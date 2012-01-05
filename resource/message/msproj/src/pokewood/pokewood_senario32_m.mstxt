@@ -375,27 +375,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『よし……
+			<Text>[Name:TrainerName Idx="1" ]『よし……
 ぶじに　うごきはじめた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『よし……
+			<Text>[Name:TrainerName Idx="1" ]『よし……
 無事に　動き始めた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1196,36 +1196,38 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょしゅ『しっ　しつれいしました！▼
-でも　このＦー００の　せっけいデータを
-かいしゃに　うりこめば　あかじつづきの▽
+でも　Ｆー００の　せっけいデータを
+うりこめば　あかじつづきの▽
 われわれの　ラボだって　きっと▽
 もちなおす　はずですよ！！▼
-これで　もっと　いろんな　けんきゅうが
+そうすれば　もっと　もっと
+いろんな　けんきゅうが▽
 できるように　なりますね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:14" />
+				Time="2012-01-03T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:14" />
+				Time="2012-01-03T07:19:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『しっ　失礼しました！▼
-でも　このＦー００の　設計データを
-会社に　売り込めば　赤字続きの▽
+でも　Ｆー００の　設計データを
+売り込めば　赤字続きの▽
 我々の　ラボだって　きっと▽
 持ち直す　はずですよ！！▼
-これで　もっと　色々な　研究が
+そうすれば　もっと　もっと
+色々な　研究が▽
 できるように　なりますね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:14" />
+				Time="2012-01-03T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:14" />
+				Time="2012-01-03T07:19:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1977,15 +1979,15 @@
 早く　探しに　行かないとッ！▼
 Ｆー００は　テスト段階で
 何が　するか　分かりません！▼
-それに　事故でも　あったら
+それに　事故にでも　あったら
 どうするんですかッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

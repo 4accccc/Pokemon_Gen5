@@ -2911,26 +2911,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　でられないよ</Text>
+でもさ　まだ　こっから　でられないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　出られないよ</Text>
+でもさ　まだ　こっから　出られないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3056,31 +3056,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『おお　いうねえ……
+			<Text>ぬいぐるみ『オオ　いうねえ……
 じゃあ　ボクと　しょうぶ　してみる？▼
 ワタのかたまり　だからって
 なめて　かかると　キミ　しらないぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『おお　言うねえ……
+			<Text>ぬいぐるみ『オオ　言うねえ……
 じゃあ　ボクと　勝負してみる？▼
 ワタの塊　だからって
 なめて　かかると　キミ　知らないぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3098,30 +3098,32 @@
 			<Text>[Name:TrainerName Idx="1" ]おうじ『のぞむところだ！
 たかが　ぬいぐるみ　あいてに▽
 ポケモンは　いらない！▼
-ボクが　あみだした　おうじクンフーを
+ボクが　あみだした
+ひっさつ　おうじクンフーを▽
 おみまいしてやるぜっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『望むところだ！
 たかが　ぬいぐるみ　相手に▽
 ポケモンは　いらない！▼
-ボクが　編み出した　王子クンフーを
+ボクが　編み出した
+必殺　王子クンフーを▽
 お見舞いしてやるぜっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3229,15 +3231,14 @@
 かすることも　ありません……▼
 スキを　つかれた　[Name:TrainerName Idx="1" ]おうじは
 ぬいぐるみの　はんげきを　うけ▽
-そのまま　ねむりに　ついたのでした……
-</Text>
+いっしゅんで　たおれたのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3250,15 +3251,14 @@
 かすることもなく　空を　切ります……▼
 スキを　つかれた　[Name:TrainerName Idx="1" ]王子は
 ぬいぐるみの　反撃を　受け▽
-そのまま　眠りに　ついたのでした……
-</Text>
+一瞬で　倒れたのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:57" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3467,31 +3467,35 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『えーと……
 たしか……　けびん……　だったかな？▼
-ちちうえも　ははうえも　にいさんのこと
+なんかさ　ちちうえも　ははうえも
+にいさんの　ことに　なると▽
 はなしたがらない　からねー▼
-こっそり　だいじんに　きいただけで……</Text>
+なまえだって　だいじんが　こっそり
+おしえてくれた　だけだもんな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:11:51" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:11:51" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『えーと……
 確か……　けびん……　だったかな？▼
-父上も　母上も　兄さんのこと
+何かさ　父上も　母上も
+兄さんの　ことに　なると▽
 話したがらない　からねー▼
-こっそり　大臣に　聞いただけで……</Text>
+名前だって　大臣が　こっそり
+教えてくれた　だけだもんな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:11:51" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:11:51" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3669,34 +3673,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『なに　いってんだよ
-キミも　いっしょに　いくんだよ！▽
+きみも　いっしょに　いくんだよ！▽
 いっしょに　にげるんだ！▼
 ボクが　ここから　にげだしたら
 もんばんの　きみは▽
 ただじゃ　すまないだろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『何　言ってんだよ
-キミも　一緒に　行くんだよ！▽
+君も　一緒に　行くんだよ！▽
 一緒に　逃げるんだ！▼
 ボクが　ここから　逃げだしたら
 門番の　君は▽
 ただじゃ　済まないだろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3762,7 +3766,7 @@
 			<Text>[Name:TrainerName Idx="1" ]王子『分かってるさ！
 これで　出られるわけじゃない！▽
 ジュジュベを　何とか　しないと！▼
-そのためにも　きみの　アドバイスが
+そのためにも　君の　アドバイスが
 絶対に　必要なんだよ！▽
 だから　絶対！　絶対！　絶対！
 ボクと　一緒に　行くんだよ！！▼
@@ -3770,11 +3774,11 @@
 ボクの　お城に　住めば　いいんだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:12" />
+				Time="2012-01-05T06:40:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

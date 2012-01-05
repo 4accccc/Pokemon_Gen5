@@ -158,18 +158,18 @@
 こだいぶんめいの　なぞを▽
 ときあかす　だいはっけん　なんです▼
 どうか　のりうつっている　ヤツを
-おいはらって　ください！！▼
+おいはらって　くださいませんか▼
 いろいろ　かたりかけて　きますが
 しんちょうに　おねがいしますよ▼
-ヤツめ　きにいらない　へんじを　すると
+ヤツめ　きにいらない　へんじをすると
 エラいめに　あわせてきますから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:18:55" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:18:55" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -181,15 +181,15 @@
 追い払って　くださいませんか▼
 いろいろ　語りかけて　きますが
 慎重に　お願いしますよ▼
-ヤツめ　気にいらない　返事を　すると
+ヤツめ　気にいらない　返事をすると
 エラい目に　あわせてきますから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T09:29:42" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T09:29:42" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1757,16 +1757,16 @@
 			<Text>声『我は　力を　使い果たした
 されど　消えるわけには　いかぬ▼
 力　弱き　者よ……
-貴様の　たましいを　くらおう▼
+貴様の　魂を　食らおう▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T05:32:19" />
+				Time="2012-01-03T07:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T05:32:19" />
+				Time="2012-01-03T07:40:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2415,14 +2415,15 @@
 まっかな　ウソ！▼
 せきぞうの　のろい　なんてえのも
 まっかな　ウソ！▼
+すべてが　かね　ほしさの
 きょうげんで　ございます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2433,14 +2434,15 @@
 真っ赤な　ウソ！▼
 石像の　のろい　なんてえのも
 真っ赤な　ウソ！▼
+すべては　金欲しさの
 狂言で　ございます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2505,37 +2507,37 @@
 		Label="pw_event8_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『こら！　バカもの！
-あくりょうたいじの　せんもんか　である
-ゴーストイレイザーに　しんようされれば▽
-のろいのせきぞう　としての　かちも
+			<Text>いらいぬし『こら！　バカもんが！
+あくりょうたいじの　せんもんかである
+ゴーストイレイザーを　だませれば▽
+のろいのせきぞう　として　かちも▽
 はねあがり　アホな　コレクターに▽
 たかねで　うりとばせた　ものを！▼
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>依頼主『こら！　バカもんが！
 悪霊退治の　スペシャリスト　である
-ゴーストイレイザーに　信用されれば▽
-のろいの石像　としての価値も
+ゴーストイレイザーに　だませれば▽
+のろいの石像　として　価値も▽
 跳ね上がり　アホな　コレクターに▽
 高値で　売り飛ばせた　ものを！▼
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:51" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2703,19 +2705,19 @@
 はかいのまじんから　うばったと▽
 いわれる　エネルギーの　かたまりです▼
 そして　せきぞうには　まじんの
-エネルギーが　ひとのてに　わたらぬよう▽
-まもりがみが　とりついて　いたのですよ▼
+ちからが　ひとのてに　わたらぬよう▽
+まもりがみが　とりついて　いたのです▼
 まもりがみは　れきせんの　ゆうしゃ……
 なかなか　てごわかったでしょう？▼
 わたしなんて　とても　とても
 はが　たちませんでしたから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2726,18 +2728,18 @@
 いわれる　エネルギーの塊です▼
 そして　石像には　魔神の
 エネルギーが　人の手に　渡らぬよう▽
-守り神が　取りついて　いたのですよ▼
+守り神が　取りついて　いたのです▼
 守り神は　歴戦の　勇者……
 なかなか　手強かったでしょう？▼
 私なんて　とても　とても
 歯が　立ちませんでしたから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2775,18 +2777,18 @@
 まもりがみを　たおし　ふういんを
 とけば　その　エネルギーは▽
 まじんの　もとに　かえります▼
-そして　まじんは　おそろしい　ちからを
+そして　まじんは　その　ちからを
 とりもどし　ふっかつ　するのです！▼
 どう？　ワクワクしない？
 ロマンとか　かんじない？▼
 ねえ　[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:10:27" />
+				Time="2012-01-03T07:27:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

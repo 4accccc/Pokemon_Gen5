@@ -420,12 +420,14 @@
 		<language name="JPN_KANJI" width="256">ひとがた『グギギ！　グギャア！</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（にんげん……？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……▼
+（にんげん……？
 いいえ　ちがう▽
 しかも　ぶきみな　あかい　きり……▼
 いったい　なにが
 おきているの？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（人間……？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……▼
+（人間……？
 いいえ　違う▽
 しかも　不気味な　赤い　霧……▼
 一体　何が　起きているの？</language>

@@ -214,31 +214,31 @@
 			Language="JPN">
 			<Text>じょしゅ『[Name:TrainerName Idx="1" ]はかせ……▼
 Ｆー００と　あそんでいても
-いいの　ですか？▼
-あたらしい　けんきゅうの　いらいも
+いいのですか？▼
+あたらしい　じっけんの　いらいも
 たくさん　きていますが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『[Name:TrainerName Idx="1" ]博士……▼
 Ｆー００と　遊んでいても
-いいの　ですか？▼
-新しい　研究の　依頼も
+いいのですか？▼
+新しい　実験の　依頼も
 たくさん　来ていますが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -370,33 +370,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わかるでしょ？▼
 ポケモン　みたいにね
-わざを　つかうのよ！▼
+自分で　わざを　つかうのよ！▼
 Ｆー００の　からだには
-ポケモンみたいな　わざが　つかえる
+ポケモンみたいに　わざが　つかえる▽
 システムが　ついてるんだから！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:10:44" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:10:44" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『分かるでしょ？▼
 ポケモン　みたいにね
-わざを　使うのよ！▼
+自分で　わざを　使うのよ！▼
 Ｆー００の　身体には
-ポケモンの　わざが　使える▽
+ポケモンみたいに　わざが　使える▽
 システムが　ついてるんだから！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:59" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:59" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1326,15 +1326,15 @@
 ひとりも　いないんだ……▼
 いまじゃ　アンタたち　おとなに
 まざって　けんきゅうの　まいにち……▼
-Ｆー００だけ　なの
+Ｆー００だけ　なのよ
 アタシが　いっしょに　あそべるのは</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:47" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:47" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1345,15 +1345,15 @@
 ひとりも　いないんだ……▼
 今じゃ　アンタたち　大人に
 混ざって　研究の　毎日……▼
-Ｆー００だけ　なの
+Ｆー００だけ　なのよ
 アタシが　一緒に　遊べるのは</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:47" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:47" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2027,28 +2027,28 @@
 			<Text>じょしゅ『ざんねん　ながら……▼
 はかせは　われわれに　Ｆー００を
 さわらせて　くださいませんから▽
-そんな　ひまなど……</Text>
+そんな　ヒマなど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T07:30:41" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T07:30:41" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『残念ながら……▼
 博士は　我々に　Ｆー００を
 触らせて　くださいませんから▽
-そんな　ひまなど……</Text>
+そんな　ヒマなど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T07:30:41" />
+				Time="2012-01-03T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T07:30:41" />
+				Time="2012-01-03T07:20:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

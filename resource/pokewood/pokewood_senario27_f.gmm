@@ -371,9 +371,9 @@
 	</row>
 	<row id="pw_turn_hero_4">
 		<language name="JPN" width="256">あせるしみん『オイ！！　いそげっ！！
-はやく　にげないと　ふみつぶされるぞ！</language>
+はやく　にげないと　つぶされるぞ！</language>
 		<language name="JPN_KANJI" width="256">あせる市民『オイ！！　急げっ！！
-早く　逃げないと　ふみつぶされるぞ！</language>
+早く　逃げないと　つぶされるぞ！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">グアイ『これは……</language>
@@ -451,9 +451,9 @@
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">グアイ『なんとかしろ！！
-キミの　だいじなひと　だろう！！</language>
-		<language name="JPN_KANJI" width="256">グアイ『なんとかしろ！！
-キミの　大事な人　だろう！！</language>
+キミの　だいじな　かぞく　だろう！！</language>
+		<language name="JPN_KANJI" width="256">グアイ『何とかしろ！！
+キミの　大事な家族　だろう！！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">モニカ『イヤーッ！！▼
@@ -469,9 +469,9 @@
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">モニカ『なんで　こんな……
-なんで　わたしが　こんな　ことに！！</language>
+なんで　わたしが　こんなことに！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『何で　こんな……
-何で 　私が　こんな　ことに！！</language>
+何で 　私が　こんなことに！！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おちついて！！</language>
@@ -479,9 +479,9 @@
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">モニカ『イヤーッ！！
-だれでもいいから　たすけてーっ！！</language>
+だれでも　いいから　たすけてーっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『イヤーッ！！
-だれでもいいから　助けてーっ！！</language>
+だれでも　いいから　助けてーっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『デカいなあ……</language>
@@ -495,9 +495,9 @@
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">モニカ『なんで　ビルが　ちいさいの？
-なんで　ひとが　ちいさいのよっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『なんで　ビルが　小さいの？
-なんで　人が　小さいのよっ！！</language>
+どうして　ひとが　ちいさいのよっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『何で　ビルが　小さいの？
+どうして　人が　小さいのよっ！！</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こまったわ……
@@ -613,16 +613,16 @@
 		<language name="JPN" width="256">……ボールから　とびだす
 おねえちゃん……▼
 そのからだは　どういうわけだか
-ビルよりも　きょだいに　なっていた……▼
+ビルよりも　おおきく　なっていた……▼
 どうにか　あばれる　おねえちゃんを
 とめることは　できたけど▽
-おおきな　からだは　そのまんま▼
+おおきな　からだは　そのまんま……▼
 ああ……　アタシは　いったい
 どうすれば　いいの……</language>
 		<language name="JPN_KANJI" width="256">……ボールから　飛び出す
 お姉ちゃん……▼
 その身体は　どういうわけだか
-ビルよりも　巨大に　なっていた▼
+ビルよりも　大きく　なっていた……▼
 どうにか　暴れる　お姉ちゃんを
 止めることは　できたけど▽
 大きな　身体は　そのまんま▼
@@ -673,25 +673,26 @@
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">……まるで　かみなりの　ような
-おたけびを　あげ　おねえちゃんは▽
+おたけびを　あげて　おねえちゃんは▽
 あたりを　はかい　しつくした……▼
 ……それでも　おねえちゃんの
 いかりは　おさまらず▽
 せかいじゅうで　あばれまわった……▼
-……じたいを　おもく　みた　くにぐには
-おねえちゃんを　たおそうとしたけれど▽
+……じたいを　おもく　みた
+せかいじゅうの　くにぐにが▽
+おねえちゃんを　たおそうとしたけど▽
 かなう　ものは　いなかった……▼
 けっきょく……
 ひとりの　きょだいな　OLに　よって▽
 せかいは　ほろんで　しまったの……</language>
-		<language name="JPN_KANJI" width="256">……まるで　かみなりの　ような
-おたけびを　あげ　お姉ちゃんは▽
+		<language name="JPN_KANJI" width="256">……まるで　雷の　ような
+雄叫びを　あげて　お姉ちゃんは▽
 あたりを　破壊しつくした……▼
 ……それでも
 お姉ちゃんは　治まらず▽
 世界中で　暴れまわった……▼
 ……事態を　重く　見た　各国は
-お姉ちゃんを　倒そうとしたけれど▽
+お姉ちゃんを　殺そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
 ひとりの　巨大な　OLに　よって▽

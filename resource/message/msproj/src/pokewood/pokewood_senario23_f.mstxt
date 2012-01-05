@@ -2911,26 +2911,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　でられないよ</Text>
+でもさ　まだ　こっから　でられないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　出られないよ</Text>
+でもさ　まだ　こっから　出られないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3056,31 +3056,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『おお　いうねえ……
+			<Text>ぬいぐるみ『オオ　いうねえ……
 じゃあ　ボクと　しょうぶ　してみる？▼
 ワタのかたまり　だからって
 なめて　かかると　キミ　しらないぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『おお　言うねえ……
+			<Text>ぬいぐるみ『オオ　言うねえ……
 じゃあ　ボクと　勝負してみる？▼
 ワタの塊　だからって
 なめて　かかると　キミ　知らないぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3098,30 +3098,32 @@
 			<Text>[Name:TrainerName Idx="1" ]ひめ『のぞむところよ！
 たかが　ぬいぐるみ　あいてに▽
 ポケモンは　いらないわ！▼
-わたしが　あみだした　ひめカラテを
+わたしが　あみだした
+ひっさつ　ひめカラテを▽
 おみまいして　あげるっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『望むところよ！
 たかが　ぬいぐるみ　相手に▽
 ポケモンは　いらないわ！▼
-私が　編み出した　姫カラテを
+私が　編み出した
+必殺　姫カラテを▽
 お見舞いしてあげるっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3229,15 +3231,14 @@
 かすることも　ありません……▼
 スキを　つかれた　[Name:TrainerName Idx="1" ]ひめは
 ぬいぐるみの　はんげきを　うけ▽
-そのまま　ねむりに　ついたのでした……
-</Text>
+いっしゅんで　たおれたのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3250,15 +3251,14 @@
 かすることもなく　空を　切ります……▼
 スキを　つかれた　[Name:TrainerName Idx="1" ]姫は
 ぬいぐるみの　反撃を　受け▽
-そのまま　眠りに　ついたのでした……
-</Text>
+一瞬で　倒れたのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3523,14 +3523,14 @@
 それじゃ　ますます　いそいで
 こんなところから　でないとね！！▼
 わたし　びしょうねんと　びだんしと
-ジェントルマンには　めが　ないからね！</Text>
+ジェントルマンに　めが　ないからね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3538,14 +3538,14 @@
 それじゃ　ますます　急いで
 こんな所から　出ないとね！！▼
 私　美少年と　美男子と　ハンサムと
-ジェントルマンには　目が　ないからね！</Text>
+ジェントルマンに　目が　ないからね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-05T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-05T06:40:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

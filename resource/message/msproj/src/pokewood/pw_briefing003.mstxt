@@ -381,11 +381,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ハチクマン……
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド……
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール……
 [Ctrl1:xcenter ]はたして　いきのこるのは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:11:40" />
+				Time="2012-01-05T06:32:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -394,11 +394,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ハチクマン……
-[Ctrl1:xcenter ][Name:PokemonNickname ]キッド……
+[Ctrl1:xcenter ][Name:PokemonNickname ]ガール……
 [Ctrl1:xcenter ]果たして　生き残るのは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:11:35" />
+				Time="2012-01-05T06:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

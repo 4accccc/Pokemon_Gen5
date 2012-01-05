@@ -660,14 +660,14 @@
 簡単に　口に　すれば▽
 相手は　傷つくんだよ！▼
 オマエは　天才の　くせに
-そんなことも　わからないのか！！</Text>
+そんなことも　分からないのか！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2828,29 +2828,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『げんかい　か……
 Ｆー００が　とまらない……▼
-ボディに　たまった　ねつで▽
+ボディに　たまった　ねつで
 エンジンが　ばくはつ　してしまう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:16:55" />
+				Time="2012-01-03T05:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:16:55" />
+				Time="2012-01-03T05:15:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『限界か……
 Ｆー００が　止まらない……▼
-ボディに　たまった　熱で▽
-エンジンが　爆発　してしまう……</Text>
+内部に　蓄積された　熱で
+エンジンが　爆発してしまう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:16:55" />
+				Time="2012-01-03T05:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:16:55" />
+				Time="2012-01-03T05:15:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3123,43 +3123,43 @@
 			Language="JPN">
 			<Text>……Ｆー００は　わたしを　つかむと
 そとへ　ほうりなげた……▼
-そのちょくごの　ことだ▼
+そのちょくごの　ことだった……▼
 げんかいに　たっしていた
 Ｆー００の　からだは　ばくはつし▽
 ラボ　もろとも　ふきとんだ……▼
 かろうじて　いちめいを
 とりとめた　わたし……▼
-Ｆー００が　さいごに　とった　こうどうは
+Ｆー００が　とった　こうどうは
 ぼうそうゆえの　ぐうぜん　なのか……▽
 はたして……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……Ｆー００は　私を　つかむと
 外へ　放り投げた……▼
-その直後の　ことだ▼
+その直後の　ことだった……▼
 限界に　達していた
 Ｆー００の　身体は　爆発し▽
 ラボ　もろとも　吹き飛んだ……▼
 辛うじて　一命を
 取り留めた　私……▼
-Ｆー００が　最期に　取った　行動は
-暴走ゆえの　偶然　なのか……▽
+Ｆー００が　取った　行動は
+暴走ゆえの　偶然なのか……▽
 果たして……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-03T07:47:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3307,16 +3307,16 @@
 あんなものは　いっぱんじんに
 りかい　できるはずが　ない……▼
 だから　ふくざつな　ぶぶんを　けし
-だれにでも　りかいできる▽
-かんたんな　しょりに　けいさんを▽
+だれにでも　わかりやすい▽
+シンプルな　しょりに　けいさんを▽
 かきかえた……　それだけだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-03T07:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-03T07:47:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3328,16 +3328,16 @@
 あんなものは　一般人に
 理解できるはずが　ない……▼
 だから　複雑な　部分を　消し
-だれにでも　理解できる▽
+だれにでも　分かりやすい▽
 シンプルな　処理に　計算を▽
 書き換えた……　それだけだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:43" />
+				Time="2012-01-03T07:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:43" />
+				Time="2012-01-03T07:47:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

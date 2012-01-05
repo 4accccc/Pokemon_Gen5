@@ -517,32 +517,34 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]（にんげん……？
+			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
+（にんげん……？
 いいえ　ちがう▽
 しかも　ぶきみな　あかい　きり……▼
 いったい　なにが
 おきているの？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]（人間……？
+			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
+（人間……？
 いいえ　違う▽
 しかも　不気味な　赤い　霧……▼
 一体　何が　起きているの？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-03T07:19:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -173,27 +173,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『うっさいな……
+			<Text>モニカ『もう……　うっさいな……
 こっちは　いそがしいのに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『うっさいな……
+			<Text>モニカ『もう……　うっさいな……
 こっちは　忙しいのに……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:06:28" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:06:28" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -241,26 +241,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『ああ！　もう　うるさい！
-うるさいうるさい　うるさーいっ！</Text>
+			<Text>モニカ『ああ！　もう　うるさいっ！！
+うるさい　うるさい　うるさーいっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ああ！　もう　うるさーいっ！！</Text>
+			<Text>モニカ『ああ！　もう　うるさいっ！！
+うるさい　うるさい　うるさーいっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:06:28" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:06:28" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -314,17 +315,18 @@
 これは　とっても　めずらしい
 モンスターボール　なんだから▼
 ごくひの　ルートで　てに　いれた
-とくべつなボール……▼
-なんでも　むかしの　もちぬしの
+とくべつな　モンスターボール……▼
+なんでも　ふこうな　しを　とげた
+むかしの　トレーナーの▽
 のろいが　こめられた▽
 おそろしいボール　なんだって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -332,17 +334,18 @@
 これは　とっても　珍しい
 モンスターボール　なんだから▼
 極秘の　ルートで　手に　いれた
-特別なボール……▼
-なんでも　昔の　持ち主の
+特別な　モンスターボール……▼
+なんでも　不幸な　死を　遂げた
+昔の　トレーナーの▽
 のろいが　込められた▽
 恐ろしいボール　なんだって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:10:42" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:10:42" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -443,29 +446,29 @@
 			Language="JPN">
 			<Text>モニカ『しらないっ！！▼
 わたしは　[Name:TrainerName Idx="1" ]の
-ママ　じゃないし　ぎんこうでも▽
+ママじゃないし　ぎんこうでも▽
 ないんだからねっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『知らないっ！！▼
 私は　[Name:TrainerName Idx="1" ]の
-ママ　じゃないし　銀行でも▽
+ママじゃないし　銀行でも▽
 ないんだからねっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:02" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:02" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -796,28 +799,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『どっちが　やれやれよ！
-わたしの　くろうも　しらないで！！▼
+わたしの　くろうも　しらないで！！▽
 すこしは　いたいめ　みると　いいわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『どっちが　やれやれよ！
-私の　苦労も　しらないで！！▼
+私の　苦労も　知らないで！！▽
 少しは　痛い目　みると　いいわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1044,14 +1047,14 @@
 じゃあ　さっき　かってきた
 へんな　モンスターボールを▽
 わたしに　ちょうだいよ！▼
-そうしたら　ゆるしてあげても　いいわ</Text>
+そしたら　ゆるしてあげても　いいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:11" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:11" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1059,14 +1062,14 @@
 じゃあ　さっき　買ってきた
 変な　モンスターボールを▽
 私に　ちょうだいよ！▼
-そうしたら　許してあげても　いいわ</Text>
+そしたら　許してあげても　いいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:11" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:11" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1470,7 +1473,7 @@
 			Language="JPN">
 			<Text>めずらしいものに　めがない　ボクは
 いつものように　めずらしいと▽
-ひょうばんの　ボールを▽
+ひょうばんの　いかがわしいボールを▽
 かってしまった……▼
 そして　いつものように
 そんなボクを　しかる　モニカ……▼
@@ -1483,17 +1486,17 @@
 ボクは　いったい　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T03:35:40" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T03:35:40" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>珍しいものに　目がない　ボクは
 いつものように　珍しいと▽
-評判の　ボールを▽
+評判の　いかがわしいボールを▽
 買ってしまった……▼
 そして　いつものように
 そんなボクを　しかる　モニカ……▼
@@ -1506,11 +1509,11 @@
 ボクは　一体　どうすれば……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T03:35:40" />
+				Time="2012-01-05T06:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T03:35:40" />
+				Time="2012-01-05T06:01:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

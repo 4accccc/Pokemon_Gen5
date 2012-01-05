@@ -368,9 +368,9 @@
 		<language name="JPN_KANJI" width="256">インターフォン『ピンポーン！！</language>
 	</row>
 	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">モニカ『うっさいな……
+		<language name="JPN" width="256">モニカ『もう……　うっさいな……
 こっちは　いそがしいのに……</language>
-		<language name="JPN_KANJI" width="256">モニカ『うっさいな……
+		<language name="JPN_KANJI" width="256">モニカ『もう……　うっさいな……
 こっちは　忙しいのに……</language>
 	</row>
 	<row id="pw_turn_hero_5">
@@ -378,9 +378,10 @@
 		<language name="JPN_KANJI" width="256">インターフォン『ピンポーン！！</language>
 	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">モニカ『ああ！　もう　うるさい！
-うるさいうるさい　うるさーいっ！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ああ！　もう　うるさーいっ！！</language>
+		<language name="JPN" width="256">モニカ『ああ！　もう　うるさいっ！！
+うるさい　うるさい　うるさーいっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『ああ！　もう　うるさいっ！！
+うるさい　うるさい　うるさーいっ！！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">モニカ『いいかげんに　してよ！
@@ -393,16 +394,18 @@
 これは　とっても　めずらしい
 モンスターボール　なんだから▼
 ごくひの　ルートで　てに　いれた
-とくべつなボール……▼
-なんでも　むかしの　もちぬしの
+とくべつな　モンスターボール……▼
+なんでも　ふこうな　しを　とげた
+むかしの　トレーナーの▽
 のろいが　こめられた▽
 おそろしいボール　なんだって……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいじゃないか……▼
 これは　とっても　珍しい
 モンスターボール　なんだから▼
 極秘の　ルートで　手に　いれた
-特別なボール……▼
-なんでも　昔の　持ち主の
+特別な　モンスターボール……▼
+なんでも　不幸な　死を　遂げた
+昔の　トレーナーの▽
 のろいが　込められた▽
 恐ろしいボール　なんだって……</language>
 	</row>
@@ -435,11 +438,11 @@
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">モニカ『しらないっ！！▼
 わたしは　[1:00:トレーナー名:1]の
-ママ　じゃないし　ぎんこうでも▽
+ママじゃないし　ぎんこうでも▽
 ないんだからねっ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『知らないっ！！▼
 私は　[1:00:トレーナー名:1]の
-ママ　じゃないし　銀行でも▽
+ママじゃないし　銀行でも▽
 ないんだからねっ！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
@@ -498,10 +501,10 @@
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">モニカ『どっちが　やれやれよ！
-わたしの　くろうも　しらないで！！▼
+わたしの　くろうも　しらないで！！▽
 すこしは　いたいめ　みると　いいわ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『どっちが　やれやれよ！
-私の　苦労も　しらないで！！▼
+私の　苦労も　知らないで！！▽
 少しは　痛い目　みると　いいわ！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
@@ -543,12 +546,12 @@
 じゃあ　さっき　かってきた
 へんな　モンスターボールを▽
 わたしに　ちょうだいよ！▼
-そうしたら　ゆるしてあげても　いいわ</language>
+そしたら　ゆるしてあげても　いいよ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ハアッ……▼
 じゃあ　さっき　買ってきた
 変な　モンスターボールを▽
 私に　ちょうだいよ！▼
-そうしたら　許してあげても　いいわ</language>
+そしたら　許してあげても　いいよ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなあ……</language>
@@ -621,7 +624,7 @@
 	<row id="pw_event3_hero_9">
 		<language name="JPN" width="256">めずらしいものに　めがない　ボクは
 いつものように　めずらしいと▽
-ひょうばんの　ボールを▽
+ひょうばんの　いかがわしいボールを▽
 かってしまった……▼
 そして　いつものように
 そんなボクを　しかる　モニカ……▼
@@ -634,7 +637,7 @@
 ボクは　いったい　どうすれば……</language>
 		<language name="JPN_KANJI" width="256">珍しいものに　目がない　ボクは
 いつものように　珍しいと▽
-評判の　ボールを▽
+評判の　いかがわしいボールを▽
 買ってしまった……▼
 そして　いつものように
 そんなボクを　しかる　モニカ……▼

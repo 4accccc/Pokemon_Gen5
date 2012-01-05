@@ -159,26 +159,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あせるしみん『オイ！！　いそげっ！！
-はやく　にげないと　ふみつぶされるぞ！</Text>
+はやく　にげないと　つぶされるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:53" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:53" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あせる市民『オイ！！　急げっ！！
-早く　逃げないと　ふみつぶされるぞ！</Text>
+早く　逃げないと　つぶされるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:53" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:53" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -510,26 +510,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グアイ『なんとかしろ！！
-キミの　だいじなひと　だろう！！</Text>
+キミの　だいじな　かぞく　だろう！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『なんとかしろ！！
-キミの　大事な人　だろう！！</Text>
+			<Text>グアイ『何とかしろ！！
+キミの　大事な家族　だろう！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -608,26 +608,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『なんで　こんな……
-なんで　わたしが　こんな　ことに！！</Text>
+なんで　わたしが　こんなことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:53" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:53" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『何で　こんな……
-何で 　私が　こんな　ことに！！</Text>
+何で 　私が　こんなことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:16" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:16" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -676,26 +676,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『イヤーッ！！
-だれでもいいから　たすけてーっ！！</Text>
+だれでも　いいから　たすけてーっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『イヤーッ！！
-だれでもいいから　助けてーっ！！</Text>
+だれでも　いいから　助けてーっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -779,26 +779,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『なんで　ビルが　ちいさいの？
-なんで　ひとが　ちいさいのよっ！！</Text>
+どうして　ひとが　ちいさいのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:49" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:49" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なんで　ビルが　小さいの？
-なんで　人が　小さいのよっ！！</Text>
+			<Text>モニカ『何で　ビルが　小さいの？
+どうして　人が　小さいのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:49" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:49" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1394,26 +1394,26 @@
 			<Text>……ボールから　とびだす
 おねえちゃん……▼
 そのからだは　どういうわけだか
-ビルよりも　きょだいに　なっていた……▼
+ビルよりも　おおきく　なっていた……▼
 どうにか　あばれる　おねえちゃんを
 とめることは　できたけど▽
-おおきな　からだは　そのまんま▼
+おおきな　からだは　そのまんま……▼
 ああ……　アタシは　いったい
 どうすれば　いいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:52" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:52" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……ボールから　飛び出す
 お姉ちゃん……▼
 その身体は　どういうわけだか
-ビルよりも　巨大に　なっていた▼
+ビルよりも　大きく　なっていた……▼
 どうにか　暴れる　お姉ちゃんを
 止めることは　できたけど▽
 大きな　身体は　そのまんま▼
@@ -1421,11 +1421,11 @@
 どうすれば　いいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:52" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:52" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1679,46 +1679,47 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……まるで　かみなりの　ような
-おたけびを　あげ　おねえちゃんは▽
+おたけびを　あげて　おねえちゃんは▽
 あたりを　はかい　しつくした……▼
 ……それでも　おねえちゃんの
 いかりは　おさまらず▽
 せかいじゅうで　あばれまわった……▼
-……じたいを　おもく　みた　くにぐには
-おねえちゃんを　たおそうとしたけれど▽
+……じたいを　おもく　みた
+せかいじゅうの　くにぐにが▽
+おねえちゃんを　たおそうとしたけど▽
 かなう　ものは　いなかった……▼
 けっきょく……
 ひとりの　きょだいな　OLに　よって▽
 せかいは　ほろんで　しまったの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:38:17" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:38:17" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……まるで　かみなりの　ような
-おたけびを　あげ　お姉ちゃんは▽
+			<Text>……まるで　雷の　ような
+雄叫びを　あげて　お姉ちゃんは▽
 あたりを　破壊しつくした……▼
 ……それでも
 お姉ちゃんは　治まらず▽
 世界中で　暴れまわった……▼
 ……事態を　重く　見た　各国は
-お姉ちゃんを　倒そうとしたけれど▽
+お姉ちゃんを　殺そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
 ひとりの　巨大な　OLに　よって▽
 世界は　滅んで　しまったの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:42" />
+				Time="2012-01-03T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:42" />
+				Time="2012-01-03T07:19:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

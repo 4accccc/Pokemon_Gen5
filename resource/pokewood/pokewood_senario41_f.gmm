@@ -741,9 +741,9 @@
 [1:02:ポケモンニックネーム:0]マン！</language>
 	</row>
 	<row id="pw_event7_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『あれれ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『あれれ……
 ワザが　あたらなかった……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『あれれ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『あれれ……
 ワザが　当たらなかった……</language>
 	</row>
 	<row id="pw_event7_enemy_0">
@@ -763,17 +763,17 @@
 我輩は　アジトに　帰るッ！</language>
 	</row>
 	<row id="pw_event7_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『そんな！
-ちょっと　まってよーっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『そんな！
-ちょっと　待ってよーっ！！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『そんな！
+ちょっと　まってくれよーっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『そんな！
+ちょっと　待ってくれよーっ！！</language>
 	</row>
 	<row id="pw_event7_hero_2">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンを　まえに
+		<language name="JPN" width="256">あくのかいじん　ハチクマンに
 こうげきも　できなかった▽
 [1:02:ポケモンニックネーム:0]マン……▼
 ヒーローとして　あるまじき　ミスを
-おかした　なさけない　かのじょに▽
+おかした　なさけない　かれに▽
 ハチクマンの　やるきは▽
 ちからつきて　しまった……▼
 がんばれ！
@@ -781,10 +781,10 @@
 たたかえ！
 ハチクマン！</language>
 		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンを　前に
-攻撃も　できなかった▽
-[1:02:ポケモンニックネーム:0]ガール……▼
-ヒロインとして　あるまじき　ミスを
-犯した　情けない　彼女に▽
+攻撃も　出来なかった▽
+[1:02:ポケモンニックネーム:0]マン……▼
+ヒーローとして　あるまじき　ミスを
+犯した　情けない　彼に▽
 ハチクマンの　やる気は▽
 力尽きて　しまった……▼
 がんばれ！

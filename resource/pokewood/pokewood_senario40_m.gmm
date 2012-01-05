@@ -419,19 +419,21 @@
 		<language name="JPN" width="256">？？？『しんじつと　りそうの　ししゃ
 [1:02:ポケモンニックネーム:0]キッド　すいさん！▼
 あくのかいじん　ハチクマン！
-きょうこそ　けっちゃくを　つけよう！</language>
+さあ！　きょうこそ　ふたりの▽
+けっちゃくを　つけるぞ！</language>
 		<language name="JPN_KANJI" width="256">？？？『真実と　理想の　使者
 [1:02:ポケモンニックネーム:0]キッド　参上！▼
-悪の　怪人　ハチクマン！
-今日こそ　決着を　つけよう！</language>
+悪の怪人　ハチクマン！
+さあ！　今日こそ　二人の▽
+決着を　つけるぞ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！！▼
-きさまと　わがはい！
+よかろう！　きさまと　わがはい！
 どちらが　しんに　つよいか▽
 きそおうでは　ないかっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！！▼
-貴様と　我輩！
+よかろう！　貴様と　我輩！
 どちらが　真に　強いか▽
 競おうでは　ないかっ！！</language>
 	</row>
@@ -442,13 +444,13 @@
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">ハチクマン『なまいきな　ほどの
 じしん　では　ないか……▼
-ならば　わがはいの　ほこる
+……ならば　わがはいの　ほこる
 あくの　ポケモンぐんだん……▼
 すべて　いちげきで
 たおして　みせよっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『生意気な　ほどの
 自信では　ないか……▼
-ならば　我輩の　誇る
+……ならば　我輩の　誇る
 悪の　ポケモン軍団……▼
 すべて　一撃で
 倒して　みせよっ！</language>
@@ -797,16 +799,20 @@
 そんなこと　言っても……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">ハチクマン『ええい！　なさけない！
-きさまなど　もう　しらぬわっ！▼
-きさまと　たたかっていては
-あくのかいじんの　なが　すたる！▼
-きさまより　てごわい　ライバルを
+		<language name="JPN" width="256">ハチクマン『クウーゥ！　なさけない！
+もう　やってられぬわっ！▼
+きさまなどと　たたかっていては
+あくのかいじんの　なが　すたるっ！▼
+わがはいは　きさまより
+てごわい　ライバルを▽
 さがしに　ゆくわっ！！▼
 さらばだ！　[1:02:ポケモンニックネーム:0]キッド！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ええい！　情けない！
-貴様など　もう　知らぬわっ！▼
-我輩は　新たな　ライバルを
+		<language name="JPN_KANJI" width="256">ハチクマン『クウーゥ！　情けない！
+もう　やってられぬわっ！▼
+貴様などと　戦っていては
+悪の怪人の　名が　廃るっ！▼
+我輩は　貴様より
+手強い　ライバルを▽
 探しに　ゆくわっ！！▼
 さらばだ！　[1:02:ポケモンニックネーム:0]キッド！</language>
 	</row>
@@ -817,7 +823,7 @@
 ちょっと　待ってくれ……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">かいじんハチクマンに　あきれられた
+		<language name="JPN" width="256">ハチクマンに　あきれられた
 [1:02:ポケモンニックネーム:0]キッド……▼
 たたかうべき　あくの　いない
 ヒーローなど　ゆめみがちな▽
@@ -828,7 +834,7 @@
 [1:02:ポケモンニックネーム:0]キッド！▼
 さらば！
 [1:02:ポケモンニックネーム:0]キッド！</language>
-		<language name="JPN_KANJI" width="256">怪人ハチクマンに　あきれられた
+		<language name="JPN_KANJI" width="256">ハチクマンに　あきれられた
 [1:02:ポケモンニックネーム:0]キッド……▼
 戦うべき　悪の　いない
 ヒーローなど　夢見がちな▽
@@ -855,8 +861,8 @@
 ファーッファファファッ！！！</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『どうしたんだ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『どうしたんだ……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『なんだよ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『何だよ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">ハチクマン『アッパレで　ある！！
@@ -882,26 +888,28 @@
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『まってくれ！！▼
-ハチクマン……
-ひょっとして　あなたは▽
-ぼくの　オヤジ　なのか……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『まってくれ！！▼
-ハチクマン……
-ひょっとして　あなたは▽
+なあ　ハチクマン……
+ひょっとして　アンタは▽
+ぼくの　オヤジ　なんじゃあ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『待ってくれ！！▼
+なあ　ハチクマン……
+ひょっとして　アンタは▽
 僕の　オヤジ　なんじゃあ……</language>
 	</row>
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">ハチクマン『なっ……
-なにを　いっておる　きさま！！！▼
-きさまの　ような　むすこを
+なにを　ほざくか　きさま！！▼
+きさまのような　むすこを
 もった　おぼえは　ないわっ！！▼
-わがはいは　こどくな　あくのかいじん！
+わがはいは　かいじん！
+こどくと　あいしゅうが　にあう▽
 あくの　どくしんきぞくで　あるっ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『なっ……
 何を　言っておる　貴様！！▼
 貴様のような　息子を
 持った　覚えは　ないわっ！！▼
-我輩は　孤独な　悪の怪人！
+我輩は　怪人！
+孤独と　哀愁が　似合う▽
 悪の　独身貴族で　あるっ！</language>
 	</row>
 	<row id="pw_event6_hero_4">
@@ -936,14 +944,14 @@
 	</row>
 	<row id="pw_event6_enemy_5">
 		<language name="JPN" width="256">ハチクマン『……　……▼
-しばし　まて……
+まて……
 [1:02:ポケモンニックネーム:0]キッド……▼
 きさまに　ひとつだけ
 いって　おくことが　ある……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『……　……▼
-しばし　待て……
+待て……
 [1:02:ポケモンニックネーム:0]キッド……▼
-貴様に　ひとつだけ
+貴様に　少々
 言っておくことが　ある……</language>
 	</row>
 	<row id="pw_event6_hero_6">
@@ -951,27 +959,38 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『何だ……</language>
 	</row>
 	<row id="pw_event6_enemy_6">
-		<language name="JPN" width="256">ハチクマン『キッド……▼
+		<language name="JPN" width="256">ハチクマン『キッドよ……▼
 きさまの　もつ　そのちから……
-せかいのへいわ　だけでなく▽
-ははおやにも　そそぐことだ……</language>
+せかいの　へいわの　だけでなく▽
+ははおやにも　そそぐことだな……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『キッド……▼
-貴様の持つ　その力……
-世界の平和　だけでなく▽
-母親にも　注ぐことだ……</language>
+貴様は　正義の名の　下に
+危険な戦いに　身を　投じ▽
+人々を　救う　ヒーロー……▼
+……多くの　者どもが
+貴様の　力に　期待し▽
+そして　頼っているので　あろう……▼
+……だが▼
+そんな　貴様の　行いに
+心穏やかで　いられぬ者が▽
+いることを　覚えておくことだ……</language>
 	</row>
 	<row id="pw_event6_hero_7">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン……
+どういう　いみだ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン……
+どういう　意味だ……</language>
 	</row>
 	<row id="pw_event6_enemy_7">
 		<language name="JPN" width="256">ハチクマン『では　さらばだ……
 [1:02:ポケモンニックネーム:0]キッド……▼
-いや……▼
+いや……
 [1:00:トレーナー名:1]よ……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『では　さらばだ……
+		<language name="JPN_KANJI" width="256">ハチクマン『フッ　愚か者が……
+足りぬ頭で　考えよ……▼
+では　さらばだ……
 [1:02:ポケモンニックネーム:0]キッド……▼
-いや……▼
+いや……
 [1:00:トレーナー名:1]よ……</language>
 	</row>
 	<row id="pw_event6_hero_8">

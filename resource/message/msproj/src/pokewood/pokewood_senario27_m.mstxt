@@ -159,26 +159,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あせるしみん『オイ！！　いそげっ！！
-はやく　にげないと　ふみつぶされるぞ！</Text>
+はやく　にげないと　つぶされるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:54" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:54" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あせる市民『オイ！！　急げっ！！
-早く　逃げないと　ふみつぶされるぞ！</Text>
+早く　逃げないと　つぶされるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:54" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:03:54" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -521,15 +521,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『なんとかしろ！！
+			<Text>グアイ『何とかしろ！！
 キミの　大事な人　だろう！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:36" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -608,26 +608,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『なんで　こんな……
-なんで　わたしが　こんな　ことに！！</Text>
+なんで　わたしが　こんなことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:55" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:55" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『何で　こんな……
-何で 　私が　こんな　ことに！！</Text>
+何で 　私が　こんなことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:17" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:17" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -676,26 +676,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『イヤーッ！！
-だれでもいいから　たすけてーっ！！</Text>
+だれでも　いいから　たすけてーっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:06" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:06" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『イヤーッ！！
-だれでもいいから　助けてーっ！！</Text>
+だれでも　いいから　助けてーっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:06" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:06" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -779,26 +779,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『なんで　ビルが　ちいさいの？
-なんで　ひとが　ちいさいのよっ！！</Text>
+どうして　ひとが　ちいさいのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:50" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:50" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なんで　ビルが　小さいの？
-なんで　人が　小さいのよっ！！</Text>
+			<Text>モニカ『何で　ビルが　小さいの？
+どうして　人が　小さいのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:50" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:26:50" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1392,39 +1392,38 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……ボールから　とびだす　モニカ▼
-そのからだは　ビルよりも
+そのからだは　なぜか　ビルよりも
 きょだいに　なっていた……▼
-グアイが　いうには
 どうにか　あばれる　かのじょを
 とめることは　できたけど▽
-おおきな　からだは　そのまんま▼
+おおきな　からだは　そのまんま……▼
 ああ……　ボクは　いったい
 どうすれば　いいんだよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:53" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:53" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……ボールから　飛び出す　モニカ▼
-その身体は　どういうわけだか
-ビルよりも　巨大に　なっていた▼
+その身体は　なぜか　ビルよりも
+巨大に　なっていた……▼
 どうにか　暴れる　彼女を
 止めることは　できたけど▽
-大きな　身体は　そのまんま▼
+大きな　身体は　そのまんま……▼
 ああ……　ボクは　いったい
 どうすれば　いいんだよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:53" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:59:53" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1683,41 +1682,42 @@
 ……それでも　モニカの
 いかりは　おさまらず▽
 せかいじゅうで　あばれまわった……▼
-……じたいを　おもく　みた　くにぐには
-モニカを　とめようと　したけれど▽
+……じたいを　おもく　みた
+せかいじゅうの　くにぐにが▽
+モニカを　たおそうとしたけれど▽
 かなう　ものは　いなかった……▼
 けっきょく……
 ひとりの　きょだいな　OLに　よって▽
 せかいは　ほろんで　しまったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:38:18" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:38:18" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……まるで　かみなりの　ような
-おたけびを　あげ　モニカは▽
+			<Text>……まるで　雷の　ような
+雄叫びを　あげながら　モニカは▽
 あたりを　破壊しつくした……▼
 ……それでも　モニカの
 怒りは　治まらず▽
 世界中で　暴れまわった……▼
 ……事態を　重く　見た　各国は
-モニカを　倒そうとしたけれど▽
+モニカを　殺そうとしたけれど▽
 かなう　者は　いなかった……▼
 結局……
 ひとりの　巨大な　OLに　よって▽
 世界は　滅んで　しまったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:43" />
+				Time="2012-01-03T07:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:43" />
+				Time="2012-01-03T07:19:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

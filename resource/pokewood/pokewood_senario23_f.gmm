@@ -1061,9 +1061,9 @@
 	</row>
 	<row id="pw_event9_enemy_1">
 		<language name="JPN" width="256">ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　でられないよ</language>
+でもさ　まだ　こっから　でられないよ</language>
 		<language name="JPN_KANJI" width="256">ぬいぐるみ『そのようだね……
-でもさあ　まだ　こっから　出られないよ</language>
+でもさ　まだ　こっから　出られないよ</language>
 	</row>
 	<row id="pw_event9_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『どういうことよ！
@@ -1090,11 +1090,11 @@
 ボロきれと　ワタくずに　するわよ！</language>
 	</row>
 	<row id="pw_event9_enemy_3">
-		<language name="JPN" width="256">ぬいぐるみ『おお　いうねえ……
+		<language name="JPN" width="256">ぬいぐるみ『オオ　いうねえ……
 じゃあ　ボクと　しょうぶ　してみる？▼
 ワタのかたまり　だからって
 なめて　かかると　キミ　しらないぜ？</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『おお　言うねえ……
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『オオ　言うねえ……
 じゃあ　ボクと　勝負してみる？▼
 ワタの塊　だからって
 なめて　かかると　キミ　知らないぜ？</language>
@@ -1103,12 +1103,14 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『のぞむところよ！
 たかが　ぬいぐるみ　あいてに▽
 ポケモンは　いらないわ！▼
-わたしが　あみだした　ひめカラテを
+わたしが　あみだした
+ひっさつ　ひめカラテを▽
 おみまいして　あげるっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『望むところよ！
 たかが　ぬいぐるみ　相手に▽
 ポケモンは　いらないわ！▼
-私が　編み出した　姫カラテを
+私が　編み出した
+必殺　姫カラテを▽
 お見舞いしてあげるっ！！</language>
 	</row>
 	<row id="pw_event9_enemy_4">
@@ -1135,8 +1137,7 @@
 かすることも　ありません……▼
 スキを　つかれた　[1:00:トレーナー名:1]ひめは
 ぬいぐるみの　はんげきを　うけ▽
-そのまま　ねむりに　ついたのでした……
-</language>
+いっしゅんで　たおれたのでした……</language>
 		<language name="JPN_KANJI" width="256">……魔法のオリを　守る　扉を
 壊した　[1:00:トレーナー名:1]姫……▼
 しかし　喜ぶ　彼女の　前に
@@ -1146,8 +1147,7 @@
 かすることもなく　空を　切ります……▼
 スキを　つかれた　[1:00:トレーナー名:1]姫は
 ぬいぐるみの　反撃を　受け▽
-そのまま　眠りに　ついたのでした……
-</language>
+一瞬で　倒れたのでした……</language>
 	</row>
 	<row id="pw_event10_enemy_0">
 		<language name="JPN" width="256">ぬいぐるみ『わっ！　びっくりした！</language>
@@ -1219,12 +1219,12 @@
 それじゃ　ますます　いそいで
 こんなところから　でないとね！！▼
 わたし　びしょうねんと　びだんしと
-ジェントルマンには　めが　ないからね！</language>
+ジェントルマンに　めが　ないからね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『そっか……▼
 それじゃ　ますます　急いで
 こんな所から　出ないとね！！▼
 私　美少年と　美男子と　ハンサムと
-ジェントルマンには　目が　ないからね！</language>
+ジェントルマンに　目が　ないからね！</language>
 	</row>
 	<row id="pw_event10_enemy_5">
 		<language name="JPN" width="256">ぬいぐるみ『……▼
