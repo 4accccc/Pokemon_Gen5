@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-12-28T12:44:48" source="kyuremu_union_w_01_v04b.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2012-01-05T19:53:15" source="kyuremu_union_w_01_v04c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-12-28T12:44:48" source="kyuremu_union_w_01_v04b.mb"/>
+<original_create user="swan_3dcg02" host="W00193" date="2012-01-05T19:53:15" source="kyuremu_union_w_01_v04c.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2183,28 +2183,28 @@
 			2222 2222 2222 2222 2222 2222 2222 1222
 			3343 6633 6666 6666 6666 3333 1444 2221
 			2222 2222 2222 2222 2222 2222 2222 1222
-			3333 3333 3333 6633 6666 6666 3666 4433
+			3333 3333 3333 6633 6666 6666 3666 4633
 			1114 2222 2222 2222 2222 2222 2222 1222
 			4414 4444 4444 3333 3333 6666 6666 6666
-			3336 1444 2211 2222 2222 2222 2222 1222
+			6666 1666 2211 2222 2222 2222 2222 1222
 			1114 1111 1111 4441 3344 3333 6663 6666
-			6666 3366 4443 1111 2221 2222 2222 1222
+			6666 6666 4666 1111 2221 2222 2222 1222
 			1114 1111 1111 1111 4444 3333 3333 6333
-			6666 6666 3666 4333 1144 1111 2222 1222
+			6666 6666 6666 6666 1146 1111 2222 1222
 			1111 1222 1111 1111 3411 3333 4444 4444
-			3333 6633 6666 6666 3333 4443 1114 1111
+			3333 6633 6666 6666 6666 4466 1114 1111
 			5551 2222 2222 1112 3411 4333 1144 4111
-			4444 3444 6333 6666 6666 3666 3333 1444
+			4444 3444 6333 6666 6666 6666 6666 1444
 			5552 5555 2255 2222 3222 4436 1114 2211
-			2222 1111 4444 3334 6663 6666 6666 1336
+			2222 1111 4444 3334 6663 6666 6666 1666
 			0052 5500 5555 2255 1222 4363 1111 5522
-			5555 5555 1122 4444 3444 3333 6663 1366
+			5555 5555 1112 4444 3444 3333 6663 1666
 			0002 0000 0000 5555 2225 3631 2214 5552
-			7055 0007 2250 1111 4444 3344 3333 1363
+			7700 7777 2550 1112 4444 3344 6633 1666
 			0005 7770 0000 5000 5555 3415 1436 5552
-			7055 0777 2250 1112 4444 3344 4436 1444
+			7005 0777 5550 1222 4441 3344 4436 1444
 			7775 7777 7777 0777 0000 4250 3663 2144
-			0555 0000 2555 1112 3444 6633 1443 1111
+			0555 0000 5555 1225 3441 6633 1443 1111
 			7775 7777 7777 7777 7777 5077 6342 3366
 			1114 2222 1122 3441 6633 3366 1444 1111
 			7775 7777 7777 7777 7777 0777 4120 6633
@@ -2275,19 +2275,19 @@
 			88bb f888 253b fce6 eebc eeee ccce cccc
 			9999 9999 8888 8888 abbb aaaa ceaa abbe
 			8eaa e888 574a fce6 bbbe ebbb ccee cccc
-			9999 9999 8889 8888 abbe ddaa cbdd aabe
+			9999 9999 8889 8888 abbe ddda cbdd aabe
 			caaa ac88 253d cce6 baab bbbb ccee eecc
-			999b 9999 8899 8888 abbc ddaa cadd aabe
+			999b 9999 8899 8888 abbc ddda cadd aabe
 			addd aaee 34dd ccea aaaa ebba eeee beee
-			9add 9999 8899 8888 bbb9 ddaa eddd aabe
+			9add 9999 8899 8888 bbb8 ddaa eddd aabe
 			dddd dddd addd bceb aaaa eebb eeee abbe
 			aadd 99ea 8999 8888 bbe8 daaa bddd abec
 			dddd dddd aadd accb baaa eeeb beee aabb
-			aadd baaa 8999 8888 bb98 aaab dddd abee
+			aadd baaa 8999 8888 bb88 aaab dddd abee
 			ddda dddd baad abce bbba bbbb bbbb aaab
 			aadd aaaa 9cba 8888 be88 aabb ddaa becb
-			daaa aadd ebaa bbcc bbbb bbbb abbb ddaa
-			aadd aaaa bbbb 889e b988 bbbb aaaa ecca
+			ddaa addd ebaa bbcc bbbb bbbb abbb ddaa
+			aadd aaaa bbbb 889e b888 bbbb aaaa ecca
 			abbe bbaa cceb bbef bbbb bbbb aaab ddda
 			dddd aaaa bbba 9ebb c888 bbbb abbb ccba
 			eeec eeeb fcce bbbc bbbb abbb ddaa dddd
@@ -2335,7 +2335,7 @@
 			eeee eeee eeee eeee eeee eeee eeee beee
 			8889 8888 8888 c888 cccc cccc cccc cccc
 			cccc eccc eeee eeee eeee eeee eeee eeee
-			8889 8888 8888 c888 eecc cccc cccc cccc
+			8889 8888 8888 c888 eeec cccc cccc cccc
 			cccc cccc cccc eecc eeee eeee eeee eeee
 			8899 8888 8888 c888 eeee eeee eeee cccc
 			fccc ffff ccff cccc cccc eeec eeee eeee
@@ -2348,22 +2348,22 @@
 			9999 8999 8888 c888 abbb aaaa aaaa cbaa
 			eecc bbbb 153b bcc6 eebb eeee ccce cccc
 			9999 9999 8888 8888 abbb aaaa aaaa ceaa
-			bbec aaab 574a ecc6 bbbb ebbb ccee eccc
-			9999 9999 8889 8888 abbe ddaa addd ecba
+			bbee aaab 574a ecc6 bbbb ebbb ccee eccc
+			9999 9999 8889 8888 abbe ddda addd ecba
 			aabe aaaa 153d cce6 baaa bbbb ccee eecc
-			999a 9999 8899 8888 abbc ddaa dddd eccd
-			aaab aaaa 34dd ccba aaab ebba eeee beee
-			9add 9999 8899 8888 bbb9 ddaa dddd beca
+			999a 9999 8899 8888 abbc ddda dddd eced
+			daab aadd 34dd ccba aaab ebba eeee beee
+			9add 9999 8899 8888 bbb8 ddaa dddd beca
 			ddaa bebd dddd ceba aaae eebb eeee abbe
 			aadd 99ea 8999 8888 bbe8 daaa dddd aece
 			ddda 888e dddb cbaa babc eeeb beee aabb
-			aadd baaa 8999 8888 bb98 aaab addd abec
+			aadd baaa 8999 8888 bb88 aaab dddd abec
 			addd 8888 dda8 cbaa bbec bbbb bbbb daab
-			aadd aaaa 9cba 8888 be88 aabb adaa abec
+			aadd aaaa 8cba 8888 be88 aabb adaa abec
 			edda 8888 aae8 ceba bbcf bbbb abbb ddaa
-			aadd aaaa bbbb 889e b988 bbbb baaa bbec
+			aadd aaaa bbbb 888e b888 bbbb baaa bbec
 			fbaa 8888 bbc8 ceeb bbcf bbbb aaab ddda
-			dddd aaaa bbba 9ebb c888 bbbb ebbb becc
+			dddd aaaa bbba 8ebb c888 bbbb ebbb becc
 			8ebb 8888 bbf8 ceeb bbcf abbb ddaa dddd
 			dddd aadd baaa bbbb 888e bbbe cbbb becf
 			8ebb 8888 bbf8 cebb bbcf aaab dddd dddd
