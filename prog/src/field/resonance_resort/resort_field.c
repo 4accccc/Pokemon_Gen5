@@ -4338,11 +4338,11 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
     {
       static const u8 sc_card_rank_add[]  =
       {
-        1,2,3,4,5,5
+        0,1,2,3,4,5
       };
       static const u8 sc_badge_add[]  =
       {
-        1,1,1,1,2,2,2,2,
+        0,1,1,1,1,2,2,2,2
       };
       static const u8 sc_medal_add[]  =
       {
