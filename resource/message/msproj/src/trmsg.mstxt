@@ -39442,26 +39442,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>え！？　あなた　トレーナーなの
-わーい！　ポケモンたち　でておいで！▼</Text>
+わーい！　テッポウオたち　カモーン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>え！？　あなた　トレーナーなの
-わーい！　ポケモンたち　でておいで！▼</Text>
+わーい！　テッポウオたち　カモーン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -39476,27 +39476,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ……！　パートナーたち
+			<Text>ああ……！　テッポウオたち
 ボールに　もどる　じかんよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ……！　パートナーたち
+			<Text>ああ……！　テッポウオたち
 ボールに　戻る　時間よ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T09:18:46" />
+				Time="2012-01-05T03:01:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -39562,15 +39562,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みて！　私の　ポケモン▽
+			<Text>みて！　私の　ポケモン
 すっごく　大きいんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T05:49:22" />
+				Time="2012-01-05T03:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T05:49:22" />
+				Time="2012-01-05T03:01:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -79360,27 +79360,27 @@
 		Label="TRID_SWPLAZMAM_36_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラーズマー！
+			<Text>オー！　プラーズマー！
 プラズマだんに　えいこう　あれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T05:59:41" />
+				Time="2012-01-05T09:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T05:59:41" />
+				Time="2012-01-05T09:08:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラーズマー！
+			<Text>オー！　プラーズマー！
 プラズマ団に　栄光あれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T05:59:41" />
+				Time="2012-01-05T09:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T05:59:41" />
+				Time="2012-01-05T09:08:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
