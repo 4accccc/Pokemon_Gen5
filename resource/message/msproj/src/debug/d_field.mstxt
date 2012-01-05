@@ -14104,7 +14104,8 @@ LR→補完"</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_MMDLLIST_MENU_0">
+		Label="DEBUG_FIELD_MMDLLIST_MENU_0"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>全部</Text>
@@ -14129,7 +14130,8 @@ LR→補完"</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_MMDLLIST_MENU_1">
+		Label="DEBUG_FIELD_MMDLLIST_MENU_1"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ビルボードのみ</Text>
@@ -14154,7 +14156,8 @@ LR→補完"</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_MMDLLIST_MENU_2">
+		Label="DEBUG_FIELD_MMDLLIST_MENU_2"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>連れ歩きのみ</Text>
@@ -14179,7 +14182,8 @@ LR→補完"</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_MMDLLIST_MENU_3">
+		Label="DEBUG_FIELD_MMDLLIST_MENU_3"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>連れ歩き（SWAN追加）のみ</Text>
@@ -14204,7 +14208,8 @@ LR→補完"</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_INTRO_DEMO">
+		Label="DEBUG_FIELD_INTRO_DEMO"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>物語開始デモ</Text>
@@ -14229,7 +14234,8 @@ LR→補完"</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_FIELD_SYACHI_COMPATIBLE">
+		Label="DEBUG_FIELD_SYACHI_COMPATIBLE"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デバッグＢＷ通信ＯＫ</Text>
@@ -14247,6 +14253,32 @@ LR→補完"</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
 				Time="2011-11-30T01:58:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:58:15" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_SET_BTLBOX_EGG_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴをバトルボックスへ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-05T04:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:57:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴをバトルボックスへ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-05T04:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

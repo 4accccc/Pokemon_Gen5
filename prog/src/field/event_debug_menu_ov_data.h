@@ -29,6 +29,7 @@ extern BOOL debugMenuCallProc_Sodateya( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk );
+extern BOOL debugMenuCallProc_SetBtlBoxEgg( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 extern BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk );

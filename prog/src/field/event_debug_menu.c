@@ -163,6 +163,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData, FS_OVERLAY_ID(debugmenu_data) }, //国連データ作成
   { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList, FS_OVERLAY_ID(debugmenu_data) },//ふしぎなおくりものカード作成
   { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox, FS_OVERLAY_ID(debugmenu_data) },  //不正チェックを通るポケモンを作成
+  { DEBUG_FIELD_SET_BTLBOX_EGG_00, debugMenuCallProc_SetBtlBoxEgg, FS_OVERLAY_ID(debugmenu_data) },  //不正チェックを通るポケモンを作成
   { DEBUG_FIELD_STR64, debugMenuCallProc_ChangeName, FS_OVERLAY_ID(debugmenu_data) },  //主人公名を再設定
   { DEBUG_FIELD_STR67, debugMenuCallProc_EventPokeCreate, FS_OVERLAY_ID(debugmenu_data) },  //イベントポケモン作成
   { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList, FS_OVERLAY_ID(debugmenu_data) },  //シンボルポケモン作成

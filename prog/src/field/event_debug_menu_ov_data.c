@@ -550,6 +550,107 @@ BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk )
 #endif
   return( FALSE );
 }
+//--------------------------------------------------------------
+/**
+ * @brief   タマゴをバトルBOXへセットする
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+*/
+//--------------------------------------------------------------
+BOOL debugMenuCallProc_SetBtlBoxEgg( DEBUG_MENU_EVENT_WORK *wk )
+{
+#if 1
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  MYSTATUS *myStatus;
+  POKEMON_PASO_PARAM  *ppp;
+  const STRCODE *name;
+  POKEPARTY *party = PokeParty_AllocPartyWork( HEAPID_FIELDMAP );
+  BATTLE_BOX_SAVE* btlbox = BATTLE_BOX_SAVE_GetBattleBoxSave( sv );
+  myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
+  name = MyStatus_GetMyName( myStatus );
+  BATTLE_BOX_SAVE_InitWork(btlbox);
+
+
+
+  {
+    int i,j;
+
+    static const u16 monsno_tbl1[] =
+    {
+      MONSNO_KORATTA,
+      MONSNO_OTATI,
+      MONSNO_POTIENA,
+      MONSNO_BIPPA,
+      MONSNO_PHI,
+      MONSNO_ZIGUZAGUMA,
+    };
+    static const u16 waza_tbl1[] =
+    {
+      WAZANO_TAIATARI,
+      WAZANO_HIKKAKU,
+      WAZANO_TAIATARI,
+      WAZANO_TAIATARI,
+      WAZANO_HATAKU,
+      WAZANO_TAIATARI,
+    };
+    static const BOOL egg_tbl1[] =
+    {
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE,
+      FALSE,
+      TRUE,
+    };
+
+    u16 oya_name[6] =
+      L"デバグポケ";
+
+    u16 egg_name[4] =
+      L"タマゴ";
+
+    const u16 *p_monsno;
+    const u16 *p_waza;
+    u32 pow = 0;
+    const BOOL *p_egg;
+
+    oya_name[ 5 ]  = 0xFFFF;
+    egg_name[ 3 ]  = 0xFFFF;
+
+    p_monsno  = monsno_tbl1;
+    p_waza    = waza_tbl1;
+    p_egg     = egg_tbl1;
+    pow       = 0;
+
+
+    for(i=0;i < PokeParty_GetPokeCountMax(party);i++){
+      POKEMON_PARAM *p_temp = PP_Create( p_monsno[ i ], 100, 0, HEAPID_PROC );
+      PP_Put( p_temp, ID_PARA_waza1, p_waza[ i ] );
+      PP_Put( p_temp, ID_PARA_waza2, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_waza3, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_waza4, WAZANO_NULL );
+      PP_Put( p_temp, ID_PARA_oyaname_raw, (u32)oya_name );
+      PP_Put( p_temp, ID_PARA_pow_exp,pow );
+      if( p_egg[i] )
+      {
+        PP_Put( p_temp, ID_PARA_tamago_flag, TRUE );
+        PP_Put( p_temp, ID_PARA_nickname_raw, (u32)egg_name );
+      }
+
+      PP_Renew( p_temp );
+      PokeParty_Add( party, p_temp );
+
+      GFL_HEAP_FreeMemory( p_temp );
+    }
+    BATTLE_BOX_SAVE_SetPokeParty( btlbox, party );
+
+  }
+
+  GFL_HEAP_FreeMemory(party);
+#endif
+  return( FALSE );
+}
 //======================================================================
 //  デバッグメニュー 主人公名前設定
 //======================================================================
