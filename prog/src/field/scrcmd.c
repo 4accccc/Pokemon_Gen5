@@ -98,7 +98,6 @@
 #include "scrcmd_evt_lock.h"
 #include "scrcmd_traintown.h"
 #include "scrcmd_record.h"
-#include "scrcmd_d12_gmk.h"
 #include "scrcmd_tv.h"
 #include "scrcmd_cgear.h"
 #include "scrcmd_zoroa.h"

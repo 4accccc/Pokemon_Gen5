@@ -549,7 +549,7 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, FALSE, FALSE }, // _SEARCH_POKEID_NUM (546)
   { TRUE, TRUE, TRUE }, // _ADD_RECORD (547)
   { TRUE, TRUE, TRUE }, // _GET_RECORD (548)
-  { FALSE, FALSE, TRUE }, // _D12_GMK_VANISH (549)
+  { FALSE, FALSE, FALSE }, // NO_CMD (549)
   { TRUE, FALSE, FALSE }, // _TV_GET_MSG (550)
   { TRUE, FALSE, FALSE }, // _CHG_ZOROA (551)
   { FALSE, FALSE, FALSE }, // NO_CMD (552)

@@ -495,8 +495,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_league_front01.c \
         field/event_league_front02.c \
         field/event_bsubway.c \
-        field/scrcmd_d12_gmk.c \
-        field/field_gimmick_d12_st.c \
         field/fldmmdl.c \
         field/fes_gimmick_nw.c \
         field/straw_poke_form.c \
@@ -1387,10 +1385,6 @@ SRCS_OVERLAY_SPPOKE_GIMMICK = field/sp_poke_gimmick.c
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_PALACE_GIMMICK = field/palace_gimmick.c
-
-#===> GROUP_OVERLAY_SUBSCREEN
-#GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_GIMMICK_D12 = field/field_gimmick_d12.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

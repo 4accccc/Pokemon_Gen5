@@ -187,12 +187,6 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     BSUBWAY_GIMMICK_Move, //C04R0109
   },
   {
-    FS_OVERLAY_ID(field_gimmick_d12), //D12
-    D12_GIMMICK_Setup,    //D12
-    D12_GIMMICK_End,    //D12
-    D12_GIMMICK_Move,    //D12
-  },
-  {
     FS_OVERLAY_ID(field_gimmick_t01),  // T01 and R01 and T02
     T01_GIMMICK_Setup,    //T01 and R01 and T02
     T01_GIMMICK_End,    //T01 and R01 and T02

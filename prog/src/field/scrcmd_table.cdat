@@ -800,7 +800,7 @@
   DEF_CMD( EvCmdGetRecord, EV_SEQ_GET_RECORD )
 
   //D12ギミック制御
-  DEF_CMD( EvCmdD12Gmk_Vanish, EV_SEQ_D12_GMK_VANISH )
+  NO_CMD() //DEF_CMD( EvCmdD12Gmk_Vanish, EV_SEQ_D12_GMK_VANISH )
 
   // テレビ番組抽選
   DEF_CMD( EvCmdTV_GetMsg, EV_SEQ_TV_GET_MSG )

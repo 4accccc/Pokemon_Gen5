@@ -31,7 +31,6 @@
 #include "field_gimmick_r04d03.h"
 #include "sp_poke_gimmick.h"
 #include "palace_gimmick.h"
-#include "field_gimmick_d12.h"
 #include "field_gimmick_t01.h"
 #include "resonance_resort/resort_reception.h"
 #include "resonance_resort/resort_field.h"
@@ -75,7 +74,6 @@ FS_EXTERN_OVERLAY(field_gimmick_h03);
 FS_EXTERN_OVERLAY(field_gimmick_r04d03);
 FS_EXTERN_OVERLAY(sppoke_gimmick);
 FS_EXTERN_OVERLAY(palace_gimmick);
-FS_EXTERN_OVERLAY(field_gimmick_d12);
 FS_EXTERN_OVERLAY(field_gimmick_d06);
 FS_EXTERN_OVERLAY(field_gimmick_bsubway);
 FS_EXTERN_OVERLAY(legend_gimmick);

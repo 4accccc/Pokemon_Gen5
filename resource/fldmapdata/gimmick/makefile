@@ -19,7 +19,6 @@ SUBDIRS	=	gym_denki \
 					d06 \
 					league_front \
 					sppoke \
-					d12 \
 					zoroa \
 					r04d03 \
 					t01 \
