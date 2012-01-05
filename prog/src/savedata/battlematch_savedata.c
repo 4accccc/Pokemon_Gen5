@@ -215,7 +215,7 @@ BOOL BATTLEMATCH_IsSameDS( const BATTLEMATCH_DATA * cp_sv )
 //-----------------------------------------------------------------------------
 BOOL BATTLEMATCH_IsEndPenaltyTime( const BATTLEMATCH_DATA * cp_sv )
 {
-  static const s64  sc_penalty_time = 60*60*4;  //4ŽžŠÔ
+  static const s64  sc_penalty_time = 60*60*3;  //3ŽžŠÔ
 
   if( BATTLEMATCH_IsPowerOff(cp_sv) )
   {
