@@ -1064,6 +1064,20 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
         {
           commWork->reqSendMemberData = FALSE;
         }
+
+        // BTS 214【ミニゲームが使用できない状況でアイコンが暗くならない】
+        //
+        //  親の場合は会話モードにメンバーの変更があったことを伝える
+        //  ↓
+        //  会話モードではそれをトリガにボタンの状態を設定する
+        //
+        if( selfId == 0 )
+        {
+          CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
+          CTVT_TALK_SetIsChangeMembaer( talkWork, TRUE );
+          ICHI_Printf("メンバー変更 \n");
+        }
+
       }
     }
   }

@@ -227,6 +227,7 @@ struct _CTVT_TALK_WORK
   u8    acceptBit2;    // 参加したNetIDのビット管理
 
   BOOL  isConnectVersion; // SWAN以外のバージョンが接続しているとTRUE
+  BOOL  isChangeMember;   // BTS214用
   // >>
 };
 
@@ -487,10 +488,12 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   // swan追加仕様 11.11.22
   // 子機だとミニゲームボタンを暗くする
   // +WiFiクラブだと暗くする
+  // +WBが接続していたら暗くする
   {
     // 子機チェック
     if( COMM_TVT_GetSelfIdx(work) != 0 
-        || COMM_TVT_IsWifi( work ) == TRUE )
+        || COMM_TVT_IsWifi( work ) == TRUE
+        || talkWork->isConnectVersion == TRUE )
     {
       GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon1, 1 );
       GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon2, 1 );
@@ -1482,6 +1485,43 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     {
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
       talkWork->state = CTS_YES_NO_GAME;
+    }
+
+    // BTS 214
+    // 
+    // ミニゲームボタンの状態と接続メンバーの整合性をとる
+    //
+    // WBが接続していると→暗くする
+    // SWANのみ接続していると→明るくする
+    //
+    if( talkWork->isChangeMember == TRUE )
+    {
+      u16 anmIndex = GFL_CLACT_WK_GetAnmIndex( talkWork->clwkBalloon1 );
+      // anmIndex = 0 ボタン押せる状態
+      // anmIndex = 1 ボタン押した状態
+      // anmIndex = 2 ボタン押せる状態
+      ICHI_Printf("ボタン状態変更チェック %d %d \n", anmIndex, talkWork->isConnectVersion );
+
+      // ボタン押せる状態だがWBが接続された場合
+      if( ( anmIndex == 0 || anmIndex == 2 ) && talkWork->isConnectVersion == TRUE )
+      {
+        // ミニゲームボタンを暗くする
+        GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon1, 1 );
+        GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon2, 1 );
+        GFL_CLACT_WK_StopAnm( talkWork->clwkBalloon1 );
+        GFL_CLACT_WK_StopAnm( talkWork->clwkBalloon2 );
+      }
+      // ボタン押せない状態だったがWBが接続からいなくなった場合
+      else if( anmIndex == 1 && talkWork->isConnectVersion == FALSE )
+      {
+        // ミニゲームボタンを明るくする
+        GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon1, 0 );
+        GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon2, 0 );
+        GFL_CLACT_WK_StopAnm( talkWork->clwkBalloon1 );
+        GFL_CLACT_WK_StopAnm( talkWork->clwkBalloon2 );
+      }
+
+      talkWork->isChangeMember = FALSE;
     }
   }
 
@@ -2552,5 +2592,17 @@ const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork
 void CTVT_TALK_SetIsConnectVersion( CTVT_TALK_WORK *talkWork, const BOOL flg )
 {
   talkWork->isConnectVersion = flg;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続メンバーに変更があったか
+ *
+ *	@param	CTVT_TALK_WORK *talkWork
+ *	@param	BOOL flg  変更があるとTRUE
+ */
+//-----------------------------------------------------------------------------
+void CTVT_TALK_SetIsChangeMembaer( CTVT_TALK_WORK *talkWork, const BOOL flg )
+{
+  talkWork->isChangeMember = flg;
 }
 

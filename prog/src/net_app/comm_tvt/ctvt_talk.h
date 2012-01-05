@@ -56,6 +56,7 @@ extern const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *ta
 extern const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork );
 
 extern void CTVT_TALK_SetIsConnectVersion( CTVT_TALK_WORK *talkWork, const BOOL flg );
+extern void CTVT_TALK_SetIsChangeMembaer( CTVT_TALK_WORK *talkWork, const BOOL flg );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
