@@ -58,14 +58,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブリーダーが　ポケモンを
-そだてているんじゃ　なくてね▽
-ポケモンに　そだててもらっているの▼
-こどもも　ポケモンも　まいにち
-いろんなことを　おしえてくれるわ</Text>
+			<Text>だれか　あたしを　そだててよー
+さんしょく　ひるねつき　でー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T06:36:56" />
+				Time="2011-12-28T11:33:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,14 +70,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブリーダーが　ポケモンを
-育てているんじゃ　なくてね▽
-ポケモンに　育ててもらっているの▼
-こどもも　ポケモンも　毎日
-いろんなことを　教えてくれるわ</Text>
+			<Text>だれか　あたしを　育ててよー
+三食　昼寝つき　でー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T06:37:24" />
+				Time="2011-12-28T11:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
