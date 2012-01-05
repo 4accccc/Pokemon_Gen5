@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-09-09T11:25:09" source="wbt_v_all.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-12-28T11:34:17" source="wbt_v_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-09-09T11:25:09" source="wbt_v_all.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-12-28T11:34:17" source="wbt_v_all.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-2.500000 1.125000 -0.031250" whd="5.000000 2.500000 0.156250"/>
+<box_test pos_scale="5" xyz="-2.500000 1.125000 -0.031250" whd="5.000000 2.500000 0.171875"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="wbt_v_all_t1"
@@ -657,9 +657,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.500000 2.250000 0.250000"
-		volume_max="2.500000 7.250000 0.250000"
-		volume_r="7.673096"
+		volume_min="-2.500000 2.250000 0.281250"
+		volume_max="2.500000 7.250000 0.281250"
+		volume_r="7.674072"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -670,7 +670,7 @@
 					<mtx idx="0"/>
 					<tex st="129.000000 129.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-2.500000 2.250000 0.250000"/>
+					<pos_s xyz="-2.500000 2.250000 0.281250"/>
 					<tex st="-1.000000 129.000000"/>
 					<pos_xy xy="2.500000 2.250000"/>
 					<tex st="-1.000000 -1.000000"/>
@@ -771,7 +771,7 @@
 		vertex_size="16" polygon_size="6"
 		triangle_size="4" quad_size="2"
 		volume_min="-5.000000 2.250000 -0.062500"
-		volume_max="5.000000 7.250000 0.250000"
+		volume_max="5.000000 7.250000 0.281250"
 		volume_r="8.807861"
 	>
 		<display index="0" material="0" polygon="1" priority="0"/>
