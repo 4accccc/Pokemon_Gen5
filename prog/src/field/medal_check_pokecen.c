@@ -317,7 +317,7 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
       }
     }
 
-    // 一番ヒントレベル未満のヒントは全て開放
+    // 一番ヒントレベル以下のヒントは全て開放
     if( hint_level_max >= 0 )
     {
       for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
@@ -327,8 +327,8 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
         // ヒントレベルで開放するものだけ開放
         if( medal_data[medal_id].hint_type == MEDALDATA_HINTTYPE_LEVEL )
         {
-          // 取得している最大未満は全て開放
-          if( medal_data[medal_id].hint_level < hint_level_max )
+          // 取得している最大以下は全て開放
+          if( medal_data[medal_id].hint_level <= hint_level_max )
           {
             MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
           }
