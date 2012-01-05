@@ -46,5 +46,6 @@
 #define BG_T06_DUMMY_FES_14              15
 #define BG_T06_DUMMY_FES_15              16
 #define BG_T06_DUMMY_FES_16              17
+#define HIDE_ITEM_212                    18
 
 #endif //ZONE_T06_EVB_H
