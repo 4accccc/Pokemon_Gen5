@@ -398,7 +398,7 @@ EVENT_START   ev_r09r0201_girl4_01
       _ITEM_CHK( ITEM_SUGOIKIZUGUSURI, 1, SCWK_ANSWER )
 
       //すごいキズグスリを買ってきて、なおかつ日付が変わっていない
-      IF $SCWK_ANSWER == FALSE && FLAG_ON( TMFLG_R9R0201_ITEMBUY ) THEN
+      IF $SCWK_ANSWER == TRUE && FLAG_ON( TMFLG_R9R0201_ITEMBUY ) THEN
 
         //お嬢様：すぐに　かってきてくれて　ありがと！▼
         _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_07 )
@@ -422,7 +422,7 @@ EVENT_START   ev_r09r0201_girl4_01
         //========================================//
 
       //すごいキズグスリを買ってきたが、日付が変わっている
-      ELSIF $SCWK_ANSWER == FALSE && FLAG_OFF( TMFLG_R9R0201_ITEMBUY ) THEN
+      ELSIF $SCWK_ANSWER == TRUE && FLAG_OFF( TMFLG_R9R0201_ITEMBUY ) THEN
 
         //お嬢様：ずいぶん　まった　きがするけど▼
         _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_08 )
