@@ -295,6 +295,7 @@ extern CTVT_MIC_WORK* COMM_TVT_GetMicWork( COMM_TVT_WORK *work );
 extern DRAW_SYS_WORK* COMM_TVT_GetDrawSys( COMM_TVT_WORK *work );
 // add ichiraku
 extern CTVT_GAME_WORK* COMM_TVT_GetGameWork( COMM_TVT_WORK *work );
+extern CTVT_CALL_WORK* COMM_TVT_GetCallWork( COMM_TVT_WORK *work );
 
 extern const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work );
 

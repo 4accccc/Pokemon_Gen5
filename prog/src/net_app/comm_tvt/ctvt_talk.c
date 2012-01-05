@@ -2299,6 +2299,17 @@ static void CTVT_TALK_GameEnter_End( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 , GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 5 , 15 );
   //GFL_BG_ChangeScreenPalette(CTVT_FRAME_SUB_MISC , 0, 0, 32, 24, CTVT_PAL_BG_SUB_BG );
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
+
+  // 通信
+  // 接続コールバック関数を戻す
+  {
+    CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+
+    // 接続チェックコールバック関数を通常関数に設定
+    CTVT_COMM_Req_StopGame( work, commWork );
+  }
+
 }
 
 // ミニゲーム常時終了チェック

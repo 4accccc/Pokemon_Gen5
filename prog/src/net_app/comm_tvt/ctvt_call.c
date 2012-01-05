@@ -136,6 +136,7 @@ struct _CTVT_CALL_MEMBER_WORK
   u8 connectNum;
   
   u8 barWorkNo;
+  u8 romCode;   // バージョン
 };
 
 //バーワーク
@@ -869,6 +870,66 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   return CTM_CALL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンがWBのものかチェック
+ *
+ *	@param	COMM_TVT_WORK *work 全体ワーク
+ *	@param	*callWork ワーク
+ *	@param	address   チェックするMACアドレス 
+ *
+ *	@return WBだとTRUE
+ */
+//-----------------------------------------------------------------------------
+BOOL CTVT_CALL_IsCheckWB( COMM_TVT_WORK *work, CTVT_CALL_WORK *callWork, u8 *address )
+{
+  int mem;
+  u8 i;
+  BOOL  isMatch = FALSE;
+
+  // MACアドレスをマッチするのを検索
+  for( mem=0; mem<CTVT_CALL_SEARCH_NUM; mem++ )
+  {
+    BOOL isSame = TRUE;
+
+    // MACアドレスのマッチ検索
+    for( i=0; i<6; i++ )
+    {
+      if( callWork->memberData[ mem ].macAddress[ i ] != address[ i ] )
+      {
+        isSame = FALSE;
+        break;
+      }
+    }
+
+    if( isSame == TRUE )
+    {
+      // マッチしていた
+      isMatch = TRUE;
+      ICHI_Printf("Matchしていた %d\n", mem);
+      break;
+    }
+  }
+
+  // 検索したMACアドレスを発見
+  // バージョンチェック
+  if( isMatch == TRUE )
+  {
+    // バージョン取得
+    u8 version = callWork->memberData[ mem ].romCode;
+
+    ICHI_Printf("version %d\n", version );
+
+    if( version == VERSION_BLACK || version == VERSION_WHITE )
+    {
+      return TRUE;
+    }
+  }
+
+  ICHI_Printf("MACアドレスMatchしない\n");
+  return FALSE;
+}
+
 //--------------------------------------------------------------
 //	TP更新
 //--------------------------------------------------------------
@@ -1239,11 +1300,23 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             {
               callWork->memberData[registNo].serviceType = WB_NET_COMM_TVT;
               GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(CTVT_COMM_BEACON) );
+              // バージョンを保存
+              {
+                CTVT_COMM_BEACON *becData = callWork->memberData[registNo].beacon;
+                u8 version = MyStatus_GetRomCode( &becData->myStatus );
+                callWork->memberData[registNo].romCode = version;
+              }
             }
             else
             {
               callWork->memberData[registNo].serviceType = WB_NET_FIELDMOVE_SERVICEID;
               GFL_STD_MemCopy( beaconData , callWork->memberData[registNo].beacon , sizeof(GBS_BEACON) );
+              // バージョンを保存
+              {
+                GBS_BEACON *becData = callWork->memberData[registNo].beacon;
+                u8 version = becData->info.pm_version;
+                callWork->memberData[registNo].romCode = version;
+              }
             }
             
             if( isRefresh == FALSE )

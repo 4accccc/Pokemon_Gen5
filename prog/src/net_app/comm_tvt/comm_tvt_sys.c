@@ -1173,6 +1173,10 @@ CTVT_GAME_WORK* COMM_TVT_GetGameWork( COMM_TVT_WORK *work )
 {
   return work->gameWork;
 }
+CTVT_CALL_WORK* COMM_TVT_GetCallWork( COMM_TVT_WORK *work )
+{
+  return work->callWork;
+}
 const COMM_TVT_INIT_WORK* COMM_TVT_GetInitWork( const COMM_TVT_WORK *work )
 {
   return work->initWork;

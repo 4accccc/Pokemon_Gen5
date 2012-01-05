@@ -39,6 +39,7 @@ extern const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK 
 extern void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 extern void CTVT_CALL_TermMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork );
 
+extern BOOL CTVT_CALL_IsCheckWB( COMM_TVT_WORK *work, CTVT_CALL_WORK *callWork, u8 *address );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------

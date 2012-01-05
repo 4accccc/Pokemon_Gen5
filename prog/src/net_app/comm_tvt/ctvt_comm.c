@@ -25,6 +25,7 @@
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
 #include "ctvt_talk.h"
+#include "ctvt_call.h"
 #include "ctvt_mic.h"
 #include "enc_adpcm.h"
 #include "ctvt_game.h"  // add ichiraku
@@ -820,10 +821,11 @@ static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID 
 static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork)
 {
   CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
-  ARI_TPrintf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
+  ICHI_Printf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
                         ,cbWork->macAddress[0],cbWork->macAddress[1]
                         ,cbWork->macAddress[2],cbWork->macAddress[3]
                         ,cbWork->macAddress[4],cbWork->macAddress[5]); 
+  ICHI_Printf("接続時接続コールバック\n");
   if( commWork->beacon.isCalling == 0 )
   {
     return TRUE;
@@ -841,23 +843,35 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   // バージョン条件を追加しただけ
   //
   CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
-  MYSTATUS *myStatus = (MYSTATUS*)&commWork->beacon.myStatus;
-  u8  version;
 
-  version = MyStatus_GetRomCode( myStatus );
+  ICHI_Printf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
+                        ,cbWork->macAddress[0],cbWork->macAddress[1]
+                        ,cbWork->macAddress[2],cbWork->macAddress[3]
+                        ,cbWork->macAddress[4],cbWork->macAddress[5]); 
+  ICHI_Printf("ゲーム開始待ち中接続コールバック\n");
+  ICHI_Printf("===============================\n");
 
-  // スワンのみ
-  if( version == VERSION_W2 || version == VERSION_B2 )
+  // WBかどうかチェック
   {
-    if( commWork->beacon.isCalling == 0 )
+    CTVT_CALL_WORK *callWork = COMM_TVT_GetCallWork( commWork->parentWork );
+    if( CTVT_CALL_IsCheckWB( commWork->parentWork, callWork, cbWork->macAddress ) )
     {
-      return TRUE;
+      // SWAN以外のバージョンがきた
+      // =ありえないので接続きる
+      OS_Printf("SWAN以外なので接続しない\n");
+      return FALSE;
     }
-    return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
   }
 
-  OS_Printf("SWAN以外なので接続しない\n");
-  return FALSE;
+#if 0
+  // 通常の接続チェック
+  if( commWork->beacon.isCalling == 0 )
+  {
+    return TRUE;
+  }
+#endif
+
+  return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
 }
 
 //--------------------------------------------------------------
@@ -2368,6 +2382,11 @@ void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE
 void CTVT_COMM_Req_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
 {
   WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack_ReqGame );
+}
+// ゲーム参加募集中止時の処理
+void CTVT_COMM_Req_StopGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack );
 }
 // 会話からゲームに行く時の処理
 void CTVT_COMM_Exit_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
