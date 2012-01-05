@@ -209,6 +209,7 @@ EVENT_START ev_scene_palace01_1stguide
   _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_HIGHSCORE_LV1 )  // てんとりハンドレッド
   _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_HOLD_LV1 )       // かいさいＬＶ１
   _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_CLEAR_LV1 )      // たっせいＬＶ１
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FES_JOIN_LV1 )       // さんかＬＶ１
 	
 	//========================================//
 	//初回誘導イベントを無効
