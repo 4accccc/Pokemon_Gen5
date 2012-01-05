@@ -276,7 +276,8 @@ void MEDAL_AchiveCheck( GAMEDATA* p_gamedata, SAVE_CONTROL_WORK *p_sv , HEAPID h
   // ƒqƒ“ƒgƒŒƒxƒ‹‚²‚Æ‚Ìƒ^ƒCƒgƒ‹Žæ“¾”‚ª‰ß”¼”ˆÈã‚ðŽæ“¾‚µ‚Ä‚¢‚éê‡‚ÍA‚»‚ÌƒŒƒxƒ‹{‚P‚Ìƒqƒ“ƒgƒŒƒxƒ‹‚Ü‚Å‘S‚ÄŠJ•ú‚·‚é
   for( i = HINT_LEVEL_MAX-1 ; i >= 0; i-- )
   {
-    if( (title_open_cnt[i]) >= (title_open_max[ i ]/2) )
+    // Ø‚èã‚°‚ÄŒvŽZ‚·‚éi‘”‚ª5ŒÂ‚ÌŽž‚Í‚RŒÂ`j
+    if( (title_open_cnt[i]) >= (title_open_max[ i ]/2 + title_open_max[ i ]%2 ) )
     {
       for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
       {
