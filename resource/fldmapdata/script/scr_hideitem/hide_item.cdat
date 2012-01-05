@@ -1275,7 +1275,7 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 	{ // ÉLÉYÇÆÇ∑ÇË
 		212, 
 		1,0, // flags
-		ZONE_ID_R03, // ñ¢égóp
-		  1,  1, // x, y
+		ZONE_ID_R20, // ÇQÇOî‘ìπòH
+		127,655, // x, y
 	},
 }; // end of hide_item_data
