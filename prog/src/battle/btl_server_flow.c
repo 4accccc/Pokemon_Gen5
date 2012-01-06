@@ -9691,7 +9691,10 @@ static void scEvent_TurnCheck( BTL_SVFLOW_WORK* wk, u8 pokeID, BtlEventType even
 //------------------------------------------------------------------
 static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 {
-  u8 pokeIDList[ BTL_POS_MAX ];
+  /// BW日本語版でpokeIDListが未初期化のまま使用されるバグがあったため、
+  /// 海外版でも録画できなくなるバグが発生していた(海外バグSYSTEM199)。
+  /// BWと初期化状態にするために、0,0,0,0,3,0と初期化する↓
+  u8 pokeIDList[ BTL_POS_MAX ]={0,0,0,0,3,0};   
   u32 pokeCnt, i, p;
   WazaSick sick;
   BTL_POKEPARAM* bpp;
