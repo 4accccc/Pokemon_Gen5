@@ -2488,7 +2488,8 @@ static void PLIST_SelectPokeTerm_KyuremuUnion( PLIST_WORK *work )
   PLIST_MSG_CloseWindow( work , work->msgWork );
 
   //リターンまたは同じプレートを選んだらキャンセル
-  if( (work->selectState == PSSEL_SELECT && work->pokeCursor == work->changeTarget) )
+  if( work->selectState != PSSEL_SELECT  ||
+      work->pokeCursor == work->changeTarget )
   {
     work->selectPokePara = NULL;
     work->mainSeq = PSMS_SELECT_POKE;
