@@ -117,9 +117,10 @@ pc_box:
   DEFINE_LOCAL game_clear
   DEFINE_LOCAL kyuremu_get
 
+  //ゲームクリアフラグ
   _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, game_clear )
-  //@todo キュレム捕獲フラグがないので仮でゲームクリアフラグ
-  _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, kyuremu_get )
+  //キュレム捕獲フラグ
+  _FLAG_CHECK( FE_D10R0401_POKE10_GET, kyuremu_get )
 
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
