@@ -353,6 +353,19 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         {
           return SexGetMsgID( sex, resort_tourist_greet_05_m, resort_tourist_greet_05_f);
         }
+        else if( comm == RESORT_COMM_TYPE_PDW )
+        {
+
+          //ƒ|ƒPƒ‚ƒ“‚ð’PŒê“o˜^
+          u16 pokemon = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_POKEMON, NULL );
+          GF_ASSERT( pokemon > 0 );
+          if( pokemon == 0 )
+          {
+            pokemon = 1;
+          }
+          WORDSET_RegisterPokeMonsNameNo( p_wordset, 1, pokemon );
+          return SexGetMsgID( sex, resort_tourist_greet_06_m, resort_tourist_greet_06_f);
+        }
         else
         {
           return SexGetMsgID( sex, resort_tourist_greet_18_m, resort_tourist_greet_18_f);
