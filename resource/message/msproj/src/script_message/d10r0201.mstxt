@@ -18,13 +18,13 @@
 プラズマだんを　かいさん　させます▼
 それでは　ポケモンと　ともに
 ただしき　みちを！▼
-そういって　どこかに　とんでいった
-とりあえず　かいけつ　か……▼
+そして　きえていった……
+ふう！　かいけつ　だな▼
 Nさまの
 ぶじも　かくにん　できたし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:08:51" />
+				Time="2012-01-06T10:13:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -44,13 +44,13 @@ Nさまの
 プラズマ団を　解散させます▼
 それでは　ポケモンと　共に
 正しき　道を！▼
-そういって　どこかに　飛んでいった
-とりあえず　解決か……▼
+そして　きえていった……
+ふう！　解決だな▼
 Nさまの
 無事も　確認できたし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:08:54" />
+				Time="2012-01-06T10:13:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,6 +72,13 @@ Nさまの
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-09T12:23:53" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T05:52:52" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -129,6 +136,13 @@ Nさまの
 				User="matsumiya:W00224"
 				Time="2011-08-09T12:25:17" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T05:52:54" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -180,6 +194,13 @@ Nさまの
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-09T12:25:22" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T05:52:55" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

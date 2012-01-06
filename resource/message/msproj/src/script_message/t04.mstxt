@@ -1876,13 +1876,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>・GRIDX＝760、GRIDZ＝300
-　GRIDX＝736～737、GRIDZ＝299で発生
+・GRIDX＝736～738、GRIDZ＝300
+　GRIDX＝738、GRIDZ＝299
+・GRIDX＝758、GRIDZ＝300～301
+・GRIDX＝752～754、GRIDZ＝297
 ・コール音再生と同時に表示
 ・コール音終了後にtvt_event_07.mstxtを表示
 </Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T11:08:06" />
+				Time="2012-01-06T08:57:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
