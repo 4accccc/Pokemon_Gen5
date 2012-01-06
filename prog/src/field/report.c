@@ -675,7 +675,8 @@ static void InitBmp( REPORT_WORK * wk )
 	str = GFL_MSG_CreateString( mman, REPORT_STR_04 );
   {
     u16 zoneID = PLAYERWORK_getZoneID(GAMESYSTEM_GetMyPlayerWork(wk->gameSys));
-    if( ZONEDATA_IsResonanceResort(zoneID) )
+    if( ZONEDATA_IsResonanceResort(zoneID)
+        || ZONEDATA_IsResonanceResortRoom(zoneID) )
     {
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
       RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );

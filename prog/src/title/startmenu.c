@@ -1691,7 +1691,8 @@ static void InitBmp( START_MENU_WORK * wk )
 			situation = SaveData_GetSituation( wk->savedata );
 			spLoc = Situation_GetSpecialLocation( situation );
 
-      if( ZONEDATA_IsResonanceResort( spLoc->zone_id ) )
+      if( ZONEDATA_IsResonanceResort( spLoc->zone_id )
+          || ZONEDATA_IsResonanceResortRoom(spLoc->zone_id) )
       {
         is_resort = TRUE;
       }
@@ -1704,7 +1705,8 @@ static void InitBmp( START_MENU_WORK * wk )
 		}else{
 			PLAYERWORK_SAVE	plwk;
 			SaveData_SituationLoad_PlayerWorkSave( wk->savedata, &plwk );
-      if( ZONEDATA_IsResonanceResort( plwk.zoneID ) )
+      if( ZONEDATA_IsResonanceResort( plwk.zoneID )
+          || ZONEDATA_IsResonanceResortRoom(plwk.zoneID) )
       {
         is_resort = TRUE;
       }
