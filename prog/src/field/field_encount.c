@@ -512,17 +512,11 @@ static ENCOUNT_LOCATION enc_GetLocation( MAPATTR attr, ENCOUNT_TYPE enc_type )
 static const ENCPROB_PATTERN* enc_GetEncProbPattern( FIELD_ENCOUNT* enc, ENCOUNT_LOCATION loc )
 {
   u8 idx;
-  static const u8 DATA_ProbPatIdx[ENC_LOCATION_FISHING] = {
-    ENC_LOCATION_GROUND_L,
-    ENC_LOCATION_GROUND_H,
-    ENC_LOCATION_GROUND_L,
-    ENC_LOCATION_WATER,
-    ENC_LOCATION_WATER,
-  }; 
+
   if( loc >= ENC_LOCATION_FISHING ){  //釣りはパターンデータを持たない
     return NULL;
   }
-  idx = enc->encdata->prob[DATA_ProbPatIdx[loc]]-1; //1オリジン
+  idx = enc->encdata->prob[loc]-1; //1オリジン
   if( idx >= NELEMS(DATA_EncProbPattern) ){
     idx = 0;
     GF_ASSERT(0);
