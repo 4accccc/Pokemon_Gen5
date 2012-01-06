@@ -2203,10 +2203,12 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   if(result!=GFL_UI_TP_HIT_NONE){
     PMSND_PlaySE( SE_PKWDSELECT_DECIDE ); // 決定
     BLINKPALANM_SetDecideAnime( wk->blinkWork[wk->nowpos] );
+    TOUCHBAR_SetActiveAll( wk->touchbar, FALSE );
     wk->seq = MENU_DECIDE_WAIT;
   }else{
     // キャンセル
     if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
+      TOUCHBAR_SetActiveAll( wk->touchbar, FALSE );
       wk->seq = MENU_FADEOUT;
       *wk->param->result = LOAD_SAVEDATA_MAX;
     // ページ切り替え
@@ -2354,10 +2356,12 @@ static BOOL SubSeq_Select_WatchWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
       *wk->param->result = wk->valid_list[_get_real_pos(wk, wk->nowpos)]->slot_no;
     // 「じょうほう」
     }else if(result==1){
+      TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
       wk->seq = MENU_PUT_INFORMATION;
     // もどる
     }else{
       wk->seq   = MENU_START;
+      TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
       _set_cursor_blink( wk, wk->nowpos );
     }
   }
@@ -2398,10 +2402,12 @@ static BOOL SubSeq_Yesno_Delete1Wait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         wk->seq = MENU_WARNING_MSG;
     // 「じょうほう」
     }else if(result==1){
+      TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
       wk->seq = MENU_PUT_INFORMATION;
     // 「もどる」
     }else{
       wk->seq   = MENU_START;
+      TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
       _set_cursor_blink( wk, wk->nowpos );
     }
   }
@@ -2443,6 +2449,7 @@ static BOOL SubSeq_Yesno_Delete2Wait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
         *wk->param->result = wk->valid_list[_get_real_pos(wk, wk->nowpos)]->slot_no;
     }else{
       wk->seq   = MENU_START;
+      TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
       _set_cursor_blink( wk, wk->nowpos );
     }
   }
