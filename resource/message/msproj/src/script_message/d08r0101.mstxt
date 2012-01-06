@@ -44,13 +44,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・n01r0502でのイベント前
 ・GRIDX＝181、GRIDZ＝145、上向き</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:19:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -69,7 +68,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -118,13 +117,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・n01r0502でのイベント前
 ・GRIDX＝181、GRIDZ＝145、上向き</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:19:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -136,7 +134,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -287,13 +285,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・再度上を向いてメッセージ表示
 ・続けてhakase1_04b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -346,13 +343,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・再度上を向いてメッセージ表示
 ・続けてhakase1_04w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -419,12 +415,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：Black2ver
 ・主人公と向き合ってメッセージ表示
 ・続けてhakase1_05b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -491,12 +487,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・主人公と向き合ってメッセージ表示
 ・続けてhakase1_05w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -555,12 +551,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：Black2ver
 ・！マーク表示後にメッセージ
 ・続けてhakase1_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -619,12 +615,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・！マーク表示後にメッセージ
 ・続けてhakase1_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:20:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -704,10 +700,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは　また　あおうぞ▼</Text>
+			<Text>それでは　また　あおうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:21:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -715,10 +711,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　また　会おうぞ▼</Text>
+			<Text>それでは　また　会おうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:27:31" />
+				Time="2012-01-06T13:21:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

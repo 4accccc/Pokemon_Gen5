@@ -67,10 +67,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]おくに　すすんでほしい[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]おくに　すすんでほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:55:28" />
+				Time="2012-01-06T13:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,10 +78,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]奥に　進んでほしい[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]奥に　進んでほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:55:40" />
+				Time="2012-01-06T13:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -46,6 +46,13 @@
 				User="matsumiya:W00224"
 				Time="2011-09-12T06:25:59" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c09r0501_swchampion_01"
@@ -94,6 +101,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:14:49" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -165,6 +179,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-28T05:59:24" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c09r0501_swchampion_03"
@@ -227,6 +248,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:18:30" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c09r0501_swchampion_04"
@@ -278,12 +306,12 @@
 			<Comment>♀
 ・戦闘後メッセージ
 　フィールドに復帰すると自動で表示
-・表示後、アイリスが押すような格好で
-　主人公と一緒にc09r0601へ
+・表示後、アイリス、主人公をみて
+　swchampion_06かswchampion_07へ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T07:45:45" />
+				Time="2012-01-06T12:24:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -293,6 +321,119 @@
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:18:30" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0501_swchampion_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほら　おにーちゃん！
+さきに　いっていって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほら　おにーちゃん！
+先に　行って行って！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♂
+・表示後、アイリスが押すような格好で
+　主人公と一緒にc09r0601へ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:23:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0501_swchampion_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほら　おねーちゃん！
+さきに　いっていって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほら　おねーちゃん！
+先に　行って行って！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♀
+・表示後、アイリスが押すような格好で
+　主人公と一緒にc09r0601へ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:23:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:22:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c09r0501_swchampion_05"
@@ -338,6 +479,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-01T06:38:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:21:54" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

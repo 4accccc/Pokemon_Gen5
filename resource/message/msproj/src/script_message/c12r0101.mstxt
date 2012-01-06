@@ -2028,11 +2028,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
+・アイテム入手処理
+　No029「げんきのかたまり」×２
 ・続けてswmama_end_06
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T05:29:20" />
+				Time="2012-01-06T12:52:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

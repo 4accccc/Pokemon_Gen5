@@ -2549,6 +2549,9 @@ msg_wbt_info_11へ</Comment>
 			<Text>……おおっ！　いろんな　ちほうの
 リーダーズトーナメントに▽
 さんか　できるようになりましたよ！▼
+リーダーズトーナメントは
+これまでの　トーナメントは▽
+ことなる　ルールに　なります！▼
 たいかいに　しゅつじょうする
 トレーナーは　みんな　ゆうめいな▽
 ジムリーダーの　かたがたです▼
@@ -2556,8 +2559,8 @@ msg_wbt_info_11へ</Comment>
 あいてに　なるとおもいますが▽
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T03:59:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-06T10:42:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2568,6 +2571,9 @@ msg_wbt_info_11へ</Comment>
 			<Text>……おおっ！　いろんな　地方の
 リーダーズトーナメントに▽
 参加　できるようになりましたよ！▼
+リーダーズトーナメントは
+これまでの　トーナメントは▽
+異なる　ルールに　なります！▼
 大会に　出場する
 トレーナーは　みな　著名な▽
 ジムリーダーの　方々です▼
@@ -2576,7 +2582,7 @@ msg_wbt_info_11へ</Comment>
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T11:20:20" />
+				Time="2012-01-06T10:43:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2757,10 +2763,10 @@ msg_wbt_info_11へ</Comment>
 			Language="JPN">
 			<Comment>♀
 ・ダウンロードトーナメント用
-テンポアップのため削除</Comment>
+・テンポアップのため削除</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T06:47:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-06T10:41:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2778,7 +2784,7 @@ msg_wbt_info_11へ</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

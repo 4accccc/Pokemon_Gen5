@@ -56,6 +56,13 @@
 				Time="2011-06-17T05:57:00" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -118,6 +125,13 @@
 				Time="2011-06-17T05:57:00" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -167,6 +181,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T05:57:00" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -232,6 +253,13 @@
 				Time="2011-06-17T05:57:00" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -244,13 +272,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギはかせ
-どう　なさってるかな？▼
-では　アタシは　フキヨセカーゴで
-じゅんびを　してますね！▼</Text>
+			<Text>ところで　アララギはかせは
+どう　なさってるのかな？▼
+ひこうきに　のせて！　って
+やくそく　だったけれど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T11:04:54" />
+				Time="2012-01-06T11:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -258,13 +286,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ博士
-どう　なさってるかな？▼
-では　アタシは　フキヨセカーゴで
-準備を　してますね！▼</Text>
+			<Text>ところで　アララギ博士は
+どう　なさってるのかな？▼
+飛行機に　乗せて！　って
+約束だったけれど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T11:04:47" />
+				Time="2012-01-06T11:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -289,6 +317,13 @@
 				Time="2011-06-17T05:57:00" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -305,10 +340,10 @@
 つれていってもらうのも▼
 じぶんで　ひこうきを
 そうじゅう　するのも▽
-どちらも　たのしい　です！▼</Text>
+どちらも　たのしい　です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T11:21:10" />
+				Time="2012-01-06T11:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -320,10 +355,10 @@
 連れていってもらうのも▼
 自分で　飛行機を
 操縦するのも▽
-どちらも　楽しい　です！▼</Text>
+どちらも　楽しい　です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T11:21:28" />
+				Time="2012-01-06T11:19:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -345,6 +380,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T05:57:01" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -413,6 +455,13 @@
 				Time="2011-06-17T05:57:01" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:09" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -475,6 +524,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -557,6 +613,13 @@
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:14" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -636,6 +699,13 @@
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:14" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -701,6 +771,13 @@
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:17" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -759,6 +836,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -824,6 +908,13 @@
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -886,6 +977,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:19:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２ねんまえの　きおく……
-まちの　ようすは　どうだったかな？</Text>
+			<Text>いみなく　おどる　おれたち
+いみなく　いつか　きえるブー♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T07:28:21" />
+				Time="2012-01-06T11:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２年前の　記憶……
-街の　様子は　どうだったかな？</Text>
+			<Text>意味なく　踊る　おれたち
+意味なく　いつか　消えるブー♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T07:28:34" />
+				Time="2012-01-06T11:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,8 +30,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・クリア前
 　ホワイトフォレストへのストッパー
 　GRIDX＝2～8、GRIDZ＝5に全部配置
@@ -40,7 +39,7 @@
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:16:58" />
+				Time="2012-01-06T11:09:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -48,6 +47,61 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-01T09:17:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0101_man3_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いみなく　おどる　おれたち
+いみなく　いつか　きえるブー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:09:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>意味なく　踊る　おれたち
+意味なく　いつか　消えるブー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:09:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：Black2ver
+・クリア前
+　ホワイトフォレストへのストッパー
+　GRIDX＝2～8、GRIDZ＝5に全部配置
+　なんか適当にその場回転していてください
+・クリアすると削除
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:09:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:09:12" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -171,39 +225,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_r14r0101_man3_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:25" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:25" />
-		</LanguageCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

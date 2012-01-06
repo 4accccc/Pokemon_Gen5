@@ -8,11 +8,11 @@
 			Language="JPN">
 			<Text>パートナーの　おかげで
 ジムバッジを　８つ　あつめた▼
-おれの　ふがいなさで
+なのに　ボクの　ふがいなさで
 チャンピオンロードで　あしどめさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T13:33:45" />
+				Time="2012-01-06T11:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,11 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>パートナーの　おかげで
 ジムバッジを　８つ　集めた▼
-おれの　ふがいなさで
+なのに　ボクの　ふがいなさで
 チャンピオンロードで　足止めさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T13:42:55" />
+				Time="2012-01-06T11:57:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -41,10 +41,17 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>VETERANM</Text>
+			<Text>TRAINERM</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T13:32:15" />
+				Time="2012-01-06T11:58:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:56:20" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -89,10 +96,17 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>TRAINERW</Text>
+			<Text>RANGERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T13:35:19" />
+				Time="2012-01-06T11:56:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T11:56:21" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

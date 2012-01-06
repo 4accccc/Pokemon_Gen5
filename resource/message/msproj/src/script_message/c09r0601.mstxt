@@ -33,7 +33,7 @@
 ポケモンのことを　考え
 ポケモンのために　心を　尽くす▼
 そんな　あふれる　優しさを　持つ
-たくえつした　ポケモントレーナーと！▼
+卓越した　ポケモントレーナーと！▼
 トレーナーを　心より　信じ
 トレーナーのため　全力を　だす▼
 そんな　尽きない　強さを　持つ
@@ -42,7 +42,7 @@
 名前を　刻む　場所なの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T12:48:25" />
+				Time="2012-01-06T12:26:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,6 +67,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:23:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:26:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -143,6 +150,13 @@
 				Time="2011-07-24T10:23:09" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:26:45" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -198,6 +212,13 @@
 				Time="2011-07-24T10:23:09" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:26:45" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -251,6 +272,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:23:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:26:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -314,6 +342,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T10:23:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T12:26:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
