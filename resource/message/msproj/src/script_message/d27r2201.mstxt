@@ -420,6 +420,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-16T05:39:10" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T07:20:27" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -469,6 +476,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T07:20:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -521,6 +535,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-16T05:39:10" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T07:20:30" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -570,6 +591,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T07:20:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -622,6 +650,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T07:20:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -687,10 +722,10 @@
 いいさ
 オレは　とっても　つよいからな▼
 おまえの　ような
-おこさまは　みのがしてやるよ……</Text>
+おこさまは　みのがしてやる……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T06:32:39" />
+				Time="2012-01-06T05:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

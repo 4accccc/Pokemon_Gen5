@@ -46,6 +46,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-18T11:44:21" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -99,21 +106,24 @@
 				User="matsumiya:W00224"
 				Time="2011-06-18T11:44:23" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r22_swboss_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『ひさしぶり　です！▼
-いま　あなたが　むきあった
-ポケモンは　テラキオン！▼
-たたかいの　ほのおから　ポケモンを
-まもるため　ひとと　たたかった▽
-３びきの　ポケモンの　いっぴき！▼</Text>
+			<Text>いま　あなたが　であった
+ポケモンは　テラキオン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:24:24" />
+				Time="2012-01-06T09:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,15 +131,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『ひさしぶり　です！▼
-いま　あなたが　向き合った
-ポケモンは　テラキオン！▼
-戦いの　炎から　ポケモンを
-守るため　人と　戦った▽
-３匹の　ポケモンの　１匹！▼</Text>
+			<Text>いま　あなたが　であった
+ポケモンは　テラキオン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:24:27" />
+				Time="2012-01-06T09:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,12 +144,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・テラキオンとの戦闘後、
-　画面左下（草むら上）から出現
-・続けてswboss_02</Comment>
+・posでメッセージだけ表示
+・続けてswboss_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:23:50" />
+				Time="2012-01-06T09:13:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -152,6 +157,78 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-20T07:15:59" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ『ひさしぶり　です！▼
+テラキオンは
+たたかいの　ほのおから　ポケモンを▽
+まもるため　ひとと　たたかった▽
+３びきの　ポケモンの　いっぴき！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:13:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:12:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ『ひさしぶり　です！▼
+テラキオンは
+戦いの　炎から　ポケモンを▽
+守るため　人と　戦った▽
+３匹の　ポケモンの　１匹！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:13:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:12:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アクロマ登場してメッセージ表示
+・続けてswboss_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:14:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:13:31" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:13:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -211,6 +288,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T07:16:49" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -267,6 +351,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-20T07:16:49" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -338,6 +429,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T08:53:20" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -408,6 +506,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T08:53:22" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -474,6 +579,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:58:11" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -532,6 +644,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-07T13:03:28" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:29" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -578,6 +697,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T09:03:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

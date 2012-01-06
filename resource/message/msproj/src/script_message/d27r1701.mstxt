@@ -39,5 +39,12 @@
 				User="matsumiya:W00224"
 				Time="2011-12-11T05:28:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T05:49:24" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
