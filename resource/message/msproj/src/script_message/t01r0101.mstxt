@@ -48,6 +48,13 @@
 				Time="2011-08-17T03:37:12" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -106,6 +113,13 @@
 				Time="2011-08-17T03:40:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -158,6 +172,13 @@
 				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -208,6 +229,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:37:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -268,6 +296,13 @@
 				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -325,6 +360,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:49:52" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t01r0101_mama_07"
@@ -379,6 +421,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:49:52" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t01r0101_mama_08"
@@ -425,6 +474,13 @@
 				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -437,12 +493,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『うん　ばっちり！▼
+			<Text>うん　ばっちり！▼
 あなたも　ポケモンも
 げんき　ハツラツって　かんじ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:34:09" />
+				Time="2012-01-06T03:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -450,12 +506,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『うん　ばっちり！▼
+			<Text>うん　ばっちり！▼
 あなたも　ポケモンも
 元気ハツラツって　感じ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:34:10" />
+				Time="2012-01-06T03:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -477,6 +533,13 @@
 				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -489,14 +552,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンには　やさしくしてる？▼
-あなたの　ために　ポケモンは
+			<Text>あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
 あなたも　ポケモンに
-やさしくするのが　ふつうでしょ？</Text>
+やさしくしてあげてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:00" />
+				Time="2012-01-06T03:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -504,14 +566,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンには　優しくしてる？▼
-あなたの　ために　ポケモンは
+			<Text>あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
 あなたも　ポケモンを
-気遣ってあげるのが　普通でしょ？</Text>
+気遣ってあげてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:04" />
+				Time="2012-01-06T03:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -533,6 +594,13 @@
 				Time="2011-08-17T03:37:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -545,10 +613,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>たよりが　ないのは
+げんきな　しょうこ　っていうけど▼
+さみしいことを　よろこぶだなんて
+おやって　たいへん　なんだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:12" />
+				Time="2012-01-06T03:15:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -556,10 +627,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>便りが　ないのは
+元気な　証拠　っていうけど▼
+寂しいことを　喜ぶだなんて
+親って　大変なんだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:17" />
+				Time="2012-01-06T03:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,6 +653,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:37:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -593,10 +674,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>こんどは　こどもを　さがしに
+あたしが　たびに　でようかな？▼
+ああ　でも　かえってきたときに
+るすだと　それは　ざんねんよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:21" />
+				Time="2012-01-06T03:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -604,10 +688,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>今度は　こどもを　探しに
+あたしが　旅に　でようかな？▼
+ああ　でも　帰ってきたときに
+留守だと　それは　残念よね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:21" />
+				Time="2012-01-06T03:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -627,6 +714,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:37:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -641,10 +735,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あなたと　あたしの　こども
+あわせてみたかったな……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:22" />
+				Time="2012-01-06T03:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -652,10 +747,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あなたと　あたしの　こども
+会わせてみたかったな……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T04:19:22" />
+				Time="2012-01-06T03:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -675,6 +771,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-17T03:37:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:12:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

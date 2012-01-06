@@ -543,10 +543,11 @@
 ・ジムバッジ取得前＋アイテム入手前
 ・posを踏むとメッセージ表示
 ・アイテム入手処理
-　No030「おいしいみず」</Comment>
+　No030「おいしいみず」
+・入手後、glasses_03表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:14:29" />
+				Time="2012-01-06T02:23:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

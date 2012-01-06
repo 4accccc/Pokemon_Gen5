@@ -863,10 +863,10 @@
 世界には　本当に▽
 多くの　ポケモンが　いるぞ！▼
 それを　知ってもらうため
-せいそくちリストを　つくったんだよ▼</Text>
+生息地リストを　つくったんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:37:00" />
+				Time="2012-01-06T03:01:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1474,5 +1474,47 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01r0401_poke_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はっふうん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:01:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:01:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はっふうん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:01:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:01:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:00:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・チラチーノ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:00:44" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

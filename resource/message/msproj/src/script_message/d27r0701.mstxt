@@ -81,14 +81,14 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：２回目
-・Black2、White2でposが異なる
+・Black2、White2で配置が異なる
 　階段を下りるとイベント開始
 　したっぱに！マーク表示後
 　主人公に隣接してメッセージ表示
 ・続けてswplazmam1_02_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:19:04" />
+				Time="2012-01-06T03:34:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -200,12 +200,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
-・続けて
+・続けてswplazmam1_02_04
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:31:33" />
+				Time="2012-01-06T03:34:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -253,11 +252,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
-・続けて</Comment>
+・続けてswrival_02_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:36:24" />
+				Time="2012-01-06T03:34:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -424,13 +422,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：Black2ver
 ・アジト船：２回目
-・Black2ver
 ・2回目イベント終了まで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:31:02" />
+				Time="2012-01-06T03:33:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -486,15 +483,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・アジト船：２回目
-・White2ver
-・2回目イベント終了まで繰り返し
-
-※仮メッセージ</Comment>
+・2回目イベント終了まで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:49:21" />
+				Time="2012-01-06T03:33:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -552,12 +546,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・GRIDX＝18、GRIDZ＝13</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:24:13" />
+				Time="2012-01-06T03:33:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -607,12 +600,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・GRIDX＝18、GRIDZ＝13</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:24:20" />
+				Time="2012-01-06T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

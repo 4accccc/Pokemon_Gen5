@@ -1127,11 +1127,11 @@
 キュレムの　こおりエネルギー　とか▼
 ソーラーパネル　とか
 エコロジーな　ふね　なんだ▼
-まあね　イッシュを　ボロボロにしちゃ
+イッシュを　ボロボロにしちゃ
 しはいするときに　こまるからさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:42:27" />
+				Time="2012-01-06T04:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1143,11 +1143,11 @@
 キュレムの　こおりエネルギー　とか▼
 ソーラーパネル　とか
 エコロジーな　船なんだ▼
-まあね　イッシュを　ボロボロにしちゃ
+イッシュを　ボロボロにしちゃ
 支配するときに　こまるからさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:42:38" />
+				Time="2012-01-06T04:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1221,6 +1221,64 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-12T10:55:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_barrier_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あぶない！
+バリアは　でんりゅうで　ビリビリだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>危ない！　バリアには
+高圧電流が　流れている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バリア接近時
+・！マーク表示後にメッセージ
+　主人公を一歩下げる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:56:36" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

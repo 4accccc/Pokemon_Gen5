@@ -21,14 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『オマエ　先に行けッ！▼
 オレは　こいつらから
 ダークトリニティのこと　ききだす▼
 チョロネコか　ダークトリニティを
 みつけたら　教えてくれよッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:42:27" />
+				Time="2012-01-06T03:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,11 +122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こいつ！　プラズマだんの
+			<Text>このやろ！　プラズマだんの
 イッシュせいふくを　じゃまするな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:22:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,11 +134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こいつ！　プラズマ団の
+			<Text>このやろ！　プラズマ団の
 イッシュ征服を　じゃまするな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -175,11 +175,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう　ポケモン　よこせよ！
-おまえらに　かちめなんて　ないッ！</Text>
+			<Text>あがけ　あがけ！▼
+レシラムの　ひばしら
+ゼクロムの　いなずま　よりも▽
+キュレムの　こおりが　うえだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:21:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -187,11 +189,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう　ポケモン　よこせよ！
-おまえらに　勝ち目なんて　ないッ！</Text>
+			<Text>あがけ　あがけ！▼
+レシラムの　火柱
+ゼクロムの　稲妻　よりも▽
+キュレムの　氷塊が　上だ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:21:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -228,13 +232,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あがけ　あがけ！▼
-レシラムの　ひばしら
-ゼクロムの　いなずま　よりも▽
-キュレムの　こおりが　うえだ！</Text>
+			<Text>……アッ　アイツ！
+こわいよー！　オニだよー！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:21:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -242,13 +244,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あがけ　あがけ！▼
-レシラムの　火柱
-ゼクロムの　稲妻　よりも▽
-キュレムの　氷塊が　上だ！</Text>
+			<Text>……アッ　アイツ！
+こわいよー！　オニだよー！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2012-01-06T03:21:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

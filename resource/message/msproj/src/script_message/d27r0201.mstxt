@@ -43,6 +43,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-11T03:59:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:41" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -83,11 +90,11 @@
 			<Comment>♂：Black2ver
 ・アジト船：2回目
 　マップ切り替えでイベント開始
-・続けてswrival_02_02
+・続けてトレーナー戦闘へ
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:29:24" />
+				Time="2012-01-06T03:50:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -96,6 +103,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:28" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -110,11 +124,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『やばい！
-スイッチを　まもらないと！▼</Text>
+			<Text>プラズマだん『クッ……！
+なかまに　しらせないと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T03:59:06" />
+				Time="2012-01-06T03:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,11 +136,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『やばい！
-スイッチを　守らないと！▼</Text>
+			<Text>プラズマ団『クッ……！
+仲間に　知らせないと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:32:48" />
+				Time="2012-01-06T03:53:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,10 +150,10 @@
 			Language="JPN">
 			<Comment>♂：Black2ver
 ・戦闘後に自動で表示
-　続けて</Comment>
+　続けてswplazmaw1_02_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:29:27" />
+				Time="2012-01-06T03:50:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -148,6 +162,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -162,10 +183,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『なかまに　しらせなきゃ！▼</Text>
+			<Text>プラズマだん『やばいわ！
+みんなで　スイッチを　まもらなきゃ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T03:59:06" />
+				Time="2012-01-06T03:53:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -173,10 +195,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『仲間に　知らせなきゃ！▼</Text>
+			<Text>プラズマ団『やばいわ！
+みんなで　スイッチを　守らなきゃ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:18:19" />
+				Time="2012-01-06T03:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -199,6 +222,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -245,6 +275,28 @@
 				User="matsumiya:W00224"
 				Time="2011-12-13T05:29:33" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:46" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0201_swrival_02_01"
@@ -286,6 +338,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T11:44:13" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -349,6 +408,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-25T11:44:24" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:31" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -404,6 +470,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-22T11:02:37" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:31" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -453,6 +526,71 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-22T11:02:37" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:53:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_barrier_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あぶない！
+バリアは　でんりゅうで　ビリビリだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:54:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>危ない！　バリアには
+高圧電流が　流れている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バリア接近時
+・！マーク表示後にメッセージ
+　主人公を一歩下げる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-06T03:49:45" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
