@@ -2180,13 +2180,18 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_CHECK_LAST:  //最後の振り返りかをチェック
-    UTIL_PLAYERINFO_CreateStay( p_wk );
     if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) == DREAM_WORLD_MATCHUP_END )
     { 
+      UTIL_PLAYERINFO_Create( p_wk );
+      UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+      while( !UTIL_PLAYERINFO_MoveIn( p_wk ) )
+      {
+      }
       *p_seq  = SEQ_START_MSG_LAST;
     }
     else
     { 
+      UTIL_PLAYERINFO_CreateStay( p_wk );
       *p_seq  = SEQ_CHECK_BTLCNT;
     }
     break;
