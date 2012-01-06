@@ -152,12 +152,12 @@ void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL ev_mov
   }
   if( ewk->player.move_f ){ //一歩移動済み
     encwork_AddWalkCountAndProb( enc, ewk, attr );
-  }
-  if( !move_f ){  //最後にエンカウントしたグリッドでの方向転換とイベント一歩は歩数に数えない
     return;
   }
-  encwork_AddWalkCountAndProb( enc, ewk, attr );
-  ewk->player.move_f = TRUE;  //最初の一歩目フラグ
+  if( move_f ){  //最後にエンカウントしたグリッドでの方向転換とイベント一歩は歩数に数えない
+    encwork_AddWalkCountAndProb( enc, ewk, attr );
+    ewk->player.move_f = TRUE;  //最初の一歩目フラグ
+  }
 }
 
 //--------------------------------------------------------------
@@ -802,6 +802,9 @@ static void encwork_AddWalkCountAndProb( FIELD_ENCOUNT* enc, ENCOUNT_WORK* ewk, 
     return;
   }
   ++ewk->player.walk_ct;
+  if( ewk->player.walk_ct <= dat->safety){ //セーフティ内はエンカウント率上昇計算をしない
+    return;
+  }
   ewk->player.step += ewk->player.move_f;
   if( ewk->player.step < dat->interval ){
     return;
