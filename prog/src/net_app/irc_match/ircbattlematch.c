@@ -936,7 +936,8 @@ static void _modeSuccessTimingEnd2(IRC_BATTLE_MATCH* pWork)
 
   // =============================
   // SEI—¹‘Ò‚¿‚Éˆ—‚ð•ÏX onoue
-  if( PMSND_CheckPlaySE() == FALSE )
+  if( PMSND_CheckPlaySE() == FALSE
+      && pWork->timer > 60 )
   {
     _ReturnButtonStart(pWork,FALSE);
     GFL_NET_Exit(NULL);
