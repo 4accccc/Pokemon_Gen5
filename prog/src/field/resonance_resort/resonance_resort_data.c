@@ -2962,16 +2962,16 @@ RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 inde
  *	@return TRUEマージorセットした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PROXY_BUFF_MergeBeacon( RESORT_PROXY_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+RESORT_MERGE_RESULT RESORT_PROXY_BUFF_MergeBeacon( RESORT_PROXY_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
   if( p_data )
   {
     //何もしない。
-    return TRUE;
+    return RESORT_MERGE_RESULT_OK;
   }
 
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2983,16 +2983,16 @@ BOOL RESORT_PROXY_BUFF_MergeBeacon( RESORT_PROXY_BUFF *p_wk, const RESORT_BEACON
  *	@return TRUEマージorセットした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PROXY_BUFF_MergeRecv( RESORT_PROXY_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+RESORT_MERGE_RESULT RESORT_PROXY_BUFF_MergeRecv( RESORT_PROXY_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
   if( p_data )
   {
     //何もしない。
-    return TRUE;
+    return RESORT_MERGE_RESULT_OK;
   }
 
-  return FALSE;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3004,16 +3004,16 @@ BOOL RESORT_PROXY_BUFF_MergeRecv( RESORT_PROXY_BUFF *p_wk, const RESORT_RECV_DAT
  *	@return TRUEマージorセットした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PROXY_BUFF_MergeProxy( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+RESORT_MERGE_RESULT RESORT_PROXY_BUFF_MergeProxy( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
 {
   RESORT_PROXY_DATA *p_data = Resort_Proxy_Buff_GetSameOwnerData( p_wk, &cp_proxy->basic1 );
   if( p_data )
   {
     RESORT_PROXY_DATA_MergeProxy( p_data, cp_proxy );
-    return TRUE;
+    return RESORT_ADD_RESULT_OK;
   }
 
-  return FALSE;
+  return RESORT_ADD_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**

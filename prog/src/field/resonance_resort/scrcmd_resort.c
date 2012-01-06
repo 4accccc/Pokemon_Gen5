@@ -361,7 +361,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_NEON,NULL);
     break;
   case RESORT_GET_PARAM_IS_CITYNAME:
-    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_PARADE,NULL);
+    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME,NULL);
     break;
   case RESORT_GET_PARAM_CITYNAME_SEC_SEX:
     {
