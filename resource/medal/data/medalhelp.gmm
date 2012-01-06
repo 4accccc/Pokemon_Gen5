@@ -1465,10 +1465,10 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_046">
-		<language name="JPN" width="216">むげんダンジョンで
+		<language name="JPN" width="216">イッシュのなんかんで
 たたかいに　かって！
 かって！　かちまくれ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンで
+		<language name="JPN_KANJI" width="216">イッシュの難関で
 戦いに　勝って！
 勝って！　勝ちまくれ！</language>
 	</row>
@@ -1489,55 +1489,55 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_050">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_051">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０の　いずれかで
 すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０の　いずれかで
 すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_052">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５の　いずれかを
 せんとう　３かい　いないで　クリア！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５の　いずれかを
 戦闘回数　３回以内で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０の　いずれかを
 せんとう　５かい　いないで　クリア！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０の　いずれかを
 戦闘回数　５回以内で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５の　いずれかを
 １００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５の　いずれかを
 １００歩以内に　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_055">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０の　いずれかを
 １０００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０の　いずれかを
 １０００歩以内に　クリアしろ！</language>
 	</row>

@@ -1792,90 +1792,90 @@
 
 	<row id="MDL_EXP_BATTLE_046">
 		<language name="JPN" width="216">２０にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 やや　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">２０人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 やや　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_047">
 		<language name="JPN" width="216">５０にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 そこそこ　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">５０人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 そこそこ　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_048">
 		<language name="JPN" width="216">１００にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 かなり　つよい　あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">１００人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 かなり　強い　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_049">
 		<language name="JPN" width="216">１０００にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 むてきのせんしを　たたえる　メダル。</language>
 		<language name="JPN_KANJI" width="216">１０００人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 無敵の戦士を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_050">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５で　トレーナーを
 すべて　たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５で　トレーナーを
 すべて　倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_051">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０で　トレーナーを
 すべて　たおした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０で　トレーナーを
 すべて　倒した　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_052">
-		<language name="JPN" width="216">むげんダンジョンの　エリア２から５を
+		<language name="JPN" width="216">イッシュのなんかん　エリア２から５を
 せんとう　３かい　いないで
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの　エリア２から５を
+		<language name="JPN_KANJI" width="216">イッシュの難関　エリア２から５を
 戦闘回数　３回以内で
 クリアした　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_053">
-		<language name="JPN" width="216">むげんダンジョンの　エリア６から１０を
+		<language name="JPN" width="216">イッシュのなんかん　エリア６から１０を
 せんとう　５かい　いないで
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの　エリア６から１０を
+		<language name="JPN_KANJI" width="216">イッシュの難関　エリア６から１０を
 戦闘回数　５回以内で
 クリアした　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_054">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５を　１００ほ　で
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５を　１００歩以内で
 クリアした　戦果の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_055">
-		<language name="JPN" width="216">むげんダンジョンの
+		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０を　１０００ほ　で
 クリアした　せんかの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
+		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０を　１０００歩以内で
 クリアした　戦果の　メダル。</language>
 	</row>

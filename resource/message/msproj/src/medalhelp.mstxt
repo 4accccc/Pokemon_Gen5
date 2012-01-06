@@ -5225,29 +5225,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンで
+			<Text>イッシュのなんかんで
 たたかいに　かって！
 かって！　かちまくれ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンで
+			<Text>イッシュの難関で
 戦いに　勝って！
 勝って！　勝ちまくれ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5360,174 +5360,174 @@
 		Label="MDL_HINT_BATTLE_050">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア２から５の　いずれかで
 すべての　トレーナーを　たおせ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア２から５の　いずれかで
 すべての　トレーナーを　倒せ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_BATTLE_051">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア６から１０の　いずれかで
 すべての　トレーナーを　たおせ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア６から１０の　いずれかで
 すべての　トレーナーを　倒せ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_BATTLE_052">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア２から５の　いずれかを
 せんとう　３かい　いないで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア２から５の　いずれかを
 戦闘回数　３回以内で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_BATTLE_053">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア６から１０の　いずれかを
 せんとう　５かい　いないで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア６から１０の　いずれかを
 戦闘回数　５回以内で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_BATTLE_054">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア２から５の　いずれかを
 １００ほ　いないに　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア２から５の　いずれかを
 １００歩以内に　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_BATTLE_055">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア６から１０の　いずれかを
 １０００ほ　いないに　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア６から１０の　いずれかを
 １０００歩以内に　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-06T10:40:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

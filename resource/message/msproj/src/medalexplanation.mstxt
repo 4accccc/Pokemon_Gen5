@@ -5552,28 +5552,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>２０にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 やや　つよい　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２０人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 やや　強い　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5589,28 +5589,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>５０にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 そこそこ　つよい　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>５０人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 そこそこ　強い　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5626,28 +5626,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>１００にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 かなり　つよい　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１００人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 かなり　強い　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5663,28 +5663,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>１０００にんの　トレーナーを
-むげんダンジョンで　たおした
+イッシュのなんかんで　たおした
 むてきのせんしを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１０００人の　トレーナーを
-無限ダンジョンで　倒した
+イッシュの難関で　倒した
 無敵の戦士を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5698,174 +5698,174 @@
 		Label="MDL_EXP_BATTLE_050">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア２から５で　トレーナーを
 すべて　たおした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア２から５で　トレーナーを
 すべて　倒した　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_EXP_BATTLE_051">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア６から１０で　トレーナーを
 すべて　たおした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア６から１０で　トレーナーを
 すべて　倒した　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_EXP_BATTLE_052">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの　エリア２から５を
+			<Text>イッシュのなんかん　エリア２から５を
 せんとう　３かい　いないで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの　エリア２から５を
+			<Text>イッシュの難関　エリア２から５を
 戦闘回数　３回以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_EXP_BATTLE_053">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの　エリア６から１０を
+			<Text>イッシュのなんかん　エリア６から１０を
 せんとう　５かい　いないで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの　エリア６から１０を
+			<Text>イッシュの難関　エリア６から１０を
 戦闘回数　５回以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_EXP_BATTLE_054">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア２から５を　１００ほ　で
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア２から５を　１００歩以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_EXP_BATTLE_055">
 		<LanguageCell
 			Language="JPN">
-			<Text>むげんダンジョンの
+			<Text>イッシュのなんかんの
 エリア６から１０を　１０００ほ　で
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無限ダンジョンの
+			<Text>イッシュの難関の
 エリア６から１０を　１０００歩以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-06T10:39:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
