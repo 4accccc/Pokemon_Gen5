@@ -145,6 +145,8 @@ static BOOL MDLREC_CHECK_TrainCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamed
 static BOOL MDLREC_CHECK_BridgeCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_GetExp( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_CaptureCnt( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 
 // 判定用関数テーブル読み込み
 typedef BOOL (*MDLACHIEVEPROC)( MEDALREC_DATA* ,GAMEDATA* ,u32 ,HEAPID );
@@ -1342,6 +1344,46 @@ static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA
 
   ONOUE_Printf("リンクイベント実行数:%d/%u\n",check_cnt,target_cnt);
   return cmp_target( check_cnt , target_cnt );
+}
+
+// 1日に獲得した経験値の最大数
+static BOOL MDLREC_CHECK_GetExp( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 day_max,day_cnt;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  RECORD      *p_rec = SaveData_GetRecord(p_svc);
+  day_max = RECORD_Get( p_rec , RECID_DAYMAX_EXP );
+  day_cnt = RECORD_Get( p_rec , RECID_DAYCNT_EXP );
+
+  // 大きいほうと比較
+  if( day_max > day_cnt )
+  {
+    return cmp_target( day_max , target_cnt );
+  }
+  else
+  {
+    return cmp_target( day_cnt , target_cnt );
+  }
+}
+
+// 1日に捕獲したポケモンの最高数
+static BOOL MDLREC_CHECK_CaptureCnt( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 day_max,day_cnt;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  RECORD      *p_rec = SaveData_GetRecord(p_svc);
+  day_max = RECORD_Get( p_rec , RECID_DAYMAX_CAPTURE );
+  day_cnt = RECORD_Get( p_rec , RECID_DAYCNT_CAPTURE );
+
+  // 大きいほうと比較
+  if( day_max > day_cnt )
+  {
+    return cmp_target( day_max , target_cnt );
+  }
+  else
+  {
+    return cmp_target( day_cnt , target_cnt );
+  }
 }
 
 //----------------------------------------------------------------------------
