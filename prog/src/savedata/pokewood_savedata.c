@@ -38,8 +38,9 @@ struct _POKEWOOD_SAVEDATA{
   u32 strange_flag[POKEWOOD_ARRAY_NUM];       ///< ストレンジエンド取得済みフラグ
   u32 senario_theatergo_flag[POKEWOOD_ARRAY_NUM];///< 指定のシナリオを一度でも上映して観た事がある
   u32 bad_flag[POKEWOOD_ARRAY_NUM];           ///< バッドエンド取得済みフラグ
+  u8  kanban_temp[POKEWOOD_RECSAVEDATA_MAX];  ///< 全カンバン保存箇所
 
-  u8 array[124];                              ///< 余り
+  u8 array[116];                              ///< 余り
 };
 
 //---------------------------------------------------------------------------
@@ -489,16 +490,48 @@ int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
 {
-  // セーブデータが４つ以上になったので、押し出し式に変更
-//  if(index<POKEWOOD_KANBAN_MAX){
-//    sv->title_no[index] = title_no;
-//  }
+
+  int i,n;
+  OS_Printf("kanban: ");
+  for(i=0;i<POKEWOOD_RECSAVEDATA_MAX;i++){
+    OS_Printf("%02d, ", sv->kanban_temp[i]);
+  }
+  OS_Printf("\n");
 
   // 最新の看板は常に０として扱い、登録されるたびに押し出していく３を超えたら廃棄
   sv->title_no[3] = sv->title_no[2];
   sv->title_no[2] = sv->title_no[1];
   sv->title_no[1] = sv->title_no[0];
   sv->title_no[0] = title_no;
+
+  // 全看板情報からなくなっている場合はその看板は削除する
+  sv->kanban_temp[index] = 0; //消去場所は書き潰す
+  for(i=1;i<4;i++){
+    int flag=0;
+    for(n=0;n<POKEWOOD_RECSAVEDATA_MAX;n++){
+      if(sv->title_no[i]==sv->kanban_temp[n]){ flag++; }
+    }
+    if(flag==0){
+      sv->title_no[i] = 0;
+    }
+  }
+
+}
+
+//=============================================================================================
+/**
+ * @brief	看板情報用のテンポラリ領域に書き込む
+ *
+ * @param   sv		
+ * @param   index		
+ * @param   title_no		
+ */
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetKanbanTemporary( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
+{
+  if(index<POKEWOOD_RECSAVEDATA_MAX){
+    sv->kanban_temp[index] = title_no;
+  }
 }
 
 //=============================================================================================
