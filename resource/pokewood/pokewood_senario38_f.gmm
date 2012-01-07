@@ -354,22 +354,24 @@
 		<language name="JPN_KANJI" width="256">たいこのひほう</language>
 	</row>
 	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">いらいぬし『ゆけっ！
-[1:00:トレーナー名:1]さーん</language>
-		<language name="JPN_KANJI" width="256">依頼主『ゆけっ！
-[1:00:トレーナー名:1]さーん</language>
+		<language name="JPN" width="256">いらいぬし『ゆけ！　ゆけーっ！
+[1:02:ポケモンニックネーム:0]せんせーい！</language>
+		<language name="JPN_KANJI" width="256">依頼主『ゆけ！　ゆけーっ！
+[1:02:ポケモンニックネーム:0]せんせーい！</language>
 	</row>
 	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">いらいぬし『がんばれー
-[1:00:トレーナー名:1]さーん　あと　すこし！</language>
-		<language name="JPN_KANJI" width="256">依頼主『がんばれー　
-[1:00:トレーナー名:1]さーん　あと少し！</language>
+		<language name="JPN" width="256">いらいぬし『がんばれー！
+[1:02:ポケモンニックネーム:0]せんせい！　あと　すこし！</language>
+		<language name="JPN_KANJI" width="256">依頼主『がんばれー！
+[1:02:ポケモンニックネーム:0]先生！　あと　少し！</language>
 	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">いらいぬし『しとめちゃって　ください
-[1:00:トレーナー名:1]さーん</language>
-		<language name="JPN_KANJI" width="256">依頼主『仕留めちゃって　ください
-[1:00:トレーナー名:1]さーん</language>
+		<language name="JPN" width="256">いらいぬし『さあ　そこですよ！
+サッサと　しとめちゃって　ください！▽
+[1:02:ポケモンニックネーム:0]せんせい！！</language>
+		<language name="JPN_KANJI" width="256">依頼主『さあ　そこですよ！
+サッサと　仕留めちゃって　ください！▽
+[1:02:ポケモンニックネーム:0]先生！！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">いらいぬし『いいですか？
@@ -377,7 +379,7 @@
 こだいぶんめいの　なぞを▽
 ときあかす　だいはっけん　なんです▼
 どうか　のりうつっている　ヤツを
-おいはらって　くださいませんか▼
+おいはらって　くださいませんか？▼
 いろいろ　かたりかけて　きますが
 しんちょうに　おねがいしますよ▼
 ヤツめ　きにいらない　へんじをすると
@@ -387,7 +389,7 @@
 古代文明の　なぞを▽
 解き明かせる　大発見　なんです▼
 どうか　のりうつっている　ヤツを
-追い払って　くださいませんか▼
+追い払って　くださいませんか？▼
 いろいろ　語りかけて　きますが
 慎重に　お願いしますよ▼
 ヤツめ　気にいらない　返事をすると
@@ -395,10 +397,10 @@
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">わかい　じょしゅ『わたし　なんて
-おこらせて　ボコボコに　なりました……▽
+おこらせて　ボコボコにされて……▽
 どうか　おきを　つけて</language>
 		<language name="JPN_KANJI" width="256">若い　助手『私　なんて
-怒らせて　ボコボコに　なりました……▽
+怒らせて　ボコボコに　されて……▽
 どうか　お気を　つけて</language>
 	</row>
 	<row id="pw_event0_enemy_2">
@@ -432,8 +434,8 @@
 （……さて　どう　答えよう？）</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『せきぞうから　きえなさい！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『石像から　消えなさい！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『せきぞうから　きえて！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『石像から　消えて！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">こえ『ほう……　てきか……</language>
@@ -666,10 +668,10 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">こえ『わが　ねむりを　さますものよ
 わが　といに　こたえるのだ▽
-きさま　われの　しょうたい　あててみよ</language>
-		<language name="JPN_KANJI" width="256">声『わが　眠りを　覚ます者よ
+われの　しょうたい　あててみよ</language>
+		<language name="JPN_KANJI" width="256">声『我が　眠りを　覚ます者よ
 我が　問いに　答えるのだ▽
-貴様　我の正体を　言い当ててみよ</language>
+我の正体を　言い当ててみよ</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『そんなこと
@@ -682,14 +684,14 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『悪霊だ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
-		<language name="JPN" width="256">こえ『あくりょう……　そうみえるか……
+		<language name="JPN" width="256">こえ『おお……　そうみえるか……
 だが　われも　われじしんが　わからぬ▼
 しかし　おわりの　ときは　ちかい……
-さあ　さいごの　いちげきを　あたえん！</language>
-		<language name="JPN_KANJI" width="256">声『悪霊……　そう映るか……
+さいごの　いちげきを　あたえん！</language>
+		<language name="JPN_KANJI" width="256">声『おお……　そう映るか……
 だが　我も　我自身が　分からぬ▼
 しかし　終わりの時は　近い……
-さあ　最後の　一撃を　与えん！</language>
+最後の　一撃を　与えん！</language>
 	</row>
 	<row id="pw_event5_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『はかいのまじん　だ！</language>
@@ -699,11 +701,11 @@
 		<language name="JPN" width="256">こえ『まじん……　そうみえるか……
 だが　われも　われじしんが　わからぬ▼
 しかし　おわりの　ときは　ちかい……
-さあ　さいごの　いちげきを　あたえん！</language>
+さいごの　いちげきを　あたえん！</language>
 		<language name="JPN_KANJI" width="256">声『魔神……　そう映るか……
 だが　我も　我自身が　分からぬ▼
 しかし　終わりの時は　近い……
-さあ　最後の　一撃を　与えん！</language>
+最後の　一撃を　与えん！</language>
 	</row>
 	<row id="pw_event5_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『わからない！</language>
@@ -712,10 +714,10 @@
 	<row id="pw_event5_react_enemy_2">
 		<language name="JPN" width="256">こえ『そうか……　そのとおり……▼
 われにも　われじしんが　わからぬ……
-きおく　うすれ　ただ　ここに　いる……</language>
+きおく　うすれ　ここに　いる……</language>
 		<language name="JPN_KANJI" width="256">声『そうか……　その通り……▼
 我にも　我自身が　分からぬ……
-記憶　かすみ　ただ　ここに　いる……</language>
+記憶　かすみ　ここに　いる……</language>
 	</row>
 	<row id="pw_event5_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『にんげん　だ！</language>
@@ -723,11 +725,13 @@
 	</row>
 	<row id="pw_event5_react_enemy_3">
 		<language name="JPN" width="256">こえ『なっ　なにを　いっておる……
-われが　ひとなどと……▼
-さあ　さいごの　いちげきを　あたえん！</language>
+われが　ひと　などと……▼
+ええい！　もう　よいわ！
+さいごの　いちげきを　あたえん！</language>
 		<language name="JPN_KANJI" width="256">声『なっ　何を　言っておる……
-我が　人などと……▼
-さあ　最後の　一撃を　与えん！</language>
+我が　人　などと……▼
+ええい！　もう　よいわ！
+最後の　一撃を　与えん！</language>
 	</row>
 	<row id="pw_event6_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『くっ……　ダメ……
@@ -878,13 +882,13 @@
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００３への　ついき』▼
 ファイルＮｏ．００３を　さいごに
-[1:02:ポケモンニックネーム:0]からの　れんらくが　とだえる▽
-いぜん　[1:02:ポケモンニックネーム:0]の　しょうそく　ふめい</language>
+[1:02:ポケモンニックネーム:0]からの　れんらく　とだえる▽
+[1:02:ポケモンニックネーム:0]の　しょうそくふめい</language>
 		<language name="JPN_KANJI" width="256">『ゴーストイレイザー報告書
 ファイルＮｏ．００３への　追記』▼
 ファイルＮｏ．００３を　最後に
-[1:02:ポケモンニックネーム:0]からの　連絡が　途絶える▼
-依然　[1:02:ポケモンニックネーム:0]の　消息不明</language>
+[1:02:ポケモンニックネーム:0]からの　連絡　途絶える▼
+[1:02:ポケモンニックネーム:0]の　消息不明</language>
 	</row>
 	<row id="pw_event8_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……　……　……</language>
@@ -931,9 +935,11 @@
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『やれやれ……
-やっと　しょうたいを　あらわしましたね</language>
+やっと　ちゃばんげきが▽
+おわりましたか……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『やれやれ……
-やっと　正体を　現しましたね</language>
+やっと　茶番劇が▽
+終わりましたか……</language>
 	</row>
 	<row id="pw_event8_enemy_3">
 		<language name="JPN" width="256">こえ『もうしわけ　ありやせん！▼
@@ -1042,11 +1048,11 @@
 それは　エネルギーの　けっしょう！！▼
 たいこの　むかし……
 はかいのまじんから　うばったと▽
-いわれる　エネルギーの　かたまりです▼
+いわれる　エネルギーの　かたまり▼
 そして　せきぞうには　まじんの
 ちからが　ひとのてに　わたらぬよう▽
 まもりがみが　とりついて　いたのです▼
-まもりがみは　れきせんの　ゆうしゃ……
+かれは　れきせんの　ゆうしゃ……
 なかなか　てごわかったでしょう？▼
 わたしなんて　とても　とても
 はが　たちませんでしたから……</language>
@@ -1054,11 +1060,11 @@
 それは　エネルギーの　結晶！！▼
 太古の　昔……
 破壊の魔神から　うばったと▽
-いわれる　エネルギーの塊です▼
+いわれる　エネルギーの塊▼
 そして　石像には　魔神の
 エネルギーが　人の手に　渡らぬよう▽
 守り神が　取りついて　いたのです▼
-守り神は　歴戦の　勇者……
+彼は　歴戦の　勇者……
 なかなか　手強かったでしょう？▼
 私なんて　とても　とても
 歯が　立ちませんでしたから……</language>
@@ -1078,7 +1084,7 @@
 とりもどし　ふっかつ　するのです！▼
 どう？　ワクワクしない？
 ロマンとか　かんじない？▼
-ねえ　[1:00:トレーナー名:1]くん……</language>
+ねえ　[1:02:ポケモンニックネーム:0]くん……</language>
 		<language name="JPN_KANJI" width="256">依頼主『オフコース！！▼
 守り神を　倒し　封印を　解けば▽
 そのエネルギーは▽
@@ -1087,7 +1093,7 @@
 取り戻し　復活するのです！▼
 どう？　ワクワクしない？
 ロマンとか　感じない？▼
-ねえ　[1:00:トレーナー名:1]くん……</language>
+ねえ　[1:02:ポケモンニックネーム:0]くん……</language>
 	</row>
 	<row id="pw_event9_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『まさか……　おまえは……</language>

@@ -389,11 +389,11 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
 イッシュぼうえいたい　クルーです！▼
 セリザワさんと　いいましたね……
-そのＭ・Ｂは　あなたの物　ですか？　</language>
+そのＭ・Ｂは　あなたのもの　ですか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
 イッシュ防衛隊　クルーです！▼
 セリザワさんと　言いましたね……
-そのＭ・Ｂは　あなたの物　ですか？　</language>
+そのＭ・Ｂは　あなたの物　ですか？</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">セリザワ『イッシュぼうえいたい……▼
@@ -518,8 +518,8 @@
 同じと　いう　意味なのかねェ？</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">つうしん『きこえるか！　[1:00:トレーナー名:1]！！</language>
-		<language name="JPN_KANJI" width="256">通信『聞こえるか！　[1:00:トレーナー名:1]！！</language>
+		<language name="JPN" width="256">つうしん『きこえるか！　[1:00:トレーナー名:1]！</language>
+		<language name="JPN_KANJI" width="256">通信『聞こえるか！　[1:00:トレーナー名:1]！</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はいっ！</language>
@@ -600,10 +600,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちくしょうっ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_2">
-		<language name="JPN" width="256">セリザワ『いかんじゃないか？
-そんな　きたないことばを　つかっては？</language>
-		<language name="JPN_KANJI" width="256">セリザワ『いかんじゃないか？
-そんな　きたない言葉を　使っては？</language>
+		<language name="JPN" width="256">セリザワ『ハハハ……
+おいおい　いかんじゃないか？▼
+イッシュぼうえいたいが　そんな
+きたない　ことばを　つかっては？</language>
+		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……
+おいおい　いかんじゃないか？▼
+イッシュ防衛隊が　そんな
+汚い　言葉を　使っては？</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……ほんぶ　との
@@ -756,10 +760,10 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">セリザワ『……もう　たたかいは
 いいだろう　[1:00:トレーナー名:1]くん▼
-それよりも　はなしを　しないかね……？</language>
+それより　はなしを　しないかね……？</language>
 		<language name="JPN_KANJI" width="256">セリザワ『……もう　戦いは
 いいだろう　[1:00:トレーナー名:1]くん▼
-それよりも　話を　しないかね……？</language>
+それより　話を　しないかね……？</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……
@@ -890,9 +894,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おいっ！　待てっ！！</language>
 	</row>
 	<row id="pw_event6_hero_3">
-		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]！　おうとうせよ！
+		<language name="JPN" width="256">つうしん『オイ！　おうとうせよ！
 おうとうせよ！　[1:00:トレーナー名:1]！！</language>
-		<language name="JPN_KANJI" width="256">通信『[1:00:トレーナー名:1]！　応答せよ！
+		<language name="JPN_KANJI" width="256">通信『オイ！　応答せよ！
 応答せよ！　[1:00:トレーナー名:1]！！</language>
 	</row>
 	<row id="pw_event6_hero_4">
@@ -976,15 +980,15 @@
 倒すなど　夢のまた夢　だよ？</language>
 	</row>
 	<row id="pw_event8_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……▼
-Ｍ・Ｂいじょうに　きょうりょくだな……
-しかし　こんな　きけんなものを▽
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……
+Ｍ・Ｂいじょうに　てごわいな……▼
+しかし　こんな　きけんなものを
 どうやって　てに　いれたんだ……▼
 まさか……　じぶんで　Ｍ・Ｂを
 かいはつ　したとでも　いうのか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……▼
-Ｍ・Ｂ以上に　強力だな……
-しかし　こんな　危険な　物を▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……
+Ｍ・Ｂ以上に　強力だな……▼
+しかし　こんな　危険な　物を
 どうやって　手に　入れたんだ……▼
 まさか……　自分で　Ｍ・Ｂを
 開発したとでも　いうのか？</language>

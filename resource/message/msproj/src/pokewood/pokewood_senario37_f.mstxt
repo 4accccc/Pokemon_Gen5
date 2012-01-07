@@ -923,16 +923,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょうじょ『え……？
+			<Text>少女『え……？
 おっ……　おねえちゃん▽
 うたがりぶかーい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1174,16 +1174,17 @@
 ファイルＮｏ．００２　ついき』▼
 しょうじょに　とりついた　あくりょう
 とりはらうことに　せいこう▼
-しょうじょは　じゅんちょうに　かいふく
-ただし　アーカムと　なのる▽
+しょうじょは　じゅんちょうに
+かいふくを　している　もよう▼
+ただし　アーカムと　なのる
 あくりょうの　ほかくに　しっぱい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:22:03" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:22:03" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1191,16 +1192,17 @@
 ファイルＮｏ．００２　追記』▼
 少女に　取りついた　悪霊を
 取り払うことに　成功▼
-少女は　順調に　回復
-ただし　アーカムと　名乗る▽
+少女は　順調に
+回復を　している　模様▼
+ただし　アーカムと　名乗る
 悪霊の　捕獲に　失敗</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:22:03" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:22:03" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1424,34 +1426,34 @@
 			<Text>『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００２　への　ついき』▼
 ファイルＮｏ．００２　いこう
-[Name:TrainerName Idx="1" ]の　しょうそくふめい▼
-なお　[Name:TrainerName Idx="1" ]が　ちょうさした
+[Name:PokemonNickname Idx="0" ]の　しょうそくふめい▼
+なお　[Name:PokemonNickname Idx="0" ]が　ちょうさした
 むらびと　ぜんいんの　しょうそくも▽
 すべて　ふめいで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
 ファイルＮｏ．００２　への　追記』▼
 ファイルＮｏ．００２　以降
-[Name:TrainerName Idx="1" ]の　消息不明▼
-なお　[Name:TrainerName Idx="1" ]が　調査した
+[Name:PokemonNickname Idx="0" ]の　消息不明▼
+なお　[Name:PokemonNickname Idx="0" ]が　調査した
 村人　全員の　消息も▽
 全て　不明で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T05:15:58" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T05:15:58" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1662,7 +1664,7 @@
 			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００２　ついき』▼
-[Name:TrainerName Idx="1" ]から　れんらくなし
+[Name:PokemonNickname Idx="0" ]から　れんらくなし
 いぜん　しょうそく　ふめい▼
 うりふたつの　じんぶつを
 みたとの　じょうほうも　あるものの▽
@@ -1673,17 +1675,17 @@
 ちゅうい　されたし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
 ファイルＮｏ．００２　追記』▼
-[Name:TrainerName Idx="1" ]から　連絡なし
+[Name:PokemonNickname Idx="0" ]から　連絡なし
 依然　消息不明▼
 うりふたつの　人物を
 見たとの　情報も　あるものの▽
@@ -1694,11 +1696,11 @@
 注意　されたし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1899,64 +1901,70 @@
 		Label="pw_event6_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『きみ……
+			<Text>[Name:PokemonNickname Idx="0" ]『で　きみ……
 なんで　こんなことを　したの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『君……
+			<Text>[Name:PokemonNickname Idx="0" ]『で　君……
 何で　こんなことを　したの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうじょ『だって　おとんと　おかんが
-むらを　せんでん　するために▽
-オマエもやれ　って……！▼
-ゆうれいそうどうで　むらおこし　やで！
-かんこうきゃくで　ボロもうけや　って▼
+			<Text>しょうじょ『しかたないんよ……
+おとんと　おかんが　この　むらを▽
+パアッと　せんでん　するから▽
+オマエも　きょうりょくせえ　って……▼
+ゆうれいで　むらおこし　やで！
+かんこうきゃく　あつめて▽
+ボロもうけ　やでっ！　って……▼
 う……　うっ……　うわーん！
-</Text>
+ウチは　めいれいされた　だけよー！▽
+せやから　かんにしてー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:47" />
+				Time="2012-01-06T12:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:47" />
+				Time="2012-01-06T12:01:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>少女『だって　おとんと　おかんが
-むらを　せんでん　するために▽
-オマエもやれ　って……！▼
-ゆうれいそうどうで　むらおこし　やで！
-かんこうきゃくで　ボロもうけや　って▼
+			<Text>少女『しかたないんよ……
+おとんと　おかんが　この　むらを▽
+パアッと　せんでん　するから▽
+オマエも　きょうりょくせえ　って……▼
+ゆうれいで　むらおこし　やで！
+かんこうきゃく　あつめて▽
+ボロもうけ　やでっ！　って……▼
 う……　うっ……　うわーん！
-</Text>
+ウチは　めいれいされた　だけよー！▽
+せやから　かんにしてー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:47" />
+				Time="2012-01-06T12:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:52:47" />
+				Time="2012-01-06T12:01:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2033,15 +2041,15 @@
 ファイルＮｏ．００２への　ついき』▼
 ゆうれい　しょうじょ　デタラメ　なり
 さいきん　ニセ　じょうほう　おおし▽
-ちゅうい　されたし▼
+くれぐれも　ちゅうい　されたし▼
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2051,15 +2059,15 @@
 ファイルＮｏ．００２への　追記』▼
 幽霊少女　デタラメ　なり
 最近　ニセ　情報　多し▽
-注意　されたし▼
+くれぐれも　注意　されたし▼
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2012-01-06T11:59:24" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

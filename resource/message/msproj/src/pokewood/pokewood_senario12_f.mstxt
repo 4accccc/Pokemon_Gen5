@@ -1201,35 +1201,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『もうしわけ　ありません……
+			<Text>[Name:TrainerName Idx="1" ]『キャップ……
 さくせんは　しっぱいです……▼
 こちらの　てもちポケモンは
 ぜんめつ　しました……▼
 だいバンギラスは　このまま
-まちに　しんにゅう　してしまいます……</Text>
+まちに　しんにゅう　してしまいます</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『申し訳ありません……
+			<Text>[Name:TrainerName Idx="1" ]『キャップ……
 作戦は　失敗です……▼
 こちらの　手持ちポケモンは
 全滅　しました……▼
 大バンギラスは　このまま
-街に　侵入　してしまいます……</Text>
+街に　侵入　してしまいます</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1280,26 +1280,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ううっ……
-もうしわけ　ありません……</Text>
+わたしが　しっかり　してれば……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ううっ……
-申し訳ありません……</Text>
+私が　しっかり　してれば……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1428,17 +1428,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『キャハ！　キャハハッ！
+だいかいじゅうを　たおしたんだもん！▽
 これで　わたしも　ゆうめいじん！！▼
 もう　こんな　あぶない　しごとで
 くろうする　ひつようもないっ！▽
-いっしょう　あそんで　いきていけるわ！</Text>
+きっと　えいゆう　あつかい　されて▽
+いっしょう　あそんで　くらせるわ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1446,14 +1448,15 @@
 これで　私も　有名人！！▼
 もう　こんな　危ない　仕事で
 苦労する　必要もないっ！▽
+きっと　英雄　扱い　されて▽
 一生　遊んで　生きて行けるわ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2012-01-05T08:39:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -103,30 +103,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『ファーファファ！！▼
-まだまだ　だっ！　まだまだ　いくぞっ！
+まだまだ！　まだまだ　いくぞっ！
 さらなる　たたかいの　きわみへ！▽
 さあ！　ついてくるが　いいっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファーファファ！！▼
-まだまだ　だっ！　まだまだ　いくぞっ！
+まだまだ！　まだまだ　いくぞっ！
 さらなる　戦いの　極みへ！▽
 さあ！　ついてくるが　いいっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -167,30 +167,30 @@
 			<Text>ハチクマン『ファファファ……▼
 わがはいの　ポケモンぐんだんも
 もはや　あとが　ない……▼
-ここで　けっちゃくと　いこうではないか！
+ここで　けっちゃくを　つけるぞ！
 [Name:PokemonNickname Idx="0" ]キッドよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファファファ……▼
 我輩の　ポケモン軍団も
 もはや　後が　ない……▼
-ここで　決着と　いこうではないか！
+ここで　決着を　つけるぞ！
 [Name:PokemonNickname Idx="0" ]キッドよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -780,14 +780,14 @@
 しばらく　　あわぬ　あいだに
 ずいぶん　くちが　わるくなったな……▼
 [Name:PokemonNickname Idx="0" ]キッド……
-きさまも　そろそろ　はんこうき　か……</Text>
+きさま　そろそろ　はんこうき　か……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -795,14 +795,14 @@
 しばらく　　会わぬ間に
 ずいぶん　口が　悪くなったな……▼
 [Name:PokemonNickname Idx="0" ]キッド……
-貴様も　そろそろ　反抗期か……</Text>
+貴様　そろそろ　反抗期か……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1169,27 +1169,27 @@
 		Label="pw_event3_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジッ！　ジリジリジリジリジリジリッ！！
+			<Text>ジッ！　ジリジリジリジリジリッ！！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジッ！　ジリジリジリジリジリジリッ！！
+			<Text>ジッ！　ジリジリジリジリジリッ！！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1523,7 +1523,8 @@
 [Name:PokemonNickname Idx="0" ]キッド……▼
 みちびかれるままに
 ハチクマンのアジトに　ついた▽
-かれには　あくむの　トレーニングが▽
+かれには　あくむのような▽
+かこくな　トレーニングが▽
 まちうけているのだった……▼
 はげめ！
 [Name:PokemonNickname Idx="0" ]キッド！▼
@@ -1531,11 +1532,11 @@
 [Name:PokemonNickname Idx="0" ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T04:05:24" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T04:05:24" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1544,7 +1545,8 @@
 [Name:PokemonNickname Idx="0" ]キッド……▼
 導かれるままに
 ハチクマンのアジトに　着いた▽
-彼には　悪夢の　トレーニングが▽
+彼には　悪夢のような▽
+過酷な　トレーニングが▽
 待ち受けているのだった……▼
 はげめ！
 [Name:PokemonNickname Idx="0" ]キッド！▼
@@ -1552,11 +1554,11 @@
 [Name:PokemonNickname Idx="0" ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T04:27:15" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2303,27 +2305,27 @@
 		Label="pw_event6_enemy_8">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジッ！　ジリジリジリジリジリジリッ！！
+			<Text>ジッ！　ジリジリジリジリジリッ！！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジッ！　ジリジリジリジリジリジリッ！！
+			<Text>ジッ！　ジリジリジリジリジリッ！！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T03:45:32" />
+				Time="2012-01-06T12:52:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

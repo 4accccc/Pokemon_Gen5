@@ -510,12 +510,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　好きだー！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">マリア『……　……　……　……フフッ</language>
-		<language name="JPN_KANJI" width="256">マリア『……　……　……　……フフッ</language>
+		<language name="JPN" width="256">マリア『……　……　……フフッ</language>
+		<language name="JPN_KANJI" width="256">マリア『……　……　……フフッ</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない！）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない！）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない）</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">マリア『……　……　……　……？</language>
@@ -630,10 +630,10 @@
 		<language name="JPN_KANJI" width="256">マリア『……　……？</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほらほら　どうしたんだい？
-ぼくだよ　[1:00:トレーナー名:1]だよー</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほらほら　どうしたんだい？
-ぼくだよ　[1:00:トレーナー名:1]だよー</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほらほら！
+ぼくだよ！　[1:00:トレーナー名:1]だよー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほらほら！
+ぼくだよ！　[1:00:トレーナー名:1]だよー！</language>
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">マリア『……　……　……　……？</language>
@@ -666,8 +666,8 @@
 ぼくは　君が　大好きなんだー！</language>
 	</row>
 	<row id="pw_event4_enemy_4">
-		<language name="JPN" width="256">マリア『……　フッ……　フフフフッ</language>
-		<language name="JPN_KANJI" width="256">マリア『……　フッ……　フフフフッ</language>
+		<language name="JPN" width="256">マリア『フッ……　フフフフッ</language>
+		<language name="JPN_KANJI" width="256">マリア『フッ……　フフフフッ</language>
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……▼
@@ -694,16 +694,16 @@
 		<language name="JPN_KANJI" width="256">マリア『ウフッ……　ウフフフフッ</language>
 	</row>
 	<row id="pw_event5_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくの　いのちを　ささげる！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『僕の命を　ささげる！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくのいのちを　きみに！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『僕の命を　きみに！</language>
 	</row>
 	<row id="pw_event5_react_enemy_2">
 		<language name="JPN" width="256">マリア『……　……　……？</language>
 		<language name="JPN_KANJI" width="256">マリア『……　……　……？</language>
 	</row>
 	<row id="pw_event5_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もういちど　やりなおそう！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう一度やりなおそう！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふたりで　やりなおそう！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ふたりで　やりなおそう！</language>
 	</row>
 	<row id="pw_event5_react_enemy_3">
 		<language name="JPN" width="256">マリア『ウフッ……　ウフフフフッ</language>
@@ -737,16 +737,18 @@
 とどまっていると　マリアさんの▽
 からだが　ゆきのように　ガンガン▽
 とけて　きえて　しまうんすよ！▼
-なんで　きょうは　ここで　おわりっす！
-まー　また　あしたも　きますんで▽
+そろそろ　ヤバい　かんじなんで
+きょうは　このへんで　おわりっす！▼
+まー　また　あしたも　きますんで
 そんとき　がんばって　くださいよ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『あー　そりゃ　ムリっす！▼
 この世界に　長い時間
 留まってると　マリアさんの▽
 身体が　雪のように　ガンガン▽
 溶けて　消えて　しまうんすよね！▼
-なんで　今日は　ここで　終わりっす！
-まー　また　明日も　来ますんで▽
+そろそろ　ヤバい　感じなんで
+今日は　この辺で　終わりっす！▼
+まー　また　明日も　来ますんで
 そんとき　頑張って　くださいよ！</language>
 	</row>
 	<row id="pw_event6_hero_3">
@@ -796,20 +798,22 @@
 ざんねんながら　それは　ムリっす！▼
 このせかいに　ながい　あいだ
 とどまっていると　マリアさんの▽
-からだが　ゆきのように　ガンガン▽
+きおくが　ゆきのように　ドロドロに▽
 とけて　きえて　しまうんすよね！▼
-なんで　きょうは　ここで　おわりっす！
-まー　また　もどって　きますんで▽
-つぎは　がんばって　くださいよ！</language>
+そろそろ　ヤバい　かんじなんで
+きょうは　このへんで　おわりっす！▼
+まー　また　あしたも　きますんで
+そんとき　がんばって　くださいよ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『あー　すんませんー▼
 残念ながら　それは　ムリっす！▼
 この世界に　長い時間
 留まってると　マリアさんの▽
-記憶が　雪のように　ガンガン▽
+記憶が　雪のように　ドロドロに▽
 溶けて　消えて　しまうんすよね！▼
-なんで　今日は　ここで　終わりっす！
-まー　また　戻って　きますんで▼
-次は　頑張って　くださいよ！</language>
+そろそろ　ヤバい　感じなんで
+今日は　この辺で　終わりっす！▼
+まー　また　明日も　来ますんで
+そんとき　頑張って　くださいよ！</language>
 	</row>
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まってくれー！！
@@ -822,15 +826,15 @@
 ……　……　……　……　……</language>
 	</row>
 	<row id="pw_event7_hero_3">
-		<language name="JPN" width="256">……きがつけば　ぼくは　ゆうえんちの
-ベンチに　すわっていた▼
-あれは　ゆめだったのか？
+		<language name="JPN" width="256">……きがつけば　ぼくは
+ゆうえんちのベンチに　すわっていた▼
+……あれは　ゆめだったのか？
 げんじつ　だったのか？▼
 ……ただ　わたしは　きょうも　また
 ゆうえんちへ　かよいつづける……</language>
-		<language name="JPN_KANJI" width="256">……気がつけば　ぼくは　遊園地の
-ベンチに　座っていた▼
-あれは　夢だったのか？
+		<language name="JPN_KANJI" width="256">……気がつけば　ぼくは
+遊園地のベンチに　座っていた▼
+……あれは　夢だったのか？
 現実　だったのか？▼
 ……ただ　ぼくは　今日も　また
 遊園地へ　通い続ける……</language>
@@ -871,11 +875,13 @@
 	</row>
 	<row id="pw_event8_enemy_2">
 		<language name="JPN" width="256">こえ『[1:00:トレーナー名:1]！　あさだよー▼
-こえ『おきなさーい　ちこく　しちゃうよー▼
+こえ『ねーえ　はやく　おきなよ！
+おきないと　ちこく　しちゃうよー▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">声『[1:00:トレーナー名:1]！　朝だよー▼
-声『起きなさーい　遅刻しちゃうよー▼
+声『ねーえ　早く　起きなよ！
+起きないと　遅刻しちゃうよー▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 	</row>
@@ -949,14 +955,14 @@
 でも　あなたの　かわりはてた
 すがたを　みたら　ショックで……▼
 それからのことは　まっしろ……▼
-まさか　あなたが
+……まさか　あなたが
 あんなことに　なっているなんて……</language>
 		<language name="JPN_KANJI" width="256">マリア『……あなたに　会うため
 この世界に　戻ってきたの……▼
 でも　あなたの　変わり果てた
 姿を　見たら　ショックで……▼
 それからのことは　真っ白……▼
-まさか　あなたが
+……まさか　あなたが
 あんなことに　なっているなんて……</language>
 	</row>
 	<row id="pw_event9_hero_2">
@@ -991,13 +997,15 @@
 ……いや　たしかに　おぼえていない▼
 ぼくは　なにを　していた？
 きのうは？　おとといは？▽
-なにも……　なにも　おもいだせない……</language>
+ダメだ……　なにも……▽
+なにも　おもいだせないぞ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ええと……▼
 ……　……　……　……　……▼
 ……　いや　確かに　覚えていない▼
 ぼくは　何を　していた？
 昨日は？　一昨日は？▽
-何も……　何も　思い出せない……</language>
+ダメだ……　何も……▽
+何も　思い出せないぞ……</language>
 	</row>
 	<row id="pw_event9_enemy_3">
 		<language name="JPN" width="256">ドーブル『やっぱ　そうすか……▼
@@ -1029,11 +1037,11 @@
 つまった　ゆうえんちの　なかを▽
 きおくも　ないまま　ウロウロ▽
 さまよってるんすよねー▼
-でも　しんだものが　いつまでも
-にんげんのせかいに　いると　ヤバいっす▼
-これいじょう　コッチに　とどまってると
-きおくも　からだも　ドロドロに　とけて▽
-アンタは　アンタで　なくなっちゃうっす</language>
+でも　しんだ　ものが　いつまでも
+コッチに　いると　ヤバいっす▼
+じきに　きおくも　からだも
+ドロドロに　とけて　アンタは▽
+アンタで　いられなくなっちゃうっす</language>
 		<language name="JPN_KANJI" width="256">ドーブル『そーなんすよ！▼
 アンタは　とっくに　死んでいるのに
 コッチの世界に　残ってるんす！▼
@@ -1042,10 +1050,10 @@
 記憶も　ないまま　ウロウロ▽
 さまよってるんすよねー▼
 でも　死んだ者が　いつまでも
-人間の世界に　いると　ヤバいっす▼
-これ以上　コッチに　留まってると
-記憶も　身体も　ドロドロに　溶けて▽
-アンタは　アンタで　なくなっちゃうっす</language>
+コッチに　いると　ヤバいっす▼
+じきに　記憶も　体も
+ドロドロに　溶けて　アンタは▽
+アンタで　いられなくなっちゃうっす</language>
 	</row>
 	<row id="pw_event9_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……▼
@@ -1059,27 +1067,29 @@
 	</row>
 	<row id="pw_event9_enemy_5">
 		<language name="JPN" width="256">ドーブル『オレは　マリアさんに
-たのまれて　アンタを　たすけにきたんす▼
-……それで　いっしょにきた　マリアさんは
-かわりはてた　アンタを　みたら
+たのまれて　さまよってる▽
+アンタを　たすけに　きたんす！▼
+……で　いっしょにきた　マリアさん
+かわりはてた　アンタを　みたら▽
 ショックで　きおく　うしなって……▼
-ぎゃくに　きおく　なくしてたはずの
-アンタは　マリアさんと　さいかいしたら▽
-かなり　いしきが　もどったんすよね……▼
-……まあ　どっちもどっち　もしくは
-いっしゅう　まわって▽
-あいしょうバッチリ　って　ことすかねー</language>
+んで　きおく　なくしてた　アンタは
+マリアさんと　あった　ショックで▽
+ぎゃくに　いしき　もどったんすよ！▼
+……まあ　どっちも　どっち
+もしくは　いっしゅう　まわって▽
+あいしょうバッチリって　ことすかねー</language>
 		<language name="JPN_KANJI" width="256">ドーブル『オレは　マリアさんに
-頼まれて　アンタを　助けに　来たんす▼
-……それで　一緒に来た　マリアさんは
-変わり果てた　アンタを　見たら
-ショックで　記憶　失っちゃって……▼
-逆に　記憶なくしてたはずの
-アンタは　マリアさんと　再会した瞬間に▽
-かなり　記憶が　戻ったんすよね……▼
-……まあ　どっちもどっち
-もしくは　一周　回って▽
-相性バッチリ　って　ことすかねー</language>
+頼まれて　さまよってる▽
+アンタを　助けに　来たんす！▼
+……で　一緒に来た　マリアさん
+変わり果てた　アンタを　見たら▽
+ショックで　記憶　失って……▼
+んで　記憶　なくしてた　アンタは
+マリアさんに　あった　ショックで▽
+逆に　意識　戻ったんすよ！▼
+……まあ　どっちも　どっち
+もしくは　一周　まわって▽
+相性バッチリって　ことすかねー</language>
 	</row>
 	<row id="pw_event9_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……　……
@@ -1093,8 +1103,8 @@
 このせかいは　もう　わたしたちが
 いるべき　ばしょ　じゃないもの……</language>
 		<language name="JPN_KANJI" width="256">マリア『[1:00:トレーナー名:1]……
-私と　一緒に　行こ……▼
-この世界は　もう　私たちが
+わたしと　一緒に　行こ……▼
+この世界は　もう　わたしたちが
 いるべき　場所じゃない　もの……</language>
 	</row>
 	<row id="pw_event9_hero_7">
@@ -1123,33 +1133,37 @@
 	</row>
 	<row id="pw_event9_hero_8">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふふふ　そっか……▼
-でも　ぼくは　マリアと　いっしょなら
-どんな　ところでも　いいよ</language>
+でもさ　ぼくは　マリアと
+いっしょに　いられるなら▽
+どんな　ところでも　かまわないさ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ふふふ　そっか……▼
-でも　ぼくは　マリアと　一緒なら
-どんな　ところでも　いいよ</language>
+でもさ　ぼくは　マリアと
+一緒に　いられるなら▽
+どんな　ところでも　構わないさ</language>
 	</row>
 	<row id="pw_event9_enemy_8">
-		<language name="JPN" width="256">ドーブル『ふっふっふっ！
+		<language name="JPN" width="256">ドーブル『やー　アツアツっすねー
 さあ！　おにあいの　おふたりさん！▼
-ちゃっちゃと　いくっすよー
-こっちではない　せかいへ！</language>
-		<language name="JPN_KANJI" width="256">ドーブル『ふっふっふっ！
+チャッチャッと　いくっすよー
+コッチじゃない　せかいへ！</language>
+		<language name="JPN_KANJI" width="256">ドーブル『やー　アツアツっすねー
 さあ！　お似合いの　おふたりさん！▼
-ちゃっちゃと　行くっすよー
-こっちではない　世界へ！</language>
+チャッチャッと　行くっすよー
+コッチじゃない　世界へ！</language>
 	</row>
 	<row id="pw_event9_hero_9">
-		<language name="JPN" width="256">……こうして　ぼくは　ふたたび
-マリアと　いっしょに　なれた……▼
-ざんねんながら　ぼくは　しんだが
-となりには　ほほえむ　マリアが　いる▽
-もう　おもいのこすは　なにもない</language>
+		<language name="JPN" width="256">……こうして　ぼく　ふたたび
+マリアと　めぐりあえた……▼
+どうやら　わたしは　しんだらしいが
+となりには　いとしい　マリアが▽
+やさしく　ほほえんで　いる……▽
+おもいのこすことは　なにもない……</language>
 		<language name="JPN_KANJI" width="256">……こうして　ぼくは　再び
-マリアと　一緒に　なれた……▼
-残念ながら　ぼくは　死んだが
-となりには　微笑む　マリアが　いる▽
-もう　思い残すは　何もない</language>
+マリアと　めぐり合えた……▼
+どうやら　ぼくは　死んだらしいが
+となりには　愛しい　マリアが▽
+優しく　微笑んで　いる……▽
+思い残すことは　何もない……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

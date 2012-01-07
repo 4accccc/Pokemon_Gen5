@@ -430,9 +430,9 @@
 許さない！　覚悟してっ！！</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと　おねえちゃん……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やだ　おねえちゃん……
 そんなに　おこらないでよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと　お姉ちゃん……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やだ　お姉ちゃん……
 そんなに　怒らないでよ……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
@@ -478,10 +478,12 @@
 アンタ　いい加減に　しなさいよ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『まあまあ…
-そんなに　おこらなくてもいいじゃん……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まあまあ……
-そんなに　怒らなくてもいいじゃん……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん　たら……
+そんなに　あおすじ　たてて▽
+おこらなくても　いいじゃん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃん　たら……
+そんなに　青筋　立てて▽
+怒らなくても　いいじゃん……</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">モニカ『ダメ！　ぜったい！！
@@ -523,9 +525,9 @@
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">モニカ『ムキキー！！
-だったら　わたしに　かってみなさいよ！</language>
+だったら　わたしに　かってみなさい！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ムキキー！！
-だったら　私に　勝ってみなさいよ！</language>
+だったら　私に　勝ってみなさい！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">モニカ『ハアッ……▼
@@ -536,9 +538,9 @@
 これで　すこしは　こりたかしら？</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……　わるかったよ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……　ゴメン……
 もう　かんべん　してよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……　悪かったよ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……　ゴメン……
 もう　勘弁　してよ……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
@@ -732,8 +734,10 @@
 なんで　負けないのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　ムチャクチャな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　ムチャクチャな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
+ムチャクチャな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
+ムチャクチャな……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">モニカ『そもそも　[1:00:トレーナー名:1]が
@@ -756,9 +760,9 @@
 		<language name="JPN_KANJI" width="256">モニカ『こんなもの……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメだよ！　おねえちゃん！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメ！　おねえちゃん！
 それ　たかいんだからっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメだよ！　おねえちゃん！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメ！　おねえちゃん！
 それ　たかいんだからっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
@@ -769,7 +773,7 @@
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっとっ！！
-たのむよ！　やめてくれよ！！</language>
+おねがい！　やめてっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっとっ！！
 お願い！　止めてっ！！</language>
 	</row>
@@ -781,9 +785,9 @@
 開いていくのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　おねえちゃん！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なにしてるのよ！
 ボールを　ひらいちゃ　ダメっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！　お姉ちゃん！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何してるのよ！
 ボールを　開いちゃ　ダメっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_5">

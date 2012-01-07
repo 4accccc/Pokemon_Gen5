@@ -584,18 +584,18 @@
 直ちに　状況を　報告しろ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もうしわけ　ありません……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャップ……
 さくせんは　しっぱいです……▼
 こちらの　てもちポケモンは
 ぜんめつ　しました……▼
 だいバンギラスは　このまま
-まちに　しんにゅう　してしまいます……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『申し訳ありません……
+まちに　しんにゅう　してしまいます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャップ……
 作戦は　失敗です……▼
 こちらの　手持ちポケモンは
 全滅　しました……▼
 大バンギラスは　このまま
-街に　侵入　してしまいます……</language>
+街に　侵入　してしまいます</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">つうしん『なんてことだ……
@@ -605,9 +605,9 @@
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ううっ……
-もうしわけ　ありません……</language>
+わたしが　しっかり　してれば……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ううっ……
-申し訳ありません……</language>
+私が　しっかり　してれば……</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャハ！　やったー！
@@ -637,14 +637,17 @@
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャハ！　キャハハッ！
+だいかいじゅうを　たおしたんだもん！▽
 これで　わたしも　ゆうめいじん！！▼
 もう　こんな　あぶない　しごとで
 くろうする　ひつようもないっ！▽
-いっしょう　あそんで　いきていけるわ！</language>
+きっと　えいゆう　あつかい　されて▽
+いっしょう　あそんで　くらせるわ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャハ！　キャハハッ！
 これで　私も　有名人！！▼
 もう　こんな　危ない　仕事で
 苦労する　必要もないっ！▽
+きっと　英雄　扱い　されて▽
 一生　遊んで　生きて行けるわ！</language>
 	</row>
 	<row id="pw_event4_enemy_2">

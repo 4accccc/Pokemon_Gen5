@@ -1414,32 +1414,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
-オマエを　エサに▽
+いもうとの　オマエを　エサに▽
 メカポリスを　おびきだし　たおす！▼
-オマエたちのいう　せいぎが
-こわれる　ところを　みせてやるぜ……</Text>
+オマエたちの　いう　せいぎが
+こわれちまう　しゅんかんを▽
+ジックリと　みせてやるぜ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ！
-オマエを　エサに▽
+妹の　オマエを　エサに▽
 メカポリスを　おびきだし　倒す！▼
-オマエ達のいう　正義が
-壊れる所を　みせてやるぜ……</Text>
+オマエ達の　いう　正義が
+壊れちまう　瞬間を▽
+ジックリ　みせてやるぜ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

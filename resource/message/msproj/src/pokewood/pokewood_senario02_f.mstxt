@@ -1053,29 +1053,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『だから　きさまと
-はなすことなど　ないと　いっておろう！▼
+			<Text>ハチクマン『ええい　くどいわ！
+きさまと　はなすことなど▽
+ないと　いって　おるだろう！▼
 さっさと　きえうせるが　よいわっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:04:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『だから　貴様と
-話すことなど　ないと　言っておろう！▼
+			<Text>ハチクマン『ええい　くどいわ！
+貴様と　話すことなど▽
+ないと　言って　おるだろう！▼
 さっさと　消え失せるが　よいわっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:04:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1198,32 +1200,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『ファ……　ファファファ！
-わがはいは　あくのかいじんで　ある！！▽
+わがはいは　かいじんで　ある！！▽
 あやしくて　とうぜん　だろうっ！！▼
 わがはいの　おおいなる　やぼうが
 きさまに　わかってたまるかっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-05T08:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-05T08:04:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファ……　ファファファ！
-我輩は　悪の怪人で　ある！！▽
+我輩は　怪人で　ある！！▽
 怪しくて　当然だろうっ！！▼
 我輩の　大いなる　野望が
 貴様に　理解できるはずがないわ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-05T08:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-05T08:04:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

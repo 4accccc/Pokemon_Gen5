@@ -484,18 +484,18 @@
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">まじん『オイラの　クエスチョンに
 こたえるので　ごじゃる♪▼
-こたえを　まちがっても　だいじょうぶ！
+まちがっても　だいじょうぶ！
 ブチこわすだけで　ごじゃるよぉぉぉ！</language>
 		<language name="JPN_KANJI" width="256">魔神『オイラの　クエスチョンに
 答えるので　ごじゃる♪▼
-答を　間違っても　大丈夫！
+間違っても　オーライで　ごじゃる！
 ブチ壊すだけで　ごじゃるよぉぉぉ！</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">あせる　ひとびと『みんな！　みろっ！
-あのバケモンが　まちを　こわすんだ！！</language>
+なんだよ！　あのバケモンはっ！！</language>
 		<language name="JPN_KANJI" width="256">あせる人々『みんな！　見ろっ！
-あのバケモンが　街を　壊すんだ！！</language>
+何だ！？　あのバケモンは！！</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">まじん『んー！　んー！　んー！
@@ -509,10 +509,10 @@
 	</row>
 	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おい！　まて！
-それより　クエスチョンじゃ　ないのか？▼
+それより　クエスチョンだろ？▼
 （こちらに　きを　ひかないと……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『おい！　待て！
-それより　クエスチョンじゃ　ないのか？▼
+それより　クエスチョンだろ？▼
 （こちらに　気を　引かないと……</language>
 	</row>
 	<row id="pw_event1_enemy_3">
@@ -542,13 +542,13 @@
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">まじん『るるるーん♪
 はーい！　せいかいで　ごじゃる！▽
-わかってくれて　うれしいで　ごじゃる！▼
-うれしくて　おどっちゃうで　ごじゃる♪
+わかってくれて　うれしいでごじゃる！▼
+うれしくて　おどっちゃうでごじゃる♪
 るーん♪　るるるーん♪</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
 はーい！　正解で　ごじゃる！▽
-分かってくれて　うれしいで　ごじゃる▼
-うれしくて　踊っちゃうで　ごじゃる♪▼
+分かってくれて　うれしいでごじゃる▼
+うれしくて　踊っちゃうでごじゃる♪
 るーん♪　るるるーん♪</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
@@ -574,10 +574,10 @@
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">まじん『るるるーん♪
 ざんねーん！　ハズレでごじゃる！！▼
-かなしいで　ごじゃるよぉぉぉぉぉぉ！！</language>
+かなしいで　ごじゃるよぉぉぉぉぉ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
 ざんねーん！　ハズレでごじゃる！！▼
-悲しいで　ごじゃるよぉぉぉぉぉぉ！！</language>
+悲しいで　ごじゃるよぉぉぉぉぉ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……しるか！</language>
@@ -585,11 +585,11 @@
 	</row>
 	<row id="pw_event1_react_enemy_3">
 		<language name="JPN" width="256">まじん『るるるーん♪
-ざんねーん！　ハズレで　ごじゃる！！▼
-かなしいで　ごじゃるよぉぉぉぉぉぉ！！</language>
+ざんねーん！　ハズレでごじゃる！！▼
+かなしいで　ごじゃるよぉぉぉぉぉ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
-ざんねーん！　ハズレで　ごじゃる！！▼
-悲しいで　ごじゃるよぉぉぉぉぉぉ！！</language>
+ざんねーん！　ハズレでごじゃる！！▼
+悲しいで　ごじゃるよぉぉぉぉぉ！！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">まじん『るるるーん♪
@@ -649,11 +649,11 @@
 		<language name="JPN" width="256">まじん『るるるーん♪
 ざんねーん！　ハズレでごじゃる！！▽
 と　いうかで　ごじゃる……▼
-オイラを　バカに　したなぁぁぁぁぁぁ！！</language>
+オイラを　バカに　したなぁぁぁぁ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
 ざんねーん！　ハズレでごじゃる！！▽
 と　いうかで　ごじゃる……▼
-オイラを　バカに　したなぁぁぁぁぁぁ！！</language>
+オイラを　バカに　したなぁぁぁぁ！！</language>
 	</row>
 	<row id="pw_event2_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ダンスか……？</language>
@@ -698,20 +698,20 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ダンディ　だな</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉぉぉ！！</language>
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁ！！
+そなた！　ウソは　ダメだぞぉぉ！！</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁ！！
+そなた！　ウソは　ダメだぞぉぉ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『さみしがり　だな</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『寂しがり　だな</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉぉぉ！！</language>
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁ！！
+そなた！　ウソは　ダメだぞぉぉ！！</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁ！！
+そなた！　ウソは　ダメだぞぉぉ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『らんぼうもの　だな</language>
@@ -777,11 +777,11 @@
 		<language name="JPN" width="256">まじん『るるるーん♪▼
 そうかー？　それじゃあ
 オイラいがいの　いまいちなものは▽
-みーんな　ブチこわすぞぉぉぉぉぉぉ！！</language>
+みーんな　ブチこわすぞぉぉぉぉ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪▼
 そうかー？　それじゃあ
 オイラ以外の　イマイチなものは▽
-みーんな　ブチ壊すぞぉぉぉぉぉぉ！！</language>
+みーんな　ブチ壊すぞぉぉぉぉ！！</language>
 	</row>
 	<row id="pw_event4_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『がまん　だ！</language>
@@ -805,11 +805,11 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『優しさ　だ！</language>
 	</row>
 	<row id="pw_event4_react_enemy_2">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁ！！
 かなしい！　きずつくぞぉぉぉぉぉ！！▼
 この　こころのきずを　いやすには
 ブチこわすしか　ないぞぉぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁ！！
 悲しい！　傷つくぞぉぉぉぉぉ！！▼
 この　心の傷を　いやすには
 ブチ壊すしか　ないぞぉぉぉぉぉ！！</language>
@@ -863,30 +863,30 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『破壊を　やめろ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁ！！
 はかいのまじんに　それは　タブー！▽
-オイラは　ブチこわすんだぞぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
+オイラは　ブチこわすんだぞぉぉ！！</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁ！！
 破壊の魔神に　それは　タブー！▽
-オイラは　ブチ壊すんだぞぉぉぉぉ！！</language>
+オイラは　ブチ壊すんだぞぉぉ！！</language>
 	</row>
 	<row id="pw_event5_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『せかいから　きえろ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『世界から　消えろ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_1">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁ！！
 じぶんで　じぶんを　けすなんて▽
 そんな　かなしいこと　ゼッタイに▽
 やっちゃいけないんだぞぉぉぉぉ！！▼
 だから　かわりに　オイラが　せかいを
-ブチこわして　けせばいいぞおぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
+ブチこわして　けせばいいぞおぉぉ！！</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁ！！
 自分で　自分を　消すなんて▽
 そんな　悲しいこと　ゼッタイに▽
 やっちゃいけないんだぞぉぉぉぉ！！▼
 だから　変わりに　オイラが　世界を
-ブチ壊して　消せばいいぞおぉぉぉ！！</language>
+ブチ壊して　消せばいいぞおぉぉ！！</language>
 	</row>
 	<row id="pw_event5_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『せかいを　まもってくれ！</language>
@@ -907,12 +907,12 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『反省　してくれ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_3">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁ！！
 オイラの　じしょには　はんせいなんて▽
 もじは　かいてないで　ごじゃる！▼
 とまどわずに　ふりかえらずに
 ブチこわすだけなんだぞぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁ！！
 オイラの　辞書には　反省なんて▽
 文字は　書いてないで　ごじゃる！▼
 戸惑わずに　振り返らずに
@@ -985,10 +985,10 @@
 破壊を　繰り返すのか……？</language>
 	</row>
 	<row id="pw_event6_enemy_3">
-		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁ！！
 こんな　あいなき　せかい　なんて▽
 ブチこわすだけなんだぞぉぉぉぉ！！</language>
-		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁぁぁ！！
+		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁ！！
 こんな　愛なき　世界　なんて▽
 ブチ壊すだけなんだぞぉぉぉぉ！！</language>
 	</row>
@@ -1197,10 +1197,10 @@
 	<row id="pw_event10_enemy_0">
 		<language name="JPN" width="256">まじん『るるるーん♪
 そなたは　つよいで　ごじゃるな▽
-オイラ　じつに　ごきげんで　ごじゃる！</language>
+オイラ　ごきげんで　ごじゃる！</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
 そなたは　強いで　ごじゃるな▽
-オイラ　実に　ご機嫌で　ごじゃる！</language>
+オイラ　ご機嫌で　ごじゃる！</language>
 	</row>
 	<row id="pw_event10_enemy_1">
 		<language name="JPN" width="256">アーカム『そんな　バカな……

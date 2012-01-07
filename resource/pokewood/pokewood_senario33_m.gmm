@@ -637,11 +637,11 @@
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００　ごめんな▼
-そろそろ　おまえの　バッテリーが
+もう　おまえの　バッテリーが
 きれちゃうんだ……▼
 だから　ちょっと　やすまないとな？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００　ごめんな▼
-そろそろ　お前の　バッテリーが
+もう　お前の　バッテリーが
 切れちゃうんだ……▼
 だから　ちょっと　休まないとな？</language>
 	</row>
@@ -872,12 +872,12 @@
 おまえが　よろこんでるのを　みると
 ぼくも　うごく　うれしいよ▼
 でも　そろそろ　おわりに　しないとね
-おまえの　バッテリーが　きれちゃうんだ</language>
+バッテリーが　きれちゃうからさ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうか……▼
 お前が　喜んでいるのを　みると
 僕も　すごく　うれしいよ▼
 でも　そろそろ　終わりに　しないとね
-お前の　バッテリーが　切れちゃうんだ</language>
+バッテリーが　切れちゃうからさ</language>
 	</row>
 	<row id="pw_event7_enemy_1">
 		<language name="JPN" width="256">Ｆー００『ヤダ！　ヤダ！
@@ -910,9 +910,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『また　後で　遊ぼう</language>
 	</row>
 	<row id="pw_event7_react_enemy_2">
-		<language name="JPN" width="256">Ｆー００『ワカッタ！　アトデ　アソブ！
+		<language name="JPN" width="256">Ｆー００『ウン！　アトデ　アソブ！
 Ｆー００ト　[1:00:トレーナー名:1]　ナカヨシ！！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『ワカッタ！　アトデ　アソブ！
+		<language name="JPN_KANJI" width="256">Ｆー００『ウン！　アトデ　アソブ！
 Ｆー００ト　[1:00:トレーナー名:1]　ナカヨシ！！</language>
 	</row>
 	<row id="pw_event8_enemy_0">

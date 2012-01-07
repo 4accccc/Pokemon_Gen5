@@ -1414,32 +1414,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フフフ！
-アンタを　エサに▽
+妹の　アンタを　エサに▽
 メカポリスを　おびきだし　たおす！▼
-アンタたちのいう　せいぎが
-こわれる　ところを　みせてやるわぁ……</Text>
+アンタたちの　いう　せいぎが
+こわれていく　しゅんかんを▽
+ゆっくりと　みせてやるわぁ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フフフ！
-アンタを　エサに▽
+妹の　アンタを　エサに▽
 メカポリスを　おびきだし　倒す！▼
-アンタ達のいう　正義が
-壊れる所を　みせてやるわぁ……</Text>
+アンタ達の　いう　正義が
+壊れていく　瞬間を▽
+ゆっくりと　みせてやるわぁ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:11:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

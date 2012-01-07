@@ -619,31 +619,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『なに！？
+			<Text>[Name:TrainerName Idx="1" ]はかせ『なにィ！？
 みらいの　せかいでは▽
 ポケモンが　にんげんを▽
-つかまえるのか？</Text>
+つかまえるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『なに！？
+			<Text>[Name:TrainerName Idx="1" ]博士『何ィ！？
 未来の　世界では▽
 ポケモンが　人間を▽
-捕まえるのか？</Text>
+捕まえるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -696,28 +696,29 @@
 			<Text>[Name:TrainerName Idx="1" ]はかせ『むう……▼
 （タイムスリップ　してきたことを
 はなすべきか……？▽
-しんじてもらえるとは　おもえないが……</Text>
+しんじて　もらえるとは▽
+おもえないが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:40" />
+				Time="2012-01-05T09:11:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:40" />
+				Time="2012-01-05T09:11:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『むう……▼
 （タイムスリップ　してきたことを
-話すべきか？▽
+話すべきか……？▽
 信じてもらえるとは　思えないが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:40" />
+				Time="2012-01-05T09:11:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:40" />
+				Time="2012-01-05T09:11:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

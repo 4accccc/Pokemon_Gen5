@@ -362,34 +362,27 @@
 何とか　するか……</language>
 	</row>
 	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くうきが　おもたい……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『くうきが　おもたい……
 はやく　けっちゃくを　つけないと▽
-とりこまれる　きけんが……
-</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『空気が　重たい……
+とりこまれる　きけんが……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『空気が　重たい……
 早く　決着を　つけないと▽
-取り込まれる　危険が……
-</language>
+取り込まれる　危険が……</language>
 	</row>
 	<row id="pw_turn_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……
-からだが……！
-</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……
-からだが……！
-</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『うう……
+かっ　からだが……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『うう……
+かっ　体が……！</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『この　けはい……
-ただごと　じゃない……
-</language>
+ただごと　じゃない……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『この　気配……
-ただごと　じゃない……
-</language>
+ただごと　じゃない……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">カダス『ウググ……
-</language>
+		<language name="JPN" width="256">カダス『ウググ……</language>
 		<language name="JPN_KANJI" width="256">カダス『ウググ……
 </language>
 	</row>
@@ -400,10 +393,8 @@
 完全に　取りつかれている？</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">カダス『オマエ　ナニモノダ……？
-</language>
-		<language name="JPN_KANJI" width="256">カダス『オマエ　何者ダ……？
-</language>
+		<language name="JPN" width="256">カダス『オマエ　ナニモノダ……？</language>
+		<language name="JPN_KANJI" width="256">カダス『オマエ　何者ダ……？</language>
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……▼
@@ -530,11 +521,11 @@
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『さて……▼
 （ふたつの　むじゅんする　はなし……
-どちらが　ただしいの……▽
+どちらを　しんじる……？▽
 どう　こうどう　すべきか……？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『さて……▼
 （二つの　矛盾する話……
-どちらが　正しいの……▽
+どちらを　信じる……？▽
 どう　行動　すべきか……？</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
@@ -576,8 +567,8 @@
 ウググ……　話　聞イテクレルカ</language>
 	</row>
 	<row id="pw_event2_react_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『どちらも　ウソね！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『どちらも　ウソね！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『どちらも　ウソつきね！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『どちらも　ウソつきね！</language>
 	</row>
 	<row id="pw_event2_react_enemy_3">
 		<language name="JPN" width="256">カダス『ウッ……
@@ -590,8 +581,8 @@
 ウググ……　信ジヌカ</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">カダス『オマエ　ココロガ　ツヨイ……　</language>
-		<language name="JPN_KANJI" width="256">カダス『オ前　心ガ　強イ……　</language>
+		<language name="JPN" width="256">カダス『オマエ　ココロ　ツヨイ……　</language>
+		<language name="JPN_KANJI" width="256">カダス『オ前　心　強イ……　</language>
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おしえて！
@@ -627,7 +618,7 @@
 </language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">カダス『ムスメノ　パワー
+		<language name="JPN" width="256">カダス『ムスメ　ノ　パワー
 ダレカニ　メ　ヲ　ツケラレタ……▼
 エタイノ　シレナイ　モノ　ニ
 トリツカレテ　シマッタ……▼
@@ -652,7 +643,7 @@
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００１への　ついき』▼
 むらの　はかば　いじょう　なし
-べっけんで　きになる　じょうほう　あり▽
+べっけんで　きになる　じょうほうあり▽
 ちょうさを　けいぞく　する▼
 コードネーム　[1:02:ポケモンニックネーム:0]　</language>
 		<language name="JPN_KANJI" width="256">『ゴーストイレイザー　報告書
@@ -743,7 +734,7 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">カダス『オマエノ　カラダ　ジョウブ▼
 オレノ　ウツワニ　シテヤル
-オマエノ　タマシイ　モ　ノコシテ　ヤル▼
+オマエノ　タマシイ　モ　ノコシテヤル▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">カダス『オ前ノ　身体　丈夫▼
@@ -768,15 +759,13 @@
 ムラハ　カイテキデ　アンゼン
 ケシキハ　スバラシク　クウキ　ウマイ▼
 メンドウナ　ヤツ　コナイヨウニ
-ホウコク　シヨウ　ソウ　シヨウ……
-</language>
+ホウコク　シヨウ　ソウ　シヨウ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ウガガ……
 村ノ　幽霊騒ギ　ウソ……▼
 村ハ　快適デ　安全
 景色ハ　素晴ラシク　空気　ウマイ▼
 面倒ナ　ヤツ　来ナイヨウニ
-報告シヨウ　ソウ　シヨウ……
-</language>
+報告シヨウ　ソウ　シヨウ……</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
@@ -844,7 +833,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『なんで　こんな
 そうどうを　おこしたんですか？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『何で　こんな
-騒動を　おこしたんですか？</language>
+騒動を　起こしたんですか？</language>
 	</row>
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">カダス『いや……
@@ -852,7 +841,7 @@
 じじょうが　あるんですわ▼
 ……じつは　うちの　ワイフが
 このむらの　かんこうじむしょに▽
-つとめとるんですがね▼
+つとめとるんですがねぇ▼
 ここんとこ　パッとせん　むらを
 せんでん　せな！　って▽
 ビービー　なきよるんですよ</language>
@@ -861,7 +850,7 @@
 事情が　あるんですわ▼
 ……実は　うちの　ワイフが
 この村の　観光事務所に▽
-勤めとるんですがね▼
+勤めとるんですがねぇ▼
 ここんとこ　パッと　せん　村を
 ピーアールせな！　って▽
 ビービー　泣きよるんですよ</language>
@@ -891,7 +880,7 @@
 これから　おくさんと　ふたりで▽
 ウチの　じむしょ　きてもらいます！▽
 おせっきょうだけじゃ　すみませんよ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あなたねえ
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『……あなたねえ
 泣きついても　許しませんよ！▼
 恥ずかしく　ないんですか？
 これから　奥さんと　二人で▽
@@ -909,9 +898,9 @@
 ……　……　……　……　……　……▼
 『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００１　への　ついき』▼
-むらの　ゆうれいそうどう　デタラメなり
+ゆうれいそうどう　デタラメなり
 さいきん　ニセ　じょうほう　おおし▽
-ちゅうい　されたし▼
+くれぐれも　ちゅうい　されたし▼
 コードネーム　[1:02:ポケモンニックネーム:0]</language>
 		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
 ……　……　……　……　……　……▼
@@ -919,7 +908,7 @@
 ファイルＮｏ．００１　への追記』▼
 村の幽霊騒動　デタラメ　なり
 最近　ニセ情報　多し▽
-注意されたし▼
+くれぐれも　注意されたし▼
 コードネーム　[1:02:ポケモンニックネーム:0]</language>
 	</row>
 ﻿	<flowchart-group-list>

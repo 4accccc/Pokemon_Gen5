@@ -2307,26 +2307,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょしゅ『うるさい　って……
-ぼくは　はかせの　ためを　おもって……</Text>
+ぼくは　はかせと　みんなのためを▽
+おもって　いっただけなのに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『うるさい　って……
-僕は　博士の　ためを　思って……</Text>
+僕は　博士と　みんなのためを▽
+思って　言っただけなのに……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2447,26 +2449,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょしゅ『たのみますよ！
-Ｆー００は　ぼくらの　きぼうなんです！</Text>
+Ｆー００は　ラボの　きぼうなんです！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『頼みますよ！
-Ｆー００は　僕らの　希望なんです！</Text>
+Ｆー００は　ラボの　希望なんです！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T11:04:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

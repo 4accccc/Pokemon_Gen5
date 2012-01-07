@@ -595,28 +595,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『うーん……▼
-みればみるほど　よくできてる……
-まるで　ほんとうの　ＵＦＯみたいだ……</Text>
+みれば　みるほど　よくできてる……
+まるで　ほんものの▽
+ＵＦＯと　みわけが　つかない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T08:16:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『うーん……▼
-みればみるほど　よく出来てる……
-まるで　本当の　ＵＦＯみたいだ……</Text>
+みれば　みるほど　よくできてる……
+まるで　本物の▽
+ＵＦＯと　見分けが　つかない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-05T08:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-05T08:16:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2956,27 +2958,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『はい……▼
 （なるほど……　じゅうりょくは
-ＵＦＯの　じゃくてんと　いうことか……</Text>
+ＵＦＯの　じゃくてん　なのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-01-05T08:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-01-05T08:16:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『はい……▼
 （なるほど……　じゅうりょくは
-ＵＦＯの　弱点と　いうことか……</Text>
+ＵＦＯの　弱点なのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-01-05T08:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-01-05T08:16:36" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

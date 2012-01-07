@@ -414,9 +414,8 @@
 言うことなんて　聞きはしない　</language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなこと　あるわけない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなこと　あるわけない！
-</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『バカなこと　いわないで！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『バカなこと　言わないで！</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">じょしゅ『フン……▼
@@ -655,14 +654,14 @@
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こうなったら
 Ｆー００の　しんぞうに　あたる▽
-ＣＰＵの　どうさを　とめるしかない……▼
-どうにかして　Ｆー００を　はかいせずに
-ＣＰＵのみを　とめられないか……</language>
+ＣＰＵを　とめるしかない……▼
+なんとか　Ｆー００を　はかいせずに
+ＣＰＵのみ　とめる　ほうほうは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『こうなったら
 Ｆー００の　心臓に　あたる▽
-ＣＰＵの動作を　止めるしかない……▼
-どうにかして　Ｆー００を　破壊せずに
-ＣＰＵのみを　止められないか……</language>
+ＣＰＵを　止めるしかない……▼
+何とか　Ｆー００を　破壊せずに
+ＣＰＵのみを　止める方法は……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">じょしゅ『ＣＰＵだけを　とめる……▼
@@ -710,9 +709,9 @@
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００！！
-だいじょうぶなのっ！？</language>
+おまえ　だいじょうぶなのっ！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００！！
-大丈夫なのっ！？</language>
+お前　大丈夫なのっ！？</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">Ｆー００『……　……[1:00:トレーナー名:1]</language>
@@ -945,19 +944,19 @@
 		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴゴッ！！！</language>
 	</row>
 	<row id="pw_event7_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　Ｆー００！！ 
-なにする　つもりよっ！！  </language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！　Ｆー００！！ 
-何する　つもりよっ！！  </language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ！！　Ｆー００！！ 
+おまえ　なにする　つもりよっ！！  </language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ！！　Ｆー００！！ 
+お前　何する　つもりよっ！！  </language>
 	</row>
 	<row id="pw_event7_enemy_3">
 		<language name="JPN" width="256">Ｆー００『ギゴググゴゴゴゴゴッ！！！</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『ギゴググゴゴゴゴゴッ！！！</language>
 	</row>
 	<row id="pw_event7_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『はなして！　Ｆー００！！ 
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はなして！　Ｆー００！ 
 わたしも　いっしょに　いるわ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『離して！　Ｆー００！！ 
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『離して！　Ｆー００！ 
 私も　一緒に　いるわ！！</language>
 	</row>
 	<row id="pw_event7_enemy_4">
@@ -1063,7 +1062,7 @@
 Ｋから　はじまる　あの　しきは
 Ｆー００に　にんげんの　こころを▽
 めばえさせる　ために　もっとも▽
-じゅうような　しょりが　かかれている……▼
+じゅうような　ポイントよ……▼
 そこを　むりやり　かきかえれば
 おだやかな　Ｆー００が　きょうぼうに▽
 なっても　おかしくない……</language>

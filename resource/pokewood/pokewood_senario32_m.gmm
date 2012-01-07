@@ -828,9 +828,11 @@
 	</row>
 	<row id="pw_event6_react_enemy_0">
 		<language name="JPN" width="256">じょしゅ『うるさい　って……
-ぼくは　はかせの　ためを　おもって……</language>
+ぼくは　はかせと　みんなのためを▽
+おもって　いっただけなのに……</language>
 		<language name="JPN_KANJI" width="256">助手『うるさい　って……
-僕は　博士の　ためを　思って……</language>
+僕は　博士と　みんなのためを▽
+思って　言っただけなのに……</language>
 	</row>
 	<row id="pw_event6_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しったことか……</language>
@@ -852,9 +854,9 @@
 	</row>
 	<row id="pw_event6_react_enemy_2">
 		<language name="JPN" width="256">じょしゅ『たのみますよ！
-Ｆー００は　ぼくらの　きぼうなんです！</language>
+Ｆー００は　ラボの　きぼうなんです！</language>
 		<language name="JPN_KANJI" width="256">助手『頼みますよ！
-Ｆー００は　僕らの　希望なんです！</language>
+Ｆー００は　ラボの　希望なんです！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

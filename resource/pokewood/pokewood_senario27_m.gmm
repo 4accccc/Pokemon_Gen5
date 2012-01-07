@@ -354,8 +354,8 @@
 		<language name="JPN_KANJI" width="256">なぞのおとこ</language>
 	</row>
 	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">おどろくしみん『みろ！　なんだありゃ！</language>
-		<language name="JPN_KANJI" width="256">おどろく市民『見ろ！　なんだありゃ！</language>
+		<language name="JPN" width="256">おどろくしみん『おわわ……</language>
+		<language name="JPN_KANJI" width="256">おどろく市民『おわわ……</language>
 	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">グアイ『まさか……
@@ -413,9 +413,11 @@
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">グアイ『やっているさ！！
-だが　ボールが　コントロールできない！</language>
+だが　モンスターボールが▽
+コントロール　できないんだっ！！</language>
 		<language name="JPN_KANJI" width="256">グアイ『やっているさ！！
-だが　ボールが　コントロールできない！</language>
+だが　モンスターボールが▽
+コントロール　できないんだっ！！</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！</language>
@@ -795,11 +797,11 @@
 	<row id="pw_event7_enemy_0">
 		<language name="JPN" width="256">モニカ『キャッ！　かゆいっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　やぶけちゃうでしょ！！▽
+ストッキングが　やぶけちゃう！！▽
 コレ　おろしたてなんだからね！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『キャッ！　かゆいっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　破けちゃうでしょ！！▽
+ストッキングが　破けちゃう！！▽
 コレ　おろしたてなんだからね！！</language>
 	</row>
 	<row id="pw_event7_hero_1">

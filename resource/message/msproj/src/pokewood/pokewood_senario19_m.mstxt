@@ -134,14 +134,15 @@
 やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ペネロペ！！
 われらの　コンビネーションで▽
-おこづかいを　はぎとって　やりましょう！</Text>
+かれの　おこづかいを▽
+サクッと　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:12" />
+				Time="2012-01-05T09:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:12" />
+				Time="2012-01-05T09:21:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -151,14 +152,15 @@
 やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ペネロペ！！
 我らの　美しい　コンビネーションで▽
-お小遣いを　はぎとって　やりましょう！</Text>
+彼の　お小遣いを▽
+全額　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2012-01-05T09:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2012-01-05T09:21:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -741,15 +743,15 @@
 			Language="JPN">
 			<Text>ペネロペ『とっても　ステキよ
 [Name:PokemonNickname Idx="0" ]も……　あなたも……▼
-（ヤバッ！　つい　くちに　でちゃった！
+（ヤバッ！　くちに　でちゃった！
 でも　てれてる　かおも　かわいすぎ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1104,26 +1106,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ふう……
-ぼくの　[Name:PokemonNickname Idx="0" ]じゃ　ダメかな……</Text>
+ぼくの　[Name:PokemonNickname Idx="0" ]じゃ　ダメか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ふう……
-ぼくの　[Name:PokemonNickname Idx="0" ]じゃ　ダメかな……</Text>
+ぼくの　[Name:PokemonNickname Idx="0" ]じゃ　ダメか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:54" />
+				Time="2012-01-05T09:21:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -642,16 +642,18 @@
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうか……
 どうしても　オレと　たたかうか……▽
-だったら　こっちも　ほんきで　いくぞ！</language>
+だったら　こっちも　ほんきで　いく！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうか……
 どうしても　オレと　戦う気か……▽
-だったら　こっちも　本気で　いくぞ！</language>
+だったら　こっちも　本気で　いく！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
-		<language name="JPN" width="256">？？？『たのもしいことよ……
-ワシの　みたては　ただしかったか……　</language>
-		<language name="JPN_KANJI" width="256">？？？『頼もしいことよ……
-ワシの　見立ては　正しかったか……　</language>
+		<language name="JPN" width="256">？？？『たのもしいことよ……▼
+……さてと　ワシの　みたては
+ただしかったかのう……</language>
+		<language name="JPN_KANJI" width="256">？？？『頼もしいことよ……▼
+……さてと　ワシの　見立ては
+正しかったかのう……　</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……
@@ -979,14 +981,14 @@
 こいつらは　イッシュぼうえいたいの　
 かこくな　トレーニングを　いっしょに▽
 たえぬいた　パートナー……▼
-かたいきずな　どころか
-おなじ　じごくを　みた　せんゆう　だ！</language>
+かたいきずな　どころか　おなじ
+じごくを　あじわった　せんゆう　だ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そりゃ　そうだ！▼
 こいつらは　イッシュ防衛隊の　
 過酷な　トレーニングを　一緒に▽
 耐え抜いた　パートナー……▼
 固いキズナ　どころか　
-同じ地獄を　みた　戦友だ！</language>
+同じ地獄を　味わった　戦友だ！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">？？？『なるほど　な……

@@ -1589,7 +1589,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・Ｂ『イッシュの　ききだと　いうのに
+			<Text>Ｍ・Ｂ『イッシュの　ききと　いうのに
 たたかうことを　あきらめたな！！▼
 それでも　きさまは
 イッシュぼうえいたいの　クルーか！▼
@@ -1598,15 +1598,15 @@
 ゼロから　きたえなおして　やる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｂ『イッシュの　危機だと　いうのに
+			<Text>Ｍ・Ｂ『イッシュの　危機と　いうのに
 戦うことを　あきらめたな！！▼
 それでも　貴様は
 イッシュ防衛隊の　クルーか！▼
@@ -1615,11 +1615,11 @@
 ゼロから　鍛え直してやる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2029,35 +2029,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこ『……よーし　いくべっ！！
+			<Text>おとこ『……おっしゃ！　いくべっ！！
 あんな　こどもが　がんばったんだ！▼
 いい　おとなの　オラに　だって
 やれねえことは　ねえっ！！▼
-そらのうえの　おっかさん……
-むすこの　いきざま　みててくれよお！　</Text>
+そらの　うえの　おっかさん……
+むすこの　いきざま　みててくれよ！　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『……よーし　行くべっ！！
+			<Text>男『……おっしゃ！　行くべっ！！
 あんな　子供が　頑張ったんだ！▼
 いい大人の　オラに　だって
 やれねえことは　ねえっ！！▼
 空の上の　おっかさん……
-息子の　生き様　見ててくれよ！　</Text>
+息子の　生き様　みててくれよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-05T08:52:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

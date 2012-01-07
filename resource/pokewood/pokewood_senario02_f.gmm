@@ -560,11 +560,13 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ねらいは　なに！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">ハチクマン『だから　きさまと
-はなすことなど　ないと　いっておろう！▼
+		<language name="JPN" width="256">ハチクマン『ええい　くどいわ！
+きさまと　はなすことなど▽
+ないと　いって　おるだろう！▼
 さっさと　きえうせるが　よいわっ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『だから　貴様と
-話すことなど　ないと　言っておろう！▼
+		<language name="JPN_KANJI" width="256">ハチクマン『ええい　くどいわ！
+貴様と　話すことなど▽
+ないと　言って　おるだろう！▼
 さっさと　消え失せるが　よいわっ！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
@@ -589,12 +591,12 @@
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファ……　ファファファ！
-わがはいは　あくのかいじんで　ある！！▽
+わがはいは　かいじんで　ある！！▽
 あやしくて　とうぜん　だろうっ！！▼
 わがはいの　おおいなる　やぼうが
 きさまに　わかってたまるかっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファ……　ファファファ！
-我輩は　悪の怪人で　ある！！▽
+我輩は　怪人で　ある！！▽
 怪しくて　当然だろうっ！！▼
 我輩の　大いなる　野望が
 貴様に　理解できるはずがないわ！</language>

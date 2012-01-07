@@ -482,14 +482,14 @@
 駆除！　駆除よ！</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『なに！？
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『なにィ！？
 みらいの　せかいでは▽
 ポケモンが　にんげんを▽
-つかまえるの？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『なに！？
+つかまえるの！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『何ィ！？
 未来の　世界では▽
 ポケモンが　人間を▽
-捕まえるの？</language>
+捕まえるの！？</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">レディアン『みらい……？
@@ -501,10 +501,11 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『さて……▼
 （タイムスリップ　してきたことを
 はなすべきかしら……？▽
-しんじてもらえるとは　おもえないけど……</language>
+しんじて　もらえるとは▽
+おもえないけど……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『さて……▼
 （タイムスリップ　してきたことを
-話すべきかしら？▽
+話すべきかしら……？▽
 信じてもらえるとは　思えないけど……</language>
 	</row>
 	<row id="pw_event1_enemy_2">

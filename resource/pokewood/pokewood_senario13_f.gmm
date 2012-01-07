@@ -624,14 +624,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">Ｍ・Ｂ『イッシュの　ききだと　いうのに
+		<language name="JPN" width="256">Ｍ・Ｂ『イッシュの　ききと　いうのに
 たたかうことを　あきらめたな！！▼
 それでも　きさまは
 イッシュぼうえいたいの　クルーか！▼
 さっさと　ほんぶに　もどってこい！
 きさまの　たるんだ　こんじょうを▽
 ゼロから　きたえなおして　やる！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『イッシュの　危機だと　いうのに
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『イッシュの　危機と　いうのに
 戦うことを　あきらめたな！！▼
 それでも　貴様は
 イッシュ防衛隊の　クルーか！▼
@@ -716,18 +716,18 @@
 早く　逃げてよ……</language>
 	</row>
 	<row id="pw_event5_enemy_4">
-		<language name="JPN" width="256">おとこ『……よーし　いくべっ！！
+		<language name="JPN" width="256">おとこ『……おっしゃ！　いくべっ！！
 あんな　こどもが　がんばったんだ！▼
 いい　おとなの　オラに　だって
 やれねえことは　ねえっ！！▼
-そらのうえの　おっかさん……
-むすこの　いきざま　みててくれよお！　</language>
-		<language name="JPN_KANJI" width="256">男『……よーし　行くべっ！！
+そらの　うえの　おっかさん……
+むすこの　いきざま　みててくれよ！　</language>
+		<language name="JPN_KANJI" width="256">男『……おっしゃ！　行くべっ！！
 あんな　子供が　頑張ったんだ！▼
 いい大人の　オラに　だって
 やれねえことは　ねえっ！！▼
 空の上の　おっかさん……
-息子の　生き様　見ててくれよ！　</language>
+息子の　生き様　みててくれよ！</language>
 	</row>
 	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">ちからつきた　[1:00:トレーナー名:1]の　まえに

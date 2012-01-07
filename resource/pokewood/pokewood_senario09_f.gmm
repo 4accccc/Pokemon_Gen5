@@ -471,11 +471,13 @@
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うーん……▼
-みればみるほど　よくできてる……
-まるで　ほんとうの　ＵＦＯみたい……</language>
+みれば　みるほど　よくできてる……
+まるで　ほんものの▽
+ＵＦＯと　みわけが　つかない……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うーん……▼
-みればみるほど　よく出来てる……
-まるで　本当の　ＵＦＯみたい……</language>
+みれば　みるほど　よくできてる……
+まるで　本物の▽
+ＵＦＯと　見分けが　つかない……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">Ｅ『ボヤボヤ　するな……
@@ -999,10 +1001,10 @@
 	<row id="pw_event6_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はい……▼
 （なるほど……　じゅうりょくは
-ＵＦＯの　じゃくてんと　いうことか……</language>
+ＵＦＯの　じゃくてん　なのね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はい……▼
 （なるほど……　じゅうりょくは
-ＵＦＯの　弱点と　いうことか……</language>
+ＵＦＯの　弱点　なのね……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

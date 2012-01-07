@@ -53,6 +53,8 @@ PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
 PWS_A_NONE_B_POKEMON    =(PWS_B_POKE|PWS_A_NONE)       # 0x20 敵がポケモン自分はいない
 PWS_A_POKEMON_B_NONE    =(PWS_B_NONE|PWS_A_POKE)       # 0x02 敵はいない自分側はポケモン
 
+STRING_MAX_JP           = 249   # 日本語での1セル内最大文字数
+STRING_1LINE_MAX_JP     = 18    # 日本語での１ライン分最大文字数
 
 $bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,"チェンジ４"=>4,}
 $waza_ret_hash = { "技１"=>0, "技２"=>1, "技３"=>2, "技４"=>3 }
@@ -496,8 +498,8 @@ class STR_CHECKER
     sankaku_num = 0
     str = str.gsub(/%MYNAME0/,"主人公００")
     str = str.gsub(/%MYNAME1/,"主人公０１")
-    str = str.gsub(/%MYPOKE0/,"ポケモン０")
-    str = str.gsub(/%MYPOKE1/,"ポケモン１")
+    str = str.gsub(/%MYPOKE0/,"ぽけもん０")
+    str = str.gsub(/%MYPOKE1/,"ぽけもん１")
     num = str.split(//).length
     temp = str.split(//)
     temp.each{|word|
@@ -505,10 +507,24 @@ class STR_CHECKER
         sankaku_num+=2
       end
     }
-    if (num+sankaku_num) > 249 then
-      puts "#{ARGV[0]}の『#{str}』の文字が249を超えて『#{num+sankaku_num}』文字です（#{num},#{sankaku_num}\n"
+    #文字総数チェック
+    if (num+sankaku_num) > STRING_MAX_JP then
+      puts "#{ARGV[0]}の『#{str}』の文字が#{STRING_MAX_JP}を超えて『#{num+sankaku_num}』文字です（#{num},#{sankaku_num}\n"
       return 0
     end
+    
+    #1行ごとの文字数チェック
+    array=str.split(/\n/)
+    array.each{|ss|
+      ss = ss.gsub(/\r/,"")
+      ss = ss.gsub(/▼/,"")
+      ss = ss.gsub(/▽/,"")
+      if ss.split(//).size>STRING_1LINE_MAX_JP then
+        printf("#{ARGV[0]}の中に１行で%d文字存在:%s\n",ss.split(//).size,ss)
+        return 0
+      end
+    }
+
     return 1
   end
 end

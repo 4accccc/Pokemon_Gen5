@@ -252,28 +252,28 @@
 			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュぼうえいたい　クルーです！▼
 セリザワさんと　いいましたね……
-そのＭ・Ｂは　あなたの物　ですか？　</Text>
+そのＭ・Ｂは　あなたのもの　ですか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュ防衛隊　クルーです！▼
 セリザワさんと　言いましたね……
-そのＭ・Ｂは　あなたの物　ですか？　</Text>
+そのＭ・Ｂは　あなたの物　ですか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -816,25 +816,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしん『きこえるか！　[Name:TrainerName Idx="1" ]！！</Text>
+			<Text>つうしん『きこえるか！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信『聞こえるか！　[Name:TrainerName Idx="1" ]！！</Text>
+			<Text>通信『聞こえるか！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1275,27 +1275,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『いかんじゃないか？
-そんな　きたないことばを　つかっては？</Text>
+			<Text>セリザワ『ハハハ……
+おいおい　いかんじゃないか？▼
+イッシュぼうえいたいが　そんな
+きたない　ことばを　つかっては？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『いかんじゃないか？
-そんな　きたない言葉を　使っては？</Text>
+			<Text>セリザワ『ハハハ……
+おいおい　いかんじゃないか？▼
+イッシュ防衛隊が　そんな
+汚い　言葉を　使っては？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2098,27 +2102,27 @@
 			Language="JPN">
 			<Text>セリザワ『……もう　たたかいは
 いいだろう　[Name:TrainerName Idx="1" ]くん▼
-それよりも　はなしを　しないかね……？</Text>
+それより　はなしを　しないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『……もう　戦いは
 いいだろう　[Name:TrainerName Idx="1" ]くん▼
-それよりも　話を　しないかね……？</Text>
+それより　話を　しないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2696,27 +2700,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしん『[Name:TrainerName Idx="1" ]！　おうとうせよ！
+			<Text>つうしん『オイ！　おうとうせよ！
 おうとうせよ！　[Name:TrainerName Idx="1" ]！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信『[Name:TrainerName Idx="1" ]！　応答せよ！
+			<Text>通信『オイ！　応答せよ！
 応答せよ！　[Name:TrainerName Idx="1" ]！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3026,35 +3030,35 @@
 		Label="pw_event8_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
-Ｍ・Ｂいじょうに　きょうりょくだな……
-しかし　こんな　きけんなものを▽
+			<Text>[Name:TrainerName Idx="1" ]『クッ……
+Ｍ・Ｂいじょうに　てごわいな……▼
+しかし　こんな　きけんなものを
 どうやって　てに　いれたんだ……▼
 まさか……　じぶんで　Ｍ・Ｂを
 かいはつ　したとでも　いうのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:08:05" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:08:05" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
-Ｍ・Ｂ以上に　強力だな……
-しかし　こんな　危険な　物を▽
+			<Text>[Name:TrainerName Idx="1" ]『クッ……
+Ｍ・Ｂ以上に　強力だな……▼
+しかし　こんな　危険な　物を
 どうやって　手に　入れたんだ……▼
 まさか……　自分で　Ｍ・Ｂを
 開発したとでも　いうのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:08:05" />
+				Time="2012-01-05T09:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:08:05" />
+				Time="2012-01-05T09:09:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -619,31 +619,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『なに！？
+			<Text>[Name:TrainerName Idx="1" ]はかせ『なにィ！？
 みらいの　せかいでは▽
 ポケモンが　にんげんを▽
-つかまえるの？</Text>
+つかまえるの！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『なに！？
+			<Text>[Name:TrainerName Idx="1" ]博士『何ィ！？
 未来の　世界では▽
 ポケモンが　人間を▽
-捕まえるの？</Text>
+捕まえるの！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-05T09:17:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -696,28 +696,29 @@
 			<Text>[Name:TrainerName Idx="1" ]はかせ『さて……▼
 （タイムスリップ　してきたことを
 はなすべきかしら……？▽
-しんじてもらえるとは　おもえないけど……</Text>
+しんじて　もらえるとは▽
+おもえないけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:39" />
+				Time="2012-01-05T09:11:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:39" />
+				Time="2012-01-05T09:11:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『さて……▼
 （タイムスリップ　してきたことを
-話すべきかしら？▽
+話すべきかしら……？▽
 信じてもらえるとは　思えないけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:39" />
+				Time="2012-01-05T09:11:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T10:30:39" />
+				Time="2012-01-05T09:11:20" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

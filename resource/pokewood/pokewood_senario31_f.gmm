@@ -549,11 +549,11 @@
 		<language name="JPN" width="256">かいぶつ『ブフー…… 
 クラヤミノ　ソコ▽
 アンコクセイウン　カラ……▽
-ブヒュー　バファッ　ブルル　ボルン……</language>
+ブヒュー　バファッ　ブルル……</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『ブフー…… 
 事象ノ　地平面ノ　奥底▽
 暗黒星雲　ヨリ　来タル……▽
-ブヒュー　バファッ　ブルル　ボルン……</language>
+ブヒュー　バファッ　ブルル……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぜったい　ゆるせない！</language>
@@ -575,7 +575,7 @@
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">かいぶつ『ヒカリ……
-アンコクセイウンノ▽
+アンコクセイウン　ノ▽
 チカラガ　ヨワマル……！</language>
 		<language name="JPN_KANJI" width="256">かいぶつ『光量子ノ　波動
 コヒーレンス……▼

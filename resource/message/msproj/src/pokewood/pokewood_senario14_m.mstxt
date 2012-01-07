@@ -1433,27 +1433,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そうか……
 どうしても　オレと　たたかうか……▽
-だったら　こっちも　ほんきで　いくぞ！</Text>
+だったら　こっちも　ほんきで　いく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そうか……
 どうしても　オレと　戦う気か……▽
-だったら　こっちも　本気で　いくぞ！</Text>
+だったら　こっちも　本気で　いく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1468,27 +1468,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『たのもしいことよ……
-ワシの　みたては　ただしかったか……　</Text>
+			<Text>？？？『たのもしいことよ……▼
+……さてと　ワシの　みたては
+ただしかったかのう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:23" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:23" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『頼もしいことよ……
-ワシの　見立ては　正しかったか……　</Text>
+			<Text>？？？『頼もしいことよ……▼
+……さてと　ワシの　見立ては
+正しかったかのう……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:23" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:23" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2863,15 +2865,15 @@
 こいつらは　イッシュぼうえいたいの　
 かこくな　トレーニングを　いっしょに▽
 たえぬいた　パートナー……▼
-かたいきずな　どころか
-おなじ　じごくを　みた　せんゆう　だ！</Text>
+かたいきずな　どころか　おなじ
+じごくを　あじわった　せんゆう　だ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:09" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:09" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2880,14 +2882,14 @@
 過酷な　トレーニングを　一緒に▽
 耐え抜いた　パートナー……▼
 固いキズナ　どころか　
-同じ地獄を　みた　戦友だ！</Text>
+同じ地獄を　味わった　戦友だ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:09" />
+				Time="2012-01-05T09:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:09" />
+				Time="2012-01-05T09:00:25" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

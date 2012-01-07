@@ -374,14 +374,16 @@
 やぼったい　[1:02:ポケモンニックネーム:0]は……▼
 さあ！　ミゲル！！
 われらの　コンビネーションで▽
-おこづかいを　はぎとって　やりましょう！</language>
+かのじょの　おこづかいを▽
+サクッと　はぎとって　やりましょう！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
 （フッ……　何だ？
 この　やぼったい　トレーナーに▽
 やぼったい　[1:02:ポケモンニックネーム:0]は……▼
 さあ！　ミゲル！！
 我らの　美しい　コンビネーションで▽
-お小遣いを　はぎとって　やりましょう！</language>
+彼女の　お小遣いを▽
+全額　はぎとって　やりましょう！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こっ　こんにちは……
@@ -536,10 +538,12 @@
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">ミゲル『とっても　ステキだ……
 [1:02:ポケモンニックネーム:0]も……　あなたも……▼
-（ヤベッ！　つい　くちに　でちゃった！</language>
+（ヤベッ！　くちに　でちゃった！
+でも　てれてる　かおも　キャワイイぜ</language>
 		<language name="JPN_KANJI" width="256">ミゲル『とっても　ステキだ……
 [1:02:ポケモンニックネーム:0]も……　あなたも……▼
-（ヤベッ！　つい　口に　出ちゃった！</language>
+（ヤベッ！　つい　口に　出ちゃった！
+でも　てれてる　顔も　キャワイイぜ</language>
 	</row>
 	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『えっ……？</language>
@@ -612,10 +616,10 @@
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さすがですね……▼
 ミゲルさんの　ドーブルは
-ホントに　つよいや……</language>
+ホントに　つよいな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さすがですね……▼
 ミゲルさんの　ドーブルは
-ホントに　強いや……</language>
+ホントに　強いな……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルーッ！！▼
@@ -627,9 +631,9 @@
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふう……
-わたしの　[1:02:ポケモンニックネーム:0]じゃ　ダメかな……</language>
+わたしの　[1:02:ポケモンニックネーム:0]じゃ　ダメね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ふう……
-わたしの　[1:02:ポケモンニックネーム:0]じゃ　ダメかな……</language>
+わたしの　[1:02:ポケモンニックネーム:0]じゃ　ダメね……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
 		<language name="JPN" width="256">ミゲル『そんなことは　ないっ！

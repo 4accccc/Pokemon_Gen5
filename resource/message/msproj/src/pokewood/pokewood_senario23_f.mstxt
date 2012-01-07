@@ -926,14 +926,14 @@
 ことばは　ほんとう　だったのか？▼
 それは　だれにも　わかりません▼
 それからさきの　ひめの　きろくは
-どこにも　のこっていないのですから……</Text>
+どこにも　のこっていないのです……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:48" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:48" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -941,14 +941,14 @@
 言葉は　本当　だったのか？▼
 それは　だれにも　分かりません▼
 それから先の　姫の記録は
-どこにも　残っていないのですから……</Text>
+どこにも　残っていないのです……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:48" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:48" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1098,29 +1098,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『もー　うるさい！
 ほめられても　うれしくないよーっ！！▼
-それに　なに？　こきつかわれる　って？
+それに　なに？　こきつかわれるって？
 わたし　なに　させられるのよ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『もー　うるさい！
 ほめられても　うれしくないよーっ！！▼
-それに　何？　こき使われる　って？
+それに　何？　こき使われるって？
 私　何　させられるのよ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1172,33 +1172,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『うげー！
-なによ　それ　めんどくさー！▼
-そんなの　めしつかいが　することよ！
-ひめが　することじゃないよー！▽
-どれもこれも　やったこともないし！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『うげげー！
+なによ　ソレ　めんどくさー！▼
+そんなのさ　めしつかいの　する
+しごと　じゃない！▽
+ひめが　することじゃないよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『うえー！
-何よ　それ　面倒くせー！▼
-そんなの　召使いが　することよ！
-姫が　することじゃないよー！▽
-どれもこれも　やったこともないし！！</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『うげげー！
+何よ　ソレ　面倒くさー！▼
+そんなのさ　召使いの　する
+仕事　じゃない！▽
+姫が　することじゃないよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1213,30 +1213,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『やれやれ……
-どうしようもない　あまちゃんだな▼
+じんせい　なめてるって　いうか▽
+とんだ　あまちゃん　だなあ▼
 キミみたいな　にんげんは
 つかまって　せいかいだった　かもね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『やれやれ……
-どうしようもない　甘ちゃんだな▼
+人生　なめてる　っていうか▽
+とんだ　甘ちゃんだなあ▼
 キミみたいな　人間は
 捕まって　正解だった　かもね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1275,32 +1277,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]ひめは
-ろうどうへの　きょうふに　ふるえながら▽
+あすから　はじまる　ろうどうへの▽
+きょうふに　ふるえながら▽
 ねむりに　ついたのです……▼
 いのちが　あるだけ　マシだったと
 じぶんに　いいきかせて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]姫は
-労働への　恐怖に　震えながら▽
+明日から　はじまる　労働への▽
+恐怖に　震えながら▽
 眠りに　ついたのです……▼
 命が　あるだけ　マシだったと
 自分に　言い聞かせて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1495,14 +1499,14 @@
 ……おひめさまの　キミなら　きっと
 ゴージャスな　かざりの　ついた▽
 とびらに　なるだろうね……▽
-きっと　いいねだんで　うれるとおもうよ</Text>
+いいねだんで　うれるんだろうな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1512,14 +1516,14 @@
 ……お姫様の　キミなら　きっと
 ゴージャスな　飾りの　ついた▽
 立派な　扉に　なるだろうね……▽
-きっと　いい値段で　売れると思うよ</Text>
+いい値段で　売れるんだろうな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1657,14 +1661,14 @@
 とびらに　かえられてしまいました▼
 きっと　いまごろ　そのとびらは
 どこかの　いえの　とびらと　して▽
-やくめを　はたして　いるのでしょう……</Text>
+やくめを　はたしているのでしょう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1673,14 +1677,14 @@
 扉に　変えられてしまいました▼
 きっと　今ごろ　その扉は
 どこかの家の　扉と　して▽
-役目を　果たして　いるのでしょう……</Text>
+役目を　果たしているのでしょう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T03:35:27" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1967,18 +1971,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『ゲー！　ばいしゅう　かよ！▼
-まったく　いっこくのひめが　これじゃ
+			<Text>ぬいぐるみ『ゲー！　ばいしゅうかよ！▼
+いっこくの　ひめが　これじゃ
 にんげんのみらいは　まっくらだね！▼
 そもそも　ボク　ぬいぐるみ　なんだぜ
 かねの　つかいみちなんて　ないよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2012,33 +2016,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『ムカーッ！！▼
 たかが　ぬいぐるみの　くせに
-そんな　くち　きくなんて　なまいきよ！▼
+そんなくち　きくなんて　なまいきよ！▼
 もう　いい！　たのまないわ！！
 じぶんで　こわせば　いいんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『ムカーッ！！▼
 たかが　ぬいぐるみの　くせに
 そんな口　聞くなんて　生意気よ！▼
-それに　一体　何なのよ
+それに　一体　何なのよ！
 ぬいぐるみマネー　っていうのは！▼
 もう　いい！　頼まないわ！！
 自分で　壊せば　いいんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:11" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2128,28 +2132,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『ふーん……▼
-ぬいぐるみの　くせに　くろうしてるんだ
-だから　ボロボロで　よごれてるのね……</Text>
+あなた　ぬいぐるみの　くせに
+いがいと　くろう　してるんだ▽
+だから　ボロボロで　きたないのね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『ふーん……▼
-ぬいぐるみの　くせに　苦労してるんだ
-だから　ボロボロで　汚れてるのね……</Text>
+あなた　ぬいぐるみの　くせに
+意外と　苦労してるんだ▽
+だから　ボロボロで　汚いのね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2249,38 +2255,38 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『そうだね……
-そうしたい　ような　きも　するけど……▼
+そうしたい　きも　するけど……▼
 キミと　ちがって　ボクは
 ポケモンも　もってないし▼
 からだが　ワタで　できてるから
 あまり　うまく　うごけないし……▼
-そもそも　どうやって　ジュジュベさまに
-たちむかえばいいか　わからないね</Text>
+どうしたら　ジュジュベさま　から
+にげられるのか　わからないしね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『そうだね……
-そうしたい　ような　気も　するけど……▼
+そうしたい　気も　するけど……▼
 キミと　違って　ボクは
 ポケモンも　持ってないし▼
 身体が　ワタで　出来てるから
 あまり　うまく　動けないし……▼
-そもそも　どうやって　ジュジュベさまに
-立ち向かえばいいか　分からないしね</Text>
+どうしたら　ジュジュベさま　から
+逃げられるか　わからないしね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2431,25 +2437,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『ぜつぼうてきだね……</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『ぜつぼうてきね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:55" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:27:55" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『絶望的だね……</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『絶望的ね……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T09:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T09:55:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2501,27 +2507,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『きた！　きた！　きた！
-もう　ちょっとで　とびらを　こわせそう！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『きた！きた！きた！
+もう　ちょっとで▽
+とびらを　こわせそう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『来た！　来た！　来た！
-もう　ちょっとで　扉を　壊せそう！</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『来た！来た！来た！
+もう　ちょっとで▽
+扉を　壊せそう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2726,28 +2734,30 @@
 			<Text>[Name:TrainerName Idx="1" ]ひめ『……なんで
 そんなこと　おしえて　くれるんだ？▼
 あなた　ここの　もんばん　でしょ？
-ヒントは　さっきで　おしまいじゃないの？</Text>
+ヒントは　さっきで▽
+おしまい　じゃないの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『……なんで
+			<Text>[Name:TrainerName Idx="1" ]姫『……何で
 そんなこと　教えて　くれるの？▼
 あなた　ここの門番　でしょ？
-ヒントは　さっきで　おしまいじゃないの？</Text>
+ヒントは　さっきで▽
+お仕舞いじゃないの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2806,26 +2816,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『ありがとう……！
-ぜったい　いっしょに　ここを　でよう！</Text>
+ぜったい　いっしょに　ここをでよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『ありがとう……！
-絶対　一緒に　ここを　出よう！</Text>
+絶対　一緒に　ここを出よう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3343,28 +3353,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『……ああ
-この　みがわりの　ぬいぐるみの　こと？▼
+みがわりの　ぬいぐるみの　こと？▼
 そういえば　あなたに　そっくりね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T04:27:52" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T04:27:52" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『……ああ
-この　みがわりの　ぬいぐるみの　こと？▼
+みがわりの　ぬいぐるみの　こと？▼
 そういえば　あなたに　そっくりね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T04:27:52" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T04:27:52" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3373,15 +3383,14 @@
 			Language="JPN">
 			<Text>ぬいぐるみ『そうだね……▼
 でもまあ　ボクは　もとから
-このすがたって　わけでも　ないけど
-</Text>
+このすがたって　わけでも　ないけど</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T09:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T09:09:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3552,29 +3561,29 @@
 		Label="pw_event10_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『……▼
-（まあ　カッコイイほうだと　おもうけど
+			<Text>ぬいぐるみ『ははは……▼
+（カッコイイほうだと　おもうけど
 なんか　プレッシャーだな……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『……▼
-（まあ　カッコイイほうだと　思うけど
+			<Text>ぬいぐるみ『ははは……▼
+（カッコイイほうだと　思うけど
 何か　プレッシャーだな……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T08:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-06T08:37:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

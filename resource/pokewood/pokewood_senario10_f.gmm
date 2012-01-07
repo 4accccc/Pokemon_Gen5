@@ -521,9 +521,9 @@
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">にげまどうしみん『はやく　にげろ！！
-ＵＦＯに　つかまったら　おしまいだぞ！</language>
+ＵＦＯに　つかまったら　おわりだぞ！</language>
 		<language name="JPN_KANJI" width="256">逃げ惑う市民『早く　逃げろ！！
-ＵＦＯに　捕まったら　お仕舞いだぞ！</language>
+ＵＦＯに　捕まったら　終わりだぞ！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>

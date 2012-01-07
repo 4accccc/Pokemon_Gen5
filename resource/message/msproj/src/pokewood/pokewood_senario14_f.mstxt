@@ -1433,27 +1433,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そう……
 どうしても　たたかいたいのね……▽
-なら　こっちも　ほんきで　いくよ！</Text>
+なら　こっちも　ほんきで　いく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:07" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:07" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そうか……
 どうしても　戦いたいのね……▽
-なら　こっちも　本気で　いくよ！</Text>
+なら　こっちも　本気で　いく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:07" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:07" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1468,27 +1468,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『たのもしいことよ……
-ワシの　みたては　ただしかったか……　</Text>
+			<Text>？？？『たのもしいことよ……▼
+……さてと　ワシの　みたては
+ただしかったかのう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『頼もしいことよ……
-ワシの　見立ては　正しかったか……　</Text>
+			<Text>？？？『頼もしいことよ……▼
+……さてと　ワシの　見立ては
+正しかったかのう……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2860,34 +2862,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そりゃ　そうよ！▼
-このこたちは　イッシュぼうえいたいの　
+みんなは　イッシュぼうえいたいの　
 かこくな　トレーニングを　いっしょに▽
 たえぬいた　パートナー……▼
-かたいきずな　どころか
-おなじ　じごくを　みた　せんゆう　よ！</Text>
+かたいきずな　どころか　おなじ
+じごくを　あじわった　せんゆう　よ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:08" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:08" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そりゃ　そうよ！▼
-この子達は　イッシュ防衛隊の　
+みんなは　イッシュ防衛隊の　
 過酷な　トレーニングを　一緒に▽
 耐え抜いた　パートナー……▼
 固いキズナ　どころか　
-同じ地獄を　みた　戦友よ！</Text>
+同じ地獄を　味わった　戦友よ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:08" />
+				Time="2012-01-05T09:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T08:35:08" />
+				Time="2012-01-05T09:00:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -1716,30 +1716,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……そうだっ！！
-ボクの　かけがえのない　こいびとだっ！▼
+ボクの　たいせつな　こいびとだっ！▼
 だから　あなたに　ボールを
 わたすことは　できない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T10:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T10:41:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……そうだっ！！
-ボクの　かけがいのない　恋人だっ！▼
+ボクの　大切な　恋人だっ！▼
 だから　あなたに　ボールを
 渡すことは　できない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T10:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-06T10:41:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2161,29 +2161,29 @@
 			Language="JPN">
 			<Text>グアイ『こっ　この　わたしを
 ドロボウ　だとっ！？▼
-キミには　ひとを　みるめ　というものが
+キミには　ひとを　みる　め　が
 まるで　ないようだなっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:18" />
+				Time="2012-01-06T10:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:18" />
+				Time="2012-01-06T10:41:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グアイ『こっ　この　私を
 ドロボウ　だとっ！？▼
-キミには　人を　見る目　というものが
+キミには　人を　見る目が
 まるで　ないようだなっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:18" />
+				Time="2012-01-06T10:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:18" />
+				Time="2012-01-06T10:41:31" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

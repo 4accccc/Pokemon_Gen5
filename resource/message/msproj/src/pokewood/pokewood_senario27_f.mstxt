@@ -71,25 +71,25 @@
 		Label="pw_turn_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>おどろくしみん『みろ！　なんだありゃ！</Text>
+			<Text>おどろくしみん『おわわ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おどろく市民『見ろ！　なんだありゃ！</Text>
+			<Text>おどろく市民『おわわ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -339,26 +339,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グアイ『やっているさ！！
-だが　ボールが　コントロールできない！</Text>
+だが　モンスターボールが▽
+コントロール　できないんだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T13:58:33" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T13:58:33" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グアイ『やっているさ！！
-だが　ボールが　コントロールできない！</Text>
+だが　モンスターボールが▽
+コントロール　できないんだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T13:58:33" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T13:58:33" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2102,29 +2104,29 @@
 			Language="JPN">
 			<Text>モニカ『キャッ！　かゆいっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　やぶけちゃうでしょ！！▽
+ストッキングが　やぶけちゃう！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:11" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:11" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッ！　かゆいっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　破けちゃうでしょ！！▽
+ストッキングが　破けちゃう！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:11" />
+				Time="2012-01-06T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:11" />
+				Time="2012-01-06T10:47:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
