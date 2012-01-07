@@ -4604,7 +4604,7 @@ static BOOL RESORT_FIELD_DEBUG_CheckSamePeople( RESORT_SYSTEM *p_sys )
           RESORT_ABSTRUCT_DATA_GetData( p_data1, RESORT_DATA_PARAM_NAME, name1 );
           RESORT_ABSTRUCT_DATA_GetData( p_data2, RESORT_DATA_PARAM_NAME, name2 );
           
-          if( !(buff1 == buff2 && idx1 == idx1) )
+          if( !(buff1 == buff2 && idx1 == idx2) )
           {
             if( trainerID1 == trainerID2 )
             {
