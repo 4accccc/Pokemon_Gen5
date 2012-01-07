@@ -3010,10 +3010,10 @@ RESORT_MERGE_RESULT RESORT_PROXY_BUFF_MergeProxy( RESORT_PROXY_BUFF *p_wk, const
   if( p_data )
   {
     RESORT_PROXY_DATA_MergeProxy( p_data, cp_proxy );
-    return RESORT_ADD_RESULT_OK;
+    return RESORT_MERGE_RESULT_OK;
   }
 
-  return RESORT_ADD_RESULT_NG;
+  return RESORT_MERGE_RESULT_NG;
 }
 //----------------------------------------------------------------------------
 /**
@@ -4721,6 +4721,7 @@ RESORT_RECORD_ADD_ID_SORT:
 ///	定数
 //=====================================
 #define RESORT_MY_NAME_BUFF_MAX  (20)
+#define RESORT_NG_TRAINER_ID_DEFAULT  (0xFFFFFFFF)
 
 //-------------------------------------
 ///	街データ
@@ -4809,6 +4810,8 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   p_wk->rnd_seed    = GFUser_GetPublicRand(0);
   p_wk->lv          = 1;
   p_wk->is_tutorial = 1;
+
+  GFL_STD_MemFill32( p_wk->trainerID, RESORT_NG_TRAINER_ID_DEFAULT, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
 
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
@@ -5019,7 +5022,7 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
 void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 {
   //ビーコントレーナーセーブを破棄
-  GFL_STD_MemClear( p_wk->trainerID, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
+  GFL_STD_MemFill32( p_wk->trainerID, RESORT_NG_TRAINER_ID_DEFAULT, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
   p_wk->trainerID_cnt = 0;
   p_wk->trainerID_max = 0;
 
@@ -5074,7 +5077,8 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
   int i;
   for( i = 0; i < cp_wk->trainerID_max; i++ )
   {
-    if( cp_wk->trainerID[ i ] == trainerID )
+    if( cp_wk->trainerID[ i ] != RESORT_NG_TRAINER_ID_DEFAULT
+        && cp_wk->trainerID[ i ] == trainerID )
     {
       return TRUE;
     }
