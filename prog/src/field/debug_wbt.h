@@ -9,12 +9,16 @@
 
 
 #ifdef  PM_DEBUG
+
+#include "pm_define.h"  //TEMOTI_POKEMAX
 #include "field/wbt.h"
 #include "field/wbt_system.h"
 
 extern BOOL DEBUG_WBT_ForceTrMode;
 extern BOOL DEBUG_WBT_ReverseJudgeMode;
 extern u16 DEBUG_WBT_ForceTrList[ WBT_TRAINER_NUM ];
+extern BOOL  DEBUG_WBT_ForceRentalMode;
+extern u16 DEBUG_WBT_ForceRental[ TEMOTI_POKEMAX ];
 
 //------------------------------------------------------------------
 /// WBTデバッグ：強制トレーナーリストの設定

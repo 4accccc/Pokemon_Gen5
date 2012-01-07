@@ -34,6 +34,7 @@
 #include "msg/msg_wbt_system.h"   //msg_wbtsys_oyaname
 #include "poke_tool/poke_memo.h"  //POKE_MEMO_
 
+#include "debug_wbt.h"  //DEBUG_WBT_ForceRentalMode,DEBUG_WBT_ForceRental
 
 //============================================================================================
 //    定義
@@ -610,6 +611,12 @@ static void WBTSYS_SetupRentalParty(
 
   WBT_NGINFO_Delete( ng_info );
 
+#ifdef  PM_DEBUG
+  if ( DEBUG_WBT_ForceRentalMode )
+  { //強制レンタルモードの場合は指定ポケモンにしてしまう
+    GFL_STD_MemCopy16( DEBUG_WBT_ForceRental, index_array, sizeof(index_array) );
+  }
+#endif
   { //抽選したポケモンを使ってPOKEPARTYを設定する
     BSUBWAY_POKEMON * btpwd;
     btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * TEMOTI_POKEMAX );

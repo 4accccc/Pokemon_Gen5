@@ -83,9 +83,11 @@ enum{
 
 // DebugMode
 enum{
-	DEBUG_MODE_TR	= 0,			// トレーナー選択
-  DEBUG_MODE_FORCE_TR_MODE, //強制トレーナーリストモード選択
-	DEBUG_MODE_REVERSE_JUDGE,					// debug
+	DEBUG_MODE_TR	= 0,			    ///< トレーナー選択
+  DEBUG_MODE_FORCE_TR_MODE,   ///< 強制トレーナーリストモード選択
+	DEBUG_MODE_REVERSE_JUDGE,		///< 不利判定を必勝にするモード選択
+  DEBUG_MODE_FORCE_RENT_MODE, ///< 強制レンタルモード選択
+  DEBUG_MODE_RENT,            ///< レンタルポケモン選択
 	//
 	DEBUG_MODE_MAX,					// max
 };
@@ -144,6 +146,8 @@ static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput_forceTrMode( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput_reverseJudgeMode( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_forceRentMode( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_rentalPokemon( DEBUG_WBT_WORK *wk );
 //
 static void createNumWin( DEBUG_WBT_WORK * wk );
 static void deleteNumWin( DEBUG_WBT_WORK * wk );
@@ -152,9 +156,9 @@ static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos
 static void printMsgStrWin( DEBUG_WBT_WORK * wk, const u16 msg_id, const s32 xpos, const s32 ypos );
 static void updateNumWin( DEBUG_WBT_WORK * wk );
 static void clearNumWin(  DEBUG_WBT_WORK * wk );
-static void dispInfo( DEBUG_WBT_WORK * wk );
-static void dispInfo_forceTrMode( DEBUG_WBT_WORK * wk );
-static void dispInfo_reverseJudgeMode( DEBUG_WBT_WORK * wk );
+static void dispInfo_TrainerList( DEBUG_WBT_WORK * wk );
+static void dispInfo_RentalList( DEBUG_WBT_WORK * wk );
+static void dispInfo_toggleMode( DEBUG_WBT_WORK * wk, u32 msg_id, u32 mode_value );
 static void dispInfoPrintf( DEBUG_WBT_WORK * wk );
 
 //=============================================================================
@@ -192,6 +196,8 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_01, (void*)DEBUG_STR_WBT_01, GFL_OVERLAY_BLANK_ID },  // トレーナーせってい
   { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // 逆転判定モード
   { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // 強制トレーナーモード
+  { DEBUG_STR_WBT_18, (void*)DEBUG_STR_WBT_18, GFL_OVERLAY_BLANK_ID },   // 強制レンタルモード
+  { DEBUG_STR_WBT_19, (void*)DEBUG_STR_WBT_19, GFL_OVERLAY_BLANK_ID },   // レンタルポケモン設定
   { DEBUG_STR_WBT_04, (void*)DEBUG_STR_WBT_04, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_05, (void*)DEBUG_STR_WBT_05, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_06, (void*)DEBUG_STR_WBT_06, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
@@ -361,6 +367,16 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
     case DEBUG_STR_WBT_03:  //強制トレーナーリストモード設定
     	*seq = 3;
     	work->DebugMode = DEBUG_MODE_FORCE_TR_MODE;
+      break;
+
+    case DEBUG_STR_WBT_18:  // 強制レンタルモード
+      *seq = 3;
+      work->DebugMode = DEBUG_MODE_FORCE_RENT_MODE;
+      break;
+
+    case DEBUG_STR_WBT_19:  // レンタルポケモン設定
+      *seq = 3;
+      work->DebugMode = DEBUG_MODE_RENT;
       break;
 
     case DEBUG_STR_WBT_04:
@@ -875,6 +891,12 @@ static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk )
   case DEBUG_MODE_REVERSE_JUDGE:
 		bflg = debugMenuKeyInput_reverseJudgeMode( wk );
     break;
+  case DEBUG_MODE_FORCE_RENT_MODE:
+    bflg = debugMenuKeyInput_forceRentMode( wk );
+    break;
+  case DEBUG_MODE_RENT:
+    bflg = debugMenuKeyInput_rentalPokemon( wk );
+    break;
   default:
     GF_ASSERT( 0 );
 	}
@@ -962,7 +984,89 @@ static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk )
 	if(flg == 1){
 //		OS_Printf("index, num:%d,%d\n", wk->Index, wk->Trbuffer[wk->Index]);
 		// 表示まとめ
-		dispInfo( wk );
+		dispInfo_TrainerList( wk );
+		wk->Flag &= ~FLG_WIN_UPDATE;
+	}
+	return( bflg );
+}
+
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput_rentalPokemon( DEBUG_WBT_WORK *wk )
+{
+  enum {
+    RENT_POKE_MIN = 1,
+    RENT_POKE_MAX = 908,
+  };
+	s16		flg=0;
+	BOOL	bflg=FALSE;
+  s32 tmp;
+	
+  if ( wk->Index >= TEMOTI_POKEMAX ) wk->Index = 0;
+	// 戻し
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		bflg = TRUE;
+	}
+	// 上
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+		wk->Index--;
+		if(wk->Index < 0){
+			wk->Index = TEMOTI_POKEMAX-1;
+		}
+		flg = 1;
+	}
+	// 下
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+		wk->Index++;
+		if(wk->Index >= TEMOTI_POKEMAX){
+			wk->Index = 0;
+		}
+		flg = 1;
+	}
+	// 左(減らす)
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+    tmp = DEBUG_WBT_ForceRental[wk->Index] - 1;
+    if(tmp < RENT_POKE_MIN){
+      tmp = RENT_POKE_MAX;
+		}
+    DEBUG_WBT_ForceRental[wk->Index] = tmp;
+		flg = 1;
+	}
+  else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
+    tmp = DEBUG_WBT_ForceRental[wk->Index] - 10;
+    if(tmp < RENT_POKE_MIN){
+      tmp = RENT_POKE_MAX;
+		}
+    DEBUG_WBT_ForceRental[wk->Index] = tmp;
+		flg = 1;
+  }
+	// 右(増やす)
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+    tmp = DEBUG_WBT_ForceRental[wk->Index] + 1;
+    if(tmp > RENT_POKE_MAX){
+      tmp = RENT_POKE_MIN;
+		}
+    DEBUG_WBT_ForceRental[wk->Index] = tmp;
+		flg = 1;
+	}
+  else if ( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
+    tmp = DEBUG_WBT_ForceRental[wk->Index] + 10;
+    if(tmp > RENT_POKE_MAX){
+      tmp = RENT_POKE_MIN;
+		}
+    DEBUG_WBT_ForceRental[wk->Index] = tmp;
+		flg = 1;
+  }
+
+	// 更新
+	if(wk->Flag & FLG_WIN_UPDATE){
+		flg = 1;
+	}
+	
+	// 更新
+	if(flg == 1){
+		// 表示まとめ
+		dispInfo_RentalList( wk );
 		wk->Flag &= ~FLG_WIN_UPDATE;
 	}
 	return( bflg );
@@ -1002,7 +1106,7 @@ static BOOL debugMenuKeyInput_forceTrMode( DEBUG_WBT_WORK *wk )
 	// 更新
 	if(flg == 1){
 		// 表示まとめ
-		dispInfo_forceTrMode( wk );
+    dispInfo_toggleMode( wk, DEBUG_STR_WBT_03, DEBUG_WBT_ForceTrMode );
 		wk->Flag &= ~FLG_WIN_UPDATE;
 	}
 	return( bflg );
@@ -1043,7 +1147,48 @@ static BOOL debugMenuKeyInput_reverseJudgeMode( DEBUG_WBT_WORK *wk )
 	// 更新
 	if(flg == 1){
 		// 表示まとめ
-		dispInfo_reverseJudgeMode( wk );
+    dispInfo_toggleMode( wk, DEBUG_STR_WBT_02, DEBUG_WBT_ReverseJudgeMode );
+		wk->Flag &= ~FLG_WIN_UPDATE;
+	}
+	return( bflg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(入力画面:強制レンタルモード)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput_forceRentMode( DEBUG_WBT_WORK *wk )
+{
+	s16		flg=0;
+	BOOL	bflg=FALSE;
+	
+	// 戻し
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		// 戻し
+		wk->Flag &= ~FLG_SET_MODE;
+		bflg = TRUE;
+//		OS_Printf("end\n");
+	}
+  else if ( (GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A )) != 0 )
+  { //モードを反転
+    DEBUG_WBT_ForceRentalMode = !(DEBUG_WBT_ForceRentalMode);
+		flg = 1;
+  }
+	
+	// 更新
+	if(wk->Flag & FLG_WIN_UPDATE){
+		flg = 1;
+	}
+	
+	// 更新
+	if(flg == 1){
+		// 表示まとめ
+    dispInfo_toggleMode( wk, DEBUG_STR_WBT_02, DEBUG_WBT_ForceRentalMode );
 		wk->Flag &= ~FLG_WIN_UPDATE;
 	}
 	return( bflg );
@@ -1214,6 +1359,42 @@ static void clearNumWin( DEBUG_WBT_WORK * wk )
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief	表示項目まとめ(レンタルポケモン)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void dispInfo_RentalList( DEBUG_WBT_WORK * wk )
+{
+	s32		i;
+	s32		tmp;
+	s32		mode=0;
+	
+	// クリア
+	clearNumWin( wk );
+	//
+	// index
+	//
+	// 番号を表示
+	for(i=0;i<3;i++){
+    s32 mode1 = 0, mode2 = 0;
+    if ( wk->Index < 3 ) {
+      if ( wk->Index == i ) mode1 = 1;
+    } else {
+      if ( wk->Index - 3 == i ) mode2 = 1;
+    }
+	  printNumWin( wk, 0+i, 2, dwbt_info_tbl[0]+60*i, dwbt_info_tbl[1], mode1 );
+		printNumWin( wk, DEBUG_WBT_ForceRental[0+i], 5, dwbt_info_tbl[0]+60*i, dwbt_info_tbl[1]+16, 0 );
+	  printNumWin( wk, 3+i, 2, dwbt_info_tbl[0]+60*i, dwbt_info_tbl[1]+32, mode2 );
+		printNumWin( wk, DEBUG_WBT_ForceRental[3+i], 5, dwbt_info_tbl[0]+60*i, dwbt_info_tbl[1]+48, 0 );
+	}
+	// 更新
+	updateNumWin( wk );
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief	表示項目まとめ(トレーナー)
  *
  *  @param  DEBUG_WBT_WORK *wk
@@ -1221,7 +1402,7 @@ static void clearNumWin( DEBUG_WBT_WORK * wk )
  *  @return
  */
 //-----------------------------------------------------------------------------
-static void dispInfo( DEBUG_WBT_WORK * wk )
+static void dispInfo_TrainerList( DEBUG_WBT_WORK * wk )
 {
 	s32		i;
 	s32		tmp;
@@ -1258,25 +1439,16 @@ static void dispInfo( DEBUG_WBT_WORK * wk )
 }
 
 //----------------------------------------------------------------------------
-/**
- *  @brief	表示項目まとめ(debug)
- *
- *  @param  DEBUG_WBT_WORK *wk
- *
- *  @return
- */
-//-----------------------------------------------------------------------------
-static void dispInfo_forceTrMode( DEBUG_WBT_WORK * wk )
+//----------------------------------------------------------------------------
+static void dispInfo_toggleMode( DEBUG_WBT_WORK * wk, u32 msg_id, u32 mode_value )
 {
-	s32		i;
-	s32		tmp;
 	s32		mode=0;
 	
 	// クリア
 	clearNumWin( wk );
 	//
-	printMsgStrWin( wk, DEBUG_STR_WBT_03, 4,		0 );			// index
-	printNumWin( wk, DEBUG_WBT_ForceTrMode, 1, 4,		2+16, 0 );		// index(0)
+	printMsgStrWin( wk, msg_id, 4,		0 );			// index
+	printNumWin( wk, mode_value, 1, 4,		2+16, 0 );		// index(0)
 	// 更新
 	updateNumWin( wk );
 }
@@ -1292,17 +1464,7 @@ static void dispInfo_forceTrMode( DEBUG_WBT_WORK * wk )
 //-----------------------------------------------------------------------------
 static void dispInfo_reverseJudgeMode( DEBUG_WBT_WORK * wk )
 {
-	s32		i;
-	s32		tmp;
-	s32		mode=0;
-	
-	// クリア
-	clearNumWin( wk );
-	//
-	printMsgStrWin( wk, DEBUG_STR_WBT_02, 4,		0 );			// index
-	printNumWin( wk, DEBUG_WBT_ReverseJudgeMode, 1, 4,		2+16, 0 );		// index(0)
-	// 更新
-	updateNumWin( wk );
+  dispInfo_toggleMode( wk, DEBUG_STR_WBT_02, DEBUG_WBT_ReverseJudgeMode );
 }
 
 //----------------------------------------------------------------------------
