@@ -7223,10 +7223,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あそびに　きた　ひと　ごうけい</Text>
+			<Text>おきゃくに　であった　かず</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-14T03:53:55" />
+				Time="2012-01-07T08:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7234,10 +7234,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊びに　来た人　合計</Text>
+			<Text>お客に出会った　数</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-22T11:28:35" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

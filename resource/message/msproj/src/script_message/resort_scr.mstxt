@@ -5882,13 +5882,13 @@ BW♀
 			Language="JPN">
 			<Text>……きいてきいて！▼
 ぼく　このまちで
-まちに　おきゃくが　きた　かず　が▽
+まちで　おきゃくに　であった　かず　が▽
 いちばん　おおいんだ！▼
 もう　[Name:ResortGreet ]
 って　かんじだよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:01:20" />
+				Time="2012-01-07T08:40:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5898,13 +5898,13 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>……きいてきいて！▼
 ぼく　この街で
-街にお客がきた数　が▽
+街でお客に出会った数　が▽
 一番　多いんだ！▼
 もう　[Name:ResortGreet ]
 って　感じだよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:01:35" />
+				Time="2012-01-07T08:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6527,13 +6527,13 @@ BW♀
 			Language="JPN">
 			<Text>……きいてきいて！▼
 わたし　このまちで
-まちに　おきゃくを　よんだ　かずが▽
+まちで　おきゃくに　であった　かずが▽
 いちばん　おおいの！▼
 もう　[Name:ResortGreet ]
 って　かんじなの▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T09:58:27" />
+				Time="2012-01-07T08:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6543,13 +6543,13 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>……きいてきいて！▼
 わたし　この街で
-街に　お客を呼んだ数　が▽
+街でお客に出会った数　が▽
 一番　多いの！▼
 もう　[Name:ResortGreet ]
 って　感じなの▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T09:59:00" />
+				Time="2012-01-07T08:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -7080,10 +7080,10 @@ BW♀
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　おにあいの▽
-おみせを　おおしえしましょう！</Text>
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:47:44" />
+				Time="2012-01-07T09:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7095,10 +7095,10 @@ BW♀
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　お似合いの▽
-お店を　お教えしましょう！</Text>
+お店を　お教えしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:47:45" />
+				Time="2012-01-07T09:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7350,10 +7350,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　おにあいの▽
-おみせを　おおしえしましょう！</Text>
+おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:47:37" />
+				Time="2012-01-07T09:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7364,10 +7364,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　お似合いの▽
-お店を　お教えしましょう！</Text>
+お店を　お教えしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:47:38" />
+				Time="2012-01-07T09:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11892,10 +11892,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちに　おきゃくを　よんだ　かず</Text>
+			<Text>まちで　おきゃくに　であった　かず</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T09:55:23" />
+				Time="2012-01-07T08:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11903,10 +11903,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街に　お客を呼んだ　数</Text>
+			<Text>街でお客に出会った　数</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T09:55:43" />
+				Time="2012-01-07T08:42:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11943,10 +11943,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>買い物で　使った　金額</Text>
+			<Text>買い物で使った　金額</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:51:55" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61393,11 +61393,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしい　りょうりを　たべて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　りょうりを
+たべさせたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-30T07:54:54" />
+				Time="2011-12-27T13:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61405,11 +61405,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしい　料理を　食べて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　料理を
+食べてさせたいな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:04:28" />
+				User="shimoyamada:W00184"
+				Time="2011-12-27T13:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61442,11 +61442,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしい　りょうりを　たべて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　りょうりを
+たべさせたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-30T07:54:59" />
+				Time="2011-12-27T13:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61454,11 +61454,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしい　料理を　食べて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　料理を
+食べてさせたいな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:04:31" />
+				User="shimoyamada:W00184"
+				Time="2011-12-27T13:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62253,11 +62253,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしい　りょうりを　たべて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　りょうりを
+たべさせたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T08:11:55" />
+				Time="2011-12-27T13:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62265,11 +62265,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしい　料理を　食べて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　料理を
+食べてさせたいな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:04:57" />
+				User="shimoyamada:W00184"
+				Time="2011-12-27T13:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62302,11 +62302,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしい　りょうりを　たべて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　りょうりを
+たべさせたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T08:12:07" />
+				Time="2011-12-27T13:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62314,11 +62314,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしい　料理を　食べて
-くつろぎたいな▼</Text>
+			<Text>ポケモンに　おいしい　料理を
+食べてさせたいな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:04:57" />
+				User="shimoyamada:W00184"
+				Time="2011-12-27T13:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -62988,28 +62988,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードのことを　ききたい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 いちばんの　ひとに　あいたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『街にお客がきた　数』が
+『街でお客に出会った　数』が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:08:03" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:46:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -63049,28 +63049,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードのことを　ききたい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 いちばんの　ひとに　あいたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『街にお客がきた　数』が
+『街でお客に出会った　数』が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:08:03" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:46:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64086,28 +64086,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 １０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客がきた　数』が
+『街でお客に出会った　数』が
 １０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:46:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -64147,28 +64147,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 １０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客がきた　数』が
+『街でお客に出会った　数』が
 １０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:46:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65192,28 +65192,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 ３５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客が来た　数』が
+『街でお客に出会った　数』が
 ３５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:47:42" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -65253,28 +65253,28 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　おきゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 ３５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客が来た　数』が
+『街でお客に出会った　数』が
 ３５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:47:42" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66305,15 +66305,15 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客が来た　数』が
+『街でお客に出会った　数』が
 ７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:47:42" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -66366,15 +66366,15 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街にお客が来た　数』が
+『街でお客に出会った　数』が
 ７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-13T13:39:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:05" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:47:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -115344,25 +115344,25 @@ PWT</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちに　おきゃくが　きた　かず</Text>
+			<Text>まちで　おきゃくに　であった　かず</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:44:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街にお客がきた　数</Text>
+			<Text>街でお客に出会った　数</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-12-10T10:00:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-07T08:46:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
