@@ -10,10 +10,12 @@
 せっかく　いいところまで　いったのに▽
 やられちゃった！▼
 むりして　たたかわないで
-ナースを　さがすべきだったかな</Text>
+ナースを　さがすべきだったかな▼
+さすが　イッシュのなんかん
+しろのじゅどう　よね……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-21T05:48:28" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,10 +27,12 @@
 せっかく　いいところまで　行ったのに▽
 やられちゃった！▼
 無理して　戦わないで
-ナースを　探すべきだったかな？</Text>
+ナースを　探すべきだったかな？▼
+さすが　イッシュの難関
+白の樹洞　よね……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-21T05:48:40" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:39:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,13 +203,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのじゅどうの　さいかそうには
+			<Text>イッシュのなんかん
+しろのじゅどうの　さいかそうには▽
 いったい　なにが　あるのか……▼
 ……ふむ　わたしが　いちばんに
 ときあかして　みせるよ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:02" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -213,13 +218,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白の樹洞の　最下層には
+			<Text>イッシュの難関
+白の樹洞の　最下層には▽
 いったい　なにが　あるのか……▼
 ……ふむ　わたしが　一番に
 解き明かして　みせるよ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:31" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:39:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"

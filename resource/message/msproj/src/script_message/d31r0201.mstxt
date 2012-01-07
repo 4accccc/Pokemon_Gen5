@@ -7,11 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そらの　はてまで　つきぬけて
-そびえたつ　くろのまてんろう……▽
+そびえたつ　くろのまてんろう……▼
+イッシュのなんかん　ともいわれる
 きょうみぶかい　たてもの　よね……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:47" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,11 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>空の　果てまで　突き抜けて
-そびえたつ　黒の摩天楼……▽
+そびえたつ　黒の摩天楼……▼
+イッシュの難関　ともいわれる
 非常に　興味深い　建造物ね……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,6 +54,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:33" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -125,6 +134,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:35" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -186,6 +202,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:35" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:34" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -202,11 +225,11 @@
 			<Text>いままで　みたことも　ない
 つよい　ちからを　かんじる……▼
 ふるえが……　とまらないよ……▼
-このビルには　いったい
+この　イッシュのなんかん　には
 なにが　かくされて　いるんだ？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:00" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -217,11 +240,11 @@
 			<Text>いままで　みたことも　ない
 強い力を　感じる……▼
 震えが……　止まらないよ……▼
-このビルには　いったい
+この　イッシュの難関　には
 なにが　隠されて　いるんだ？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:13:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -250,6 +273,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:39" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:38" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_espm_02"
@@ -259,11 +289,12 @@
 			<Text>なんなんだ　この　ちからは！
 どんどん　おおきくなって　いるんだ！▼
 ううっ……　とりはだが　とまらない……▼
-くろのまてんろう……
+イッシュのなんかん
+くろのまてんろう……▽
 いったい　どんな　ひみつが……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:04" />
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -274,11 +305,12 @@
 			<Text>なんなんだ　この　力は！
 どんどん　大きくなって　いるんだ！▼
 ううっ……　鳥肌が　とまらない……▼
-黒の摩天楼……
+イッシュの難関
+黒の摩天楼……▽
 いったい　どんな　秘密が……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T01:20:35" />
+				Time="2012-01-07T09:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -305,6 +337,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:41" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:36" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -366,6 +405,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:41" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_stop_01"
@@ -414,6 +460,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:37:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T09:17:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

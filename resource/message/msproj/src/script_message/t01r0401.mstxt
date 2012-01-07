@@ -367,10 +367,11 @@
 			<Comment>♀
 ・図鑑評価後
 　No630「きょかしょう」を持っていないとき
-・１回のみ</Comment>
+・１回のみ
+・！マーク表示後にメッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:17:09" />
+				Time="2012-01-07T08:37:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -846,10 +847,11 @@
 せかいには　ほんとうに▽
 おおくの　ポケモンが　いるぞ！▼
 それを　しってもらうため
-せいそくちリストを　つくったんだよ▼</Text>
+せいそくちリストを　つくったんだよ▼
+で　ここに　きたのは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T10:36:52" />
+				Time="2012-01-07T08:22:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -863,10 +865,11 @@
 世界には　本当に▽
 多くの　ポケモンが　いるぞ！▼
 それを　知ってもらうため
-生息地リストを　つくったんだよ▼</Text>
+生息地リストを　つくったんだよ▼
+で　ここに　来たのは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T03:01:29" />
+				Time="2012-01-07T08:22:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1042,10 +1045,11 @@
 ポケモンが　くいついたら
 「！」と　でるので　そのときに▽
 すばやく　つりざおを　ひきましょう！▼
-だとさ</Text>
+だとさ
+なんだか　おもしろいモン　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:51:04" />
+				Time="2012-01-07T08:23:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1064,10 +1068,11 @@
 ポケモンが　くいついたら
 「！」と　でるので　そのときに▽
 すばやく　つりざおを　ひきましょう！▼
-だとさ</Text>
+だとさ
+なんだか　おもしろいモン　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:51:10" />
+				Time="2012-01-07T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

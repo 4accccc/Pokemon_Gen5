@@ -48,6 +48,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-22T12:31:58" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -103,6 +110,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-11T06:39:32" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:23" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0101_sage7_02_02"
@@ -149,6 +163,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T04:38:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:23" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -201,6 +222,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-24T04:38:41" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:23" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0101_sage7_02_04"
@@ -252,6 +280,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-22T12:32:34" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -323,11 +358,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリアを　かいじょして　くれて
+			<Text>バリアを　かいじょ　してくれて
 ありがとな！　たすかった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:31:28" />
+				Time="2012-01-07T08:47:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -421,6 +456,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-22T12:32:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:25" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -602,6 +644,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-18T04:02:01" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0501_swrival_02_03"
@@ -720,6 +769,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-18T04:02:30" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:27" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -858,6 +914,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-18T04:10:17" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:28" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0101_sage7_02_09"
@@ -910,6 +973,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-18T04:19:53" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-07T08:46:29" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
