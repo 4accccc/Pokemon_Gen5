@@ -372,7 +372,7 @@ static void updateStatus( RINGTONE_SYS * rtone )
   case STAT_OPEN_ON:
     if ( flag == FALSE )
     {
-      changeStatus( rtone, STAT_OPEN_OFF );
+      changeStatus( rtone, REQ_STOP );
     }
     break;
 
@@ -381,7 +381,7 @@ static void updateStatus( RINGTONE_SYS * rtone )
   case STAT_CLOSE_ON:
     if ( flag == FALSE )
     {
-      changeStatus( rtone, STAT_CLOSE_OFF );
+      changeStatus( rtone, REQ_STOP );
     }
     break;
   }
