@@ -2529,17 +2529,37 @@ const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork 
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  i;
 
+  // BTS230【ライブキャスターを3人及び4人で繋いだ後子機が抜けた場合、残っているメンバーにてミニゲームを開始することが出来ません】
+  //
+  // 接続人数分しか見ておらず
+  // 2人接続だがNetID=3で接続した場合のときに処理できなかった
+  //
+  // 修正として
+  // 4人分回しその中で参加ビットがたっている(=参加)の人数を
+  // カウントする。その参加人数が接続人数と同じだと全員参加にする
+  //
+  u8  acceptNum = 0;
+
+  ICHI_Printf("connectNum %d acceptBit %x \n", connectNum, talkWork->acceptBit );
+
   // 0番目は自分(親)なので無視する
-  for( i=1; i<connectNum; i++ )
+  for( i=1; i<CTVT_MEMBER_NUM; i++ )
   {
-    // NetIdのビットがたっていなければFALSE
-    if( !(talkWork->acceptBit & (1<<i)) )
+    // NetIdのビットがたっていれば参加人数を追加
+    if( talkWork->acceptBit & (1<<i) )
     {
-      return FALSE;
+      acceptNum++;
     }
   }
+  acceptNum++;  // 自分(親)は参加なので追加
 
-  return TRUE;
+  // 接続人数 == 参加人数 
+  if( connectNum == acceptNum )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -2568,18 +2588,28 @@ const BOOL CTVT_TALK_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork
 {
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  i;
+  u8  acceptNum = 0;
 
+
+  ICHI_Printf("connectNum %d acceptBit2 %x \n", connectNum, talkWork->acceptBit2 );
   // 0番目は自分(親)なので無視する
-  for( i=1; i<connectNum; i++ )
+  for( i=1; i<CTVT_MEMBER_NUM; i++ )
   {
-    // NetIdのビットがたっていなければFALSE
-    if( !(talkWork->acceptBit2 & (1<<i)) )
+    // NetIdのビットがたっていれば参加人数を追加
+    if( talkWork->acceptBit2 & (1<<i) )
     {
-      return FALSE;
+      acceptNum++;
     }
   }
+  acceptNum++;  // 自分(親)は参加なので参加
 
-  return TRUE;
+  // 接続人数 == 参加人数 
+  if( connectNum == acceptNum )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
