@@ -19,6 +19,10 @@
 //outer
 #include "resort_people.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_PEOPLE_BUFF_PRINT
+#endif //PM_DEBUG
+
 //=============================================================================
 /**
  *				人物ワーク
@@ -83,6 +87,10 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_I
 
 //その他
 static void Resort_People_CreateMmdl( RESORT_PEOPLE *p_wk,  const RESORT_PEOPLE_INIT_PARAM *cp_param );
+
+#ifdef DEBUG_PEOPLE_BUFF_PRINT
+static void Resort_People_PrintBuff( RESORT_PEOPLE_SYS *p_wk );
+#endif
 
 //-------------------------------------
 ///	抽象動作
@@ -758,6 +766,11 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
     init_param.create = create;
 
     NAGI_Printf( "Add=%d\n",peopleID );
+
+#ifdef DEBUG_PEOPLE_BUFF_PRINT
+    Resort_People_PrintBuff( p_wk );
+#endif
+
     p_wk->p_people[peopleID] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
     RESORT_DATA_MANAGER_Update( p_wk->param.p_data_manager );
     return p_wk->p_people[peopleID];
@@ -930,6 +943,11 @@ void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people )
 
   //消したので更新
   RESORT_DATA_MANAGER_Update( p_wk->param.p_data_manager );
+
+
+#ifdef DEBUG_PEOPLE_BUFF_PRINT
+    Resort_People_PrintBuff( p_wk );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1086,3 +1104,32 @@ BOOL RESORT_PEOPLE_TOOL_IsObjID( int objid )
 {
   return RESORT_PEOPLE_MMDLID_OFS_S <= objid  &&  objid < RESORT_PEOPLE_MMDLID_OFS_E;
 }
+
+
+#ifdef DEBUG_PEOPLE_BUFF_PRINT
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファ状況をプリント
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Resort_People_PrintBuff( RESORT_PEOPLE_SYS *p_wk )
+{
+  int i;
+  OS_TFPrintf(2,"人物配置\n");
+  for( i = 0; i < p_wk->param.max; i++ )
+  {
+    RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByIndex( p_wk, i );
+    if( p_people )
+    {
+      OS_TFPrintf(2,"[%d]○t=%d,i=%d",i, RESORT_ABSTRUCT_DATA_GetBufferType(p_people->p_abstruct_data),RESORT_ABSTRUCT_DATA_GetBufferIndex(p_people->p_abstruct_data));
+    }
+    else
+    {
+      OS_TFPrintf(2,"[%d]×",i);
+    }
+  }
+  OS_TFPrintf(2,"\n");
+}
+#endif

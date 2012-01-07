@@ -142,7 +142,7 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
   {
     if( !sp_wk->is_task_create )
     {
-      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
+      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortFunCheck, FS_OVERLAY_ID( debug_resort_check ) );
     }
   }
 #else

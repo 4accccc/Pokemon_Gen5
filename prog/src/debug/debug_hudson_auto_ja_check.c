@@ -480,6 +480,208 @@ static BOOL ResortShopCheck_CheckShopAllRankMax( GAMEDATA *p_gamedata )
   return TRUE;
 }
 
+
+//=============================================================================
+/**
+ *				ファンチェック
+*/
+//=============================================================================
+//-------------------------------------
+///チェックワーク	
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK  *p_gamesys;
+  u32 seq;
+  u32 cnt;
+} RESORT_FUN_CHECK_WK;
+
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+static void RESORT_FUN_CHECK_Init( void *p_wk_adrs, GAMESYS_WORK* p_gamesys, HEAPID heapID );
+static void RESORT_FUN_CHECK_Update( GFL_TCBL *p_task, void *p_wk_adrs );
+static u32 RESORT_FUN_CHECK_GetWorkSize( void );
+
+static void ResortFunCheck_InitResort( GAMEDATA *p_gamedata );
+
+//=============================================================================
+/**
+ *					データ
+*/
+//=============================================================================
+const HUDSON_AUTOTEST_WORK HUDSON_AUTOTEST_ResortFunCheck =
+{
+  RESORT_FUN_CHECK_Init,
+  RESORT_FUN_CHECK_Update,
+  RESORT_FUN_CHECK_GetWorkSize,
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *	@param	p_gamesys ゲームデータ
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FUN_CHECK_Init( void *p_wk_adrs, GAMESYS_WORK* p_gamesys, HEAPID heapID )
+{
+  RESORT_FUN_CHECK_WK  *p_wk = p_wk_adrs;
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_FUN_CHECK_WK) );
+  p_wk->p_gamesys = p_gamesys;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  更新
+ *
+ *	@param	GFL_TCBL *p_task  タスク
+ *	@param	*p_wk_adrs ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FUN_CHECK_Update( GFL_TCBL *p_task, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_JUMP_JA_START,
+    SEQ_JUMP_JA_WAIT,
+
+    SEQ_INIT_FUN,
+
+    SEQ_IN_JA_START,
+    SEQ_IN_JA_WAIT1,
+    SEQ_IN_JA_WAIT2,
+
+    SEQ_CHECK_FUN,
+
+    SEQ_OUT_JA_START,
+    SEQ_OUT_JA_WAIT1,
+    SEQ_OUT_JA_WAIT2,
+
+    SEQ_END,
+  };
+
+
+  RESORT_FUN_CHECK_WK  *p_wk = p_wk_adrs;
+  GAMESYS_WORK  *p_gamesys  = p_wk->p_gamesys;
+  GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  FIELDMAP_WORK *p_field    = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+
+  switch( p_wk->seq )
+  {
+  case SEQ_INIT:
+    p_wk->seq = SEQ_JUMP_JA_START;
+    break;
+  case SEQ_JUMP_JA_START:
+    if( !GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      VecFx32 appear_pos;
+      GMEVENT* p_event;
+
+      VEC_Set(&appear_pos,
+          GRID_TO_FX32(430),
+          GRID_TO_FX32(0),
+          GRID_TO_FX32(490)
+          );     
+      
+      p_event = EVENT_ChangeMapPos( 
+        p_gamesys, p_field, ZONE_ID_R04, &appear_pos, DIR_UP, FALSE );
+      GAMESYSTEM_SetEvent( p_gamesys, p_event );
+      p_wk->seq = SEQ_JUMP_JA_WAIT;
+    }
+    break;
+  case SEQ_JUMP_JA_WAIT:
+    if( !GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      p_wk->seq = SEQ_INIT_FUN;
+    }
+    break;
+  case SEQ_INIT_FUN:
+    ResortFunCheck_InitResort( p_gamedata );
+    p_wk->seq = SEQ_IN_JA_START;
+    break;
+  case SEQ_IN_JA_START:
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_UP, DEBUG_UI_PLAY_LOOP );
+    p_wk->seq = SEQ_IN_JA_WAIT1;
+    break;
+  case SEQ_IN_JA_WAIT1:
+    if( GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      DEBUG_UI_SetUp( DEBUG_UI_NONE, DEBUG_UI_PLAY_ONE );
+      p_wk->seq = SEQ_IN_JA_WAIT2;
+    }
+    break;
+  case SEQ_IN_JA_WAIT2:
+    if( !GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      p_wk->seq = SEQ_CHECK_FUN;
+    }
+    break;
+  case SEQ_CHECK_FUN:
+    if( p_wk->cnt++ > 180 )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq = SEQ_OUT_JA_START;
+    }
+    break;
+  case SEQ_OUT_JA_START:
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_DOWN, DEBUG_UI_PLAY_LOOP );
+    p_wk->seq = SEQ_OUT_JA_WAIT1;
+    break;
+  case SEQ_OUT_JA_WAIT1:
+    if( GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      DEBUG_UI_SetUp( DEBUG_UI_NONE, DEBUG_UI_PLAY_ONE );
+      p_wk->seq = SEQ_OUT_JA_WAIT2;
+    }
+    break;
+  case SEQ_OUT_JA_WAIT2:
+    if( !GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      p_wk->seq = SEQ_INIT_FUN;
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タスクワークサイズ取得関数
+ *	@return タスクワークサイズ
+ */
+//-----------------------------------------------------------------------------
+static u32 RESORT_FUN_CHECK_GetWorkSize( void )
+{
+  return sizeof( RESORT_FUN_CHECK_WK );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾートのファン初期化を行う
+ *
+ *	@param	GAMEDATA *p_gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void ResortFunCheck_InitResort( GAMEDATA *p_gamedata )
+{
+  SAVE_CONTROL_WORK* p_save = GAMEDATA_GetSaveControlWork(p_gamedata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_save );
+  RESORT_CITY_DATA *p_city =  RESONANCE_RESORT_SV_GetCityData(p_resort);
+  RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
+
+  //ファン１日フラグをOFF
+  RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_FUN_DAY_FLAG, FALSE );
+
+  //いっぱいならPROXY全部消す
+  if( RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= RESORT_PROXY_BUFF_GetMax( p_proxy_buff) )
+  {
+    RESORT_PROXY_BUFF_InitInstance( p_proxy_buff, RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
+  }
+}
+
 #endif //PM_DEBUG
 #endif // DEBUG_ONLY_FOR_hudson
 

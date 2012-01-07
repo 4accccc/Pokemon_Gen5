@@ -54,6 +54,7 @@
 #define DEBUG_RESORT_FIELD_PRINT_ON
 //#define DEBUG_EFFECT_MOVE
 //#define DEBUG_MMDL_POS_CHECK
+#define DEBUG_SAME_PEOPLE_CHECK
 #endif
 
 #if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
@@ -201,6 +202,10 @@ static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EF
 //=============================================================================
 static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
 static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
+
+#ifdef DEBUG_SAME_PEOPLE_CHECK
+static BOOL RESORT_FIELD_DEBUG_CheckSamePeople( RESORT_SYSTEM *p_sys );
+#endif
 
 //=============================================================================
 /**
@@ -355,6 +360,40 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
   RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
   RESORT_FIELD_EFFECT_Main( p_wk->p_effect );
 
+#ifdef PM_DEBUG
+  {
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R && GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      RESORT_SETDATA ret;
+      const HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
+      GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
+      RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
+
+      RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
+      RESORT_UTIL_SetProxy( p_wk->p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_FUN, 6, heapID );
+      ret = RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+      NAGI_Printf( "ファン追加%d\n", ret );
+      RESORT_PROXY_DATA_Exit( p_proxy );
+    }
+  }
+#endif
+
+
+#ifdef DEBUG_SAME_PEOPLE_CHECK
+  //同じ人物がいるかチェック
+  {
+    static int s_same_people_check_cnt  = 0;
+
+    //１秒に１回チェックする
+    if( s_same_people_check_cnt == 0 )
+    {
+      GF_ASSERT( RESORT_FIELD_DEBUG_CheckSamePeople( p_wk->p_sys ) );
+    }
+    s_same_people_check_cnt++;
+    s_same_people_check_cnt %= 60;
+  }
+#endif
 
 
 #ifdef DEBUG_MMDL_POS_CHECK
@@ -4496,3 +4535,94 @@ static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata
     }
   }
 }
+
+
+#ifdef DEBUG_SAME_PEOPLE_CHECK
+#include "print/str_tool.h"
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ人物がいるかチェックする
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *
+ *	@return TRUE同じ人物がいない  FALSEいた
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_FIELD_DEBUG_CheckSamePeople( RESORT_SYSTEM *p_sys )
+{
+  static const RESORT_DATA_BUFFER_TYPE sc_type[] =
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+    RESORT_DATA_BUFFER_TYPE_SECRETARY,
+    RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF,
+    RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF,
+    RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,
+  };
+
+  RESORT_ABSTRUCT_MANAGER *p_man = RESORT_SYSTEM_GetAbstructManager( p_sys );
+
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_man, sc_type, NELEMS(sc_type) );
+
+  while(TRUE)
+  {
+    RESORT_ABSTRUCT_DATA *p_data1 =  RESORT_ABSTRUCT_MANAGER_NextIterator( p_man, &ite, sc_type, NELEMS(sc_type) );
+
+    if( p_data1 == NULL )
+    {
+      break;
+    }
+
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data1) )
+    {
+
+      RESORT_ABSTRUCT_ITERATOR ite2 = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_man, sc_type, NELEMS(sc_type) );
+
+
+      while(TRUE)
+      {
+        RESORT_ABSTRUCT_DATA *p_data2 =  RESORT_ABSTRUCT_MANAGER_NextIterator( p_man, &ite2, sc_type, NELEMS(sc_type) );
+
+        if( p_data2 == NULL )
+        {
+          break;
+        }
+
+        if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data2) )
+        {
+          u16 trainerID1 = RESORT_ABSTRUCT_DATA_GetData( p_data1, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+          u16 sex1 = RESORT_ABSTRUCT_DATA_GetData( p_data1, RESORT_DATA_PARAM_SEX, NULL );
+          u16 trainerID2 = RESORT_ABSTRUCT_DATA_GetData( p_data2, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+          u16 sex2 = RESORT_ABSTRUCT_DATA_GetData( p_data2, RESORT_DATA_PARAM_SEX, NULL );
+
+          RESORT_DATA_BUFFER_TYPE buff1 = RESORT_ABSTRUCT_DATA_GetBufferType( p_data1 );
+          u32 idx1 = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_data1 );
+          RESORT_DATA_BUFFER_TYPE buff2 = RESORT_ABSTRUCT_DATA_GetBufferType( p_data2 );
+          u32 idx2 = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_data2 );
+
+          STRCODE name1[PERSON_NAME_SIZE+EOM_SIZE];
+          STRCODE name2[PERSON_NAME_SIZE+EOM_SIZE];
+          RESORT_ABSTRUCT_DATA_GetData( p_data1, RESORT_DATA_PARAM_NAME, name1 );
+          RESORT_ABSTRUCT_DATA_GetData( p_data2, RESORT_DATA_PARAM_NAME, name2 );
+          
+          if( !(buff1 == buff2 && idx1 == idx1) )
+          {
+            if( trainerID1 == trainerID2 )
+            {
+              if( sex1 == sex2 )
+              {
+                if( STRTOOL_Comp( name1, name2 ) )
+                {
+                  OS_TPrintf( "same people! a=[%d,%d] b=[%d,%d]", buff1, idx1, buff2, idx2 );
+                  return FALSE;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return TRUE;
+}
+#endif

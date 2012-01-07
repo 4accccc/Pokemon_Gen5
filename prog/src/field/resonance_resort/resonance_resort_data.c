@@ -19,6 +19,7 @@
 #include "system/main.h"
 #include "field/resort_work.h"
 #include "app/research_radar/question_id.h"
+#include "print/str_tool.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //arc
@@ -518,6 +519,9 @@ static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, cons
   if( is_trainerID )
   {
     is_name  = (Resort_Basic1_Data_CompareU16( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
+
+    GF_ASSERT( is_name == STRTOOL_Comp( cp_a->name, cp_b->name ) );
+
     is_sex   = (cp_a->sex == cp_b->sex);
   }
 
@@ -3922,6 +3926,8 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
   case RESORT_DATA_PARAM_EXT7_THANKS:  //p_ret_adrs‚©‚çŽæ“¾
     RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, p_ret_adrs,cp_wk->basic1.trainerID );
     return 0;
+  case RESORT_DATA_PARAM_TRAINER_ID:
+    return cp_wk->basic1.trainerID;
   default:
     GF_ASSERT(0);
     return 0;

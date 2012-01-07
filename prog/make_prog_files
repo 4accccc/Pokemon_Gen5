@@ -2167,6 +2167,14 @@ SRCS_OVERLAY_DEBUG_UI_RESORT_GUIDE = debug/debug_ui_resort_guide.c
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_DEBUG_UI_A = debug/debug_ui_a.c
 
+#KEY　オートup
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_UP = debug/debug_ui_up.c
+
+#KEY　オートdown
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_DOWN = debug/debug_ui_down.c
+
 ############################
 
 #SNDVIEWERライブラリ

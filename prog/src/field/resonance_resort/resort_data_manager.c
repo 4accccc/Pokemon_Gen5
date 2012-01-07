@@ -157,7 +157,7 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     RESORT_DATA_MANAGER_INFO *p_info = &p_wk->info[i];
     for( j = 0; j < RESORT_DATA_MANAGER_MAX; j++ )
     {
-      if( p_info->people_buffer_type[j] == RESORT_DATA_BUFFER_TYPE_NULL )
+      if( p_info->people_buffer_type[j] != RESORT_DATA_BUFFER_TYPE_NULL )
       {
         RESORT_Printf( "[%d]›t=%di=%d ", j, p_info->people_buffer_type[j], p_info->people_index[j] );
       }

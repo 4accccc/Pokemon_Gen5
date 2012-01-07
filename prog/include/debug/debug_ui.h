@@ -39,6 +39,8 @@ typedef enum {
   DEBUG_UI_AUTO_USER_INPUT, // 自動　入力データ再生
   DEBUG_UI_AUTO_RESORT_GUIDE, // 自動　リゾートガイド
   DEBUG_UI_AUTO_A, // 自動　A
+  DEBUG_UI_AUTO_UP, // 自動　up
+  DEBUG_UI_AUTO_DOWN, // 自動　down
 
   DEBUG_UI_TYPE_MAX,
 } DEBUG_UI_TYPE;

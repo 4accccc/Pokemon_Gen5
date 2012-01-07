@@ -17,20 +17,11 @@ FS_EXTERN_OVERLAY( debug_resort_check );
 
 //=============================================================================
 /**
- *					íËêî
-*/
-//=============================================================================
-enum
-{
-  DEBUG_RESORT_SHOP_CHECK_UI_START,
-  DEBUG_RESORT_SHOP_CHECK_UI_END,
-};
-
-//=============================================================================
-/**
  *					äOïîåˆäJä÷êî
 */
 //=============================================================================
 extern const HUDSON_AUTOTEST_WORK HUDSON_AUTOTEST_ResortShopCheck;
+
+extern const HUDSON_AUTOTEST_WORK HUDSON_AUTOTEST_ResortFunCheck;
 
 #endif // DEBUG_ONLY_FOR_hudson
