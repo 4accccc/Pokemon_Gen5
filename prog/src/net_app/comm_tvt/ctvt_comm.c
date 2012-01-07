@@ -1305,6 +1305,7 @@ static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *co
   state->reqTalk = FALSE;
   state->bufferNo = 0xFF;
   state->state = CCSU_NONE;
+  GFL_STD_MemClear( &state->data, sizeof(CTVT_COMM_MEMBER_DATA) );
 }
 //--------------------------------------------------------------
 // メンバー更新
