@@ -244,6 +244,28 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="DBGF_LABEL_WBTFINAL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WBTけっしょう</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2012-01-07T11:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="DBGF_LABEL_PWSENARIO"
 		Style="Large">
 		<LanguageCell
@@ -2390,6 +2412,72 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DBGF_BG_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WCS</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2012-01-07T10:11:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DBGF_BG_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WBT</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2012-01-07T10:11:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DBGF_BG_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュレムせんよう</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2012-01-07T10:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

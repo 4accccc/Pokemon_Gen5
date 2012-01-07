@@ -223,6 +223,7 @@ typedef enum {
   SELITEM_AI8,
   SELITEM_AI9,
 
+  SELITEM_WBT_FINAL,
   SELITEM_POKEWOOD_SENARIO,
   SELITEM_PWCUTIN_EARLY,
 
@@ -344,6 +345,7 @@ enum {
   LAYOUT_LABEL_ZONEID_X        = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_HOUR_X          = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_MINUTE_X        = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_WBTFINAL_X      = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_PWSENARIO_X     = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_PWCUTIN_X      = LAYOUT_LABEL_PAGE3_X,
 
@@ -354,6 +356,7 @@ enum {
   LAYOUT_LABEL_ZONEID_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
   LAYOUT_LABEL_HOUR_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
   LAYOUT_LABEL_MINUTE_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
+  LAYOUT_LABEL_WBTFINAL_Y      = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*7,
   LAYOUT_LABEL_PWSENARIO_Y     = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
   LAYOUT_LABEL_PWCUTIN_Y       = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*9,
 
@@ -442,6 +445,7 @@ static const LABEL_LAYOUT LabelLayout_Page3[] = {
   { DBGF_LABEL_ZONEID,     LAYOUT_LABEL_ZONEID_X,       LAYOUT_LABEL_ZONEID_Y     },
   { DBGF_LABEL_HOUR,       LAYOUT_LABEL_HOUR_X,         LAYOUT_LABEL_HOUR_Y       },
   { DBGF_LABEL_MINUTE,     LAYOUT_LABEL_MINUTE_X,       LAYOUT_LABEL_MINUTE_Y     },
+  { DBGF_LABEL_WBTFINAL,   LAYOUT_LABEL_WBTFINAL_X,     LAYOUT_LABEL_WBTFINAL_Y   },
   { DBGF_LABEL_PWSENARIO,  LAYOUT_LABEL_PWSENARIO_X,    LAYOUT_LABEL_PWSENARIO_Y  },
   { DBGF_LABEL_PWCUTIN,    LAYOUT_LABEL_PWCUTIN_X,      LAYOUT_LABEL_PWCUTIN_Y  },
 
@@ -548,6 +552,7 @@ static const ITEM_LAYOUT ItemLayout_Page3[] = {
   { SELITEM_ZONEID,      LAYOUT_LABEL_ZONEID_X      +50,   LAYOUT_LABEL_ZONEID_Y     },
   { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +50,   LAYOUT_LABEL_HOUR_Y       },
   { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +50,   LAYOUT_LABEL_MINUTE_Y     },
+  { SELITEM_WBT_FINAL,   LAYOUT_LABEL_WBTFINAL_X    +80,   LAYOUT_LABEL_WBTFINAL_Y   },
   { SELITEM_POKEWOOD_SENARIO,  LAYOUT_LABEL_PWSENARIO_X+80, LAYOUT_LABEL_PWSENARIO_Y  },
   { SELITEM_PWCUTIN_EARLY,  LAYOUT_LABEL_PWCUTIN_X+80, LAYOUT_LABEL_PWCUTIN_Y  },
   { SELITEM_AI0,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_0_Y   },
@@ -641,7 +646,7 @@ typedef struct {
   u32  msgSpeed : 3;
   u32  recMode  : 2;
   u32  fCutin   : 1;
-  u32  dummy : 1;
+  u32  fWbtFinal : 1;
   u32  backGround      : 5;
   u32  landForm        : 5;
   u32  season          : 2;
@@ -1476,6 +1481,9 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_PWCUTIN_EARLY:
     save->fCutin ^= 1;
     break;
+  case SELITEM_WBT_FINAL:
+    save->fWbtFinal ^= 1;
+    break;
 
   case SELITEM_AI0:   save->fAI_0 ^= 1; break;
   case SELITEM_AI1:   save->fAI_1 ^= 1; break;
@@ -1685,6 +1693,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SHOOTER_MODE:  printItem_Flag( wk, wk->saveData.fShooterMode, wk->strbuf ); break;
         case SELITEM_PWCUTIN_EARLY: printItem_Flag( wk, wk->saveData.fCutin, wk->strbuf ); break;
         case SELITEM_TRAINER_TYPE:  printItem_TrainerType( wk, wk->strbuf, wk->strbufSub ); break;
+        case SELITEM_WBT_FINAL:     printItem_Flag( wk, wk->saveData.fWbtFinal, wk->strbuf ); break;
 
         case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
         case SELITEM_AI1: printItem_Flag( wk, wk->saveData.fAI_1,    wk->strbuf ); break;
@@ -1954,8 +1963,9 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_AI3,            SELITEM_AI3,          },
       { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_AI4,            SELITEM_AI4,          },
       { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_AI5,            SELITEM_AI5,          },
-      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_POKEWOOD_SENARIO,    SELITEM_AI6,            SELITEM_AI6,          },
-      { SELITEM_POKEWOOD_SENARIO, SELITEM_FLD_MINUTE,  SELITEM_PWCUTIN_EARLY,    SELITEM_AI8,            SELITEM_AI8,          },
+      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_WBT_FINAL,     SELITEM_AI6,            SELITEM_AI6,          },
+      { SELITEM_WBT_FINAL,      SELITEM_FLD_MINUTE,    SELITEM_POKEWOOD_SENARIO,SELITEM_AI7,          SELITEM_AI7,          },
+      { SELITEM_POKEWOOD_SENARIO, SELITEM_WBT_FINAL,  SELITEM_PWCUTIN_EARLY,    SELITEM_AI8,            SELITEM_AI8,          },
       { SELITEM_PWCUTIN_EARLY, SELITEM_POKEWOOD_SENARIO,  SELITEM_BACKGROUND,    SELITEM_AI9,            SELITEM_AI9,          },
 
       { SELITEM_AI0,            SELITEM_AI9,           SELITEM_AI1,           SELITEM_BACKGROUND,     SELITEM_BACKGROUND    },
@@ -1965,7 +1975,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_AI4,            SELITEM_AI3,           SELITEM_AI5,           SELITEM_ZONEID,         SELITEM_ZONEID,       },
       { SELITEM_AI5,            SELITEM_AI4,           SELITEM_AI6,           SELITEM_FLD_HOUR,       SELITEM_FLD_HOUR,     },
       { SELITEM_AI6,            SELITEM_AI5,           SELITEM_AI7,           SELITEM_FLD_MINUTE,     SELITEM_FLD_MINUTE,   },
-      { SELITEM_AI7,            SELITEM_AI6,           SELITEM_AI8,           SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_AI7,            SELITEM_AI6,           SELITEM_AI8,           SELITEM_WBT_FINAL,      SELITEM_WBT_FINAL          },
       { SELITEM_AI8,            SELITEM_AI7,           SELITEM_AI9,           SELITEM_POKEWOOD_SENARIO, SELITEM_POKEWOOD_SENARIO },
       { SELITEM_AI9,            SELITEM_AI8,           SELITEM_AI0,           SELITEM_PWCUTIN_EARLY,SELITEM_PWCUTIN_EARLY },
 
@@ -2601,6 +2611,9 @@ FS_EXTERN_OVERLAY(battle);
       }
       if( wk->saveData.fSubway ){
         BTL_SETUP_SetSubwayMode( &wk->setupParam );
+      }
+      if( wk->saveData.fWbtFinal ){
+        wk->setupParam.WBTFinalFlag = TRUE;
       }
 
       if( trID == 0 && wk->saveData.trainerType != 0 )
