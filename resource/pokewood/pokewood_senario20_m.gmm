@@ -562,11 +562,11 @@
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">バルバラ『おだまりなさい！
 あなたの　ことなんて▼
-ちっとも　おもってなんか
+なんだとも　おもってなんか
 いないのですわ！</language>
 		<language name="JPN_KANJI" width="256">バルバラ『お黙りなさい！
 あなたの　事なんて▼
-ちっとも　思ってなんか
+何だとも　思ってなんか
 いないのですわ！</language>
 	</row>
 	<row id="pw_event1_hero_3">
@@ -579,7 +579,7 @@
 くちで　いっても　わからないなら
 からだで　わからせて　あげますわ！</language>
 		<language name="JPN_KANJI" width="256">バルバラ『あー！　もう！
-なんなんですの？　あなた！▼
+何なんですの？　あなた！▼
 口で　いっても　分からないなら
 身体で　分らせて　あげますわ！</language>
 	</row>
@@ -760,13 +760,13 @@
 		<language name="JPN_KANJI" width="256">ドーブル『ブ……ブルブル……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">バルバラ『なんですの？
+		<language name="JPN" width="256">バルバラ『なっ　なんですの？
 ワタクシの　ドーブルちゃんを▽
 たおして　しまうなんて！▼
 あなた　どうかしてるんじゃなくて？
 ２どと　あいたく　ありませんわ！▼
 ばか！　だいきらい！　ですわ！</language>
-		<language name="JPN_KANJI" width="256">バルバラ『何ですの？
+		<language name="JPN_KANJI" width="256">バルバラ『なっ　何ですの？
 ワタクシの　ドーブルちゃんを▽
 倒して　しまうなんて！▼
 あなた　どうかしてるんじゃなくて？

@@ -1036,27 +1036,27 @@
 		Label="pw_event4_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『オマエ……
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『アンタ……
 かわったのねぇ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『アンタ……
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『アンタ……
 変わったのねぇ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1212,29 +1212,29 @@
 		Label="pw_event5_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『……▼
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『……▼
 ……
 ありがとう……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-12T06:36:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-12T06:36:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『……▼
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『……▼
 ……
 ありがとう……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-12T06:36:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-12T06:36:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

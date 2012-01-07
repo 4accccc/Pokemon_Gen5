@@ -616,14 +616,14 @@
 			<Text>[Name:TrainerName Idx="1" ]『カ　カミロさん！
 始める前に　ひとつだけ▽
 お願いが　あります！▽
-もし　僕が　勝ったら……</Text>
+もし　私が　勝ったら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -877,15 +877,15 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『イヤなことは　イヤと
 ハッキリ　意見を　いう！▼
-私の事を　思って……
+私のことを　思って……
 あなたは　素晴らしい　人です！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -925,29 +925,29 @@
 			Language="JPN">
 			<Text>カミロ『うっとおしいぞ！
 きみの　ことなんて▼
-ちっとも　おもってなんか
+なんだとも　おもってなんか
 いないんだからな！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『うっとおしいぞ！
 きみの　事なんて▼
-ちっとも　思ってなんか
+何だとも　思ってなんか
 いないんだからな！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1142,31 +1142,31 @@
 		Label="pw_event2_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あちゃー！
+			<Text>[Name:TrainerName Idx="1" ]『いやーん！
 まけちゃったー！▼
 カミロさんは　つよいです！
 ぜんぜん　かないませんでした！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あちゃー！
+			<Text>[Name:TrainerName Idx="1" ]『いやーん！
 負けちゃったー！▼
 カミロさんは　強いです！
 全然　敵いませんでした！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1740,35 +1740,35 @@
 		Label="pw_event4_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミロ『なんなんだよー？
+			<Text>カミロ『チッ　なんなんだよー？
 オレの　ドーブルちゃんを▽
 たおすなんて　ひどいじゃないか！▼
 マジかよ……　しんじられないぜ
 わるいけど　もう　あいたくない▼
 きみじゃ　ダメなんだ……ぜ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T03:26:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T03:26:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミロ『何なんだよー？
+			<Text>カミロ『チッ　何なんだよー？
 オレの　ドーブルちゃんを▽
 倒すなんて　ひどいじゃないか！▼
 マジかよ……　信じられないぜ
 悪いけど　もう　会いたくない▼
 きみじゃ　ダメなんだ……ぜ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -3256,7 +3256,7 @@
 壊した　[Name:TrainerName Idx="1" ]姫……▼
 しかし　喜ぶ　彼女の　前に
 ぬいぐるみが　立ちはだかったのでした▼
-飛びかかる　[Name:TrainerName Idx="1" ]ひめ……
+飛びかかる　[Name:TrainerName Idx="1" ]姫……
 しかし　その　一撃は　ぬいぐるみに▽
 かすることもなく　空を　切ります……▼
 スキを　つかれた　[Name:TrainerName Idx="1" ]姫は
@@ -3264,11 +3264,11 @@
 一瞬で　倒れたのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-07T05:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-07T05:19:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3424,17 +3424,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『そうなの！？▼
+			<Text>[Name:TrainerName Idx="1" ]姫『そうなの！？▼
 じゃあさ！　じゃあさ！　もしかして
 本当は　すっごく　カッコイイ▽
 男の子　とか　だったり　して？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-07T06:01:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2012-01-07T06:01:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

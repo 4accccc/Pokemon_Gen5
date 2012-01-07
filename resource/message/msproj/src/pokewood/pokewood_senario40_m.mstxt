@@ -468,28 +468,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『ふっ……
-それは　ぼくも　おなじ！▼
-あくの　ちからに　まけしない！</Text>
+それは　こっちの　セリフだ！▽
+せいぎは　かならず　かつ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-07T03:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-07T03:37:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『ふっ……
-それは　僕も　同じ！▼
-悪の　力に　負けしない！</Text>
+それは　こっちの　セリフだ！▽
+正義は　必ず　勝つ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-07T03:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2012-01-07T03:37:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

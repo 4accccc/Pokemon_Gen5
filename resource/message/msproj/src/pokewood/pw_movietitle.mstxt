@@ -5427,11 +5427,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokewoodScenarioName ]
+			<Text>[System:Color name="1" ][Name:PokewoodScenarioName ][/System:Color]
 の　さつえいに　チャレンジしますか？</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-12-28T03:54:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5439,11 +5439,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokewoodScenarioName ]
+			<Text>[System:Color name="1" ][Name:PokewoodScenarioName ][/System:Color]
 の　撮影に　チャレンジしますか？</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-12-28T06:48:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"

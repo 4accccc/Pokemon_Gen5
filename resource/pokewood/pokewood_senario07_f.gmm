@@ -626,9 +626,9 @@
 働いていたに　すぎない</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『オマエ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『アンタ……
 かわったのねぇ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『アンタ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『アンタ……
 変わったのねぇ……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
@@ -676,10 +676,10 @@
 そして　生まれ変われ！</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……▼
 ……
 ありがとう……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『……▼
 ……
 ありがとう……</language>
 	</row>

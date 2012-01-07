@@ -489,7 +489,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『カ　カミロさん！
 始める前に　ひとつだけ▽
 お願いが　あります！▽
-もし　僕が　勝ったら……</language>
+もし　私が　勝ったら……</language>
 	</row>
 	<row id="pw_event0_enemy_7">
 		<language name="JPN" width="256">カミロ『かったら……？</language>
@@ -542,7 +542,7 @@
 あなたは　すばらしい　ひとです！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『イヤなことは　イヤと
 ハッキリ　意見を　いう！▼
-私の事を　思って……
+私のことを　思って……
 あなたは　素晴らしい　人です！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
@@ -558,11 +558,11 @@
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">カミロ『うっとおしいぞ！
 きみの　ことなんて▼
-ちっとも　おもってなんか
+なんだとも　おもってなんか
 いないんだからな！</language>
 		<language name="JPN_KANJI" width="256">カミロ『うっとおしいぞ！
 きみの　事なんて▼
-ちっとも　思ってなんか
+何だとも　思ってなんか
 いないんだからな！</language>
 	</row>
 	<row id="pw_event1_hero_3">
@@ -596,11 +596,11 @@
 		<language name="JPN_KANJI" width="256">ドーブル『ブルルゥ？</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あちゃー！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いやーん！
 まけちゃったー！▼
 カミロさんは　つよいです！
 ぜんぜん　かないませんでした！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あちゃー！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いやーん！
 負けちゃったー！▼
 カミロさんは　強いです！
 全然　敵いませんでした！</language>
@@ -760,13 +760,13 @@
 		<language name="JPN_KANJI" width="256">ドーブル『ブ……ブルブル……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">カミロ『なんなんだよー？
+		<language name="JPN" width="256">カミロ『チッ　なんなんだよー？
 オレの　ドーブルちゃんを▽
 たおすなんて　ひどいじゃないか！▼
 マジかよ……　しんじられないぜ
 わるいけど　もう　あいたくない▼
 きみじゃ　ダメなんだ……ぜ</language>
-		<language name="JPN_KANJI" width="256">カミロ『何なんだよー？
+		<language name="JPN_KANJI" width="256">カミロ『チッ　何なんだよー？
 オレの　ドーブルちゃんを▽
 倒すなんて　ひどいじゃないか！▼
 マジかよ……　信じられないぜ

@@ -473,11 +473,11 @@
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ふっ……
-それは　わたしも　おなじ！▼
-あくの　ちからには　まけないよ！</language>
+それは　こっちの　セリフよ！▽
+せいぎは　ぜったい　まけないもん！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ふっ……
-それは　私も　同じ！▼
-悪の　力には　負けないよ！</language>
+それは　こっちの　セリフよ！▽
+正義は　絶対　負けないもん！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ……▼

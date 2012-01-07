@@ -467,28 +467,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ふっ……
-それは　わたしも　おなじ！▼
-あくの　ちからには　まけないよ！</Text>
+それは　こっちの　セリフよ！▽
+せいぎは　ぜったい　まけないもん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T02:40:47" />
+				Time="2012-01-07T03:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T02:40:47" />
+				Time="2012-01-07T03:37:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ふっ……
-それは　私も　同じ！▼
-悪の　力には　負けないよ！</Text>
+それは　こっちの　セリフよ！▽
+正義は　絶対　負けないもん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T02:40:47" />
+				Time="2012-01-07T03:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T02:40:47" />
+				Time="2012-01-07T03:37:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

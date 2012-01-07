@@ -1408,17 +1408,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『クスクス……
+			<Text>[Name:TrainerName Idx="1" ]姫『クスクス……
 貧しい　庶民の　アナタ……▽
 王家の　子女である　わたし……▽
 格の差は　あって　当然よ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-07T05:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-07T05:58:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1674,7 +1674,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『エッ！　何！？▼
+			<Text>[Name:TrainerName Idx="1" ]姫『エッ！　何！？▼
 おじいちゃん！？　しかもツルツル！？
 私好みの　ダンディーの予感！▼
 い　いいんですか？
@@ -1683,11 +1683,11 @@
 ツルツル！！　ダンディー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-07T05:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-07T05:58:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

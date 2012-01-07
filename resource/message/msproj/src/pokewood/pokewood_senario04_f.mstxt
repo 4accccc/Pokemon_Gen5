@@ -1677,7 +1677,7 @@
 		Label="pw_event7_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 ほうりつ？　せいぎ？▽
 しったことですか！▼
 どんなてを　つかっても
@@ -1686,16 +1686,16 @@
 もんくが　あるなら
 つかまえて　みな！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 法律？　正義？▽
 知ったことですか！▼
 どんな手を　使っても
@@ -1704,12 +1704,12 @@
 文句が　あるなら
 捕まえて　みな！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1745,29 +1745,29 @@
 		Label="pw_event7_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『フフフッ！▼
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フフフッ！▼
 ダイナミックエンジンごと
 ふきとびな！　メカポリス！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『フフフッ！▼
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フフフッ！▼
 ダイナミックエンジンごと
 吹き飛びな！　メカポリス！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T05:58:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

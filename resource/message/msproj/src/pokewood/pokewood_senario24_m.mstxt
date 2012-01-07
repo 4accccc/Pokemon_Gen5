@@ -929,27 +929,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『なるほど……
 それで　どうなるんだ……？▼
-ぼくみたいに　つかまえるのか？</Text>
+ボクみたいに　つかまえるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2012-01-07T08:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2012-01-07T08:12:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『なるほど……
 それで　どうなるんだ……？▼
-ぼくみたいに　捕まえるのか？</Text>
+ボクみたいに　捕まえるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2012-01-07T08:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2012-01-07T08:12:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1018,14 +1018,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『なんだって？</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『何だって？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1284,14 +1284,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『それは　すごい！</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『それは　すごい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:31" />
+				Time="2012-01-07T06:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:31" />
+				Time="2012-01-07T06:01:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3297,15 +3297,15 @@
 [Name:TrainerName Idx="1" ]王子の　心を▽
 大きく　成長　させました……▼
 時が経ち　[Name:TrainerName Idx="1" ]王子が
-王を　継いでからも　国は▽
+王位を　継いでからも　国は▽
 幸せに　栄え続けたのです……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:15" />
+				Time="2012-01-07T06:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:15" />
+				Time="2012-01-07T06:01:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

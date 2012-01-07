@@ -605,10 +605,10 @@
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なるほど……
 それで　どうなるんだ……？▼
-ぼくみたいに　つかまえるのか？</language>
+ボクみたいに　つかまえるのか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『なるほど……
 それで　どうなるんだ……？▼
-ぼくみたいに　捕まえるのか？</language>
+ボクみたいに　捕まえるのか？</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『そのとおり……▼
@@ -626,7 +626,7 @@
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なんだって？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『なんだって？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『何だって？</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『いきる　エネルギーを
@@ -690,7 +690,7 @@
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『それは　すごい！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]おうじ『それは　すごい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『それは　すごい！</language>
 	</row>
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『そうでしょう？▼
@@ -1208,7 +1208,7 @@
 [1:00:トレーナー名:1]王子の　心を▽
 大きく　成長　させました……▼
 時が経ち　[1:00:トレーナー名:1]王子が
-王を　継いでからも　国は▽
+王位を　継いでからも　国は▽
 幸せに　栄え続けたのです……</language>
 	</row>
 	<row id="pw_event9_enemy_0">

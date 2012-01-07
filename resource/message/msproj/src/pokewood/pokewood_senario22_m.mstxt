@@ -2197,16 +2197,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『どこだっ！？
-くそーっ！　でぐちは　どこだ！▽
-とびらは　どこなんだー！？</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『どこだっ！？
+くそーっ！　出口は　どこだ！▽
+扉は　どこなんだー！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2012-01-07T05:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2012-01-07T05:58:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

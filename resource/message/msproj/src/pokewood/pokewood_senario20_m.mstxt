@@ -929,29 +929,29 @@
 			Language="JPN">
 			<Text>バルバラ『おだまりなさい！
 あなたの　ことなんて▼
-ちっとも　おもってなんか
+なんだとも　おもってなんか
 いないのですわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バルバラ『お黙りなさい！
 あなたの　事なんて▼
-ちっとも　思ってなんか
+何だとも　思ってなんか
 いないのですわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -998,16 +998,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バルバラ『あー！　もう！
-なんなんですの？　あなた！▼
+何なんですの？　あなた！▼
 口で　いっても　分からないなら
 身体で　分らせて　あげますわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T07:37:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1740,35 +1740,35 @@
 		Label="pw_event4_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>バルバラ『なんですの？
+			<Text>バルバラ『なっ　なんですの？
 ワタクシの　ドーブルちゃんを▽
 たおして　しまうなんて！▼
 あなた　どうかしてるんじゃなくて？
 ２どと　あいたく　ありませんわ！▼
 ばか！　だいきらい！　ですわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バルバラ『何ですの？
+			<Text>バルバラ『なっ　何ですの？
 ワタクシの　ドーブルちゃんを▽
 倒して　しまうなんて！▼
 あなた　どうかしてるんじゃなくて？
 ２度と　会いたく　ありませんわ！▼
 ばか！　大嫌い！　ですわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:12:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
