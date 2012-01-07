@@ -2303,7 +2303,7 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 
 //==================================================================
 /**
- * 送信ビーコンセット：フェスタミッション配布
+ * 送信ビーコンセット：フェスミッション配布
  */
 //==================================================================
 void GAMEBEACON_Set_FestMission( void )
@@ -2312,6 +2312,21 @@ void GAMEBEACON_Set_FestMission( void )
 
   GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION, 0);
 }
+
+//==================================================================
+/**
+ * 送信ビーコンセット：配信フェスミッション配布
+ *
+ * デバッグ版のデバッグモード、および、スポット用にしか使われない
+ */
+//==================================================================
+void GAMEBEACON_Set_DistributionFestMission( void )
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_FMISSION) == FALSE){ return; };
+
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_DISTRIBUTION_FMISSION, 0);
+}
+
 
 //==================================================================
 /**

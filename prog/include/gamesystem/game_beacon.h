@@ -314,6 +314,7 @@ extern void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no, u16 zone_id );
 extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( void );
+extern void GAMEBEACON_Set_DistributionFestMission( void );
 extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 extern void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param );
 extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );

@@ -407,6 +407,27 @@ extern void DEB_LINKFEST_SetBeaconWait( LINK_FESTIVAL* wk, int wait );
 //---------------------------------------------------------
 extern void DEB_LINKFEST_SetTimeStopFlag( LINK_FESTIVAL* wk, BOOL flag );
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ライフのデクリメントをとめるフラグをゲット
+ */
+//---------------------------------------------------------
+extern BOOL DEB_LINKFEST_GetTimeStopFlag( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 配信スポットエミュレーションフラグをセットする
+ */
+//---------------------------------------------------------
+extern void DEB_LINKFEST_SetSpotModeFlag( LINK_FESTIVAL* wk, BOOL flag );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 配信モードエミュレーションフラグをゲット
+ */
+//---------------------------------------------------------
+extern BOOL DEB_LINKFEST_GetSpotModeFlag( LINK_FESTIVAL* wk );
+
 #endif  //PM_DEBUG
 
 

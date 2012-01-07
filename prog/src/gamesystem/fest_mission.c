@@ -157,6 +157,13 @@ u32 FEST_MISSION_GetLife( const FEST_MISSION* fmwk )
   if( fmwk->start_rtc == FMISSION_RTC_NULL ){
     return  fmwk->beacon.time;  //スタート時間が未登録の場合制限時間をそのまま返す
   }
+
+#ifdef PM_DEBUG
+  if( fmwk->deb_time_stop_rtc ){
+    now_sec = fmwk->deb_time_stop_rtc;
+  }
+#endif
+  
   diff = ( now_sec-fmwk->start_rtc );
   
   if( diff < 0 ){
@@ -185,51 +192,6 @@ BOOL FEST_MISSION_IsLifeLeftForEntry( const FEST_MISSION* fmwk )
     return FALSE;
   }
   return TRUE;
-}
-
-//---------------------------------------------------------
-/*
- * @brief ミッション状態監視処理
- */
-//---------------------------------------------------------
-void FEST_MISSION_Update( FEST_MISSION* fmwk )
-{
-  FEST_BEACON* beacon = &fmwk->beacon;
-
-  if( beacon->m_id == FMISSION_ID_NULL ){
-    return;
-  }
-#if 0
-  if( beacon->life ){
-    --beacon->life;
-    if( beacon->life == 0 ){
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", beacon->m_id, fmwk->key );
-    }
-  }
-#endif
-}
-
-//---------------------------------------------------------
-/*
- * @brief ミッション終了監視(ミッション中でない場合、常にFalse)
- *
- * @retval  TRUE   ミッション終了
- * @retval  FALSE  ミッション中でないorミッション継続中
- */
-//---------------------------------------------------------
-BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk )
-{
-  const FEST_BEACON* beacon = &fmwk->beacon;
-
-  if( beacon->m_id == FMISSION_ID_NULL ){
-    return FALSE;
-  }
-#if 0
-  if( beacon->time == 0){
-    return TRUE;
-  }
-#endif
-  return FALSE;
 }
 
 //---------------------------------------------------------
@@ -351,12 +313,14 @@ u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff )
   }else{
     beacon->time += bonus;
   }
+#if 0
   //フレームを秒に変換して返す
   if( (bonus/60) == 0 ){
     bonus = 1; //最低1
   }else{
     bonus /= 60;
   }
+#endif
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション m_id=%d key=%08x スコア加算 %d ボーナス %d\n",beacon->m_id, fmwk->key, score_diff, bonus );
   return bonus;
 }

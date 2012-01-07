@@ -106,18 +106,8 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
     return;
   }
   if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( wk->gdata ) == FALSE ){  //表フィールドにいる間だけ更新
-    u32 score;
+    u32 score = LINK_FESTIVAL_GetNowScore(wk);
 
-#if 0
-#ifdef PM_DEBUG
-    if( !wk->deb_time_stop_f ){
-      FEST_MISSION_Update( &wk->mission );
-    }
-#else
-    FEST_MISSION_Update( &wk->mission );
-#endif
-#endif
-    score = LINK_FESTIVAL_GetNowScore(wk);
     if( score-wk->now_score ){
       wk->finfo_bonus += FEST_MISSION_TimeBonusCalc( &wk->mission,  score-wk->now_score );
       wk->now_score = score;
@@ -193,13 +183,6 @@ u16 LINK_FESTIVAL_GetMissionLife( LINK_FESTIVAL* wk )
 {
   u32 life = FEST_MISSION_GetLife( &wk->mission );
 
-#ifdef PM_DEBUG
-  if( wk->deb_time_stop_f ) {
-    if( life == 0 ){
-      life = 1; //ストップ状態なら残り1で止める
-    }
-  }
-#endif
   return life;
 }
 
@@ -825,7 +808,16 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
     --wk->beacon_timer;
     return;
   }
+#ifdef PM_DEBUG
+  if( wk->deb_spot_mode_f ){
+    //配信スポットエミュレーション 
+    GAMEBEACON_Set_DistributionFestMission();
+  }else{
+    GAMEBEACON_Set_FestMission();
+  }
+#else
   GAMEBEACON_Set_FestMission();
+#endif
   wk->beacon_timer = wk->beacon_wait;
 }
 

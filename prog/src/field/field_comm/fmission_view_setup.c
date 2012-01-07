@@ -40,7 +40,7 @@
 #include "fmission_view_sub.h"
 
 #ifdef PM_DEBUG
-#include "field/event_debug_livecomm.h"
+#include "field/event_debug_linkfest.h"
 #endif  //PM_DEBUG
 
 //==============================================================================
@@ -245,7 +245,7 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
   //デバッグメニューコールリクエスト
   case EV_DEBUG_MENU_CALL:
     event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromFMission, wk );
+              FS_OVERLAY_ID( d_linkfest ), DEBUG_EVENT_LinkFest, wk );
     break;
 #endif  //PM_DEBUG
 

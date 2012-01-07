@@ -62,7 +62,8 @@ struct _LINK_FESTIVAL{
   u8  m_gmk_work[FMISSION_WORK_AREA_LEN];
 
 #ifdef PM_DEBUG
-  u8  deb_time_stop_f;
+  u8  deb_time_stop_f:1;
+  u8  deb_spot_mode_f:1;
 #endif
 };
 

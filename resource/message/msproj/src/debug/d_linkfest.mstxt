@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リストこうしんストップ</Text>
+			<Text>マイスコアせってい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リスト更新ストップ</Text>
+			<Text>マイスコア設定</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,10 +28,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トップメニュー</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -53,10 +53,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ビーコンリクエスト</Text>
+			<Text>ミッション　じかんストップ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64,10 +64,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ビーコンリクエスト</Text>
+			<Text>ミッション　時間ストップ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93,10 +93,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スタックかくにん</Text>
+			<Text>ミッションきょうせいしゅうりょう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -104,10 +104,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スタック確認</Text>
+			<Text>ミッション強制終了</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -133,10 +133,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがいにんずう　せってい</Text>
+			<Text>ビーコンリクエスト</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -144,10 +144,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれ違い人数　設定</Text>
+			<Text>ビーコンリクエスト</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -173,10 +173,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれいかいすう　せってい</Text>
+			<Text>スタッククリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -184,10 +184,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>御礼回数　設定</Text>
+			<Text>スタッククリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,10 +213,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スタッククリア</Text>
+			<Text>メンバーリストクリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -224,10 +224,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スタッククリア</Text>
+			<Text>メンバーリストクリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -253,10 +253,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メンバーリストクリア</Text>
+			<Text>つうしんバッファかくにん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -264,10 +264,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メンバーリストクリア</Text>
+			<Text>通信バッファかくにん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,10 +293,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんバッファかくにん</Text>
+			<Text>つうしんバッファクリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -304,10 +304,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信バッファかくにん</Text>
+			<Text>通信バッファクリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -333,50 +333,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんバッファクリア</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>通信バッファクリア</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_menu_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>デルパワーせってい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -386,8 +346,8 @@
 			Language="JPN_KANJI">
 			<Text>デルパワー設定</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -409,37 +369,61 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_menu_11"
-		Style="Large">
+		Label="dlf_menu_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信スポットエミュレーション</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T03:22:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T03:22:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信スポットエミュレーション</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T03:22:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T03:22:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_menu_10">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やめる</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-05T07:20:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1091,14 +1075,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mission_req_type01"
+		Label="dlf_log_req_type01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションタイプ　デフォ</Text>
+			<Text>ビーコンタイプ　じぶん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:46:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1106,10 +1090,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションタイプ　デフォ</Text>
+			<Text>ビーコンタイプ　じぶん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:46:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1138,14 +1122,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mission_req_type02"
+		Label="dlf_log_req_type02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションタイプ　カスタム</Text>
+			<Text>ビーコンタイプ　カスタム</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1153,10 +1137,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションタイプ　カスタム</Text>
+			<Text>ビーコンタイプ　カスタム</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:46:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1178,14 +1162,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_req_id"
+		Label="dlf_log_action_id"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>m_id=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
+			<Text>log_act=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1193,10 +1177,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>m_id=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
+			<Text>log_act=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1269,10 +1253,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>tr_no=[Digit:4digits Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1280,10 +1264,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>tr_no=[Digit:4digits Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1309,10 +1293,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
+			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:56:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,10 +1304,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
+			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T11:56:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1349,330 +1333,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>nickname [Name:PokemonNickname Idx="2" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>nickname [Name:PokemonNickname Idx="2" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_beacon_req_param12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:21:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1682,8 +1346,8 @@
 			Language="JPN_KANJI">
 			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:21:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1705,37 +1369,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_beacon_req_param13"
-		Style="Large">
+		Label="dlf_beacon_req_param05">
 		<LanguageCell
 			Language="JPN">
-			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
+			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:27:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:18:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
+			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:27:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:18:54" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff78ff</CellData>
@@ -1745,37 +1401,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_beacon_req_param14"
-		Style="Large">
+		Label="dlf_beacon_req_param06">
 		<LanguageCell
 			Language="JPN">
-			<Text>fword=[Name:PMS Idx="3" ]</Text>
+			<Text>fword=[Name:PMS Idx="3" ]　icon=[Digit:1digit ]　[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:18:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:27:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>fword=[Name:PMS Idx="3" ]</Text>
+			<Text>fword=[Name:PMS Idx="3" ]　icon=[Digit:1digit ]　[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:18:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-29T02:27:30" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff78ff</CellData>
@@ -1785,44 +1433,36 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_id"
-		Style="Large">
+		Label="dlf_fake_tr_id">
 		<LanguageCell
 			Language="JPN">
 			<Text>Fake tr_id=[Digit:5digits Idx="0" ]  mine_id=[Digit:5digits Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Fake tr_id=[Digit:5digits Idx="0" ]  mine_id=[Digit:5digits Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>フェイクパラメータ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -1832,37 +1472,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_time"
-		Style="Large">
+		Label="dlf_fake_name">
 		<LanguageCell
 			Language="JPN">
-			<Text>time=[Digit:5digits Idx="0" ]</Text>
+			<Text> name=[Digit:3digits Idx="0" ] [Name:TrainerName Idx="2" ] m=[Digit:3digits Idx="1" ] [Name:TrainerName Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>time=[Digit:5digits Idx="0" ]</Text>
+			<Text> name=[Digit:3digits Idx="0" ] [Name:TrainerName Idx="2" ] m=[Digit:3digits Idx="1" ] [Name:TrainerName Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -1872,37 +1504,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_quata"
-		Style="Large">
+		Label="dlf_fake_zone">
 		<LanguageCell
 			Language="JPN">
-			<Text>quata=[Digit:5digits Idx="0" ]</Text>
+			<Text> zone=[Digit:4digits Idx="0" ] [Name:Place Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>quata=[Digit:5digits Idx="0" ]</Text>
+			<Text> zone=[Digit:4digits Idx="0" ] [Name:Place Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -1912,37 +1536,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_param"
-		Style="Large">
+		Label="dlf_fake_sex">
 		<LanguageCell
 			Language="JPN">
-			<Text>param=[Digit:5digits Idx="0" ]</Text>
+			<Text> sex=[Digit:1digit Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:1digit Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>param=[Digit:5digits Idx="0" ]</Text>
+			<Text> sex=[Digit:1digit Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:1digit Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -1952,37 +1568,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_reward"
-		Style="Large">
+		Label="dlf_fake_version">
 		<LanguageCell
 			Language="JPN">
-			<Text>reward=[Name:Item Idx="0" ]</Text>
+			<Text> ver=[Digit:2digits Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:2digits Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>reward=[Name:Item Idx="0" ]</Text>
+			<Text> ver=[Digit:2digits Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:2digits Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -1992,37 +1600,125 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mprm_reward_num"
-		Style="Large">
+		Label="dlf_fake_lang">
 		<LanguageCell
 			Language="JPN">
-			<Text>reward_num=[Digit:5digits Idx="0" ]</Text>
+			<Text> lang=[Digit:2digits Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:2digits Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>reward_num=[Digit:5digits Idx="0" ]</Text>
+			<Text> lang=[Digit:2digits Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:2digits Idx="1" ] [Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fake_score">
+		<LanguageCell
+			Language="JPN">
+			<Text> score=[Digit:4digits ]  mine=[Digit:4digits Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text> score=[Digit:4digits ]  mine=[Digit:4digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fake_tr_view">
+		<LanguageCell
+			Language="JPN">
+			<Text> trview=[Digit:1digit Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:1digit Idx="1" ] [Name:PMS Idx="3" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:58:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text> trview=[Digit:1digit Idx="0" ] [Name:PMS Idx="2" ] mine=[Digit:1digit Idx="1" ] [Name:PMS Idx="3" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:58:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-28T12:01:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fake_color">
+		<LanguageCell
+			Language="JPN">
+			<Text> color=[Digit:2digits Idx="0" ]  mine=[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text> color=[Digit:2digits Idx="0" ]  mine=[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T02:45:11" />
+		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -2123,10 +1819,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイト</Text>
+			<Text>ホワイト２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2134,10 +1830,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイト</Text>
+			<Text>ホワイト２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2152,7 +1848,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2163,90 +1859,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ブラック</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_version_glay"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホワイト２</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホワイト２</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_version_glay0002"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>ブラック２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2256,8 +1872,8 @@
 			Language="JPN_KANJI">
 			<Text>ブラック２</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2272,7 +1888,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2312,7 +1928,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2352,7 +1968,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2392,7 +2008,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2432,7 +2048,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2472,7 +2088,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2512,7 +2128,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2552,7 +2168,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2592,6 +2208,646 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_freeword_icon_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:12:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:12:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_freeword_icon_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいさつ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:13:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あいさつ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_freeword_icon_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>おれい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おれい</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_freeword_icon_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>じまん</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じまん</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-06T14:14:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>たんぱんこぞう</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:48:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:48:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たんぱんこぞう</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:48:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:48:56" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリート♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリート♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:46" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンジャー♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:50:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンジャー♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブリーダー♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブリーダー♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:50:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:55:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:55:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>やまおとこ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:50:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やまおとこ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>スキンヘッド</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:51:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:51:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スキンヘッド</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようちえん♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようちえん♂</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうじょ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しょうじょ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリート♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリート♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンジャー♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンジャー♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブリーダー♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブリーダー♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:52:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:55:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けんきゅういん♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:55:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>パラソル</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パラソル</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナース</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナース</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_tr_view_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようちえん♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:53:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようちえん♀</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-07T02:54:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
@@ -2603,10 +2859,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Rand Action &amp; Def Param</Text>
+			<Text>フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2614,10 +2870,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Rand Action &amp; Def Param</Text>
+			<Text>フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2625,10 +2881,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>アクション</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:45:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2650,10 +2906,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やせいポケモンをたおせ</Text>
+			<Text>配信フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2661,10 +2917,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>野生ポケモンを倒せ</Text>
+			<Text>配信フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2690,10 +2946,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンバトルStart</Text>
+			<Text>フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2701,10 +2957,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン戦闘開始</Text>
+			<Text>フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2730,10 +2986,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンバトルWin</Text>
+			<Text>配信フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2741,10 +2997,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン戦闘Win</Text>
+			<Text>配信フェスミッション受信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2770,10 +3026,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>SPポケモンバトルStart</Text>
+			<Text>ポケモン名とエンカウントした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2781,10 +3037,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SPポケモン戦闘開始</Text>
+			<Text>ポケモン名とエンカウントした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2810,10 +3066,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>SPポケモンバトルWin</Text>
+			<Text>ポケモン名を倒した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2821,10 +3077,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SPポケモン戦闘Win</Text>
+			<Text>ポケモン名を倒した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2850,10 +3106,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーバトルStart</Text>
+			<Text>ポケモン名を捕まえた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2861,10 +3117,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナー戦闘開始</Text>
+			<Text>ポケモン名を捕まえた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2890,10 +3146,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーバトルWin</Text>
+			<Text>ポケモン名に逃げられた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2901,10 +3157,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナー戦闘Win</Text>
+			<Text>ポケモン名に逃げられた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2930,10 +3186,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムリーダーバトルStart</Text>
+			<Text>トレーナー戦開始</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2941,10 +3197,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムリーダー戦闘開始</Text>
+			<Text>トレーナー戦開始</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2970,10 +3226,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムリーダーバトルWin</Text>
+			<Text>トレーナー戦勝利</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2981,10 +3237,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムリーダー戦闘Win</Text>
+			<Text>トレーナー戦勝利</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3010,10 +3266,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>SPトレーナーバトルStart</Text>
+			<Text>全滅した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3021,10 +3277,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SPトレーナー戦闘開始</Text>
+			<Text>全滅した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3050,10 +3306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>SPトレーナーバトルWin</Text>
+			<Text>アイテム名を使用した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3061,10 +3317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SPトレーナー戦闘Win</Text>
+			<Text>アイテム名を使用した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3090,10 +3346,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオンバトルStart</Text>
+			<Text>アイテム名を手に入れた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3101,10 +3357,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオン戦闘開始</Text>
+			<Text>アイテム名を手に入れた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3130,10 +3386,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオンバトルWin</Text>
+			<Text>フィールド技を使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3141,10 +3397,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオン戦闘Win</Text>
+			<Text>フィールド技を使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3170,10 +3426,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンほかく</Text>
+			<Text>買い物中</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3181,10 +3437,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン捕獲</Text>
+			<Text>買い物中</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3210,10 +3466,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>SPポケモンほかく</Text>
+			<Text>デルパワーを使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3221,10 +3477,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>SPポケモン捕獲</Text>
+			<Text>デルパワーを使った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3250,10 +3506,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンLvUP</Text>
+			<Text>観覧車に乗った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3261,10 +3517,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンLvUP</Text>
+			<Text>観覧車に乗った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3290,10 +3546,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンしんか</Text>
+			<Text>看板を調べている</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3301,10 +3557,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン進化</Text>
+			<Text>看板を調べている</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3330,10 +3586,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーしよう</Text>
+			<Text>タマゴを受け取った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3341,10 +3597,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワー使用</Text>
+			<Text>タマゴを受け取った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3370,10 +3626,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイテムはっけん</Text>
+			<Text>ポケモン名を倒した 草</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3381,10 +3637,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイテム発見</Text>
+			<Text>ポケモン名を倒した 草</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3410,10 +3666,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイじかん　こうしん</Text>
+			<Text>ポケモン名を捕まえた 草</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3421,10 +3677,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイ時間更新</Text>
+			<Text>ポケモン名を捕まえた 草</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3450,10 +3706,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかんかんせい</Text>
+			<Text>ポケモン名を倒した キノコ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3461,10 +3717,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑完成</Text>
+			<Text>ポケモン名を倒した キノコ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3490,10 +3746,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれいすう　こうしん</Text>
+			<Text>ポケモン名を捕まえた キノコ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3501,10 +3757,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お礼数更新</Text>
+			<Text>ポケモン名を捕まえた キノコ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3530,10 +3786,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユニオンうけつけ</Text>
+			<Text>アイテム名を見つけた キラキラ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3541,10 +3797,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユニオン受付</Text>
+			<Text>アイテム名を見つけた キラキラ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3570,10 +3826,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれいを　うけた</Text>
+			<Text>鐘を鳴らした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3581,10 +3837,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お礼を受けた</Text>
+			<Text>鐘を鳴らした</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3610,10 +3866,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンはいふ</Text>
+			<Text>アイテム名を見つけた　羽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3621,10 +3877,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン配布中</Text>
+			<Text>アイテム名を見つけた　羽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3650,10 +3906,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイテムはいふ</Text>
+			<Text>アイテム名を見つけた　石</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3661,10 +3917,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイテム配布中</Text>
+			<Text>アイテム名を見つけた　石</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3690,10 +3946,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎな　おくりもの　はいふ</Text>
+			<Text>ポケモン名\]が生まれた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3701,10 +3957,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>不思議な贈り物配布</Text>
+			<Text>ポケモン名\]が生まれた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3730,10 +3986,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゅうしょに　あてた</Text>
+			<Text>ポケモン名を釣り上げた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3741,10 +3997,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>急所に当てた</Text>
+			<Text>ポケモン名を釣り上げた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3770,10 +4026,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゅうしょに　うけた</Text>
+			<Text>ポケモン名を見つけた　獣道</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3781,10 +4037,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>急所に受けた</Text>
+			<Text>ポケモン名を見つけた　獣道</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3810,10 +4066,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルから　にげた</Text>
+			<Text>まいごを助けた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3821,10 +4077,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルから逃げた</Text>
+			<Text>まいごを助けた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3850,10 +4106,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>HPがすくない</Text>
+			<Text>アイテム名を渡した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3861,10 +4117,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>HPが少ない</Text>
+			<Text>アイテム名を渡した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3890,10 +4146,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>PPがすくない</Text>
+			<Text>道具交換成功</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3901,10 +4157,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>PPが少ない</Text>
+			<Text>道具交換成功</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3930,10 +4186,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンがひんし</Text>
+			<Text>アイテム名を買った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3941,10 +4197,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンがひん死</Text>
+			<Text>アイテム名を買った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3970,10 +4226,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　じょうたいいじょう</Text>
+			<Text>じゃんけんに買った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3981,10 +4237,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが状態異常</Text>
+			<Text>じゃんけんに買った</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4010,10 +4266,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイテムをつかった</Text>
+			<Text>クイズに正解した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4021,10 +4277,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイテムを使った</Text>
+			<Text>クイズに正解した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4050,10 +4306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フィールドわざを　つかった</Text>
+			<Text>トレーナーを倒した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4061,10 +4317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フィールド技を　つかった</Text>
+			<Text>トレーナーを倒した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4090,10 +4346,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴを　うけとった</Text>
+			<Text>アイテム名をもらった</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4101,10 +4357,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴを　受け取った</Text>
+			<Text>アイテム名をもらった</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4130,10 +4386,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴが　かえった</Text>
+			<Text>クイズに正解した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4141,10 +4397,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴが　かえった</Text>
+			<Text>クイズに正解した</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4170,10 +4426,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいものちゅう</Text>
+			<Text>お金が足りない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4181,10 +4437,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>買い物中</Text>
+			<Text>お金が足りない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4210,10 +4466,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サブウェイちょうせん</Text>
+			<Text>じゃんけんに負けた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4221,10 +4477,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サブウェイ挑戦</Text>
+			<Text>じゃんけんに負けた</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-28T13:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4250,10 +4506,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サブウェイ　れんしょう</Text>
+			<Text>クイズに不正解</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4261,10 +4517,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サブウェイ　連勝</Text>
+			<Text>クイズに不正解</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4290,10 +4546,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サブウェイ　トロフィーGet</Text>
+			<Text>ポケモン名がひん死</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4301,10 +4557,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サブウェイ　トロフィーGet</Text>
+			<Text>ポケモン名がひん死</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4330,10 +4586,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トライアルハウスちょうせん</Text>
+			<Text>ポケモン名のHPが少ない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4341,10 +4597,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トライアルハウス挑戦</Text>
+			<Text>ポケモン名のHPが少ない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4370,10 +4626,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トライアルハウス　ランクUp</Text>
+			<Text>ポケモン名のPPが少ない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4381,10 +4637,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トライアルハウス　ランクUp</Text>
+			<Text>ポケモン名のPPが少ない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4410,170 +4666,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんらんしゃに　のった</Text>
+			<Text>一言メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>観覧車に乗った</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_46"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケシフターちょうせん</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケシフター挑戦</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_47"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ミュージカルちょうせん</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ミュージカル挑戦</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_48"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>たにんのデルパワーしよう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>他人のデルパワー使用</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_49"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひとことメッセージ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4583,8 +4679,8 @@
 			Language="JPN_KANJI">
 			<Text>一言メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-06T07:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4604,1200 +4700,5 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_50"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>デルパワーはいふ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>デルパワー配布</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_null"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>NULLアクション</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>NULLアクション</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>サーチ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>サーチ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_00">
-		<LanguageCell
-			Language="JPN">
-			<Text>フェスミッション受信</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:03:39" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>フェスミッション受信</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>配信フェスミッション受信</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>配信フェスミッション受信</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:18" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_02">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名とエンカウントした</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名とエンカウントした</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:38" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_03">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を倒した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を倒した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:04:55" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_04">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を捕まえた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を捕まえた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:13" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_05">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名に逃げられた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名に逃げられた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_06">
-		<LanguageCell
-			Language="JPN">
-			<Text>トレーナー戦開始</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>トレーナー戦開始</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:47" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_07">
-		<LanguageCell
-			Language="JPN">
-			<Text>トレーナー戦勝利</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>トレーナー戦勝利</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:05:54" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_08">
-		<LanguageCell
-			Language="JPN">
-			<Text>全滅した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>全滅した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:01" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:01" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_09">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を使用した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を使用した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:25" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:08" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_10">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を手に入れた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を手に入れた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:16" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_11">
-		<LanguageCell
-			Language="JPN">
-			<Text>フィールド技を使った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>フィールド技を使った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_12">
-		<LanguageCell
-			Language="JPN">
-			<Text>買い物中</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>買い物中</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:29" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_13">
-		<LanguageCell
-			Language="JPN">
-			<Text>デルパワーを使った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>デルパワーを使った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:37" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_14">
-		<LanguageCell
-			Language="JPN">
-			<Text>観覧車に乗った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>観覧車に乗った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:44" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_15">
-		<LanguageCell
-			Language="JPN">
-			<Text>看板を調べている</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>看板を調べている</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:06:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_16">
-		<LanguageCell
-			Language="JPN">
-			<Text>タマゴを受け取った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>タマゴを受け取った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_17">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を倒した 草</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を倒した 草</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:31" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_18">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を捕まえた 草</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を捕まえた 草</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:14:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:39" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_19">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を倒した キノコ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を倒した キノコ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:15:01" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:46" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_20">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を捕まえた キノコ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を捕まえた キノコ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:15:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:07:56" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_21">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を見つけた キラキラ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を見つけた キラキラ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:04" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_22">
-		<LanguageCell
-			Language="JPN">
-			<Text>鐘を鳴らした</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>鐘を鳴らした</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:12" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_23">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を見つけた　羽</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を見つけた　羽</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:15:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_24">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を見つけた　石</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を見つけた　石</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:15:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:29" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_25">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名\]が生まれた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名\]が生まれた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:35" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:35" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_26">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を釣り上げた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を釣り上げた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:08:43" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_27">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモン名を見つけた　獣道</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモン名を見つけた　獣道</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:15:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:10" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_28">
-		<LanguageCell
-			Language="JPN">
-			<Text>まいごを助けた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>まいごを助けた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:18" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_29">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を渡した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を渡した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:24" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_30">
-		<LanguageCell
-			Language="JPN">
-			<Text>道具交換成功</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>道具交換成功</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:29" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_31">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名を買った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名を買った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:35" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_32">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゃんけんに買った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>じゃんけんに買った</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:43" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_33">
-		<LanguageCell
-			Language="JPN">
-			<Text>クイズに正解した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>クイズに正解した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:09:54" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_34">
-		<LanguageCell
-			Language="JPN">
-			<Text>トレーナーを倒した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>トレーナーを倒した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:02" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:02" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_35">
-		<LanguageCell
-			Language="JPN">
-			<Text>アイテム名をもらった</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アイテム名をもらった</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:27" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_36">
-		<LanguageCell
-			Language="JPN">
-			<Text>図鑑クイズに正解した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>図鑑クイズに正解した</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:33" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_37">
-		<LanguageCell
-			Language="JPN">
-			<Text>お金が足りない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>お金が足りない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:39" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_38">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゃんけんに負けた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>じゃんけんに負けた</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:45" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_39">
-		<LanguageCell
-			Language="JPN">
-			<Text>ニックネームがひん死</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T12:32:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ニックネームがひん死</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T12:32:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:10:56" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_40">
-		<LanguageCell
-			Language="JPN">
-			<Text>ニックネームのHPが少ない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ニックネームのHPが少ない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:11:05" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_41">
-		<LanguageCell
-			Language="JPN">
-			<Text>ニックネームのPPが少ない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ニックネームのPPが少ない</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:16:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:11:15" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="dlf_action_search_42">
-		<LanguageCell
-			Language="JPN">
-			<Text>一言メッセージ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:17:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>一言メッセージ</Text>
-			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:12:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-29T13:12:21" />
-		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

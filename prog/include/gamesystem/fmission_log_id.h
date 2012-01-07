@@ -55,7 +55,7 @@
 #define  FMISSION_LOG_ACT_POKE_QUIZ_CLEAR    ( 38 )  ///<図鑑クイズに正解
 #define  FMISSION_LOG_ACT_RUN_OUT_OF_MONEY   ( 39 )  ///<お金が足りない
 #define  FMISSION_LOG_ACT_RPS_LOSE           ( 40 )  ///<じゃんけんに負けた
-#define  FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER  ( 41 )  ///<クイズに不正(記憶・図鑑クイズ共用)
+#define  FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER  ( 41 )  ///<クイズに不正解(記憶・図鑑クイズ共用)
 #define  FMISSION_LOG_ACT_POKE_DOWN          ( 42 )   ///<[ポケモン名]が瀕死
 #define  FMISSION_LOG_ACT_POKE_HP_LITTLE     ( 43 )   ///<[ポケモン名]のHPが少ない
 #define  FMISSION_LOG_ACT_POKE_PP_LITTLE     ( 44 )   ///<[ポケモン名]のPPが少ない

@@ -96,6 +96,10 @@ struct _FEST_MISSION{
   u32 key;        //マジックキー
   s32 end_life;   //ミッション終了時の残り時間(秒)
   s64 start_rtc;  //ミッション開始時RTC(日付+時刻の秒変換値)
+
+#ifdef PM_DEBUG
+  s64 deb_time_stop_rtc;  ///<デバッグモード用RTC記憶
+#endif
 };
 
 #define FMISSION_GOAL_NULL  (0x3FFF)  //ミッション目標無効値

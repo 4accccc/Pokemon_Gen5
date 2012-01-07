@@ -92,23 +92,6 @@ extern BOOL FEST_MISSION_IsLifeLeftForEntry( const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
- * @brief ミッション状態監視処理
- */
-//---------------------------------------------------------
-extern void FEST_MISSION_Update( FEST_MISSION* fmwk );
-
-//---------------------------------------------------------
-/*
- * @brief ミッション終了監視(ミッション中でない場合、常にFalse)
- *
- * @retval  TRUE   ミッション終了
- * @retval  FALSE  ミッション中でないorミッション継続中
- */
-//---------------------------------------------------------
-extern BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk );
-
-//---------------------------------------------------------
-/*
  * @brief ミッションが生きているか取得
  *
  * @retval  TRUE   ミッション中且つライフ有

@@ -48,7 +48,54 @@ void DEB_LINKFEST_SetBeaconWait( LINK_FESTIVAL* wk, int wait )
 //---------------------------------------------------------
 void DEB_LINKFEST_SetTimeStopFlag( LINK_FESTIVAL* wk, BOOL flag )
 {
+  s64 now_rtc = GFL_RTC_GetDateTimeBySecond();
   wk->deb_time_stop_f = flag;
+
+  if( wk->deb_time_stop_f ){
+    wk->mission.deb_time_stop_rtc = now_rtc;
+  }else{
+    s64 diff = wk->mission.deb_time_stop_rtc-wk->mission.start_rtc;
+    wk->mission.start_rtc = now_rtc-diff;
+    wk->mission.deb_time_stop_rtc = 0;
+  }
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ライフのデクリメントをとめるフラグをゲット
+ */
+//---------------------------------------------------------
+BOOL DEB_LINKFEST_GetTimeStopFlag( LINK_FESTIVAL* wk )
+{
+  return wk->deb_time_stop_f;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 配信スポットエミュレーションフラグをセットする
+ */
+//---------------------------------------------------------
+void DEB_LINKFEST_SetSpotModeFlag( LINK_FESTIVAL* wk, BOOL flag )
+{
+  wk->deb_spot_mode_f = flag;
+
+  if( wk->deb_spot_mode_f ){
+    wk->mission.beacon.distribution_f = TRUE;
+  }else{
+    if( wk->mission.arc.host != FMISSION_HOST_COMM ){
+      wk->mission.beacon.distribution_f = FALSE;
+    }
+  }
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 配信モードエミュレーションフラグをゲット
+ */
+//---------------------------------------------------------
+BOOL DEB_LINKFEST_GetSpotModeFlag( LINK_FESTIVAL* wk )
+{
+  return wk->deb_time_stop_f;
 }
 
 
