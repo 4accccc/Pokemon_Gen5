@@ -15840,17 +15840,17 @@
 	</row>
 
 	<row id="TRID_RANGERM_28_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">やせいに　とけこみ
-ポケモンと　こころで　かいわする……▽
+		<language name="JPN" width="216">やせいに　とけこむ！
 それが　ポケモンレンジャーだ！！▼</language>
-		<language name="JPN_KANJI" width="216">野生に　とけこみ
-ポケモンと　心で　会話する……▽
+		<language name="JPN_KANJI" width="216">野生に　とけこむ！
 それが　ポケモンレンジャーだ！！▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_28_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">おれの　やせいを　かんじたか？</language>
-		<language name="JPN_KANJI" width="216">おれの　野生を　感じたか？</language>
+		<language name="JPN" width="216">なんじゃくものの　オレめ！
+もういちど　やせいに　とけこもう！</language>
+		<language name="JPN_KANJI" width="216">軟弱者の　オレめ！
+もう一度　野生に　とけこもう！</language>
 	</row>
 
 	<row id="TRID_RANGERM_28_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
@@ -15863,12 +15863,10 @@
 	<row id="TRID_RANGERM_28_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">やせいに　とけこみすぎると
 ひとは　もちろん▽
-ポケモンにも　きづいてもらえない▽
-そこは　もんだい　なのだ……</language>
+ポケモンにも　きづいてもらえないのだ</language>
 		<language name="JPN_KANJI" width="216">野生に　とけこみすぎると
 人は　もちろん▽
-ポケモンにも　気づいてもらえない▽
-そこは　問題なのだ……</language>
+ポケモンにも　気づいてもらえないのだ</language>
 	</row>
 
 	<row id="TRID_RANGERW_27_TRMSG_FIGHT_START">
@@ -15917,10 +15915,10 @@
 	</row>
 
 	<row id="TRID_RANGERW_28_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あなたも　ポケモンと
-ちからを　あわせているのね！</language>
-		<language name="JPN_KANJI" width="216">あなたも　ポケモンと
-力を　合わせているのね！</language>
+		<language name="JPN" width="216">おおいなる　ちから！
+あなたの　ポケモン　マーベラス！</language>
+		<language name="JPN_KANJI" width="216">おおいなる　ちから！
+あなたの　ポケモン　マーベラス！</language>
 	</row>
 
 	<row id="TRID_RANGERW_28_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
@@ -15931,16 +15929,12 @@
 	</row>
 
 	<row id="TRID_RANGERW_28_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">ひとりでは　できないことも
-だれかと　いっしょなら……▼
-そう！　わたしたちの　そばには
-いつも　ポケモンが　いてくれる……▽
-これって　ステキな　ことでしょ！</language>
-		<language name="JPN_KANJI" width="216">ひとりでは　できないことも
-だれかと　一緒なら……▼
-そう！　わたしたちの　そばには
-いつも　ポケモンが　いてくれる……▽
-これって　ステキな　ことでしょ！</language>
+		<language name="JPN" width="216">ポケモンって　すごすぎるでしょ
+つい　たよりすぎちゃうのよね▽
+おおいなる　ちからって　あぶないわ</language>
+		<language name="JPN_KANJI" width="216">ポケモンって　すごすぎるでしょ
+つい　頼りすぎちゃうのよね▽
+おおいなる　力って　危ないわ</language>
 	</row>
 
 	<row id="TRID_VETERANM_20_TRMSG_FIGHT_START">
@@ -16111,9 +16105,9 @@
 	</row>
 
 	<row id="TRID_KINDERGARTENW_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">むしポケモンの　かわりに
+		<language name="JPN" width="216">ドラゴンポケモンの　かわりに
 ステキな　トレーナーを　みっけ！▼</language>
-		<language name="JPN_KANJI" width="216">むしポケモンの　かわりに
+		<language name="JPN_KANJI" width="216">ドラゴンポケモンの　かわりに
 ステキな　トレーナーを　みっけ！▼</language>
 	</row>
 
@@ -16125,10 +16119,10 @@
 	</row>
 
 	<row id="TRID_KINDERGARTENW_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">アーティさんと　おはなし　したいから
-むしポケモンを　すきに　なるの！</language>
-		<language name="JPN_KANJI" width="216">アーティさんと　おはなし　したいから
-むしポケモンを　すきに　なるの！</language>
+		<language name="JPN" width="216">シャガさんと　おはなし　したいから
+ドラゴンポケモンを　すきに　なるの！</language>
+		<language name="JPN_KANJI" width="216">シャガさんと　おはなし　したいから
+ドラゴンポケモンを　すきに　なるの！</language>
 	</row>
 
 	<row id="TRID_FUTAGO_09_TRMSG_FIGHT_START_1">
