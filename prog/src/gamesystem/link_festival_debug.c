@@ -95,7 +95,7 @@ void DEB_LINKFEST_SetSpotModeFlag( LINK_FESTIVAL* wk, BOOL flag )
 //---------------------------------------------------------
 BOOL DEB_LINKFEST_GetSpotModeFlag( LINK_FESTIVAL* wk )
 {
-  return wk->deb_time_stop_f;
+  return wk->deb_spot_mode_f;
 }
 
 
