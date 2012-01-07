@@ -981,7 +981,7 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
     GFL_MSG_GetString( wk->msgman, dlc_sex_male+value, wk->str_tmp );
     break;
   case BPRM_WSET_VERSION:
-    GFL_MSG_GetString( wk->msgman, dlc_version_black+(value-VERSION_BLACK), wk->str_tmp );
+    GFL_MSG_GetString( wk->msgman, dlc_version_white+(value-VERSION_WHITE), wk->str_tmp );
     break;
   case BPRM_WSET_LANG:
     GFL_MSG_GetString( wk->msgman, dlc_lang_01+(value-LANG_JAPAN), wk->str_tmp );

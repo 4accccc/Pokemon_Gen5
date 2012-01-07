@@ -966,7 +966,7 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     GFL_MSG_GetString( wk->msgman, dlf_sex_male+value, wk->str_tmp );
     break;
   case BPRM_WSET_VERSION:
-    GFL_MSG_GetString( wk->msgman, dlf_version_white+(value-VERSION_WHITE), wk->str_tmp );
+    GFL_MSG_GetString( wk->msgman, dlf_version_white+(value-VERSION_W2), wk->str_tmp );
     break;
   case BPRM_WSET_LANG:
     GFL_MSG_GetString( wk->msgman, dlf_lang_01+(value-LANG_JAPAN), wk->str_tmp );
