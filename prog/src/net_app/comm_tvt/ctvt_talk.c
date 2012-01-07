@@ -2625,13 +2625,26 @@ void CTVT_TALK_SetIsConnectVersion( CTVT_TALK_WORK *talkWork, const BOOL flg )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  接続バージョンチェック用フラグ取得
+ *
+ *	@param	CTVT_TALK_WORK *talkWork 
+ *
+ *	@return BOOL  flg SWAN以外が接続しているとTRUE
+ */
+//-----------------------------------------------------------------------------
+const BOOL CTVT_TALK_GetIsConnectVersion( CTVT_TALK_WORK *talkWork )
+{
+  return talkWork->isConnectVersion;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  接続メンバーに変更があったか
  *
  *	@param	CTVT_TALK_WORK *talkWork
  *	@param	BOOL flg  変更があるとTRUE
  */
 //-----------------------------------------------------------------------------
-void CTVT_TALK_SetIsChangeMembaer( CTVT_TALK_WORK *talkWork, const BOOL flg )
+void CTVT_TALK_SetIsChangeMember( CTVT_TALK_WORK *talkWork, const BOOL flg )
 {
   talkWork->isChangeMember = flg;
 }

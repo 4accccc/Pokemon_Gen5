@@ -951,9 +951,13 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
   // メンバーのROMバージョンチェック
   {
     CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
-
     BOOL only_swan = TRUE;
     u8 i;
+
+    // 現在のバージョンフラグ SWAN以外が接続しているとTRUE
+    const BOOL old_version_flg = CTVT_TALK_GetIsConnectVersion( talkWork );
+
+
     for( i=0;i<CTVT_MEMBER_NUM;i++ )
     {
       if( CTVT_COMM_CheckMemberVersion( work , commWork , &commWork->member[i] , i ) )
@@ -972,6 +976,23 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
     {
       // SWANのみ
       CTVT_TALK_SetIsConnectVersion( talkWork, FALSE );
+    }
+
+    // 設定前のフラグと違ったか = メンバーに変更がありボタンを変更する必要がある
+    if( only_swan == old_version_flg )
+    {
+      // BTS 214【ミニゲームが使用できない状況でアイコンが暗くならない】
+      //
+      //  親の場合は会話モードにメンバーの変更があったことを伝える
+      //  ↓
+      //  会話モードではそれをトリガにボタンの状態を設定する
+      //
+      if( selfId == 0 )
+      {
+        CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
+        CTVT_TALK_SetIsChangeMember( talkWork, TRUE );
+        ICHI_Printf("メンバー変更 \n");
+      }
     }
   }
 
@@ -1064,20 +1085,6 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
         {
           commWork->reqSendMemberData = FALSE;
         }
-
-        // BTS 214【ミニゲームが使用できない状況でアイコンが暗くならない】
-        //
-        //  親の場合は会話モードにメンバーの変更があったことを伝える
-        //  ↓
-        //  会話モードではそれをトリガにボタンの状態を設定する
-        //
-        if( selfId == 0 )
-        {
-          CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
-          CTVT_TALK_SetIsChangeMembaer( talkWork, TRUE );
-          ICHI_Printf("メンバー変更 \n");
-        }
-
       }
     }
   }
@@ -1378,9 +1385,15 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
 static BOOL CTVT_COMM_CheckMemberVersion( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , CTVT_MEMBER_STATE *state , const u8 idx )
 {
   CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+
   if( state->isEnable == FALSE )
   {
     //不在
+    return FALSE;
+  }
+  if( state->isEnableData == FALSE )
+  {
+    //データを受信していない
     return FALSE;
   }
   if( state->isSelf == TRUE )
