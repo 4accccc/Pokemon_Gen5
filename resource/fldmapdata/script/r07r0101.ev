@@ -145,6 +145,8 @@ EVENT_START   ev_r07r0101_hakase2_01
     //========================================//
     //ローカルライブキャスター・アララギ通話状態を変更（T07到着まで）
     _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_CARGOSERVICE )
+    //ローカルライブキャスター・ライバル通話状態を変更（D24R0301,D24R0901ベル連れ歩きまで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R06_2 )
     //========================================//
 
   ELSIF $WK_SCENE_C06HAKASE == 2 THEN   //フキヨセジム攻略まで繰り返し

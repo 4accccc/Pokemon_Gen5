@@ -268,6 +268,10 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   _FLAG_RESET( SYS_FLAG_WBT_TUTORIAL )
   //C05GYM0101ヤーコン表示
   _FLAG_RESET( FV_C05GYM0101_SWLEADER5_01 )
+  //ローカルライブキャスター・ライバル通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_WBT_2 )
+  //ローカルライブキャスター・チェレン通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_WBT_2 )
   //========================================//
 
 EVENT_END

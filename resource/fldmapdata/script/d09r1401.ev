@@ -123,7 +123,7 @@ EVENT_START   ev_pos_d09r1401_swrival_01
   //POS無効
   $WK_SCENE_D09R1401_SWRIVAL_01 = 1
   //ローカルライブキャスター・ライバル通話状態を変更（ポケモンリーグ到達まで）
-  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_1 )
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C09 )
   //========================================//
 
 EVENT_END

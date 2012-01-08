@@ -96,7 +96,7 @@ _DEBUG_PRINT_WK(1)
   ELSIF $WK_SCENE_C12_WHITE_MEET == 1 THEN
     //_OBJ_POS_CHANGE( C12_SWRIVAL_01, 37, 8, 717, DIR_UP )
    //ポケセン案内後ならベルの位置を移動
-   ELSIF $WK_SCENE_C12_WHITE_MEET == 5 THEN
+  ELSIF $WK_SCENE_C12_WHITE_MEET == 5 THEN
     _OBJ_POS_CHANGE( C12_SWBELL_01, 49, 1, 740, DIR_LEFT )
     _OBJ_POS_CHANGE( C12_SWMAMA_01, 38, 1, 740, DIR_RIGHT )
     _OBJ_POS_CHANGE( C12_SWSISTER_01, 38, 1, 741, DIR_RIGHT )
@@ -2068,6 +2068,8 @@ EVENT_START   ev_scene_c12_rivalsister_end_01
   $WK_SCENE_SPPOKE_EVENT_01 = 2
   //ローカルライブキャスター：アララギ娘通話状態を変更（D33R0101終了まで）
   _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_D33R0101 )
+  //ローカルライブキャスター：ライバル通話状態を変更（t04終了まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04 )
   //========================================//
 
 EVENT_END
