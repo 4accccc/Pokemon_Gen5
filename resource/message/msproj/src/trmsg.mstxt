@@ -71770,25 +71770,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラーズマー！</Text>
+			<Text>プラーズマー！
+まけた！　たいへんだー！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:24:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:24:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラーズマー！</Text>
+			<Text>プラーズマー！
+負けた！　大変だー！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:24:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:24:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
