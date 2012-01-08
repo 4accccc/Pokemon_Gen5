@@ -98,6 +98,17 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_w_02_file_unit_bg_w02[] = {
 };
 
 ///==================================
+/// bg02_w02 Unit File Resource
+
+static const u16 res_kyuremu_union_w_02_file_bg02_w02[] = {
+ NARC_data_demo3d_bg02_w02_nsbmd,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_02_file_unit_bg02_w02[] = {
+ { res_kyuremu_union_w_02_file_bg02_w02, 1 },
+};
+
+///==================================
 /// ak_w02 Unit File Resource
 
 static const u16 res_kyuremu_union_w_02_file_ak_w02[] = {
@@ -145,6 +156,10 @@ static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_02_file_unit_bg_w02_tbl[] 
  { res_kyuremu_union_w_02_file_unit_bg_w02, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_02_file_unit_bg02_w02_tbl[] = {
+ { res_kyuremu_union_w_02_file_unit_bg02_w02, 1 },
+};
+
 static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_02_file_unit_ak_w02_tbl[] = {
  { res_kyuremu_union_w_02_file_unit_ak_w02, 1 },
 };
@@ -159,6 +174,7 @@ static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_02_file_unit_eff02_w02_tbl
 
 static const DEMO3D_SCENE_UNIT res_kyuremu_union_w_02_scene_unit[] = {
  { res_kyuremu_union_w_02_file_unit_bg_w02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_02_file_unit_bg02_w02_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_02_file_unit_ak_w02_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_02_file_unit_eff01_w02_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_02_file_unit_eff02_w02_tbl, 1, DEMO3D_UNITCHG_NONE },

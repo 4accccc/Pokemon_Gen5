@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-12-14T12:57:27" source="kyuremu_union_b_03_v02.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-03T17:51:16" source="kyuremu_union_b_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-12-14T12:57:27" source="kyuremu_union_b_03_v02.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-03T17:51:16" source="kyuremu_union_b_03.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -33,35 +33,35 @@
 	<tex_image index="0" name="bq_code"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="bq_code_pl"
 		path="C:/home/swan_data3d/demo/blackkyurem/tex/bq_code.tga"
 	>
 		<bitmap size="128">
-			8888 8888 6678 3445 8888 8888 8888 8888
-			8888 8888 6678 3445 8888 8888 8888 8888
-			9999 9999 7889 4566 8888 8888 8888 8888
-			bbbb bbbb 9aab 6678 8888 8888 8888 8888
-			dddd dddd abcd 789a 8889 8888 8888 8888
-			eeee eeee cdde 99ab abbc 8889 8888 8888
-			dddd dddd abcd 789a bbbb aabb 999a 8888
-			bbbb bbbb 9aab 6678 cccd cccc cccc bbbc
-			9999 9999 7889 4566 dddd abcc 889a 8888
-			8888 8888 6678 3445 899a 8888 8888 8888
-			8888 8888 6678 3445 8888 8888 8888 8888
-			7777 7777 5667 3344 8888 8888 8888 8888
-			6666 6666 4566 2334 8888 8888 8888 8888
-			5555 5555 3455 1223 8888 8888 8888 8888
-			4444 4444 2344 0112 8888 8888 8888 ee88
-			3333 3333 2233 0001 8888 8888 8888 ee88
+			8888 8888 cba9 eddc 8888 8888 8888 8888
+			8888 8888 cba9 eddc 8888 8888 8888 8888
+			6666 6666 a977 dccb 8888 8888 8888 8888
+			4444 4444 7654 bba8 8888 8888 8888 8888
+			2222 2222 5432 9876 8877 8888 8888 8888
+			1111 1111 3222 7654 5443 8776 8888 8888
+			2222 2222 5432 9876 4444 5544 7666 8877
+			4444 4444 7654 bba8 3332 3333 3333 4443
+			6666 6666 a886 dccb 2222 5433 8866 8888
+			8888 8888 cba9 eddc 8765 8888 8888 8888
+			8888 8888 cba9 eddc 8888 8888 8888 8888
+			aaaa aaaa cbba eedd 8888 8888 8888 8888
+			bbbb bbbb dccb feed 8888 8888 8888 8888
+			cccc cccc eddc fffe 8888 8888 8888 8888
+			dddd dddd eeed ffff 8888 8888 8888 1188
+			eeee eeee feee ffff 8888 8888 8888 1188
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="bq_code_pl" color_size="16">
-		4631 4a52 4e73 5294 56b5 5ad6 5ef7 6318
-		6739 6b5a 6f7b 739c 77bd 7bde 7fff 7fff
+		7fff 7fff 7bde 77bd 739c 6f7b 6b5a 6b5a
+		6739 6739 6318 5ef7 5ad6 56b5 5294 4a52
 	</tex_palette>
 </tex_palette_array>
 
