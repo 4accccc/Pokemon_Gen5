@@ -47,6 +47,13 @@
 				Time="2011-06-17T02:34:03" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:31" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -99,6 +106,13 @@
 				Time="2011-06-17T02:34:03" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -116,13 +130,13 @@
 ってか
 あんたが　つよい　ってことか▼
 まっ　くやしーけど
-ぜんぶ　だしきったし▽
+いっさい　てぬきなし　だったし▽
 すがすがしーし　スッキリしたし！▼
 これ！
 あたしに　かった　あかし！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T03:13:33" />
+				Time="2012-01-08T03:59:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,13 +149,13 @@
 ってか
 あんたが　強い　ってことか▼
 まっ　くやしーけど
-全部　だしきったし▽
+一切　手抜きなし　だったし▽
 すがすがしーし　スッキリしたし！▼
 これ！
 あたしに　勝った　証！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T03:13:27" />
+				Time="2012-01-08T03:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -162,6 +176,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:34:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -212,6 +233,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:34:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -276,6 +304,13 @@
 				Time="2011-06-17T02:34:04" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -289,13 +324,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざマシン０９は　ベノムショック！
-とくしゅな　どくえきを　あびせるの！▼
+とくしゅな　どくえき　あびせちゃう！▼
 しかも　あいてが　どくじょうたいなら
 いりょくは　なんと　２ばい！▽
-ちょっと　ききすぎッ　でしょ</Text>
+エヘヘ！　パンチ　ききすぎだよね！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T03:14:02" />
+				Time="2012-01-08T04:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -304,13 +339,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざマシン０９は　ベノムショック！
-特殊な　毒液を　浴びせるの！▼
+特殊な　毒液　浴びせちゃう！▼
 しかも　相手が　どく状態なら
 威力は　なんと　２倍！▽
-ちょっと　ききすぎッ　でしょ</Text>
+エヘヘ！　パンチ　効きすぎだよね！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T03:14:07" />
+				Time="2012-01-08T04:03:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -331,6 +366,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:34:04" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -392,6 +434,13 @@
 				Time="2011-06-17T02:34:04" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -449,6 +498,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:34:04" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -512,6 +568,13 @@
 				Time="2011-06-17T02:34:05" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:35" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -560,10 +623,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SUNGLASSES</Text>
+			<Text>PWSTAFF
+←SUNGLASSES</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:06:52" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -624,10 +695,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SUNGLASSES</Text>
+			<Text>PWSTAFF
+←SUNGLASSES</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:06:54" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:38" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -693,6 +772,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-07T06:00:59" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:58:41" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

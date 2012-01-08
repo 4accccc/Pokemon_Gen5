@@ -78,6 +78,13 @@
 				Time="2011-06-17T02:57:26" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -95,10 +102,10 @@
 まけたのも
 なっとく　かなあ……▼
 そうだ！　この　ビートルバッジ！
-きみに　にあうよ！▼</Text>
+きみに　あいそうだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T09:35:14" />
+				Time="2012-01-08T05:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -111,10 +118,10 @@
 負けたのも
 納得　かなあ……▼
 そうだ！　この　ビートルバッジ！
-きみに　似合うよ！▼</Text>
+きみに　あいそうだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T09:35:29" />
+				Time="2012-01-08T05:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -136,6 +143,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:57:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -188,6 +202,13 @@
 				Time="2011-06-17T02:57:28" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -201,7 +222,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>むう！　そうぞういじょうに
-きみに　にあってるね▽
+にあってるね▽
 その　ビートルバッジ！▼
 それに　バッジを　３コ　もっていれば
 レベル４０までの　ポケモンは▽
@@ -210,7 +231,7 @@
 これも　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T09:38:45" />
+				Time="2012-01-08T05:19:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -219,7 +240,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>むう！　想像以上に
-きみに　似合ってるね▽
+似合ってるね▽
 その　ビートルバッジ！▼
 それに　バッジを　３個　持っていれば
 レベル４０までの　ポケモンは▽
@@ -228,7 +249,7 @@
 これも　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T09:38:38" />
+				Time="2012-01-08T05:20:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,6 +272,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:57:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -309,6 +337,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:57:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -378,6 +413,13 @@
 				Time="2011-06-17T02:57:28" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -442,6 +484,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:57:29" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T05:19:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

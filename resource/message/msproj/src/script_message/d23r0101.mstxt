@@ -58,6 +58,13 @@ GRIDX=15、GRIDZ=26
 				Time="2011-05-30T06:42:23" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -116,6 +123,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:18" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="sg_d23r0101_workman_03"
@@ -159,6 +173,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:18" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -207,6 +228,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:18" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="sg_d23r0101_workman_05"
@@ -254,6 +282,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:18" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_workman_06"
@@ -297,6 +332,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-10T02:43:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:22" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -346,6 +388,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:01" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:28" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -407,6 +456,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -462,6 +518,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -514,6 +577,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_workman2b_02"
@@ -563,6 +633,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_workman2b_03"
@@ -609,6 +686,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_workman2c_01"
@@ -653,6 +737,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -710,6 +801,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -760,6 +858,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -825,6 +930,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:43:13" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_assistantm_02"
@@ -869,6 +981,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:52:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -928,6 +1047,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:52:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_assistantm_04"
@@ -972,6 +1098,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:52:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1031,6 +1164,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:52:51" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d23r0101_assistantm_06"
@@ -1043,11 +1183,11 @@ GRIDX=15、GRIDZ=26
 はなしに　きょうみ　あるよね？▼
 ということは
 コンビナートなかま　なのか！▼
-うれしいな
+うれしいな　ったら　うれしいな！
 じゃあさ　これを　もっていきなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T02:51:05" />
+				Time="2012-01-08T03:35:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1061,11 +1201,11 @@ GRIDX=15、GRIDZ=26
 話に　興味あるよね？▼
 ということは
 コンビナート仲間　なのか！▼
-うれしいな
+うれしいな　ったら　うれしいな！
 じゃあさ　これを　持っていきなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T02:51:01" />
+				Time="2012-01-08T03:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1088,6 +1228,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:52:51" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1137,6 +1284,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-30T06:56:42" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:33" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1201,6 +1355,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-11-13T02:02:23" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:35" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1252,6 +1413,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T02:02:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:37" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1311,6 +1479,13 @@ GRIDX=15、GRIDZ=26
 				User="matsumiya:W00224"
 				Time="2011-11-13T02:02:25" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1362,6 +1537,13 @@ GRIDX=15、GRIDZ=26
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T02:02:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:34:37" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

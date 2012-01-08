@@ -787,12 +787,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレンさんに　みこまれて
-ジムの　トレーナーに　なった　ぼく！▼
-その　つよさを
-きみに　おしえてあげるよ！▼</Text>
+ジムの　トレーナーに　なったぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -801,12 +799,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレンさんに　みこまれて
-ジムの　トレーナーに　なった　ぼく！▼
-その　強さを
-きみに　教えてあげるよ！▼</Text>
+ジムの　トレーナーに　なったぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -982,11 +978,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくも　たびをして
-ポケモンを　きたえようかな……</Text>
+			<Text>……チェレンさんに　みこまれたのも
+ほかに　ひとが　いないから？▼
+イヤイヤ！　たとえ　そうでも
+ぼくが　つよくなれば　いいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:37:10" />
+				Time="2012-01-08T03:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -994,11 +992,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくも　旅をして
-ポケモンを　鍛えようかな……</Text>
+			<Text>……チェレンさんに　みこまれたのも
+他に　人が　いないから？▼
+イヤイヤ！　たとえ　そうでも
+ぼくが　強くなれば　いいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:37:25" />
+				Time="2012-01-08T03:28:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1240,12 +1240,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしは　チェレンさんに
-いろいろ　おそわって　つよくなる！▽
-ひとそれぞれの　やりかたが　あるのよ</Text>
+			<Text>じぶんの　ポケモンのこと
+もっと　くわしく　しってあげよっと！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:30:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1253,12 +1252,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしは　チェレンさんに
-いろいろ　教わって　強くなる！▽
-人それぞれの　やりかたが　あるのよ</Text>
+			<Text>自分の　ポケモンのこと
+もっと　詳しく　知ってあげよっと！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T03:30:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

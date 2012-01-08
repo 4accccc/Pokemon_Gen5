@@ -26,6 +26,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T13:24:03" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:01" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_menu_02"
@@ -52,6 +59,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T13:24:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:02" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_menu_03"
@@ -78,6 +92,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T13:24:53" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:02" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_01"
@@ -129,6 +150,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:04:30" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:05" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_02"
@@ -178,6 +206,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:40:30" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:07" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_03"
@@ -219,6 +254,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:40:47" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:07" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_04"
@@ -246,11 +288,10 @@
 作品が　一本も　ありません▼
 ああ……▼
 どなたかが　新しい　作品を
-つくって　くださらない　かしら……▼
-</Text>
+つくって　くださらない　かしら……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:21" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -266,6 +307,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:40:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:09" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_05"
@@ -304,6 +352,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:39:50" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:35" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_theater_06"
@@ -342,6 +397,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:41:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:35" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw__monitor_01"
@@ -379,6 +441,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-28T02:56:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:35" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_01"
@@ -425,6 +494,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:55:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_02"
@@ -473,6 +549,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:55:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_03"
@@ -525,6 +608,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:56:00" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_04"
@@ -577,6 +667,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:56:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_05"
@@ -619,6 +716,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:56:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_starnpc_06"
@@ -655,6 +759,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-13T10:56:15" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_01"
@@ -701,6 +812,13 @@ msg_pw_tutorial_show_02</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:15" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:21:52" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_02"
@@ -753,6 +871,13 @@ msg_pw_tutorial_show_03</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:02" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_03"
@@ -797,6 +922,13 @@ msg_pw_tutorial_show_04</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:18" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_04"
@@ -842,6 +974,13 @@ msg_pw_tutorial_show_05</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:53" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_05"
@@ -896,6 +1035,13 @@ msg_pw_tutorial_show_06</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_06"
@@ -957,6 +1103,13 @@ msg_pw_tutorial_show_07</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_07"
@@ -1001,6 +1154,13 @@ msg_pw_tutorial_show_08</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:27" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_08"
@@ -1056,6 +1216,13 @@ msg_pw_tutorial_show_09</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:43" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_08a"
@@ -1091,6 +1258,13 @@ msg_pw_tutorial_show_09</Comment>
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-22T10:50:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_08b"
@@ -1137,6 +1311,13 @@ msg_pw_tutorial_show_09</Comment>
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-22T10:50:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_09"
@@ -1181,6 +1362,13 @@ msg_pw_tutorial_show_10</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:30" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_10"
@@ -1229,6 +1417,13 @@ msg_pw_tutorial_show_11</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:35" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_11"
@@ -1273,6 +1468,13 @@ msg_pw_tutorial_show_12</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_12"
@@ -1318,6 +1520,13 @@ msg_pw_tutorial_show_13</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:38" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_13"
@@ -1364,6 +1573,13 @@ msg_pw_tutorial_show_14</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:22" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_14"
@@ -1407,6 +1623,13 @@ msg_pw_tutorial_show_14</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:43" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -1429,11 +1652,11 @@ msg_pw_tutorial_show_14</Comment>
 むすめが　いるのです……▼
 ちちである　わたしも　ながねんの
 ゆめに　チャレンジしたかった……▼
-だって　にんげん　ちょうせんすることを
+だって　にんげん　ちょうせんを
 やめたら　そこで　おわりでしょ？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:57:02" />
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1450,11 +1673,11 @@ msg_pw_tutorial_show_14</Comment>
 娘が　いるのです……▼
 父である　わたしも　長年の
 夢に　チャレンジしたかった……▼
-だって　人間　挑戦することを
+だって　人間　挑戦を
 やめたら　そこで　終わりでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T04:05:02" />
+				Time="2012-01-08T04:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1476,6 +1699,13 @@ msg_pw_tutorial_show_16</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_16"
@@ -1521,6 +1751,13 @@ msg_pw_tutorial_show_17</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:48" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_17"
@@ -1575,6 +1812,13 @@ msg_pw_tutorial_show_17</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_18"
@@ -1625,5 +1869,12 @@ c15.mstxtのmsg_c15_sunglasses_04へ</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:14:05" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T04:22:13" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

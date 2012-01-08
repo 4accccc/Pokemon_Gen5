@@ -655,7 +655,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうだ　[Name:TrainerName Idx="0" ]▼
+			<Text>どうだ　[Name:TrainerName Idx="0" ]！▼
 ポケモンの　タイプは
 しょうぶに　おいて　だいじ　だろう▼
 みずは　ほのおに　つよく
@@ -665,7 +665,7 @@
 すべてが　きまるわけでは　ないがな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T09:54:41" />
+				Time="2012-01-08T03:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,7 +673,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうだ　[Name:TrainerName Idx="0" ]▼
+			<Text>どうだ　[Name:TrainerName Idx="0" ]！▼
 ポケモンの　タイプは
 勝負に　おいて　大事だろう▼
 みずは　ほのおに　強く
@@ -683,7 +683,7 @@
 すべてが　決まるわけでは　ないがな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T10:06:55" />
+				Time="2012-01-08T03:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -877,12 +877,10 @@
 			Language="JPN">
 			<Text>えんの　なかった
 ポケモンや　ひとと　であう……▽
-それが　たびの　よさ　だな▼
-さあ！　ヒオウギに　もどり
-ポケモンジムに　いどめ！</Text>
+それが　たびの　よさ　だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:57:12" />
+				Time="2012-01-08T03:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,12 +890,10 @@
 			Language="JPN_KANJI">
 			<Text>縁の　なかった
 ポケモンや　人と　出会う……▽
-それが　旅の　良さ　だな
-さあ！　ヒオウギに　戻り
-ポケモンジムに　挑め！</Text>
+それが　旅の　良さ　だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:57:25" />
+				Time="2012-01-08T03:18:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2599,6 +2595,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！▼
+よお！▼
+よお！！▼
 やくそく　だったな▼
 おいらと　おまえ▼
 さいこうの　しょうぶを　したよな▼
@@ -2606,7 +2604,7 @@
 フカマルを　そだててくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:26:30" />
+				Time="2012-01-08T03:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2615,6 +2613,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よお！▼
+よお！▼
+よお！！▼
 約束だったな▼
 おいらと　おまえ▼
 最高の　勝負を　したよな▼
@@ -2622,7 +2622,7 @@
 フカマルを　育ててくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:26:16" />
+				Time="2012-01-08T03:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2669,6 +2669,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！▼
+よお！▼
+よお！！▼
 やくそく　だったな▼
 おいらと　おまえ▼
 さいこうの　しょうぶを　したよな▼
@@ -2676,7 +2678,7 @@
 ミニリューを　そだててくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:26:47" />
+				Time="2012-01-08T03:20:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2685,6 +2687,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よお！▼
+よお！▼
+よお！！▼
 約束だったな▼
 おいらと　おまえ▼
 最高の　勝負を　したよな▼
@@ -2692,7 +2696,7 @@
 ミニリューを　育ててくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:26:51" />
+				Time="2012-01-08T03:20:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

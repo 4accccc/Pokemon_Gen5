@@ -1105,10 +1105,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかし　ひろい　ぼくじょうだな……</Text>
+			<Text>しっかし　ひろい　ぼくじょうだなッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T14:01:24" />
+				Time="2012-01-08T03:13:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1116,10 +1116,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかし　広い　牧場だな……</Text>
+			<Text>しっかし　広い　牧場だなッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T06:31:29" />
+				Time="2012-01-08T03:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1345,13 +1345,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　かってに
+			<Text>……にしても　ポケモンが　かってに
 いなくなるとか　ありえないだろ？▼
 さいあくの　ばあい　じけんに
 まきこまれてるかも　しれないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T07:10:51" />
+				Time="2012-01-08T03:10:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1359,13 +1359,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　勝手に
+			<Text>……にしても　ポケモンが　勝手に
 いなくなるとか　ありえないだろ？▼
 最悪の場合　事件に
 まきこまれてるかも　しれないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T07:10:44" />
+				Time="2012-01-08T03:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2314,10 +2314,10 @@
 ポケモンが　いなくなることを
 おびえているような……▼
 さあ　ハーデリア
-みんなが　まってるよ！　かえろう▼</Text>
+みんなが　まってるよ！　かえろー▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T07:21:11" />
+				Time="2012-01-08T03:14:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2330,10 +2330,10 @@
 ポケモンが　いなくなることを
 おびえているような……▼
 さあ　ハーデリア
-みんなが　待ってるよ！　帰ろう▼</Text>
+みんなが　待ってるよ！　帰ろー▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:30:44" />
+				Time="2012-01-08T03:14:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

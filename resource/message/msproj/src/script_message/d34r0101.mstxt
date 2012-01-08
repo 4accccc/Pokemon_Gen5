@@ -8,10 +8,10 @@
 			Language="JPN">
 			<Text>ポケモンだあ……！▼
 こんなところに　かくれているなんて
-すごい　ポケモン　なのかもお？▼</Text>
+すごい　ポケモン　なのかも？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:13:17" />
+				Time="2012-01-08T06:15:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,10 +21,10 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンだあ……！▼
 こんなところに　隠れているなんて
-すごい　ポケモン　なのかもお？▼</Text>
+すごい　ポケモン　なのかも？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:13:31" />
+				Time="2012-01-08T06:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48,6 +48,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-08T11:08:39" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:15:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -84,12 +91,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すごいね！　大発見！
-大発見　だよ！▼
+大発見　だよお！▼
 他にも　隠し穴が　あるか
 いろんな　木を　調べてみるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T12:22:39" />
+				Time="2012-01-08T06:15:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -113,6 +120,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-08T11:08:39" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T06:15:32" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
