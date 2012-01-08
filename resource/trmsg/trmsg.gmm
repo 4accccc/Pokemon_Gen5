@@ -16330,8 +16330,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_34_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">プラーズマー！</language>
-		<language name="JPN_KANJI" width="216">プラーズマー！</language>
+		<language name="JPN" width="216">プラーズマー！
+まけた！　たいへんだー！</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+負けた！　大変だー！</language>
 	</row>
 
 	<row id="TRID_OL_09_TRMSG_FIGHT_START">
