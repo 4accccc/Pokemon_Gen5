@@ -28,15 +28,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・主人公：♂
-・このマップに来ると、背後から登場
-　隣接してこのメッセージ
+・このマップに来ると隣接してこのメッセージ
 ・続けてswbell_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:43:44" />
+				Time="2012-01-08T08:20:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -45,6 +43,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -81,15 +86,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・主人公：♀
-・このマップに来ると、背後から登場
-　隣接してこのメッセージ
+・このマップに来ると隣接してこのメッセージ
 ・続けてswbell_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:43:42" />
+				Time="2012-01-08T08:20:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -98,6 +101,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T10:24:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -109,11 +119,13 @@
 この　かざん……▼
 リバースマウンテン　でね
 しらべたい　ところが　あるの▼
+だけど　やせいの　ポケモンたちが
+てごわくって　てこずっちゃって……▼
 ということで　おねがい！
-いっしょに　つれていってくれるよね▼</Text>
+いっしょに　てつだって！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T02:27:14" />
+				Time="2012-01-08T08:21:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,11 +137,13 @@
 この　火山……▼
 リバースマウンテン　でね
 調査したい　ところが　あるの▼
+だけど　野生の　ポケモンたちが
+手強くって　てこずっちゃって……▼
 ということで　お願い！
-一緒に　連れていってくれるよね▼</Text>
+一緒に　手伝って！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T02:27:14" />
+				Time="2012-01-08T08:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,12 +151,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・続けてswbell_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:43:32" />
+				Time="2012-01-08T08:19:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -151,6 +164,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:24:01" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -186,13 +206,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・！マーク表示後、このメッセージ表示
 ・連れ歩き開始</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:34:52" />
+				Time="2012-01-08T08:19:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -201,6 +220,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -234,14 +260,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・主人公：♂
 ・GRIDX＝37、GRIDZ＝56～59
 　GRIDX＝44、GRIDZ＝55～59</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:40:19" />
+				Time="2012-01-08T08:19:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -250,6 +275,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -283,14 +315,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・主人公：♀
 ・GRIDX＝37、GRIDZ＝56～59
 　GRIDX＝44、GRIDZ＝55～59</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:40:24" />
+				Time="2012-01-08T08:19:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -299,6 +330,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:16:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -332,12 +370,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・振り向き会話その１</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:29" />
+				Time="2012-01-08T08:19:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -388,12 +425,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・振り向き会話その２</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:31" />
+				Time="2012-01-08T08:19:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -444,12 +480,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・振り向き会話その３</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:33" />
+				Time="2012-01-08T08:19:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -500,12 +535,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・振り向き会話その４</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:34" />
+				Time="2012-01-08T08:19:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -556,13 +590,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・振り向き会話その５
 ・以降、このメッセージを繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:35" />
+				Time="2012-01-08T08:19:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -609,12 +642,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・禁則処理：道具「あなぬけのヒモ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:37" />
+				Time="2012-01-08T08:19:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -623,6 +655,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:22" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -654,12 +693,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・禁則処理：わざ「あなをほる」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T08:22:39" />
+				Time="2012-01-08T08:19:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -668,6 +706,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -701,8 +746,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・連れ歩き終了の確認
 ・swbell_05かswbell_06表示済み
 ・posイベント
@@ -712,7 +756,7 @@
 　いいえ→swbell_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T10:20:37" />
+				Time="2012-01-08T08:19:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -721,6 +765,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -758,13 +809,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・はい選択時
 ・swbell_05かswbell_06表示済み</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:50:50" />
+				Time="2012-01-08T08:19:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -773,6 +823,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -810,13 +867,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・はい選択時
 ・swbell_05かswbell_06未表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:50:55" />
+				Time="2012-01-08T08:19:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -825,6 +881,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T08:23:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -856,13 +919,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・いいえ選択時
 ・posから一歩戻す</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T10:10:25" />
+				Time="2012-01-08T08:19:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -871,6 +933,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T09:46:51" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -899,12 +968,12 @@
 かざんのおきいしが　あるのかなあ？▼
 あのね　遠く　離れた
 シンオウ地方の　火山には▽
-かざんのおきいしが　あり▼
+かざんのおきいしが　あって▼
 それが　ヒードランに
 関係しているんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T02:30:08" />
+				Time="2012-01-08T08:22:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -912,13 +981,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・カゴメ到達まで
 ・別れた辺りをウロウロと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T09:53:31" />
+				Time="2012-01-08T08:19:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -927,6 +995,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T09:47:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -966,12 +1041,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・ヒードラン部屋に行かず、ヤマジ側で分かれた場合</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T03:42:48" />
+				Time="2012-01-08T08:19:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -980,6 +1054,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-17T03:42:21" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:22:24" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1031,6 +1112,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-08T05:13:34" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:19:23" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1080,6 +1168,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-08T05:13:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:19:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1137,6 +1232,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-08T05:13:35" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:19:23" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1188,6 +1290,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-08T05:13:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:19:23" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

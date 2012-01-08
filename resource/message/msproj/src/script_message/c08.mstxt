@@ -178,12 +178,12 @@
 			Language="JPN">
 			<Text>それにしても　おにーちゃん　って
 ポケモンに　したわれて　いるのね！▼
-ボールの　なかからでも
+ボールの　なかからでも　ポケモンの
 うれしそうな　きもち　つたわってくる！▼
 じゃ　がんばってねー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:39:04" />
+				Time="2012-01-08T08:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -193,12 +193,12 @@
 			Language="JPN_KANJI">
 			<Text>それにしても　おにーちゃん　って
 ポケモンに　慕われて　いるのね！▼
-ボールの　中からでも
+ボールの　中からでも　ポケモンの
 うれしそうな　気持ち　伝わってくる！▼
 じゃ　がんばってねー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:39:12" />
+				Time="2012-01-08T08:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -372,11 +372,11 @@
 			Language="JPN">
 			<Comment>♂
 ・posイベント
-　GIRDX＝、GRIDZ＝
+　GRIDX＝418、GRIDZ＝169
 ・続けてswleader7_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:39:46" />
+				Time="2012-01-08T08:51:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -985,11 +985,11 @@
 			Language="JPN">
 			<Text>シャガ『おまえたちが　した
 ２ねんまえの　しょぎょう……▼
-あれを　しっている　にんげんが▽
+あれを　しっている　にんげんが
 すなおに　わたすと　かんがえるのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T06:57:36" />
+				Time="2012-01-08T08:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1038,7 +1038,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『そうぞうどおり▼
+			<Text>ヴィオ『ふむ　そうぞうどおり▼
 ほんらいで　あれば　もういちど
 こおりを　うちこむと　おどしたいが▽
 しばらくは　つかえぬし……▼
@@ -1046,7 +1046,7 @@
 さがすと　するか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:31:24" />
+				Time="2012-01-08T08:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1054,7 +1054,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『想像通り▼
+			<Text>ヴィオ『ふむ　想像通り▼
 本来であれば　もう一度
 氷を　撃ちこむと　脅したいが▽
 しばらくは　使えぬし……▼
@@ -1062,7 +1062,7 @@
 探すと　するか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:31:26" />
+				Time="2012-01-08T08:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1268,10 +1268,10 @@
 			Language="JPN">
 			<Text>プラズマだん『なんだと……？▼
 ポケモンを　こきつかわずに
-その　じつりょくを　だせるのか？</Text>
+そんな　じつりょくを　だせるのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T06:07:44" />
+				Time="2012-01-08T08:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1281,10 +1281,10 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『なんだと……？▼
 ポケモンを　こきつかわずに
-その　実力を　だせるのか？</Text>
+そんな　実力を　だせるのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:33:27" />
+				Time="2012-01-08T09:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1518,10 +1518,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『ジャマを　しないでよ！
-この　オジャマムシ!▼</Text>
+この　オタンコナス！　オジャマムシ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:46:27" />
+				Time="2012-01-08T09:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1530,10 +1530,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『ジャマを　しないでよ！
-この　オジャマムシ!▼</Text>
+この　オタンコナス！　オジャマムシ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:33:56" />
+				Time="2012-01-08T09:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1619,12 +1619,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『ヴィオさまは　いっていた
-シャガが　まもろうとする　ばしょ▽
-そこに　たいせつなものが　あるって</Text>
+			<Text>プラズマだん『ヴィオさまは　いってた▼
+シャガが　いつもいる　ばしょに
+たいせつなものが　あるだろう　って！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T06:26:46" />
+				Time="2012-01-08T09:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1632,12 +1632,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『ヴィオさまは　いっていた
-シャガが　守ろうとする　場所▽
-そこに　大切なものが　あるって</Text>
+			<Text>プラズマ団『ヴィオさまは　いってた▼
+シャガが　いつもいる　場所に
+大切なものが　あるだろう　って！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:34:04" />
+				Time="2012-01-08T09:02:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1820,11 +1820,10 @@
 			<Text>シャガ『こいつら……！
 てごわく　なっている！▼
 [Name:TrainerName ]！
-ほかの　プラズマだんを　たのむ！▽
-この　まちの　ジムを　まもってくれ</Text>
+ほかの　プラズマだんを　たのむ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:58:38" />
+				Time="2012-01-08T09:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1835,11 +1834,10 @@
 			<Text>シャガ『こいつら……！
 手強く　なっている！▼
 [Name:TrainerName ]！
-他の　プラズマ団を　頼む！▽
-この街の　ジムを　守ってくれ</Text>
+他の　プラズマ団を　頼む！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:58:47" />
+				Time="2012-01-08T09:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2423,8 +2421,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……ジムが
-かくしばしょ　だったか▼
+			<Text>ダークトリニティ『……あんのじょう
+ジムが　かくしばしょ　だったか▼
 なるほど
 よく　かんがえている▼
 シャガが　いなければ　はいれないし
@@ -2435,7 +2433,7 @@
 いま　わたしが　いただいた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:25" />
+				Time="2012-01-08T09:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2443,8 +2441,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……ジムが
-隠し場所　だったか▼
+			<Text>ダークトリニティ『……案の定
+ジムが　隠し場所　だったか▼
 なるほど
 よく　考えている▼
 シャガが　いなければ　入れないし
@@ -2455,7 +2453,7 @@
 今　わたしが　いただいた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:28" />
+				Time="2012-01-08T09:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2551,13 +2549,13 @@
 こんかいは　もくてきを　たっせいする▼
 Ｎさまの　ように
 たみの　こころを　うばう▽
-きゅうしんりょくが　ありません▼
+きゅうしんりょくが　ない▼
 かわりに　あっとうてきな　ちからで
 ひとびとを　くっぷく　させる……▽
-２ねんは　ぞんがい　ながいぞ▼</Text>
+２ねんは　ぞんがい　ながかったぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:16" />
+				Time="2012-01-08T09:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2570,13 +2568,13 @@
 今回は　目的を　達成する▼
 Ｎさまの　ように
 民の　心を　奪う▽
-求心力が　ありません▼
+求心力が　ない▼
 代わりに　圧倒的な　力で
 人々を　屈服させる……▽
-２年は　存外　長いぞ▼</Text>
+２年は　存外　長かったぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:17" />
+				Time="2012-01-08T09:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2716,12 +2714,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……フフ▼
-いでんしのくさび
-うばいかえせるか　わたしから？▼</Text>
+			<Text>ダークトリニティ『……フフ
+いでんしのくさび　うばいかえせるか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:48" />
+				Time="2012-01-08T09:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2729,12 +2726,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……フフ▼
-いでんしのくさび
-奪い返せるか　わたしから？▼</Text>
+			<Text>ダークトリニティ『……フフ
+いでんしのくさび　奪い返せるか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:43:52" />
+				Time="2012-01-08T09:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2771,13 +2767,13 @@
 			Language="JPN">
 			<Text>ダークトリニティ『……ざんねん▼
 いでんしのくさびを　もっているのは
-ほかの　なかま　です▼
+ほかの　なかま▼
 そう……
-じかんかせぎは　できました▽
+じかんかせぎは　できた▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:27:06" />
+				Time="2012-01-08T09:08:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2787,13 +2783,13 @@
 			Language="JPN_KANJI">
 			<Text>ダークトリニティ『……残念▼
 いでんしのくさびを　持っているのは
-他の　仲間です▼
+他の　仲間▼
 そう……
-時間稼ぎは　できました▽
+時間稼ぎは　できた▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:27:07" />
+				Time="2012-01-08T09:08:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2831,10 +2827,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『なんたること！▼</Text>
+			<Text>シャガ『なんたること！▼
+いや
+[Name:TrainerName ]は　よくやってくれた▼
+ふがいないのは
+この　わたし　だ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:32:37" />
+				Time="2012-01-08T09:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2842,10 +2842,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『なんたること！▼</Text>
+			<Text>シャガ『なんたること！▼
+いや
+[Name:TrainerName ]は　よくやってくれた▼
+ふがいないのは
+この　わたし　だ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:32:41" />
+				Time="2012-01-08T09:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2854,10 +2858,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてtvt_01</Comment>
+・続けてtvt_01
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:32:52" />
+				Time="2012-01-08T09:11:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3224,10 +3229,10 @@
 			<Text>シャガ『……そういってくれるか▼
 わかった！
 そちらは　まかせる▼
-だが　けっして　むりは　するなよ！</Text>
+だが　けっして　むりは　するなよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T06:13:08" />
+				Time="2012-01-08T09:12:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3238,10 +3243,10 @@
 			<Text>シャガ『……そういってくれるか▼
 わかった！
 そちらは　任せる▼
-だが　決して　無理は　するなよ！</Text>
+だが　決して　無理は　するなよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T06:13:18" />
+				Time="2012-01-08T09:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

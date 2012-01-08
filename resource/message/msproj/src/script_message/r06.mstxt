@@ -49,6 +49,13 @@
 				Time="2011-06-17T05:53:39" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:47:50" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -105,6 +112,13 @@
 				Time="2011-06-18T11:44:41" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:47:52" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -153,6 +167,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T05:54:19" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -215,6 +236,13 @@
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -271,6 +299,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T05:54:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -336,6 +371,13 @@
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -399,6 +441,13 @@
 				Time="2011-05-22T05:29:24" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -455,6 +504,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:29:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -522,6 +578,13 @@
 				Time="2011-05-22T05:29:24" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T07:48:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -541,13 +604,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『ぐぬぬ……▼
+			<Text>ロット『やるせない　ことだ……▼
 ゲーチスさまの　やぼう　あくいは
 いまも　ひろがりつづけ……▽
 ほかの　だれかを　ゆがめているのか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T07:43:58" />
+				Time="2012-01-08T07:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -555,13 +618,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『ぐぬぬ……▼
+			<Text>ロット『やるせない　ことだ……▼
 ゲーチスさまの　野望　悪意は
 いまも　広がりつづけ……▽
 他の　だれかを　ゆがめているのか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T07:44:01" />
+				Time="2012-01-08T07:50:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -613,10 +676,10 @@
 きもちは　はかりかねるがな▼
 ただ　おまえが　コバルオンを
 なかまに　できたなら　これからの▽
-おおきな　ちからと　なるだろうな▼</Text>
+おおきな　ちからと　なるだろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T11:06:16" />
+				Time="2012-01-08T07:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -634,10 +697,10 @@
 気持ちは　はかりかねるがな▼
 ただ　おまえが　コバルオンを
 仲間に　できたなら　これからの▽
-大きな　力と　なるだろうな▼</Text>
+大きな　力と　なるだろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T11:06:21" />
+				Time="2012-01-08T07:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

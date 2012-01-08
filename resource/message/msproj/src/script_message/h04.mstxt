@@ -1757,6 +1757,51 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_h04_gentleman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みちを　きこうと　はなしかけたら
+ポケモントレーナー　でしたよ！▽
+あなたも　きをつけなさいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:39:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みちを　きこうと　はなしかけたら
+ポケモントレーナー　でしたよ！▽
+あなたも　きをつけなさいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:39:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:39:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝90、GRIDZ＝29</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:36:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T08:36:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04_sign_01"
 		Style="Large">
 		<LanguageCell

@@ -952,11 +952,11 @@
 んー　おねがいだけど　アナタ
 はかせを　よんできて　くれます？▼
 アタシは
-フキヨセ　カーゴサ　ービスで▽
+フキヨセ　カーゴ　サービスで▽
 フライトの　じゅんびを　してますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T11:26:48" />
+				Time="2012-01-08T07:59:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -969,11 +969,11 @@
 んー　お願いだけど　アナタ
 博士を　呼んできて　くれます？▼
 アタシは
-フキヨセ　カーゴサ　ービスで▽
+フキヨセ　カーゴ　サービスで▽
 フライトの　準備を　してますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T11:26:42" />
+				Time="2012-01-08T07:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1086,15 +1086,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウシティで
-あって　ほしい　ひとが　いるけど▽
+			<Text>ソウリュウシティに
+あってほしい　ひとが　いるけど▽
 いま　ネジやまは　とおれないからね▼
+ひこうきで　ひとっとび　して
+ヤマジタウンへ　むかうのよ！▼
 というわけで
 フキヨセ　カーゴ　サービスで▽
 まってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T02:18:48" />
+				Time="2012-01-08T08:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1102,15 +1104,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウシティで
-会って　ほしい　人が　いるけど▽
+			<Text>ソウリュウシティに
+会ってほしい　人が　いるけど▽
 いま　ネジ山は　通れないからね▼
+飛行機で　ひとっとび　して
+ヤマジタウンへ　向かうのよ！▼
 というわけで
 フキヨセ　カーゴ　サービスで▽
-まってまーす！▼</Text>
+待ってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T02:19:30" />
+				Time="2012-01-08T08:07:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

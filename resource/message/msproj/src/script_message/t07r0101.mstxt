@@ -120,6 +120,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T03:51:25" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:34:34" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -190,6 +197,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-20T02:55:21" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:34:36" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -270,6 +284,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T02:55:21" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:34:36" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -345,6 +366,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T02:55:21" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:34:36" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -412,6 +440,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-20T02:55:21" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:34:36" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -419,5 +454,59 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_woman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　クイズ　むずかしいわ▼
+「タウンマップを　みているときに
+　セレクトボタンを　おすと▽
+　はてさて　いったい　どうなるの？」</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:35:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:35:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　クイズ　むずかしいわ▼
+「タウンマップを　みているときに
+　セレクトボタンを　おすと▽
+　はてさて　いったい　どうなるの？」</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:36:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:36:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:36:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:36:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:36:13" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

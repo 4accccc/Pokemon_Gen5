@@ -200,10 +200,11 @@
 			Language="JPN">
 			<Comment>♀
 ・メッセージ表示後、画面下へ
-・画面外に消えると主人公、操作可能に</Comment>
+　！マーク表示後、振り向き
+　主人公に隣接してswbell_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:52:57" />
+				Time="2012-01-08T10:43:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -219,6 +220,76 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2012-01-08T05:27:19" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだ！▼
+ダウジングマシンとか
+せいそくちリストとか　よくつかうなら▽
+とうろく　しておくと　いいよ！▼
+えーっと
+たしか　この　ほんに……▼
+あった！
+じゃあ　よむね▼
+「とうろく　しておけば
+　Ｙボタンで　いっぱつ　よびだし！」▽
+だって！　じゃあねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:42:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:38:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだ！▼
+ダウジングマシンとか
+せいそくちリストとか　よく使うなら▽
+登録しておくと　いいよ！▼
+えーっと
+たしか　この本に……▼
+あった！
+じゃあ　読むね▼
+「登録しておけば
+　Ｙボタンで　一発　呼びだし！」▽
+だって！　じゃあねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:43:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:42:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、画面下へ
+・画面外に消えると主人公、操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:43:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:38:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T10:38:48" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow

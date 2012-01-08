@@ -1191,12 +1191,11 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・削除タイミングはd10到達時（暫定）
 ・ここでチェレンがいっているのは
 　前作主人公、そしてNのこと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:20:51" />
+				Time="2012-01-08T09:48:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1265,12 +1264,11 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-・削除タイミングはd10到達時（暫定）
 ・ここでチェレンがいっているのは
 　前作主人公、そしてNのこと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:20:56" />
+				Time="2012-01-08T09:48:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1287,5 +1285,54 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swleader1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『……ああ▼
+ジャイアントホールなら
+２２ばんどうろから　いけるはずだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:47:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:47:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『……ああ▼
+ジャイアントホールなら
+２２番道路から　行けるはずだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:47:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・msg_w21_swleader1_03b
+　msg_w21_swleader1_03w表示後は
+　こちらのメッセージを繰り返し表示
+・削除タイミングはd10r0101到達時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:48:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-08T09:46:27" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
