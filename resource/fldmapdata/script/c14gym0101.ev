@@ -317,7 +317,7 @@ EVENT_START   ev_c14gym0101_guide_01
       //バッジ入手前の処理
 
       //アイテム入手フラグで分岐
-      IF FLAG_OFF( FE_C08GYM_ITEM ) THEN
+      IF FLAG_OFF( FE_C14GYM_ITEM ) THEN
       
         _TALK_OBJ_START()
 
@@ -336,7 +336,7 @@ EVENT_START   ev_c14gym0101_guide_01
 
         //=====================================
         //アイテム入手フラグをセット
-        _FLAG_SET( FE_C08GYM_ITEM )
+        _FLAG_SET( FE_C14GYM_ITEM )
         //=====================================
 
       ELSE
