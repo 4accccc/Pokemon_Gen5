@@ -28,5 +28,6 @@
 #define SCRID_C13_MAN3A_01 (21)
 #define SCRID_C13_BOY2_01 (22)
 #define SCRID_POS_C13_SWLEADER2_MEET_02 (23)
+#define SCRID_ZONE_C13 (24)
 
 #endif //_C13_DEF_H_

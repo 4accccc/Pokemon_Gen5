@@ -45,6 +45,7 @@ _EVENT_DATA	ev_c13_man3_01
 _EVENT_DATA	ev_c13_man3a_01
 _EVENT_DATA	ev_c13_boy2_01
 _EVENT_DATA   ev_pos_c13_swleader2_meet_02
+_EVENT_DATA	ev_zone_c13
 _EVENT_DATA_END
 
 
@@ -53,23 +54,31 @@ DEFINE_LOCAL	LWK_POSX
 DEFINE_LOCAL	LWK_POSZ
 
 /************************************************************/
-/*  FIELD_INIT_SCRIPT                                       */
+/*					ZONE_CHANGE_LABEL				*/
 /************************************************************/
-INIT_EVENT_START ev_init_c13
+INIT_EVENT_START	ev_zone_c13
 
   //ネオプラズマ団イベント起動後なら
   IF $WK_SCENE_C13 == 5 THEN
-	_OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
+  	
+  	_SXY_MOVE_NPC_POS( C13_SWRIVAL_01, DIR_RIGHT, 239, 0, 671 )
   
   ELSIF $WK_SCENE_C13 == 7 THEN
   
-	_OBJ_POS_CHANGE( C13_SWLEADER2_01, 241, 0, 670, DIR_RIGHT )
-  	_OBJ_POS_CHANGE( C13_PILOT_01, 243, 0, 670, DIR_LEFT )
+  	_SXY_MOVE_NPC_POS( C13_SWLEADER2_01, DIR_RIGHT, 241, 0, 670 )
+  	_SXY_MOVE_NPC_POS( C13_PILOT_01, DIR_LEFT, 243, 0, 670 )
   
   ENDIF
 
 INIT_EVENT_END
 
+
+/************************************************************/
+/*  FIELD_INIT_SCRIPT                                       */
+/************************************************************/
+INIT_EVENT_START ev_init_c13
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*			ホミカとの出会いイベント						  */
