@@ -48,6 +48,13 @@
 				Time="2011-06-07T03:49:39" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T08:53:10" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -98,6 +105,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-25T08:24:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T08:53:12" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -151,6 +165,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-07T03:58:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T08:53:12" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0402_boy2_01"
@@ -193,6 +214,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-07T03:54:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T08:53:12" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

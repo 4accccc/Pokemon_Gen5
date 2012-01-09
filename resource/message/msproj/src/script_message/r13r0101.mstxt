@@ -45,6 +45,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-31T06:12:18" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:25" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -96,6 +103,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-18T06:15:04" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -149,6 +163,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-18T06:15:04" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -199,6 +220,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-18T06:15:04" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -248,6 +276,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-31T06:12:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -301,6 +336,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-05T07:46:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r13_oldwoman_01"
@@ -343,6 +385,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-05T07:46:19" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T04:56:27" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
