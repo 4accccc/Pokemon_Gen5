@@ -46,6 +46,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-24T03:21:05" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:54:54" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c07pc0101_fighterw_02"
@@ -99,6 +106,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-24T03:21:04" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:54:56" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c07pc0101_poke44_01"
@@ -141,6 +155,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-24T03:21:56" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:54:55" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

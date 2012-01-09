@@ -813,10 +813,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:37:16" />
+				Time="2012-01-09T02:33:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -876,10 +876,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:37:16" />
+				Time="2012-01-09T02:33:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

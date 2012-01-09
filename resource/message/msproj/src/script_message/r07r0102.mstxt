@@ -48,6 +48,13 @@ childcare_08</Text>
 				Time="2011-07-17T04:17:50" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:59:37" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -109,6 +116,13 @@ childcare_08</Text>
 				User="matsumiya:W00224"
 				Time="2011-07-17T04:18:00" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:59:39" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r07r0101_girl3_01"
@@ -152,6 +166,13 @@ ID：schoolg_12</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-27T01:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:59:39" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -199,6 +220,13 @@ ID：schoolg_12</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-27T01:59:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:59:39" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

@@ -47,6 +47,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:35:21" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -102,6 +109,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:52:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:22" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -159,6 +173,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:34:34" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:22" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -211,6 +232,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:35:07" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:22" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -259,6 +287,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:35:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:22" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -310,6 +345,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:45:22" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T02:55:22" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
