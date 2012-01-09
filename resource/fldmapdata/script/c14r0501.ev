@@ -141,21 +141,8 @@ EVENT_START ev_c14r0501_lady_01
       //連れ歩き解除
       _PAIR_TRAINER_FREE( SCRID_C14R0501_POKE45_01, MV_DMY )
       
-      //自機座標取得
-      _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-      //コジョフー座標取得
-      _OBJ_POS_GET( C14R0501_POKE45_01,LCW_POKE_POSX,LCW_POKE_POSZ ) 
-      
-      //アニメ：コジョフーの位置にいたら主人公どく
-      IF $LCW_POSX == 5 && $LCW_POSZ == 3  && $LCW_POKE_POSX == 5 && $LCW_POKE_POSZ == 2 THEN
-        _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_avoid_down )
-      ELSE
-        _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_avoid_up )
-      ENDIF
-      
-      //アニメ：コジョフーもとの位置に戻る
-      _OBJ_ANIME_AUTO( C14R0501_POKE45_01, 5, 3, FORCE_TYPE_NPC, 8, DIR_LR)
-      _OBJ_ANIME_WAIT()
+      //アニメ：コジョフー戻り処理
+      _CALL ev_poke45_ret
       
       //歩数カウント終了
       _SC_WALK_COUNT_STOP()
@@ -189,38 +176,9 @@ EVENT_START ev_c14r0501_lady_01
     
     //連れ歩き解除
     _PAIR_TRAINER_FREE( SCRID_C14R0501_POKE45_01, MV_DMY )
-      
-    //自機座標取得
-    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-    _PLAYER_DIR_GET( LWK_DIR )
-    //コジョフー座標取得
-    _OBJ_POS_GET( C14R0501_POKE45_01,LCW_POKE_POSX,LCW_POKE_POSZ ) 
     
-    //アニメ：コジョフーの位置にいたら主人公どく
-    IF $LCW_POSX == 5 && $LCW_POSZ == 3  && $LCW_POKE_POSX == 5 && $LCW_POKE_POSZ == 2 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_avoid_down )
-    ELSE
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_avoid_up )
-    ENDIF
-    
-    //アニメ：コジョフーもとの位置に戻る
-    _OBJ_ANIME_AUTO( C14R0501_POKE45_01, 5, 3, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-    
-    //アニメ：主人公LADYと向き合う
-    IF $LCW_POSX == 5 && $LCW_POSZ == 3  && $LCW_POKE_POSX == 5 && $LCW_POKE_POSZ == 2 THEN
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 4, FORCE_TYPE_NPC, 8, DIR_LR)
-      _OBJ_ANIME_WAIT()
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
-      _OBJ_ANIME_WAIT()
-    ELSE
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 2, FORCE_TYPE_NPC, 8, DIR_LR)
-      _OBJ_ANIME_WAIT()
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
-      _OBJ_ANIME_WAIT()
-    ENDIF
-    
-    _TURN_HERO_SITE()
+    //アニメ：コジョフー戻り処理
+    _CALL ev_poke45_ret
     
     //LADY：またわたくしの
     _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_05,C14R0501_LADY_01, POS_DEFAULT )
@@ -245,6 +203,74 @@ EVENT_START ev_c14r0501_lady_01
 
 EVENT_END
 
+/**************************************************************/
+/*            LADY：コジョフー散歩イベント                               */
+/**************************************************************/
+ev_poke45_ret:
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    _PLAYER_DIR_GET( LWK_DIR )
+    //コジョフー座標取得
+    _OBJ_POS_GET( C14R0501_POKE45_01,LCW_POKE_POSX,LCW_POKE_POSZ ) 
+    
+    //アニメ：コジョフー復帰
+    
+    //A && a
+    IF $LWK_DIR == DIR_DOWN && $LCW_POKE_POSX == 5  && $LCW_POKE_POSZ == 2 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_a_a )
+    
+    //A && b
+    ELSIF $LWK_DIR == DIR_DOWN && $LCW_POKE_POSX == 7  && $LCW_POKE_POSZ == 2 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_a_b )
+    
+    //B && b
+    ELSIF $LWK_DIR == DIR_LEFT && $LCW_POKE_POSX == 7  && $LCW_POKE_POSZ == 2 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_b_b )
+    
+    //B && c
+    ELSIF $LWK_DIR == DIR_LEFT && $LCW_POKE_POSX == 8  && $LCW_POKE_POSZ == 3 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_b_c )
+    
+    //B && d
+    ELSIF $LWK_DIR == DIR_LEFT && $LCW_POKE_POSX == 7  && $LCW_POKE_POSZ == 4 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_b_d )
+    
+    //C && d
+    ELSIF $LWK_DIR == DIR_UP && $LCW_POKE_POSX == 7  && $LCW_POKE_POSZ == 4 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_c_d )
+    
+    //C && e
+    ELSIF $LWK_DIR == DIR_UP && $LCW_POKE_POSX == 6  && $LCW_POKE_POSZ == 5 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_c_e )
+    
+    //C && f
+    ELSIF $LWK_DIR == DIR_UP && $LCW_POKE_POSX == 5  && $LCW_POKE_POSZ == 4 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_c_f )
+    
+    //D && f
+    ELSIF $LWK_DIR == DIR_RIGHT && $LCW_POKE_POSX == 5  && $LCW_POKE_POSZ == 4 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_d_f )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_d_f )
+    
+    //D && g
+    ELSIF $LWK_DIR == DIR_RIGHT && $LCW_POKE_POSX == 4  && $LCW_POKE_POSZ == 3 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_d_g )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_d_g )
+    
+    //D && a
+    ELSIF $LWK_DIR == DIR_RIGHT && $LCW_POKE_POSX == 5  && $LCW_POKE_POSZ == 2 THEN
+      _OBJ_ANIME( C14R0501_POKE45_01, anm_poke_ret_d_a )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_d_g )
+    
+    ELSE
+      _OBJ_ANIME_AUTO( C14R0501_POKE45_01, 5, 3, FORCE_TYPE_NPC, 8, DIR_LR)
+    ENDIF
+    
+    _OBJ_ANIME_WAIT()
+
+_RET
+
 //--------------------------------------------------------------------
 //	主人公：コジョフーポイントからどく
 //--------------------------------------------------------------------
@@ -261,6 +287,93 @@ _ANIME_LABEL	anm_player_avoid_up
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA AC_DIR_PAUSE_OFF,1
   _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_d_f
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_d_g
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_a_a
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_a_b
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_b_b
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_b_c
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_b_d
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_c_d
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_c_e
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_c_f
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_d_f
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_d_g
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke_ret_d_a
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+/*
+★コジョフー座標
+a=x:5,z:2
+b=x:7,z:2
+c=x:8,x:3
+d=x:7,z:4
+e=x:6,z:5
+f=x:5,z:4
+g=x:4,z:3
+*/
 
 /**************************************************************/
 /*            POKE45                               */
