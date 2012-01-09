@@ -51,6 +51,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_r19r0101_informationw_01
 
+  //！マーク
+  _OBJ_ANIME( R19R0101_INFORMATIONW_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
   //主人公名代入
   _PLAYER_NAME( 0 )
   //受付嬢：あれ？　《主人公》▼
@@ -204,4 +208,9 @@ _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 
-
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

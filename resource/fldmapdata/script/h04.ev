@@ -54,7 +54,7 @@ INIT_EVENT_START ev_init_h04
 
 	//橋トレーナーイベント後なら位置を変える
 	IF $WK_SCENE_H04_STOP_01 == 1 THEN
-		_OBJ_RAIL_LOC_SET( H04_STOP_01, 8, 1, 12 )
+		_OBJ_RAIL_LOC_SET( H04_STOP_01, 8, 2, 12 )
 	ENDIF
 
 INIT_EVENT_END
@@ -288,57 +288,7 @@ EVENT_END
 /*  ストッパー：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_h04_stop_01
-{
-
-  _TALK_OBJ_START()
-
-  //ストッパーとの勝負に勝った後か
-  IF $WK_SCENE_H04_STOP_01 == 1 THEN
-    //ストッパー：２ねんかん　コツコツと　のばした
-    _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ELSE
-
-    //ストッパー：まてーい！▼
-    _BALLOONWIN_OBJMSG( msg_h04_stop_01, H04_STOP_01 )
-
-    //ストッパーと戦う？
-    _YES_NO_WIN( SCWK_ANSWER )
-
-    IF $SCWK_ANSWER == SCR_YES THEN   //はい
-      //ストッパー：がははは！　おぬしの　ような
-      _BALLOONWIN_OBJMSG( msg_h04_stop_03, H04_STOP_01 )
-      _MSGWIN_CLOSE()
-
-      //トレーナー戦呼び出し
-    _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
-
-      //結果チェック
-      _CALL ev_battle_check
-
-      //勝利時
-      //========================================//
-      //POSイベント進行
-      $WK_SCENE_H04_STOP_01 = 1
-      //========================================//
-
-      //ストッパー：２ねんかん　コツコツと　のばした
-      _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ELSE    //いいえ
-      //ストッパー：そうであろう！　９９９れんしょうの
-      _BALLOONWIN_OBJMSG( msg_h04_stop_03, H04_STOP_01 )
-      _MSGWIN_CLOSE()
-
-    ENDIF
-
-  ENDIF
-
-}
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_stop_05 )
 EVENT_END
 
 ev_battle_check:
@@ -357,6 +307,16 @@ _RET
 /**************************************************************/
 EVENT_START   ev_pos_h04_stop_01
 {
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+	_OBJ_ANIME( H04_STOP_01, anm_dir_r )
+  CASE DIR_RIGHT THEN
+	_OBJ_ANIME( H04_STOP_01, anm_dir_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
   //アニメ：ストッパー「！」振り向き
   _OBJ_ANIME( H04_STOP_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
@@ -390,9 +350,9 @@ EVENT_START   ev_pos_h04_stop_01
   
   SWITCH $SCWK_ANSWER
   CASE DIR_LEFT THEN
-	_OBJ_ANIME( H04_STOP_01, anm_staystep_r )
+	_OBJ_ANIME( H04_STOP_01, anm_walk_r_4f )
   CASE DIR_RIGHT THEN
-	_OBJ_ANIME( H04_STOP_01, anm_staystep_l )
+	_OBJ_ANIME( H04_STOP_01, anm_walk_l_4f )
   ENDSWITCH
   
   _OBJ_ANIME_WAIT()
@@ -472,9 +432,9 @@ EVENT_START   ev_pos_h04_stop_01
 
 	SWITCH $SCWK_ANSWER
 	CASE DIR_LEFT THEN
-		_OBJ_ANIME( H04_STOP_01, anm_walk_l )
+		_OBJ_ANIME( H04_STOP_01, anm_walk_l2 )
 	CASE DIR_RIGHT THEN
-		_OBJ_ANIME( H04_STOP_01, anm_walk_r )
+		_OBJ_ANIME( H04_STOP_01, anm_walk_r2 )
 	ENDSWITCH
 
 	_OBJ_ANIME_WAIT()
@@ -786,6 +746,32 @@ _ANIME_LABEL  anm_walk_r
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_walk_l
   _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_r_4f
+  _ANIME_DATA AC_WALK_R_4F,1
+  _ANIME_DATA ACMD_END,0
+  
+//--------------------------------------------------------------------
+//☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l_4f
+  _ANIME_DATA AC_WALK_L_4F,1
+  _ANIME_DATA ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//☆共通処理：2歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_r2
+  _ANIME_DATA AC_WALK_R_4F,2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_l2
+  _ANIME_DATA AC_WALK_L_4F,2
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

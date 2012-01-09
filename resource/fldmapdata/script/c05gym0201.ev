@@ -76,7 +76,7 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
 	//ヤーコン・プレイヤー：向き合う
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_l )
 	_TIME_WAIT( 20 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	_OBJ_ANIME_WAIT()
 	
@@ -87,7 +87,7 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
 	//ヤーコン、画面外に移動
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader5_leave )
 	_TIME_WAIT( 20 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
 	
 	_OBJ_ANIME_WAIT()
 	

@@ -75,11 +75,6 @@ EVENT_START   ev_c12r0202_rivalsister_01
 {
   //主人公名代入
   _PLAYER_NAME( 0 )
-  
-  //手持ちポケモンの位置を取得
-  _GET_PARTY_FRONT_POKEMON( LWK_FRONT, POKECOUNT_MODE_BATTLE_ENABLE )
-  //先頭ポケモンの名前を格納
-  _TEMOTI_MONS_NAME( 1, LWK_FRONT )
 
   //殿堂入り回数を取得
   _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
@@ -91,24 +86,32 @@ EVENT_START   ev_c12r0202_rivalsister_01
   
   //ポケモン入手後から、ヒオウギジムクリアまで
   ELSIF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-
+    
+    _CALL ev_pokename
+    
     //ライバル妹：あ、主人公さん！   
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
 
   //タウンマップをライバルに渡すまで
   ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 
+    _CALL ev_pokename
+
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
     
   ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
-     
+
+    _CALL ev_pokename
+
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
   //チャンピオンロードでライバルと戦った後なら
   ELSIF $WK_SCENE_D09R1401_SWRIVAL_01 == 1 THEN
-  	
+
+    _CALL ev_pokename
+
 	IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C12R0202_RIVALSISTER_TAL ) && FLAG_OFF( FV_C12R0202_POKE32_01 )  THEN
 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
@@ -129,6 +132,15 @@ EVENT_START   ev_c12r0202_rivalsister_01
   ENDIF
 }
 EVENT_END
+
+ev_pokename:
+
+  //手持ちポケモンの位置を取得
+  _GET_PARTY_FRONT_POKEMON( LWK_FRONT, POKECOUNT_MODE_BATTLE_ENABLE )
+  //先頭ポケモンの名前を格納
+  _TEMOTI_MONS_NAME( 1, LWK_FRONT )
+
+_RET
 
 /**************************************************************/
 /*  レパルダス：話しかけ                                      */
