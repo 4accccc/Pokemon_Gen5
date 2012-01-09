@@ -289,6 +289,10 @@ EVENT_START		ev_pos_r05_swbell_01
   
   //そらをとぶヒントメダル取得
   _SET_MEDAL_HINT_ACHIEVE( MDLID_SORAWOTOBU )
+
+  //かくしあなヒントメダル取得
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_KEMONOMICHI )
+
   //========================================//
   
 EVENT_END
