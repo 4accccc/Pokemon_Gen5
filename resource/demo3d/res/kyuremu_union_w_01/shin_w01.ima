@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2012-01-05T19:53:16" source="kyuremu_union_w_01_v04c.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-08T22:35:15" source="kyuremu_union_w_01_011.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="1015"
+	frame_size="1100"
 	tool_start_frame="1"
-	tool_end_frame="1015"
+	tool_end_frame="1100"
 	interpolation="frame"
 	compress_material="on" material_size="9 9"
 	frame_step_mode="2"
 	tolerance_color="2"
 />
 
-<mat_color_data size="1019">
+<mat_color_data size="1105">
 	25 0 16 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -107,7 +107,11 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 31 31 31 31 31 31
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -122,7 +126,12 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31
 </mat_color_data>
 
 <mat_color_anm_array size="3">
@@ -139,7 +148,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="2"/>
 		<emission_g frame_step="1" data_size="1" data_head="2"/>
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="2" data_size="508" data_head="3"/>
+		<polygon_alpha frame_step="2" data_size="551" data_head="3"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="shin_tail_r_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -154,7 +163,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="2" data_size="508" data_head="3"/>
+		<polygon_alpha frame_step="2" data_size="551" data_head="3"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="shin_tail_w_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -169,7 +178,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="2" data_size="508" data_head="511"/>
+		<polygon_alpha frame_step="2" data_size="551" data_head="554"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
