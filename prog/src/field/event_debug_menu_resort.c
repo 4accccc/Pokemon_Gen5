@@ -51,6 +51,7 @@
 #include "net_app/union/union_beacon_tool.h"
 #include "resonance_resort/resort_debug_inline.h"
 #include "script.h"
+#include "event_debug_resort_input.h"
 
 #include "../../../resource/fldmapdata/script/resort_scr_def.h"
 
@@ -66,8 +67,6 @@ extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuListEvent(GMEVENT *event, int *seq, void *wk );
 static void DEBUG_EVENT_DebugMenu_CallSubMenu( DEBUG_MENU_EVENT_WORK*p_wk, const DEBUG_MENU_INITIALIZER *cp_menu_data );
-
-static GMEVENT * EVENT_CallDebugInputResort( GAMESYS_WORK *p_gsys, void *work );
 
 //--------------------------------------------------------------
 /// ‘åŒ³
@@ -730,8 +729,11 @@ static BOOL debugMenuCallProc_AddCeleb( DEBUG_MENU_EVENT_WORK *p_wk )
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeProc( p_wk->gmEvent, 
-    FS_OVERLAY_ID(debug_resort_app), &DEBUG_INPUT_Resort_ProcData, p_wk->gdata);
+
+  GMEVENT *event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
+      FS_OVERLAY_ID(event_debug_resort_input), EVENT_CallDebugInputResort, NULL );
+
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
   return TRUE;
 }
 

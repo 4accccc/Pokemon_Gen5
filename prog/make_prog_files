@@ -358,6 +358,11 @@ SRCS_OVERLAY_EVENT_WBT_DOWNLOAD  =  field/event_wbt_wifi.c
 #GROUP_OVERLAY_MAINEVENT
 SRCS_OVERLAY_EVENT_DEBUG_WIFIMATCH  = field/event_debug_wifimatch.c
 
+#デバック
+#===> main
+#GROUP_OVERLAY_MAINEVENT
+SRCS_OVERLAY_EVENT_DEBUG_RESORT_INPUT  = field/event_debug_resort_input.c
+
 #Wifiクラブ
 #===> main
 #GROUP_OVERLAY_MAINEVENT
@@ -2545,8 +2550,10 @@ SRCS_OVERLAY_PROF_WORD = system/prof_word.c
 
 #===> GROUP_OVERLAY_GIMMICK
 #===> SRCS_OVERLAY_PROF_WORD
-SRCS_OVERLAY_DEBUG_RESORT = field/event_debug_menu_resort.c \
-                            field/resonance_resort/resort_debug_input.c
+SRCS_OVERLAY_DEBUG_RESORT = field/event_debug_menu_resort.c
+
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_DEBUG_RESORT_APP = field/resonance_resort/resort_debug_input.c
 
 #進化デモ
 #===> SRCS_OVERLAY_WIFINOTE

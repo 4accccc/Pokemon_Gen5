@@ -103,9 +103,6 @@ extern void GMEVENT_CallEvent(GMEVENT * parent, GMEVENT * child);
 extern void GMEVENT_CallProc( GMEVENT * parent, 
     FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * pwk);
 
-extern void GMEVENT_ChangeProc( GMEVENT * parent, 
-    FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * pwk);
-
 //------------------------------------------------------------------
 /**
  * @brief OverlayイベントCall→オーバーレイ解放
