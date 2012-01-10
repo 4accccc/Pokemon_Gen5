@@ -42,7 +42,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -89,7 +89,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -124,10 +124,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、買う道具の数を選ぶとき♂</Comment>
+			<Comment>買う画面で、買う道具の数を選ぶとき♂
+
+0：選んだサービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:57:53" />
+				Time="2012-01-10T12:11:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -138,7 +140,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -173,10 +175,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う画面で、買う道具の数を選ぶとき♀</Comment>
+			<Comment>買う画面で、買う道具の数を選ぶとき♀
+
+0：選んだサービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:57:56" />
+				Time="2012-01-10T12:11:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -187,7 +191,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -223,10 +227,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき♂</Comment>
+「はい、いいえ」の確認をするとき♂
+
+0：選んだサービス名
+1：数量
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:58:38" />
+				Time="2012-01-10T12:12:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -237,7 +245,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -273,10 +281,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき♀</Comment>
+「はい、いいえ」の確認をするとき♀
+
+0：選んだサービス名
+1：数量
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:58:41" />
+				Time="2012-01-10T12:12:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -287,7 +299,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -323,10 +335,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき♂</Comment>
+「はい、いいえ」の確認をするとき♂
+0：選んだサービス名
+1：
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:58:45" />
+				Time="2012-01-10T12:14:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -337,7 +352,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -373,10 +388,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>買う画面で、個数と値段を表示して、
-「はい、いいえ」の確認をするとき♀</Comment>
+「はい、いいえ」の確認をするとき♀
+0：選んだサービス名
+1：
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:58:49" />
+				Time="2012-01-10T12:14:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -387,7 +405,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -426,10 +444,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買い物をしたときのお礼のメッセージ♂</Comment>
+			<Comment>買い物をしたときのお礼のメッセージ♂
+
+0：道具名
+1：ポケット名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:58:58" />
+				Time="2012-01-10T12:14:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -440,7 +461,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -479,10 +500,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買い物をしたときのお礼のメッセージ♀</Comment>
+			<Comment>買い物をしたときのお礼のメッセージ♀
+
+0：道具名
+1：ポケット名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:59:01" />
+				Time="2012-01-10T12:15:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -493,7 +517,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -542,7 +566,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -591,7 +615,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -638,7 +662,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -671,10 +695,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買い物リストに表示されている商品の値段</Comment>
+			<Comment>買い物リストに表示されている商品の値段
+
+1：値段</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:16:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -685,7 +711,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -732,7 +758,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -781,7 +807,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -830,7 +856,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -879,7 +905,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -928,7 +954,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -963,10 +989,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+0：サービス名
+1：
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:30:30" />
+				Time="2012-01-10T12:16:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -977,7 +1006,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1012,10 +1041,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+0：サービス名
+1：
+2：値段</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:30:30" />
+				Time="2012-01-10T12:17:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1026,7 +1058,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1075,7 +1107,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1124,7 +1156,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1171,7 +1203,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1218,7 +1250,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1265,7 +1297,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1312,7 +1344,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1345,10 +1377,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>左上のウィンドウに、お小遣いの値を表示</Comment>
+			<Comment>左上のウィンドウに、お小遣いの値を表示
+
+0：値段</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:17:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1359,7 +1393,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1392,10 +1426,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>バトルポイントショップの時に左上に表示する残りBP</Comment>
+			<Comment>バトルポイントショップの時に左上に表示する残りBP
+
+0：ＢＰ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:17:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1406,7 +1442,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1439,10 +1475,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>手持ちの道具の数を、画面左に表示</Comment>
+			<Comment>手持ちの道具の数を、画面左に表示
+
+0：数量</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:18:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1453,7 +1491,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1486,10 +1524,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う数を画面右に表示</Comment>
+			<Comment>買う数を画面右に表示
+
+0：数量</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:18:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1500,7 +1540,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1533,10 +1573,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う値段を円で画面右に表示</Comment>
+			<Comment>買う値段を円で画面右に表示
+
+0：値段</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:18:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1547,7 +1589,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1580,10 +1622,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買う値段をBPで画面右に表示</Comment>
+			<Comment>買う値段をBPで画面右に表示
+
+0：ＢＰ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:18:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1594,7 +1638,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1641,7 +1685,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1688,7 +1732,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1737,7 +1781,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1785,7 +1829,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1822,10 +1866,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>第１役割説明</Comment>
+			<Comment>第１役割説明
+
+1：秘書番号
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:20:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1866,10 +1915,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>第２役割説明</Comment>
+			<Comment>第２役割説明
+
+1：秘書番号
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:21:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1910,10 +1964,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>第３役割説明</Comment>
+			<Comment>第３役割説明
+
+1：秘書番号
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1954,10 +2013,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>第４役割説明</Comment>
+			<Comment>第４役割説明
+
+1：秘書番号
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:21:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2052,10 +2116,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>くじ役割
-</Comment>
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T04:57:45" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:22:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2149,10 +2218,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>マーケット役割説明</Comment>
+			<Comment>マーケット役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:22:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2195,10 +2270,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>花屋役割説明</Comment>
+			<Comment>花屋役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:23:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2241,10 +2322,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道場役割説明</Comment>
+			<Comment>道場役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:23:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2287,10 +2374,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>保育所役割説明</Comment>
+			<Comment>保育所役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:23:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2333,10 +2426,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>古道具屋役割説明</Comment>
+			<Comment>古道具屋役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:23:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2379,10 +2478,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>レストラン役割説明</Comment>
+			<Comment>レストラン役割説明
+
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-10T12:23:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2421,10 +2526,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ
+
+0：秘書名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:27" />
+				Time="2012-01-10T12:23:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2463,10 +2570,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ
+
+0：秘書名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:23:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2505,10 +2614,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ
+
+0：秘書名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:33:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2547,10 +2658,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ
+
+0：秘書名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:33:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2590,10 +2703,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>システムｍｓｇ
-案内する</Comment>
+案内する
+
+0：お店名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:13:54" />
+				Time="2012-01-10T12:26:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2633,10 +2748,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>システムｍｓｇ
-案内する</Comment>
+案内する
+
+0：お店名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:13:58" />
+				Time="2012-01-10T12:27:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2676,10 +2793,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>システムｍｓｇ
-招待するで建て替え</Comment>
+招待するで建て替え
+
+0：お店名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:14:16" />
+				Time="2012-01-10T12:27:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2719,10 +2838,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>システムｍｓｇ
-招待するで建て替え</Comment>
+招待するで建て替え
+
+2：住民名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:14:20" />
+				Time="2012-01-10T12:27:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2761,10 +2882,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>並び替えシステムｍｓｇ（お店と秘書共用）</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:36:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2775,7 +2896,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2812,10 +2933,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ（お店と秘書共用）
+実機未使用（makeが通らないのので残している）
+
+0：
+1：</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:48:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2826,7 +2951,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2859,10 +2984,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムｍｓｇ</Comment>
+			<Comment>システムｍｓｇ（お店と秘書共用）</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:00:35" />
+				Time="2012-01-10T12:36:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2873,7 +2998,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2918,10 +3043,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>古道具♂</Comment>
+			<Comment>古道具♂
+
+0：サービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:02:34" />
+				Time="2012-01-10T12:31:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2970,10 +3097,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>古道具♀</Comment>
+			<Comment>古道具♀
+
+0：サービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:02:39" />
+				Time="2012-01-10T12:31:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3018,10 +3147,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>古道具♂</Comment>
+			<Comment>古道具♂
+
+0：道具名
+1：ポケット名
+2：サービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:02:43" />
+				Time="2012-01-10T12:32:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3066,10 +3199,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>古道具♀</Comment>
+			<Comment>古道具♀
+
+0：道具名
+1：ポケット名
+2：サービス名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:02:43" />
+				Time="2012-01-10T12:32:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
