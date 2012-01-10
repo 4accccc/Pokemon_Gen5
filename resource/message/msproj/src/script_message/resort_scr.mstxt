@@ -374,11 +374,11 @@ IRC♂
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-GTSで　こうかんしたこと
-おぼえている？▼</Text>
+GTSで　こうかんした
+[Name:PokemonNickname2 Idx="1" ]は　げんき？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-09T02:33:39" />
+				Time="2012-01-10T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -387,11 +387,11 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-GTSで　交換したこと
-覚えている？▼</Text>
+GTSで　交換した
+[Name:PokemonNickname2 Idx="1" ]は　元気？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-09T02:33:45" />
+				Time="2012-01-10T13:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -402,11 +402,11 @@ GTSで　交換したこと
 			<Comment>旅行者挨拶文
 GTS♂
 0：旅行者
-1：－
+1：交換したポケモン名
 2：クチグセ</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T03:59:18" />
+				Time="2012-01-10T13:26:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1524,11 +1524,11 @@ IRC♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-GTSで　こうかんしたこと
-おぼえている？▼</Text>
+GTSで　こうかんした
+[Name:PokemonNickname2 Idx="1" ]は　げんき？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-09T02:34:12" />
+				Time="2012-01-10T13:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1537,11 +1537,11 @@ GTSで　こうかんしたこと
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-GTSで　交換したこと
-覚えている？▼</Text>
+GTSで　交換した
+[Name:PokemonNickname2 Idx="1" ]は　元気？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-09T02:34:16" />
+				Time="2012-01-10T13:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1552,11 +1552,11 @@ GTSで　交換したこと
 			<Comment>旅行者挨拶文
 GTS♀
 0：旅行者
-1：－
+1：交換したポケモン名
 2：クチグセ</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T04:15:51" />
+				Time="2012-01-10T13:27:11" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
