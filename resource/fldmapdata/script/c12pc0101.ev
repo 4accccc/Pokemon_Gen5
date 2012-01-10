@@ -143,7 +143,7 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	_MSGWIN_CLOSE()
 	
 	//モンスターボール入手処理
-	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
+	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 10)
 	
 	//ベル：つぎは
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_09 , C12PC0101_SWBELL_01 , POS_DEFAULT )
@@ -155,11 +155,11 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	
 	//階段SE再生
 	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
-  
+
 	//ベル動作モデル非表示
 	_OBJ_DEL(C12PC0101_SWBELL_01)
-  
+  	
+  	_SE_WAIT()
 	//==================================//
   
 	//ゾーンBGM変更フラグをリセット
@@ -173,7 +173,7 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	//==================================//
 	
 	//C12のSCENE_CHANGE起動
-	$WK_SCENE_C12_WHITE_MEET = 5
+	$WK_SCENE_C12_WHITE_MEET = 6
 	
 	//C12PC0101のベルを非表示
 	_FLAG_SET( FV_C12PC0101_SWBELL )
