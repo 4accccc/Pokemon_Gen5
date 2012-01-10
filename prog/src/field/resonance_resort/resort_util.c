@@ -3592,7 +3592,7 @@ BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *
     {
       int i;
 
-      for( i = 0; i < lv; i++ )
+      for( i = 0; i <= lv; i++ )
       {
         u32 v = sc_resort_institution_release_rank[ i ];
         if( sc_resort_institution_release_tbl[id][ v ] == shop_type )
