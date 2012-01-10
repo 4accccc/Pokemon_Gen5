@@ -2511,13 +2511,22 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
   return FALSE;
 }
 
-static int _version_check( UNION_SYSTEM_PTR unisys )
+static int _version_check( UNION_SYSTEM_PTR unisys, BOOL is_colosseum )
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
   int i,rom;
+  OS_Printf( "バージョンチェック\n" );
   for(i=0;i<GFL_NET_GetConnectNum();i++){
-    MYSTATUS *status = GAMEDATA_GetMyStatusPlayer( gamedata, i );
-    rom = MyStatus_GetRomCode(status);
+    if( is_colosseum )
+    {
+      rom = MyStatus_GetRomCode(&unisys->colosseum_sys->basic_status[i].myst);
+    }
+    else
+    {
+      MYSTATUS *status = GAMEDATA_GetMyStatusPlayer( gamedata, i );
+      rom = MyStatus_GetRomCode(status);
+    }
+    OS_Printf( "[%d]=%d\n", i, rom );
     if(rom==VERSION_BLACK || rom==VERSION_WHITE){
       OS_Printf("============================= BW検出 トレーナーカードデータを対応させます\n");
       return VERSION_BLACK;
@@ -2587,7 +2596,7 @@ static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRAINERCARD_PARAM, WB_NET_UNION) == TRUE){
       OS_TPrintf("トレーナーカード前の同期取り成功\n");
-      if(_version_check(unisys) == VERSION_W2){
+      if(_version_check(unisys,FALSE) == VERSION_W2){
         (*seq) = UNION_TRCARD_SEQ_TRCARD_SEND;      // SWANトレーナーカードを送信
       }else{
         (*seq) = UNION_TRCARD_SEQ_BW_TRCARD_SEND;   // BWトレーナーカードを送信
@@ -3636,7 +3645,7 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
       OS_TPrintf("トレーナーカード交換前の同期取り成功\n");
 //      (*seq)++;
       // 接続メンバーがBWなら旧トレーナーカードで送信
-      if(_version_check(unisys) == VERSION_W2){
+      if(_version_check(unisys,TRUE) == VERSION_W2){
         (*seq)=8;
       }else{
         (*seq)=18;
