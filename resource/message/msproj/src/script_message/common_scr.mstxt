@@ -133,6 +133,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:28" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_02"
@@ -171,6 +178,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_03"
@@ -208,6 +222,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_04"
@@ -248,6 +269,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_05"
@@ -301,6 +329,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_06"
@@ -336,6 +371,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_07"
@@ -379,6 +421,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_08"
@@ -424,6 +473,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_09"
@@ -460,6 +516,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:32" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_report_10"
@@ -639,6 +702,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_fldcomm_exit_02">
@@ -680,6 +750,13 @@
 				User="iwasawa:W00270"
 				Time="2011-09-20T11:05:28" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:33" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_gameover_myhome_01"
@@ -836,6 +913,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_gameover_pc_02_01"
@@ -886,6 +970,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_gameover_pc_02_02"
@@ -922,6 +1013,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_wireless_off_keywait"
@@ -961,6 +1059,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_wireless_off_nowait"
@@ -1001,6 +1106,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:38" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_common_itemuse_ng"
@@ -1047,6 +1159,13 @@ bag.gmmの変更も忘れないでください
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:38" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -1093,6 +1212,13 @@ bag.gmmの変更も忘れないでください
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:38" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -1140,6 +1266,13 @@ bag.gmmの変更も忘れないでください
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:40" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -1191,6 +1324,13 @@ bag.gmmの変更も忘れないでください
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:24:40" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>

@@ -18876,6 +18876,13 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T03:31:50" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T06:01:33" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="ZKN_FORM_646_002"
@@ -18902,6 +18909,13 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T03:31:50" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T06:01:35" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="ZKN_FORM_647_001"
@@ -18928,6 +18942,13 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-14T03:31:50" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T06:01:35" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="ZKN_FORM_648_001"

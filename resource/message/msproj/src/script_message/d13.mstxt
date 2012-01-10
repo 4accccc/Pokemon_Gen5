@@ -6,10 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだ　おまえかあ</Text>
+			<Text>なんだ　おまえかあ▼
+ゲーチスも　アクロマさんも
+おれを　かえてくれなかったよ……▼
+やっぱ　じぶんを　かえるのは
+じぶんじしん　って　ことかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:59:01" />
+				Time="2012-01-10T05:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだ　おまえかあ</Text>
+			<Text>なんだ　おまえかあ▼
+ゲーチスも　アクロマさんも
+おれを　変えてくれなかったよ……▼
+やっぱ　自分を　変えるのは
+自分自身って　ことかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:59:02" />
+				Time="2012-01-10T05:20:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,11 +39,10 @@
 			<Comment>♂
 ・クリア後出現
 　といっても初期から配置で問題ないですが
-※swanで新規作成
-※仮メッセージ</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T09:00:36" />
+				Time="2012-01-10T05:18:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44,6 +51,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-15T08:59:29" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:18:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

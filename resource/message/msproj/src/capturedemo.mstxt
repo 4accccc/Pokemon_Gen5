@@ -37,6 +37,13 @@
 				Time="2011-11-09T12:00:22" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T03:53:57" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -81,6 +88,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-09T12:00:24" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T03:53:58" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>

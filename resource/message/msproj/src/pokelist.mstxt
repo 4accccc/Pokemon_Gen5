@@ -35,6 +35,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:04" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>48</Text>
 			<TextModifiedBy
@@ -74,6 +81,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>48</Text>
@@ -118,6 +132,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>24</Text>
 			<TextModifiedBy
@@ -159,6 +180,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>60</Text>
@@ -202,6 +230,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>60</Text>
 			<TextModifiedBy
@@ -244,6 +279,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>60</Text>
 			<TextModifiedBy
@@ -284,6 +326,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>8</Text>
@@ -326,6 +375,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>8</Text>
 			<TextModifiedBy
@@ -366,6 +422,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>8</Text>
@@ -408,6 +471,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
 			<TextModifiedBy
@@ -447,6 +517,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
@@ -496,6 +573,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
 			<TextModifiedBy
@@ -536,6 +620,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
@@ -578,6 +669,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
 			<TextModifiedBy
@@ -618,6 +716,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
@@ -660,6 +765,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
 			<TextModifiedBy
@@ -701,6 +813,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
 			<TextModifiedBy
@@ -741,6 +860,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
@@ -789,6 +915,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>160</Text>
@@ -841,6 +974,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>104</Text>
 			<TextModifiedBy
@@ -883,6 +1023,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>104</Text>
@@ -928,6 +1075,13 @@
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>104</Text>
 			<TextModifiedBy
@@ -970,6 +1124,13 @@ PP回復アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>104</Text>
@@ -1014,6 +1175,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>104</Text>
 			<TextModifiedBy
@@ -1057,6 +1225,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1098,6 +1273,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -1138,6 +1320,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -1181,6 +1370,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1223,6 +1419,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1264,6 +1467,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -1304,6 +1514,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -1348,6 +1565,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1390,6 +1614,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -1445,6 +1676,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1486,6 +1724,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -1526,6 +1771,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -1570,6 +1822,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1611,6 +1870,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -1651,6 +1917,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -1696,6 +1969,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1737,6 +2017,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -1788,6 +2075,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1832,6 +2126,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -1880,6 +2181,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1925,6 +2233,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -1968,6 +2283,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2013,6 +2335,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2056,6 +2385,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2101,6 +2437,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2145,6 +2488,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2186,6 +2536,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2231,6 +2588,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2274,6 +2638,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2320,6 +2691,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2363,6 +2741,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2408,6 +2793,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2451,6 +2843,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2496,6 +2895,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2538,6 +2944,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2588,6 +3001,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2629,6 +3049,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -2669,6 +3096,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -2712,6 +3146,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2758,6 +3199,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2801,6 +3249,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2846,6 +3301,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -2885,6 +3347,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -2927,6 +3396,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -2968,6 +3444,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -3007,6 +3490,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3049,6 +3539,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -3089,6 +3586,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -3134,6 +3638,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3178,6 +3689,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3219,6 +3737,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -3259,6 +3784,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -3304,6 +3836,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3345,6 +3884,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
 			<TextModifiedBy
@@ -3385,6 +3931,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>36</Text>
@@ -3430,6 +3983,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3470,6 +4030,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3512,6 +4079,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3552,6 +4126,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3594,6 +4175,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3643,6 +4231,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="iwasawa:W00270"
 				Time="2011-05-23T08:18:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8080</CellData>
@@ -3685,6 +4280,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3735,6 +4337,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3784,6 +4393,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3831,6 +4447,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3887,6 +4510,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -3935,6 +4565,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -3985,6 +4622,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4028,6 +4672,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4079,6 +4730,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4121,6 +4779,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4165,6 +4830,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4207,6 +4879,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-12-02T10:53:19" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4247,6 +4926,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4296,6 +4982,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4344,6 +5037,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4384,6 +5084,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4426,6 +5133,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4466,6 +5180,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4511,6 +5232,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4554,6 +5282,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4606,6 +5341,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4649,6 +5391,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4694,6 +5443,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4733,6 +5489,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4776,6 +5539,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4818,6 +5588,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -4869,6 +5646,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4917,6 +5701,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -4964,6 +5755,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -5015,6 +5813,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -5062,6 +5867,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -5111,6 +5923,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -5158,6 +5977,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -5207,6 +6033,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5247,6 +6080,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5289,6 +6129,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5329,6 +6176,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5371,6 +6225,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5411,6 +6272,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5453,6 +6321,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5493,6 +6368,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5535,6 +6417,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5575,6 +6464,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5617,6 +6513,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5658,6 +6561,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:20" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5847,6 +6757,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:24" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
 			<TextModifiedBy
@@ -5887,6 +6804,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -5929,6 +6853,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:24" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>84</Text>
@@ -6214,6 +7145,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6254,6 +7192,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6296,6 +7241,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6336,6 +7288,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6378,6 +7337,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6418,6 +7384,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6460,6 +7433,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6500,6 +7480,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6542,6 +7529,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6582,6 +7576,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6624,6 +7625,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6664,6 +7672,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6706,6 +7721,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6746,6 +7768,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
@@ -6788,6 +7817,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>72</Text>
 			<TextModifiedBy
@@ -6828,6 +7864,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -6867,6 +7910,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -6910,6 +7960,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:28" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7002,6 +8059,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7041,6 +8105,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7082,6 +8153,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7121,6 +8199,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7162,6 +8247,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7201,6 +8293,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7242,6 +8341,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7282,6 +8388,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7321,6 +8434,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7364,6 +8484,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7406,6 +8533,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7447,6 +8581,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:30" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7535,6 +8676,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7569,6 +8717,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7610,6 +8765,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7645,6 +8807,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</LanguageCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7677,6 +8846,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7721,6 +8897,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7763,6 +8946,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7807,6 +8997,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7847,6 +9044,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7889,6 +9093,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -7929,6 +9140,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -7971,6 +9189,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -8011,6 +9236,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -8053,6 +9285,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -8094,6 +9333,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -8134,6 +9380,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -8182,6 +9435,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
 			<TextModifiedBy
@@ -8221,6 +9481,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -8262,6 +9529,13 @@ PP値上昇アイテムで技選択するとき</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:45:34" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>

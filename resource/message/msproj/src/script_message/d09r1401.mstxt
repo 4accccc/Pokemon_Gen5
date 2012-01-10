@@ -45,6 +45,13 @@
 				User="matsumiya:W00224"
 				Time="2011-09-14T09:39:46" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:12:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d09r1401_swrival_02"
@@ -98,6 +105,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-14T09:39:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:12:27" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -153,6 +167,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-14T09:40:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:12:27" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -214,6 +235,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-14T09:40:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T05:12:27" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
