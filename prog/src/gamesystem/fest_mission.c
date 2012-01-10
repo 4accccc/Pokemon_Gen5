@@ -100,7 +100,6 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succe
     fmwk->start_rtc = FMISSION_RTC_NULL;
   }else{
     fmwk->my_score = 0; //継承ミッションの場合、スコアクリア
-    beacon->time = FEST_MISSION_GetLife( src ); //受信時点からの残りライフを設定
   }
 
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート m_id=%d, key = %08x, goal=%d, param=%d, time=%d sec\n",
@@ -169,7 +168,9 @@ u32 FEST_MISSION_GetLife( const FEST_MISSION* fmwk )
   if( diff < 0 ){
     return 0; //逆転してたら何かおかしいので0を返す
   }
+//  IWASAWA_Printf("rtc=%08x%08x, time=%d, diff=%d, ", (u32)(fmwk->start_rtc>>32), (u32)(fmwk->start_rtc&0xFFFFFFFF), fmwk->beacon.time, diff );
   diff = (s64)fmwk->beacon.time - diff;
+//  IWASAWA_Printf("life=%d\n",diff);
   if( diff < 0 ){
     return 0;
   }
