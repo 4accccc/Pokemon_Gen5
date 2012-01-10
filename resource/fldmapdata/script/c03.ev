@@ -30,7 +30,7 @@ _EVENT_DATA		ev_bg_c03_sign5_01
 _EVENT_DATA		ev_bg_c03_sign6_01
 _EVENT_DATA		ev_bg_c03_sign7_01
 _EVENT_DATA		ev_bg_c03_sign8_01
-_EVENT_DATA		ev_pos_c03_swchampion_01
+_EVENT_DATA		ev_pos_c03_swchampion_02
 _EVENT_DATA		ev_c03_ol1_01
 _EVENT_DATA		ev_c03_ol2_01
 _EVENT_DATA		ev_c03_ol3_01
@@ -43,34 +43,101 @@ _EVENT_DATA		ev_c03_businessman4_01
 _EVENT_DATA		ev_c03_businessman5_01
 _EVENT_DATA		ev_scene_c03_rarry_start
 _EVENT_DATA		ev_c03_clown_01
+_EVENT_DATA		ev_pos_c03_swchampion_01
+_EVENT_DATA		ev_init_c03
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c03
+  
+  //
+  
+INIT_EVENT_END
+
 /**************************************************************/
 /*		POS：アイリス誘導
 /**************************************************************/
 EVENT_START		ev_pos_c03_swchampion_01
+{
+
+  DEFINE_LOCAL  LCW_POSI
+  DEFINE_LOCAL  LCW_POSF
+  DEFINE_LOCAL  LCW_POSS
   
-  //アイリス：こっちが
+  //主人公座標取得
+  _GET_OBJ_RAIL_LOC( MMDL_ID_PLAYER, LCW_POSI, LCW_POSF, LCW_POSS )
+  
+  //上から来たケースでは振り向き
+  IF $LCW_POSS > 11 THEN
+    _OBJ_ANIME( C03_SWCHAMPION_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //アイリス：このさきが
   _BALLOONWIN_OBJMSG_POS( msg_c03_swchampion_01, C03_SWCHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：アイリス退場
-  _OBJ_ANIME( C03_SWCHAMPION_01, anm_swchampion_bye )
+  _OBJ_ANIME( C03_SWCHAMPION_01, anm_swchampion_bye_01 )
   _OBJ_ANIME_WAIT()
   
-  //アイリスOBJ削除
-  _OBJ_DEL( C03_SWCHAMPION_01 )
+  _OBJ_ANIME( C03_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
   
   //==================================//
   
-  //C03のPOS無効
+  //C03のPOS有効
   $WK_SCENE_C03GYM_STOPPER = 2
   
   //C03のアイリス非表示
   _FLAG_SET( FV_C03_SWCHAMPION_01 )
+  _FLAG_RESET( FV_C03_SWCHAMPION_02 )
+  
+  //==================================//
+  
+  //アイリス動作モデル生成
+  _OBJ_ADD( C03_SWCHAMPION_02 )
+  _OBJ_DEL( C03_SWCHAMPION_01 )
+
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆アイリス退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swchampion_bye_01
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*		POS：アイリス誘導
+/**************************************************************/
+EVENT_START		ev_pos_c03_swchampion_02
+  
+  //アイリス：こっちが
+  _BALLOONWIN_OBJMSG_POS( msg_c03_swchampion_02, C03_SWCHAMPION_02, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス退場
+  _OBJ_ANIME( C03_SWCHAMPION_02, anm_swchampion_bye_02 )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリスOBJ削除
+  _OBJ_DEL( C03_SWCHAMPION_02 )
+  
+  //==================================//
+  
+  //C03のPOS無効
+  $WK_SCENE_C03GYM_STOPPER = 3
+  
+  //C03のアイリス非表示
+  _FLAG_SET( FV_C03_SWCHAMPION_02 )
   
   //C03P07表示
   _FLAG_RESET( FV_C03P17_SWCHAMPION_01 )
@@ -84,7 +151,7 @@ EVENT_END
 //--------------------------------------------------------------------
 //	☆アイリス退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swchampion_bye
+_ANIME_LABEL	anm_swchampion_bye_02
 	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/25 19:00:36
+#save date:2012/01/10 18:02:31
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03.wms
 #hold event type:
 1
 #hold event number:
-12
+13
 #event number: 0
 #type
 1
@@ -40,7 +40,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-2 23 -1
+3 0 -1
 #event number: 1
 #type
 1
@@ -382,6 +382,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 3 28 -1
+#event number: 12
+#type
+1
+#ID name
+C03_SWCHAMPION_02
+#OBJ CODE Number
+SWIRIS
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C03_SWCHAMPION_02
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+2 22 -1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -700,92 +731,75 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-5
+4
 #event number: 0
 #Pos Event Label
-POS_C03_SWCHAMPION_01
+POS_C03_SWCHAMPION_02_05
 #Pos Script Name
-SCRID_POS_C03_SWCHAMPION_01
+SCRID_POS_C03_SWCHAMPION_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C03GYM_STOPPER
 #Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-2 25 2
-#size
-1 1
-#event number: 1
-#Pos Event Label
-POS_C03_SWCHAMPION_02
-#Pos Script Name
-SCRID_POS_C03_SWCHAMPION_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03GYM_STOPPER
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-2 25 1
-#size
-1 1
-#event number: 2
-#Pos Event Label
-POS_C03_SWCHAMPION_03
-#Pos Script Name
-SCRID_POS_C03_SWCHAMPION_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03GYM_STOPPER
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-2 25 0
-#size
-1 1
-#event number: 3
-#Pos Event Label
-POS_C03_SWCHAMPION_04
-#Pos Script Name
-SCRID_POS_C03_SWCHAMPION_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03GYM_STOPPER
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-2 25 -1
-#size
-1 1
-#event number: 4
-#Pos Event Label
-POS_C03_SWCHAMPION_05
-#Pos Script Name
-SCRID_POS_C03_SWCHAMPION_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03GYM_STOPPER
-#Event Trigger Work Value
-1
+2
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
 2 25 -2
 #size
-1 1
+1 5
+#event number: 1
+#Pos Event Label
+POS_C03_SWCHAMPION_01_02
+#Pos Script Name
+SCRID_POS_C03_SWCHAMPION_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03GYM_STOPPER
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+2 27 3
+#size
+2 1
+#event number: 2
+#Pos Event Label
+POS_C03_SWCHAMPION_01_01
+#Pos Script Name
+SCRID_POS_C03_SWCHAMPION_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03GYM_STOPPER
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+3 4 -2
+#size
+1 5
+#event number: 3
+#Pos Event Label
+POS_C03_SWCHAMPION_01_03
+#Pos Script Name
+SCRID_POS_C03_SWCHAMPION_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03GYM_STOPPER
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+3 0 3
+#size
+5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

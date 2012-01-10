@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/11 17:22:41
+#save date:2012/01/10 15:42:35
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t04.wms
 #SECTION START:OBJ_EVENT
@@ -690,7 +690,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+6
 #event number: 0
 #Pos Event Label
 POS_T04_SWRIVAL_01
@@ -739,9 +739,60 @@ WK_SCENE_T04_D20_TVT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 -64 72
+232 -64 56
 #size
-2 1
+1 3
+#event number: 3
+#Pos Event Label
+POS_T04_LOCALTVT_02
+#Pos Script Name
+SCRID_POS_T04_LOCALTVT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_T04_D20_TVT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+312 -64 72
+#size
+1 4
+#event number: 4
+#Pos Event Label
+POS_T04_LOCALTVT_03
+#Pos Script Name
+SCRID_POS_T04_LOCALTVT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_T04_D20_TVT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 -80 72
+#size
+5 1
+#event number: 5
+#Pos Event Label
+POS_T04_LOCALTVT_02
+#Pos Script Name
+SCRID_POS_T04_LOCALTVT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_T04_D20_TVT
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+584 -72 56
+#size
+1 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

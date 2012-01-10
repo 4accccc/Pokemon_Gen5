@@ -131,6 +131,7 @@ init_flags:
 	
 	//C03
 	_FLAG_SET( FV_C03_SWCHAMPION_01 ) //アイリス：ジム前イベント後表示
+	_FLAG_SET( FV_C03_SWCHAMPION_02 ) //アイリス：ジム前イベント後表示
 	_FLAG_SET( FV_C03P17_SWCHAMPION_01 )  //アイリス：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P17_SWRIVAL_01 ) //ライバル：下水道前イベント起動時表示
 	_FLAG_SET( FV_C03P01_SWBOSS_01 )  //アクロマ：ジムクリア後表示

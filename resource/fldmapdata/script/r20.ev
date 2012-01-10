@@ -60,6 +60,8 @@ INIT_EVENT_START   ev_zone_r20
   
   IF $WK_SCENE_R20 == 3 THEN
     _SXY_MOVE_NPC_POS( R20_SWRIVAL_01, DIR_DOWN , 162, -3, 668 )
+  ELSIF $WK_SCENE_R20 == 4 THEN
+    _SXY_MOVE_NPC_POS( R20_SWRIVAL_01, DIR_DOWN , 141, 2, 645 )
   ENDIF
 }
 INIT_EVENT_END
@@ -387,14 +389,6 @@ EVENT_END
 EVENT_START   ev_r20_swplazmaw_01
   
   _TALK_OBJ_START()
-
-  //==================================//
-  //ライバル表示
-  _FLAG_RESET( FV_R20_SWRIVAL_01 )
-  //==================================//
-  
-  //ライバル動作モデル生成
-  _OBJ_ADD( R20_SWRIVAL_01 )
   
   //ライバル位置移動
   _OBJ_POS_CHANGE( R20_SWRIVAL_01, 146, 2, 663, DIR_RIGHT )
@@ -432,6 +426,14 @@ EVENT_START   ev_r20_swplazmaw_01
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
+  
+  //=======================================//
+  //R20のBGMを元に戻す
+  _FLAG_RESET( SYS_FLAG_BGM_R20_PLAZMA )
+  //=======================================//
+  
+  //BGMをフィールド曲に戻す
+  _BGM_NOW_MAP_RECOVER()
   
   //アニメ：ライバル隣接
   
@@ -484,6 +486,8 @@ EVENT_START   ev_r20_swplazmaw_01
   _FLAG_SET( FV_R20_SWRIVAL_01 )
   //SWPLAZMAW非表示
   _FLAG_SET( FV_R20_SWPLAZMA_01 )
+  //R20イベント終了
+  $WK_SCENE_R20 = 5
 
   //ホミカ・父を表示
   _FLAG_RESET(FV_C13_SWLEADER2_MEET)

@@ -419,13 +419,13 @@ EVENT_START		ev_pos_t04_localtvt_01
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
-	
 	//========================================/
 	
 	//ライブキャスターイベント終了
 	$WK_SCENE_T04_D20_TVT = 2
 	
 	//========================================/
+	
 	
 EVENT_END
 

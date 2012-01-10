@@ -29,6 +29,7 @@ _EVENT_DATA		ev_pos_d11r0101_plasma_01
 _EVENT_DATA		ev_pos_d11r0101_swrival_01
 _EVENT_DATA		ev_pos_d11r0101_stopper_01
 _EVENT_DATA		ev_d11r0101_man2_01
+_EVENT_DATA		ev_d11r0101_businessman_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -550,6 +551,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_d11r0101_man2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0101_man2_02 )
+EVENT_END
+
+/**************************************************************/
+/*		BUSINESSMAN
+/**************************************************************/
+EVENT_START		ev_d11r0101_businessman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0101_businessman_01 )
 EVENT_END
 
 //--------------------------------------------------------------------
