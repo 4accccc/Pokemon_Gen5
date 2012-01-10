@@ -138,6 +138,12 @@ EVENT_START  ev_pos_r04_swboss_02
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
+  //アクロママシーン起動：SE再生・アクロマ芝居
+  _SE_PLAY( SEQ_SE_SHINKA_W025  )
+  _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_act)
+  _OBJ_ANIME_WAIT()
+  _SE_WAIT()
+  
   //アニメ：イワパレス目が覚める
   _OBJ_ANIME( R04_BIGROCK_01, anm_poke50_hatena)
   _OBJ_ANIME( R04_BIGROCK_03, anm_poke50_gyoe)

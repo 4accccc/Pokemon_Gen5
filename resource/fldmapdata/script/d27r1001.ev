@@ -676,6 +676,11 @@ EVENT_START ev_pos_d27r1001_barrier_01
   
   _SE_WAIT()
   
+  //メッセージ：あぶない！
+  _PLAINWIN_MSG_DOWN( msg_d27r1001_barrier_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
   
 EVENT_END
 

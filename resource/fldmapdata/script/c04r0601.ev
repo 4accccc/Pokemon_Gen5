@@ -44,17 +44,7 @@ INIT_EVENT_START   ev_zone_c04r0601
   
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
-  
-  //バージョンごとに異なる接続を配置
-  /*
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C04R0601_R04W_EXIT01, 9, 0, 11 )
-  //W2
-  ELSE
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C04R0601_R04_EXIT01, 9, 0, 11 )
-  ENDIF
-  */
+
 INIT_EVENT_END
 
 /************************************************************/

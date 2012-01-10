@@ -180,7 +180,9 @@ ev_vs_d32r0101_poke50_01:
 
     _MSGWIN_CLOSE()
 
-    _TIME_WAIT( 8 )
+    //SEçƒê∂
+    _SE_PLAY( SEQ_SE_SHINKA_W025  )
+    _SE_WAIT()
     
     {
     DEFINE_LOCAL LWK_DIR

@@ -519,19 +519,30 @@ EVENT_END
 /*					バリア解除スイッチ（１）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r1301_switch_01
-  
+
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_01 = 1
+  //=====================================
+
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_04  )
   //メッセージ：スイッチを踏んだ！
   _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_01 )
+  
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _AB_KEYWAIT_MARK()
+  ELSE
+    _LAST_KEYWAIT()
+  ENDIF
+  
   _MSGWIN_CLOSE()
+  _SE_WAIT()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BUTTON_OFF( 0 )
   //ゲート解除演出
   _HIDE_SHIP_GATE_OFF( 0 )
-  //=====================================
-  //POS無効
-  $WK_SCENE_D27_SWITCH_01 = 1
-  //=====================================
   
   //メッセージ：バリアが解除された！
   IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
@@ -546,20 +557,31 @@ EVENT_END
 /*					バリア解除スイッチ（２）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r1301_switch_02
-  
-  //メッセージ：スイッチを踏んだ！
-  _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_01 )
-  _MSGWIN_CLOSE()
-  
-  //ボタン踏んだ処理
-  _HIDE_SHIP_BUTTON_OFF( 1 )
-  //ゲート解除演出
-  _HIDE_SHIP_GATE_OFF( 1 )
+
   //=====================================
   //POS無効
   $WK_SCENE_D27_SWITCH_02 = 1
   //=====================================
 
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_04  )
+  //メッセージ：スイッチを踏んだ！
+  _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_01 )
+  
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _AB_KEYWAIT_MARK()
+  ELSE
+    _LAST_KEYWAIT()
+  ENDIF
+  
+  _MSGWIN_CLOSE()
+  _SE_WAIT()
+  
+  //ボタン踏んだ処理
+  _HIDE_SHIP_BUTTON_OFF( 1 )
+  //ゲート解除演出
+  _HIDE_SHIP_GATE_OFF( 1 )
+  
   //メッセージ：バリアが解除された！
   IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
     _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_02 )
@@ -574,18 +596,29 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_d27r1301_switch_03
 
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_03 = 1
+  //=====================================
+
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_04  )
   //メッセージ：スイッチを踏んだ！
   _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_01 )
+  
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _AB_KEYWAIT_MARK()
+  ELSE
+    _LAST_KEYWAIT()
+  ENDIF
+  
   _MSGWIN_CLOSE()
+  _SE_WAIT()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BUTTON_OFF( 2 )
   //ゲート解除演出
   _HIDE_SHIP_GATE_OFF( 2 )
-  //=====================================
-  //POS無効
-  $WK_SCENE_D27_SWITCH_03 = 1
-  //=====================================
 
   //メッセージ：バリアが解除された！
   IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
@@ -600,19 +633,30 @@ EVENT_END
 /*					バリア解除スイッチ（４）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r1301_switch_04
+  
+  //=====================================
+  //POS無効
+  $WK_SCENE_D27_SWITCH_04 = 1
+  //=====================================
 
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_04  )
   //メッセージ：スイッチを踏んだ！
   _PLAINWIN_MSG_DOWN( msg_d27r1301_switch_01 )
+  
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _AB_KEYWAIT_MARK()
+  ELSE
+    _LAST_KEYWAIT()
+  ENDIF
+  
   _MSGWIN_CLOSE()
+  _SE_WAIT()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BUTTON_OFF( 3 )
   //ゲート解除演出
   _HIDE_SHIP_GATE_OFF( 3 )
-  //=====================================
-  //POS無効
-  $WK_SCENE_D27_SWITCH_04 = 1
-  //=====================================
 
   //メッセージ：バリアが解除された！
   IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
@@ -737,7 +781,13 @@ EVENT_START ev_pos_d27r1301_barrier_01
   
   _SE_WAIT()
   
-  
+  /*
+  //メッセージ：あぶない！
+  _PLAINWIN_MSG_DOWN( msg_d27r1301_barrier_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  */
+    
 EVENT_END
 
 //-------------------------------------
