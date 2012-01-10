@@ -178,7 +178,7 @@ _WBT_SYSTEM_ENTRY()
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
-  //_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+  //_WBT_SYSTEM_END()   //上記予約スクリプト内で実行されるため不要
 
 EVENT_END
 
@@ -224,7 +224,7 @@ EVENT_START		ev_debug_wbt_final_game
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
-  //_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+  //_WBT_SYSTEM_END()   //上記予約スクリプト内で実行されるため不要
 EVENT_END
 
 /**************************************************************/
@@ -438,7 +438,7 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
 
-_MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
+_MAP_FADE_BLACK_IN_FORCE()  //注意：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
 //結果チェック( _WBT_TRAINER_BATTLE の戻り値LWK_WIN_OR_LOSEをチェック）
 IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
@@ -687,7 +687,7 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
 
-_MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
+_MAP_FADE_BLACK_IN_FORCE()  //注意：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
 
 //歓声ＳＥ再生
@@ -1012,7 +1012,7 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
 
-_MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
+_MAP_FADE_BLACK_IN_FORCE()  //注意：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
 
 _RET
