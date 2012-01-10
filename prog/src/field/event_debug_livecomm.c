@@ -30,6 +30,7 @@
 #include "print/wordset.h"  //WORDSET
 #include "net/net_whpipe.h"
 #include "app/townmap_util.h"
+#include "net_app/union/union_beacon_tool.h"
 
 #include "debug_message.naix"
 #include "msg/debug/msg_d_numinput.h"
@@ -140,6 +141,8 @@ typedef enum{
   BPRM_WSET_ZONE,
   BPRM_WSET_POKEWOOD,
   BPRM_WSET_WBT,
+  BPRM_WSET_COLOR,
+  BPRM_WSET_TR_VIEW,
 }BPRM_WSET_TYPE;
 
 typedef enum{
@@ -507,8 +510,8 @@ static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
   { BPRM_WSET_VERSION, 3, VERSION_WHITE, VERSION_B2,}, //FAKE_VERSION,
   { BPRM_WSET_LANG, 1, LANG_JAPAN, LANG_KOREA,}, //FAKE_LANG,
-  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_COLOR,
-  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_TR_VIEW,
+  { BPRM_WSET_COLOR, 2, 0, 15}, //FAKE_COLOR,
+  { BPRM_WSET_TR_VIEW, 2, 0, 7 }, //FAKE_TR_VIEW,
 };
 
 ////////////////////////////////////////////////
@@ -707,6 +710,9 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     fake[FAKE_LANG] = PM_LANG;
     fake[FAKE_COLOR] = owner_info.favoriteColor;
     fake[FAKE_TR_VIEW] = MyStatus_GetTrainerView( wk->my_status );
+    if( fake[FAKE_SEX] ){
+      fake[FAKE_TR_VIEW] -= UNION_VIEW_INDEX_WOMAN_START;
+    }
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -998,6 +1004,18 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
   case BPRM_WSET_WBT:
     WORDSET_RegisterWBTTournamentName( wk->wset, idx, value );
     return;
+  case BPRM_WSET_COLOR:
+    GFL_MSG_GetString( wk->msgman, dlc_color_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_TR_VIEW:
+    {
+      u8 ofs = 0;
+      if( wk->fake_prm[ TR_PAT_FAKE-(idx==3)][FAKE_SEX] ){
+        ofs = UNION_VIEW_INDEX_WOMAN_START;
+      }
+      GFL_MSG_GetString( wk->msgman, dlc_tr_view_01+value+ofs, wk->str_tmp );
+    }
+    break;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
 }
@@ -1694,6 +1712,7 @@ static void breq_DrawFakeLine( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, FAKE_
 
   WORDSET_RegisterNumber(wk->wset, 0, fake[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   WORDSET_RegisterNumber(wk->wset, 1, mine[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
   sub_BeaconParamWordset( wk, 2, fake[fake_id], f_prm->wset_type );
   sub_BeaconParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
   
