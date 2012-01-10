@@ -260,6 +260,20 @@ void GMEVENT_CallProc( GMEVENT * parent,
   cpew->pwk = pwk;
   GMEVENT_CallEvent( parent, proc_event );
 }
+void GMEVENT_ChangeProc( GMEVENT * parent, 
+    FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * pwk)
+{
+  CPEW * cpew;
+  GMEVENT * proc_event;
+  proc_event = GMEVENT_Create( parent->gsys, NULL, callProcEvent, sizeof(CPEW) );
+  cpew = GMEVENT_GetEventWork( proc_event );
+  cpew->ov_id = ov_id;
+  cpew->proc_data = proc_data;
+  cpew->pwk = pwk;
+  GMEVENT_ChangeEvent( parent, proc_event );
+}
+
+
 
 //------------------------------------------------------------------
 /**
