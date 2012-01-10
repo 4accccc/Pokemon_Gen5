@@ -40,6 +40,7 @@ _EVENT_DATA   ev_pos_d26r0101_open_gate
 _EVENT_DATA   ev_pos_d26r0101_boss_01
 _EVENT_DATA	ev_bg_d26r0101_sign1_01
 _EVENT_DATA	ev_bg_d26r0101_sign2_01
+_EVENT_DATA   ev_recover_d26r0101
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -47,6 +48,31 @@ DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
+
+{
+  //バージョン取得
+  DEFINE_LOCAL LCWK_VERSION
+
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+
+  //バージョンごとに異なる接続を配置
+
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0101_D26R0901_EXIT01, -248, 80, 248 )
+  //W2
+  ELSE
+  _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0101_D26R0201_EXIT01, -248, 80, 248 )
+  ENDIF
+
+}
+
+_RET
 
 /************************************************************/
 /*                  ジムギミック初期化                      */
@@ -144,25 +170,17 @@ INIT_EVENT_START  ev_zone_d26r0101
 
 }
 
-{
-  //バージョン取得
-  DEFINE_LOCAL LCWK_VERSION
+  _CALL ev_exit_change
 
-  //ROMのバージョンを取得
-  _GET_ROM_VERSION( LCWK_VERSION )
+INIT_EVENT_END
 
-  //バージョンごとに異なる接続を配置
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d26r0101
 
-  //B2
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0101_D26R0901_EXIT01, -248, 80, 248 )
-  //W2
-  ELSE
-  _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0101_D26R0201_EXIT01, -248, 80, 248 )
-  ENDIF
-
-}
-
+  _CALL ev_exit_change
+  
 INIT_EVENT_END
 
 /**************************************************************/

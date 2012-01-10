@@ -28,6 +28,7 @@ _EVENT_DATA   ev_c03r0601_informationw_01
 _EVENT_DATA   ev_zone_c03r0601
 _EVENT_DATA   ev_init_c03r0601
 _EVENT_DATA   ev_c03r0601_clown_01
+_EVENT_DATA   ev_recover_c03r0601
 _EVENT_DATA_END
 
 //バージョン取得
@@ -38,10 +39,10 @@ DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*		CALL：特殊接続                             */
 /************************************************************/
-INIT_EVENT_START   ev_zone_c03r0601
-  
+ev_exit_change:
+
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
@@ -54,6 +55,24 @@ INIT_EVENT_START   ev_zone_c03r0601
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_C03R0601_R04_EXIT01, 9, 0, 11 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c03r0601
+  
+  _CALL ev_exit_change
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c03r0601
+
+  _CALL ev_exit_change
   
 INIT_EVENT_END
 

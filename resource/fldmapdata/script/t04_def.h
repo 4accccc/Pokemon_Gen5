@@ -20,5 +20,6 @@
 #define SCRID_T04_WORKMAN2_01 (13)
 #define SCRID_BG_T04_SIGN4_01 (14)
 #define SCRID_T04_TRAINERW_01 (15)
+#define SCRID_RECOVER_T04 (16)
 
 #endif //_T04_DEF_H_

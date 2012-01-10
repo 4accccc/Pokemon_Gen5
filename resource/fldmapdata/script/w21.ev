@@ -35,15 +35,25 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
+
+  //プラズマフリゲートイベント進行中以外は接続を移動させる
+  IF $WK_SCENE_W21_01 != 3 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 787, -3, 247 )
+  ENDIF
+
+_RET
+
 /************************************************************/
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_w21
   
-  //プラズマフリゲートイベント進行中以外は接続を移動させる
-  IF $WK_SCENE_W21_01 != 3 THEN
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_W21_D27R0101_EXIT01, 787, -3, 247 )
-  ENDIF
+  _CALL ev_exit_change
   
 INIT_EVENT_END
 
@@ -73,7 +83,9 @@ INIT_EVENT_END
 /*					FIELD_RECOVER_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_w21
-  //
+
+  _CALL ev_exit_change
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -380,6 +392,10 @@ EVENT_START	ev_reserve_w21_swplazma_end_01
   //チェレン：ゴメン……
   _BALLOONWIN_OBJMSG_POS( msg_w21_swleader1_01 , W21_SWLEADER1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //ライバル：じゃそちらは
   _BALLOONWIN_OBJMSG_POS( msg_w21_swrival_08 , W21_SWRIVAL_01 ,POS_DEFAULT )

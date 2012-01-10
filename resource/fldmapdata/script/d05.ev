@@ -40,6 +40,7 @@ _EVENT_DATA    ev_d05_tennisw_01
 _EVENT_DATA    ev_d05_man1_01
 _EVENT_DATA    ev_d05_backpackerw_01
 _EVENT_DATA    ev_d05_workman1_02
+_EVENT_DATA   ev_recover_d05
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -48,14 +49,32 @@ DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*		CALL：特殊接続                             */
 /************************************************************/
-INIT_EVENT_START   ev_zone_d05
-  
+ev_exit_change:
+
   //プラズマフリゲートイベント進行中以外は接続を移動させる
   IF $WK_SCENE_D05 < 2 || $WK_SCENE_D05 > 3 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D05_D27R0101_EXIT01, 202, 0, 492 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d05
+  
+  _CALL ev_exit_change
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d05
+
+  _CALL ev_exit_change
   
 INIT_EVENT_END
 
@@ -381,14 +400,14 @@ EVENT_START		ev_scene_d05_swplazma_01
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
   //========================================//
-  //D05R0101 WBTチュートリアル優勝時→WBT通常状態に
-  $WK_SCENE_D05R0101 = 2
   //D05プラズマ団イベント終了
   $WK_SCENE_D05 = 3
   //D05ライバル非表示
   _FLAG_SET( FV_D05_SWRIVAL_01 )
   //D05チェレン非表示
   _FLAG_SET( FV_D05_SWLEADER1_01 )
+  //D05R0101アクロマ非表示に
+  _FLAG_SET( FV_D05R0101_SWBOSS_01 )
   
   //D27R0101アジト船1回目イベント起動
   _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
@@ -516,6 +535,9 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   //R06チェレン表示
   _FLAG_RESET( FV_R06_SWLEADER1_01 )
   _FLAG_RESET( FV_R06R0101_SWLEADER1_01 )
+  
+  //D05R0101 WBTチュートリアル優勝時→WBT通常状態に
+  $WK_SCENE_D05R0101 = 2
   
   //R06異常気象イベントPOS有効
   $WK_SCENE_R06_SWLEADER1 = 1

@@ -39,9 +39,9 @@ DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
-/*					ZONE_CHANGE_LABEL  						*/
+/*		CALL：特殊接続                             */
 /************************************************************/
-INIT_EVENT_START	ev_zone_d27r0301
+ev_exit_change:
 
   //D10プラズマフリゲート起動中
   IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
@@ -50,6 +50,15 @@ INIT_EVENT_START	ev_zone_d27r0301
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0301_D27R1101_EXIT01, 23, 0, 1 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r0301
+
+  _CALL ev_exit_change
   
 INIT_EVENT_END
 
@@ -66,7 +75,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START	ev_recover_d27r0301
 
-  //
+  _CALL ev_exit_change
 
 INIT_EVENT_END
 

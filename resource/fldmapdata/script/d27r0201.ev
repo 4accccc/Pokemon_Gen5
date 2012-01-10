@@ -38,13 +38,7 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0201
   
-  //D10プラズマフリゲート起動中
-  IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R0101_EXIT01, 0, 0, 0 )
-  //プラズマフリゲートいない
-  ELSE
-    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R1101_EXIT01, 0, 0, 0 )
-  ENDIF
+  _CALL ev_exit_change
   
 INIT_EVENT_END
 
@@ -63,8 +57,24 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_recover_d27r0201
 
   _CALL sub_gate_set
+  _CALL ev_exit_change
 
 INIT_EVENT_END
+
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
+
+  //D10プラズマフリゲート起動中
+  IF FLAG_ON( FE_D10_PLAZMA_FRIGATE_01 ) THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R0101_EXIT01, 0, 0, 0 )
+  //プラズマフリゲートいない
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0201_D27R1101_EXIT01, 0, 0, 0 )
+  ENDIF
+
+_RET
 
 // ゲート(バリアー)の状態をフラグを見て設定
 sub_gate_set:

@@ -26,6 +26,7 @@
 _EVENT_DATA   ev_zone_d24
 _EVENT_DATA   ev_init_d24
 _EVENT_DATA   ev_bg_d24_sign1_01
+_EVENT_DATA   ev_recover_d24
 _EVENT_DATA_END
 
 //バージョン取得
@@ -35,12 +36,11 @@ DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL LCW_POSX
 DEFINE_LOCAL LCW_POSZ
 
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
 
-/************************************************************/
-/*  ZONE_CHANGE                                             */
-/************************************************************/
-INIT_EVENT_START   ev_zone_d24
-  
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
@@ -57,6 +57,15 @@ INIT_EVENT_START   ev_zone_d24
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0501_EXIT01, 667, -1, 304 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0501_EXIT02, 671, -1, 299 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*  ZONE_CHANGE                                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d24
+  
+  _CALL ev_exit_change
   
   //イベント進行状態を見てライブキャスターの状態をセット
   IF FLAG_ON( SYS_FLAG_PAIR )  THEN
@@ -67,6 +76,16 @@ INIT_EVENT_START   ev_zone_d24
   ENDIF
   
 INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d24
+
+  _CALL ev_exit_change
+  
+INIT_EVENT_END
+
 
 /************************************************************/
 /*  FIELD_INIT_SCRIPT                                       */

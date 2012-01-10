@@ -21,16 +21,17 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_zone_d26r0501
 _EVENT_DATA		ev_init_d26r0501
+_EVENT_DATA		ev_recover_d26r0501
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-INIT_EVENT_START   ev_zone_d26r0501
-  
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
+
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
@@ -49,7 +50,25 @@ INIT_EVENT_START   ev_zone_d26r0501
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0501_D26R0401_EXIT03, -248, 80, 216 )
     _FLAG_SET(FV_D26R0501_ROCK_B)
   ENDIF
+
+_RET
+
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL                               */
+/**************************************************************/
+INIT_EVENT_START   ev_zone_d26r0501
+  
+  _CALL ev_exit_change
  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d26r0501
+
+  _CALL ev_exit_change
+  
 INIT_EVENT_END
 
 /**************************************************************/

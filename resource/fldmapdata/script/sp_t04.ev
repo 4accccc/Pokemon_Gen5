@@ -16,4 +16,5 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _ZONE_CHANGE_LABEL		SCRID_ZONE_T04
+_FIELD_RECOVER_LABEL  SCRID_RECOVER_T04
 _SP_EVENT_DATA_END

@@ -39,6 +39,7 @@ _EVENT_DATA		ev_pos_t04_localtvt_01
 _EVENT_DATA		ev_t04_workman2_01
 _EVENT_DATA		ev_bg_t04_sign4_01
 _EVENT_DATA		ev_t04_trainerw_01
+_EVENT_DATA    ev_recover_t04
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -49,12 +50,11 @@ DEFINE_LOCAL  LCW_POSZ
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
 
+/************************************************************/
+/*		CALL：特殊接続                             */
+/************************************************************/
+ev_exit_change:
 
-/************************************************************/
-/*					ZONE_CHANGE_SCRIPT						*/
-/************************************************************/
-INIT_EVENT_START	ev_zone_t04
-  
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
@@ -66,7 +66,15 @@ INIT_EVENT_START	ev_zone_t04
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_T04_D24R0601_EXIT01, 707, -4, 299 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t04
   
+  _CALL ev_exit_change
 	
 	_FLAG_SET( FV_T04_SUMMER )
 {
@@ -265,6 +273,15 @@ INIT_EVENT_START	ev_zone_t04
   
 
 }
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_t04
+
+  _CALL ev_exit_change
+
 INIT_EVENT_END
 
 /**************************************************************/

@@ -23,6 +23,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_d10r0401
 _EVENT_DATA    ev_init_d10r0401
+_EVENT_DATA    ev_recover_d10r0401
 _EVENT_DATA_END
 
 //バージョン取得
@@ -31,11 +32,12 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*		CALL：特殊接続                             */
 /************************************************************/
-INIT_EVENT_START   ev_zone_d10r0401
-  
+ev_exit_change:
+
   //進行状態で異なる接続を配置
   
   //プラズマフリゲート起動中（d10r0301)
@@ -45,8 +47,28 @@ INIT_EVENT_START   ev_zone_d10r0401
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0401_D10R0301_EXIT01, 25, 0, 25 )
   ENDIF
+
+_RET
+
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d10r0401
+  
+  _CALL ev_exit_change
   
 INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d10r0401
+
+  _CALL ev_exit_change
+  
+INIT_EVENT_END
+
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/

@@ -21,5 +21,6 @@
 #define SCRID_D05_MAN1_01 (14)
 #define SCRID_D05_BACKPACKERW_01 (15)
 #define SCRID_D05_WORKMAN1_02 (16)
+#define SCRID_RECOVER_D05 (17)
 
 #endif //_D05_DEF_H_

@@ -59,6 +59,8 @@ _EVENT_DATA    ev_pos_c08_link_event
 _EVENT_DATA    ev_reserve_c08_link_event_ret
 
 _EVENT_DATA    ev_reserve_c08_plazma_comming_02
+
+_EVENT_DATA    ev_recover_c08
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -73,10 +75,10 @@ DEFINE_LOCAL  LCW_VERSION
 //------------------------------------------------------------------//
 
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*		CALL：特殊接続                             */
 /************************************************************/
-INIT_EVENT_START   ev_zone_c08
-  
+ev_exit_change:
+
   //プラズマ団イベント起動中接続を切る
   IF FLAG_ON( FE_C08_PLAZMA_COME ) THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_C08_C08R0201_EXIT01, 0, 0, 0 )
@@ -84,6 +86,24 @@ INIT_EVENT_START   ev_zone_c08
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_C08_C08R0401_EXIT01, 0, 0, 0 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_C08_C08R0801_EXIT01, 0, 0, 0 )
   ENDIF
+
+_RET
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c08
+
+  _CALL ev_exit_change
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c08
+  
+  _CALL ev_exit_change
   
   {
   //バージョンを取得してOBJを変化させる
