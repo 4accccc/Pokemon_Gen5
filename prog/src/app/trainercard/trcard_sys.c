@@ -568,7 +568,8 @@ void TRAINERCARD_GetSwanSelfData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameDa
       sw_trcard->wbt_flag = 1;
     }
     if( EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR ) == TRUE ){  // フェスミッション
-      sw_trcard->fmission_flag = 1;
+      sw_trcard->fmission_flag      = 1;
+      sw_trcard->bw_data.PaleceFlag = 1;  // デルパワー表示開始フラグ
     }
     if(sw_trcard->pokewood_rec_cnt){  // ポケウッド
       sw_trcard->pokewood_flag = 1;
@@ -893,12 +894,12 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   }
   
   // パレスに行った事があるか
-  {
-    INTRUDE_SAVE_WORK *intrude_sv = SaveData_GetIntrude( sv );
-    if(ISC_SAVE_GetPalaceSojournTime(intrude_sv)){
-      cardData->PaleceFlag      = 1;
-    } 
-  }
+  //{
+  //  INTRUDE_SAVE_WORK *intrude_sv = SaveData_GetIntrude( sv );
+  //  if(ISC_SAVE_GetPalaceSojournTime(intrude_sv)){
+  //    cardData->PaleceFlag      = 1;
+  //  } 
+  //}
   // ミュージカルをした事があるか
   if(cardData->MusicalNum){
     cardData->MusicalFlag   = 1;

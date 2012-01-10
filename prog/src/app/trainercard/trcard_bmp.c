@@ -785,7 +785,7 @@ void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData, SWAN_TR_C
     _add_score_list( wk, SCORE_LINE_SURETIGAI_NUM );
   }
 
-  // パレスに行った事があるならデルパワー回数の表示
+  // デルパワー回数の表示(PaleceFlagはSWANではfmission_flagと同じ）
   if(TrCardData->PaleceFlag){
     _add_score_list( wk, SCORE_LINE_G_POWER );
   }
