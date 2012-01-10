@@ -654,6 +654,8 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
     _OBJ_POS_CHANGE( C08_SWPLAZMAM_03, 429, -1, 179, DIR_LEFT )  //プラズマ団員Whiteのみ配置変更
   ENDIF
   
+  //BGM再生:氷漬けソウリュウ
+  _START_EVENT_BGM( SEQ_BGM_E_C08_ICE )
   
   //========================================//
   //C08プラズマ団襲来イベント進行
@@ -667,8 +669,8 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_1 )
   //========================================//
   
-  //BGMを変更
-  _BGM_NOW_MAP_RECOVER()
+  //BGMチェンジでの環境SEポーズ状態をCLEAR
+  _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
   
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()

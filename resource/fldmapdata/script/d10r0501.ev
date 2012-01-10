@@ -232,13 +232,16 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //BGM再生:N登場
+  _START_EVENT_BGM( SEQ_BGM_EV_GIANTHOLE_01 )
+  
   //========================================//
   //D10R0501 N登場曲に変更
   _FLAG_SET( SYS_FLAG_BGM_D10R0501_N_COME )
   //========================================//
   
-  //イベント曲再生
-  _BGM_NOW_MAP_RECOVER()
+  //BGMチェンジでの環境SEポーズ状態をCLEAR
+  _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
 
   // ゼクロムonNがおりてくる
   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START(1) // 1：下降 0：上昇
@@ -348,8 +351,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_09, D10R0501_SWSAGE1_01, POS_UP )
   _MSGWIN_CLOSE()
   
-  //BGMを変更
-  _BGM_NOW_MAP_RECOVER()
+  //BGM再生:VSゲーチス曲
+  _START_EVENT_BGM( SEQ_BGM_EV_GIANTHOLE_02 )
   
   // ゲーチス：つえをかかげる
   _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 35 )	//一番最後の引数は移動にかかるフレーム数
@@ -357,8 +360,11 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
   
   _TIME_WAIT( 23 )
-  //SE【仮】★★★再生：強い杖つき音（2011.12.20.鳴らない不具合持つ）
+  //SE再生：強い杖つき音
   _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_02)
+  
+  //BGMチェンジでの環境SEポーズ状態をCLEAR
+  _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
@@ -1053,6 +1059,13 @@ EVENT_END
 EVENT_START ev_d10r0501_poke10_01
   
   _TALK_START_SE_PLAY()
+  
+  //カメラ操作　キュレム追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  //_CAMERA_MOVE( 9688,0,970752,1007616,0,974848,6 )
+  _CAMERA_MOVE( 9688,0,970752,1015808,0,1044480,6 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
