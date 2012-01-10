@@ -101,7 +101,7 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   //========================================//
   
   //アニメ：主人公中央に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 11, 7, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 11, 8, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
   //カメラ操作　ゲーチスを中央に
@@ -301,6 +301,7 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   
   
   _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja2_03_00 , D27R0601_NINJA_02 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
@@ -331,9 +332,9 @@ _ANIME_LABEL	anm_swrival_warp_in
 //	ゲーチス：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swsage1_bye_01
-  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,3
   _ANIME_DATA	AC_WALK_L_8F,2
-  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -341,9 +342,7 @@ _ANIME_LABEL	anm_swsage1_bye_01
 /* ダークトリニティ（１）：話しかけ                                         */
 /**************************************************************/
 EVENT_START   ev_d27r0601_ninja_01
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja1_03_07 , D27R0601_NINJA_01 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0601_ninja1_03_07 )
 EVENT_END
 
 /**************************************************************/
@@ -497,7 +496,7 @@ ev_d27r0601_ninjabtl_end:
   _OBJ_ANIME_WAIT()
   
   //ライバル：なあ
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_03 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_04 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
@@ -579,51 +578,25 @@ EVENT_END
 /*					話しかけ：レパルダス				*/
 /************************************************************/
 EVENT_START	ev_d27r0601_poke32_01
+
+  _TALK_START_SE_PLAY()
+  _VOICE_PLAY( MONSNO_547, 0 )
+  
   //ダークトリニティ戦終了前
   IF $WK_SCENE_D27R0601_SWSAGE1_01 < 4 THEN
     
-    _TALK_OBJ_START()
-    _VOICE_PLAY( MONSNO_547, 0 )
     _BALLOONWIN_OBJMSG_POS( msg_d27r0601_poke32_03_01 , D27R0601_POKE32_01 ,POS_DEFAULT )
-    
-    //主人公の向きを取得
-    _PLAYER_DIR_GET( LWK_DIR )
-    //向きによって処理を分岐
-    IF $LWK_DIR == DIR_RIGHT THEN
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-    ELSE
-      _AB_KEYWAIT_MARK()
-      _MSGWIN_CLOSE()
-      
-      //アニメ：ライバルに向きなおす
-      _OBJ_ANIME( D27R0601_POKE32_01 , anm_staystep_l)
-      _OBJ_ANIME_WAIT()
-    ENDIF
     
   //ダークトリニティ戦終了後
   ELSE
     
-    _TALK_OBJ_START()
-    _VOICE_PLAY( MONSNO_547, 0 )
     _BALLOONWIN_OBJMSG_POS( msg_d27r0601_poke_32 , D27R0601_POKE32_01 ,POS_DEFAULT )
     
-    //主人公の向きを取得
-    _PLAYER_DIR_GET( LWK_DIR )
-    //向きによって処理を分岐
-    IF $LWK_DIR == DIR_RIGHT THEN
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-    ELSE
-      _AB_KEYWAIT_MARK()
-      _MSGWIN_CLOSE()
-      
-      //アニメ：ライバルに向きなおす
-      _OBJ_ANIME( D27R0601_POKE32_01 , anm_staystep_l)
-      _OBJ_ANIME_WAIT()
-    ENDIF
-    
   ENDIF
+  
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
 EVENT_END
 
 
