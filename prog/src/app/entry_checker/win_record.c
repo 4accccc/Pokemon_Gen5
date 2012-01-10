@@ -807,7 +807,7 @@ static void _strbuf_print( WIN_RECORD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRI
 //
 static void wr_main_scrollbar( WIN_RECORD_MAIN_WORK * wk );
 static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk );
-static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk );
+static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk, const s32 mode );
 
 //=============================================================================
 /**
@@ -1199,9 +1199,11 @@ static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
 					wk->Step = STEP_LV1;
 					wk->Flag |= FLG_MW_FRAME_STAT;
+					wr_main_etc_input( wk, 0 );
 				}
 			}else{
 				wk->Step = STEP_LV1;
+				wr_main_etc_input( wk, 0 );
 			}
 			break;
 		//
@@ -2311,9 +2313,10 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	switch(mode){
 		//
 		// defaultでセットされるもの
+		// (BTS319対応)で「ホドモエ」のみ初期表示
 		case WBTWIN_COUNT_HODOMOE:		// ホドモエ
-		case WBTWIN_COUNT_RENTAL:		// レンタル
-		case WBTWIN_COUNT_SHUFFLE:		// シャッフル
+//		case WBTWIN_COUNT_RENTAL:		// レンタル
+//		case WBTWIN_COUNT_SHUFFLE:		// シャッフル
 			bflg = TRUE;
 			break;
 		//
@@ -2410,7 +2413,7 @@ static u32 wr_main_framelist( WIN_RECORD_MAIN_WORK * wk )
 	}
 	
 	// リスト処理をだます処理
-	wr_main_etc_input( wk );
+	wr_main_etc_input( wk, 1 );
 	
 	// Main
 	if( wk->frame_list_work ){
@@ -2671,17 +2674,36 @@ static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk )
  * @brief	リスト処理用の補正
  *
  * @param	WIN_RECORD_MAIN_WORK*		wk
+ * @param	const s32					(0:初期化、1:通常)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk )
+static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk, const s32 mode )
 {
 	u32		buf[2];
+	s32		tmp;
 	int		kflg= GFL_UI_CheckTouchOrKey();
 	//
 	// スクロールなし
 	if(wk->Flag & FLG_MW_NO_SCROLL){
+		// 初期化時は修正の必要あり(BTS320対応)
+		if(mode == 0){
+			// 上、左
+			if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_LEFT) ){
+				FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+			}
+			// 下、右
+			else if( GFL_UI_KEY_GetCont() & (PAD_KEY_DOWN|PAD_KEY_RIGHT) ){
+				tmp = wk->DispMaxNum-1;
+				if(tmp < 0){
+					tmp = 0;
+				}else if(tmp >= WIN_RECORD_DISP_PANEL_MAX){
+					tmp = WIN_RECORD_DISP_PANEL_MAX-1;
+				}
+				FRAMELIST_SetCursorPos( wk->frame_list_work, tmp );
+			}
+		}
 		return;
 	}
 	//
@@ -2693,13 +2715,29 @@ static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk )
 	// 上下のボタンを押したらすぐに、
 	// スクロールが開始するようにするための処理
 	// =>(カーソル位置を両端に移動)
-	// 上
-	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-		FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+	//
+	// 初期化時はtrg(repeatでも)うまく判定できない場合があるため、
+	// seが2重になることがある(BTS320対応)
+	if(mode == 0){
+		// 上、左
+		if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_LEFT) ){
+			FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+		}
+		// 下、右
+		else if( GFL_UI_KEY_GetCont() & (PAD_KEY_DOWN|PAD_KEY_RIGHT) ){
+			FRAMELIST_SetCursorPos( wk->frame_list_work, WIN_RECORD_DISP_PANEL_MAX-1 );
+		}
 	}
-	// 下
-	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
-		FRAMELIST_SetCursorPos( wk->frame_list_work, WIN_RECORD_DISP_PANEL_MAX-1 );
+	// 通常
+	else{
+		// 上
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+			FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+		}
+		// 下
+		else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+			FRAMELIST_SetCursorPos( wk->frame_list_work, WIN_RECORD_DISP_PANEL_MAX-1 );
+		}
 	}
 }
 
