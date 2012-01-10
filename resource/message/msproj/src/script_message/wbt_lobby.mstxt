@@ -4656,6 +4656,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-07-13T08:59:51" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:37" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>A</Text>
 			<TextModifiedBy
@@ -5051,6 +5059,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-07-13T08:57:55" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:45" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>A</Text>
 			<TextModifiedBy
@@ -5102,6 +5118,14 @@ msg_wbt_info_11へ</Comment>
 				User="matsumiya:W00224"
 				Time="2011-11-09T09:56:41" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:45" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
 			<Text>A</Text>
@@ -5216,6 +5240,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-11-09T09:56:45" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
 			<TextModifiedBy
@@ -5281,6 +5313,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-07-13T08:51:59" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
 			<TextModifiedBy
@@ -5338,6 +5378,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-07-13T08:53:47" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
 			<TextModifiedBy
@@ -5388,6 +5436,14 @@ msg_wbt_info_11へ</Comment>
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-13T08:54:15" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
@@ -5441,6 +5497,14 @@ msg_wbt_info_11へ</Comment>
 				Time="2011-07-13T08:53:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
 			<TextModifiedBy
@@ -5492,6 +5556,14 @@ msg_wbt_info_11へ</Comment>
 				User="suginaka_katsunori:W00227"
 				Time="2011-07-29T07:36:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
 			<Text>B</Text>
@@ -7237,6 +7309,71 @@ msg_wbt_info_11へ</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_19a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+ただいま　スペシャルな
+トーナメントを　じゅんびちゅうです▼
+じかんが　かかりそうなので
+きながに　おまちくださいませ！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:59:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+ただいま　スペシャルな
+トーナメントを　準備中です▼
+時間が　かかりそうなので
+気長に　お待ちくださいませ！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:59:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+初回ホドモエトーナメント優勝後でかつ
+プラズマフリゲート１回目のイベントを終了していない場合に表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:59:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-10T03:58:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
