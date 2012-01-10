@@ -433,8 +433,7 @@ sub_medaloyaji_rankup_check:
     CASE SCR_MEDALRANK_BW  THEN
       $LWK_MEDAL_ID = MDLID_RANK_BW
     DEFAULT
-      //–œ‚ªˆê‚Ì‚½‚ß‚É
-      $LWK_MEDAL_ID = MDLID_GOAL  //‰¼
+      $LWK_MEDAL_ID = MDLID_GOAL  //–œ‚ªˆê‚Ì‚½‚ß‚É
     ENDSWITCH
     _CALL sub_medaloyaji_gettitle
 
