@@ -9587,4 +9587,56 @@
 				Time="2011-08-08T11:06:51" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_poweroff"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ランダムマッチ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-10T06:16:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ランダムマッチ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-10T06:16:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_poweroff_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>電源切断フラグ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-10T06:16:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>電源切断フラグ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-10T06:16:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

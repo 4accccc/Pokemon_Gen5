@@ -54,6 +54,7 @@
 #include "savedata/perapvoice.h"
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/pokewood_savedata.h"
+#include "savedata/battlematch_savedata.h"
 
 #include "savedata/person_state.h"
 #include "app/local_tvt/local_tvt_call.h"
@@ -258,6 +259,10 @@ static void DebugSetWBTSaveTrID( GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 para
 static u32 DebugGetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
 static void DebugSetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value );
 
+
+static u32 DebugGetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
+static void DebugSetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value );
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -358,6 +363,10 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_SepiaColor =
 {
   D_NINPUT_DATA_LIST, NELEMS(DNI_SepiaColorList), DNI_SepiaColorList,
 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_Rndmatch =
+{
+  D_NINPUT_DATA_LIST, NELEMS(DNI_RndmatchList), DNI_RndmatchList,
+};
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -413,6 +422,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_resort_00, (void*)&DATA_ResonanceResort, GFL_OVERLAY_BLANK_ID },
   { dni_wbtsave_title, (void*)&DATA_WBTSave, GFL_OVERLAY_BLANK_ID },
   { dni_sepia_color_title, (void*)&DATA_SepiaColor, GFL_OVERLAY_BLANK_ID },
+  { dni_rndmatch_poweroff, (void*)&DATA_Rndmatch, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1917,6 +1927,35 @@ static void DebugSetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param,
 {
   u32 * color = getSepiaValue( param );
   *color = value;
+}
+
+//=============================================================================
+//=============================================================================
+static u32 DebugGetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gdata);
+  BATTLEMATCH_DATA *p_btlmatch = SaveData_GetBattleMatch( p_sv );
+  return BATTLEMATCH_IsPowerOff(p_btlmatch);
+}
+
+static void DebugSetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gdata);
+  BATTLEMATCH_DATA *p_btlmatch = SaveData_GetBattleMatch( p_sv );
+
+  if( value == BATTLEMATCH_IsPowerOff(p_btlmatch) )
+  {
+    return;
+  }
+
+  if( value == 1 )
+  {
+    BATTLEMATCH_StartPowerOffCheck(p_btlmatch);
+  }
+  else
+  {
+    BATTLEMATCH_EndPowerOffCheck(p_btlmatch);
+  }
 }
 
 #endif  //PM_DEBUG

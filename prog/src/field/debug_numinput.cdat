@@ -570,4 +570,15 @@ static const DEBUG_NUMINPUT_LIST DNI_SepiaColorList[] = {
   { dni_sepia_color_green,  1, &DNI_SepiaColorFunc },
   { dni_sepia_color_blue,   2, &DNI_SepiaColorFunc },
 };
+
+//////////////////////////////////////////////////////
+///ランダムマッチ
+static const DEBUG_NUMINPUT_PARAM DNI_RndmatchFlag =
+{
+  0, 1, DebugGetRndmatchFlag, DebugSetRndmatchFlag,
+};
+static const DEBUG_NUMINPUT_LIST DNI_RndmatchList[] = {
+  { dni_rndmatch_poweroff_00,    0, &DNI_RndmatchFlag },
+};
+
 #endif  //PM_DEBUG
