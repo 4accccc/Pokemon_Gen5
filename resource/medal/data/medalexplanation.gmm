@@ -2013,20 +2013,20 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_015">
-		<language name="JPN" width="216">１０にんと　ともだちコードを
-こうかんした　せっきょくてきな
-こうりゅうの　あかしとなる　メダル。</language>
-		<language name="JPN_KANJI" width="216">１０人と　ともだちコードを
-交換した　積極的な　交流の
-証しとなる　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_016">
 		<language name="JPN" width="216">５にんと　ともだちコードを
 こうかんした　かっぱつな　
 こうりゅうの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">５人と　ともだちコードを
 交換した　活発な　交流の
+証しとなる　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_016">
+		<language name="JPN" width="216">１０にんと　ともだちコードを
+こうかんした　せっきょくてきな
+こうりゅうの　あかしとなる　メダル。</language>
+		<language name="JPN_KANJI" width="216">１０人と　ともだちコードを
+交換した　積極的な　交流の
 証しとなる　メダル。</language>
 	</row>
 

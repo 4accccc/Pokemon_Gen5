@@ -186,8 +186,8 @@
 #define MDLID_MUSICALGOODS	(172)	// オシャレばんちょう
 #define MDLID_MUSICAL_TOTAL_POINT	(173)	// １０にんのでまち
 #define MDLID_FRIEND_CODE_LV1	(174)	// ともだちエントリー
-#define MDLID_FRIEND_CODE_LV3	(175)	// ともだちワイド
-#define MDLID_FRIEND_CODE_LV2	(176)	// ともだちブロード
+#define MDLID_FRIEND_CODE_LV2	(175)	// ともだちブロード
+#define MDLID_FRIEND_CODE_LV3	(176)	// ともだちワイド
 #define MDLID_FRIEND_CODE_LV4	(177)	// ワールドコネクション
 #define MDLID_GURUGURU_LV1	(178)	// ぐるぐるマイスター
 #define MDLID_AFFINITY_CHECK_LV1	(179)	// フィーリングマスター
