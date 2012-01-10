@@ -237,11 +237,12 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         spot = RESORT_UTIL_DrawLotsWantSpot( p_abstruct, p_sys, p_gamedata );
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
+
 #ifdef PM_DEBUG
-    if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON) )
-    {
-      spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
-    }
+      if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON) )
+      {
+        spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
+      }
 #endif
 
       GF_ASSERT( spot > 0 );
@@ -948,6 +949,14 @@ BOOL RESORT_UTIL_SetSpot( RESORT_ABSTRUCT_DATA *p_wk, RESORT_RESIDENT_DATA *p_re
   u32 grade = 0;
   u32 index;
   BOOL is_good = FALSE;
+
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON) )
+  {
+    want_spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
+  }
+#endif
 
   {
     u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_wk );
