@@ -14,6 +14,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "system/main.h"
+#include "gamesystem/game_event.h"
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
 #include "debug/debug_str_conv.h"
@@ -65,6 +66,8 @@ extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuListEvent(GMEVENT *event, int *seq, void *wk );
 static void DEBUG_EVENT_DebugMenu_CallSubMenu( DEBUG_MENU_EVENT_WORK*p_wk, const DEBUG_MENU_INITIALIZER *cp_menu_data );
+
+static GMEVENT * EVENT_CallDebugInputResort( GAMESYS_WORK *p_gsys, void *work );
 
 //--------------------------------------------------------------
 /// ‘åŒ³
@@ -727,8 +730,8 @@ static BOOL debugMenuCallProc_AddCeleb( DEBUG_MENU_EVENT_WORK *p_wk )
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT *event = EVENT_CallDebugInputResort( p_wk->gmSys, NULL );
-  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  GMEVENT_ChangeProc( p_wk->gmEvent, 
+    FS_OVERLAY_ID(debug_resort_app), &DEBUG_INPUT_Resort_ProcData, p_wk->gdata);
   return TRUE;
 }
 
@@ -758,6 +761,7 @@ static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk 
 
   return TRUE;
 }
+
 
 #include "msg/debug/msg_debug_infinity.h"
 //----------------------------------------------------------------------------

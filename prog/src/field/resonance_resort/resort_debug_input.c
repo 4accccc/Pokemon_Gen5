@@ -2165,94 +2165,6 @@ static BOOL Page_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
 
 //util
 
-//--------------------------------------------------------------
-/**
- *  Event
- */
-//--------------------------------------------------------------
-typedef struct
-{
-  GAMESYS_WORK      * gsys;
-  FIELDMAP_WORK     * fieldmap;
-  SAVE_CONTROL_WORK * ctrl;
-  void              * p_sub_wk;
-}DEBUG_INPUT_RESORT_DATA;
-static GMEVENT_RESULT EVENT_DebugInputResort(GMEVENT * event, int *  seq, void * work);
-GMEVENT * EVENT_CallDebugInputResort( GAMESYS_WORK *p_gsys, void *work )
-{
-  GMEVENT * event = GMEVENT_Create(p_gsys, NULL, EVENT_DebugInputResort, sizeof(DEBUG_INPUT_RESORT_DATA));
-  DEBUG_INPUT_RESORT_DATA *p_wk = GMEVENT_GetEventWork(event);
-
-  p_wk->gsys = p_gsys;
-  p_wk->fieldmap = GAMESYSTEM_GetFieldMapWork(p_gsys);
-  p_wk->ctrl = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(p_gsys));
-
-  return event;
-}
-
-static GMEVENT_RESULT EVENT_DebugInputResort(GMEVENT * event, int *  seq, void * work)
-{
-  enum{
-    _FIELD_COMM,
-    _FIELD_FADEOUT,
-    _FIELD_CLOSE,
-    _CALL_WIFIBTLMATCH,
-    _WAIT_WIFIBTLMATCH,
-    _FIELD_OPEN,
-    _FIELD_FADEIN,
-    _FIELD_END
-  };
-
-  DEBUG_INPUT_RESORT_DATA * dbw = work;
-  GAMESYS_WORK * gsys = dbw->gsys;
-
-
-  switch (*seq) {
-  case _FIELD_COMM:
-      PMSND_PushBGM();
-      (*seq)++;
-    break;
-  case _FIELD_FADEOUT:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
-    (*seq)++;
-    break;
-  case _FIELD_CLOSE:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-    (*seq)++;
-    break;
-  case _CALL_WIFIBTLMATCH:
-    { 
-      RESORT_DEBUG_INPUT_PARAM *p_param;
-      dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(RESORT_DEBUG_INPUT_PARAM));
-      p_param = dbw->p_sub_wk;
-      p_param->p_gamedata = GAMESYSTEM_GetGameData( gsys );
-      GAMESYSTEM_CallProc(gsys, GFL_OVERLAY_BLANK_ID, &DEBUG_INPUT_Resort_ProcData, dbw->p_sub_wk );
-    }
-    (*seq)++;
-    break;
-  case _WAIT_WIFIBTLMATCH:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      GFL_HEAP_FreeMemory( dbw->p_sub_wk );
-      (*seq) ++;
-    }
-    break;
-    case _FIELD_OPEN:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    (*seq) ++;
-    break;
-   case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event,EVENT_FieldFadeIn_Black(gsys, dbw->fieldmap, FIELD_FADE_WAIT ));
-    (*seq) ++;
-    break;
-  case _FIELD_END:
-    PMSND_PopBGM();
-    return GMEVENT_RES_FINISH;
-  default:
-    GF_ASSERT(0);
-    break;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
 
 //--------------------------------------------------------------
 /**
@@ -2269,7 +2181,7 @@ FS_EXTERN_OVERLAY( resonance_resort_gimmick );
 
 static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-  RESORT_DEBUG_INPUT_PARAM *p_param  = pwk;
+  GAMEDATA  *p_gamedata  = pwk;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( resonance_resort_gimmick ) );
 
@@ -2285,8 +2197,8 @@ static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* 
     wk->Seq = 0;
     wk->HeapID = HEAPID_WIFIMATCH_DEBUG;
     wk->p_shop  = RESORT_BINARY_SHOP_Init(HEAPID_WIFIMATCH_DEBUG);
-    wk->p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_param->p_gamedata) );
-    wk->p_gamedata  = p_param->p_gamedata;
+    wk->p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+    wk->p_gamedata  = p_gamedata;
 
     //‰Šúƒy[ƒWì¬
     wk->p_pageData = Page_PushPage( NULL, &sc_first_page );
