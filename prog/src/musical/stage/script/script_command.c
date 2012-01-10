@@ -244,6 +244,10 @@ static void SCRIPT_TCB_EffectRepeat(  GFL_TCB *tcb, void *work );
 //便利関数
 static const s32 ScriptFunc_GetPokeBit( const STA_SCRIPT_WORK *scriptWork , const s32 pokeNo );
 
+// サウンド関連
+static u16 GetWaveArcNo( int seq_no );
+static s32 GetSeqNo( s32 SeqParam );
+
 
 //======================================================================
 //  data
@@ -1968,12 +1972,18 @@ SCRIPT_FUNC_DEF( MessageColor )
 //------------------------------------------------------------------
 //  音楽
 //------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@note スワンバージョンでは、seqParamをBGMのシーケンス番号として扱っています！！
+ */
+//-----------------------------------------------------------------------------
 #pragma mark [>Bgm
 SCRIPT_FUNC_DEF( BgmReady )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const s32 seqNo = ScriptFunc_GetValueS32();
+  const s32 seqParam = ScriptFunc_GetValueS32();
+  s32 seqNo = GetSeqNo( seqParam );
 
   SCRIPT_PRINT_LABEL(BgmReady);
 
@@ -1982,11 +1992,17 @@ SCRIPT_FUNC_DEF( BgmReady )
   return SFT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@note スワンバージョンでは、seqParamをBGMのシーケンス番号として扱っています！！
+ */
+//-----------------------------------------------------------------------------
 SCRIPT_FUNC_DEF( BgmStart )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const s32 seqNo = ScriptFunc_GetValueS32();
+  const s32 seqParam = ScriptFunc_GetValueS32();
+  s32 seqNo = GetSeqNo( seqParam );
   
   SCRIPT_PRINT_LABEL(BgmStart);
 
@@ -2006,19 +2022,108 @@ SCRIPT_FUNC_DEF( BgmStop )
 
   return SFT_CONTINUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@note スワンバージョンでは、seqParamをBGMのシーケンス番号として扱っています！！
+ *	      また、波形データアーカイブインデックスを、BGMシーケンス情報からたどって取得していますアーカイブインデックスを、BGMシーケンス情報からたどって取得しています
+ */
+//-----------------------------------------------------------------------------
 SCRIPT_FUNC_DEF( BgmSetDataLink )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const s32 arcNo = ScriptFunc_GetValueS32();
+  const s32 seqParam = ScriptFunc_GetValueS32();
   const s32 dstNo = ScriptFunc_GetValueS32();
   const s32 scrNo = ScriptFunc_GetValueS32();
-
+  s32 seqNo = GetSeqNo( seqParam );
+  u16 arcNo = GetWaveArcNo( seqNo );
+ 
   SCRIPT_PRINT_LABEL(BgmSetDataLink);
+  
+  // 取得できなかったときはアサート
+  GF_ASSERT( arcNo != NNS_SND_ARC_INVALID_WAVEARC_NO );
+  
+  ONOUE_Printf("WAVE_MUS_WB_MSL_DL_DUMMY_01 = %d\n",WAVE_MUS_WB_MSL_DL_DUMMY_01);
+  ONOUE_Printf("求めた波形アーカイブID      = %d\n",arcNo);
   
   STA_ACT_SetBgmLinkNumber( work->actWork , arcNo , dstNo , scrNo );
   
   return SFT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シーケンス番号から、waveArcNoを取得する
+ *
+ *	@param	seq_no 
+ *
+ *	@retval 取得出来た場合はwaveArcNo,それ以外の場合はNNS_SND_ARC_INVALID_WAVEARC_NO
+ */
+//-----------------------------------------------------------------------------
+static u16 GetWaveArcNo( int seq_no )
+{
+   
+  // シーケンスナンバーからバンク情報を取得
+  const NNSSndArcSeqInfo* seqInfo = NNS_SndArcGetSeqInfo(seq_no);
+  u32 bnkNo = seqInfo->param.bankNo;
+  const NNSSndArcBankInfo* bnkInfo = NNS_SndArcGetBankInfo(bnkNo);
+
+  // バンク情報から、waveArcNoを取得
+  int i;
+  for( i = 0; i < NNS_SND_ARC_BANK_TO_WAVEARC_NUM; i++ )
+  {
+    if( bnkInfo->waveArcNo[i] != NNS_SND_ARC_INVALID_WAVEARC_NO )
+    {
+      // 発見したwaveArcIDを返す
+      return bnkInfo->waveArcNo[i];
+    }
+  }
+
+  return NNS_SND_ARC_INVALID_WAVEARC_NO;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シーケンスNOパラメータから、実際に使用するシーケンス番号を取得
+ *
+ *	@param	
+ *
+ *	@retval シーケンス番号
+ */
+//-----------------------------------------------------------------------------
+static s32 GetSeqNo( s32 SeqParam )
+{
+  int i;
+
+  // シャチとスワンのシーケンス番号変換
+  // 左はシャチの時の定義値、右はスワンでのシーケンス番号
+  const s32 swan_seq_table[][2]=
+  {
+    {1109,SEQ_BGM_MSL_BEFORE},
+    {1110,SEQ_BGM_MSL_01},
+    {1111,SEQ_BGM_MSL_02},
+    {1112,SEQ_BGM_MSL_03},
+    {1113,SEQ_BGM_MSL_04},
+    {1174,SEQ_BGM_MSL_DL_01},
+    {1175,SEQ_BGM_MSL_DL_02},
+    {1176,SEQ_BGM_MSL_DL_03},
+    {1177,SEQ_BGM_MSL_DL_04},
+  };
+
+  ONOUE_Printf("テーブル長：%d\n",NELEMS(swan_seq_table));
+  // シーケンス番号を取得
+  for( i = 0; i < NELEMS(swan_seq_table); i++ )
+  {
+    if( swan_seq_table[i][0] == SeqParam )
+    {
+      // スワンバージョンのシーケンス番号に変換
+      return swan_seq_table[i][1];
+    }
+  }
+
+  // 発見できなかった
+  GF_ASSERT(0);
+  return SeqParam;
 }
 
 #include "sound/sound_manager.h"
