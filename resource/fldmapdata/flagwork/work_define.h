@@ -330,6 +330,7 @@
 #define WK_SCENE_D27_HINT_05             16718 /* 0x414e プラズマフリゲート：POS制御トレーナー用 */
 #define WK_SCENE_H05_GIRL                16719 /* 0x414f ワンダーブリッジ：消える少女制御用 */
 #define WK_SCENE_R14R0201_RANDORUS       16720 /* 0x4150 豊穣の社：うつしかがみイベント用ワーク */
+#define WK_SCENE_R20R0101                16721 /* 0x4151 20番道路ゲート */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

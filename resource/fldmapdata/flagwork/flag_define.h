@@ -942,6 +942,8 @@
 #define FV_D27R1101_SWPLAZMA_03           1026 /* 0x0402 プラズマフリゲート：搭乗三回目プラズマ団員 */
 #define FV_H05_WANDERGIRL                 1027 /* 0x0403 ワンダーブリッジ：消える少女 */
 #define FV_R14R0201_OLDMAN_01             1028 /* 0x0404 豊穣の社：うつしかがみをくれる老人 */
+#define FV_D27R0101_SWBOSS_01             1029 /* 0x0405 プラズマフリゲート：クリア後アクロマ */
+#define FV_C03_SWCHAMPION_02              1030 /* 0x0406 ヒウンシティ外周：アイリス */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
@@ -2344,6 +2346,8 @@
 #define SYS_FLAG_BGM_D10R0501_VS_GCIS     2555 /* 0x09fb BGM変更フラグ：ジャイアントホール・イベント曲 */
 #define SYS_FLAG_BGM_D10R0501_N_COME      2556 /* 0x09fc BGM変更フラグ：ジャイアントホール・N曲 */
 #define SYS_FLAG_FES_KINOMI_M             2557 /* 0x09fd フェスミッションのオープンフラグその24 */
+#define SYS_FLAG_BGM_R20_PLAZMA           2558 /* 0x09fe BGM変更フラグ：20番道路プラズマ団のテーマ */
+#define SYS_FLAG_BGM_C07R0301_R10         2559 /* 0x09ff BGM変更フラグ：10番道路 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
