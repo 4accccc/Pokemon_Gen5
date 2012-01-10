@@ -216,6 +216,7 @@ static const FES_NPC_OBJ_PARAM* sub_GetObjParam( const FEST_MISSION* fmwk )
   const FES_NPC_PARAM* param = &DATA_FesNpcParam[fmwk->beacon.base_param];
   int idx = fmwk->beacon.ex_param;
 
+  IWASAWA_Printf("%d, %d\n",fmwk->beacon.base_param, fmwk->beacon.ex_param);
   if( param->param_num == FES_NPC_PARAM_FIXED ){
     idx = 0;
   }else if( fmwk->beacon.ex_param >= param->param_num ){
