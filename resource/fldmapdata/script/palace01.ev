@@ -213,16 +213,7 @@ EVENT_START ev_scene_palace01_1stguide
 	
 	//========================================//
 	//初回誘導イベントを無効
-	//$WK_SCENE_PALACE01 = 1
-	
-	//初回誘導イベントを無効
 	$WK_SYS_FES_TUTORIAL = 1
-	
-	//ハイルツリーを使えるように【仮】
-	//_FLAG_SET( SYS_FLAG_PALACE_MISSION_CLEAR )
-	
-	//フェスミッションを全て選択できるように【仮】
-	//_FLAG_SET( SYS_FLAG_FES_TUTORIAL_CLEAR )
 	//========================================//
 
 EVENT_END
