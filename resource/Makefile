@@ -61,6 +61,7 @@ SUBDIRS	=	wmi \
 			fld3d_ci \
 			fmission_data \
 			infinity_dungeon \
+			local_tvt \
 			fldmapdata\
 			pokegra\
 			net_err\
@@ -129,7 +130,6 @@ SUBDIRS	=	wmi \
 			shopdata \
 			fld_shortcut_menu \
 			wifi_match \
-			local_tvt \
 			palace \
             op_demo \
             op_demo2 \
