@@ -3605,4 +3605,221 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sub_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プラズマフリゲート１回目
+・全プラズマ団に勝利後
+・サブウイン</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:57:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:46" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:57:40" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sub_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウソだろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウソだろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プラズマフリゲート１回目
+・全プラズマ団に勝利後
+・サブウイン</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sub_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……やばい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……やばい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プラズマフリゲート１回目
+・全プラズマ団に勝利後
+・サブウイン</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sub_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうする？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうする？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プラズマフリゲート１回目
+・全プラズマ団に勝利後
+・サブウイン</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T02:58:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
