@@ -13,6 +13,7 @@
   .include  "c07r0301.h"
 
   //@author fujimura_souichirou
+  //@author	Mizuguchi_Mai サウンドデザイナーイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -69,7 +70,15 @@ EVENT_START   ev_c07r0301_trainerm_01
         $LOCALWORK0 = 1
 
         //BGM再生:BW10番道路のBGM
-        _BGM_PLAY( SEQ_BGM_R_F )
+        _START_EVENT_BGM( SEQ_BGM_R_F )
+        
+        //========================================//
+        //ＢＧＭ変更フラグをセット
+        _FLAG_SET( SYS_FLAG_BGM_C03R0402 )
+      
+        //BGMチェンジでの環境SEポーズ状態をCLEAR
+        _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+        //========================================//
 
       //いいえ
       ELSE

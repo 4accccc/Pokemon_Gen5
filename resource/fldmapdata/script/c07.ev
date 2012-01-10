@@ -14,6 +14,7 @@
 
   //@author fujimura_souichirou
   //@author	suginaka_katsunori	ダークトリニティイベント
+  //@author	Mizuguchi_Mai サウンドデザイナーイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -66,6 +67,12 @@ INIT_EVENT_START ev_zone_c07
 			$WK_OTHER_C07_SEASON = 0
 		ENDIF
 	ENDSWITCH
+	
+	//========================================//
+	//C07R0301 サウンドデザイナーイベントをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_C07R0301_R10 )
+	//========================================//
+	
 }
 INIT_EVENT_END
 
