@@ -393,17 +393,19 @@ sub_npc_shopping_main:
   _FMISSION_NPC_SHOPPING_ITEM_GET( i_item, i_price )
 
   //ÅõÅõÇÅ~Å~â~Ç≈çwì¸ÇµÇ»Ç¢Ç©ÅH
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
   _ITEM_NAME( 0, i_item )
   _NUMBER( 1, i_price, 5 )
-  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_01, FES_NPC_MSGSET_NUM_SHOOPING )
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_01, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
   
   _YES_NO_WIN( i_ret )
 
   IF $i_ret == SCR_NO THEN
     //écîO
-    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_02, FES_NPC_MSGSET_NUM_SHOOPING )
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_02, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    _GOLD_WIN_CLOSE()
     _RET
   ENDIF
 
@@ -413,9 +415,10 @@ sub_npc_shopping_main:
   IF $i_ret == FALSE THEN
     //Ç®ã‡Ç™ë´ÇËÇ»Ç¢
     _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_RUN_OUT_OF_MONEY )
-    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_03, FES_NPC_MSGSET_NUM_SHOOPING )
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_03, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    _GOLD_WIN_CLOSE()
     _RET
   ENDIF
 
@@ -423,27 +426,33 @@ sub_npc_shopping_main:
   _ADD_ITEM( i_item, 1, i_ret )
   IF $i_ret == FALSE THEN
     //ÇªÇÍà»è„Ç‡ÇƒÇ»Ç¢ÇÀ
-    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_04, FES_NPC_MSGSET_NUM_SHOOPING )
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_04, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    _GOLD_WIN_CLOSE()
     _RET
   ENDIF
 
   //Ç‹Ç¢Ç«Ç†ÇË
-  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_05, FES_NPC_MSGSET_NUM_SHOOPING )
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_05, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
   _MSGWIN_CLOSE()
+
+  //èäéùã‡å∏ÇÁÇ∑
+  _SUBTRACT_GOLD(i_price)
 
   //ÅõÅõÇÅ~Å~â~Ç≈îÉÇ¢Ç‹ÇµÇΩ
   _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_ITEM_BUY, i_item )
-  _SE_PLAY( SEQ_SE_SYS_22 )  //ÅyâºÅzÇ±ÇÃÇrÇdÇ≈ó«Ç¢ÇÒÇæÇ¡ÇØÅHÅH
-  _SYSWIN_MSG( msg_fm_npc_shop01_sys01, POS_DEFAULT )
+  _SE_PLAY( SEQ_SE_SYS_22 )
+  _GOLD_WIN_UPDATE()
+  _SYSWIN_MSG( msg_fm_npc_shop01_sys01, POS_DOWN )
   _SE_WAIT()
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //ç°å„Ç‡ÇÊÇÎÇµÇ≠ÅI
-  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_shop01_06, FES_NPC_MSGSET_NUM_SHOOPING )
+  _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_fm_npc_shop01_06, FES_NPC_MSGSET_NUM_SHOPPING, POS_DOWN )
   _MSGWIN_CLOSE()
+  _GOLD_WIN_CLOSE()
   
   //à√ì]ïúãAÇ≈NPCè¡Ç∑
   _CALL	sub_fmission_npc_vanish
