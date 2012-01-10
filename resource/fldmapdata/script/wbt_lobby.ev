@@ -332,7 +332,7 @@ DEFINE_LOCAL  LWK_TEMP
 
     _WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ELSE
-    //仮・本当はこのまま会場イベントへつながるはず
+    //本当はこのまま会場イベントへつながるはず
     //_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ENDIF
 
@@ -579,21 +579,24 @@ ev_select_pokemon:
     _RET
   ENDIF
 
-//ルールと適用しているかチェック　
-_WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
-
-IF $LWK_CHK_RULE == TRUE THEN
-//問題なしの場合
-
-ELSE
-//問題ありの場合
-
-	//参加するポケモンに問題があるようです
-	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_error1, SCWK_TARGET_OBJID, POS_DL )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
-ENDIF
+  //2011.12.28 ポケモン選択画面でのチェックと同じなのでチェックを削除。
+  //キャンセルしていなければLWK_CHK_RULEをTRUEにして返すように変更
+  $LWK_CHK_RULE = TRUE
+////ルールと適用しているかチェック　
+//_WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
+//
+//IF $LWK_CHK_RULE == TRUE THEN
+////問題なしの場合
+//
+//ELSE
+////問題ありの場合
+//
+//	//参加するポケモンに問題があるようです
+//	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_error1, SCWK_TARGET_OBJID, POS_DL )
+//	_LAST_KEYWAIT()
+//	_MSGWIN_CLOSE()
+//
+//ENDIF
 
 _RET
 
@@ -962,7 +965,7 @@ ev_wbt_get_sourvenir:
 
 ev_wbt_unlock_tournament:
   IF $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_DOWNLOAD THEN
-    //仮：ダウンロードの場合は何もしない
+    //ダウンロードの場合は何もしない
     _RET
   ENDIF
 
