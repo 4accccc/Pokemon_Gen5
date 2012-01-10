@@ -44,7 +44,7 @@ const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     WBTWIN_COUNT_MAX,   //ダミー
     WBTRECEPT_1, WBTREG_DOWNLOAD,
     WBTBTDATA_1,        //現在WBTROM_TRID_BATTLE_MOB_STARTを指定しているため、ここのデータ
-    { 0, 0, 0, 0 },
+    { 2, 2, 3, 3 },
   },
 
   {//WBTCUP_HODOMOE,     //ホドモエトーナメント           
