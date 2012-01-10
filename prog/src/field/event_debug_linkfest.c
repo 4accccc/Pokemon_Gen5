@@ -31,6 +31,7 @@
 #include "net/net_whpipe.h"
 #include "app/townmap_util.h"
 #include "app/name_input.h"
+#include "net_app/union/union_beacon_tool.h"
 
 #include "debug_message.naix"
 #include "msg/debug/msg_d_numinput.h"
@@ -654,6 +655,9 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
     fake[FAKE_LANG] = PM_LANG;
     fake[FAKE_SCORE] = 0; //owner_info.favoriteColor;
     fake[FAKE_TR_VIEW] = MyStatus_GetTrainerView( wk->my_status );
+    if( fake[FAKE_SEX] ){
+      fake[FAKE_TR_VIEW] -= UNION_VIEW_INDEX_WOMAN_START;
+    }
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -981,7 +985,13 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     GFL_MSG_GetString( wk->msgman, dlf_freeword_icon_01+value, wk->str_tmp );
     break;
   case BPRM_WSET_TR_VIEW:
-    GFL_MSG_GetString( wk->msgman, dlf_tr_view_01+value, wk->str_tmp );
+    {
+      u8 ofs = 0;
+      if( wk->fake_prm[ TR_PAT_FAKE-(idx==3)][FAKE_SEX] ){
+        ofs = UNION_VIEW_INDEX_WOMAN_START;
+      }
+      GFL_MSG_GetString( wk->msgman, dlf_tr_view_01+value+ofs, wk->str_tmp );
+    }
     break;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
