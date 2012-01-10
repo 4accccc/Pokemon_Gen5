@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-12-14T21:01:08" source="title_b.mb"/>
+	<create user="ibe_mana" host="W00191" date="2012-01-10T16:25:02" source="title_b.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -14,7 +14,7 @@
 	frame_size="5781"
 	tool_start_frame="0"
 	tool_end_frame="5780"
-	compress_material="on" material_size="11 11"
+	compress_material="on" material_size="10 10"
 />
 
 </body>

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-12-26T22:54:56" source="title_b.mb"/>
+	<create user="ibe_mana" host="W00191" date="2012-01-10T16:24:11" source="title_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-12-26T22:54:56" source="title_b.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2012-01-10T16:24:11" source="title_b.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1232,7 +1232,7 @@
 </tex_palette_array>
 
 <material_array size="4">
-	<material index="0" name="isi3b"
+	<material index="0" name="isi3b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1280,31 +1280,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="lambert65"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="3" name="moya"
+	<material index="2" name="moya_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -1323,6 +1299,30 @@
 		shininess_table_flag="off"
 		tex_image_idx="6" tex_palette_idx="6"
 		tex_tiling="flip flip"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="w_isi_03_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -11485,7 +11485,7 @@
 		volume_max="1.390869 0.386475 1.390869"
 		volume_r="1.392822"
 	>
-		<display index="0" material="3" polygon="1" priority="0"/>
+		<display index="0" material="2" polygon="1" priority="0"/>
 	</node>
 	<node index="3" name="pSphere4" kind="mesh"
 		parent="0"
@@ -11505,7 +11505,7 @@
 		volume_max="1.390869 0.000000 1.390869"
 		volume_r="1.392822"
 	>
-		<display index="0" material="3" polygon="2" priority="0"/>
+		<display index="0" material="2" polygon="2" priority="0"/>
 	</node>
 	<node index="4" name="polySurface12" kind="mesh"
 		parent="0"
@@ -11525,7 +11525,7 @@
 		volume_max="1.526123 0.000000 1.526123"
 		volume_r="2.371826"
 	>
-		<display index="0" material="2" polygon="3" priority="0"/>
+		<display index="0" material="3" polygon="3" priority="0"/>
 	</node>
 	<node index="5" name="polySurface13" kind="mesh"
 		parent="0"
@@ -11565,7 +11565,7 @@
 		volume_max="1.526123 2.002930 1.526123"
 		volume_r="2.416748"
 	>
-		<display index="0" material="2" polygon="5" priority="0"/>
+		<display index="0" material="3" polygon="5" priority="0"/>
 	</node>
 </node_array>
 
