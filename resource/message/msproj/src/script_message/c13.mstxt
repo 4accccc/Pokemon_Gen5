@@ -2224,12 +2224,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアの　まんなかに　ある
-ＣＯＮＮＥＣＴＥＤに　タッチして▽
+			<Text>まずは　Ｃギアの
+でんげんを　オン！　そして……▼
+Ｃギアの　まんなかに　ある
+[System:Color name="1" ]ＣＯＮＮＥＣＴＥＤ[/System:Color]に　タッチして▽
 すれちがいログを　チェックだぜ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:29:31" />
+				Time="2012-01-09T11:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2237,12 +2239,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＣーＧＥＡＲの　真ん中に　ある
-ＣＯＮＮＥＣＴＥＤに　タッチして▽
+			<Text>まずは　ＣーＧＥＡＲの
+でんげんを　ＯＮ！　そして……▼
+ＣーＧＥＡＲの　真ん中に　ある
+[System:Color name="1" ]ＣＯＮＮＥＣＴＥＤ[/System:Color]に　タッチして▽
 すれちがいログを　チェックだぜ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:29:41" />
+				Time="2012-01-09T11:41:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2275,12 +2279,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアの　ＷＩＲＥＲＥＳＳを　タッチ！
-さらに　ハイリンクを　タッチ！▽
+			<Text>まずは　Ｃギアの
+でんげんを　オン！　そして……▼
+Ｃギアの　[System:Color name="1" ]ＷＩＲＥＲＥＳＳ[/System:Color]を　タッチ！
+さらに　[System:Color name="1" ]ハイリンク[/System:Color]を　タッチ！▽
 ひまなら　やってみな！　すごいぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:30:07" />
+				Time="2012-01-09T11:40:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2288,12 +2294,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＣーＧＥＡＲの　ＷＩＲＥＲＥＳＳを　タッチ！
-さらに　ハイリンクを　タッチ！▽
+			<Text>まずは　ＣーＧＥＡＲの
+でんげんを　ＯＮ！　そして……▼
+ＣーＧＥＡＲの　[System:Color name="1" ]ＷＩＲＥＲＥＳＳ[/System:Color]を　タッチ！
+さらに　[System:Color name="1" ]ハイリンク[/System:Color]を　タッチ！▽
 ひまなら　やってみな！　すごいぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:30:03" />
+				Time="2012-01-09T11:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

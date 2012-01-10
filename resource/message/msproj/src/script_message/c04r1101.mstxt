@@ -717,4 +717,106 @@ princess_10</Text>
 				Time="2012-01-08T05:59:55" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_boy2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カミツレさん　すごいよな！▼
+ふつうなら　かいぞう　するだけなのに
+あたらしい　ジムを　つくっちゃって▼
+カミツレさん　めっちゃ　すごいよな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:51:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:44:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カミツレさん　すごいよな！▼
+普通なら　改造するだけなのに
+新しい　ジムを　造っちゃって▼
+カミツレさん　めっちゃ　すごいよな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:51:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:51:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:44:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:42:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:42:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r1101_woman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かそく！　かそく！　どんどん
+はやくなる　かんじが　ゴキゲン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:49:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:46:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かそく！　かそく！　どんどん
+速くなる　感覚が　ゴキゲン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:49:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:46:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:44:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:42:27" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:42:38" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

@@ -277,12 +277,12 @@
 			Language="JPN">
 			<Text>マコモ『[System:Color name="2" ]ゲームシンク[/System:Color]って　すごいでしょ！
 アナタも　レポートを　おくってみてね▼
-くわしいことは　おくの
-パソコンに　まとめているから▽
-よければ　チェックしてね！</Text>
+くわしいことは　あたしの
+じょしゅが　まとめているから▽
+よければ　はなしかけてみてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:44:16" />
+				Time="2012-01-09T12:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -292,12 +292,12 @@
 			Language="JPN_KANJI">
 			<Text>マコモ『[System:Color name="2" ]ゲームシンク[/System:Color]って　すごいでしょ！
 アナタも　レポートを　送ってみてね▼
-詳しいことは　奥の
-パソコンに　まとめているから▽
-よければ　チェックしてね！</Text>
+詳しいことは　あたしの
+助手が　まとめているから▽
+よければ　話しかけてみてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:44:07" />
+				Time="2012-01-09T12:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1360,10 +1360,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マコモの　メモ▼</Text>
+			<Text>あたし　マコモさんの
+じょしゅを　つとめております▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1371,10 +1372,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マコモの　メモ▼</Text>
+			<Text>あたし　マコモさんの
+じょしゅを　つとめております▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1382,17 +1384,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>調べたとき</Comment>
+			<Comment>♀
+・調べたとき
+・続けてpc_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:03:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1414,10 +1419,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どの　こうもくを　よみますか？</Text>
+			<Text>ゆめの　けんきゅうで　なにか
+しりたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:02:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1425,10 +1431,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どの　項目を　読みますか？</Text>
+			<Text>ゆめの　けんきゅうで　なにか
+しりたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1436,17 +1443,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>選択肢表示</Comment>
+			<Comment>♀
+・選択肢表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:58:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1498,10 +1507,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1553,10 +1563,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1608,10 +1619,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1640,17 +1652,17 @@
 せかいじゅうの　トレーナーの▽
 レポートを　あつめる　システム▼
 Ｃギアの　がめんに　ある
-Ｗｉ－Ｆｉを　タッチして　あらわれる▽
+Ｗｉ－Ｆｉを　タッチして　あらわれます▽
 [System:Color name="1" ]ゲームシンク[/System:Color]という　ボタンで▼
 ねむらせる　ポケモンを　えらび
 Ｗｉ－Ｆｉコネクションで▽
-レポートを　おくることが　できる▼
+レポートを　おくることが　できます▼
 ねむらせることの　できる
 ポケモンは　けんきゅうの　けっか▽
-しだいに　ふえていく　よてい▼</Text>
+しだいに　ふえていく　よてい　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1665,17 +1677,17 @@
 世界中の　トレーナーの▽
 レポートを　集める　システム▼
 Ｃ－ＧＥＡＲの　画面に　ある
-Ｗｉ－Ｆｉを　タッチして　表示される▽
+Ｗｉ－Ｆｉを　タッチして　表示されます▽
 [System:Color name="1" ]ＧＡＭＥ　ＳＹＮＣ[/System:Color]という　ボタンで▼
 眠らせる　ポケモンを　選び
 Ｗｉ－Ｆｉコネクションで▽
-レポートを　送信することが　できる▼
+レポートを　送信することが　できます▼
 眠らせることの　できる
 ポケモンは　研究の　結果▽
-次第に　増えていく　予定▼</Text>
+次第に　増えていく　予定です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:03:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1683,18 +1695,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>解説文
+			<Comment>♀
+・解説文
 ・続けてpc_02表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:58:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1718,7 +1732,7 @@
 			Language="JPN">
 			<Text>ポケモンのゆめ　とは……▼
 ねむらせた　ポケモンは
-ねている　あいだに　ゆめをみる▼
+ねている　あいだに　ゆめをみます▼
 ゲームシンクで　ねむらせた
 ポケモンを　おこすと▽
 その　あいだに　みた　ゆめは▼
@@ -1726,8 +1740,8 @@
 [System:Color name="1" ]ハイリンク[/System:Color]という　くうかんで▽
 げんじつと　なっている　ようす……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1737,7 +1751,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの夢　とは……▼
 眠らせた　ポケモンは
-寝ている　あいだに　夢をみる▼
+寝ている　あいだに　夢をみます▼
 ゲームシンクで　眠らせた
 ポケモンを　起こすと▽
 その　あいだに　みた　夢は▼
@@ -1745,8 +1759,8 @@
 [System:Color name="1" ]ハイリンク[/System:Color]という　空間で▽
 現実と　なっている　様子……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1754,18 +1768,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>解説文
+			<Comment>♀
+・解説文
 ・続けてpc_02表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T11:59:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>パソコン</Text>
+			<Text>OL
+←パソコン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-09T12:01:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
