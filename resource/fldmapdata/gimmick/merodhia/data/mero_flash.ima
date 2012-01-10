@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2012-01-05T19:50:46" source="mero_flash_5.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2012-01-10T15:26:07" source="mero_flash.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -21,10 +21,10 @@
 />
 
 <mat_color_data size="74">
-	25 0 0 4 8 12 16 19 23 27
-	31 31 31 31 29 28 26 24 22 21
-	19 17 16 14 12 10 9 7 5 3
-	2 0 0 0 0 0 0 0 0 10
+	25 0 0 6 12 19 25 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	28 26 23 21 18 16 13 10 8 5
+	3 0 0 0 0 0 0 0 0 10
 	21 31 31 31 31 31 31 31 31 31
 	31 31 31 28 25 22 19 16 13 11
 	8 6 4 3 2 1 0 0 0 0

@@ -224,6 +224,24 @@ VMCMD_RESULT EvCmdMeroGMK_IsAnimeEnd( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロエッタ  下降（初期位置）
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdMeroGMK_Down( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  // タスクを追加
+  SPPOKE_GMK_MerodhiaDown( p_fieldmap );
+
+  return GMEVENT_RES_CONTINUE;
+}
+
 //=============================================================================
 /**
  *					static関数

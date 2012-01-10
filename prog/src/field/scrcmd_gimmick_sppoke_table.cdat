@@ -27,6 +27,7 @@
   // 【配布】メロエッタ
   DEF_CMD( EvCmdMeroGMK_StartAnime, EV_SEQ_MERO_GMK_START_ANIME )
   DEF_CMD( EvCmdMeroGMK_IsAnimeEnd, EV_SEQ_MERO_GMK_IS_ANIME_END )
+  DEF_CMD( EvCmdMeroGMK_Down, EV_SEQ_MERO_GMK_DOWN )
 
   END_CMD
   //スクリプトコマンドテーブル終了

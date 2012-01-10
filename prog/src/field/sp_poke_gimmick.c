@@ -479,6 +479,20 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
 
 //=============================================================================
+// 【配布】メロディア用
+// 
+// メロディアを初期位置に下降させる処理
+static void MERODHIA_DOWN_TASK_Add( MERO_GMK_WK *p_wk, FIELDMAP_WORK *fieldWork );
+// タスクワーク
+typedef struct {
+  MMDL*     p_mmdl;   // 対象動作モデル
+  VecFx32   start;
+  VecFx32   end;
+} MERODHIA_DOWN_TASK_WORK;
+static FIELD_TASK_RETVAL MerodhiaTaskFunc( void *wk );
+
+
+//=============================================================================
 // 【配布】ケルディオ用
 
 // 座標
@@ -816,13 +830,13 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
             {
               // ステップフォルムに
               MMDL_ChangeOBJCode( p_ica_wk->p_poke, POKE12_FORM );
-              ICHI_Printf("ステップフォルムに\n");
             }
             else
             {
               // ボイスフォルムに
               MMDL_ChangeOBJCode( p_ica_wk->p_poke, POKE12 );
             }
+            ICHI_Printf("フォルムチェンジ %d \n", MMDL_CheckPossibleAcmd( p_ica_wk->p_poke ) ); 
             // 影をOFF
             MMDL_OnMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
           }
@@ -897,15 +911,18 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
         p_ica_wk->p_anime = NULL;
         p_ica_wk->anime_status = MERO_ANIME_STATUS_NONE;
 
+#if 0
         // 位置を初期化
         {
           VecFx32 pos;
           MMDL_GetVectorPos( p_ica_wk->p_poke, &pos );
           MMDL_InitPosition( p_ica_wk->p_poke, &pos, MMDL_GetDirDisp(p_ica_wk->p_poke) );
         }
+#endif
 
         // 影をON
-        MMDL_OffMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+        //MMDL_OffMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+        //↑下降タスクで行う
       }
 
       // アニメーション再生
@@ -999,6 +1016,104 @@ BOOL SPPOKE_GMK_MerodhiaIsAnimeEnd(FIELDMAP_WORK *fieldWork)
     return FALSE;
   }
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロディアを初期位置に下降
+ *
+ *	@param	*fieldWork
+ */
+//-----------------------------------------------------------------------------
+void SPPOKE_GMK_MerodhiaDown(FIELDMAP_WORK *fieldWork)
+{
+  SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
+  MERO_GMK_WK *p_ica_wk = (MERO_GMK_WK*)p_wk->Work;
+
+  // メロディア下降タスクを追加
+  MERODHIA_DOWN_TASK_Add( p_ica_wk, fieldWork );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロディア下降タスク追加
+ */
+//-----------------------------------------------------------------------------
+static void MERODHIA_DOWN_TASK_Add( MERO_GMK_WK *p_wk, FIELDMAP_WORK *fieldWork )
+{
+  FIELD_TASK      *task;
+  FIELD_TASK_MAN  *taskMan;
+  MERODHIA_DOWN_TASK_WORK *work;
+  HEAPID heap_id  = FIELDMAP_GetHeapID( fieldWork );
+
+  VecFx32 before_pos;
+  VecFx32 after_pos;
+
+  // スタート位置を設定
+  {
+    MMDL_GetVectorPos( p_wk->p_poke, &before_pos );
+  }
+
+  // 動作モデルを下降地点に移動
+  {
+    fx32    y = 0;
+
+    after_pos.x = GRID_TO_FX32( 5 ) + GRID_HALF_FX32;  // グリッドの中心
+    after_pos.y = 0;
+    after_pos.z = GRID_TO_FX32( 7 ) + GRID_HALF_FX32;  // グリッドの中心
+
+    MMDL_GetMapPosHeight( p_wk->p_poke, &after_pos, &y );
+    after_pos.y = y;
+  }
+
+
+  // タスクマネージャー取得
+  taskMan = FIELDMAP_GetTaskManager( fieldWork );
+
+  // タスク生成
+  task = FIELD_TASK_Create( heap_id, sizeof(MERODHIA_DOWN_TASK_WORK), MerodhiaTaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->p_mmdl  = p_wk->p_poke;
+  work->start   = before_pos;
+  work->end     = after_pos;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロディア下降タスク関数
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK_RETVAL MerodhiaTaskFunc( void *wk )
+{
+  MERODHIA_DOWN_TASK_WORK* work = (MERODHIA_DOWN_TASK_WORK*)wk;
+  VecFx32 pos;
+
+  // 現在地を取得
+  MMDL_GetVectorPos( work->p_mmdl, &pos );
+
+  if( pos.y > work->end.y ){
+    pos.y -= (FX32_ONE);
+    MMDL_SetVectorPos( work->p_mmdl, &pos );
+  }
+  else
+  {
+    // 最終位置にする
+    pos.y = work->end.y;
+    pos.x = work->end.x;
+    pos.z = work->end.z;
+
+    MMDL_InitPosition( work->p_mmdl, &pos, MMDL_GetDirDisp( work->p_mmdl ) );
+    MMDL_OffMoveBit( work->p_mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+
+    // タスク終了
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 //============================================================================================================

@@ -30,4 +30,5 @@ extern VMCMD_RESULT EvCmdKerudhioGMK_EffectDelete( VMHANDLE *core, void *wk );
 // 【配布】メロエッタ
 extern VMCMD_RESULT EvCmdMeroGMK_StartAnime( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMeroGMK_IsAnimeEnd( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdMeroGMK_Down( VMHANDLE *core, void *wk );
 

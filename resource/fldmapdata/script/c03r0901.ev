@@ -30,8 +30,10 @@ _EVENT_DATA   ev_c03r0901_sunglasses_01
 _EVENT_DATA	ev_c03r0901_veteranw_01
 _EVENT_DATA_END
 
+
 DEFINE_LOCAL	LWK_POSX
 DEFINE_LOCAL	LWK_POSZ
+
 
 /**************************************************************/
 /*  MUSICIAN  C03R0901                                        */
@@ -101,37 +103,49 @@ EVENT_START   ev_c03r0901_musician_01
       //BGMの再生
       _START_EVENT_BGM( SEQ_BGM_E_INISHIE )
       //ギターアニメ開始
-      _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move )
+      _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move_1 )
 
       // メロエッタ ICAアニメ開始
       _MERO_GMK_START_ANIME( MMDL_ID_EVENTOBJ_00 )
       
-      //ウェイト:ダンス開始まで
-      _TIME_WAIT( MERODHIA_DANCE_WAIT )
-      
       //ダンス開始
+      _DEBUG_PRINT_WK(1)
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_01 )
       
       //ウェイト：カメラ移動開始まで
       _TIME_WAIT( MERODHIA_CAMERA_WAIT ) 
 
       //カメラ移動
-      _CAMERA_MOVE( 9688, 0, 970752, 360448, 151552, 331776, 120 )
+      _CAMERA_MOVE( 9569,0,957688,339968,172032,393216, 120 )
 
       //ウェイト：ステップフォルムに変化まで
       _TIME_WAIT( MERODHIA_STER_ANIME ) 
       
+      // 調整用
+      _TIME_WAIT( 8 ) 
+
       //ステップフォルムのアニメ
+      _OBJ_ANIME_WAIT()
+      _DEBUG_PRINT_WK(2)
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_02 )
+      _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move_2 )
 
       //ウェイト：ボイスフォルムに変化まで
       _TIME_WAIT( MERODHIA_VOICE_ANIME ) 
 
       //ボイスフォルムのアニメ
+      _OBJ_ANIME_WAIT()
+      _DEBUG_PRINT_WK(3)
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_03 )
+      _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move_3 )
 
       //メロエッタICAアニメ終了チェック
       _MERO_GMK_IS_ANIME_END()
+
+      // アニメ終了チェック
+      _DEBUG_PRINT_WK(4)
+      _OBJ_ANIME_WAIT()
+      _DEBUG_PRINT_WK(5)
 
       _BGM_WAIT()
       
@@ -153,18 +167,16 @@ EVENT_START   ev_c03r0901_musician_01
         _SYSWIN_CLOSE()
       ENDIF
       
-      _CALL cheer
-      
-      _CAMERA_WAIT_MOVE()   //カメラ移動待ち
-      //カメラもどし
-      _CAMERA_DEF_MOVE( 30 )
+      //メロエッタ下降
+      _MERO_GMK_DOWN()
 
-      _CAMERA_WAIT_MOVE() //カメラ移動待ち
-      _CAMERA_BIND()    //カメラバインド
-      _CAMERA_END()   //カメラ操作終了
+      //カメラ移動（メロエッタ中心）
+      _CAMERA_MOVE( 9688,0,970752,360448,0,491520, 25 )
+      _CAMERA_WAIT_MOVE()   //カメラ移動待ち
       
       // いにしえのうたを覚えていないときのみ
       IF $is_event_start == 1 THEN
+
         //技を覚えさせる処理
         _CALL learn_skill
       ELSE
@@ -172,9 +184,11 @@ EVENT_START   ev_c03r0901_musician_01
         //ボールに戻るアニメ
         _CALL ball_in
 
-        //自機3歩前
-        _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
+        // お客の向きを戻す
+        _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
+        _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
         _OBJ_ANIME_WAIT()
+
       ENDIF
       
       //ハイリンクフェス追加前の場合
@@ -182,9 +196,6 @@ EVENT_START   ev_c03r0901_musician_01
     		_CALL fes_append
       //ハイリンクフェス追加後の場合
       ELSE
-      	_OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
-      	_OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
-      	_OBJ_ANIME_WAIT()
       
     		//ギタリストメッセージ
     		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
@@ -248,15 +259,17 @@ learn_skill:
   //ボールに戻るアニメ
   _CALL ball_in
 
+  // お客の向きを戻す
+  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
+  _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
   //覚えた後の子芝居
   IF $SCWK_ANSWER == TRUE THEN
-    //自機3歩前
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
-    _OBJ_ANIME_WAIT()
 
     //ギタリストメッセージ
     _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_03 )
-    _BALLOONWIN_CLOSE()
+    //_BALLOONWIN_CLOSE()
     //メッセージ間ウェイト
     _TIME_WAIT( 8 )
 
@@ -279,6 +292,13 @@ ball_out:
 _RET
 
 ball_in:
+
+  //カメラもどし
+  _CAMERA_MOVE( 9688,0,970752,360448,0,622592, 25 )
+  _CAMERA_WAIT_MOVE() //カメラ移動待ち
+  _CAMERA_BIND()    //カメラバインド
+  _CAMERA_END()   //カメラ操作終了
+
   _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
   //ポケ非表示フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
@@ -290,20 +310,11 @@ ball_in:
   _DISP_FADE_END_CHECK()
   _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
   _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
-_RET
 
-cheer:
-  _SUBWIN_MSG( msg_c03r0901_sub_01, 3, 3, 1 )
-  _TIME_WAIT( 32 )
-  _SUBWIN_MSG( msg_c03r0901_sub_02, 22, 10, 2 )
-  _TIME_WAIT( 32 )
-  _SUBWIN_MSG( msg_c03r0901_sub_03, 4, 16, 3 )
-  _TIME_WAIT( 16 )
-  _SUBWIN_CLOSE( 1 )
-  _TIME_WAIT( 16 )
-  _SUBWIN_CLOSE( 2 )
-  _TIME_WAIT( 16 )
-  _SUBWIN_CLOSE( 3 )
+  //自機3歩前
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
+  _OBJ_ANIME_WAIT()
+
 _RET
 
 fes_append:
@@ -347,15 +358,20 @@ fes_append:
   _OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 2, 8, FORCE_TYPE_NOT, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
-  _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 _RET
 
 //--------------------------------------------------------------------
 //語り部アニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_guitar_move
-   _ANIME_DATA AC_STAY_WALK_D_8F,140
+_ANIME_LABEL  anm_guitar_move_1
+  _ANIME_DATA AC_STAY_WALK_D_8F,67
+  _ANIME_DATA ACMD_END,0
+_ANIME_LABEL  anm_guitar_move_2
+  _ANIME_DATA AC_STAY_WALK_D_8F,33
+  _ANIME_DATA ACMD_END,0
+_ANIME_LABEL  anm_guitar_move_3
+  _ANIME_DATA AC_STAY_WALK_D_8F,30
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -401,21 +417,20 @@ _ANIME_LABEL  anm_player_move_right
 //　メロエッタアニメ（最初）
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_merodhia_01
-  _ANIME_DATA AC_MELODYER_SHAKE,4
-  _ANIME_DATA AC_MELODYER_SPIN,3
+  _ANIME_DATA AC_MELODYER_SHAKE,8
+  _ANIME_DATA AC_MELODYER_SPIN,7
   _ANIME_DATA ACMD_END,0
 //--------------------------------------------------------------------
 //　メロエッタアニメ（ステップフォルム）
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_merodhia_02
-  _ANIME_DATA AC_MELODYER_STEP,4
+  _ANIME_DATA AC_MELODYER_STEP,11
   _ANIME_DATA ACMD_END,0
 //--------------------------------------------------------------------
 //　メロエッタアニメ（最後）
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_merodhia_03
-  _ANIME_DATA AC_MELODYER_SHAKE,3
-  _ANIME_DATA AC_MELODYER_SPIN,2
+  _ANIME_DATA AC_MELODYER_SPIN,5
   _ANIME_DATA AC_MELODYER_SPIN_POSE,1
   _ANIME_DATA ACMD_END,0
 

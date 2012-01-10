@@ -1,9 +1,8 @@
 //======================================================================
 /**
- * @file  scr_gmk_timing_def.h
- * @brief  メロディアイベントタイミング定義群
- * @author  Saito
- * @note    松島さんが編集します
+ * @file    scr_gmk_timing_def.h
+ * @brief   メロディアイベントタイミング定義群
+ * @author  ichiraku=katsuhiko
  */
 //======================================================================
 #pragma once
@@ -22,10 +21,10 @@
  * */
 
 
-#define MERODHIA_DANCE_WAIT       (30)    //ダンス開始
-#define MERODHIA_CAMERA_WAIT      (175)   //カメラ移動開始
-#define MERODHIA_STER_ANIME       (361)   //ステップフォルム開始 361+175+30 = 566
+#define MERODHIA_CAMERA_WAIT      (129)   //カメラ移動開始
+#define MERODHIA_STER_ANIME       (437)   //ステップフォルム開始 435+129+2 = 566
 
-#define MERODHIA_VOICE_ANIME      (281)   //ボイスフォルムに戻った時 847-566 = 281
+#define MERODHIA_VOICE_ANIME      (261)   //ボイスフォルムに戻った時 847-566 -20 = 261
+                                          // -20は調整
 
 
