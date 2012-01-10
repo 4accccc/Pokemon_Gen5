@@ -518,10 +518,7 @@ static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, cons
   //トレーナーIDが一致しないとチェックしない
   if( is_trainerID )
   {
-    is_name  = (Resort_Basic1_Data_CompareU16( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
-
-    GF_ASSERT( is_name == STRTOOL_Comp( cp_a->name, cp_b->name ) );
-
+    is_name  = STRTOOL_Comp( cp_a->name, cp_b->name );
     is_sex   = (cp_a->sex == cp_b->sex);
   }
 
