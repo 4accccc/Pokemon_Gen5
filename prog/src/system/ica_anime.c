@@ -265,24 +265,33 @@ BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
 //-----------------------------------------------------------------------------------
 BOOL ICA_ANIME_IncAnimeFrameNoLoop( ICA_ANIME* anime, fx32 frame )
 {
-  int now;
+  int   now;
+  BOOL  end = FALSE;
 
-  if( ( anime->nowFrame >> FX32_SHIFT) < anime->frameSize ){
-    // フレームを更新
-    anime->nowFrame += frame;
-  
-    now = anime->nowFrame >> FX32_SHIFT;
-    
-    // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
-    if( ( now < anime->bufStartFrame ) ||
-      ( (anime->bufStartFrame + anime->bufSize) <= now ) )
-    {
-      UpdateBuf( anime, anime->nowFrame );
-    }
-    return FALSE;
-  }else{
-    return TRUE;
+  // 現在フレームを更新
+  anime->nowFrame += frame;
+
+  // 最終フレームを超えているかチェック
+  if( ( anime->nowFrame >> FX32_SHIFT) >= anime->frameSize ){
+    // 最終フレームにする
+    anime->nowFrame = ( (anime->frameSize-1) << FX32_SHIFT );
+    end = TRUE;
+    ICHI_Printf("最終フレーム\n");
   }
+
+  // フレームを変換
+  now = anime->nowFrame >> FX32_SHIFT;
+
+  // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
+  if( ( now < anime->bufStartFrame ) ||
+      ( (anime->bufStartFrame + anime->bufSize) <= now ) )
+  {
+    ICHI_Printf("バッファ更新\n");
+    UpdateBuf( anime, anime->nowFrame );
+  }
+
+  // 終了しているかどうかを返す
+  return end;
 }
 
 
