@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-09-12T18:37:38" source="texset_in44.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-10T15:33:56"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.2.20090218"/>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="1 1"
 	compress_material="off" material_size="14 14"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="black_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/black.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/black.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -45,7 +45,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="m_pc17"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm01.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm01.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -71,7 +71,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="m_pc21"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm02.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm02.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -97,7 +97,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="m_pc16"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm03.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm03.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -123,7 +123,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="m_pc15"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm04.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm04.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -141,7 +141,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="clsm_kabe01_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_kabe01.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_kabe01.tga"
 	>
 		<bitmap size="1024">
 			1313 1313 1313 1313 1313 1313 1313 1313
@@ -279,7 +279,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="clsm_kabe02_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_kabe02.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_kabe02.tga"
 	>
 		<bitmap size="512">
 			ffff ffff ffff ffff ffff ffff ffff ffff
@@ -353,13 +353,13 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="clsm_yuka01_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka01.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka01.tga"
 	>
 		<bitmap size="32">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			5555 5555 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 0001 4000
+			0001 4000 0001 4000 0001 4000 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="8" name="clsm_yuka02"
@@ -367,7 +367,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="clsm_yuka02_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka02.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka02.tga"
 	>
 		<bitmap size="256">
 			0023 0000 0000 0000 0000 0000 0000 0000
@@ -409,7 +409,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="clsm_yuka03_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka03.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka03.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 5555 5555 ffff ffff
@@ -427,7 +427,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="clsm_yuka04_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka04.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka04.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -441,7 +441,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="clsm_yuka05_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka05.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka05.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0050 0000 01a4 0000 01a4 0000
@@ -455,13 +455,13 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="clsm_yuka06_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka06.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka06.tga"
 	>
 		<bitmap size="32">
-			5555 5555 0001 4000 0001 4000 0001 4000
-			0001 4000 0001 4000 0001 4000 0001 4000
-			0001 4000 0001 4000 0001 4000 0001 4000
-			0001 4000 0001 4000 0001 4000 5555 5555
+			0000 0000 5550 0555 aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa aaa4 1aaa aaa4 1aaa
+			aaa4 1aaa aaa4 1aaa 5550 0555 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="13" name="clsm_yuka07"
@@ -469,7 +469,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="clsm_yuka07_pl"
-		path="C:/home/swan_data3d/field/in44/chip/tex/clsm_yuka07.tga"
+		path="C:/home/wb_data3d/field/in44/chip/tex/clsm_yuka07.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -494,7 +494,7 @@
 		356a 3d8b 41ac 5ad6 6317 6b7a 7bfe 7fff
 	</tex_palette>
 	<tex_palette index="3" name="clsm_yuka01_pl" color_size="4">
-		7371 7fff 7fff 7fff
+		636f 6790 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="clsm_yuka02_pl" color_size="8">
 		0000 67b2 67d4 6bf8 7fff 7fff 7fff 7fff
@@ -509,7 +509,7 @@
 		0000 67d4 6bf8 7fff
 	</tex_palette>
 	<tex_palette index="8" name="clsm_yuka06_pl" color_size="4">
-		636f 6790 7fff 7fff
+		636f 6790 67d4 7fff
 	</tex_palette>
 	<tex_palette index="9" name="clsm_yuka07_pl" color_size="4">
 		7fff 67b2 67d4 6bf8
@@ -533,13 +533,13 @@
 
 <material_array size="14">
 	<material index="0" name="black"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -557,7 +557,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="clsm01"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -574,14 +574,14 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="1" tex_palette_idx="12"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
 	<material index="2" name="clsm03"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -597,8 +597,8 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="13"
-		tex_tiling="repeat repeat"
+		tex_image_idx="3" tex_palette_idx="11"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -653,13 +653,13 @@
 		tex_gen_mode="none"
 	/>
 	<material index="5" name="clsm_kabe01"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -773,31 +773,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="10" name="clsm_yuka03"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="4"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="11" name="clsm_yuka05"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -814,14 +790,14 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="9" tex_palette_idx="5"
-		tex_tiling="repeat repeat"
+		tex_tiling="repeat clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="clsm_yuka07"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="11" name="clsm_yuka05"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -837,8 +813,32 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="6"
+		tex_image_idx="11" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="12" name="clsm_yuka07"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="13" tex_palette_idx="9"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -1293,6 +1293,77 @@
 
 <output_info vertex_size="56" polygon_size="14"
 	triangle_size="0" quad_size="14"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="14">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="14">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="14">
+		<ex_material index="0" disp_pos="-780.000000 240.000000"/>
+		<ex_material index="1" disp_pos="-660.000000 240.000000"/>
+		<ex_material index="2" disp_pos="-540.000000 240.000000"/>
+		<ex_material index="3" disp_pos="-420.000000 240.000000"/>
+		<ex_material index="4" disp_pos="-300.000000 240.000000"/>
+		<ex_material index="5" disp_pos="-180.000000 240.000000"/>
+		<ex_material index="6" disp_pos="-60.000000 240.000000"/>
+		<ex_material index="7" disp_pos="60.000000 240.000000"/>
+		<ex_material index="8" disp_pos="180.000000 240.000000"/>
+		<ex_material index="9" disp_pos="300.000000 240.000000"/>
+		<ex_material index="10" disp_pos="420.000000 240.000000"/>
+		<ex_material index="11" disp_pos="540.000000 240.000000"/>
+		<ex_material index="12" disp_pos="660.000000 240.000000"/>
+		<ex_material index="13" disp_pos="780.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="14">
+		<ex_polygon index="0" disp_pos="300.000000 180.000000"/>
+		<ex_polygon index="1" disp_pos="-780.000000 180.000000"/>
+		<ex_polygon index="2" disp_pos="-660.000000 180.000000"/>
+		<ex_polygon index="3" disp_pos="-540.000000 180.000000"/>
+		<ex_polygon index="4" disp_pos="-420.000000 180.000000"/>
+		<ex_polygon index="5" disp_pos="-300.000000 180.000000"/>
+		<ex_polygon index="6" disp_pos="-180.000000 180.000000"/>
+		<ex_polygon index="7" disp_pos="-60.000000 180.000000"/>
+		<ex_polygon index="8" disp_pos="60.000000 180.000000"/>
+		<ex_polygon index="9" disp_pos="420.000000 180.000000"/>
+		<ex_polygon index="10" disp_pos="540.000000 180.000000"/>
+		<ex_polygon index="11" disp_pos="660.000000 180.000000"/>
+		<ex_polygon index="12" disp_pos="780.000000 180.000000"/>
+		<ex_polygon index="13" disp_pos="180.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
