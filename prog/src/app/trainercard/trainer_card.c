@@ -2024,6 +2024,37 @@ static BOOL _sign_eneble_check( TR_CARD_WORK *wk, int hitNo )
   return FALSE;
 }
 
+//----------------------------------------
+// 通常時タッチボタン定義
+//----------------------------------------
+enum{
+  BTN_NORMAL_RETURN=0,    // 戻る
+  BTN_NORMAL_END,         // 終了
+  BTN_NORMAL_TURN,        // カード裏返しボタン
+  BTN_NORMAL_BADGE,       // バッジ画面ボタン
+  BTN_NORMAL_LOUPE,       // 精密描画ボタン
+  BTN_NORMAL_PEN,         // ペン先ボタン
+  BTN_NORMAL_BOOKMARK,    //ブックマークボタン
+  BTN_NORMAL_TRAINERTYPE, //トレーナータイプ
+  BTN_NORMAL_CHARA,       //性格
+  BTN_NORMAL_PMS,         //簡易会話
+  BTN_NORMAL_MOVE_R,      //右へ移動(拡大時）(dummy)
+  BTN_NORMAL_MOVE_L,      //左へ移動(拡大時）(dummy)
+  BTN_NORMAL_MEDAL,       //メダル
+};
+
+//----------------------------------------
+// 通信時タッチ定義
+//----------------------------------------
+enum{
+  BTN_COMM_RETURN=0,      // 戻る
+  BTN_COMM_END,           // 終了
+  BTN_COMM_TURN,          // カード裏返しボタン
+  BTN_COMM_MEDAL,         // メダル
+};
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 通常時タッチ処理
@@ -2042,23 +2073,23 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
   }
 
   switch(hitNo){
-  case 0:     // 戻る
+  case BTN_NORMAL_RETURN:     // 戻る
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
     PMSND_PlaySE( SND_TRCARD_CANCEL );
     GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
     return TRC_KEY_REQ_RETURN_BUTTON;
     break;
-  case 1:     // 終了
+  case BTN_NORMAL_END:     // 終了
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
     PMSND_PlaySE( SND_TRCARD_END );
     return TRC_KEY_REQ_END_BUTTON;
     break;
-  case 2:     // カード裏返しボタン
+  case BTN_NORMAL_TURN:     // カード裏返しボタン
     GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN, ANMS_TURN_G ,TRUE);
     return TRC_KEY_REQ_REV_BUTTON;
     break;
-  case 3:     // バッジ画面ボタン・アニメON/OFFボタン
+  case BTN_NORMAL_BADGE:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
       // アニメON／OFF
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
@@ -2076,7 +2107,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       return TRC_KEY_REQ_BADGE_CALL;
     }
     break;
-  case 4:     // 精密描画ボタン
+  case BTN_NORMAL_LOUPE:     // 精密描画ボタン
     if(wk->is_back && wk->TrCardData->SignAnimeOn==0){
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
           if(wk->ScaleMode==0){
@@ -2092,7 +2123,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       }
     }
     break;
-  case 5:     // ペン先ボタン
+  case BTN_NORMAL_PEN:     // ペン先ボタン
     if(wk->is_back){
       // 編集可能 & アニメ中じゃなかったら
       if(wk->tcp->TrCardData->EditPossible && wk->TrCardData->SignAnimeOn==0){    
@@ -2103,25 +2134,25 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       }
     }
     break;
-  case 6:     // ブックマークボタン
+  case BTN_NORMAL_BOOKMARK:     // ブックマークボタン
     SetBookMark( wk );
     break;
-  case 7:     // トレーナータイプ
+  case BTN_NORMAL_TRAINERTYPE:     // トレーナータイプ
     if(wk->is_back==0){
       return TRC_KEY_REQ_TRAINER_TYPE;
     }
     break;
-  case 8:     // 性格
+  case BTN_NORMAL_CHARA:     // 性格
     if(wk->is_back==0){
       return TRC_KEY_REQ_PERSONALITY;
     }
     break;
-  case 9:     // 簡易会話
+  case BTN_NORMAL_PMS:     // 簡易会話
     if(wk->is_back==0){
       return TRC_KEY_REQ_PMS_CALL;
     }
     break;
-  case 12:    // メダル
+  case BTN_NORMAL_MEDAL:    // メダル
     // 表示している時のみ反応あり
     if(wk->Flag & FLG_DISP_MEDAL){
       if(wk->is_back==0){
@@ -2148,14 +2179,14 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
 static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
 {
   switch(hitNo){
-  case 0:     // 戻る
-  case 1:     // 終了
-  case 2:     // カード裏返しボタン
-  case 3:     // バッジ画面ボタン・アニメON/OFFボタン
-  case 7:     // トレーナータイプ
-  case 8:     // 性格
+  case BTN_NORMAL_RETURN:     // 戻る
+  case BTN_NORMAL_END:     // 終了
+  case BTN_NORMAL_TURN:     // カード裏返しボタン
+  case BTN_NORMAL_BADGE:     // バッジ画面ボタン・アニメON/OFFボタン
+  case BTN_NORMAL_TRAINERTYPE:     // トレーナータイプ
+  case BTN_NORMAL_CHARA:     // 性格
     break;
-  case 4:     // 精密描画ボタン
+  case BTN_NORMAL_LOUPE:     // 精密描画ボタン
     if(wk->is_back){
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
       PMSND_PlaySE( SND_TRCARD_SCALEDOWN );
@@ -2163,7 +2194,7 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
       return TRC_KEY_REQ_SCALE_BUTTON;
     }
     break;
-  case 5:     // ペン先ボタン
+  case BTN_NORMAL_PEN:     // ペン先ボタン
     if(wk->is_back){
       PMSND_PlaySE( SND_TRCARD_PEN );
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2+1, TRUE);
@@ -2171,17 +2202,17 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
       OS_Printf("pen touch\n");
     }
     break;
-  case 6:     // ブックマークボタン
+  case BTN_NORMAL_BOOKMARK:     // ブックマークボタン
     SetBookMark( wk );
     break;
-  case 10:     // 右へ移動
+  case BTN_NORMAL_MOVE_R:     // 右へ移動
     if(wk->ScaleSide==0){
       PMSND_PlaySE( SND_TRCARD_ANIME );
       wk->sub_seq = CARDSCALE_MOVE_RIGHT_START;
       return TRC_KEY_REQ_SCALE_BUTTON;
     }
     break;
-  case 11:    // 左へ移動
+  case BTN_NORMAL_MOVE_L:    // 左へ移動
     if(wk->ScaleSide==1){
       PMSND_PlaySE( SND_TRCARD_ANIME );
       wk->sub_seq = CARDSCALE_MOVE_LEFT_START;
@@ -2450,23 +2481,28 @@ static int CheckTouch(TR_CARD_WORK* wk)
   };
   static const GFL_UI_TP_HITTBL Btn_TpRectComm[] = {
     { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
-    { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
+    { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 終了
     { TP_CARD_Y,     TP_CARD_Y+TP_CARD_H,        TP_CARD_X,     TP_CARD_X+TP_CARD_W },     // カード裏返しボタン
+    { TP_MEDAL_Y,   TP_MEDAL_Y+TP_MEDAL_H,       TP_MEDAL_X,   TP_MEDAL_X+TP_MEDAL_W },    // メダル(COMM_BTN_MEDAL)
     { GFL_UI_TP_HIT_END,0,0,0}
   };
 
 
   // タッチ検出
   if(wk->TrCardData->OtherTrCard==FALSE){
-	if(wk->ScaleMode == 0){
-		// 通常時
-	    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
-	}else{
-		// 拡大時
-	    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect_2 );
-	}
+    if(wk->ScaleMode == 0){
+      // 通常時
+      hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
+    }else{
+      // 拡大時
+      hitNo = GFL_UI_TP_HitTrg( Btn_TpRect_2 );
+    }
   }else{
     hitNo = GFL_UI_TP_HitTrg( Btn_TpRectComm );
+    // 通信中にメダルボタンを押されたらメダル呼び出し番号に変換する
+    if(hitNo==BTN_COMM_MEDAL){    
+      hitNo=BTN_NORMAL_MEDAL; 
+    }
   }
   // 拡大状態かどうか
   if(wk->ScaleMode==0){
