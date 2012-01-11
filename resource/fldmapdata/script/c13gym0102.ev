@@ -529,7 +529,9 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
 
 	_OBJ_POS_CHANGE( C13GYM0102_SUNGLASSES_01, 13, 0, 6, DIR_LEFT )
-
+	
+	_START_EVENT_BGM( SEQ_BGM_PW_LAND )	
+	
 	//サングラス：プレイヤーに近づいてくる
 	//X座標が３の場合
 	IF $LWK_POSX == 3 THEN
@@ -558,16 +560,16 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	
 		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x3 )
 		_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	//X座標が４の場合
 	ELSE
 	
 		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x4 )
 		_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	ENDIF
+	
+	_END_EVENT_BGM()
 	
 	//ホミカ：プレイヤーに近づく
 	//X座標が３の場合
@@ -588,16 +590,11 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	//X座標が３の場合
 	IF $LWK_POSX == 3 THEN
 	
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-	
 	//X座標が４の場合
 	ELSE
-	
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-	
+		_OBJ_ANIME_WAIT()
 	ENDIF
-	
-	_OBJ_ANIME_WAIT()
 	
 	//なに？　あんた　ポケウッドに　いくわけ？
 	_BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_07 , C13GYM0102_SWLEADER2_01 )
