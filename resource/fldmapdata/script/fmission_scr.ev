@@ -309,6 +309,8 @@ sub_npc_trade_item_exe:
       _MSGWIN_CLOSE()
 
       //ÅõÅõÇ∆Å~Å~Çåä∑ÇµÇΩ
+      _SUB_ITEM( i_item_mine, 1, i_ret )
+
       _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_ITEM_TRADE )
 	    _ME_PLAY(	SEQ_ME_ITEM )
       _SYSWIN_MSG( msg_fm_npc_trade_sys01, POS_DEFAULT )
