@@ -11141,7 +11141,7 @@ static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
     flag = 1;
   // Å¬’l‚àŠÛ‚ß‚é
   }else if(pew->estimate<POKEWOOD_PROFIT_VALUE_MIN){
-    pew->estimate = -POKEWOOD_PROFIT_VALUE_MIN;
+    pew->estimate = POKEWOOD_PROFIT_VALUE_MIN;
     flag = 1;
   }
 
