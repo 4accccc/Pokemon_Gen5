@@ -185,11 +185,6 @@ EVENT_START   ev_c03r0901_musician_01
         //ボールに戻るアニメ
         _CALL ball_in
 
-        // お客の向きを戻す
-        _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
-        _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
-        _OBJ_ANIME_WAIT()
-        
         //========================================//
     	   _FLAG_SET(FE_C03R0901_MELODY)
     	   //========================================//
@@ -260,11 +255,6 @@ learn_skill:
 
   //ボールに戻るアニメ
   _CALL ball_in
-
-  // お客の向きを戻す
-  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
-  _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
   
   //========================================//
   _FLAG_SET(FE_C03R0901_MELODY)
