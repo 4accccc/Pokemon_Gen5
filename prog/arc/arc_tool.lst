@@ -378,3 +378,5 @@
   ARCID_ENDING_GIMMICK "fieldmap/ending.narc" # エンディングイベントのギミック
   ARCID_KERUDHIO_GIMMICK "fieldmap/kerudhio.narc" # 【配布】ケルディオのギミック
   ARCID_MERO_GIMMICK "fieldmap/mero.narc" # 【配布】メロエッタのギミック
+  ARCID_LEGEND_GMK "fieldmap/legend_gmk.narc" # 伝説ポケギミックアーカイブ
+

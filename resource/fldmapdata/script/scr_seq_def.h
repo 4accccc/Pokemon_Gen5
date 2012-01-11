@@ -16674,6 +16674,7 @@
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_WILD_WIN
   .endm
 
+
 // 物語開始デモ
 //--------------------------------------------------------------
 /**
@@ -16738,6 +16739,90 @@
 
   .macro  _ASM_DEMO_GIMMICK_ENDING_C12_INIT
   .short  EV_SEQ_DEMO_GIMMICK_ENDING_C12_INIT
+  .endm
+
+
+// リュウラセンの塔 D08R0901専用
+//--------------------------------------------------------------
+/**
+ * @brief 伝説ポケギミック開始
+ */
+//--------------------------------------------------------------
+#define _START_LEG_GMK() _ASM_START_LEG_GMK
+
+  .macro _ASM_START_LEG_GMK
+  .short EV_SEQ_START_LEG_GMK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボール移動（使用場所はＮの城パッケージポケイベント限定）
+ *
+ * @param target      対象ＯＢＪ
+ * @param tx        目的Ｘ座標
+ * @param ty        目的Ｙ座標 0.5グリッドサイズずつの指定（2を設定すると1グリッド）
+ * @param tz        目的Ｚ座標
+ * @param height    アニメ中のボール高さ
+ * @param sync      必要シンク数
+ */
+//--------------------------------------------------------------
+#define _LEG_MOVE_BALL( target, tx, ty, tz, height, sync ) \
+    _ASM_LEG_MOVE_BALL target, tx, ty, tz, height, sync
+
+  .macro _ASM_LEG_MOVE_BALL target, tx, ty, tz, height, sync
+  .short EV_SEQ_LEG_MOVE_BALL
+  .short \target
+  .short \tx
+  .short \ty
+  .short \tz
+  .short \height
+  .short \sync
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ開始（使用場所はＮの城パッケージポケイベント限定）
+ *
+ * @param tx        Ｘ座標
+ * @param ty        Ｙ座標 0.5グリッドサイズずつの指定（2を設定すると1グリッド）
+ * @param tz        Ｚ座標
+ */
+//--------------------------------------------------------------
+#define _LEG_START_BALL_ANM( tx, ty, tz  ) \
+    _ASM_LEG_START_BALL_ANM tx, ty, tz
+
+  .macro _ASM_LEG_START_BALL_ANM tx, ty, tz
+  .short EV_SEQ_LEG_START_BALL_ANM
+  .short \tx
+  .short \ty
+  .short \tz
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ終了待ち（使用場所はＮの城パッケージポケイベント限定）
+ *
+ */
+//--------------------------------------------------------------
+#define _LEG_WAIT_BALL_ANM() \
+    _ASM_LEG_WAIT_BALL_ANM
+
+  .macro _ASM_LEG_WAIT_BALL_ANM
+  .short EV_SEQ_LEG_WAIT_BALL_ANM
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ボールアニメ中、ポケモンを表示、非表示していいタイミングまで待つ
+ * （使用場所はＮの城パッケージポケイベント限定）
+ *
+ */
+//--------------------------------------------------------------
+#define _LEG_WAIT_BALL_POKE_APP() \
+    _ASM_LEG_WAIT_BALL_POKE_APP
+
+  .macro _ASM_LEG_WAIT_BALL_POKE_APP
+  .short EV_SEQ_LEG_WAIT_BALL_POKE_APP
   .endm
 
 

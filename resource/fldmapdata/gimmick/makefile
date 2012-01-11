@@ -42,7 +42,8 @@ SUBDIRS	=	gym_denki \
 					rezi \
 					ending \
 					kerudhio \
-					merodhia
+					merodhia \
+					legend
 
 .PHONY:	do-build clean
 

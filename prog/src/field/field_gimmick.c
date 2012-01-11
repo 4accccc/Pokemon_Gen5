@@ -55,6 +55,7 @@
 #include "field_gimmick_c14.h"
 #include "field_gimmick_rezi.h"
 #include "field_gimmick_ending.h"
+#include "legend_gmk.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);

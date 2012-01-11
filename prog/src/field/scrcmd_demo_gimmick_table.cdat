@@ -35,5 +35,12 @@
   DEF_CMD( EvCmdEnding_FireWorksSeEnd, EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS_SE_END )
   DEF_CMD( EvCmdEnding_C12Init, EV_SEQ_DEMO_GIMMICK_ENDING_C12_INIT )
 
+  //リュウラセンの塔
+  DEF_CMD( EvCmdStartLegGmk, EV_SEQ_START_LEG_GMK )
+  DEF_CMD( EvCmdLegMoveBall, EV_SEQ_LEG_MOVE_BALL )
+  DEF_CMD( EvCmdLegStartBallAnm, EV_SEQ_LEG_START_BALL_ANM )
+  DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
+  DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
+
   END_CMD
   //スクリプトコマンドテーブル終了

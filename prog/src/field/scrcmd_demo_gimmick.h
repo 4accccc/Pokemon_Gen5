@@ -52,3 +52,11 @@ extern VMCMD_RESULT EvCmdEnding_FireWorksSeEnd( VMHANDLE *core, void *wk );
 // C12 エンディング
 extern VMCMD_RESULT EvCmdEnding_C12Init( VMHANDLE *core, void *wk );
 
+
+// Nの城にあったものを移植
+extern VMCMD_RESULT EvCmdStartLegGmk( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdLegMoveBall( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdLegStartBallAnm( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdLegWaitBallAnm( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdLegWaitBallPokeApp( VMHANDLE *core, void *wk );
+

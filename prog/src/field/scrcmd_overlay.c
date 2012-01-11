@@ -237,6 +237,7 @@ static const ZONEID UseZoneIDTbl_demo_gimmick[] =
   ZONE_ID_D10R0501,   // ジャイアントホール
   ZONE_ID_C12,        // ヒオウギシティ
   ZONE_ID_C09P03,     // エンディングでのポケモンリーグ
+  ZONE_ID_D08R0901,   // リュウラセンの塔
 };
 //-------------------------------------
 ///	OUT58のギミック関係
