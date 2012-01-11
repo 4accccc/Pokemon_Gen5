@@ -58,6 +58,13 @@
 				Time="2011-07-26T12:14:35" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:54" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -122,6 +129,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-26T12:14:35" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8080</CellData>
@@ -173,6 +187,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-26T12:14:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -232,6 +253,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-26T12:14:35" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8080</CellData>
@@ -284,6 +312,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:20:14" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_h06_man3_01"
@@ -328,6 +363,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:07:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -377,6 +419,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:19:54" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_h06_maid_01"
@@ -420,6 +469,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:19:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -476,6 +532,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:01:58" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_h06_trainerw_01"
@@ -519,6 +582,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:02:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -568,10 +638,11 @@
 			<Comment>♀
 ・アイテム入手処理
 　No281「くろいヘドロ」
-・続けてtrainerw_03</Comment>
+・続けてtrainerw_03
+・0＝先頭のポケモン（ひんし/タマゴ除く）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T09:17:48" />
+				Time="2012-01-11T07:45:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -579,6 +650,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:06:02" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -633,6 +711,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-24T09:13:54" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T07:44:57" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
