@@ -31,6 +31,7 @@
 #include "tachiwaki_ship.cdat"
 #include "plane_take_off_fukiyose.cdat"
 #include "plane_take_off_yamaji.cdat"
+#include "tachiwaki_ship_short.cdat"
 
 
 static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
@@ -60,5 +61,6 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { &data_tachiwaki_ship_scene, demo3d_cmd_tachiwaki_ship_data, demo3d_cmd_tachiwaki_ship_end_data, res_tachiwaki_ship_scene_unit, NELEMS(res_tachiwaki_ship_scene_unit) },
  { &data_plane_take_off_fukiyose_scene, demo3d_cmd_plane_take_off_fukiyose_data, demo3d_cmd_plane_take_off_fukiyose_end_data, res_plane_take_off_fukiyose_scene_unit, NELEMS(res_plane_take_off_fukiyose_scene_unit) },
  { &data_plane_take_off_yamaji_scene, demo3d_cmd_plane_take_off_yamaji_data, demo3d_cmd_plane_take_off_yamaji_end_data, res_plane_take_off_yamaji_scene_unit, NELEMS(res_plane_take_off_yamaji_scene_unit) },
+ { &data_tachiwaki_ship_short_scene, demo3d_cmd_tachiwaki_ship_short_data, demo3d_cmd_tachiwaki_ship_short_end_data, res_tachiwaki_ship_short_scene_unit, NELEMS(res_tachiwaki_ship_short_scene_unit) },
 };
 
