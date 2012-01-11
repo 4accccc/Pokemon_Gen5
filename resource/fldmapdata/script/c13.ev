@@ -267,7 +267,26 @@ _ANIME_LABEL	anm_common_onpu
 /*  C13 BADMAN：一言メッセージ                                */
 /**************************************************************/
 EVENT_START   ev_c13_badman_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_badman_01 )
+
+  //アイテム入手済みの場合
+  IF FLAG_ON( FE_C13_BADMAN_ITEMGET_01) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_badman_02 )
+  //アイテム未入手の場合
+  ELSE
+  
+    _TALK_OBJ_START()
+    _BALLOONWIN_OBJMSG_POS( msg_c13_badman_01 ,C13_BADMAN_01 ,POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //モンスターボール５個入手
+    _ITEM_EVENT_NOWAIT( ITEM_MONSUTAABOORU, 5 )
+    
+    //========================================//
+    _FLAG_SET(FE_C13_BADMAN_ITEMGET_01)
+    //========================================//
+  
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
