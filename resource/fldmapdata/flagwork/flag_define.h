@@ -505,6 +505,7 @@
 #define FE_D07_BIGFOUR3_TALK               489 /* 0x01e9 ネジ山：レンブ会話フラグ */
 #define FE_C12R0202_RIVALSISTER_TAL        490 /* 0x01ea ライバルの家２階：クリア後のライバル妹会話フラグ */
 #define FE_C05R0501_RIVAL_BTL_END          491 /* 0x01eb ホドモエシティ：クリア後ライバルと戦闘済み */
+#define FE_C13_BADMAN_ITEMGET_01           492 /* 0x01ec タチワキシティ：不良・アイテム入手フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -945,6 +946,8 @@
 #define FV_D27R0101_SWBOSS_01             1029 /* 0x0405 プラズマフリゲート：クリア後アクロマ */
 #define FV_C03_SWCHAMPION_02              1030 /* 0x0406 ヒウンシティ外周：アイリス */
 #define FV_D10R0501_SWRIVAL_01            1031 /* 0x0407 ジャイアントホール：ライバル */
+#define FV_C12GYM0101_GLASSES_01          1032 /* 0x0408 ヒオウギジム：ダンペイ　ストッパー */
+#define FV_C04_TRAINERW_01                1033 /* 0x0409 ライモンシティ：バトル検定前謎の女ストッパー */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
