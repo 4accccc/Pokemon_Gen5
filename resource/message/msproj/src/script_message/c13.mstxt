@@ -733,14 +733,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……だまれよ▼
+			<Text>[Name:TrainerName Idx="1" ]『……くちを　とじろよ▼
 ポケモンを　すくう！　といいつつ
 ただの　ポケモンどろぼう　だった▽
 さいていの　オマエら　だ……▽
 ゆるしてもらえると　おもうな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:47:26" />
+				Time="2012-01-11T12:23:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -748,14 +748,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……黙れよ▼
+			<Text>[Name:TrainerName Idx="1" ]『……口を　閉じろよ▼
 ポケモンを　救う！　といいつつ
 ただの　ポケモンどろぼう　だった▽
 最低の　オマエら　だ……▽
 許してもらえると　思うな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:47:50" />
+				Time="2012-01-11T12:23:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

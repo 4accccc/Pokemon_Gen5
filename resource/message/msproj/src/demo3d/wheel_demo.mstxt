@@ -367,10 +367,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オー！　昇ってる　昇ってる！
-何か……　なつかしーな……</Text>
+なんか……　なつかしーな……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:58:27" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:38:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1699,10 +1699,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWRIVAL</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:00:49" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1764,10 +1765,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWRIVAL</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:00:49" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1829,10 +1831,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWRIVAL</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:00:49" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1894,10 +1897,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWBELL</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:08:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:17" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1959,10 +1963,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWBELL</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:08:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2024,10 +2029,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWBELL</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:08:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2089,10 +2095,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BOSS</Text>
+			<Text>BOSS
+N</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:10:24" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:24" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2154,10 +2161,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BOSS</Text>
+			<Text>BOSS
+N</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:10:24" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2219,10 +2227,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BOSS</Text>
+			<Text>BOSS
+N</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:10:24" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2284,10 +2293,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1</Text>
+			<Text>SWLEADER1
+チェレン</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:11:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2349,10 +2359,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1</Text>
+			<Text>SWLEADER1
+チェレン</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:11:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -2414,10 +2425,11 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1</Text>
+			<Text>SWLEADER1
+チェレン</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-13T06:11:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T12:39:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">

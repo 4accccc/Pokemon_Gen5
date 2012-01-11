@@ -61,6 +61,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:17" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -139,6 +146,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:18" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -206,6 +220,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -225,12 +246,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにか　あたらしい　ビジネス
+			<Text>あたらしい　ポケモンビジネス
 はじめたいと　かんがえてるが……▽
 なかなか　むずかしいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -238,12 +259,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにか　新しい　ビジネス
+			<Text>新しい　ポケモンビジネス
 始めたいと　考えてるが……▽
 なかなか　難しいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -252,10 +273,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:56:25" />
+				Time="2012-01-11T11:40:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -264,6 +285,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:42:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -278,14 +306,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーの　かわりに
-ポケモンを　そだてる　サービスは▽
-いけると　おもいませんか？▼
-なに？　３ばんどうろに
-そだてやさんが　あるんだって！？</Text>
+			<Text>ポケモンに　わざを　おしえる
+サービスって　いけると　おもうよな？▼
+なに？　すでに　そういう
+ひとが　いるんだって！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,14 +320,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーの　代わりに
-ポケモンを　育てる　サービスは▽
-いけると　思いませんか？▼
-なに？　３番道路に
-育て屋さんが　あるんだって！？</Text>
+			<Text>ポケモンに　技を　教える
+サービスって　いけると　思うよな？▼
+なに？　すでに　そういう
+人物が　いるんだって！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -309,10 +335,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:42:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -321,6 +347,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:42:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -370,6 +403,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:26" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -424,6 +464,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:26" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -471,6 +518,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-21T03:31:57" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:26" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -521,6 +575,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T11:39:26" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
