@@ -181,7 +181,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     PALACE_GMK_Move,    //
   },
   {
-    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109       //;30
+    NULL,             // D12ÇÃÉMÉ~ÉbÉNÇÕçÌèúÇµÇ‹ÇµÇΩ ichiraku 30
+    NULL,
+    NULL,
+    NULL,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109
     BSUBWAY_GIMMICK_Setup, //C04R0109
     BSUBWAY_GIMMICK_End, //C04R0109
     BSUBWAY_GIMMICK_Move, //C04R0109
