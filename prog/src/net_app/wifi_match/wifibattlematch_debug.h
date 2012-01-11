@@ -28,6 +28,7 @@
 #define DEBUGWIN_BTLBGM_USE
 #define DEBUGWIN_ATLAS_USE
 #define DEBUGWIN_ETC_USE
+#define DEBUGWIN_POWEROFF_USE
 
 
 #define DEBUGWIN_GROUP_REG (41)
@@ -54,6 +55,7 @@
 
 #define DEBUGWIN_GROUP_ATLAS (100)
 #define DEBUGWIN_GROUP_ETC (110)
+#define DEBUGWIN_GROUP_POWEROFF (111)
 
 
 #include "wifibattlematch_debugdata.h"
@@ -63,7 +65,7 @@
  *  デバッグ汎用
  */
 //=============================================================================
-static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, int min, int max )
+static inline BOOL DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, int min, int max )
 { 
   BOOL is_update  = FALSE;
 
@@ -87,7 +89,9 @@ static inline void DebugWin_Util_ChangeData( DEBUGWIN_ITEM* item, int *p_param, 
   if( is_update )
   { 
     DEBUGWIN_RefreshScreen();
+    return TRUE;
   }
+  return FALSE;
 }
 
 static inline void DebugWin_Util_ChangeDataU32( DEBUGWIN_ITEM* item, u32 *p_param, u32 min, u32 max )
@@ -1705,7 +1709,6 @@ static inline void DEBUGWIN_ATLAS_Exit( void )
 
 #ifdef DEBUGWIN_ETC_USE
 
-#endif //DEBUGWIN_ETC_USE
 static inline void DebugWin_Etc_U_ServerFlag( void* userWork , DEBUGWIN_ITEM* item )
 {
   BOOL *p_is_flag  = DEBUGWIN_SERVERTIME_GetFlag();
@@ -1824,6 +1827,39 @@ static inline void DEBUGWIN_ETC_Exit( void )
 {
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_ETC );
 }
+#endif //DEBUGWIN_ETC_USE
+
+#ifdef DEBUGWIN_POWEROFF_USE
+
+static inline void DebugWin_PowerOff_U_Bp( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA *p_gamedata  = userWork;
+
+  u8 *p_bp = GAMEDATA_DEBUG_GetRndMaptchBpAdrs( p_gamedata );
+
+  DebugWin_Util_ChangeDataU8( item, p_bp, 0, 255 );
+}
+static inline void DebugWin_PowerOff_D_Bp( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA *p_gamedata  = userWork;
+  u8 bp = GAMEDATA_GetRndMaptchBp( p_gamedata );
+  DEBUGWIN_ITEM_SetNameV( item , "BP[%d]", bp );
+}
+
+
+static inline void DEBUGWIN_POWEROFF_Init( GAMEDATA *p_gamedata, HEAPID heapID )
+{
+  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_POWEROFF, "でんげんせつだん", heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_PowerOff_U_Bp, DebugWin_PowerOff_D_Bp, p_gamedata, DEBUGWIN_GROUP_POWEROFF, heapID );
+}
+
+static inline void DEBUGWIN_POWEROFF_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_POWEROFF );
+}
+#endif // DEBUGWIN_POWEROFF_USE
+
+
 #endif  //PM_DEBUG
 
 #ifndef DEBUGWIN_SAKE_RECORD_DATA_USE
@@ -1873,3 +1909,8 @@ static inline void DEBUGWIN_ETC_Exit( void )
 #define DEBUGWIN_ETC_Exit( ... ) /* */
 #endif //DEBUGWIN_ETC_USE
 
+
+#ifndef DEBUGWIN_ETC_USE
+#define DEBUGWIN_POWEROFF_Init( ... ) /* */
+#define DEBUGWIN_POWEROFF_Exit( ... ) /* */
+#endif // DEBUGWIN_POWEROFF_USE

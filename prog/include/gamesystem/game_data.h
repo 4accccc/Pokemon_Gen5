@@ -1106,6 +1106,9 @@ extern RESORT_WORK* GAMEDATA_GetReosrtWork( GAMEDATA *gamedata );
  */
 //-----------------------------------------------------------------------------
 extern u8 GAMEDATA_GetRndMaptchBp( const GAMEDATA *gamedata );
+#ifdef PM_DEBUG
+extern u8* GAMEDATA_DEBUG_GetRndMaptchBpAdrs( GAMEDATA *gamedata );
+#endif
 
 //----------------------------------------------------------------------------
 /**

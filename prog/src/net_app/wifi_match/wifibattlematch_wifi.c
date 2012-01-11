@@ -5629,9 +5629,11 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_BTLBGM_Init( heapID );
   DEBUGWIN_ATLAS_Init( heapID );
   DEBUGWIN_ETC_InitEx( heapID, (POKEPARTY*)p_wk->p_param->p_player_data->pokeparty );
+  DEBUGWIN_POWEROFF_Init( p_wk->p_param->p_param->p_game_data, heapID );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 {
+  DEBUGWIN_POWEROFF_Exit();
   DEBUGWIN_ETC_Exit();
   DEBUGWIN_ATLAS_Exit();
   DEBUGWIN_BTLBGM_Exit();

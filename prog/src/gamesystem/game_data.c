@@ -2512,6 +2512,12 @@ u8 GAMEDATA_GetRndMaptchBp( const GAMEDATA *gamedata )
 {
   return gamedata->bp;
 }
+#ifdef PM_DEBUG
+u8* GAMEDATA_DEBUG_GetRndMaptchBpAdrs( GAMEDATA *gamedata )
+{
+  return &gamedata->bp;
+}
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief  ランダムマッチで取得するBPの加算
