@@ -20,6 +20,7 @@
 #define D10R0501_KYUREMU_01                8
 #define D10R0501_SWLEADER1_01              9
 #define D10R0501_SWBELL_01                10
+#define D10R0501_SWRIVAL_01               11
 
 #endif //ZONE_D10R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d10r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

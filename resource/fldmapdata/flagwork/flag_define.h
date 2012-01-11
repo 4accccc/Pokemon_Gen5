@@ -944,6 +944,7 @@
 #define FV_R14R0201_OLDMAN_01             1028 /* 0x0404 豊穣の社：うつしかがみをくれる老人 */
 #define FV_D27R0101_SWBOSS_01             1029 /* 0x0405 プラズマフリゲート：クリア後アクロマ */
 #define FV_C03_SWCHAMPION_02              1030 /* 0x0406 ヒウンシティ外周：アイリス */
+#define FV_D10R0501_SWRIVAL_01            1031 /* 0x0407 ジャイアントホール：ライバル */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

@@ -31,6 +31,7 @@ _EVENT_DATA    ev_d10r0501_wand_01
 _EVENT_DATA    ev_d10r0501_kusabi_01
 _EVENT_DATA    ev_d10r0501_kyuremu_01
 _EVENT_DATA    ev_pos_d10r0501_swsage1_vs
+_EVENT_DATA    ev_d10r0501_swrival_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -81,6 +82,11 @@ INIT_EVENT_START ev_init_d10r0501
    _OBJ_POS_CHANGE(D10R0501_NPOKE_01,15,0,22,DIR_UP)
    _OBJ_POS_CHANGE(D10R0501_SWSAGE1_01,17,0,16,DIR_LEFT)
   ENDIF
+  
+  //D10R0501イベント終了後・D26R0101到達前ならばライバルの位置を変更
+  IF $WK_SCENE_D10R0401_SWSAGE1_01 == 4 && $WK_SCENE_D26R0101_BOSS == 0 THEN
+    _OBJ_POS_CHANGE(D10R0501_SWRIVAL_01,15,0,18,DIR_DOWN)
+  ENDIF
 
 INIT_EVENT_END
 
@@ -94,6 +100,12 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
 	//カメラ操作　ゲーチスを中心に
 	_CAMERA_MOVE( 9688,0,970752,1015808,0,1081344,40 )	//一番最後の引数は移動にかかるフレーム数
+	
+  //自転車に乗ってるなら歩行状態へ
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+  ENDIF
 
   //アニメ：主人公ゲーチスの前へ
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15, 20, FORCE_TYPE_NPC, 8, DIR_LR)
@@ -111,7 +123,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // ゲーチス：右に移動
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_1 )
-  _TIME_WAIT( 60 )
+  _TIME_WAIT( 76 )
   //SE再生：通常杖つき音
   _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
   _SE_WAIT()
@@ -148,7 +160,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
  
   // ゲーチス：右に歩いてつえをかかげる
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
-  _TIME_WAIT( 46 )
+  _TIME_WAIT( 30 )
   //SE再生：通常杖つき音
   _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
   _SE_WAIT()
@@ -225,8 +237,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
   //アニメ：ゲーチス一歩左へ
-  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_3 )
-  _OBJ_ANIME_WAIT()
+  //_OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_3 )
+  //_OBJ_ANIME_WAIT()
   
   //ゲーチス：きましたか　ひとのこころをもたぬ ばけもの Nよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
@@ -307,16 +319,18 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   //ブラック：ババリバリッシュ！
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_mu_01, POS_DOWN )
-    // ゼクロム 鳴き声指定仮
+    // ゼクロム
     _VOICE_PLAY( MONSNO_651, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_mu_01, POS_DOWN )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   //ホワイト：ンバーニガガッ！
   ELSE
-    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_shin_01, POS_DOWN )
-    // レシラム 鳴き声指定仮
+    // レシラム
     _VOICE_PLAY( MONSNO_650, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_shin_01, POS_DOWN )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   ENDIF
@@ -561,15 +575,14 @@ EVENT_END
 // いでよキュレムのとき
 //
 _ANIME_LABEL anm_swsage_1
-	_ANIME_DATA	AC_WALK_R_16F,2
+	_ANIME_DATA	AC_WALK_R_16F,3
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
 	_ANIME_DATA	ACMD_END,0
 //-------------------------------------
-// 右に歩いてつえをかかげる
+// つえをかかげる
 //
 _ANIME_LABEL anm_swsage_2
-	_ANIME_DATA	AC_WALK_R_16F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
 	_ANIME_DATA	ACMD_END,0
@@ -670,7 +683,13 @@ _RET
 EVENT_START ev_pos_d10r0501_swsage1_vs
   
   //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //自転車に乗ってるなら歩行状態へ
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+  ENDIF
   
   SWITCH $LCW_POSX
   CASE 13 THEN
@@ -794,11 +813,11 @@ ev_vs_swsage1_02:
   _OBJ_ANIME_WAIT()
     
   //ゲーチス：だまれ！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_18 , D10R0501_SWSAGE1_02 ,POS_UR )
+  _GIZAWIN_OBJMSG_POS( msg_d10r0501_swsage01_18 , D10R0501_SWSAGE1_02, POS_UR )
   _MSGWIN_CLOSE()
   
   //フィールド上にダークトリニティ配置
-  _OBJ_ADD_EX( 19, 16, DIR_DOWN, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+  _OBJ_ADD_EX( 18, 17, DIR_DOWN, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_ninja_coming_01 )
   _OBJ_ANIME_WAIT()
   
@@ -815,21 +834,24 @@ ev_vs_swsage1_02:
   _MSGWIN_CLOSE()
   
   //ダークトリニティ退場
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_u )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_ninja_bye_01 )
+  _TIME_WAIT( 2 )
+  _OBJ_DEL( D10R0501_SWSAGE1_02 )
   _OBJ_ANIME_WAIT()
   
   //ダークトリニティ・ゲーチス動作モデル削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-  _OBJ_DEL( D10R0501_SWSAGE1_02 )
   _OBJ_ADD( D10R0501_WAND_01 )
   
   //主人公移動まで間
   _TIME_WAIT( 16 )
   
-  //アニメ：主人公Ｎに隣接
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss_01)
+  //アニメ：Ｎ主人公に隣接
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_boss_to_player_01)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
   //N：アリガトウ
@@ -837,7 +859,7 @@ ev_vs_swsage1_02:
   _MSGWIN_CLOSE()
   
   //アニメ：Ｎ下を向く
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_l)
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
   // ROMバージョン取得
@@ -847,12 +869,14 @@ ev_vs_swsage1_02:
   IF $LCWK_VERSION == VERSION_B2 THEN
     _PLAINWIN_MSG_UP( msg_d10r0501_mu_02 )
     _VOICE_PLAY( MONSNO_651, 0 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
   ELSE
     _PLAINWIN_MSG_UP( msg_d10r0501_shin_02 )
     _VOICE_PLAY( MONSNO_650, 0 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
@@ -867,7 +891,7 @@ ev_vs_swsage1_02:
   _MSGWIN_CLOSE()
   
   //アニメ：N下を向く
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_d)
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_r)
   _OBJ_ANIME_WAIT()
   
   //間
@@ -912,8 +936,9 @@ ev_vs_swsage1_02:
   _BLACK_OUT_SLOW()
   
   //アニメ：Ｎ退場
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss_02)
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_boss_bye)
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_player_to_boss_01)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss_01)
   _OBJ_ANIME_WAIT()
   
   _DISP_FADE_END_CHECK()
@@ -934,7 +959,7 @@ ev_vs_swsage1_02:
   _DISP_FADE_END_CHECK()
 
   //アニメ：N退場
-  _TIME_WAIT(100)
+  _TIME_WAIT(160)
 
   // ゼクロム・レシラムに乗ったNを非表示
   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END()
@@ -942,13 +967,54 @@ ev_vs_swsage1_02:
   //=======================================//
   //D10R0501のBGMを元に戻す
   _FLAG_RESET( SYS_FLAG_BGM_D10R0501_VS_GCIS )
+  //ライバル表示
+  _FLAG_RESET( FV_D10R0501_SWRIVAL_01 )
   //=======================================//
   
-  //BGMを戻すまで余韻
-  _TIME_WAIT( 20 )
+  //ライバル動作モデル生成
+  _OBJ_ADD( D10R0501_SWRIVAL_01 )
   
   //BGMを変更
   _BGM_NOW_MAP_RECOVER()
+  
+  //アニメ：ライバル隣接
+  _OBJ_ANIME_AUTO( D10R0501_SWRIVAL_01, 15, 18, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D10R0501_SWRIVAL_01,anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：おわったのか？
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_01 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_02 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_03 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル下を向いて
+  _OBJ_ANIME( D10R0501_SWRIVAL_01 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：オレは
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_04 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル「…」
+  _OBJ_ANIME( D10R0501_SWRIVAL_01 , anm_swrival_look_pl )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：オマエはどうする？
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_05 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  
+  //ライバル：ジャイアントホールで
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swrival_06 , D10R0501_SWRIVAL_01 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
   
   //=======================================//
   //D10R0201に接続するように状態を変更
@@ -1010,27 +1076,27 @@ _ANIME_LABEL	anm_ninja_bye_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	主人公：Ｎに隣接
+//	Ｎ：主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_to_player_01
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：Ｎの見送り
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_to_boss_01
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	主人公：Ｎに隣接
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_boss_02
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_WALK_D_16F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	Ｎ：退場
+//	ライバル：「…」
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_boss_bye
-  _ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA AC_WALK_D_16F,2
+_ANIME_LABEL	anm_swrival_look_pl
+  _ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -1054,9 +1120,22 @@ EVENT_START ev_d10r0501_boss_01
 EVENT_END
 
 /************************************************************/
+/*					話しかけ：ライバル						*/
+/************************************************************/
+EVENT_START ev_d10r0501_swrival_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0501_swrival_06 )
+EVENT_END
+
+/************************************************************/
 /*					話しかけ：キュレム（キュラム・キュロム）						*/
 /************************************************************/
 EVENT_START ev_d10r0501_poke10_01
+  
+  //自転車に乗ってるなら歩行状態へ
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+  ENDIF
   
   _TALK_START_SE_PLAY()
   
@@ -1085,8 +1164,9 @@ EVENT_START ev_d10r0501_poke10_01
     _OBJ_ANIME_WAIT()
     
     _GIZAPLAINWIN_MSG_POS( msg_d10r0501_b_01, POS_DOWN )
-    //鳴き声指定仮
+    //鳴き声指定
     _VOICE_PLAY( MONSNO_653, 2 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
     
@@ -1101,6 +1181,7 @@ EVENT_START ev_d10r0501_poke10_01
     _GIZAPLAINWIN_MSG_POS( msg_d10r0501_w_01, POS_DOWN )
     //鳴き声指定仮
     _VOICE_PLAY( MONSNO_653, 1 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
     
@@ -1121,6 +1202,15 @@ EVENT_START ev_d10r0501_poke10_01
     
       //勝利したケース
       IF $LWK_ESCAPE_CK == SCR_WILD_BTL_RET_WIN THEN
+      
+      //自機にカメラを戻す
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラのバインドを解く
+      _CAMERA_DEF_MOVE (1)
+      //カメラ待ち
+      _CAMERA_WAIT_MOVE()
+      _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+      _CAMERA_END()		//カメラ操作終了
       
       //戦闘後
       //========================================//

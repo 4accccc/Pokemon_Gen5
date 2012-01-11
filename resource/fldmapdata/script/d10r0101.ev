@@ -115,7 +115,10 @@ EVENT_START ev_pos_d10r0101_swplazmam_03
   
   //アニメ：元プラズマ団員接近
   _OBJ_ANIME_AUTO( D10R0101_SWPLAZMAM_03 , 60, 41, FORCE_TYPE_NPC, 8, DIR_UD)
-  _TIME_WAIT( 8*3 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_02 , anm_staystep_d )
+  _OBJ_ANIME( D10R0101_SWPLAZMAM_01 , anm_staystep_d )
+  _TIME_WAIT( 8*2 )
   _OBJ_ANIME( D10R0101_SWRIVAL_01 , anm_common_hatena )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME_WAIT()

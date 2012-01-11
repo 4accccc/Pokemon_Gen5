@@ -472,6 +472,8 @@ EVENT_START   ev_pos_d26r0101_boss_01
   $WK_SCENE_D26R0101_BOSS = 1
   //ローカルライブキャスター・ライバル通話状態を変更（C09到達まで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_D26 )
+  //D10R0501ライバル非表示（2012.01.11 水口追加）
+  _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
   //========================================//
 
 EVENT_END
