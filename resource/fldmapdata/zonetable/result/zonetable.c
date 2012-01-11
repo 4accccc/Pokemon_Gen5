@@ -31,7 +31,7 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_SWBC, // camera_area
 		15,   // padding > placeicon
     5,
-		43,
+		42,
 		0,
 		38,
 	},
@@ -4917,7 +4917,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		5,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		2,
+		7,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -4953,7 +4953,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		20,        // camera id
 		MC_TYPE_OTHER,  // map_chg_type
-		2,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -4989,7 +4989,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		21,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		2,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -5025,7 +5025,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		2,
+		9,
 		FALSE,
 		TRUE,
 		FALSE,
@@ -11757,7 +11757,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		10,
+		2,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -15295,9 +15295,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_SWWF, // camera_area
 		15,   // padding > placeicon
     0,
-		43,
+		45,
 		0,
-		38,
+		37,
 	},
 	{//ZONE_ID_WC10PCR0101 = 425
 		RSC_GRID_NOSCROLL,
@@ -16113,7 +16113,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_GATE,  // map_chg_type
-		3,
+		9,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -16648,7 +16648,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d25r0101_bin,
     ZONE_ID_D25R0101,
 		MAPNAME_D25,
-		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -16725,7 +16725,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		39,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		0,
+		9,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -18633,7 +18633,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		FALSE,
 		TRUE,
 		TRUE,
@@ -22126,7 +22126,7 @@ static const ZONEDATA ZoneData[] = {
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		6,
-		FALSE,
+		TRUE,
 		TRUE,
 		FALSE,
 		TRUE,
