@@ -851,10 +851,10 @@ ID：mount_14</Text>
 あの　ひと　より　つよくなる！▼
 オマエは……▼
 がんばれ！　ずかんを　うめつつ
-オレの　サポートだからなッ！▼</Text>
+オレの　サポート　たのむぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:56:53" />
+				Time="2012-01-11T12:49:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -866,10 +866,10 @@ ID：mount_14</Text>
 あの人より　強くなる！▼
 オマエは……▼
 がんばれ！　図鑑を　埋めつつ
-オレの　サポートだからなッ！▼</Text>
+オレの　サポート　頼むぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:16:46" />
+				Time="2012-01-11T12:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -970,10 +970,11 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>んもう！　しつこい！▼</Text>
+			<Text>んもう！　しつこい
+アプローチは　だいきらい　よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:38:21" />
+				Time="2012-01-11T12:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -981,10 +982,11 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>んもう！　しつこい！▼</Text>
+			<Text>んもう！　しつこい
+アプローチは　大嫌い　よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:38:23" />
+				Time="2012-01-11T12:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1028,10 +1030,11 @@ ID：mount_14</Text>
 なかまは　いないのよ！▽
 うみの　あるところに　いかないと▼
 ということで……▼
-もういちど　にげてみせるわ！▼</Text>
+もういちど　にげてみせるわ！
+サヨナラ　タチワキシティ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:00:32" />
+				Time="2012-01-11T12:49:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1044,10 +1047,11 @@ ID：mount_14</Text>
 仲間は　いないのよ！▽
 海の　あるところに　いかないと▼
 ということで……▼
-もういちど　逃げてみせるわ！▼</Text>
+もういちど　逃げてみせるわ！！
+サヨナラ　タチワキシティ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:00:37" />
+				Time="2012-01-11T12:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

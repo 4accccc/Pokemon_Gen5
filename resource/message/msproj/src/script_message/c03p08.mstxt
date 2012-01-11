@@ -52,10 +52,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:23:43" />
+				Time="2012-01-11T13:24:32" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -116,10 +116,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>A</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:23:44" />
+				Time="2012-01-11T13:24:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -178,10 +178,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>A</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:23:46" />
+				Time="2012-01-11T13:24:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -240,10 +240,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>A</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:23:46" />
+				Time="2012-01-11T13:24:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -300,10 +300,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>A</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:23:46" />
+				Time="2012-01-11T13:24:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -411,12 +411,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:29:53" />
+				Time="2012-01-11T13:24:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -480,12 +479,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T05:29:59" />
+				Time="2012-01-11T13:24:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

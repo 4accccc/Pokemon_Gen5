@@ -7,12 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はがねタイプの　コイルとか
-コンビナートにも　ポケモンが　いる▼
-ポケモンを　きたえるには　むいてるし
-ワシも　ときどき　あそびに　いくよ</Text>
+コンビナートにも　ポケモンが　いて▽
+ポケモンを　きたえるには　ぴったり！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-25T06:04:10" />
+				Time="2012-01-11T13:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,12 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はがねタイプの　コイルとか
-コンビナートにも　ポケモンが　いる▼
-ポケモンを　鍛えるには　向いてるし
-ワシも　時々　遊びに行くよ</Text>
+コンビナートにも　ポケモンが　いて▽
+ポケモンを　鍛えるには　ぴったり！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-25T06:04:20" />
+				Time="2012-01-11T13:15:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,10 +294,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T07:37:38" />
+				Time="2012-01-11T13:15:59" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow

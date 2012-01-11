@@ -9,12 +9,12 @@
 			<Text>？？？『ホミカよ　
 ちちを　とめないでおくれ▼
 わたしは　じぶんの　かのうせいを
-さぐるため　ポケウッドに　いきます！▼
+さぐるため　いざ　ポケウッドへ！▼
 ムービースター　でもある
 せんちょうを　めざすのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:14:23" />
+				Time="2012-01-11T13:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,12 +25,12 @@
 			<Text>？？？『ホミカよ　
 父を　とめないでおくれ▼
 わたしは　自分の　可能性を
-探るため　ポケウッドに　行きます！▼
+探るため　いざ　ポケウッドへ！▼
 ムービースター　でもある
 船長を　めざすのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:14:36" />
+				Time="2012-01-11T13:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,10 +98,10 @@
 			<Text>ホミカ『あのね！
 船長でしょ？▼
 船　動かしてくれないと
-こまる　人　いるでしょーが！▼</Text>
+困る　人　いるでしょーが！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:33:28" />
+				Time="2012-01-11T13:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2443,11 +2443,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ホミカパパ『……みたのですか▼
-あの　えいがは
-かんぜんに　しっぱい　ですよ▼</Text>
+あの　えいがは……▼
+というより　わたしは　まいあがって
+リオルマンに　なりきれませんでした▼
+それでは　だれも
+ハラハラドキドキ　しないのです……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:33:20" />
+				Time="2012-01-11T13:07:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2456,11 +2459,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホミカパパ『……観たのですか▼
-あの　映画は
-完全に　失敗ですよ▼</Text>
+あの　映画は……▼
+というより　わたしは　舞い上がって
+リオルマンに　なりきれませんでした▼
+それでは　だれも
+ハラハラドキドキ　しないのです……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:33:26" />
+				Time="2012-01-11T13:07:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2569,7 +2575,7 @@
 ヒウンいきの　ふねに　のれるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:42:09" />
+				Time="2012-01-11T13:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2624,11 +2630,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカパパ『よし！　わたしは
-せんちょうとして　がんばりましょう！▼</Text>
+			<Text>ホミカパパ『よし！　やはり
+せんちょうとして　がんばりましょう！▼
+あらなみを　かきわけ　みんなを
+ハラハラドキドキ　させるのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:33:30" />
+				Time="2012-01-11T13:07:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2636,11 +2644,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカパパ『よし！わたしは
-船長として　がんばりましょう！▼</Text>
+			<Text>ホミカパパ『よし！　やはり
+船長として　がんばりましょう！▼
+荒波を　かきわけ　みんなを
+ハラハラドキドキ　させるのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:33:34" />
+				Time="2012-01-11T13:07:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -6,13 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『この　さきが　サムピア！▼
+			<Text>アイリス『ほらほら！▼
+この　さきが　サムピア！▼
 ヒウンで　あやしいと　いえば
 スリムストリート　か▽
 ここかなと　おもうんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:49:34" />
+				Time="2012-01-11T13:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『この先が　サムピア！▼
+			<Text>アイリス『ほらほら！▼
+この先が　サムピア！▼
 ヒウンで　怪しいと　いえば
 スリムストリート　か▽
 ここかなと　思うんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:49:41" />
+				Time="2012-01-11T13:19:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,10 +82,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリス『こっちこっち！
-じゃあ　いってみよう！▼</Text>
+ねえねえ　いってみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T08:17:44" />
+				Time="2012-01-11T13:20:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -92,10 +94,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『こっちこっち！
-じゃあ　行ってみよう！▼</Text>
+ねえねえ　行ってみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T08:17:52" />
+				Time="2012-01-11T13:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
