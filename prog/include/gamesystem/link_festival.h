@@ -428,6 +428,20 @@ extern void DEB_LINKFEST_SetSpotModeFlag( LINK_FESTIVAL* wk, BOOL flag );
 //---------------------------------------------------------
 extern BOOL DEB_LINKFEST_GetSpotModeFlag( LINK_FESTIVAL* wk );
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ログスタックチェックスキップフラグをセットする
+ */
+//---------------------------------------------------------
+extern void DEB_LINKFEST_SetLogStackCheckThrowFlag( LINK_FESTIVAL* wk, BOOL flag );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ログスタックチェックスキップフラグをゲットする
+ */
+//---------------------------------------------------------
+extern BOOL DEB_LINKFEST_GetLogStackCheckThrowFlag( LINK_FESTIVAL* wk );
+
 #endif  //PM_DEBUG
 
 

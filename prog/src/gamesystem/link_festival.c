@@ -870,6 +870,8 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
 
 #ifdef PM_DEBUG
   wk->deb_time_stop_f = FALSE;
+  wk->deb_spot_mode_f = FALSE;
+  wk->deb_log_stack_check_throw_f = FALSE;
 #endif
 }
 
@@ -929,3 +931,28 @@ static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_MISSION* fmwk)
   return TRUE;
 }
 
+
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ログスタックチェックスキップフラグをセットする
+ */
+//---------------------------------------------------------
+void DEB_LINKFEST_SetLogStackCheckThrowFlag( LINK_FESTIVAL* wk, BOOL flag )
+{
+  wk->deb_log_stack_check_throw_f = flag;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ログスタックチェックスキップフラグをゲットする
+ */
+//---------------------------------------------------------
+BOOL DEB_LINKFEST_GetLogStackCheckThrowFlag( LINK_FESTIVAL* wk )
+{
+  return wk->deb_log_stack_check_throw_f;
+}
+
+#endif  //PM_DEBUG

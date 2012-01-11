@@ -61,3 +61,28 @@ extern void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm );
 //---------------------------------------------------------
 extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, int* log_score );
 
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加人数セット
+ */
+//---------------------------------------------------------
+extern void DEB_LINKFEST_SetEntryLogNum( LINK_FESTIVAL* wk, int value );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加人数ゲット
+ */
+//---------------------------------------------------------
+extern int DEB_LINKFEST_GetEntryLogNum( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加メンバーパラメータゲット
+ */
+//---------------------------------------------------------
+extern LINKFEST_LOG* DEB_LINKFEST_GetEntryLogParam( LINK_FESTIVAL* wk, int idx );
+
+#endif  //PM_DEBUG
+

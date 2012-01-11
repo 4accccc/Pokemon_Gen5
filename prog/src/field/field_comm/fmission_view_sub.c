@@ -240,13 +240,11 @@ BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk )
   int ofs,idx,old_max;
   PANEL_WORK* pp;
 
-#if 0
   //スタックに積まれた情報をチェック
 #ifdef PM_DEBUG
-  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) ){
+  if( DEB_LINKFEST_GetLogStackCheckThrowFlag( wk->fest_sys )){
     return FALSE;
   }
-#endif
 #endif
 
   if( !FMISSION_LOG_StackTbl_GetLog( wk->logStack, wk->newLog )){

@@ -87,3 +87,77 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
   return LINKFEST_SCORELOG_SET_NEW_ENTRY;
 }
 
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加人数セット
+ */
+//---------------------------------------------------------
+static BOOL deb_check_hit_fake_id( LINK_FESTIVAL* wk, u16 id )
+{
+  int i;
+
+  for(i = 0;i < wk->log_num; i++){
+    if( wk->log[i].score.tr_id == id ) return TRUE;
+  }
+  return FALSE;
+}
+static u16 deb_make_fake_id( LINK_FESTIVAL* wk, u16 id )
+{
+  do{
+    ++id;
+  }while( deb_check_hit_fake_id( wk, id ) );
+
+  return id;
+}
+
+void DEB_LINKFEST_SetEntryLogNum( LINK_FESTIVAL* wk, int value )
+{
+  int i;
+
+  if( value == 0 ){
+    for( i = 0;i < wk->log_num; i++ ){
+      LINKFEST_LOG_Clear( &wk->log[i] );
+    }
+  }else if( value > wk->log_num ){  //指定値の方が現エントリー数より多いのでダミー追加
+    u16 id = 0;
+    for( i = wk->log_num; i < value; i++ ){
+      id = deb_make_fake_id( wk, id );
+      wk->log[i].score.tr_id = id;
+      wk->log[i].score.tmap_root = 0;
+      wk->log[i].score.value = 0;
+    }
+  }else{
+    //指定値の方が現エントリーより少ないので、余分を強制削除
+    for( i = wk->log_num; i < value; i++ ){
+      LINKFEST_LOG_Clear( &wk->log[i] );
+    }
+  }
+  wk->log_num = value;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加人数ゲット
+ */
+//---------------------------------------------------------
+int DEB_LINKFEST_GetEntryLogNum( LINK_FESTIVAL* wk )
+{
+  return wk->log_num;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル 参加メンバーパラメータゲット
+ */
+//---------------------------------------------------------
+LINKFEST_LOG* DEB_LINKFEST_GetEntryLogParam( LINK_FESTIVAL* wk, int idx )
+{
+  return &wk->log[idx];
+}
+
+
+#endif  //PM_DEBUG
+
+

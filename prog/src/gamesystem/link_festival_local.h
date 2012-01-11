@@ -64,6 +64,7 @@ struct _LINK_FESTIVAL{
 #ifdef PM_DEBUG
   u8  deb_time_stop_f:1;
   u8  deb_spot_mode_f:1;
+  u8  deb_log_stack_check_throw_f:1;
 #endif
 };
 
