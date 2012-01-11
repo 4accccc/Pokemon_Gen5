@@ -103,7 +103,6 @@ Dir.glob( glob_word ).each{|filename|
       #if line =~ /TODO|todo|‰¼[^‘z]|Œã‚Å|‚ ‚Æ‚Å|‚Æ‚è‚ ‚¦‚¸|æ‚è‚ ‚¦‚¸|æ‚è‡‚¦‚¸|æ‚èŠ¸‚¦‚¸|æŠ¸‚¦‚¸|‚Æ‚è‡‚¦‚¸/ then
       if line =~ /#{pattern_str}/ then
         todo_list << get_first_write_data( filename ,line_index.to_i+1 ,line  )
-        break
       end
     }
   }
