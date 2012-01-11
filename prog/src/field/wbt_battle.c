@@ -1059,6 +1059,13 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
       //戦ったかどうかのフラグを反映
       WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
     }
+    else if ( wbtsys->wbtcup == WBTCUP_HODOMOE_EVENT
+        && wbt_tr->tr_id == WBTROM_TRID_SWLEADER1_EVENT )
+    { //ホドモエイベントでイベント用チェレンと対戦した場合は
+      //リーダーとしてのチェレンと戦ったかどうかのフラグを反映
+      WBTSAVE_SetFlag( wbtsave, WBTROM_TRID_SWLEADER1 );
+    }
+
     if ( result == BTL_RESULT_LOSE || wbtsys->isTutorial == TRUE )
     { //敗北した場合orチュートリアル中は無効なトレーナーIDをセットしておく
       u8 pos;

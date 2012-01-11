@@ -119,9 +119,11 @@ enum { WBT_AUDIENCE_TYPE_MAX = 4 };
 //------------------------------------------------------------------
 enum {
   ///  対戦したかどうかが記録されるWBTROMトレーナーの数
-  WBTROM_TRID_RED = 53,
+  WBTROM_TRID_SWLEADER1 = 0,              ///<チェレン
+  WBTROM_TRID_RED = 53,                   ///<レッド
   WBTROM_TRID_MEM_MAX = 54,
-  WBTROM_TRID_RIVAL = 55,
+  WBTROM_TRID_RIVAL = 55,                 ///<ライバル
+  WBTROM_TRID_SWLEADER1_EVENT = 56,       ///<チェレン（ホドモエイベント戦）
   WBTROM_TRID_TYPEBATTLE_MOB_START = 58,
   WBTROM_TRID_BATTLE_MOB_START = 68,
   WBTROM_TRID_NOBATTLE_MOB_START = 78,
