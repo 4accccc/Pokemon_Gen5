@@ -5399,13 +5399,13 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ワールドリーダーズトーナメントに
-１０かい　ゆうしょうすると▼
+あと　１かい　ゆうしょうすると▼
 チャンピオンズトーナメントに
 さんか　できるようになりますよ▽
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T09:46:10" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-11T06:17:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -5414,13 +5414,13 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ワールドリーダーズトーナメントに
-１０回　優勝すると▼
+あと　１回　優勝すると▼
 チャンピオンズトーナメントに
 参加できるように　なりますよ！▽
 がんばって　くださいね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T10:00:00" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-11T06:17:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
