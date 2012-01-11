@@ -146,7 +146,7 @@ static inline STRBUF * DWC_TOOL_CreateBadNickName( HEAPID heapID )
   GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_namein_dat, heapID );
   STRBUF      *p_strbuf;
 
-  if ( GET_VERSION() == VERSION_BLACK )
+  if ( GET_VERSION() == VERSION_B2 )
   {
     //ブラックバージョンの処理
     p_strbuf  = GFL_MSG_CreateString( p_msg, NAMEIN_DEF_NAME_005 );
