@@ -986,11 +986,12 @@ static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID )
  * @retval  u32
  */
 //=============================================================================================
-u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp )
+u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp, s8 difficulty_lv )
 {
   u32 monsno = BPP_GetMonsNo( bpp );
   u16 formNo = BPP_GetValue( bpp, BPP_FORM );
-  u16 level  = BPP_GetValue( bpp, BPP_LEVEL );
+  u16 ofs_lv = difficulty_lv < 0 ? -difficulty_lv: 0;
+  u16 level  = BPP_GetValue( bpp, BPP_LEVEL ) + ofs_lv;
 
   u32 exp = POKETOOL_GetPersonalParam( monsno, formNo, POKEPER_ID_give_exp );
   exp = exp * level / 5;

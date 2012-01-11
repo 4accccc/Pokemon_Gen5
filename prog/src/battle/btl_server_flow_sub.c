@@ -698,7 +698,7 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
 {
 
   const BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSPConst( wk->mainModule );
-  u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke );
+  u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke, bsp->difficulty_lv );
   u16 memberCount  = BTL_PARTY_GetMemberCount( party );
   u16 gakusyuCount = 0;
 
