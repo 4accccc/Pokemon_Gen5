@@ -2569,28 +2569,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『やっぱり　コゲくさい……▼
-……ひょっとして　バッテリーのなかの
+……ひょっとして　バッテリーの
 エネルギーが　もれだしている……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-11T13:54:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2012-01-11T13:54:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『やっぱり　コゲ臭い……▼
-……ひょっとして　バッテリーの中の
+……ひょっとして　バッテリーの
 エネルギーが　漏れだしている……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2755,16 +2755,16 @@
 ふきとばされてしまった……▼
 かろうじて　いのちを　とりとめた
 じょしゅは　びょういんへ　はこばれた▼
-しかし　わたしは　Ｆー００への
+……しかし　わたしは　Ｆー００への
 おもいが　わすれられず▽
 いまも　ずっと　ここに　いる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2778,16 +2778,16 @@
 吹き飛ばされてしまった……▼
 かろうじて　命を　取り留めた
 助手は　病院へ　運ばれた▼
-しかし　私は　Ｆー００への
+……しかし　私は　Ｆー００への
 思いが　忘れられず▽
 今も　ずっと　ここに　いる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:13:42" />
+				Time="2012-01-11T13:54:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

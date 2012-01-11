@@ -654,11 +654,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『もっとだッ！
-もっと　こころを　こめるんだ！</Text>
+			<Text>カントク『ほら　もっとだッ！
+もっと　こころを　こめろよツ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:49:53" />
+				Time="2012-01-11T13:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -666,11 +666,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『もっとだッ！
-もっと　心を　込めるんだ！</Text>
+			<Text>監督『ほら　もっとだッ！
+もっと　心を　込めろよツ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:50:11" />
+				Time="2012-01-11T13:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -726,10 +726,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『フフン……
-いい　えんぎ　じゃないか</Text>
+おもしろい　えんぎ　じゃないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:11:29" />
+				Time="2012-01-11T13:42:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -738,10 +738,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『フフン……
-いい　演技じゃないか</Text>
+面白い　演技じゃないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:11:36" />
+				Time="2012-01-11T13:42:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1013,11 +1013,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『オイ！　いまいちど
-だいほん　かくにん　しておけ！</Text>
+			<Text>カントク『いいか！　いまいちど
+だいほん　かくにんしておけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:43:06" />
+				Time="2012-01-11T13:48:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1026,10 +1026,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『オイ！　今一度
-台本　確認しておけ！</Text>
+台本　確認して　おけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:43:07" />
+				Time="2012-01-11T13:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1050,10 +1050,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『だいほん　おぼえてるか！？
-わすれそうなら　くっちまえ！</Text>
+わすれそうなら　くっちまえｯ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:20:02" />
+				Time="2012-01-11T13:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1061,11 +1061,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『台本　覚えてるか！？
-忘れそうなら　食っちまえ！</Text>
+			<Text>監督『台本　入ってるか！？
+忘れそうなら　食っちまえ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:20:28" />
+				Time="2012-01-11T13:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1085,11 +1085,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『よしよし……
-いい　かんじだ……</Text>
+			<Text>カントク『よーし　よしよし……
+コイツは　いい　かんじだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:56:00" />
+				Time="2012-01-11T13:49:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1097,11 +1097,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『よしよし……
-いい　感じだ……</Text>
+			<Text>監督『よーし　よしよし……
+コイツは　いい　感じだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:56:15" />
+				Time="2012-01-11T13:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1157,10 +1157,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『いい　えんぎだ……</Text>
+			<Text>カントク『いい　えんぎだ……
+こころ　うばわれるぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:00:17" />
+				Time="2012-01-11T13:43:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1169,10 +1170,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『いい　演技だ……
-</Text>
+心　奪われるぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:00:23" />
+				Time="2012-01-11T13:43:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1228,11 +1229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『いいな……
-てごたえを　かんじる……</Text>
+			<Text>カントク『キャメラ　はやくしろッ！！
+もっと　コイツに　よるんだよッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:02:23" />
+				Time="2012-01-11T13:53:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1240,11 +1241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『いいな……
-手ごたえを　感じる……</Text>
+			<Text>監督『キャメラ　早くしろッ！！
+もっと　コイツに　寄るんだよッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:02:40" />
+				Time="2012-01-11T13:53:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1263,10 +1264,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さすがだな……</Text>
+			<Text>カントク『おい！　カメラ！！
+いまは　コイツだけ　ぬいとけ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:03:44" />
+				Time="2012-01-11T13:46:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1274,10 +1276,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『さすがだな……</Text>
+			<Text>監督『おい！　カメラ！！
+今は　コイツだけ　ぬいとけ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:03:47" />
+				Time="2012-01-11T13:46:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1405,11 +1408,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さあ！　おまえらしい
-フィニッシュを　きめてみろ！</Text>
+			<Text>カントク『さあッ！　おまえらしい
+フィニッシュを　きめてみろよッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:08:39" />
+				Time="2012-01-11T13:47:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1417,11 +1420,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『さあ！　お前らしい
-フィニッシュを　決めてみろ！</Text>
+			<Text>監督『さあッ！　お前らしい
+フィニッシュを　決めてみろよッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:08:45" />
+				Time="2012-01-11T13:47:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
