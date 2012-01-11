@@ -1106,11 +1106,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そんな　うつくしくない
-すうしきは　みとめない！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うつくしくない　すうしき　です
+ボクは　みとめない！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:17:27" />
+				Time="2012-01-11T11:25:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1118,11 +1118,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そんな　美しくない
-数式は　認めない！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]美しくない　数式　です
+ボクは　認めない！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:17:45" />
+				Time="2012-01-11T11:25:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2310,11 +2310,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックキュレムから
+			<Text>キュレムから
 ゼクロムが　ぶんり　した！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-20T12:14:58" />
+				Time="2012-01-11T11:23:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2322,11 +2322,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックキュレムから
+			<Text>キュレムから
 ゼクロムが　分離した！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-20T12:15:07" />
+				Time="2012-01-11T11:23:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2368,11 +2368,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトキュレムから
+			<Text>キュレムから
 レシラムが　ぶんり　した！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-20T12:14:46" />
+				Time="2012-01-11T11:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2380,11 +2380,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトキュレムから
+			<Text>キュレムから
 レシラムが　分離した！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-20T12:15:13" />
+				Time="2012-01-11T11:23:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2429,7 +2429,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 よういした　ブラックキュレムが！！▼
 なんと　いまいましい！▼
-にげた　キュレムを　また
+きえた　キュレムを　また
 かくほ　せねば　ならんではないか！▼
 やはり　めざわりな　トレーナーは
 ワタクシが　てを　くだしましょう！▼
@@ -2438,7 +2438,7 @@ N</Text>
 ワタクシを　とめることは　できない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:06:56" />
+				Time="2012-01-11T11:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2449,7 +2449,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 用意した　ブラックキュレムが！！▼
 なんと　忌々しい！▼
-逃げた　キュレムを　また
+消えた　キュレムを　また
 確保せねば　ならんではないか！▼
 やはり　目障りな　トレーナーは
 ワタクシが　手を　くだしましょう！▼
@@ -2458,7 +2458,7 @@ N</Text>
 ワタクシを　とめることは　できない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:04" />
+				Time="2012-01-11T11:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2507,7 +2507,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 よういした　ホワイトキュレムが！！▼
 なんと　いまいましい！▼
-にげた　キュレムを　また
+きえた　キュレムを　また
 かくほ　せねば　ならんではないか！▼
 やはり　めざわりな　トレーナーは
 ワタクシが　てを　くだしましょう！▼
@@ -2516,7 +2516,7 @@ N</Text>
 ワタクシを　とめることは　できない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:06:59" />
+				Time="2012-01-11T11:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2527,7 +2527,7 @@ N</Text>
 			<Text>ゲーチス『まさか！　せっかく
 用意した　ホワイトキュレムが！！▼
 なんと　忌々しい！▼
-逃げた　キュレムを　また
+消えた　キュレムを　また
 確保せねば　ならんではないか！▼
 やはり　目障りな　トレーナーは
 ワタクシが　手を　くだしましょう！▼
@@ -2536,7 +2536,7 @@ N</Text>
 ワタクシを　とめることは　できない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:01" />
+				Time="2012-01-11T11:24:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3399,11 +3399,11 @@ N</Text>
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
 キミに　アリガトウ　って！▼
-そうなんだ
+そう……
 ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:01:23" />
+				Time="2012-01-11T11:21:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3413,11 +3413,11 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
 キミに　アリガトウ　って！▼
-そうなんだ
+そう……
 ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:01:27" />
+				Time="2012-01-11T11:21:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3464,11 +3464,11 @@ N</Text>
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
 キミに　アリガトウ　って！▼
-そうなんだ
+そう……
 ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:01:35" />
+				Time="2012-01-11T11:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3478,11 +3478,11 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
 キミに　アリガトウ　って！▼
-そうなんだ
+そう……
 ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:01:32" />
+				Time="2012-01-11T11:21:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3533,13 +3533,13 @@ N</Text>
 アデクが　おしえてくれた……▼
 さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
-ことなる　かんがえを　うけいれて
+ことなる　かんがえを　うけいれ
 せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
 しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:03:11" />
+				Time="2012-01-11T11:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3551,13 +3551,13 @@ N</Text>
 アデクが　教えてくれた……▼
 さらに　多くの　出会いを　経て
 いろんな　声を　きいた……▼
-異なる　考えを　受け入れて
+異なる　考えを　受け入れ
 世界は　化学反応を　起こす▼
 そうして　ボクの　世界は
 静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:03:20" />
+				Time="2012-01-11T11:22:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3604,13 +3604,13 @@ N</Text>
 アデクが　おしえてくれた……▼
 さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
-ことなる　かんがえを　うけいれて
+ことなる　かんがえを　うけいれ
 せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
 しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:03:13" />
+				Time="2012-01-11T11:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3622,13 +3622,13 @@ N</Text>
 アデクが　教えてくれた……▼
 さらに　多くの　出会いを　経て
 いろんな　声を　きいた……▼
-異なる　考えを　受け入れて
+異なる　考えを　受け入れ
 世界は　化学反応を　起こす▼
 そうして　ボクの　世界は
 静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T11:03:16" />
+				Time="2012-01-11T11:22:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4581,12 +4581,12 @@ N</Text>
 			Language="JPN">
 			<Text>そうか……
 おわったんだな▼
-それより　キュレムを
-プラズマだんから　たすけたんだろ？▽
+それより　プラズマだんから
+キュレムを　たすけたんだろ？▽
 オマエ　すげーよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T09:59:31" />
+				Time="2012-01-11T11:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4596,12 +4596,12 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>そうか……
 終わったんだな▼
-それより　キュレムを
-プラズマ団から　助けたんだろ？▽
+それより　プラズマ団から
+キュレムを　助けたんだろ？▽
 オマエ　すげーよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T10:01:53" />
+				Time="2012-01-11T11:21:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4646,12 +4646,12 @@ N</Text>
 			Language="JPN">
 			<Text>そうだな……
 おわりなんて　じぶんが　きめることさ▼
-それより　キュレムを
-プラズマだんから　たすけたんだろ？▽
+それより　プラズマだんから
+キュレムを　たすけたんだろ？▽
 オマエ　すげーよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T09:58:48" />
+				Time="2012-01-11T11:20:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4661,12 +4661,12 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>そうだな……
 終わりなんて　自分が　決めることさ▼
-それより　キュレムを
-プラズマ団から　助けたんだろ？▽
+それより　プラズマ団から
+キュレムを　助けたんだろ？▽
 オマエ　すげーよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T10:02:14" />
+				Time="2012-01-11T11:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4710,12 +4710,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>オレは……　チョロネコを
-いもうとに　かえす▼
+いもうとに　かえすッ……！▼
 まだ　モンスターボールから
-だすことも　できないけど……</Text>
+だすなんて　ムリだけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T10:02:35" />
+				Time="2012-01-11T11:14:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4724,12 +4724,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレは……　チョロネコを
-妹に　返す▼
+妹に　返すッ……！▼
 まだ　モンスターボールから
-だすことも　できないけど……</Text>
+だすなんて　無理だけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T10:02:26" />
+				Time="2012-01-11T11:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
