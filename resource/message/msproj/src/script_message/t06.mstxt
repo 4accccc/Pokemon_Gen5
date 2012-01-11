@@ -1463,4 +1463,516 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♂
+・t06のposを踏むと画面下からベル登場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:30:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♂
+・t06のposを踏むと画面下からベル登場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:30:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごめんね！▼
+あなたに　たくした　ポケモンずかん
+パワーアップしておくの　わすれてたよ▼
+そのなも　せいそくちリスト！
+これ　すごいんだよ▽
+ちょっと　ずかんを　かりるね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごめんね！▼
+あなたに　託した　ポケモン図鑑
+パワーアップしておくの　忘れてたよ▼
+その名も　生息地リスト！
+これ　すごいんだよ▽
+ちょっと　図鑑を　借りるね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・正面を向いて、動作モデルのアニメ再生後
+・続けてwhite_13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]の　ポケモンずかんが
+パワーアップ　した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]の　ポケモン図鑑が
+パワーアップ　した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+・ME再生
+・続けてwhite_14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそくちリストは　ばしょ　ごとに　
+どんな　ポケモンが　いるのか▼
+たしかめることが　できる
+ポケモンずかんの　モード　なんだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生息地リストは　場所ごとに　
+どんな　ポケモンが　いるのか▼
+確かめることが　できる
+ポケモン図鑑の　モード　なんだよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・せいそくちリスト機能解放
+・続けてwhite_15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つかいかたは　ずかんを　ひらいて
+がめん　ひだりしたの▽
+「せいそくち」の　ところに　タッチ！▽
+つぎに　みたい　ばしょを　えらんでね▼
+その　ばしょに　せいそく　する
+ポケモンを　すべて　みたり▽
+つかまえたら　おしえてくれるよ！▼
+もういちど
+つかいかたの　せつめいを　きく？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>使い方は　図鑑を　ひらいて
+画面　左下の▽
+「生息地」の　ところに　タッチ！▽
+次に　みたい　場所を　選んでね▼
+その場所に　生息する
+ポケモンを　すべて　みたり▽
+捕まえたら　教えてくれるよ！▼
+もう一度
+使い方の　説明を　きく？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえの選択肢表示
+　はい　→swbell_06
+　いいえ→swbell_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあ　アドバイス！▼
+みちを　あるいていると
+くさむらが　ゆれることが　あるの！▽
+ゆれた　くさむらの　なかには……▼
+あとは　じっさいの
+おたのしみ　だよね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあ　アドバイス！▼
+道を　歩いていると
+草むらが　揺れることが　あるの！▽
+揺れた　草むらの　中には……▼
+あとは　実際の
+お楽しみ　だよね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク表示後
+・続けてswbell_08（一度ウインドウをとじる）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:31:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:26:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_swbell_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンずかんを　うめることは
+きみの　せかいを　ひろげること！▼
+だから　いろんな　ばしょに　いって
+いろんな　ポケモンに　であってね！▼
+じゃあねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン図鑑を　埋めることは
+きみの　世界を　広げること！▼
+だから　いろんな　場所に　行って
+いろんな　ポケモンに　出会ってね！▼
+じゃあねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・一度別方向を向かせてから
+　再度主人公をむいてメッセージ
+・r19側に退場
+　画面外に消えると操作可能
+・以降、主人公の家に出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:31:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:29:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

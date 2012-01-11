@@ -11,13 +11,12 @@
 がんじょうな　オレと▽
 オレの　ダンゴロに　かつのだ！▼
 しかし　オレと　オレの　ダンゴロは
-バッジを　７ついじょう　もつ▽
 つわものとしか　たたかわない！▼
 それが　オレと　オレの　ダンゴロの
 がんじょうな　ポリシー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:05:27" />
+				Time="2012-01-11T03:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,13 +29,12 @@
 がんじょうな　オレと▽
 オレの　ダンゴロに　勝つのだ！▼
 しかし　オレと　オレの　ダンゴロは
-バッジを　７つ以上　持つ▽
 ツワモノとしか　戦わない！▼
 それが　オレと　オレの　ダンゴロの
 がんじょうな　ポリシー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:18:34" />
+				Time="2012-01-11T03:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46,10 +44,10 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX＝6、GRIDZ＝53
-・バッジが６個以下のとき</Comment>
+・ソウリュウイベントクリア前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T02:10:20" />
+				Time="2012-01-11T03:16:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,6 +56,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-05T02:57:45" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:10" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -81,15 +86,14 @@
 			Language="JPN">
 			<Text>ムムッ！▼
 オレと　オレの　ダンゴロは
-バッジを　７ついじょう　もつ▽
-きみのような　つわものを▽
-まっていた！▼
+きみのような▽
+ツワモノを　まっていた！▼
 ここを　とおりたければ
 がんじょうな　オレと▽
 オレの　ダンゴロを　たおすのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:05:16" />
+				Time="2012-01-11T03:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -99,15 +103,14 @@
 			Language="JPN_KANJI">
 			<Text>ムムッ！▼
 オレと　オレの　ダンゴロは
-バッジを　７つ以上　持つ▼
-きみのような
+きみのような▽
 ツワモノを　待っていた！▼
 ここを　通りたければ
 がんじょうな　オレと▽
 オレの　ダンゴロを　倒すのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:19:06" />
+				Time="2012-01-11T03:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -116,13 +119,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・バッジが７個のとき
+・ウリュウイベントクリア後
 ・はい/いいえの選択肢表示
 　はい　→fighterm_03
 　いいえ→fighterm_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:18:08" />
+				Time="2012-01-11T03:16:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -131,6 +134,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-05T02:57:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -184,6 +194,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:05" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -234,6 +251,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-05T02:57:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -297,6 +321,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-05T02:57:47" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:05" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -315,15 +346,14 @@
 とられてしまうとは！▼
 まあいい！▼
 オレと　オレの　ダンゴロは
-バッジを　７ついじょう　もつ▽
-きみのような　つわものを▽
-まっていた！▼
+きみのような▽
+ツワモノを　まっていた！▼
 ここを　とおりたければ
 がんじょうな　オレと▽
 オレの　ダンゴロを　たおすのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T02:12:55" />
+				Time="2012-01-11T03:17:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -336,15 +366,14 @@
 とられてしまうとは！▼
 まあいい！▼
 オレと　オレの　ダンゴロは
-バッジを　７ついじょう　もつ▽
-きみのような　つわものを▽
-まっていた！▼
+きみのような▽
+ツワモノを　待っていた！▼
 ここを　とおりたければ
 がんじょうな　オレと▽
 オレの　ダンゴロを　たおすのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T02:12:59" />
+				Time="2012-01-11T03:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,6 +400,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2012-01-11T02:13:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -423,6 +459,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-04T12:05:11" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:19:58" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d32r0101_poke49b_01"
@@ -466,6 +509,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-04T12:07:42" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:19:59" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -511,6 +561,13 @@
 				User="matsumiya:W00224"
 				Time="2012-01-11T02:07:36" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:19:59" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d32r0101_poke50_01"
@@ -555,6 +612,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:25:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:01" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -610,6 +674,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:26:29" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:02" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -661,6 +732,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-08T05:26:29" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:02" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -710,6 +788,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-20T12:57:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:20:02" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

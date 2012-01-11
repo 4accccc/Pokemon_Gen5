@@ -1078,4 +1078,61 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_barrier_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>あぶない！
+バリアは　でんりゅうで　ビリビリだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>危ない！　バリアには
+高圧電流が　流れている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バリア接近時
+・！マーク表示後にメッセージ
+　主人公を一歩下げる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>バリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T03:24:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
