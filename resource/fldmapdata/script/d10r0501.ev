@@ -235,10 +235,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // カメラ元に戻す
 	_CAMERA_MOVE( 9688,0,970752,1015808,0,1081344,20 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-  //アニメ：ゲーチス一歩左へ
-  //_OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_3 )
-  //_OBJ_ANIME_WAIT()
   
   //ゲーチス：きましたか　ひとのこころをもたぬ ばけもの Nよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
@@ -455,10 +451,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   */
   
   _TIME_WAIT(18)
-
-  //アニメ：Nビックリ
-  _OBJ_ANIME( D10R0501_BOSS_01, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
 
   //N：ゼクロム（レシラム）！？
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_14w, msg_d10r0501_boss_14b, D10R0501_BOSS_01, POS_DOWN)
@@ -1333,7 +1325,7 @@ EVENT_START ev_d10r0501_kyuremu_01
   _GIZAPLAINWIN_CLOSE()
 
   //キュレム戦闘
-  _WILD_BTL_SET_LEGEND( MONSNO_653, 75 ) // Lv.75 キュレム
+  _WILD_BTL_SET_LEGEND( MONSNO_653, 70 ) // Lv.70 キュレム
   
   _WILD_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った

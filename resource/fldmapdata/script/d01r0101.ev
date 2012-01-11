@@ -555,7 +555,7 @@ EVENT_START   ev_pos_d01r0101_rati2_06
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    _WILD_BTL_SET_LEGEND( MONSNO_381, 70 ) // Lv.70 ラティオス
+    _WILD_BTL_SET_LEGEND( MONSNO_381, 68 ) // Lv.680 ラティオス
 
   //Ｗ２ならラティアス
   ELSE
@@ -567,7 +567,7 @@ EVENT_START   ev_pos_d01r0101_rati2_06
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    _WILD_BTL_SET_LEGEND( MONSNO_380, 70 ) // Lv.70 ラティアス
+    _WILD_BTL_SET_LEGEND( MONSNO_380, 68 ) // Lv.68 ラティアス
 
   ENDIF
 
