@@ -3291,7 +3291,7 @@ static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst )
 {
   enum
   {
-    NOISE_WND_WIDTH   = 10/2,
+    NOISE_WND_WIDTH   = 12/2,
     NOISE_WND_HEIGHT  = 4/2,
   };
 
