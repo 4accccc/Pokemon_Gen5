@@ -2562,7 +2562,7 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
           );
     }
 
-    UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
+    //UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
     *p_seq  = SEQ_START_FADEIN_EXIT;
     break;
   case SEQ_START_FADEIN_EXIT:
