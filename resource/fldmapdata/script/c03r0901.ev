@@ -28,6 +28,7 @@ _EVENT_DATA   ev_c03r0901_waiter_01
 _EVENT_DATA   ev_c03r0901_businessman_01
 _EVENT_DATA   ev_c03r0901_sunglasses_01
 _EVENT_DATA	ev_c03r0901_veteranw_01
+_EVENT_DATA	ev_pos_c03r0901_fes_01
 _EVENT_DATA_END
 
 
@@ -188,20 +189,21 @@ EVENT_START   ev_c03r0901_musician_01
         _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
         _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
         _OBJ_ANIME_WAIT()
-
+        
+        //========================================//
+    	   _FLAG_SET(FE_C03R0901_MELODY)
+    	   //========================================//
+	   
+	   IF FLAG_OFF( SYS_FLAG_FES_KINOMI_M ) THEN
+	       $LOCALWORK10 = 1
+	   ENDIF
+	   
       ENDIF
-      
-      //ハイリンクフェス追加前の場合
-      IF FLAG_OFF ( FE_C03R0901_MELODY ) THEN
-    		_CALL fes_append
-      //ハイリンクフェス追加後の場合
-      ELSE
       
     		//ギタリストメッセージ
     		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
     		_LAST_KEYWAIT()
     		_BALLOONWIN_CLOSE()
-      ENDIF
 
     ELSE
       _CALL last_message
@@ -263,6 +265,14 @@ learn_skill:
   _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
   _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  _FLAG_SET(FE_C03R0901_MELODY)
+  //========================================//
+	   
+  IF FLAG_OFF( SYS_FLAG_FES_KINOMI_M ) THEN
+       $LOCALWORK10 = 1
+  ENDIF
 
   //覚えた後の子芝居
   IF $SCWK_ANSWER == TRUE THEN
@@ -278,8 +288,8 @@ learn_skill:
 _RET
 
 ball_out:
-  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 5, 0, 7, 3, 8 )
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 5, 0, 7 )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 5, 2, 7, 3, 8 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 5, 2, 7 )
   //ボール出現フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
   _WHITE_OUT()
@@ -325,40 +335,6 @@ fes_append:
   _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
-  //アニメ：ベテラン♀隣接
-  _OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 4, LWK_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_r )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-  _OBJ_ANIME_WAIT()
-
-  _BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_02 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
-
-  //フェスミッション名格納
-  _FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_MOVIE, 0 )
-
-  //フェスミッションが追加されました
-  _SE_PLAY( SEQ_SE_FLD_133 )
-  _SYSWIN_MSG( msg_c03r0901_mission_add_03, POS_DEFAULT )
-  _SE_WAIT()
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-
-  //========================================//
-  //覚えた場合、イベント消化フラグＯＮ
-  _FLAG_SET( FE_C03R0901_MELODY )
-
-  //フェスミッションオープンフラグON
-  _FLAG_SET( SYS_FLAG_FES_KINOMI_M )
-  //========================================//
-
-  //アニメ：ベテラン♀戻る
-  _OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 2, 8, FORCE_TYPE_NOT, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
 _RET
 
 //--------------------------------------------------------------------
@@ -466,6 +442,32 @@ _ANIME_LABEL	anm_staystep_l
 _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 	
 
 /**************************************************************/
@@ -499,8 +501,98 @@ EVENT_START	ev_c03r0901_veteranw_01
 	IF FLAG_OFF( FE_C03R0901_MELODY ) THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_mission_add_01 )
 	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_mission_add_04 )
+	
+		IF FLAG_OFF( SYS_FLAG_FES_KINOMI_M ) THEN
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_02 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
+			_MSGWIN_CLOSE()
+
+			//フェスミッション名格納
+			_FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_MOVIE, 0 )
+
+			//フェスミッションが追加されました
+			_SE_PLAY( SEQ_SE_FLD_133 )
+			_SYSWIN_MSG( msg_c03r0901_mission_add_03, POS_DEFAULT )
+			_SE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_MSGWIN_CLOSE()
+
+			//========================================//
+			//フェスミッションオープンフラグON
+			_FLAG_SET( SYS_FLAG_FES_KINOMI_M )
+			
+			$LOCALWORK10 = 2
+			
+			//========================================//
+
+			_BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_04 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_mission_add_04 )
+		ENDIF
+	
 	ENDIF
 
 EVENT_END
 
+/************************************************************/
+/*	FES用　POSイベント								*/
+/************************************************************/
+EVENT_START	ev_pos_c03r0901_fes_01
+
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	SWITCH $LWK_POSX
+	CASE 4 THEN
+		$LWK_POSX = 3
+	CASE 5 THEN
+		$LWK_POSX = 4
+	CASE 6 THEN
+		$LWK_POSX = 5
+	ENDSWITCH
+
+	_OBJ_ANIME( C03R0901_VETERANW_01, anm_dir_r )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( C03R0901_VETERANW_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	//ベテラントレーナー近づいてくる
+	_OBJ_ANIME_AUTO( C03R0901_VETERANW_01, LWK_POSX, LWK_POSZ, FORCE_TYPE_NOT, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_02 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//フェスミッション名格納
+	_FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_MOVIE, 0 )
+
+	//フェスミッションが追加されました
+	_SE_PLAY( SEQ_SE_FLD_133 )
+	_SYSWIN_MSG( msg_c03r0901_mission_add_03, POS_DEFAULT )
+	_SE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+
+	//========================================//
+	//フェスミッションオープンフラグON
+	_FLAG_SET( SYS_FLAG_FES_KINOMI_M )
+	//========================================//
+
+	_BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_04 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 2, 8, FORCE_TYPE_NOT, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	$LOCALWORK10 = 2
+	//========================================//
+
+EVENT_END
