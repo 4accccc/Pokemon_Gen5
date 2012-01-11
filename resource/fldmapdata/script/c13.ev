@@ -696,14 +696,17 @@ _TALK_OBJ_START()
 		
 		//どくジムにホミカ表示
 		//_FLAG_RESET(FV_C13GYM0102_SWLEADER2)
-	
+	  
+	  //以下の処理は水口が追加（2012.01.11）
 		//R20ライバル非表示
-		_FLAG_SET( FV_R20_SWRIVAL_01 )
+		_FLAG_RESET( FV_R20_SWRIVAL_01 )
 		//R20プラズマ団表示
 		_FLAG_RESET( FV_R20_SWPLAZMA_01 )
-
+		//R20_BGM変更
+		_FLAG_SET( SYS_FLAG_BGM_R20_PLAZMA )
+		
 		//R20イベント進行
-		$WK_SCENE_R20 = 4
+		$WK_SCENE_R20 = 5
 	
 		//========================================/
 	
