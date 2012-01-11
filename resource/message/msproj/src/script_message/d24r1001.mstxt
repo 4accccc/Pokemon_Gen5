@@ -50,6 +50,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-19T10:40:17" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:59:09" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -102,6 +109,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-19T10:40:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:59:10" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -162,6 +176,13 @@
 				Time="2011-07-27T03:59:40" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:59:12" />
+		</AttributeCell>
+		<AttributeCell
 			Name="キャラ指定">
 			<Text>？？？</Text>
 			<TextModifiedBy
@@ -214,6 +235,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-27T03:59:41" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:59:13" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d24r1001_poke485_03"
@@ -257,6 +285,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-27T03:59:41" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:59:14" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

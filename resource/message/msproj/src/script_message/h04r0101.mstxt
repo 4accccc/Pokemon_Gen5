@@ -49,10 +49,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T05:53:46" />
+				Time="2012-01-11T06:55:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -117,10 +117,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T05:53:47" />
+				Time="2012-01-11T06:55:10" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -177,10 +177,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T05:53:47" />
+				Time="2012-01-11T06:55:10" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

@@ -146,14 +146,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！
+			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！▼
 でも　なかまは　おおければ
 おおいほど　たびは　たのしいはずよ！▼
 ほら！　これを　あげるから
 ポケモンを　いっぱい　つかまえたら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T07:34:57" />
+				Time="2012-01-11T05:09:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -161,14 +161,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！
+			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！▼
 でも　なかまは　おおければ
 おおいほど　たびは　たのしいはずよ！▼
 ほら！　これを　あげるから
 ポケモンを　いっぱい　つかまえたら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T07:35:00" />
+				Time="2012-01-11T05:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

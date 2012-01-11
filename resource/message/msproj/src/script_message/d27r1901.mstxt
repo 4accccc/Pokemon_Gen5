@@ -10,10 +10,10 @@
 イエスしか　いわないのって▽
 ほんとうの　やさしさ　じゃねーよな▼
 オレをふくめ　プラズマだんに
-やさしさは　なかったんだ……</Text>
+やさしさは　なかったんだな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:48:15" />
+				Time="2012-01-11T06:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25,10 +25,10 @@
 イエスしか　いわないのって▽
 本当の　優しさ　じゃねーよな▼
 オレをふくめ　プラズマ団に
-優しさは　なかったんだ……</Text>
+優しさは　なかったんだな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:48:27" />
+				Time="2012-01-11T06:05:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -49,6 +49,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-12T10:44:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T06:04:54" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

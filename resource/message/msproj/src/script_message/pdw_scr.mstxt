@@ -36,6 +36,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:37" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_02"
@@ -68,6 +75,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>401</Text>
@@ -119,6 +133,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_04"
@@ -169,6 +190,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_05"
@@ -217,6 +245,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -267,6 +302,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_06"
@@ -312,6 +354,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -368,6 +417,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_08_01"
@@ -412,6 +468,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -472,6 +535,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_sys_01"
@@ -504,6 +574,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:44" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -538,6 +615,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:45" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_sys_03"
@@ -570,6 +654,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:45" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -604,6 +695,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:45" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_sys_05"
@@ -637,6 +735,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:45" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="pdw_furniture_menu_sys_06"
@@ -669,6 +774,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T05:40:45" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
