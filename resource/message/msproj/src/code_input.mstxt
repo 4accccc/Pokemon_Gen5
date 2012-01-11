@@ -34,6 +34,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:24" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_02"
@@ -70,6 +77,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_03"
@@ -104,6 +118,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_04"
@@ -137,6 +158,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_05"
@@ -170,6 +198,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_06"
@@ -207,6 +242,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_07"
@@ -244,5 +286,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:41:26" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

@@ -26,6 +26,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:37" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_page01"
@@ -52,6 +59,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_page02"
@@ -78,6 +92,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_return"
@@ -104,6 +125,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_close"
@@ -130,6 +158,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_menu01"
@@ -156,6 +191,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_menu02"
@@ -182,6 +224,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_menu03"
@@ -208,6 +257,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_menu04"
@@ -234,6 +290,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message01"
@@ -262,6 +325,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message02"
@@ -290,6 +360,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message03"
@@ -316,6 +393,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message04"
@@ -342,6 +426,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message05"
@@ -370,6 +461,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_message06"
@@ -398,6 +496,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mailbox_yes"
@@ -424,6 +529,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mailbox_no"
@@ -450,5 +562,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-10T08:37:40" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

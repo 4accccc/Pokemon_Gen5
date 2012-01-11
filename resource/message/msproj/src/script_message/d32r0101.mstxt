@@ -45,11 +45,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX＝5、GRIDZ＝48
+・GRIDX＝6、GRIDZ＝53
 ・バッジが６個以下のとき</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:11:09" />
+				Time="2012-01-11T02:10:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -306,6 +306,81 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d32r0101_fighterm_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ムムッ！▼
+この　オレが　はいごを
+とられてしまうとは！▼
+まあいい！▼
+オレと　オレの　ダンゴロは
+バッジを　７ついじょう　もつ▽
+きみのような　つわものを▽
+まっていた！▼
+ここを　とおりたければ
+がんじょうな　オレと▽
+オレの　ダンゴロを　たおすのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:12:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:12:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ムムッ！▼
+この　オレが　はいごを
+とられてしまうとは！▼
+まあいい！▼
+オレと　オレの　ダンゴロは
+バッジを　７ついじょう　もつ▽
+きみのような　つわものを▽
+まっていた！▼
+ここを　とおりたければ
+がんじょうな　オレと▽
+オレの　ダンゴロを　たおすのだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:12:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:12:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝2～7、GRIDZ＝53
+・！マーク後、上をむいてメッセージ表示
+・はい/いいえの選択肢表示
+　はい　→fighterm_03
+　いいえ→fighterm_04
+・一度表示以降はfighterm_02から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:14:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM
+トレーナーID：karate_22</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:13:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d32r0101_poke49a_01"
 		Style="Large">
 		<LanguageCell
@@ -332,12 +407,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX＝4、GRIDZ＝48
+			<Comment>ポケモン
+・GRIDX＝7、GRIDZ＝53
+・あわせて鳴き声再生
 ・戦闘後、削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:10:05" />
+				Time="2012-01-11T02:11:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -375,12 +451,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX＝6、GRIDZ＝48
+			<Comment>ポケモン
+・GRIDX＝5、GRIDZ＝53
+・あわせて鳴き声再生
 ・戦闘後、削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T12:10:14" />
+				Time="2012-01-11T02:11:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -389,6 +466,50 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-04T12:07:42" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d32r0101_poke49c_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だだーーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:07:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:07:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だだーーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:07:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:07:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・GRIDX＝4、GRIDZ＝54
+・あわせて鳴き声再生
+・戦闘後、削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:11:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T02:07:36" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
