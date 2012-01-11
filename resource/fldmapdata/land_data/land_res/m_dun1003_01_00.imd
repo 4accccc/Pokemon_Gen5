@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-12-13T11:16:38" source="m_dun1003_01_00.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2012-01-10T18:37:10" source="m_dun1003_01_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-12-13T11:16:38" source="m_dun1003_01_00.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2012-01-10T18:37:10" source="m_dun1003_01_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2546,7 +2546,7 @@
 		vertex_size="30" polygon_size="10"
 		triangle_size="0" quad_size="10"
 		volume_min="-2.000000 -0.031250 3.000000"
-		volume_max="2.500000 -0.031250 4.000000"
+		volume_max="2.500000 -0.015625 4.000000"
 		volume_r="4.717041"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -2584,13 +2584,13 @@
 					<tex st="-55.937500 -63.375000"/>
 					<pos_xz xz="-1.750000 3.500000"/>
 					<tex st="-55.062500 -43.187500"/>
-					<pos_xz xz="-1.718750 3.781250"/>
+					<pos_s xyz="-1.718750 -0.015625 3.781250"/>
 					<tex st="-61.500000 -63.375000"/>
 					<pos_xz xz="-1.953125 3.546875"/>
 				</primitive>
 				<primitive index="2" type="quad_strip" vertex_size="6">
 					<tex st="55.687500 -63.250000"/>
-					<pos_xz xz="2.453125 3.046875"/>
+					<pos_s xyz="2.453125 -0.031250 3.046875"/>
 					<tex st="55.687500 -44.812500"/>
 					<pos_xz xz="2.218750 3.281250"/>
 					<tex st="62.937500 -63.250000"/>
@@ -2618,7 +2618,7 @@
 				</primitive>
 				<primitive index="4" type="quads" vertex_size="4">
 					<tex st="111.812500 -44.812500"/>
-					<pos_xz xz="-1.750000 4.000000"/>
+					<pos_s xyz="-1.750000 -0.015625 4.000000"/>
 					<tex st="117.625000 -44.812500"/>
 					<pos_xz xz="-1.718750 3.781250"/>
 					<tex st="123.312500 -62.937500"/>
@@ -5286,11 +5286,11 @@
 				</primitive>
 				<primitive index="4" type="triangle_strip" vertex_size="5">
 					<tex st="-375.250000 30.250000"/>
-					<pos_xy xy="-1.750000 -0.031250"/>
+					<pos_xy xy="-1.750000 -0.015625"/>
 					<tex st="-385.000000 8.437500"/>
 					<pos_xy xy="-1.625000 0.187500"/>
 					<tex st="-395.062500 32.000000"/>
-					<pos_s xyz="-1.718750 -0.031250 3.781250"/>
+					<pos_s xyz="-1.718750 -0.015625 3.781250"/>
 					<tex st="-404.687500 8.437500"/>
 					<pos_s xyz="-1.500000 0.187500 3.875000"/>
 					<tex st="-414.625000 30.187500"/>
