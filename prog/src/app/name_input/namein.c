@@ -4449,6 +4449,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
+  //デフォルト値を保存
+  p_wk->icon_def_y  = pos.y;
+
   //CLWK作成
   { 
     GFL_CLWK_DATA cldata;
@@ -4711,7 +4714,7 @@ static BOOL Icon_MainMove( ICON_WORK *p_wk )
 #else
     clpos.x = ICON_POS_X;
 #endif
-    clpos.y = ICON_POS_Y - ((ICON_MOVE_Y*sin) >> FX16_SHIFT);
+    clpos.y = p_wk->icon_def_y - ((ICON_MOVE_Y*sin) >> FX16_SHIFT);
 
     GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
   

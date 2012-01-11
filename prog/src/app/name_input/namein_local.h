@@ -548,6 +548,7 @@ typedef struct
   GFL_BMP_DATA      *p_bmp;     //文字用BMP
   BOOL  is_trans_req;
   PRINT_QUE *p_que;
+  s32               icon_def_y;
 } ICON_WORK;
 //-------------------------------------
 /// メインワーク
