@@ -47,6 +47,13 @@
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:48" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -106,6 +113,13 @@
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:43" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -162,6 +176,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:50" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -212,6 +233,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -265,6 +293,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:45" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -314,6 +349,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -366,6 +408,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:50" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -417,6 +466,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T09:59:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

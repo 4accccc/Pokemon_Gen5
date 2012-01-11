@@ -187,7 +187,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのじゅどうを
+			<Text>イッシュのなんかん　しろのじゅどうを
 たのしんで　いるかい？▼
 あれから　キミが　どこまで
 いけたのか　きょうみが　あるね▼
@@ -195,7 +195,7 @@
 キミの　ちからを　みせて　もらおう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T03:59:28" />
+				Time="2012-01-11T08:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,14 +203,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白の樹洞を　楽しんで　いるかい？▼
+			<Text>イッシュの難関　白の樹洞を
+楽しんで　いるかい？▼
 あれから　キミが　どこまで
 行けたのか　興味が　あるね▼
 さあ　成長した　キミの　ちからを
 みせて　もらおう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T04:03:47" />
+				Time="2012-01-11T08:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -860,14 +861,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろうは　どうかしら？▼
+			<Text>イッシュのなんかん
+くろのまてんろうは　どうかしら？▼
 あれから　キミが　どこまで
 いけたのか　しりたいわね▼
 さあ　せいちょうした
 キミの　ちからを　みせて　もらうわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:26:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -875,14 +877,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒の摩天楼は　どうかしら？▼
+			<Text>イッシュの難関
+黒の摩天楼は　どうかしら？▼
 あれから　キミが　どこまで
 行けたのか　知りたいわね▼
 さあ　成長した　キミの　力を
 みせて　もらうわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T04:26:53" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:45:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1491,7 +1494,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……▼
+			<Text>まいったわ……▼
 けたちがいの　つよさを　もつ
 トレーナーって　いるものね▼
 あれだけの　そしつを
@@ -1500,7 +1503,7 @@
 ぜんりょくで　ぶつかって　きなさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T06:21:32" />
+				Time="2012-01-11T08:46:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1508,7 +1511,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……▼
+			<Text>まいったわ……▼
 ケタ違いの　強さを　持つ
 トレーナーって　いるものね▼
 あれだけの　素質を
@@ -1517,7 +1520,7 @@
 全力で　ぶつかって　来なさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T06:20:12" />
+				Time="2012-01-11T08:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2245,7 +2248,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……▼
+			<Text>まいったぜ……▼
 けたちがいの　つよさを　もつ
 トレーナーって　いるものだね▼
 あれだけの　そしつの　もちぬし
@@ -2254,7 +2257,7 @@
 ぜんりょくで　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T06:22:20" />
+				Time="2012-01-11T08:46:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2262,7 +2265,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……▼
+			<Text>まいったぜ……▼
 ケタ違いの　強さを　持つ
 トレーナーって　いるものだね▼
 あれだけの　素質の　持ち主
@@ -2271,7 +2274,7 @@
 全力で　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T06:22:48" />
+				Time="2012-01-11T08:46:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6595,14 +6598,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 エリア[Digit:2digits Idx="1" ]の　クリア
 おめでとうございます！▼
 記念に　こちらの
 賞品を　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:44:58" />
+				Time="2012-01-11T08:48:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6696,14 +6699,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様▼
+			<Text>[Name:TrainerName Idx="0" ]さま▼
 じつは　この施設には
 一般には　公開されていない▽
 特別な　エリアが　ございます▼
 それが　エリア６以降の　エリアです▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:32:20" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:48:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6876,7 +6879,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 ……まさか　すべての　エリアを？▼
 驚きました
 おめでとうございます！▼
@@ -6884,7 +6887,7 @@
 こちらの　記念品を　差し上げます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:52:13" />
+				Time="2012-01-11T08:48:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6972,13 +6975,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！
+			<Text>[Name:TrainerName Idx="0" ]さま！
 大丈夫ですか？▼
 今回は　残念でしたが
 次は　がんばってくださいね！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-22T09:28:45" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:48:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7034,7 +7037,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様
+			<Text>[Name:TrainerName Idx="0" ]さま
 リタイアされたのですね▼
 申し訳ありませんが
 今回の　挑戦で　入手されました▼
@@ -7043,8 +7046,8 @@
 今回は　残念でしたが
 次は　がんばってくださいね！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-22T09:29:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:48:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7096,13 +7099,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様
+			<Text>[Name:TrainerName Idx="0" ]さま
 リタイアされたのですね▼
 今回は　残念でしたが
 次は　がんばってくださいね！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-22T09:29:22" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:48:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27630,14 +27633,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここまで　お疲れ様
+			<Text>ここまで　おつかれさま
 わたしが　ゲートトレーナーだ▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してやろう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-27T07:01:48" />
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

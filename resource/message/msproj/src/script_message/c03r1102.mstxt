@@ -46,6 +46,13 @@
 				Time="2011-06-21T03:31:25" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:32" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -95,6 +102,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:37:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:35" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -150,6 +164,13 @@
 				Time="2011-10-20T07:38:04" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:38" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -204,6 +225,13 @@
 				Time="2011-10-20T07:38:44" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:39" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -255,6 +283,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-12-09T03:36:41" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:41" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -313,6 +348,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:41" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -359,6 +401,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -407,6 +456,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -453,6 +509,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -503,6 +566,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:44" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -560,6 +630,13 @@
 				Time="2011-10-20T07:41:36" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:48" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -610,6 +687,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:48" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -662,6 +746,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-12-09T03:37:14" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:48" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -717,6 +808,13 @@
 				Time="2011-10-20T07:43:59" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:48" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -763,6 +861,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:50" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -811,6 +916,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:50" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -857,6 +969,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:50" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -926,6 +1045,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T08:02:09" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:07:57" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -997,6 +1123,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T08:02:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:01" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1070,6 +1203,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T08:02:14" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:01" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1146,6 +1286,13 @@
 				Time="2011-10-20T08:02:16" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:01" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1215,6 +1362,13 @@
 				Time="2011-10-20T08:02:26" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:01" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1264,6 +1418,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:03" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1310,6 +1471,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1358,6 +1526,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1404,6 +1579,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1452,6 +1634,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1499,6 +1688,13 @@
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1545,6 +1741,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1615,6 +1818,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-10T12:06:44" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:06" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1694,6 +1904,13 @@
 				Time="2011-11-10T12:06:41" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1761,6 +1978,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-10T12:06:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:11" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1840,6 +2064,13 @@
 				Time="2011-11-10T12:06:55" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1908,6 +2139,13 @@
 				Time="2011-11-10T12:06:53" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1969,6 +2207,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-10T12:07:00" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:12" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2032,6 +2277,13 @@
 				Time="2011-11-10T12:07:03" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2090,6 +2342,13 @@
 				Time="2011-11-10T12:07:05" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -2136,6 +2395,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mdloyj_prizecomp_sub_05"
@@ -2169,6 +2435,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mdloyj_prizecomp_sub_06"
@@ -2202,6 +2475,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mdloyj_prizecomp_sub_07"
@@ -2235,6 +2515,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mdloyj_prizecomp_sub_08"
@@ -2268,6 +2555,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:26" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mdloyj_prizecomp_sub_09"
@@ -2301,6 +2595,13 @@
 				User="ito_hiroto:W00178"
 				Time="2011-10-20T07:46:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c03r1202_rally_01"
@@ -2343,6 +2644,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-11T05:57:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2395,6 +2703,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-11T05:57:17" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -2441,6 +2756,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-08T12:35:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2509,6 +2831,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-08T12:35:55" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:19" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
@@ -2557,6 +2886,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-08T12:35:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T10:08:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

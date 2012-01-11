@@ -62,6 +62,13 @@
 				Time="2011-11-13T01:25:52" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:48" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -129,6 +136,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:54" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -189,6 +203,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:54" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -255,6 +276,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:25:59" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_mountman_02"
@@ -309,6 +337,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:26:00" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -373,6 +408,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:26:00" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_stop_01"
@@ -421,6 +463,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-13T01:29:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:49:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

@@ -50,10 +50,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T05:55:26" />
+				Time="2012-01-11T08:38:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -113,10 +113,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>B</Text>
+			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T05:55:25" />
+				Time="2012-01-11T08:38:46" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
