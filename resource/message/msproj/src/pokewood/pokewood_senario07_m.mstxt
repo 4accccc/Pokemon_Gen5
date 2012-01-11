@@ -388,25 +388,25 @@
 		Label="pw_event0_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『しょうぶしろ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『しょうぶだ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:14" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:14" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『勝負しろ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『勝負だ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:14" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:14" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1800,15 +1800,15 @@
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘッ！　そうさ
 だれだって　手柄が　欲しい▽
 その　ために　汚い　ことも　する▼
-所詮　オマエの　いう
+しょせん　オマエの　いう
 正義の　味方　なんて　ものは</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T03:53:42" />
+				Time="2012-01-07T09:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T03:53:42" />
+				Time="2012-01-07T09:41:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

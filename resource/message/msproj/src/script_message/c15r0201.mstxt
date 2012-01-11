@@ -58,14 +58,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わっ！　[Name:TrainerName Idx="0" ]さん！▼
-いつも　おつかれさまです！
+			<Text>のわっ！　[Name:TrainerName Idx="0" ]さん！▼
+い　いつも　おつかれさまです！
 わたくしも　バチュル　いっぴき▽
 とおさぬよう　ぜんしんぜんれいで▽
 けいびに　いそしんで　おります！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:20:18" />
+				Time="2012-01-11T04:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -73,14 +73,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わっ！　[Name:TrainerName Idx="0" ]さん！▼
-いつも　おつかれさまです！
+			<Text>のわっ！　[Name:TrainerName Idx="0" ]さん！▼
+い　いつも　おつかれさまです！
 わたくしも　バチュル　一匹▽
 通さぬよう　全身全霊で▽
 警備に　勤しんで　おります！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-10T02:37:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-11T04:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -561,10 +561,10 @@ msg_c15r0301_middleman2_01</Comment>
 [Name:TrainerName ]さん　おつかれさまです▼
 ウフフ……▼
 まさか　キミが　こんなに
-ゆうめいに　なるなんてな……</Text>
+ゆうめいに　なるなんてなぁ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:54:19" />
+				Time="2012-01-11T09:59:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -577,11 +577,11 @@ msg_c15r0301_middleman2_01</Comment>
 あらあら
 [Name:TrainerName ]さん　おつかれさまです▼
 ウフフ……▼
-まさか　あなたが　こんなに
-有名に　なるなんてな……</Text>
+まさか　キミが　こんなに
+有名に　なるなんてなぁ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:54:20" />
+				Time="2012-01-11T09:59:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1342,10 +1342,10 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいえ</Text>
+			<Text>だいじょうぶ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T05:46:28" />
+				Time="2012-01-11T06:42:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1353,10 +1353,10 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいえ</Text>
+			<Text>だいじょうぶ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T05:47:01" />
+				Time="2012-01-11T06:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

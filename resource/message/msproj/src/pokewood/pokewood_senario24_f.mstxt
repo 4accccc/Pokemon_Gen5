@@ -2572,7 +2572,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……こうして　脱出を　かけた
-[Name:TrainerName Idx="1" ]姫の　挑戦は
+[Name:TrainerName Idx="1" ]姫の　挑戦は▽
 終わってしまいました……▼
 その後　魔法のオリに　戻された
 [Name:TrainerName Idx="1" ]姫と　[Name:PokemonNickname Idx="0" ]が▽
@@ -2580,11 +2580,11 @@
 だれにも　分かりません……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:14" />
+				Time="2012-01-07T08:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:14" />
+				Time="2012-01-07T08:33:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

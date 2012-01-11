@@ -2286,12 +2286,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>えいが！　それは　アメイジング！▼
-さあ！　[Name:TrainerName Idx="0" ]ちゃんも
+ホラ　[Name:TrainerName Idx="0" ]ちゃんも
 その　おどろきと　かんどうを▽
 たいけんして　みちゃってよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:56:50" />
+				Time="2012-01-11T03:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2300,12 +2300,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>映画！　それは　アメイジング！▼
-さあ！　[Name:TrainerName Idx="0" ]ちゃんも
+ホラ　[Name:TrainerName Idx="0" ]ちゃんも
 その　驚きと　感動を▽
 体験して　みちゃってよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:57:08" />
+				Time="2012-01-11T03:46:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2328,13 +2328,13 @@
 		Label="msg_pw_tutorial_rec_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さん
-さつえい　がんばってください！▼
-あなたなら　きっと　すばらしい
-さくひんを　つくることが　できますよ！</Text>
+			<Text>おねがいします！　[Name:TrainerName Idx="0" ]さん！
+まずは　さつえいに　チャレンジです！▼
+シアターで　こうかい　するための
+えいが　さくひんを　とってください！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:57:28" />
+				Time="2012-01-11T03:49:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2342,13 +2342,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さん
-撮影　がんばってください！▼
-あなたなら　きっと　素晴らしい
-作品を　生み出すことが　できますよ！</Text>
+			<Text>お願いします！　[Name:TrainerName Idx="0" ]さん！
+まずは　撮影に　チャレンジです！▼
+シアターで　公開　するための
+映画作品を　撮ってください！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:57:22" />
+				Time="2012-01-11T03:49:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2374,16 +2374,16 @@
 			<Text>いやあー！　おつかれさまね！
 グッとくる　えんぎ　だったよー！▽
 こりゃ　さくひんが　たのしみだね！▼
-でね　ここからが
-ウチの　スゴイとこよ！▼
+……でね　ここからが
+ウチの　スゴイ　とこよ！▼
 たったいま　さつえいした　えいが　が
-あっというまに　かんせいして▽
-シアターで　こうかいされちゃうのよ！▼
+あっと　いうまに　かんせいして▽
+シアターで　こうかい　されちゃうの！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 いっしょに　シアターに　レッツゴー！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:23:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-11T03:51:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2394,16 +2394,16 @@
 			<Text>いやー！　おつかれさまね！
 グッとくる　演技　だったよー！▽
 こりゃ　作品が　楽しみだね！▼
-でね　ここからが
-ウチの　スゴイとこよ！▼
+……でね　ここからが
+ウチの　スゴイ　とこよ！▼
 たった今　撮影した　映画が
-あっという間に　完成して▽
-シアターで　公開されちゃうのよ！▼
+あっと　いう間に　完成して▽
+シアターで　公開　されちゃうの！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 一緒に　シアターに　レッツゴー！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:23:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-11T03:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2520,15 +2520,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わーん　ごめんー　[Name:TrainerName Idx="0" ]ちゃん！
-ボク　じかんに　なっちゃったよー！▼
-[Name:TrainerName Idx="0" ]ちゃんは　シアターで
-デビューさくを　チェックしてみたら？▼
-じゃあ　またね！
+ボク　いかなくちゃ　いけないんだー！▼
+でも　[Name:TrainerName Idx="0" ]ちゃん　はさ
+デビューさく　チェックしてみてよね！▼
+きっと　アメイジングな　えいがに
+なってる　はずだもん！▼
+じゃあ　また　そのうちね！
 ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　まってるよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:26:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-11T04:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2537,15 +2539,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わーん　ごめんー　[Name:TrainerName Idx="0" ]ちゃん！
-ボク　時間に　なっちゃったよー！▼
-[Name:TrainerName Idx="0" ]ちゃんは　シアターで
-デビュー作を　チェックしてみたら？▼
-じゃあ　またね！
+ボク　行かなくちゃ　いけないんだー！▼
+でも　[Name:TrainerName Idx="0" ]ちゃん　はさ
+デビュー作　チェックしてみてよね！▼
+きっと　アメイジングな　映画に
+なってる　はずだもん！▼
+じゃあ　また　そのうちね！
 ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　待ってるよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:26:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-11T04:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

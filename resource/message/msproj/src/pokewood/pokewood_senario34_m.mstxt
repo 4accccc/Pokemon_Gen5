@@ -3309,14 +3309,14 @@
 だから　ふくざつな　ぶぶんを　けし
 だれにでも　わかりやすい▽
 シンプルな　しょりに　けいさんを▽
-かきかえた……　それだけだ……</Text>
+かきかえた……　それだけだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-01-10T11:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-01-10T11:32:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3330,14 +3330,14 @@
 だから　複雑な　部分を　消し
 だれにでも　分かりやすい▽
 シンプルな　処理に　計算を▽
-書き換えた……　それだけだ……</Text>
+書き換えた……　それだけだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-01-10T11:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-01-10T11:32:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3383,27 +3383,27 @@
 		Label="pw_event8_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ『くそっ……
+			<Text>じょしゅ『そんな……
 やはり　わたしの　せいなのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-10T11:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-10T11:32:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手『くそっ……
+			<Text>助手『そんな……
 やはり　私の　せいなのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-10T11:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2012-01-10T11:32:04" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

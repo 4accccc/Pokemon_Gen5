@@ -440,8 +440,8 @@
 [1:02:ポケモンニックネーム:0]クノイチ！</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『しょうぶして</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『勝負して</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『しょうぶよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『勝負よ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">メカポリス『よかろう！　それでこそ
@@ -876,7 +876,7 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！　そうさ
 だれだって　手柄が　欲しい▽
 その　ために　汚い　ことも　する▼
-所詮　アンタの　いう
+しょせん　アンタの　いう
 正義の　味方　なんて　ものは</language>
 	</row>
 	<row id="pw_event8_react_hero_0">

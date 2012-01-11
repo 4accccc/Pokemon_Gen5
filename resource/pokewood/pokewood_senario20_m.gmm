@@ -700,12 +700,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハァ　ハァ……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">バルバラ『なんですの？
+		<language name="JPN" width="256">バルバラ『ハッ　なんですの？
 もう　ねを　あげて　しまうのですか？▼
 またしても　きたいはずれですわ……
 ワタクシに　ふさわしい　とのがたは▽
 どこに　いらっしゃるのかしら……？</language>
-		<language name="JPN_KANJI" width="256">バルバラ『何ですの？
+		<language name="JPN_KANJI" width="256">バルバラ『ハッ　何ですの？
 もう　音を上げて　しまうのですか？▼
 またしても　期待外れですわ……
 ワタクシに　相応しい　殿方は▽

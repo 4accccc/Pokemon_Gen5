@@ -3109,15 +3109,15 @@
 たかが　ぬいぐるみ　あいてに▽
 ポケモンは　いらないわ！▼
 わたしが　あみだした
-ひっさつ　ひめカラテを▽
+ひっさつ　ひめプロレスを▽
 おみまいして　あげるっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3125,15 +3125,15 @@
 たかが　ぬいぐるみ　相手に▽
 ポケモンは　いらないわ！▼
 私が　編み出した
-必殺　姫カラテを▽
+必殺　姫プロレスを▽
 お見舞いしてあげるっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:40:54" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3174,26 +3174,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『くらえっ！！
-ロイヤル　プリンセス　チョーップ！！</Text>
+ロイヤル・プリンセス・ラリアット！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『くらえっ！！
-ロイヤル　プリンセス　チョーップ！！</Text>
+ロイヤル・プリンセス・ラリアット！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3207,25 +3207,27 @@
 		Label="pw_event9_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『フッ……　おそい……</Text>
+			<Text>ぬいぐるみ『フッ……
+とまって　みえるぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『フッ……　遅い……</Text>
+			<Text>ぬいぐるみ『フッ……
+とまって　みえるぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T10:31:56" />
+				Time="2012-01-11T09:37:22" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

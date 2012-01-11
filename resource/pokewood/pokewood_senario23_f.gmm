@@ -1114,13 +1114,13 @@
 たかが　ぬいぐるみ　あいてに▽
 ポケモンは　いらないわ！▼
 わたしが　あみだした
-ひっさつ　ひめカラテを▽
+ひっさつ　ひめプロレスを▽
 おみまいして　あげるっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『望むところよ！
 たかが　ぬいぐるみ　相手に▽
 ポケモンは　いらないわ！▼
 私が　編み出した
-必殺　姫カラテを▽
+必殺　姫プロレスを▽
 お見舞いしてあげるっ！！</language>
 	</row>
 	<row id="pw_event9_enemy_4">
@@ -1129,13 +1129,15 @@
 	</row>
 	<row id="pw_event9_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『くらえっ！！
-ロイヤル　プリンセス　チョーップ！！</language>
+ロイヤル・プリンセス・ラリアット！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『くらえっ！！
-ロイヤル　プリンセス　チョーップ！！</language>
+ロイヤル・プリンセス・ラリアット！！</language>
 	</row>
 	<row id="pw_event9_enemy_5">
-		<language name="JPN" width="256">ぬいぐるみ『フッ……　おそい……</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『フッ……　遅い……</language>
+		<language name="JPN" width="256">ぬいぐるみ『フッ……
+とまって　みえるぜ……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『フッ……
+とまって　みえるぜ……</language>
 	</row>
 	<row id="pw_event9_hero_6">
 		<language name="JPN" width="256">……まほうのオリを　まもる　とびらを

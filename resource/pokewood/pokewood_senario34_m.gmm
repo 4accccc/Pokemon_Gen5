@@ -1042,7 +1042,7 @@
 だから　ふくざつな　ぶぶんを　けし
 だれにでも　わかりやすい▽
 シンプルな　しょりに　けいさんを▽
-かきかえた……　それだけだ……</language>
+かきかえた……　それだけだ</language>
 		<language name="JPN_KANJI" width="256">助手『……　……▼
 正直　オマエの　書いていた
 プログラムコードは　サッパリだった▼
@@ -1053,7 +1053,7 @@
 だから　複雑な　部分を　消し
 だれにでも　分かりやすい▽
 シンプルな　処理に　計算を▽
-書き換えた……　それだけだ……</language>
+書き換えた……　それだけだ</language>
 	</row>
 	<row id="pw_event8_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そういう　ことか……▼
@@ -1074,9 +1074,9 @@
 なっても　おかしくない……</language>
 	</row>
 	<row id="pw_event8_enemy_4">
-		<language name="JPN" width="256">じょしゅ『くそっ……
+		<language name="JPN" width="256">じょしゅ『そんな……
 やはり　わたしの　せいなのか……</language>
-		<language name="JPN_KANJI" width="256">助手『くそっ……
+		<language name="JPN_KANJI" width="256">助手『そんな……
 やはり　私の　せいなのか……</language>
 	</row>
 ﻿	<flowchart-group-list>

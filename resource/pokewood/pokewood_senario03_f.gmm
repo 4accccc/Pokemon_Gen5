@@ -503,10 +503,10 @@
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！▼
 そうだ！　[1:02:ポケモンニックネーム:0]ガール！！
-そのまま　あきらめて　しまえっ！！</language>
+ぜつぼうに　もだえるが　いいっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！▼
 そうだ！　[1:02:ポケモンニックネーム:0]ガール！！
-そのまま　あきらめて　しまえっ！！</language>
+絶望に　もだえるが　いいっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……いくよっ！！</language>
@@ -514,9 +514,9 @@
 	</row>
 	<row id="pw_event0_react_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！！
-それでこそ　わがはいの　てき！！</language>
+それでこそ　わがはいの　エモノよ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！！
-それでこそ　我輩の　敵！！</language>
+それでこそ　我輩の　エモノよ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『にげようかな……</language>
@@ -530,7 +530,7 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
 今さら　逃がしは　せぬぞ！▼
 今日が　[1:02:ポケモンニックネーム:0]ガールの
-最後の日と　なるのだっ！</language>
+命日と　なるのだっ！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -605,10 +605,10 @@
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファ……　ファファ！！▼
 きさまを　たおし　このよを
-わがものに　してくれるっ！</language>
+わがものに　してくれるっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファ……　ファファ！！▼
 貴様を　倒し　この世を
-我が物に　してくれるっ！</language>
+我がものに　してくれるっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……</language>
@@ -664,17 +664,17 @@
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『えっ……
-そんな……　やめて……</language>
+そんな　まって……　やめて……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『えっ……
-そんな……　止めて……</language>
+そんな　待って……　止めて……</language>
 	</row>
 	<row id="pw_event2_enemy_3">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
 よぞらに　きらめく　ほしと　なれい！▼
-ハチクほう！　はっしゃ！！</language>
+ハチクほう！　はっしゃーーーッ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
 夜空に　瞬く　星と　なれい！▼
-ハチク砲！　発射！！</language>
+ハチク砲！　発射ーーーッ！！</language>
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『キャーッ！！</language>
@@ -687,7 +687,7 @@
 さらばだ！！　[1:02:ポケモンニックネーム:0]ガール！</language>
 	</row>
 	<row id="pw_event2_hero_5">
-		<language name="JPN" width="256">……ハチクかんに　そうび　された
+		<language name="JPN" width="256">……ハチクマンの　ひみつへいき
 ハチクほうに　よって▽
 そらの　かなたへと　ちった▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
@@ -698,7 +698,7 @@
 [1:02:ポケモンニックネーム:0]ガール！！▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]ガール！！▼</language>
-		<language name="JPN_KANJI" width="256">……ハチク艦に　装備された
+		<language name="JPN_KANJI" width="256">……ハチクマンの　秘密兵器
 ハチク砲に　よって▽
 空の彼方へと　散った▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
@@ -924,9 +924,9 @@
 	</row>
 	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『やめてっ！！
-ハチクほうを　とめてっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『止めてっ！！
-ハチクほうを　止めてっ！！</language>
+ハチクほうを　とめてーーっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『やめてっ！！
+ハチクほうを　とめてーーっ！！</language>
 	</row>
 	<row id="pw_event4_enemy_6">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！▼

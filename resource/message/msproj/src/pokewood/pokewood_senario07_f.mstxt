@@ -388,25 +388,25 @@
 		Label="pw_event0_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『しょうぶして</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『しょうぶよ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『勝負して</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『勝負よ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:48:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T08:32:56" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1800,15 +1800,15 @@
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！　そうさ
 だれだって　手柄が　欲しい▽
 その　ために　汚い　ことも　する▼
-所詮　アンタの　いう
+しょせん　アンタの　いう
 正義の　味方　なんて　ものは</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T03:53:41" />
+				Time="2012-01-07T09:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-28T03:53:41" />
+				Time="2012-01-07T09:41:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -1498,7 +1498,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミロ『なんだい？
+			<Text>カミロ『フン　なんだい？
 もう　ねを　あげるのかい？▼
 きみなら　もしかして……
 って　おもったけど▼
@@ -1506,16 +1506,16 @@
 おんなのコと　おなじ▽
 スイートハニーには　ほどとおいな……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T09:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T09:13:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミロ『何だい？
+			<Text>カミロ『フン　何だい？
 もう　音を上げるのかい？▼
 きみなら　もしかして……
 って　思ったけど▼
@@ -1523,12 +1523,12 @@
 女のコと　同じ▽
 スイートハニーには　ほど遠いな……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T09:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-07T09:13:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

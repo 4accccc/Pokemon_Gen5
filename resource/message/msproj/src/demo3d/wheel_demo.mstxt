@@ -728,11 +728,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうして　シートに　ねころがってさ
-そとの　ふうけいを　ながめてごらん</Text>
+			<Text>……　……　……ギシッ
+……ガタッ！　ミシミシミシッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T03:18:00" />
+				Time="2012-01-11T06:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -740,11 +740,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうして　シートに　寝転がってさ
-外の　風景を　眺めてごらん</Text>
+			<Text>……　……　……ギシッ
+……ガタッ！　ミシミシミシッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T03:18:20" />
+				Time="2012-01-11T07:06:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -794,11 +794,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>パシャッ！　パシャッ！　パシャッ！
-ああ　とても　いい　かんじだ……</Text>
+			<Text>やれやれ　ほんとに　オンボロだな……
+こんなもの　なにが　いいんだか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T07:26:49" />
+				Time="2012-01-11T08:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -806,11 +806,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パシャッ！　パシャッ！　パシャッ！
-ああ　とても　いい　感じだ……</Text>
+			<Text>やれやれ　ほんとに　オンボロだな……
+こんなもの　何が　いいんだか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T07:26:51" />
+				Time="2012-01-11T08:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -859,11 +859,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フハッ！！　きれいだ……　とても……
-パシャッ！　パシャッ！　パシャッ！</Text>
+			<Text>たいくつだな……　まあ　でも
+このながめも　もうすぐ　みおさめ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T02:45:56" />
+				Time="2012-01-11T08:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -871,11 +871,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フハッ！！　きれいだ……　とても……
-パシャッ！　パシャッ！　パシャッ！</Text>
+			<Text>退屈だな……　まあ　でも
+この眺めも　もうすぐ　見納め……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T10:55:43" />
+				Time="2012-01-11T08:22:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -995,11 +995,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ　いいかな……？
-ちょっと　こっち　おいでよ……</Text>
+			<Text>フフ……　お腹を　けってる……
+この　子にも　みえるのかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-14T12:17:51" />
+				Time="2012-01-11T06:00:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1041,11 +1041,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　おなか　さわってみて……
-……うごいてるの　わかる？</Text>
+			<Text>フフフ……　また　うごいてる……
+たのしいのね　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:09:09" />
+				Time="2012-01-11T08:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1053,11 +1053,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　お腹　触ってみて……
-……動いてるの　わかる？</Text>
+			<Text>フフフ……　動いてる……
+楽しいのね　きっと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:09:23" />
+				Time="2012-01-11T06:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
