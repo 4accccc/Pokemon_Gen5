@@ -29,6 +29,7 @@ _EVENT_DATA    ev_c12gym0101_boy3_01
 _EVENT_DATA    ev_bg_c12gym0101_board_01
 _EVENT_DATA    ev_c12gym0101_girl3_01
 _EVENT_DATA	ev_bg_c12gym0101_statue_01
+_EVENT_DATA	ev_c12gym0101_glasses_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -108,6 +109,12 @@ EVENT_START ev_c12gym0101_boy2_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0101_boy2b_01 )
 EVENT_END
 
+/************************************************************/
+/*	C12GYM0101	DANPEI							*/
+/************************************************************/
+EVENT_START	ev_c12gym0101_glasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0101_glasses_01 )
+EVENT_END
 
 /**************************************************************/
 /*  çïî¬                         */

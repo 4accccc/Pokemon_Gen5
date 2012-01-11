@@ -1462,6 +1462,8 @@ ev_kyuremu_after:
   _FLAG_SET( FE_D10R0401_POKE10_MEET )
   //D10R0501 チェレン・ベル非表示
   _FLAG_SET( FV_D10R0501_SWLEADER1_01 )
+  //C12R0101 ベル表示
+  _FLAG_RESET( FV_C12R0101_SWBELL )
   //==================================//
 
 _RET

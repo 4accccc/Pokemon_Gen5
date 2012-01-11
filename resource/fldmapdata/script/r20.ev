@@ -329,6 +329,8 @@ EVENT_START   ev_pos_r20_swrival_01
   $WK_SCENE_R20 = 3
   //チェレン非表示
   _FLAG_SET( FV_R20_SWLEADER1_01 )
+  //ヒオウギジムのストッパー非表示
+  _FLAG_SET( FV_C12GYM0101_GLASSES_01 )
   //==================================//
   
 EVENT_END

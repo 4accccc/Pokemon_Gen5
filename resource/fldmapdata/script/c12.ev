@@ -14,6 +14,8 @@
   .include  "c12pc0101.h"
   .include  "c12pc0101_def.h"
   .include  "c12_def.h"
+  .include  "c12r0101.h"
+  .include  "c12r0101_def.h"
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou（クリア後・ライバルの妹イベント）
@@ -861,7 +863,7 @@ ev_vs_rival:
 	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ ) 
 
-	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_NPC, 8, DIR_LR )
+	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_MAP, 8, DIR_LR )
 	
 	//========================================//
 	//ライバル非表示
@@ -1416,6 +1418,9 @@ EVENT_START		ev_scene_c12_gymclear_01
   
   //C-GEAR入手フラグセット
   _FLAG_SET( FE_CGEAR_GET )
+  
+  //ノーマルジム内にストッパー表示
+  _FLAG_RESET( FV_C12GYM0101_GLASSES_01 )
   
   //ローカルライブキャスター・ベル通話状態を変更（R19到着まで）
   _PERSON_STATE_SET_BELL( BELL_STATE_C12 )
@@ -1989,8 +1994,15 @@ EVENT_START   ev_c12_game_start
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_02 )
   _OBJ_ANIME_WAIT()
 
-  _TIME_WAIT(60)
-  
+  _TIME_WAIT(45)
+
+  //TVT着信音を再生
+  _ME_PLAY( SEQ_ME_CALL )
+  _ME_WAIT()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
   //ママ・電話に出る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_03 )
   _OBJ_ANIME_WAIT()
@@ -2005,7 +2017,7 @@ EVENT_START   ev_c12_game_start
   _BALLOONWIN_OBJMSG_POS( msg_c12_demo_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  _TIME_WAIT( 30 )
+  _TIME_WAIT( 15 )
   
   //ママ・電話をきる
   _SE_PLAY( SEQ_SE_SYS_72 )
@@ -2027,8 +2039,14 @@ EVENT_START   ev_c12_game_start
 
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
-  // 部屋に移動
-  _MAP_CHANGE_DEFAULT_POS( ZONE_ID_C12R0101, DIR_DOWN )
+  //暗転
+  _MAP_FADE_BLACK_OUT_SLOW()
+  
+  //ママイベント起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_C12R0101_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C12R0101, 14, 0, 3, DIR_UP )
 
 EVENT_END
 
@@ -2221,10 +2239,10 @@ _ANIME_LABEL	anm_game_start_01
 
 _ANIME_LABEL	anm_game_start_02
   _ANIME_DATA	AC_SWMAMA2_CHASE_PETAL,1
-  _ANIME_DATA	AC_DIR_D,1
   _ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_game_start_03
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
   _ANIME_DATA	AC_SWMAMA2_ANSWER_PHONE,1
   _ANIME_DATA	ACMD_END,0
 

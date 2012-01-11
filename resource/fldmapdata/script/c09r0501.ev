@@ -255,12 +255,29 @@ EVENT_START ev_c09r0501_swchampion_01
   //========================================
 
   _TIME_WAIT( 16 )  //間
+  
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_OBJMSG_MF( msg_c09r0501_swchampion_06, msg_c09r0501_swchampion_07, C09R0501_SWCHAMPION_01, POS_UP )
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_back )
+  _TIME_WAIT( 2 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_back )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_02 )
+  _TIME_WAIT( 6 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
 
   //アニメ：チャンピオン移動（殿堂入り部屋へ）
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_player_work_up_01 )
-  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_player_work_up_01a )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_01a )
-  _TIME_WAIT( 8 )
+  _TIME_WAIT( 2 )
   _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )
   _OBJ_ANIME_WAIT()
   
@@ -373,8 +390,22 @@ _ANIME_LABEL  anm_champion_walk_b
 //チャンピオン：殿堂入り部屋へ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_champion_walk_up_01
-  _ANIME_DATA AC_WALK_L_8F,1
   _ANIME_DATA AC_WALK_U_8F,20
+  _ANIME_DATA ACMD_END,0
+  
+_ANIME_LABEL  anm_champion_walk_up_02
+  _ANIME_DATA AC_WALK_D_4F,1
+  _ANIME_DATA AC_WALK_L_4F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//-----------------------------------------------------------
+//方向固定で移動
+//-----------------------------------------------------------
+_ANIME_LABEL  anm_back
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_R_16F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

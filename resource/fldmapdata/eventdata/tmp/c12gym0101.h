@@ -15,6 +15,7 @@
 #define C12GYM0101_BOY3_01                 2
 #define C12GYM0101_BOY2_02                 3
 #define C12GYM0101_GIRL3_01                4
+#define C12GYM0101_GLASSES_01              5
 
 #endif //ZONE_C12GYM0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

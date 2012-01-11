@@ -352,6 +352,7 @@ EVENT_START   ev_pos_c04_swrival_01
   _PLAYER_NAME( 0 )
   //ライバル：そこに　いるんだろ▼
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_03, C04_SWRIVAL_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバルがプラズマ団男04と向かい合う
@@ -695,8 +696,8 @@ EVENT_START   ev_pos_c04_swrival_02
 
   //回復処理
   _TEMOTI_POKEMON_KAIFUKU()
-  _ME_PLAY( SEQ_ME_ASA )
-  _ME_WAIT()
+  _SE_PLAY( SEQ_SE_RECOVERY )
+  _SE_WAIT()
 
   //ライバル名代入
   _RIVAL_NAME( 1 )

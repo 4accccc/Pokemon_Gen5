@@ -392,6 +392,9 @@ init_flags:
   //R14R0201 豊穣の社の老人
   _FLAG_SET( FV_R14R0201_OLDMAN_01 )
 
+  //C12GYM0101 ストッパー
+  _FLAG_SET( FV_C12GYM0101_GLASSES_01 )
+
 }
 _RET
 
