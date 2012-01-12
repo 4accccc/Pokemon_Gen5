@@ -757,6 +757,23 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
 //-----------------------------------------------------------------------------
 MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit )
 {
+  return MMDLSYS_SearchRailLocationEx( sys, location, old_hit, NULL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションのあたりにいるOBJを取得する(判定から除外するMMDLを指定できるver)
+ *
+ *	@param	sys         MMDLSYS
+ *	@param	location    ロケーション
+ *	@param	old_hit     前のロケーションもちぇっくするか
+ *	@param  egnore_mmdl 判定から除外したいMMDLポインタ
+ *
+ *	@return ヒットしたOBJ
+ */
+//-----------------------------------------------------------------------------
+MMDL * MMDLSYS_SearchRailLocationEx( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit, const MMDL* egnore_mmdl )
+{
 	u32 no = 0;
 	MMDL *mmdl;
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( sys );
@@ -776,7 +793,9 @@ MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* loca
 
     if( !MMDL_CheckStatusBit( mmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
     {
-
+      if( egnore_mmdl != NULL && egnore_mmdl == mmdl ){
+        continue;
+      }
       if( old_hit ){
         MMDL_GetOldRailLocation( mmdl, &old_location );
         FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &old_location, &mdl_pos );

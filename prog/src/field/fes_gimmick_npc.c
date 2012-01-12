@@ -381,10 +381,10 @@ static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int data_idx, const VecFx32* ev_pos )
 {
   MMDL* mmdl;
-  //動作モデルとの判定を取る
-  mmdl = MMDLSYS_SearchGridPosEx( sys_wk->mmdl_sys,
-            SIZE_GRID_FX32(ev_pos->x), SIZE_GRID_FX32(ev_pos->z), ev_pos->y, H_DIFF_COLLISION_FOR_GROUND, FALSE );
-  if( mmdl != NULL && mmdl != wk->mmdl_tbl[data_idx] ){ //フェスNPC自身は無視
+  //動作モデルとの判定を取る(フェスNPC自身は無視)
+  mmdl = MMDLSYS_SearchGridPosEx2( sys_wk->mmdl_sys,
+            SIZE_GRID_FX32(ev_pos->x), SIZE_GRID_FX32(ev_pos->z), ev_pos->y, H_DIFF_COLLISION_FOR_GROUND, FALSE, wk->mmdl_tbl[data_idx] );
+  if( mmdl != NULL ){
     return TRUE;
   }
 
@@ -405,10 +405,9 @@ static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_NP
 {
   MMDL* mmdl;
   
-  //動作モデルとの判定を取る
-  mmdl = MMDLSYS_SearchRailLocation( sys_wk->mmdl_sys, ev_loc, FALSE );
-//  if( mmdl != NULL && mmdl != sys_wk->player_mmdl ){  //自機は除外する
-  if( mmdl != NULL && mmdl != wk->mmdl_tbl[data_idx] ){ //フェスNPC自身は無視
+  //動作モデルとの判定を取る(フェスNPC自身は無視)
+  mmdl = MMDLSYS_SearchRailLocationEx( sys_wk->mmdl_sys, ev_loc, FALSE, wk->mmdl_tbl[data_idx] );
+  if( mmdl != NULL ){
     return TRUE;
   }
 

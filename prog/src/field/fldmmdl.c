@@ -4035,6 +4035,27 @@ MMDL * MMDLSYS_SearchGridPos(
 MMDL * MMDLSYS_SearchGridPosEx(
   const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit )
 {
+  return MMDLSYS_SearchGridPosEx2( sys, x, z, height, y_diff, old_hit, NULL );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 指定されたグリッドX,Z,and Y座標にいるOBJを取得(立体交差を考慮&判定から除外するMMDLを指定可)
+ * @param  sys      MMDLSYS *
+ * @param  x        検索グリッドX
+ * @param  z        検索グリッドZ
+ * @param  height  検索Y座標値 fx32型
+ * @param  h_diff  Y値で許容する振れ幅(絶対値がこの指定値未満のY差分を持つOBJのみを返す)
+ *
+ * @param  old_hit    TURE=過去座標も判定する
+ * @param  egnore_mmdl  判定から除外するMMDL*を一つ指定できる
+ *
+ * @retval  MMDL  x,z位置にいるMMDL * 。NULL=その座標にOBJはいない
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_SearchGridPosEx2(
+  const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit, const MMDL* egnore_mmdl )
+{
   u32 i = 0,num = 0;
   MMDL_PARRAY array;
   
@@ -4046,6 +4067,9 @@ MMDL * MMDLSYS_SearchGridPosEx(
   
   for(i = 0;i < num;i++){
     fx32 y,diff;
+    if( egnore_mmdl != NULL && array.mmdl_parray[i] == egnore_mmdl ){
+      continue;
+    }
     diff = MMDL_GetVectorPosY( array.mmdl_parray[i] ) - height;
     if(diff < 0){
       diff = FX_Mul(diff,FX32_CONST(-1));
@@ -4057,6 +4081,7 @@ MMDL * MMDLSYS_SearchGridPosEx(
   
   return( NULL );
 }
+
 
 //--------------------------------------------------------------
 /**

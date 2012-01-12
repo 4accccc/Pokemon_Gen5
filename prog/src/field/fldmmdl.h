@@ -973,6 +973,8 @@ extern MMDL * MMDLSYS_SearchGridPos(
 	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit );
 extern MMDL * MMDLSYS_SearchGridPosEx(
 	const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit );
+extern MMDL * MMDLSYS_SearchGridPosEx2(
+	const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit, const MMDL* egnore_mmdl );
 extern MMDL * MMDLSYS_SearchMoveCode(
 	const MMDLSYS *fos, u16 mv_code );
 extern MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id );
@@ -1270,6 +1272,7 @@ extern u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_att
 extern BOOL MMDL_HitCheckRailMoveFellow(
 	const MMDL * mmdl, const RAIL_LOCATION* location );
 extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
+extern MMDL * MMDLSYS_SearchRailLocationEx( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit, const MMDL* egonre_mmdl );
 
 // ÉåÅ[Éãà⁄ìÆÅ@ç°ÇÃëOï˚ï˚å¸
 extern void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way );
