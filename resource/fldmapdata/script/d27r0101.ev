@@ -55,6 +55,7 @@ _EVENT_DATA    ev_d27r0101_swplazmam_end_01
 _EVENT_DATA    ev_d27r0101_swplazmam_end_02
 _EVENT_DATA    ev_d27r0101_swplazmam1_02_03
 _EVENT_DATA    ev_d27r0101_swplazmam1_02_04
+_EVENT_DATA    ev_d27r0101_swboss_01
 _EVENT_DATA_END
 
 //バージョン取得
@@ -74,6 +75,16 @@ INIT_EVENT_START	ev_zone_d27r0101
   //プラズマフリゲート・現在地対応
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
     $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_W17
+  ENDIF
+  
+  //アクロマ戦終了・一日一回がオフになっている
+  IF FLAG_ON( FE_D27R0401_SWBOSS_WIN_01 ) && FLAG_OFF( TMFLG_D27R0101_SWBOSS_BTL ) THEN
+    //========================================//
+    //D27R0101アクロマ表示
+    _FLAG_RESET( FV_D27R0101_SWBOSS_01 )
+    //D27R0401アクロマ非表示
+    _FLAG_SET( FV_D27R0401_SWBOSS_01 )
+    //========================================//
   ENDIF
   
 INIT_EVENT_END
@@ -1292,6 +1303,84 @@ EVENT_START	ev_d27r0101_stopper_01
   _LAST_KEYWAIT()
   _PLAINWIN_CLOSE()
 EVENT_END
+
+/************************************************************/
+/*					話しかけ：クリア後アクロマ  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swboss_01
+
+  _TALK_OBJ_START()
+
+  //一日一回アクロマ戦前
+  IF FLAG_OFF( TMFLG_D27R0101_SWBOSS_BTL ) THEN
+    
+    //初回会話
+    IF FLAG_OFF( FE_D27R0101_SWBOSS_TALK ) THEN
+      //アクロマ：おなじ
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_01 )
+      //========================================//
+      //初回会話終了
+      _FLAG_SET( FE_D27R0101_SWBOSS_TALK )
+      //========================================//
+    //2回目以降
+    ELSE
+      //アクロマ：おなじ
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_04 )
+    ENDIF
+    
+    {
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    //はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+      
+      //アクロマ：あなたと
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_02 )
+      _MSGWIN_CLOSE()
+
+      //アクロマ戦 
+      _TRAINER_BTL_SET( TRID_SWBOSS_02, 0 )
+
+      //結果チェック
+      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _TRAINER_WIN()
+      ELSE
+        _TRAINER_LOSE()
+      ENDIF
+
+      //アクロマ：あなたと　ポケモンが
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //一日一回アクロマ戦終了
+      _FLAG_SET( TMFLG_D27R0101_SWBOSS_BTL )
+      //========================================//
+    
+    ELSE
+      
+      //アクロマ：つれないひとですね
+      _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      
+    ENDIF
+    }
+
+  //一日一回イベント終了後
+  ELSE
+
+    //アクロマ：よければ　また
+    _BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swboss_end_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
 
 /************************************************************/
 /*					話しかけ：クリア後プラズマ団員01  						*/

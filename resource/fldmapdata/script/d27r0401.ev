@@ -58,9 +58,9 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_init_d27r0401
   
   //アクロマ戦終了後
-  IF $WK_SCENE_D27R0401_SWBOSS_01 == 2 THEN
+  IF $WK_SCENE_D27R0401_SWBOSS_01 == 2 && FLAG_OFF( FE_D27R0401_SWBOSS_WIN_01 ) THEN
     _OBJ_POS_CHANGE(D27R0401_SWBOSS_01,7,0,9,DIR_DOWN)
-  ELSIF $WK_SCENE_D27R0401_SWBOSS_01 == 3 THEN
+  ELSIF $WK_SCENE_D27R0401_SWBOSS_01 == 3 && FLAG_OFF( FE_D27R0401_SWBOSS_WIN_01 ) THEN
     _OBJ_POS_CHANGE(D27R0401_SWBOSS_01,7,2,5,DIR_DOWN)
   ENDIF
   
@@ -94,7 +94,7 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
   
   //主人公ワープ
-  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,7,0,10,DIR_UP)
+  //_OBJ_POS_CHANGE(MMDL_ID_PLAYER,7,0,10,DIR_UP)
 
   //アニメ：アクロマ振り返る／主人公中央に移動
   _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_staystep_d)
@@ -117,8 +117,8 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_03 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (24)
+  //カメラ操作・アクロマを追従
+  _CAMERA_MOVE( 9688,0,970752,491520,0,622592,24 )
   
   //アニメ：アクロマ中央へ移動
   _OBJ_ANIME_AUTO( D27R0401_SWBOSS_01 , 7, 9, FORCE_TYPE_NPC, 8, DIR_UD)
@@ -126,13 +126,19 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   
   //カメラ待ち
   _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
   
   //アクロマ：それはさておきっ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_04 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
-  _LAST_KEYWAIT()
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //イベント曲終了
   _END_EVENT_BGM()
@@ -269,6 +275,10 @@ EVENT_START   ev_d27r0401_swboss_01
       //アクロマ：さてと……▼
       _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_02 )
       _MSGWIN_CLOSE()
+      
+      //アニメ：芝居
+      _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_act)
+      _OBJ_ANIME_WAIT()
 
       //アクロマ戦 
       _TRAINER_BTL_SET( TRID_SWBOSS_02, 0 )
@@ -289,7 +299,7 @@ EVENT_START   ev_d27r0401_swboss_01
       _MSGWIN_CLOSE()
 
       //アイテム「マスターボール」入手
-      _ITEM_EVENT_NOWAIT( ITEM_MASUTAABOORU, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_MASUTAABOORU, 1 )
 
       //アクロマ：よければ　また
       _BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_end_05 )
@@ -299,6 +309,8 @@ EVENT_START   ev_d27r0401_swboss_01
       //========================================//
       //アクロマ（クリア後）に勝利した
       _FLAG_SET( FE_D27R0401_SWBOSS_WIN_01 )
+      //今日のアクロマ戦は終了
+      _FLAG_SET( TMFLG_D27R0101_SWBOSS_BTL )
       //========================================//
 
     //アクロマ（クリア後）に勝利している
@@ -349,6 +361,13 @@ ev_battle_check:
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
+
+//--------------------------------------------------------------------
+//アクロマ：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_act
+  _ANIME_DATA AC_SWBOSS_POINT_FINGER_L,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

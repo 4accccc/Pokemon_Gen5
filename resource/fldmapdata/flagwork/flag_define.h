@@ -506,6 +506,7 @@
 #define FE_C12R0202_RIVALSISTER_TAL        490 /* 0x01ea ライバルの家２階：クリア後のライバル妹会話フラグ */
 #define FE_C05R0501_RIVAL_BTL_END          491 /* 0x01eb ホドモエシティ：クリア後ライバルと戦闘済み */
 #define FE_C13_BADMAN_ITEMGET_01           492 /* 0x01ec タチワキシティ：不良・アイテム入手フラグ */
+#define FE_D27R0101_SWBOSS_TALK            493 /* 0x01ed プラズマフリゲート：クリア後アクロマ初回会話フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -2523,6 +2524,7 @@
 #define TMFLG_BC10R0401_SHOPBUY_02        2790 /* 0x0ae6 黒の摩天楼：ショップ２（１日１回買える） */
 #define TMFLG_BC10R0401_SHOPBUY_03        2791 /* 0x0ae7 黒の摩天楼：ショップ３（１日１回買える） */
 #define TMFLG_BC10R0401_SHOPBUY_04        2792 /* 0x0ae8 黒の摩天楼：ショップ４（１日１回買える） */
+#define TMFLG_D27R0101_SWBOSS_BTL         2793 /* 0x0ae9 プラズマフリゲート：クリア後アクロマ再戦（１日1回） */
 
 #define TMFLG_AREA_END                    2819 /* 0x0b03  */
 

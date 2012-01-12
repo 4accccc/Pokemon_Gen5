@@ -41,6 +41,7 @@
 #define D27R0101_STOPPER_01               22
 #define D27R0101_SWPLAZMAM1_02_03         23
 #define D27R0101_SWPLAZMAM1_02_04         24
+#define D27R0101_SWBOSS_01                25
 
 #endif //ZONE_D27R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
