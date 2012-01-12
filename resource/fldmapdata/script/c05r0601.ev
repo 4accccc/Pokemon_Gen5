@@ -216,7 +216,7 @@ EVENT_END
 EVENT_START   ev_c05r0601_sunglasses_01
 
   //アイテム入手済みか
-  IF FLAG_ON( FE_C05R0601_ITEMGET_01 ) THEN
+  IF FLAG_OFF( FE_C05R0601_ITEMGET_01 ) THEN
 
     //黒服：あなたー　よくきたー！
     _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_01 )
@@ -259,7 +259,6 @@ EVENT_START   ev_c05r0601_sunglasses_01
       IF $LWK_CHECK_OK >= 1 THEN
         //黒服：おー！　もーれつ！▼
         _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_03 )
-        _AB_KEYWAIT()
         _MSGWIN_CLOSE()
 
         //アイテム（たつじんのおび）入手
