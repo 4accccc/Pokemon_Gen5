@@ -90,6 +90,23 @@ INIT_EVENT_START  ev_zone_t03
   
   ENDIF
 
+  //民家で昔話を聞いた後の場合、ユニットを再配置
+  IF $WK_SCENE_T03 == 2 THEN
+
+    //アララギ娘とベル再配置
+    _SXY_MOVE_NPC_POS( T03_HAKASE2_01, DIR_DOWN, 655, 0, 170 )
+    _SXY_MOVE_NPC_POS( T03_SWBELL_01, DIR_UP, 655, 0, 171 )
+
+  ENDIF
+
+  //ライバルとプラズマ団待機中の場合は、ユニットを再配置
+  IF $WK_SCENE_T03_SWRIVAL == 2 THEN
+    _SXY_MOVE_NPC_POS( T03_SWRIVAL_01, DIR_LEFT, 647, 0, 186 )
+    _SXY_MOVE_NPC_POS( T03_SWSAGE7_01, DIR_RIGHT, 645, 0, 186 )
+    _SXY_MOVE_NPC_POS( T03_SWPLAZMAM_02, DIR_RIGHT, 645, 0, 185 )
+
+  ENDIF
+
 INIT_EVENT_END
 
 
@@ -672,6 +689,8 @@ ev_pos_t03_swrivalev_01:
     _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_01, T03_SWRIVAL_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
 
+    _START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+
     //アニメ：ヴィオ、プラズマ団登場
     _OBJ_ANIME( T03_SWSAGE7_01, anm_walk_r_6 )
     _OBJ_ANIME( T03_SWPLAZMAM_02, anm_walk_r_6 )
@@ -782,6 +801,8 @@ ev_pos_t03_swrivalev_01:
     ENDIF
 
   ENDIF
+
+_END_EVENT_BGM()
 
 }
 

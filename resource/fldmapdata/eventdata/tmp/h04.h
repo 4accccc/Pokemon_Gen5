@@ -40,6 +40,7 @@
 #define TR_BASKET_14                      20
 #define TR_TENNIS_14                      21
 #define H04_GIRL2_01                      22
+#define H04_GENTLEMAN_01                  23
 
 #endif //ZONE_H04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

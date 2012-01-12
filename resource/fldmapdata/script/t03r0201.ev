@@ -147,12 +147,16 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
   //ベル：あのね　さいきん
   _BALLOONWIN_OBJMSG_POS( msg_t03r0201_swbel_01, T03R0201_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-
+  
+  _OBJ_ANIME( T03R0201_HAKASE2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+  
   //アララギ娘：いまは　いけないけれどね
   _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_02, T03R0201_HAKASE2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //アニメ：主人公とベル、おばあさんを見る
+  _OBJ_ANIME( T03R0201_HAKASE2_01, anm_common_turn_u )
   _OBJ_ANIME( T03R0201_SWBELL_01, anm_common_turn_u )
   _TIME_WAIT( 3 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )

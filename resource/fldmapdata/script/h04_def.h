@@ -20,5 +20,6 @@
 #define SCRID_H04_MAN3_01 (13)
 #define SCRID_INIT_H04 (14)
 #define SCRID_H04_GIRL2_01 (15)
+#define SCRID_H04_GENTLEMAN_01 (16)
 
 #endif //_H04_DEF_H_
