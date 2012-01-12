@@ -382,7 +382,15 @@ _ANIME_LABEL	anm_swleader1_to_rival
 /*  ライバル：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_r20_swrival_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_swrival_04 )
+  
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  IF $WK_SCENE_R20 == 5 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_swrival_06 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_swrival_04 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/

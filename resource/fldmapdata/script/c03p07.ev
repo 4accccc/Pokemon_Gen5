@@ -87,7 +87,7 @@ EVENT_START   ev_c03p07_sunglasses_01
     
     //アニメ：アイリス退場
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_bye )
-    _TIME_WAIT(40)
+    _TIME_WAIT(6)
     _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_d )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
@@ -179,8 +179,7 @@ _ANIME_LABEL  anm_pl_gyoe_left
 //☆アイリス退場
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_swchampion_bye
-  _ANIME_DATA AC_WALK_L_8F,2
-  _ANIME_DATA AC_WALK_D_8F,8
+  _ANIME_DATA AC_WALK_D_4F,8
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

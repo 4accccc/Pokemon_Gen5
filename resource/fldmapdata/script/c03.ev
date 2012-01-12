@@ -128,6 +128,10 @@ EVENT_START		ev_pos_c03_swchampion_02
   _OBJ_ANIME( C03_SWCHAMPION_02, anm_swchampion_bye_02 )
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
   //アイリスOBJ削除
   _OBJ_DEL( C03_SWCHAMPION_02 )
   
@@ -152,7 +156,7 @@ EVENT_END
 //	☆アイリス退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swchampion_bye_02
-	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
