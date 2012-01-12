@@ -36,6 +36,7 @@
 #define C08_MAN3_02                       16
 #define C08_WOMAN1_01                     17
 #define C08_ISS_01                        18
+#define C08_PLAYER_01                     19
 
 #endif //ZONE_C08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

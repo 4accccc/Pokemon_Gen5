@@ -60,6 +60,13 @@ DEFINE_LOCAL  LCW_POSZ
 DEFINE_LOCAL  LCWK_VERSION
 DEFINE_LOCAL  LCWK_ANSWER
 DEFINE_LOCAL  LCWK_SEX
+
+//------------------------------注意--------------------------------//
+
+//  LOCALWORK15を初回会話チェックに使用
+
+//------------------------------------------------------------------//
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -67,42 +74,49 @@ INIT_EVENT_START   ev_zone_n01r0502
 {
   //N再戦処理
   DEFINE_LOCAL  LCWK_SEASON
-  DEFINE_LOCAL  LCWK_NOW_SEASON
-  _GET_SEASON_ID( LCWK_SEASON )
-  
-  SWITCH  $LCWK_SEASON
-  CASE 0 THEN
-    $LCWK_NOW_SEASON = 1
-  CASE 1 THEN
-    $LCWK_NOW_SEASON = 2
-  CASE 2 THEN
-    $LCWK_NOW_SEASON = 3
-  CASE 3 THEN
-    $LCWK_NOW_SEASON = 4
-  ENDSWITCH
+  //月を取得
+  _GET_DATE( LCWK_SEASON, LOCALWORK15 )
   
   //・D10でキュレムと戦闘した
   //・C04P01観覧車でNと出会った
   //・季節が変わっている
   //以上3点の条件を満たしていたならばNを再表示
-  IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C04WHEEL_N_MEET ) && $WK_OTHER_N01R0502_N_SEASON != $LCWK_NOW_SEASON THEN
+  IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C04WHEEL_N_MEET ) && $WK_OTHER_N01R0502_N_SEASON != $LCWK_SEASON THEN
+    //==================================//
     //n01r0502 N表示
     _FLAG_RESET( FV_N01R0502_BOSS_01 )
+    //==================================//
   ENDIF
+  
+  //==================================//
+  //日にちを取得したワークを初期化
+  $LOCALWORK15 = 0
+  //==================================//
   
 }
 
   //バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	
-	//BlackVERならレシラム
+	//BlackVERならゼクロム
 	IF $SCWK_ANSWER == VERSION_B2 THEN
-		$OBJCHRWORK0 = MU_B
+		$OBJCHRWORK0 = SPPOKE02_ZE
 	
-	//Whiteならゼクロム
+	//Whiteならレシラム
 	ELSE
-		$OBJCHRWORK0 = SHIN_B
+		$OBJCHRWORK0 = SPPOKE01_RE
 	ENDIF
+
+   {
+  DEFINE_LOCAL LWK_SEX
+  //性別を取得してOBJを変化させる
+  _GET_MY_SEX( LWK_SEX )
+  IF $LWK_SEX == PM_MALE THEN
+    $OBJCHRWORK1 = SWHERO
+  ELSE
+    $OBJCHRWORK1 = SWHEROINE
+  ENDIF
+  }
   
 INIT_EVENT_END
 
@@ -147,6 +161,7 @@ EVENT_START	ev_pos_n01r0502_boss_01
   //N01R0502 N配置
   _FLAG_RESET( FV_N01R0502_BOSS_01 )
   _FLAG_RESET( FV_N01R0502_NPOKE_01 )
+  _FLAG_RESET( FV_N01R0502_PLAYER_01 )
   //==================================//
   
   //Ｎ動作モデル生成
@@ -168,7 +183,7 @@ EVENT_START	ev_pos_n01r0502_boss_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  IF $LCW_POSX == 18 THEN
+  IF $LCW_POSX >= 17 THEN
     $LCW_POSX -= 1
   ELSE
     $LCW_POSX += 1
@@ -182,7 +197,7 @@ EVENT_START	ev_pos_n01r0502_boss_01
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
   //アニメ：主人公とＮ向き合う
-  IF $LCW_POSX == 18 THEN
+  IF $LCW_POSX >= 17 THEN
     _OBJ_ANIME( N01R0502_BOSS_01,anm_staystep_r )
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )
     _OBJ_ANIME_WAIT()
@@ -193,49 +208,99 @@ EVENT_START	ev_pos_n01r0502_boss_01
   ENDIF
   
   //Ｎ：2年前のことだ
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02b , msg_n01r0502_boss_02w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB(  msg_n01r0502_boss_02w, msg_n01r0502_boss_02b , N01R0502_BOSS_01 , POS_DEFAULT)
 
   //Ｎ：そして敗れた
   _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_03, N01R0502_BOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：Ｎ中心へ
-  _OBJ_ANIME_AUTO( N01R0502_BOSS_01,16,36, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER,16,38, FORCE_TYPE_NOT, 8, DIR_LR )
+  SWITCH $LCW_POSX
+  CASE 14 THEN
+    _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x14 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x14 )
+  CASE 15 THEN
+    _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x15 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x15 )
+  CASE 16 THEN
+    _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x16 )
+    _TIME_WAIT( 16 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x16 )
+  CASE 17 THEN
+    _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x17 )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x17 )
+  CASE 18 THEN
+    _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x16 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x18 )
+  ENDSWITCH
   _OBJ_ANIME_WAIT()
   
-  _OBJ_ANIME( N01R0502_BOSS_01,anm_staystep_d )
+  //ダミーの主人公を表示
+  _OBJ_ADD( N01R0502_PLAYER_01 )
+  
+  //アニメ：主人公消す
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_on)
   _OBJ_ANIME_WAIT()
+  
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  //カメラ操作・ダミー主人公を中心に
+  _CAMERA_MOVE( 9688,0,970752,1081344,0,2371584,24 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //主人公座標変更（一時的にNと同じ座標に）
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 36, DIR_DOWN )
   
   //Ｎ：ことなる
-  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_04, N01R0502_BOSS_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_04, N01R0502_BOSS_01, POS_UL )
   
   //Ｎ：おいで！
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05b , msg_n01r0502_boss_05w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w , msg_n01r0502_boss_05b , N01R0502_BOSS_01 , POS_UL)
   _MSGWIN_CLOSE()
   
-  //【仮】レシラム・ゼクロム登場演出
-  _OBJ_ADD( N01R0502_NPOKE_01 )
+  //アニメ：Ｎ右を向く
+  _OBJ_ANIME( N01R0502_BOSS_01, anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //レシラム・ゼクロム登場演出
+  _CALL ball_out
   
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
   //ブラック：バリバリダー！
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_01, POS_DOWN )
+    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_01, POS_UP )
     _VOICE_PLAY( MONSNO_651, 0 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   //ホワイト：モエルーワ！
   ELSE
-    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_01, POS_DOWN )
+    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_01, POS_UP )
     _VOICE_PLAY( MONSNO_650, 0 )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   ENDIF
   
+  //アニメ：Ｎ下を向く
+  _OBJ_ANIME( N01R0502_BOSS_01, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
   //Ｎ：キミが
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06b , msg_n01r0502_boss_06w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w , msg_n01r0502_boss_06b , N01R0502_BOSS_01 , POS_UL)
+  
+  //主人公座標戻す
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 38, DIR_UP )
+  
+  //アニメ：主人公出現
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off)
+  _OBJ_ANIME_WAIT()
+  
+  //ダミー主人公削除
+  _OBJ_DEL( N01R0502_PLAYER_01 )
   
   //==================================//
   //N01R0502 POS無効
@@ -246,14 +311,110 @@ EVENT_START	ev_pos_n01r0502_boss_01
   _FLAG_SET( FV_N01R0501_BOSS_01 )
   //N01R0501 POS無効
   $WK_SCENE_N01R0501_BOSS = 2
+  //ダミー主人公非表示
+  _FLAG_SET( FV_N01R0502_PLAYER_01 )
+  
+  //初回会話セット
+  $LOCALWORK15 = 99
   //==================================//
   
   //CALL：ストーン入手用会話処理へジャンプ
   _CALL ev_n02r0502_boss_stone
-  
-  
+
 EVENT_END
 
+//--------------------------------------------------------------------
+//	N：センターへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_go_center_x14
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boss_go_center_x15
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boss_go_center_x16
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boss_go_center_x17
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boss_go_center_x18
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：センターへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_go_center_x14
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_go_center_x15
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_go_center_x16
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_go_center_x17
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_go_center_x18
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//		カメラ移動用に主人公を一時的に非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vanish_off
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*					CALL：ボール出る演出						*/
+/************************************************************/
+ball_out:
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 18, 0, 36, 3, 8 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 18, 0, 36 )
+  //ボール出現フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
+  _WHITE_OUT()
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  _OBJ_ADD( N01R0502_NPOKE_01 )
+  _WHITE_IN()
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
+_RET
+ 
 /************************************************************/
 /*					話しかけ：Ｎ戦闘確認						*/
 /************************************************************/
@@ -261,11 +422,16 @@ EVENT_START	ev_n01r0502_boss_02
   
   _TALK_OBJ_START()
   
-  //入手済みイベント
-  IF $WK_SCENE_N01R0502_BOSS == 3 THEN
+  //ゼクロム・レシラム戦後
+  IF $WK_SCENE_N01R0502_BOSS == 3 && FLAG_ON( FE_D08R0901_BOSS_TALK ) THEN
     
     //再戦闘
     _CALL ev_n02r0502_boss_retry
+  
+  //ゼクロム・レシラム戦前
+  ELSIF $WK_SCENE_N01R0502_BOSS == 3 && FLAG_OFF( FE_D08R0901_BOSS_TALK ) THEN
+      
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_boss_18 )
       
   //ダークストーン・ライトストーン入手イベント
   ELSE
@@ -289,14 +455,16 @@ EVENT_START	ev_n01r0502_npoke_01
   
   //ブラック：バリバリダー！
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_01, POS_DOWN )
     _VOICE_PLAY( MONSNO_651, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_01, POS_DOWN )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   //ホワイト：モエルーワ！
   ELSE
-    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_01, POS_DOWN )
     _VOICE_PLAY( MONSNO_650, 0 )
+    _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_01, POS_DOWN )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
   ENDIF
@@ -323,16 +491,18 @@ ev_n02r0502_boss_stone:
     
     //ブラック：バババリッシュ！
     IF $LCWK_VERSION == VERSION_B2 THEN
-      _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_02, POS_DOWN )
       _VOICE_PLAY( MONSNO_651, 0 )
+      _GIZAPLAINWIN_MSG_POS( msg_n01r0502_mu_02, POS_UP )
+      _VOICE_WAIT()
       _AB_KEYWAIT_MARK()
       _GIZAPLAINWIN_CLOSE()
       //トレーナー戦
       _TRAINER_BTL_SET( TRID_BOSS_01, 0 )
     //ホワイト：ンバーニガガ！
     ELSE
-      _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_02, POS_DOWN )
       _VOICE_PLAY( MONSNO_650, 0 )
+      _GIZAPLAINWIN_MSG_POS( msg_n01r0502_shin_02, POS_UP )
+      _VOICE_WAIT()
       _AB_KEYWAIT_MARK()
       _GIZAPLAINWIN_CLOSE()
       //トレーナー戦
@@ -347,10 +517,26 @@ ev_n02r0502_boss_stone:
     
   //いいえ
   ELSE
+    
     //いつまでも　待つ！
     _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_09, N01R0502_BOSS_01, POS_DEFAULT )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
+    
+     //初回会話時にいいえの場合カメラを戻す
+    IF $LOCALWORK15 == 99 THEN
+    
+      //自機にカメラを戻す
+      _CAMERA_DEF_MOVE (24)
+      //カメラ待ち
+      _CAMERA_WAIT_MOVE()
+      _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+      _CAMERA_END()		//カメラ操作終了
+      //==================================//
+      $LOCALWORK15 = 0
+      //==================================//
+    
+    ENDIF
     
     //イベント曲停止
     _END_EVENT_BGM()
@@ -367,20 +553,25 @@ ev_n02r0502_boss_vs_end:
   _PLAYER_NAME( 0 )
   
   //Ｎ：ボクと
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10b , msg_n01r0502_boss_10w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w , msg_n01r0502_boss_10b , N01R0502_BOSS_01 , POS_UL)
   
   //性別取得
   _GET_MY_SEX( LCWK_SEX )
   
   //Ｎ：キミと
-  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_11, N01R0502_BOSS_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_11, N01R0502_BOSS_01, POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：Nレシゼクの方を見る
+  _OBJ_ANIME( N01R0502_BOSS_01,anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   
   //男性
   IF $LCWK_SEX == PM_MALE THEN
-    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_12b , msg_n01r0502_boss_12w , N01R0502_BOSS_01 , POS_DEFAULT)
+    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_12w , msg_n01r0502_boss_12b , N01R0502_BOSS_01 , POS_UL)
   //女性
   ELSE
-    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_13b , msg_n01r0502_boss_13w , N01R0502_BOSS_01 , POS_DEFAULT)
+    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_13w , msg_n01r0502_boss_13b , N01R0502_BOSS_01 , POS_UL)
   ENDIF
   
   _MSGWIN_CLOSE()
@@ -390,33 +581,66 @@ ev_n02r0502_boss_vs_end:
   
   //ブラック
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS(msg_n01r0502_mu_03,N01R0502_NPOKE_01 , POS_DEFAULT )
     _VOICE_PLAY( MONSNO_651, 0 )
+    _BALLOONWIN_OBJMSG_POS(msg_n01r0502_mu_03,N01R0502_NPOKE_01 , POS_UR )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
   ELSE
-    _BALLOONWIN_OBJMSG_POS(msg_n01r0502_shin_03,N01R0502_NPOKE_01 , POS_DEFAULT )
     _VOICE_PLAY( MONSNO_650, 0 )
+    _BALLOONWIN_OBJMSG_POS(msg_n01r0502_shin_03,N01R0502_NPOKE_01 , POS_UR )
+    _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
   ENDIF
   
+  //アニメ：N顔をふる
+  _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_act1 )
+  _OBJ_ANIME_WAIT()
+  
   //Ｎ：ボクだってさみしい
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_14b , msg_n01r0502_boss_14w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_14w , msg_n01r0502_boss_14b , N01R0502_BOSS_01 , POS_UL)
   
   //Ｎ：だから…オヤスミ
-  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_15, N01R0502_BOSS_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_15, N01R0502_BOSS_01, POS_UL )
   _MSGWIN_CLOSE()
   
-  //ゼクロム・レシラム動作モデル削除
+  //ホワイトアウト
+  _WHITE_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+  
+  //動作モデル削除
   _OBJ_DEL( N01R0502_NPOKE_01 )
   
-  //【仮】ストーンに戻る演出
+  //BlackVERならゼクロム
+  IF $SCWK_ANSWER == VERSION_B2 THEN
+    _OBJ_ADD_EX( 17, 36, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BLACKSTONE, MV_DMY )
+  //Whiteならレシラム
+  ELSE
+    _OBJ_ADD_EX( 17, 36, DIR_DOWN, MMDL_ID_EVENTOBJ_00, WHITESTONE, MV_DMY )
+  ENDIF
+  
+  //ホワイトイン
+  _WHITE_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+  
+  _TIME_WAIT( 8 )
+  
+  //アニメ：Nその場歩き
+  _OBJ_ANIME( N01R0502_BOSS_01,anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //動作モデル削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //アニメ：N主人公と向き合う
+  _OBJ_ANIME( N01R0502_BOSS_01,anm_walk_d )
+  _OBJ_ANIME_WAIT()
   
   //Ｎ：このストーンを託す！
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_16b , msg_n01r0502_boss_16w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_16w , msg_n01r0502_boss_16b , N01R0502_BOSS_01 , POS_UL)
   _MSGWIN_CLOSE()
   
   //どうぐ入手処理
@@ -428,27 +652,25 @@ ev_n02r0502_boss_vs_end:
   ENDIF
   
   //Ｎ：そのストーンを持って
-  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17b , msg_n01r0502_boss_17w , N01R0502_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17w , msg_n01r0502_boss_17b , N01R0502_BOSS_01 , POS_UL)
   _MSGWIN_CLOSE()
-  
-  _OBJ_ANIME_AUTO( N01R0502_BOSS_01,17,43, FORCE_TYPE_NPC, 8, DIR_LR )
-  _TIME_WAIT( 24 )
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  //N動作モデル削除
-  _OBJ_DEL( N01R0502_BOSS_01 )
   
   //イベント曲停止
 	_END_EVENT_BGM()
+  
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //==================================//
   //n01r0502 全てのイベント終了
   $WK_SCENE_N01R0502_BOSS = 3
   //n01r0502 レシラム・ゼクロム非表示
   _FLAG_SET( FV_N01R0502_NPOKE_01 )
-  //n01r0502 N非表示
-  _FLAG_SET( FV_N01R0502_BOSS_01 )
   //d08r0901 POS有効
   $WK_SCENE_D08R0901_LEGEND = 1
   //d08r0101 POS有効
@@ -503,7 +725,7 @@ ev_n02r0502_boss_retry:
     _CALL ev_battle_check
     
     //Ｎ：…はなしてくれたこと　おもいだした
-    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_03b , msg_n01r0502_boss_01_03w , N01R0502_BOSS_01 , POS_DEFAULT)
+    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_03w ,  msg_n01r0502_boss_01_03b , N01R0502_BOSS_01 , POS_DEFAULT)
     _MSGWIN_CLOSE()
     
     //Ｎ：ボクはまた
@@ -518,31 +740,17 @@ ev_n02r0502_boss_retry:
     //N動作モデル削除
     _OBJ_DEL( N01R0502_BOSS_01 )
     
-    //戦闘済み季節を格納する
-    SWITCH  $LCWK_SEASON
-    CASE 0 THEN
-      //==================================//
-      $WK_OTHER_N01R0502_N_SEASON = 1
-      //==================================//
-    CASE 1 THEN
-      //==================================//
-      $WK_OTHER_N01R0502_N_SEASON = 2
-      //==================================//
-    CASE 2 THEN
-      //==================================//
-      $WK_OTHER_N01R0502_N_SEASON = 3
-      //==================================//
-    CASE 3 THEN
-      //==================================//
-      $WK_OTHER_N01R0502_N_SEASON = 4
-      //==================================//
-    ENDSWITCH
+    _GET_DATE( LCWK_SEASON, LOCALWORK15 )
     
     //==================================//
+    //戦闘した月を格納
+    $WK_OTHER_N01R0502_N_SEASON = $LCWK_SEASON
     //n01r0502 N非表示
     _FLAG_SET( FV_N01R0502_BOSS_01 )
     //再会話フラグリセット
     _FLAG_RESET( FE_N01R0502_N_RETRY_TALK )
+    //日にちを取得したワークを初期化
+    $LOCALWORK15 = 0
     //==================================//
     }
   
@@ -569,12 +777,32 @@ ev_battle_check:
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+    //Nとの初戦時なら上下で向き合う
+    IF $WK_SCENE_N01R0502_BOSS == 2 THEN
+      _OBJ_POS_CHANGE(MMDL_ID_PLAYER,16,0,38,DIR_UP)
+      
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラのバインドを解く
+      //カメラ操作　N中心に
+      _CAMERA_MOVE( 9688,0,970752,1081344,0,2371584,1 )
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+    ENDIF
+    
     _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
   ELSE
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
 
+//--------------------------------------------------------------------
+//N : 専用アニメ                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_act1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

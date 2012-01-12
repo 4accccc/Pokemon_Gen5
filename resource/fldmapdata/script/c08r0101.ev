@@ -68,12 +68,16 @@ EVENT_START   ev_scene_c08r0101_legend_01
 	_BALLOONWIN_OBJMSG_WB( msg_c08_swleader7_02w , msg_c08_swleader7_02b , C08R0101_SWLEADER7_01 , POS_DEFAULT)
 	_MSGWIN_CLOSE()
 	
+	//アニメ：シャガ下を向く
+  _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+	
   //シャガWB分岐：なぜ分かたれたか
   _BALLOONWIN_OBJMSG_WB( msg_c08_swleader7_03w , msg_c08_swleader7_03b , C08R0101_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //アニメ：シャガ左を向く
-  _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_staystep_l)
+  //アニメ：シャガ左右に歩く
+  _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_swleader7_walk_lr)
   _OBJ_ANIME_WAIT()
   
   //シャガ：実は
@@ -88,17 +92,15 @@ EVENT_START   ev_scene_c08r0101_legend_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //プレーンギザウィン：ぶぅん
-  _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
-  _MSGWIN_CLOSE()
-  
   //飛行機の効果音
   _SE_PLAY( SEQ_SE_SW_SOURYU_RUMBLE  )
   
-  //_TIME_WAIT( 5 )
-  
   //画面を揺らすデモを入れる
   _SHAKE_CAMERA(0,1,3,6,0,0,0,0)
+  
+  //プレーンギザウィン：ぶぅん
+  _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
+  _MSGWIN_CLOSE()
   
   //========================================//
   //C08の曲を無音状態にセット
@@ -111,6 +113,10 @@ EVENT_START   ev_scene_c08r0101_legend_01
   
   
   _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_common_hatena)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：シャガ下を向く
+  _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
   //シャガ：なにごと　だ？
@@ -141,6 +147,8 @@ EVENT_START   ev_scene_c08r0101_legend_01
   _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
   //C08シャガ表示
   _FLAG_RESET( FV_C08_SWLEADER7_01 )
+  //C08ダミー主人公表示
+  _FLAG_RESET( FV_C08_PLAYER_01 )
   //C08プラズマ団襲来イベント開始
   $WK_SCENE_C08_SWPLAZMA = 1
   //========================================//
@@ -214,6 +222,15 @@ EVENT_END
 EVENT_START   ev_c08r0101_poke42_01
   _EASY_TALK_POKEVOICE( MONSNO_541, msg_c08_poke43_01 )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	シャガ：LR移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader7_walk_lr
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

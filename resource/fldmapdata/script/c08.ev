@@ -118,6 +118,18 @@ INIT_EVENT_START   ev_zone_c08
     $OBJCHRWORK0 = FIDDLE
   ENDIF
   }
+  
+  {
+  DEFINE_LOCAL LWK_SEX
+  //性別を取得してOBJを変化させる
+  _GET_MY_SEX( LWK_SEX )
+  IF $LWK_SEX == PM_MALE THEN
+    $OBJCHRWORK1 = SWHERO
+  ELSE
+    $OBJCHRWORK1 = SWHEROINE
+  ENDIF
+  }
+  
   {
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_08, LOCALWORK15 )
@@ -170,10 +182,12 @@ INIT_EVENT_START ev_init_c08
   ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_W2 THEN
     _DEBUG_PRINT_WK( 4 )
     _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, 0, 164, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_PLAYER_01, 418, 0, 164, DIR_DOWN )
    //プラズマ団襲来　ブラックver
   ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_B2 THEN
     _DEBUG_PRINT_WK( 5 )
     _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, 0, 162, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_PLAYER_01, 418, 0, 162, DIR_DOWN )
   //ヴィオ戦前
   ELSIF $WK_SCENE_C08_SWPLAZMA != 0 && $WK_SCENE_C08_SWPLAZMA < 6 && $LCWK_VERSION == VERSION_W2 THEN
     _DEBUG_PRINT_WK( 6 )
@@ -486,10 +500,31 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
 
   //ハイリンク通信ブロック処理
   _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
-
+  
   //暗転復帰
   _MAP_FADE_BLACK_IN()
   _DISP_FADE_END_CHECK()
+
+  //アニメ：主人公消す
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_on)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  //カメラ操作・ダミー主人公を中心に
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _CAMERA_MOVE( 9688,0,970752,27426816,0,10649600,1 )
+  ELSE
+    _CAMERA_MOVE( 9688,0,970752,27426816,0,10780672,1 )
+  ENDIF
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //主人公座標変更（一時的にシャガと同じ座標に）
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 419, 0, 162, DIR_DOWN )
+  ELSE
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 419, 0, 164, DIR_DOWN )
+  ENDIF
 
   //シャガ：この　こおりの　せかいは…
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04a , C08_SWLEADER7_01 , POS_UR)
@@ -497,13 +532,8 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   
   _GET_ROM_VERSION( LCW_VERSION )
   
-  //オノノクス動作OBJ表示（バージョンによって位置を分岐）
-  IF $LCW_VERSION == VERSION_B2 THEN
-   _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
-  ELSE
-    _OBJ_ADD_EX( 419, 165, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
-  ENDIF
-  
+  //オノノクス出現
+  _CALL ball_out
 
   //シャガ：ドラゴンテールだ
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08_SWLEADER7_01 , POS_UR)
@@ -516,31 +546,37 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
-  //アニメ：オノノクス技を出した的な演出（移動＋カメラゆれ＋ドラゴンテール音再生）
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_d)
-  _TIME_WAIT(8)
+  //アニメ：オノノクス技を出した的な演出（移動＋ドラゴンテール音再生）
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke47_attack)
+  _TIME_WAIT(2)
   _SE_PLAY( SEQ_SE_W121_01 )
-  _SHAKE_CAMERA(0,1,3,6,0,0,0,0)
   _OBJ_ANIME_WAIT()
   _SE_WAIT()
   
   //アニメ：オノノクス「？」
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_common_hatena )
   _OBJ_ANIME_WAIT()
   
   _TIME_WAIT(8)
   
   //アニメ：主人公「！」シャガ「？」
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_common_hatena )
+  _OBJ_ANIME( C08_PLAYER_01,anm_common_hatena )
   _OBJ_ANIME( C08_SWLEADER7_01,anm_common_gyoe )
   _OBJ_ANIME_WAIT()
   
   //シャガ：よくやった！
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08_SWLEADER7_01 , POS_UR)
+  _MSGWIN_CLOSE()
   
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 419, 163, FORCE_TYPE_ALL, 8, DIR_UD)
+  ELSE
+    _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 419, 165, FORCE_TYPE_ALL, 8, DIR_UD)
+  ENDIF
+  _OBJ_ANIME_WAIT()
   
-  //オノノクス動作OBJ非表示
-  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  //オノノクス非表示
+  _CALL ball_in
   
   //シャガ：それにしても
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_07 , C08_SWLEADER7_01 , POS_UR)
@@ -639,7 +675,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_10 , C08_SWLEADER7_01 , POS_UR)
   
   //アニメ：主人公とシャガ向き合う
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_r )
+  _OBJ_ANIME( C08_PLAYER_01,anm_staystep_r )
   _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
@@ -661,7 +697,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   
   _TIME_WAIT( 16 )
   //アニメ：主人公見送り
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+  _OBJ_ANIME( C08_PLAYER_01,anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //シャガ配置変更
@@ -677,11 +713,34 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   //BGM再生:氷漬けソウリュウ
   _START_EVENT_BGM( SEQ_BGM_E_C08_ICE )
   
+  //主人公座標変更
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 418, 0, 162, DIR_DOWN )
+  ELSE
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 418, 0, 164, DIR_DOWN )
+  ENDIF
+  
+  //アニメ：主人公出現
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off)
+  _OBJ_ANIME_WAIT()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (1)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //ダミー主人公削除
+  _OBJ_DEL( C08_PLAYER_01 )
+  
   //========================================//
   //C08プラズマ団襲来イベント進行
   $WK_SCENE_C08_SWPLAZMA = 2
   //C08ヴィオ非表示
   _FLAG_SET( FV_C08_SWSAGE7_01 )
+  //C08ダミー主人公非表示
+  _FLAG_SET( FV_C08_PLAYER_01 )
   //イベント再生
   _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
   _FLAG_RESET( SYS_FLAG_BGM_C08_SILENT )
@@ -694,6 +753,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
 EVENT_END
 
 
@@ -716,17 +776,113 @@ _ANIME_LABEL	anm_sage7_look_lr
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
+/*  CALL：モンスターボールからin/out                                  */
+/**************************************************************/
+ball_out:
+
+  //オノノクス動作OBJ表示（バージョンによって位置を分岐）
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 419, 0, 163, 3, 8 )
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 419, 0, 163 )
+  ELSE
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 419, 0, 165, 3, 8 )
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 419, 0, 165 )
+  ENDIF
+  
+  //ボール出現フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
+  _WHITE_OUT()
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  ELSE
+    _OBJ_ADD_EX( 419, 165, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  ENDIF
+  _WHITE_IN()
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
+_RET
+
+ball_in:
+  
+  //ボール戻り演出をバージョン分岐
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 164 )
+  ELSE
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 166 )
+  ENDIF
+  
+  //ポケ非表示フレーム待ち
+  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
+  _WHITE_OUT()
+  _DISP_FADE_END_CHECK()
+  //ポケ非表示
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  _WHITE_IN()
+  _DISP_FADE_END_CHECK()
+  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
+  
+  //ボールしまい演出をバージョン分岐
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 164, 3, 8 )
+  ELSE
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 166, 3, 8 )
+  ENDIF
+  
+_RET
+
+//--------------------------------------------------------------------
+//		カメラ移動用に主人公を一時的に非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vanish_off
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//  オノノクス：くるっとまわる
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_poke47_attack
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_1F,1  //回転終了
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
 /*  CALL：ダークトリニティ（１）                                  */
 /**************************************************************/
 ev_c08_ninja_comming:
-  
-  _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_l)
-  _TIME_WAIT( 4 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
-  _OBJ_ANIME_WAIT()
 
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //アニメ：シャガと主人公向き合う
+  IF $LCW_POSX == 404 && $LCW_POSZ == 145 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_l)
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  ELSIF $LCW_POSX == 406 && $LCW_POSZ == 145 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_r)
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+  ELSIF $LCW_POSX == 405 && $LCW_POSZ == 146 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
   //シャガ：さすがだな
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_UR)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
   
   //回復処理
@@ -736,7 +892,7 @@ ev_c08_ninja_comming:
 	_TEMOTI_POKEMON_KAIFUKU()
 	
 	//シャガ：ここで
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_14 , C08_SWLEADER7_01 , POS_UR)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_14 , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
   
   //バージョンを取得
@@ -750,7 +906,9 @@ ev_c08_ninja_comming:
   ENDIF
   
   _TIME_WAIT(4)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  IF $LCW_POSX != 405 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //階段SE再生
@@ -771,28 +929,40 @@ ev_c08_ninja_comming:
   ELSE
     _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_return_gym_w)
   ENDIF
-
-  _TIME_WAIT(4)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
   _OBJ_ANIME_WAIT()
+  
+  //アニメ：シャガと主人公向き合う
+  IF $LCW_POSX == 404 && $LCW_POSZ == 145 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_l)
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSX == 406 && $LCW_POSZ == 145 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_r)
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //プレイヤー名格納
   _PLAYER_NAME( 0 )
   
   //シャガ：ふむ…！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15 , C08_SWLEADER7_01 , POS_UR)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15 , C08_SWLEADER7_01 , POS_UP)
 	
 	//シャガ：いいか主人公
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15a , C08_SWLEADER7_01 , POS_UR)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15a , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
   
+  //SE再生
+  _SE_PLAY( SEQ_SE_W234_HIKARI )
   //いでんしのくさびデモ
   _CALL_ITEM_CUTIN(ITEM_IDENSINOKUSABI)
+  _SE_WAIT()
   
   //シャガ：これがあいつら
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_16 , C08_SWLEADER7_01 , POS_UR)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_16 , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
-  
   //ダークトリニティ登場
 	_OBJ_ADD( C08_NINJA_01 )
 	
@@ -806,7 +976,7 @@ ev_c08_ninja_comming:
 	//登場アニメーション
 	_OBJ_ANIME( C08_NINJA_01 , anm_c08_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
-	
+
 	//イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
 	
@@ -816,15 +986,15 @@ ev_c08_ninja_comming:
 	_OBJ_ANIME_WAIT()
 	
 	//？？？：ジムがかくしばしょか
-  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DL)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DOWN)
   _MSGWIN_CLOSE()
   
   //シャガ：まさか
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_17 , C08_SWLEADER7_01 , POS_UR)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_17 , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
   
   //？？？：おっしゃるとおり
-  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_02 , C08_NINJA_01 , POS_DL)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_02 , C08_NINJA_01 , POS_DOWN)
   _MSGWIN_CLOSE()
   
   //ダークトリニティ2～3登場
@@ -833,11 +1003,11 @@ ev_c08_ninja_comming:
 
   //ダークトリニティ配置
   IF $LCW_VERSION == VERSION_B2 THEN
-    _OBJ_POS_CHANGE( C08_NINJA_02, 406, 0, 145, DIR_LEFT )
-    _OBJ_POS_CHANGE( C08_NINJA_03, 406, 0, 146, DIR_LEFT )
+    _OBJ_POS_CHANGE( C08_NINJA_02, 408, 0, 145, DIR_LEFT )
+    _OBJ_POS_CHANGE( C08_NINJA_03, 408, 0, 146, DIR_LEFT )
   ELSE
-    _OBJ_POS_CHANGE( C08_NINJA_02, 402, 0, 147, DIR_RIGHT )
-    _OBJ_POS_CHANGE( C08_NINJA_03, 407, 0, 147, DIR_LEFT )
+    _OBJ_POS_CHANGE( C08_NINJA_02, 403, 0, 147, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C08_NINJA_03, 408, 0, 147, DIR_LEFT )
   ENDIF
 
 	//登場アニメーション
@@ -866,15 +1036,35 @@ ev_c08_ninja_comming:
 	
 	_OBJ_ANIME_WAIT()
 	
+	IF $LCW_POSX == 405 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+	
 	//シャガ：うばわれたら
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_18 , C08_SWLEADER7_01 , POS_UR)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_18 , C08_SWLEADER7_01 , POS_UP)
   _MSGWIN_CLOSE()
+  
+	
+	//プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  //バージョンを取得
+  _GET_ROM_VERSION( LCW_VERSION )
 	
 	//アニメ：シャガ追いかける
-  IF $LCW_VERSION == VERSION_B2 THEN
+  IF $LCW_VERSION == VERSION_B2 && $LCW_POSX == 405 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_b_405 )
+  ELSIF $LCW_VERSION == VERSION_B2 &&  $LCW_POSX != 405 THEN
     _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_b )
-  ELSE
+  ELSIF  $LCW_VERSION == VERSION_W2 &&  $LCW_POSX == 405 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_w_405 )
+  ELSIF  $LCW_VERSION == VERSION_W2 &&  $LCW_POSX != 405 THEN
     _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_w )
+  ENDIF
+  
+  IF $LCW_POSX == 405 THEN
+    _TIME_WAIT( 20 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
   ENDIF
   _OBJ_ANIME_WAIT()
   
@@ -907,14 +1097,12 @@ _ANIME_LABEL	anm_swleader7_go_gym_w
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader7_return_gym_w
 	_ANIME_DATA	AC_WALK_D_4F,1
-	_ANIME_DATA	AC_STAY_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	シャガ：ジムに入るB
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader7_go_gym_b
-	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	AC_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -923,7 +1111,6 @@ _ANIME_LABEL	anm_swleader7_go_gym_b
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader7_return_gym_b
 	_ANIME_DATA	AC_WALK_D_4F,1
-	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -995,6 +1182,15 @@ _ANIME_LABEL	anm_c08_swleader7_run_w
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
+//	シャガ追いかけるW
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_run_w_405
+  _ANIME_DATA	AC_WALK_L_4F,3
+  _ANIME_DATA	AC_WALK_D_4F,5
+  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
 //	ダークトリニティ逃走01B
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_ninja_escape_01b
@@ -1024,11 +1220,11 @@ _ANIME_LABEL	anm_c08_ninja_escape_01b
 //	ダークトリニティ逃走02B
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_ninja_escape_02b
-  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	AC_WALK_R_4F,1
   _ANIME_DATA	AC_DIR_PAUSE_ON,1
   _ANIME_DATA	AC_WALK_R_4F,1
   _ANIME_DATA	AC_ANM_PAUSE_ON,1
-  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,3
   _ANIME_DATA	AC_ANM_PAUSE_OFF,1
   _ANIME_DATA	AC_DIR_PAUSE_OFF,1
   _ANIME_DATA	AC_WALK_R_4F,3
@@ -1038,11 +1234,11 @@ _ANIME_LABEL	anm_c08_ninja_escape_02b
 //	ダークトリニティ逃走03B
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_ninja_escape_03b
-  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	AC_WALK_R_4F,1
   _ANIME_DATA	AC_DIR_PAUSE_ON,1
   _ANIME_DATA	AC_WALK_R_4F,1
   _ANIME_DATA	AC_ANM_PAUSE_ON,1
-  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	AC_WALK_R_4F,5
   _ANIME_DATA	AC_ANM_PAUSE_OFF,1
   _ANIME_DATA	AC_DIR_PAUSE_OFF,1
   _ANIME_DATA	AC_WALK_R_4F,2
@@ -1051,12 +1247,26 @@ _ANIME_LABEL	anm_c08_ninja_escape_03b
 //--------------------------------------------------------------
 //	シャガ追いかけるB
 //--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_run_b_405
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	シャガ追いかけるB
+//--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_swleader7_run_b
   _ANIME_DATA	AC_WALK_D_4F,4
   _ANIME_DATA	AC_DIR_R,1
-  _ANIME_DATA	AC_DIR_PAUSE_ON,1
-  _ANIME_DATA	AC_WALK_R_4F,1
-  _ANIME_DATA	AC_ANM_PAUSE_ON,1
   _ANIME_DATA	AC_WALK_R_4F,2
   _ANIME_DATA	AC_ANM_PAUSE_OFF,1
   _ANIME_DATA	AC_DIR_PAUSE_OFF,1
@@ -1146,6 +1356,8 @@ EVENT_START   ev_pos_c08_ninja_01
 	
 	//プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+	
+	_PLAYER_NAME( 0 )
 	
 	//シャガ：なんたること！
 	IF $LCW_POSZ == 177 THEN
@@ -1410,7 +1622,8 @@ EVENT_END
 /*  ヴィオ（SAGE7）：話しかけ                                  */
 /**************************************************************/
 EVENT_START   ev_c08_swsage7_01
-  
+    
+    /*
     //ハイリンク通信ブロック処理
     _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
     
@@ -1435,18 +1648,22 @@ EVENT_START   ev_c08_swsage7_01
     
     //バージョンを取得
     _GET_ROM_VERSION( LCW_VERSION )
-    
+    */
     //暗転処理
     _BLACK_OUT_SLOW()
     _DISP_FADE_END_CHECK()
     
      //シャガ・主人公配置変更
     IF $LCW_VERSION == VERSION_B2 THEN
-      _OBJ_POS_CHANGE( C08_SWLEADER7_01, 404, 0, 145, DIR_DOWN )
-      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 403, 0, 145, DIR_DOWN )
+      _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 145, DIR_DOWN )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d)
+      _OBJ_ANIME_WAIT()
+      //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 403, 0, 145, DIR_DOWN )
     ELSE
       _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 145, DIR_DOWN )
-      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 404, 0, 145, DIR_DOWN )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d)
+      _OBJ_ANIME_WAIT()
+      //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 404, 0, 145, DIR_DOWN )
     ENDIF
 
     //========================================//
@@ -1477,7 +1694,7 @@ EVENT_START   ev_c08_swsage7_01
     _CALL ev_c08_ninja_comming
     
     //ハイリンク通信ブロック処理終了
-    _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+    //_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
     
 EVENT_END
 

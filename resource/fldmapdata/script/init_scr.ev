@@ -191,6 +191,7 @@ init_flags:
   _FLAG_SET(FV_C08_NINJA_01)  //ソウリュウシティ：ダークトリニティ（戦うやつ）
   _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
   _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
+  _FLAG_SET(FV_C08_PLAYER_01) //ソウリュウシティ：主人公
   _FLAG_SET(FV_C08R0102_FOOTBALLM_02) //シャガ家：おろおろしてる人
 
   //H04R0301：ビレッジブリッジの民家のツリーズ
@@ -300,6 +301,7 @@ init_flags:
   _FLAG_SET( FV_N01R0502_BOSS_01 )
   _FLAG_SET( FV_N01R0501_BOSS_01 )
   _FLAG_SET( FV_N01R0502_NPOKE_01 )
+  _FLAG_SET( FV_N01R0502_PLAYER_01 )
 
   //C07:セッカシティ　ダークトリニティ
   _FLAG_SET( FV_C07_NINJA_01 )
