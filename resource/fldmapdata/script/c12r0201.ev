@@ -75,21 +75,30 @@ EVENT_START   ev_c12r0201_woman3_01
   _PLAYER_NAME( 0 )
   //ライバル名代入
   _RIVAL_NAME( 1 )
+  
+  //クリア後の場合
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_woman3_03 )
+  
+  //クリア前の場合
+  ELSE
 
-     //連れ歩き中の場合
-  	IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    //連れ歩き中の場合
+    IF FLAG_ON( SYS_FLAG_PAIR ) THEN
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_woman3_00 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_woman3_00 )
 	
-	ELSE
+    ELSE
 	
-		_TALK_OBJ_START()
-		//ライバル母：主人公くん▼（主人公が女の子の場合は台詞が変わる）
-		_BALLOONWIN_OBJMSG_MF( msg_c12r0201_woman3_01, msg_c12r0201_woman3_02, C12R0201_WOMAN3_01, POS_DOWN )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+      _TALK_OBJ_START()
+      //ライバル母：主人公くん▼（主人公が女の子の場合は台詞が変わる）
+      _BALLOONWIN_OBJMSG_MF( msg_c12r0201_woman3_01, msg_c12r0201_woman3_02, C12R0201_WOMAN3_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 	
-	ENDIF
+    ENDIF
+  
+  ENDIF
 
 EVENT_END
 

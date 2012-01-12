@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/12 11:34:37
+#save date:2012/01/12 17:27:07
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04r1101.wms
 #SECTION START:OBJ_EVENT
@@ -142,7 +142,7 @@ C04R1101_WOMAN1_01
 #OBJ CODE Number
 WOMAN1
 #MOVE CODE Number
-MV_RND_UR
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -150,7 +150,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R1101_WOMAN1_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -158,13 +158,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 32 -216
+-88 32 -200
 #event number: 5
 #type
 1
@@ -173,7 +173,7 @@ C04R1101_BOY2_01
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_DIR_RND
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -189,9 +189,9 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

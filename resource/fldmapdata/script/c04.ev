@@ -1252,12 +1252,12 @@ EVENT_START   ev_pos_c04_trial_01
     //まあ　あなた！
     _BALLOONWIN_OBJMSG_POS( LWK_MSG2 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
   ENDIF
-
-  _MSGWIN_CLOSE()
   
   //ゲームクリア後なら
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-  
+    
+    _MSGWIN_CLOSE()
+    
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
     _OBJ_ANIME_WAIT()
 
@@ -1275,7 +1275,10 @@ EVENT_START   ev_pos_c04_trial_01
   
   //ゲームクリア前
   ELSE
-
+    
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
     //========================================//
     _FLAG_RESET( FV_C04_TRAINERW_01 )
     //========================================//
