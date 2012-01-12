@@ -510,7 +510,7 @@ static void sub_LotParamTrBattle( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, 
     GF_ASSERT(0);
     tbl_no = 0;
   }
-  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NPC_TRAINER_SET_NUM*LOT_PROB_MAG, log, idx )/LOT_PROB_MAG;
+  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NPC_TRAINER_SET_NUM, log, idx );
   wk->param[idx][NPC_TRAINER_PARAM_TRID] = DATA_NpcTrainer[tbl_no][rnd];
   log[idx] = rnd;
 }
