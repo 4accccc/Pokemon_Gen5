@@ -948,6 +948,8 @@
 #define FV_D10R0501_SWRIVAL_01            1031 /* 0x0407 ジャイアントホール：ライバル */
 #define FV_C12GYM0101_GLASSES_01          1032 /* 0x0408 ヒオウギジム：ダンペイ　ストッパー */
 #define FV_C04_TRAINERW_01                1033 /* 0x0409 ライモンシティ：バトル検定前謎の女ストッパー */
+#define FV_C08_PLAYER_01                  1034 /* 0x040a ソウリュウシティ：透明になった主人公代理 */
+#define FV_N01R0502_PLAYER_01             1035 /* 0x040b N城：透明になった主人公代理 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
