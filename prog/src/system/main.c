@@ -43,6 +43,7 @@
 #include "debug/debug_ui_input.h"
 #include "debug/debug_flg.h"
 #include "debug/memory_store.h"
+#include "debug/debug_hudson.h"
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -65,7 +66,7 @@ static  void  _set_sound_mode( CONFIG *config );
 static void DEBUG_StackOverCheck(void);
 static void DEBUG_UI_AutoKey(void);
 
-#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#if defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_TIME_Printf(...) OS_TFPrintf(3,__VA_ARGS__)
 #endif  //defined
 #endif //PM_DEBUG
@@ -96,6 +97,15 @@ static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max =0;    // 16000Over
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void );
 static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
+
+//
+static BOOL DEBUG_MAIN_TIME_IsStart = FALSE;
+static OSTick DEBUG_MAIN_TIME_AveTick = 0;
+static OSTick DEBUG_MAIN_TIME_AveTickTmp = 0;
+static int DEBUG_MAIN_TIME_OverCount = 0;
+static int DEBUG_MAIN_TIME_check_sync = 0;
+static int DEBUG_MAIN_TIME_check_max = 0;
+
 #endif
 
 //------------------------------------------------------------------
@@ -528,6 +538,48 @@ static void DEBUG_UI_AutoKey( void  )
 
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+extern void DEBUG_MAIN_TIME_Start( int sync );
+extern BOOL DEBUG_MAIN_TIME_End( int *p_ave, int *p_over_cnt );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  負荷計測開始
+ *
+ *	@param	int sync 計測時間
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_MAIN_TIME_Start( int sync )
+{
+  GF_ASSERT( sync > DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME );
+  DEBUG_MAIN_TIME_IsStart = TRUE;
+  DEBUG_MAIN_TIME_check_max = sync;
+  DEBUG_MAIN_TIME_check_sync  = 0;
+  DEBUG_MAIN_TIME_OverCount = 0;
+  DEBUG_MAIN_TIME_AveTick = 0;
+  DEBUG_MAIN_TIME_AveTickTmp  = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  負荷計測終了
+ *
+ *	@param	int *p_ave    平均負荷
+ *	@param	*p_over_cnt   １フレームの処理をオーバーした回数
+ *
+ *	@return TRUE計測終了
+ */
+//-----------------------------------------------------------------------------
+BOOL DEBUG_MAIN_TIME_End( int *p_ave, int *p_over_cnt )
+{
+  if( DEBUG_MAIN_TIME_check_sync < DEBUG_MAIN_TIME_check_max )
+  {
+    return FALSE;
+  }
+  else
+  {
+    *p_ave  = DEBUG_MAIN_TIME_AveTick;
+    *p_over_cnt = DEBUG_MAIN_TIME_OverCount;
+    return TRUE;
+  }
+}
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 {
@@ -545,6 +597,8 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
+  DEBUG_MAIN_TIME_check_sync ++;
+
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
     DEBUG_TIME_Printf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
@@ -562,6 +616,20 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
     DEBUG_TIME_Printf( " Max %d\n",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+
+
+
+    if( DEBUG_MAIN_TIME_IsStart )
+    {
+      DEBUG_MAIN_TIME_OverCount   += DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount;
+      DEBUG_MAIN_TIME_AveTickTmp  += DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave;
+      DEBUG_MAIN_TIME_AveTick     = DEBUG_MAIN_TIME_AveTickTmp / DEBUG_MAIN_TIME_check_sync;
+
+      if( DEBUG_MAIN_TIME_check_sync >= DEBUG_MAIN_TIME_check_max )
+      {
+        DEBUG_MAIN_TIME_IsStart = FALSE;
+      }
+    }
 
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;

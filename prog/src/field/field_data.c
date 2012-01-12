@@ -120,6 +120,25 @@ u32 FIELDDATA_GetFieldHeapSize( u16 zone_id )
   return resistMapTbl[resid].heap_size;
 }
 
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	u16 zone_id
+ *	@param	*p_x
+ *	@param	*p_y 
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_FIELDDATA_GetBrockSize( u16 zone_id, u16 *p_x, u16 *p_z )
+{
+  u16 resid = MapID2ResistID( zone_id );
+  *p_x  = resistMapTbl[resid].mapperData.blockXNum;
+  *p_z  = resistMapTbl[resid].mapperData.blockZNum;
+}
+#endif 
+
 //============================================================================================
 //============================================================================================
 

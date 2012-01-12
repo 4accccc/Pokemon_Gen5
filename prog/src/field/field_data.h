@@ -27,3 +27,7 @@ extern const DEPEND_FUNCTIONS FieldBaseFunctions;
 extern const DEPEND_FUNCTIONS FieldNoGridFunctions;
 extern const DEPEND_FUNCTIONS FieldGridFunctions;
 
+#ifdef PM_DEBUG
+extern void DEBUG_FIELDDATA_GetBrockSize( u16 zone_id, u16 *p_x, u16 *p_z );
+#endif 
+

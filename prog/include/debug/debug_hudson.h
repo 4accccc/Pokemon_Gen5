@@ -17,6 +17,9 @@
 #if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_HUDSON_INPUT_AUTO_TEST  //L+Bとかで強制デバッグ実行できる
 #define DEBUG_ONLY_FOR_hudson
+#ifndef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#endif //ifndef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 #endif  //if defined
 #endif  //PMDEBUG
 

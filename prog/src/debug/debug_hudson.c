@@ -26,6 +26,8 @@
 #include "field/event_debug_btl_poke_change.h" // for EVENT_DEBUG_BtlPokeChange
 #include "field/event_debug_menu_ov_jump.h" // for debugMenuCallProc_AllMapCheck
 #include "debug/debug_hudson_auto_ja_check.h"
+#include "debug/debug_hudson_auto_jump_zone_fes.h"
+#include "debug/debug_hudson_auto_jump_zone_tick.h"
 
 
 //ŠO•”ŒöŠJ
@@ -142,7 +144,7 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
   {
     if( !sp_wk->is_task_create )
     {
-      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortFunCheck, FS_OVERLAY_ID( debug_resort_check ) );
+      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_JumpTickCheck, FS_OVERLAY_ID( debug_jump_tick_check ) );
     }
   }
 #else

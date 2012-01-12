@@ -2254,6 +2254,16 @@ SRCS_OVERLAY_DEBUG_CONNECT_CHECK = field/event_debug_all_connect_check.c \
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_RESORT_CHECK = debug/debug_hudson_auto_ja_check.c
 
+#DEBUG_FES_JUMP_CHECK
+#===> GROUP_OVERLAY_GIMMICK
+#===> GROUP_OVERLAY_NOTWIFI_FES_GIMMICK
+#===> SRCS_OVERLAY_EVENT_FMISSION
+SRCS_OVERLAY_DEBUG_FES_JUMP_CHECK = debug/debug_hudson_auto_jump_zone_fes.c
+
+#DEBUG_JUMP_TICK_CHECK
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_JUMP_TICK_CHECK = debug/debug_hudson_auto_jump_zone_tick.c
+
 #DEBUG_FSKILL
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_FSKILL = field/event_debug_menu_fskill.c
