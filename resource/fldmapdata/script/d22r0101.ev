@@ -68,7 +68,7 @@ INIT_EVENT_START ev_init_d22r0101
   IF $WK_SCENE_D22R0101 == 2 THEN
     _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 2, 32, DIR_DOWN )
   ELSIF $WK_SCENE_D22R0101 == 3 THEN
-    _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 3, 22, DIR_DOWN )
+    _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 22, 3, 13, DIR_DOWN )
   ELSIF $WK_SCENE_D22R0101 == 4 THEN
     _OBJ_POS_CHANGE( D22R0101_SWRIVAL_01, 47, 2, 13, DIR_DOWN )
   ELSE
@@ -257,6 +257,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
   
   //メッセージ：あたしに
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_breederw_03,D22R0101_BREEDERW_01, POS_UR )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //ライバル初期位置にワープ
@@ -325,6 +326,9 @@ EVENT_START ev_pos_d22r0101_pokesearch_02
   ELSE
     _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_pokeserch02_rivalbye )
   ENDIF
+  _TIME_WAIT( 8 )
+  //アニメ：主人公見送る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   _OBJ_POS_CHANGE(D22R0101_SWRIVAL_01,22,3,22,DIR_UP)
@@ -357,29 +361,27 @@ _ANIME_LABEL	anm_pokeserch02_rivalbye
 EVENT_START ev_pos_d22r0101_pokesearch_03
 
   //ライバル近くにワープ
-  _OBJ_POS_CHANGE(D22R0101_SWRIVAL_01,18,3,19,DIR_UP)
+  _OBJ_POS_CHANGE(D22R0101_SWRIVAL_01,22,3,19,DIR_UP)
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  $LCW_POSX -= 1
   
-  //アニメ：ライバル隣接
-  _OBJ_ANIME( D22R0101_SWRIVAL_01,anm_pokeserch03_rival_come)
-  _TIME_WAIT(8*8)
+  IF $LCW_POSZ == 11 THEN
+    _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_pokeserch03_rival_come_z11 )
+    _TIME_WAIT( 8*5 )
+  ELSIF $LCW_POSZ == 12 THEN
+    _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_pokeserch03_rival_come_z12 )
+    _TIME_WAIT( 8*4 )
+  ELSIF $LCW_POSZ == 13 THEN
+    _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_pokeserch03_rival_come_z13 )
+    _TIME_WAIT( 8*3 )
+  ENDIF
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //SWRIVAL：おい！いいもの
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_16,D22R0101_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  //アニメ：ライバル隣接
-  _OBJ_ANIME_AUTO( D22R0101_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  IF $LCW_POSZ != 12 THEN
-    _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-  ENDIF
   
   //マヒなおし入手処理
 	_ITEM_EVENT_KEYWAIT(ITEM_MAHINAOSI, 1)
@@ -389,6 +391,15 @@ EVENT_START ev_pos_d22r0101_pokesearch_03
   
   //SWRIVAL：マヒした
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_17,D22R0101_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル「…」
+  _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_rival_tenten )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：ライバル向きなおす
+  _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   
   //SWRIVAL：ポケモンがかってに
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_18,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -404,9 +415,33 @@ EVENT_END
 //--------------------------------------------------------------------
 //	ライバル隣接
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_pokeserch03_rival_come
-	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	AC_WALK_R_8F,3
+_ANIME_LABEL	anm_pokeserch03_rival_come_z11
+	_ANIME_DATA	AC_WALK_U_4F,8
+	_ANIME_DATA	AC_STAY_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pokeserch03_rival_come_z12
+	_ANIME_DATA	AC_WALK_U_4F,7
+	_ANIME_DATA	AC_STAY_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pokeserch03_rival_come_z13
+	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_STAY_WALK_R_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_tenten
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_TENTEN,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -415,7 +450,7 @@ _ANIME_LABEL	anm_pokeserch03_rival_come
 EVENT_START ev_pos_d22r0101_pokesearch_04
 
   //ヨーテリー鳴く
-  _VOICE_PLAY(MONSNO_590,0)
+  _VOICE_PLAY(MONSNO_591,0)
   _PLAINWIN_MSG_DOWN(msg_d22r0101_poke_01)
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
@@ -518,7 +553,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //ヨーテリー鳴く
-  _VOICE_PLAY(MONSNO_590,0)
+  _VOICE_PLAY(MONSNO_591,0)
   _BALLOONWIN_OBJMSG_POS(msg_d22r0101_poke_02,D22R0101_POKE31_01, POS_UL )
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
@@ -556,7 +591,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _TIME_WAIT( 4 )
   
   //ボール移動
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 51, 23, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 51, 23, FORCE_TYPE_NPC, 4, DIR_UD)
   _TIME_WAIT( 16 )
   //SE再生
   _SE_PLAY( SEQ_SE_W003_01 ) 
@@ -593,7 +628,10 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _CAMERA_END()		//カメラ操作終了
   
   //ハーデリア：わん！
+  _VOICE_PLAY(MONSNO_591,0)
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_poke_03,D22R0101_POKE31_01, POS_UL )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //ライバルワープ
@@ -643,7 +681,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _OBJ_ANIME_WAIT()
   
   //BREEDERM：ふむう
-  _BALLOONWIN_OBJMSG_POS( msg_d22r0101_breederm_06,D22R0101_BREEDERM_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d22r0101_breederm_06,D22R0101_BREEDERM_01, POS_DL )
   _MSGWIN_CLOSE()
 
   //暗転
@@ -1120,5 +1158,3 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
-
-

@@ -62,10 +62,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_d24r0901
 
-  //初回入室ならベルの位置を変更
-  IF $WK_SCENE_D24_PAIR_START == 1 && FLAG_OFF( FE_D24_SWBELL_FIRSTTALK ) THEN
-    _OBJ_POS_CHANGE( D24R0901_SWBELL_01, 0, 0, 0, DIR_RIGHT )
-  ENDIF
+  //
   
 INIT_EVENT_END
 
@@ -86,25 +83,10 @@ EVENT_START		ev_scene_d24r0901_pair_start
       _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
     ENDIF
     
-    //アニメ：主人公自動で移動
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 7,9, FORCE_TYPE_NOT, 8, DIR_LR )
-    
-    _TIME_WAIT(12)
-    
-    //階段SE再生
-    _SE_PLAY( SEQ_SE_KAIDAN )
-    _SE_WAIT()
-    
-    //ベル動作モデル移動
-    _OBJ_POS_CHANGE( D24R0901_SWBELL_01, 4, 0, 9, DIR_RIGHT )
-    
-    _OBJ_ANIME_WAIT()
-    
     //アニメ：ベル隣接
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-    _OBJ_ANIME_AUTO( D24R0901_SWBELL_01, 6,9, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME( D24R0901_SWBELL_01, anm_bell_come )
     _OBJ_ANIME_WAIT()
-    
+  
     //ベル：おうい
     _BALLOONWIN_OBJMSG_MF( msg_d24r0901_swbell_01,msg_d24r0901_swbell_02, D24R0901_SWBELL_01, POS_DEFAULT )
     
@@ -119,6 +101,10 @@ EVENT_START		ev_scene_d24r0901_pair_start
     //ベル：あ！あんしんしてよう！
     _BALLOONWIN_OBJMSG_POS( msg_d24r0901_swbell_04, D24R0901_SWBELL_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
+    
+    //アニメ：主人公隣接
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
     
     //連れ歩き開始
     _PAIR_TRAINER_SET( D24R0901_SWBELL_01 , PAIR_ID_D24_SWBELL, PAIR_TYPE_FREE_ZONE, TRID_SUPPORT_01, SCRID_D24_SWBELL )

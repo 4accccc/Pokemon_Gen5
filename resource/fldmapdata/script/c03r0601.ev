@@ -135,6 +135,14 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   //ベル：ダウジングマシンを　つかえば
   _BALLOONWIN_OBJMSG_POS( msg_c03r0601_swbell_04, C03R0601_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //アニメ：ベル「！」
+  _OBJ_ANIME( C03R0601_SWBELL_01, anm_swbell_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ベル：ダウジングマシンを　つかえば
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0601_swbell_05, C03R0601_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
   //アニメ：ベル退場
   _OBJ_ANIME_AUTO( C03R0601_SWBELL_01, 5, 14, FORCE_TYPE_NPC, 8, DIR_LR )
@@ -262,6 +270,15 @@ EVENT_START   ev_c03r0601_clown_01
   ENDIF
 }
 EVENT_END
+
+//--------------------------------------------------------------------
+//	ベル：「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swbell_gyoe
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------
