@@ -46,6 +46,8 @@
 #define HUDSON_TESTCODE_ALL_WAZA_CAM ("6")  ///< 全技カメラチェック
 #define HUDSON_TESTCODE_POKE_CHANGE ("7")  
 #define HUDSON_TESTCODE_JA_SHOP_CHECK ("8")   ///< JA施設チェック
+#define HUDSON_TESTCODE_MAP_FES_CHECK ("9")   ///< FESMAPジャンプチェック
+#define HUDSON_TESTCODE_MAP_TICK_CHECK ("10")   ///< 処理負荷チェック
 
 //=============================================================================
 /**

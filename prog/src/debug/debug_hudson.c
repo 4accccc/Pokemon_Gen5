@@ -139,12 +139,18 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
 
 #ifdef DEBUG_HUDSON_INPUT_AUTO_TEST
   //JAチェックのため、任意で発動できるようにしている。
-  if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_B
-      && GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )
+  if( GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )
   {
     if( !sp_wk->is_task_create )
     {
-      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_JumpTickCheck, FS_OVERLAY_ID( debug_jump_tick_check ) );
+      if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_B )
+      {
+        Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_JumpTickCheck, FS_OVERLAY_ID( debug_jump_tick_check ) );
+      }
+      else if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_A )
+      {
+        Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_FesMapJump, FS_OVERLAY_ID( debug_fes_jump_check ) );
+      }
     }
   }
 #else
@@ -195,6 +201,7 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
       // 全接続チェック
       else
 #endif
+      {
         if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
         {
           new_event = GMEVENT_CreateOverlayEventCall( gsys, 
@@ -248,6 +255,15 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
         {
           Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
         }
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_FES_CHECK ) )
+        {
+          Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_FesMapJump, FS_OVERLAY_ID( debug_fes_jump_check ) );
+        }
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_TICK_CHECK ) )
+        {
+          Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_JumpTickCheck, FS_OVERLAY_ID( debug_jump_tick_check ) );
+        }
+      }
     }
     break;
   }

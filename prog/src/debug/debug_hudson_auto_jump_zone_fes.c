@@ -72,6 +72,7 @@ static void InitCheck( RESORT_JUMP_FES_WK *p_wk );
 static BOOL IsEndCheck( const RESORT_JUMP_FES_WK *cp_wk );
 
 static void DebugPrint_Start( const RESORT_JUMP_FES_WK *cp_wk );
+static void DebugPrint_End( const RESORT_JUMP_FES_WK *cp_wk );
 static void DebugPrint_Prog( const RESORT_JUMP_FES_WK *cp_wk );
 
 //=============================================================================
@@ -164,6 +165,7 @@ static void RESORT_JUMP_FES_Update( GFL_TCBL *p_task, void *p_wk_adrs )
     UpdateCheckZoneID( p_wk );
     if( IsEndCheck( p_wk ) )
     {
+      DebugPrint_End( p_wk );
       p_wk->seq = SEQ_END;
     }
     else
@@ -260,7 +262,10 @@ static BOOL CheckValidZoneID( u16 zoneID )
 {
   static const u16 sc_valid_zoneID[] = 
   {
-    ZONE_ID_C07R0201, //クイズでアプリが邪魔する
+    ZONE_ID_T06R0101,
+    ZONE_ID_T01R0101,
+    ZONE_ID_D12,  //イベントが発生
+    ZONE_ID_C07R0201, //イベントが発生
     ZONE_ID_C04R0201, //イベントが発生
     ZONE_ID_UNION,
     ZONE_ID_CLOSSEUM,
@@ -339,6 +344,18 @@ static void DebugPrint_Start( const RESORT_JUMP_FES_WK *cp_wk )
 {
   OS_TFPrintf( PRINT_TARGET, "==========================\n" );
   OS_TFPrintf( PRINT_TARGET, "FES-JUMP-CHECK: Start!!\n" );
+  OS_TFPrintf( PRINT_TARGET, "==========================\n" );
+}
+//------------------------------------------------------------------------
+/**
+ * @brief デバッグ出力  終了
+ * @param cp_wk ワーク
+ */
+//------------------------------------------------------------------------
+static void DebugPrint_End( const RESORT_JUMP_FES_WK *cp_wk )
+{
+  OS_TFPrintf( PRINT_TARGET, "==========================\n" );
+  OS_TFPrintf( PRINT_TARGET, "FES-JUMP-CHECK: End!!\n" );
   OS_TFPrintf( PRINT_TARGET, "==========================\n" );
 }
 //------------------------------------------------------------------------

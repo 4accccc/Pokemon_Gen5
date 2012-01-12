@@ -93,6 +93,7 @@ static void InitCheck( RESORT_JUMP_TICK_WK *p_wk );
 static BOOL IsEndCheck( const RESORT_JUMP_TICK_WK *cp_wk );
 
 static void DebugPrint_Start( const RESORT_JUMP_TICK_WK *cp_wk );
+static void DebugPrint_End( const RESORT_JUMP_TICK_WK *cp_wk );
 static void DebugPrint_Prog( const RESORT_JUMP_TICK_WK *cp_wk, int ave, int over );
 
 //=============================================================================
@@ -140,6 +141,8 @@ static void RESORT_JUMP_TICK_Update( GFL_TCBL *p_task, void *p_wk_adrs )
     SEQ_TICK_START,
     SEQ_TICK_WAIT,
     SEQ_NEXT_INIT,
+    SEQ_EVENT_SKIP_START,
+    SEQ_EVENT_SKIP_WAIT,
     SEQ_JUMP_NEXT_START,
     SEQ_JUMP_NEXT_WAIT,
     SEQ_END,
@@ -176,10 +179,22 @@ static void RESORT_JUMP_TICK_Update( GFL_TCBL *p_task, void *p_wk_adrs )
     UpdateCheckZoneID( p_wk );
     if( IsEndCheck( p_wk ) )
     {
+      DebugPrint_End( p_wk );
       p_wk->seq = SEQ_END;
     }
     else
     {
+      p_wk->seq = SEQ_EVENT_SKIP_START;
+    }
+    break;
+  case SEQ_EVENT_SKIP_START:
+    DEBUG_UI_SetUp( DEBUG_UI_AUTO_A, DEBUG_UI_PLAY_LOOP );
+    p_wk->seq = SEQ_EVENT_SKIP_WAIT;
+    break;
+  case SEQ_EVENT_SKIP_WAIT:
+    if( !GAMESYSTEM_IsEventExists(p_gamesys) )
+    {
+      DEBUG_UI_SetUp( DEBUG_UI_NONE, DEBUG_UI_PLAY_ONE );
       p_wk->seq = SEQ_JUMP_NEXT_START;
     }
     break;
@@ -400,6 +415,18 @@ static void DebugPrint_Start( const RESORT_JUMP_TICK_WK *cp_wk )
 {
   OS_TFPrintf( PRINT_TARGET, "==========================\n" );
   OS_TFPrintf( PRINT_TARGET, "TICK-JUMP-CHECK: Start!!\n" );
+  OS_TFPrintf( PRINT_TARGET, "==========================\n" );
+}
+//------------------------------------------------------------------------
+/**
+ * @brief デバッグ出力  終了
+ * @param cp_wk ワーク
+ */
+//------------------------------------------------------------------------
+static void DebugPrint_End( const RESORT_JUMP_TICK_WK *cp_wk )
+{
+  OS_TFPrintf( PRINT_TARGET, "==========================\n" );
+  OS_TFPrintf( PRINT_TARGET, "TICK-JUMP-CHECK: End!!\n" );
   OS_TFPrintf( PRINT_TARGET, "==========================\n" );
 }
 //------------------------------------------------------------------------
