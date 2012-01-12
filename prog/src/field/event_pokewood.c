@@ -952,6 +952,9 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
           // 観劇フラグを立てる
           POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_THEATERGO, 
                                              pbew->bp->pokewoodSenario );
+          // メダル獲得チェック
+          PKWDSYS_CheckPokewoodMedal( gamedata );
+
           // シナリオオープンチェック
           PKWD_OpenCheckScenario( ps, gamedata, pbew->bp->pokewoodSenario, 
                                   pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
