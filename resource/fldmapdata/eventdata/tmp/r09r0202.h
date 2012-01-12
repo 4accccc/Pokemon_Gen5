@@ -11,7 +11,6 @@
 
 #define R09R0202_CLEANINGM_01              0
 #define FLD_ITEM_376                       1
-#define R09R0202_SUNGLASSES_01             2
 
 #endif //ZONE_R09R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

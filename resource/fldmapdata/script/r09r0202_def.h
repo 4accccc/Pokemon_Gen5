@@ -6,6 +6,5 @@
 
 //スクリプトデータID定義
 #define SCRID_R09R0202_CLEANINGM_01 (1)
-#define SCRID_R09R0202_SUNGLASSES_01 (2)
 
 #endif //_R09R0202_DEF_H_

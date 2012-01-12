@@ -24,6 +24,7 @@ _EVENT_DATA    ev_t04pc0101_fix_shop
 _EVENT_DATA    ev_t04pc0101_middleman1_01
 _EVENT_DATA    ev_t04pc0101_girl4_01
 _EVENT_DATA    ev_t04pc0101_badman_01
+_EVENT_DATA    ev_t04pc0101_sunglasses_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -99,3 +100,53 @@ EVENT_START ev_t04pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( T04_FS )
 EVENT_END
+
+/**************************************************************/
+/*  SUNGLASSES                                            */
+/**************************************************************/
+EVENT_START   ev_t04pc0101_sunglasses_01
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_SHOCKSHOP1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_mission_add_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    //はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_mission_add_02 )
+    ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_mission_add_03 )
+    ENDIF
+    
+    _MSGWIN_CLOSE()
+    
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_NPC_SHOCKSHOP_01, 0 )
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_t04pc0101_mission_add_04, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_mission_add_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_SHOCKSHOP1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_mission_add_05 )
+  ENDIF
+  
+EVENT_END
+
+

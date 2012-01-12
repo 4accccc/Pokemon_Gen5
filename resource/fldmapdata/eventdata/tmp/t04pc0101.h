@@ -21,6 +21,7 @@
 #define T04PC0101_GIRL4_01                 9
 #define T04PC0101_BADMAN_01               10
 #define T04PC0101_BREEDERM_01             11
+#define T04PC0101_SUNGLASSES_01           12
 
 #endif //ZONE_T04PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
