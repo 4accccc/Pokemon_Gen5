@@ -24,11 +24,11 @@
 			<Text>ここって……　なんだろ
 なんだか　不思議な　感じ▼
 もしかして　ここが
-リバースマウンテンの　源と……▽
+リバースマウンテンの　源……▽
 ポケモン　ヒードランの　すみか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-27T06:40:56" />
+				Time="2012-01-12T10:51:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -157,7 +157,7 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・ver
+・Black2ver
 ・No「かざんのおきいし」所有時で
 　pos（GRIDX＝9～11、GRIDZ＝16）
 ・はい/いいえの選択肢表示
@@ -165,7 +165,7 @@
 　いいえ→終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T12:06:45" />
+				Time="2012-01-12T10:51:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

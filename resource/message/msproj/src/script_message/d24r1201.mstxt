@@ -36,8 +36,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・連れ歩き終了の確認
 ・swbell_05かswbell_06表示済み
 ・はい/いいえの選択肢表示
@@ -45,7 +44,7 @@
 　いいえ→swbell_17</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:15:29" />
+				Time="2012-01-12T10:50:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -112,13 +111,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・はい選択時
 ・swbell_05かswbell_06表示済み</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:15:29" />
+				Time="2012-01-12T10:50:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -178,13 +176,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・はい選択時
 ・swbell_05かswbell_06未表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:15:29" />
+				Time="2012-01-12T10:50:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -238,13 +235,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・いいえ選択時
 ・posから一歩戻す</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:15:29" />
+				Time="2012-01-12T10:50:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -306,13 +302,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・カゴメ到達まで
 ・別れた辺りをウロウロと</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:15:29" />
+				Time="2012-01-12T10:50:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

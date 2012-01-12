@@ -147,10 +147,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……なにも　していない▼
 だがな　ひとの　ポケモンを　うばう
-オマエらは　ぜったいに　ゆるさない▼</Text>
+オマエらは　ぜったいに　ゆるさない▼
+……いっておく▼
+オレは　いまから　いかるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:18:11" />
+				Time="2012-01-12T09:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,10 +162,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……なにも　していない▼
 だがな　人の　ポケモンを　奪う
-オマエらは　絶対に　許さない▼</Text>
+オマエらは　絶対に　許さない▼
+……いっておく▼
+オレは　いまから　怒るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:18:28" />
+				Time="2012-01-12T09:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -288,10 +292,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-たよりに　させてもらうぜッ！</Text>
+たよりに　させてもらうッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T14:20:37" />
+				Time="2012-01-12T09:47:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -300,10 +304,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-頼りに　させてもらうぜッ！</Text>
+頼りに　させてもらうッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T14:20:37" />
+				Time="2012-01-12T09:47:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,10 +360,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-たよりに　させてもらうぜッ！▼</Text>
+たよりに　させてもらうッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:35:08" />
+				Time="2012-01-12T09:47:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -368,10 +372,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
-頼りに　させてもらうぜッ！▼</Text>
+頼りに　させてもらうッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:35:13" />
+				Time="2012-01-12T09:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

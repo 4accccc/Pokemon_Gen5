@@ -1216,10 +1216,10 @@ GRIDX=15、GRIDZ=26
 			<Comment>♂
 ・主人公と向き合ってメッセージ表示
 ・アイテム入手処理
-　　No038「ピーピーエイド」</Comment>
+　No038「ピーピーエイド」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T03:01:44" />
+				Time="2012-01-12T10:31:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1339,14 +1339,10 @@ GRIDX=15、GRIDZ=26
 			<Comment>♀：せいそくちリスト
 ・対象マップが
 　埋まっている　→list_02
-　埋まっていない→list_03
-※sg_d23r0101_workman_01よりも
-　奥に配置してください。
-※コンビナートのメインの遊びは
-　新人探しなので</Comment>
+　埋まっていない→list_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T02:03:09" />
+				Time="2012-01-12T10:31:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

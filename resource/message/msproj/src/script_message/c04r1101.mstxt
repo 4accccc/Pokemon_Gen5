@@ -68,10 +68,10 @@
 			Language="JPN">
 			<Text>ジムリーダーね
 ジェットコースターの　スリルで▽
-むしんに　なるのが　すきだって</Text>
+むじゃきに　なるのが　すきだって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T07:45:59" />
+				Time="2012-01-12T09:33:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -476,12 +476,12 @@ princess_10</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタのような　けだかく　つよい
+			<Text>アナタのような　ひんがある
 トレーナーの　おあいてが　できて▽
 あたくし　こうえい　ですわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T04:01:40" />
+				Time="2012-01-12T09:31:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -489,12 +489,12 @@ princess_10</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アナタのような　気高く　強い
+			<Text>アナタのような　品がある
 トレーナーの　お相手が　できて▽
 あたくし　光栄ですわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T04:01:09" />
+				Time="2012-01-12T09:30:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -775,11 +775,11 @@ princess_10</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かそく！　かそく！　どんどん
-はやくなる　かんじが　ゴキゲン！</Text>
+			<Text>かそく！　かそく！
+どんどん　はやくなって　ゴキゲン！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T11:49:38" />
+				Time="2012-01-12T09:33:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -787,11 +787,11 @@ princess_10</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かそく！　かそく！　どんどん
-速くなる　感覚が　ゴキゲン！</Text>
+			<Text>かそく！　かそく！
+どんどん　速くなって　ゴキゲン！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T11:49:42" />
+				Time="2012-01-12T09:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
