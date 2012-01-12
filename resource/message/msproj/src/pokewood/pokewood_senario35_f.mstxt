@@ -312,36 +312,36 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｆー００『ダメ……▼
-ギゴググ……▼
+ピゴググ……▼
 ボク……　モウ　ダメ……
 [Name:TrainerName Idx="1" ]……▼
-ギゴググ……　クルシイ……▼
+ピゴググ……　クルシイ……▼
 ハヤク……　ボクヲ……
 ハヤク……　コワシテ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｆー００『ダメ……▼
-ギゴググ……▼
+ピゴググ……▼
 ボク……　モウ　ダメ……
 [Name:TrainerName Idx="1" ]……▼
-ギゴググ……　クルシイ……▼
+ピゴググ……　クルシイ……▼
 ハヤク……　ボクヲ……
 ハヤク……　コワシテ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -390,32 +390,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｆー００『クルシイ……▼
-コワシテ……　ギゴググ……
+コワシテ……　ピゴググ……
 [Name:TrainerName Idx="1" ]……
 Ｆー００……　アブナイ……▼
 コウゲキ……　イヤ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｆー００『クルシイ……▼
-コワシテ……　ギゴググ……
+コワシテ……　ピゴググ……
 [Name:TrainerName Idx="1" ]……
 Ｆー００……　アブナイ……▼
 コウゲキ……　イヤ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:11" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -838,29 +838,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『……　ギゴググ……▼
+			<Text>Ｆー００『……　ピゴググ……▼
 [Name:TrainerName Idx="1" ]……　ハヤク……▼
 クルシイ……　クルシイ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『……　ギゴググ……▼
+			<Text>Ｆー００『……　ピゴググ……▼
 [Name:TrainerName Idx="1" ]……　ハヤク……▼
 クルシイ……　クルシイ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -910,31 +910,31 @@
 			Language="JPN">
 			<Text>Ｆー００『[Name:TrainerName Idx="1" ]……　……
 ……　……　ナカナイデ……▼
-……　ギゴググ……▼
+……　ピゴググ……▼
 ボク……　[Name:TrainerName Idx="1" ]　スキ……
 ダカラ……　ハヤク　コワシテ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｆー００『[Name:TrainerName Idx="1" ]……　……
 ……　……　ナカナイデ……▼
-……　ギゴググ……▼
+……　ピゴググ……▼
 ボク……　[Name:TrainerName Idx="1" ]　スキ……
 ダカラ……　ハヤク　コワシテ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1624,25 +1624,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギ……ゴ……</Text>
+			<Text>Ｆー００『ピゴ……　ギ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギ……ゴ……</Text>
+			<Text>Ｆー００『ピゴ……　ギ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1831,26 +1831,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｆー００『……　……▼
-ギゴ……　ググゴゴゴゴーッ！</Text>
+ピゴ……　グ　グギギギギーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｆー００『……　……▼
-ギゴ……　ググゴゴゴゴーッ！</Text>
+ピゴ……　グ　グギギギギーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2222,25 +2222,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴググゴゴゴゴーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴググゴゴゴゴーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2327,25 +2327,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴググゴゴゴゴーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴググゴゴゴゴーッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2486,27 +2486,27 @@
 		Label="pw_event5_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『グギ……
-ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴ……
+ピゴググギギギギギギーッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『グギ……
-ギゴググゴゴゴゴーッ！</Text>
+			<Text>Ｆー００『ピゴ……
+ピゴググギギギギギギーッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2540,27 +2540,27 @@
 			Language="JPN">
 			<Text>Ｆー００『ダメ……
 [Name:TrainerName Idx="1" ]……　ニゲテ……▼
-ギゴググゴゴゴゴーッ！</Text>
+ピゴググギギギギーッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｆー００『ダメ……
 [Name:TrainerName Idx="1" ]……　ニゲテ……▼
-ギゴググゴゴゴゴーッ！</Text>
+ピゴググギギギギーッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2592,25 +2592,25 @@
 		Label="pw_event5_react_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴグゴゴ……</Text>
+			<Text>Ｆー００『ピゴギギギ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴグゴゴ……</Text>
+			<Text>Ｆー００『ピゴギギギ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2642,25 +2642,25 @@
 		Label="pw_event5_react_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｆー００『ギゴグゴゴ……</Text>
+			<Text>Ｆー００『ピゴギギギ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｆー００『ギゴグゴゴ……</Text>
+			<Text>Ｆー００『ピゴギギギ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T08:07:17" />
+				Time="2012-01-12T13:56:19" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

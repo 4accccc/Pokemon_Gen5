@@ -354,8 +354,8 @@
 		<language name="JPN_KANJI" width="256">あやしい　しんし</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">？？？『グゴガガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">？？？『グゴガガーンッ！！</language>
+		<language name="JPN" width="256">？？？『バゴギゴーンッ！！</language>
+		<language name="JPN_KANJI" width="256">？？？『バゴギゴーンッ！！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほんとうに……
@@ -432,8 +432,8 @@
 言っていた　男なのかっ！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ２『バゴギゴーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『バゴギゴーンッ！！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">セリザワ『……よけいな　ことを
@@ -964,8 +964,8 @@
 だったのですね……</language>
 	</row>
 	<row id="pw_event8_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ２『バゴギゴーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『バゴギゴーンッ！！</language>
 	</row>
 	<row id="pw_event8_enemy_1">
 		<language name="JPN" width="256">セリザワ『ハハハ……

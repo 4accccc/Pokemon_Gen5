@@ -1297,11 +1297,11 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ　パパ！
+			<Text>ねえねえ！　パパ！
 今日は　何を　観る？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:34:18" />
+				Time="2012-01-12T13:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2110,12 +2110,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>せっしゃ　ナツメさまという　スターの
-しんえいたい　たいちょうで　ある！▼
+しんえいたい　たいちょうで　ござる！▼
 しかし　さいきん　[Name:TrainerName ]って
 やくしゃが　きに　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:44:25" />
+				Time="2012-01-12T13:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2124,12 +2124,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>拙者　ナツメ様という　スターの
-親衛隊　隊長で　ある！▼
+親衛隊　隊長で　ござる！▼
 しかし　最近　[Name:TrainerName ]って
 役者が　気に　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:45:11" />
+				Time="2012-01-12T13:31:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

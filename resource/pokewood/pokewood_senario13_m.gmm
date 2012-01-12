@@ -360,8 +360,8 @@
 こりゃ　いったい　なんだべっ！！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">？？？『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">？？？『グゴガーンッ！！</language>
+		<language name="JPN" width="256">？？？『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">？？？『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだ？　コイツはっ！？</language>
@@ -430,8 +430,8 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ラジャー！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガッ！！　グゴガーッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガッ！！　グゴガーッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガッ！！　デギガーッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガッ！！　デギガーッ！！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">おとこ『わわ……▼
@@ -480,36 +480,36 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『こっちだ！　Ｍ・Ｂ！！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴゴ……</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴゴ……</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガガ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガガ……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっぱり　こわいな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やっぱり　怖いな……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『この　てつクズめっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『この　鉄クズめっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレは　ここだっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレは　ここだっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グ……　グゴゴ……</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グ……　グゴゴ……</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギ……　デギガガ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギ……　デギガガ……</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら！　あなたっ！！
@@ -524,8 +524,8 @@
 		<language name="JPN_KANJI" width="256">男『ああ！！　わかったべっ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……▼
@@ -536,8 +536,8 @@
 戦うことが　できるぞ……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……どうやら
@@ -546,40 +546,40 @@
 相手も　本気みたい　だな……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『スクラップに　してやる！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『スクラップに　してやる！</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しんちょうに　いくか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『慎重に　いくか……</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴゴ……</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴゴ……</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガガ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガガ……</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かかってこい！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かかってこい！</language>
 	</row>
 	<row id="pw_event3_react_enemy_2">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こわい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『怖い……</language>
 	</row>
 	<row id="pw_event3_react_enemy_3">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴゴ……</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴゴ……</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガガ……</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガガ……</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……▼
@@ -660,8 +660,8 @@
 もう　僕は　オシマイだ……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……▼
@@ -670,8 +670,8 @@
 くそっ……　体が　動かない……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
+		<language name="JPN" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『デギガーンッ！！</language>
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……
