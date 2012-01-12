@@ -18052,7 +18052,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_c03p19_bin,
     ZONE_ID_C03,
 		MAPNAME_C3YAGURUMA,
-		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
