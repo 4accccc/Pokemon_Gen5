@@ -113,7 +113,7 @@ typedef struct {
 //============================================================================================
 //マルチブート用きり分け
 #ifndef MULTI_BOOT_MAKE //通常時処理
-#define SOUND_HEAP_SIZE (0x0a0000 - 30000 - 12288 + 24864)   //640K - 30000 - 0x3000
+#define SOUND_HEAP_SIZE (0x09d000)  //swan定義 2012.01.12
 #else                   //DL子機時処理
 #define SOUND_HEAP_SIZE (0x030000)   //非常に適当
 #endif //MULTI_BOOT_MAKE
@@ -258,6 +258,13 @@ static void PMSND_InitCore( BOOL systemSEload )
 
   pSoundLoadThread = NULL;
   playableCallBackFunc = NULL;
+
+#ifdef  PM_DEBUG
+  TAMADA_Printf("Snd heap after System %d\n", heapRemainsAfterSys );
+  TAMADA_Printf("Snd heap after Player %d\n", heapRemainsAfterPlayer );
+  TAMADA_Printf("Snd heap after Preset %d\n", heapRemainsAfterPresetSE );
+#endif
+  GF_ASSERT_MSG( heapRemainsAfterPresetSE > 165792, "SoundHeap not enough!!\n");
 }
 
 
