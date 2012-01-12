@@ -233,6 +233,9 @@ ev_leader3_btl:
   
   //ローカルライブキャスター・ライバル通話状態を変更（C04GYMクリアまで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C04 )
+			
+  //C03P07を非表示に
+  _FLAG_SET( FV_C03P17_SWCHAMPION_01 )
 
 	//================================================//
 
