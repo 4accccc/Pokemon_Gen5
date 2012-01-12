@@ -22,8 +22,10 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_d32r0101_fighterm_01
+_EVENT_DATA		ev_pos_d32r0101_fighterm_01
 _EVENT_DATA   ev_d32r0101_poke49_01
 _EVENT_DATA   ev_d32r0101_poke49_02
+_EVENT_DATA   ev_d32r0101_poke49_03
 _EVENT_DATA   ev_d32r0101_poke50_01
 _EVENT_DATA_END
 
@@ -41,80 +43,107 @@ EVENT_START   ev_d32r0101_fighterm_01
 
   _TALK_OBJ_START()
 
-  //バッジフラグ取得
-  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
-
-  //バッジが７つ以下の場合
-  IF $SCWK_TEMP0 == 0 THEN
-
+  // ※ ソウリュウイベント終了チェック
+  // ソウリュウイベント前
+  IF $WK_SCENE_C08_NINJA == 2 THEN
     //カラテおう：つわものとしか　たたかわない！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_01 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-  //バッジが７つ以上
+  // ソウリュウイベント後
   ELSE
-
-    //カラテおう：ここを　とおりたければ
-    _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_02 )
-
-    //カラテおうと戦う？
-    _YES_NO_WIN( SCWK_ANSWER )
-
-    IF $SCWK_ANSWER == SCR_YES THEN   //はい
-
-      //カラテおう：いっておくが　オレの　ダンゴロは
-      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_03 )
-      _AB_KEYWAIT_MARK()
-      _MSGWIN_CLOSE()
-
-      //トレーナー戦呼び出し
-      _TRAINER_BTL_SET( TRID_KARATE_22, 0 ) 
-
-      //結果チェック
-      _CALL ev_battle_check
-
-      //勝利時
-      //カラテおう：きみの　つよさは　ほんものだ！▼
-      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_05 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-      _TIME_WAIT( 15 )  //暗転前の間
-
-      //暗転
-      _BLACK_OUT_SLOW()
-      _DISP_FADE_END_CHECK()
-
-      //カラテおう、ダンゴロ削除
-      _OBJ_DEL( D32R0101_FIGHTERM_01 )
-      _OBJ_DEL( D32R0101_POKE49_01 )
-      _OBJ_DEL( D32R0101_POKE49_02 )
-
-      //========================================//
-      //カラテおう、ダンゴロ非表示
-      _FLAG_SET( FV_D32R0101_FIGHTERM_01 )
-      //========================================//
-
-      //暗転復帰
-      _BLACK_IN_SLOW()
-      _DISP_FADE_END_CHECK()
-
-      _TIME_WAIT( 30 )  //暗転後の間
-
-    ELSE    //いいえ
-
-      //カラテおう：ふがいない　へんじ　だな！
-      _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_04 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ENDIF
-
+    //カラテおうバトル呼出
+    _CALL ev_battle_start
   ENDIF
 
 EVENT_END
 
+/**************************************************************/
+/*  カラテおう：POS反応（ストッパー／トレーナー戦）          */
+/**************************************************************/
+EVENT_START ev_pos_d32r0101_fighterm_01
+
+	//========================================//
+  // カラテおう：POS反応を停止
+  $WK_SCENE_D32R0101_FIGHTERM_01 = 1
+	//========================================//
+
+    //「！」
+  _OBJ_ANIME( D32R0101_FIGHTERM_01 , anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  // 主人公は下を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_dir_d )
+  // からておうは上を向く
+  _OBJ_ANIME( D32R0101_FIGHTERM_01 , anm_dir_u )
+  _OBJ_ANIME_WAIT()
+
+  // バトル選択呼出し
+  _CALL ev_battle_start
+EVENT_END
+
+/**************************************************************/
+/*  カラテおう：戦闘呼び出し～削除まで                        */
+/**************************************************************/
+ev_battle_start:
+  //カラテおう：ここを　とおりたければ
+  _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_02 ,D32R0101_FIGHTERM_01 )
+
+  //カラテおうと戦う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //カラテおう：いっておくが　オレの　ダンゴロは
+    _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_03 ,D32R0101_FIGHTERM_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_KARATE_22, 0 ) 
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //勝利時
+    //カラテおう：きみの　つよさは　ほんものだ！▼
+    _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_05 ,D32R0101_FIGHTERM_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    _TIME_WAIT( 15 )  //暗転前の間
+
+    //暗転
+    _BLACK_OUT_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    //カラテおう、ダンゴロ削除
+    _OBJ_DEL( D32R0101_FIGHTERM_01 )
+    _OBJ_DEL( D32R0101_POKE49_01 )
+    _OBJ_DEL( D32R0101_POKE49_02 )
+    _OBJ_DEL( D32R0101_POKE49_03 )
+
+    //========================================//
+    //カラテおう、ダンゴロ非表示
+    _FLAG_SET( FV_D32R0101_FIGHTERM_01 )
+    // カラテおう：POS反応を停止
+    $WK_SCENE_D32R0101_FIGHTERM_01 = 1
+    //========================================//
+
+    //暗転復帰
+    _BLACK_IN_SLOW()
+    _DISP_FADE_END_CHECK()
+
+    _TIME_WAIT( 30 )  //暗転後の間
+
+  ELSE    //いいえ
+
+    //カラテおう：ふがいない　へんじ　だな！
+    _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_04 ,D32R0101_FIGHTERM_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+_RET
 
 ev_battle_check:
 //敗戦チェック
@@ -139,6 +168,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d32r0101_poke49_02
   _EASY_TALK_POKEVOICE( MONSNO_600, msg_d32r0101_poke49b_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ダンゴロ03：話しかけ（ストッパー）                        */
+/**************************************************************/
+EVENT_START   ev_d32r0101_poke49_03
+  _EASY_TALK_POKEVOICE( MONSNO_600, msg_d32r0101_poke49c_01 )
 EVENT_END
 
 /**************************************************************/
@@ -267,10 +303,12 @@ _ANIME_LABEL	anm_walk_l
 //	☆共通処理：方向転換
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_dir_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_dir_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 

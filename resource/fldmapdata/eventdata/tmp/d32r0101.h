@@ -21,10 +21,11 @@
 #define TR_BATTLEG_16                      5
 #define TR_RANGERW_20                      6
 #define TR_KARATE_17                       7
-#define D32R0101_FIGHTERM_01               8
+#define D32R0101_POKE49_01                 8
 #define D32R0101_POKE50_01                 9
-#define D32R0101_POKE49_01                10
-#define D32R0101_POKE49_02                11
+#define D32R0101_POKE49_02                10
+#define D32R0101_POKE49_03                11
+#define D32R0101_FIGHTERM_01              12
 
 #endif //ZONE_D32R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d32r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
