@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-12-08T12:24:17" source="tachiwaki_ship_12.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2012-01-12T12:45:33" source="tachiwaki_ship_short_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-12-08T12:24:17" source="tachiwaki_ship_12.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2012-01-12T12:45:33" source="tachiwaki_ship_short_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info

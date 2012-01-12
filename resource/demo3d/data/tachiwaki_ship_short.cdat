@@ -47,9 +47,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_tachiwaki_ship_short_data[] = {
  { DEMO3D_CMD_TYPE_SE_PLAY, 1, { SEQ_SE_SW_TACHIWAKI_02, 127, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_SE_PLAY, 1, { SEQ_SE_SW_TACHIWAKI_03, 127, DEMO3D_SE_PARAM_DEFAULT, DEMO3D_SE_PARAM_DEFAULT, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BGM_FADE, 220, { 1, 230, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 256-10, { MASK_MAIN_DISPLAY, 10, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 256+10, { MASK_MAIN_DISPLAY, 15, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 600-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 256-15, { MASK_MAIN_DISPLAY, 15, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -68,74 +66,69 @@ static const DEMO3D_CMD_DATA demo3d_cmd_tachiwaki_ship_short_end_data[] = {
 //============================================
 
 ///==================================
-/// tachiwaki_ship Unit File Resource
+/// tachiwaki_ship_short Unit File Resource
 
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship[] = {
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short[] = {
  NARC_data_demo3d_tachiwaki_ship_short_01_nsbmd,
  NARC_data_demo3d_tachiwaki_ship_short_01_nsbta,
  NARC_data_demo3d_tachiwaki_ship_short_01_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_tachiwaki_ship_short_file_unit_tachiwaki_ship[] = {
- { res_tachiwaki_ship_short_file_tachiwaki_ship, 3 },
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short[] = {
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short, 3 },
 };
 
 ///==================================
-/// tachiwaki_ship_sky Unit File Resource
+/// tachiwaki_ship_short_sky Unit File Resource
 
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_sky_morning[] = {
- NARC_data_demo3d_sky_d_nsbmd,
- NARC_data_demo3d_sky_d_nsbta,
- NARC_data_demo3d_sky_d_nsbca,
- NARC_data_demo3d_sky_d_nsbma,
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_morning[] = {
+ NARC_data_demo3d_sky_short_d_nsbmd,
+ NARC_data_demo3d_sky_short_d_nsbta,
+ NARC_data_demo3d_sky_short_d_nsbca,
 };
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_sky_noon[] = {
- NARC_data_demo3d_sky_d_nsbmd,
- NARC_data_demo3d_sky_d_nsbta,
- NARC_data_demo3d_sky_d_nsbca,
- NARC_data_demo3d_sky_d_nsbma,
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_noon[] = {
+ NARC_data_demo3d_sky_short_d_nsbmd,
+ NARC_data_demo3d_sky_short_d_nsbta,
+ NARC_data_demo3d_sky_short_d_nsbca,
 };
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_sky_evening[] = {
- NARC_data_demo3d_sky_e_nsbmd,
- NARC_data_demo3d_sky_e_nsbta,
- NARC_data_demo3d_sky_e_nsbca,
- NARC_data_demo3d_sky_e_nsbma,
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_evening[] = {
+ NARC_data_demo3d_sky_short_e_nsbmd,
+ NARC_data_demo3d_sky_short_e_nsbta,
+ NARC_data_demo3d_sky_short_e_nsbca,
 };
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_sky_night[] = {
- NARC_data_demo3d_sky_n_nsbmd,
- NARC_data_demo3d_sky_n_nsbta,
- NARC_data_demo3d_sky_n_nsbca,
- NARC_data_demo3d_sky_n_nsbma,
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_night[] = {
+ NARC_data_demo3d_sky_short_n_nsbmd,
+ NARC_data_demo3d_sky_short_n_nsbta,
+ NARC_data_demo3d_sky_short_n_nsbca,
 };
-static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_sky_midnight[] = {
- NARC_data_demo3d_sky_n_nsbmd,
- NARC_data_demo3d_sky_n_nsbta,
- NARC_data_demo3d_sky_n_nsbca,
- NARC_data_demo3d_sky_n_nsbma,
+static const u16 res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_midnight[] = {
+ NARC_data_demo3d_sky_short_n_nsbmd,
+ NARC_data_demo3d_sky_short_n_nsbta,
+ NARC_data_demo3d_sky_short_n_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_tachiwaki_ship_short_file_unit_tachiwaki_ship_sky[] = {
- { res_tachiwaki_ship_short_file_tachiwaki_ship_sky_morning, 4 },
- { res_tachiwaki_ship_short_file_tachiwaki_ship_sky_noon, 4 },
- { res_tachiwaki_ship_short_file_tachiwaki_ship_sky_evening, 4 },
- { res_tachiwaki_ship_short_file_tachiwaki_ship_sky_night, 4 },
- { res_tachiwaki_ship_short_file_tachiwaki_ship_sky_midnight, 4 },
+static const DEMO3D_FILE_UNIT res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_sky[] = {
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_morning, 3 },
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_noon, 3 },
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_evening, 3 },
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_night, 3 },
+ { res_tachiwaki_ship_short_file_tachiwaki_ship_short_sky_midnight, 3 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_short_file_unit_tachiwaki_ship_tbl[] = {
- { res_tachiwaki_ship_short_file_unit_tachiwaki_ship, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_tbl[] = {
+ { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_short_file_unit_tachiwaki_ship_sky_tbl[] = {
- { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_sky, 5 },
+static const DEMO3D_FILE_UNIT_TBL res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_sky_tbl[] = {
+ { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_sky, 5 },
 };
 
 static const DEMO3D_SCENE_UNIT res_tachiwaki_ship_short_scene_unit[] = {
- { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_tachiwaki_ship_short_file_unit_tachiwaki_ship_short_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
