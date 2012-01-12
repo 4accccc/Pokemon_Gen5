@@ -87,6 +87,9 @@ extern void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA 
 
 extern void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID );
 
+
+extern u32 RESORT_UTIL_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv );
+
 //コンボシステム
 extern void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_DATA *p_rnd );
 extern void RESORT_UTIL_InitComboCore( RESORT_SYSTEM *p_sys, u32 tbl_idx );

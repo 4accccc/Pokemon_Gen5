@@ -40,7 +40,7 @@
   DEF_CMD( EvCmdResortSetSpot, EV_SEQ_RESORT_SET_SPOT )
   DEF_CMD( EvCmdResortCallInputName, EV_SEQ_RESORT_INPUT_NAME )
   DEF_CMD( EvCmdResortCombo, EV_SEQ_RESORT_COMBO )
-  NO_CMD()
+  DEF_CMD( EvCmdResortCheckPrize, EV_SEQ_RESORT_CHECK_PRIZE )
   DEF_CMD( EvCmdResortEndItem, EV_SEQ_RESORT_END_ITEM )
   DEF_CMD( EvCmdResortAddPeople, EV_SEQ_RESORT_ADD_PEOPLE )
   DEF_CMD( EvCmdResortSetPresetPoeple, EV_SEQ_RESORT_SET_PRESET_PEOPLE )

@@ -866,10 +866,12 @@ VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs )
   {
     const u32 lv = PP_Get( p_pp, ID_PARA_level, NULL );
 
+    const u32 next_lv = lv+value > 100 ? 100: lv+value;
+
     const u32 nextLevelExp = POKETOOL_GetMinExp(
         PP_Get( p_pp, ID_PARA_monsno, NULL ),
         PP_Get( p_pp, ID_PARA_form_no, NULL ),
-        lv+value);
+        next_lv);
 
     RESORT_RECORD_AddID( RESORT_RECORD_ID_POKE_LVUP ); 
 
@@ -1512,6 +1514,43 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ご褒美チェック
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortCheckPrize( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  *p_ret_wk = FALSE;
+  if( RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL ) >= 100 )
+  {
+    u32 next_prize = RESORT_UTIL_GetNextPrize( p_sys, p_gamedata, 100 );
+    if( next_prize != RESORT_CITYPRIZE_TYPE_NONE
+        && next_prize != RESORT_CITYPRIZE_TYPE_ITEM)
+    {
+      RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+      *p_ret_wk = TRUE;
+    }
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

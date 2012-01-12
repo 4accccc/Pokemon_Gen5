@@ -59,3 +59,4 @@ extern VMCMD_RESULT EvCmdResortAddExpCity( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetMergeLock( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortCheckPrize( VMHANDLE *p_core, void *p_wk_adrs );

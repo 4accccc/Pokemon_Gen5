@@ -36,6 +36,15 @@ DEFINE_LOCAL LWK_INDEX
 /************************************************************/
 INIT_EVENT_START ev_init_c16r0101
 {
+  //ランク１００の条件付きご褒美チェック（LVあがらなくなるのでもらえなくなるため）
+  //パレードの復帰時には行わない
+  IF $WK_SCENE_C16_PARADE == 0 THEN
+    _RESORT_CHECK_PRIZE( LWK_RET )
+    IF $LWK_RET == TRUE THEN
+      $WK_SCENE_C16R0101_PRIZE = 1
+    ENDIF
+  ENDIF
+
   //ご褒美イベント以外は消す
   IF $WK_SCENE_C16R0101_PRIZE == 1 THEN
     _RESORT_GET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE, LWK_RET )

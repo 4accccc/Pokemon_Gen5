@@ -1812,6 +1812,8 @@ sub_resident_service_hatch:
 
       //Ç‡ÇµÇOÇ»ÇÁéYÇ‹ÇÍÇÈ
       IF $LWK_RET == 0 THEN
+
+        _ADD_RECORD( RECID_TAMAGO_HATCHING, 1 )
         //ê∂Ç‹ÇÍÇÈ
         _PARTY_POKE_EGG_BIRTH( LWK_RET )
 

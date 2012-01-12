@@ -65,7 +65,6 @@ extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const
 
 static BOOL Resort_Util_CheckCameraRange( const MMDL *cp_mmdl, const FIELD_CAMERA *cp_camera );
 static u32 Resort_Util_GetPrizeIndex( RESORT_BINARY_CITY *p_binary_city, u32 prize );
-static u32 Resort_Util_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv );
 
 //äXÇ≤ñJî¸èåè
 static BOOL PrizeCondition_None( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata );
@@ -1134,7 +1133,7 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
       city_next_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, *p_lv );
       {
         u32 prev_rank =  RESORT_BINARY_CITY_GetData( p_city, city_prev_idx, RESORT_BINARY_CITY_PARAM_RANK );
-        u32 next_prize =  Resort_Util_GetNextPrize( p_sys, p_gamedata, *p_lv );
+        u32 next_prize =  RESORT_UTIL_GetNextPrize( p_sys, p_gamedata, *p_lv );
         u32 next_rank =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_RANK );
 
 
@@ -2167,7 +2166,7 @@ static u32 Resort_Util_GetPrizeIndex( RESORT_BINARY_CITY *p_binary_city, u32 pri
  *	@return éüÇÃÇ≤ñJî¸èåèÇéÊìæÇµÇ‹Ç∑ÅB
  */
 //-----------------------------------------------------------------------------
-static u32 Resort_Util_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv )
+u32 RESORT_UTIL_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv )
 {
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
   RESORT_BINARY_CITY *p_binary_city = RESORT_SYSTEM_GetBinaryCity(p_sys);

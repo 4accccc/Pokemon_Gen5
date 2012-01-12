@@ -14853,6 +14853,19 @@
   .short \ret_idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  レベル１００用ご褒美チェック処理
+ */
+//--------------------------------------------------------------
+#define _RESORT_CHECK_PRIZE( ret_wk ) \
+      _ASM_RESORT_CHECK_PRIZE ret_wk
+
+  .macro _ASM_RESORT_CHECK_PRIZE ret_wk
+  .short EV_SEQ_RESORT_CHECK_PRIZE
+  .short \ret_wk
+  .endm
+
 //======================================================================
 //
 //    無限ダンジョン関連
