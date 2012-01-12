@@ -724,6 +724,20 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
             MMDL_ID_EVENTOBJ_00, debug_wbt_mmdl_id, MV_DMY, ZONE_ID_D05R0201 );
       }
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+      STRBUF * strbuf1;
+      MYSTATUS* myStatus;
+      myStatus = GAMEDATA_GetMyStatus( gdata );
+      strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
+
+      OS_Printf("デバッグ 優勝ビジョン\n");
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_wbt_trtype, 0 );
+
+      GFL_STR_DeleteBuffer( strbuf1 );
+    }
   }
 #endif
 
