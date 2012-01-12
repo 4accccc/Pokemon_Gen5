@@ -43,9 +43,9 @@ INIT_EVENT_START  ev_zone_d08r0901
   IF FLAG_OFF( FV_D08R0901_PACKAGE_POKE ) THEN
 
     IF $LWK_VERSION == VERSION_B2 THEN
-      $OBJCHRWORK0 = MU_B //ゼクロム
+      $OBJCHRWORK0 = SPPOKE02_ZE //ゼクロム
     ELSE
-      $OBJCHRWORK0 = SHIN_B //レシラム
+      $OBJCHRWORK0 = SPPOKE01_RE //レシラム
     ENDIF
 
   ENDIF
@@ -81,7 +81,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       _TIME_WAIT ( 8 )  //間
 
       //ダーク（ライト）ストーンの演出
-      //_START_LEG_GMK()
+      _START_LEG_GMK()
       //無音にする
       _START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
 
@@ -92,7 +92,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       $WK_SCENE_D08R0901_LEGEND = 2
       //==================================//
 
-      $OBJCHRWORK0 = MU_B //OBJをゼクロムに
+      $OBJCHRWORK0 = SPPOKE02_ZE //OBJをゼクロムに
 
       //システム：まわりの　オーラを　とりこんだ
       _SYSWIN_MSG( msg_d08r0901_dstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
@@ -136,7 +136,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       _TIME_WAIT ( 8 )  //間
 
       //ダーク（ライト）ストーンの演出
-      //_START_LEG_GMK()
+      _START_LEG_GMK()
       //無音にする
       _START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
 
@@ -147,7 +147,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       $WK_SCENE_D08R0901_LEGEND = 2
       //==================================//
 
-      $OBJCHRWORK0 = SHIN_B //OBJをレシラムに
+      $OBJCHRWORK0 = SPPOKE01_RE //OBJをレシラムに
 
       //システム：まわりの　オーラを　とりこんだ
       _SYSWIN_MSG( msg_d08r0901_lstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
@@ -220,7 +220,19 @@ _TALK_START_SE_PLAY()
   _OBJ_ANIME_WAIT()
 }
 {
-  _OBJ_ANIME( D08R0901_POKE_01, anm_legend_hoeru )
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9688,0,937984,1081344,0,757760,6)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  _GET_ROM_VERSION( LWK_VERSION )
+  IF $LWK_VERSION == VERSION_B2 THEN 
+    _OBJ_ANIME( D08R0901_POKE_01, anm_ze_hoeru )
+  ELSE
+    _OBJ_ANIME( D08R0901_POKE_01, anm_re_hoeru )
+  ENDIF
+  
   _OBJ_ANIME_WAIT()
 
   DEFINE_LOCAL  LWK_BATTLE_FLAG
@@ -392,6 +404,12 @@ _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 //Ｎのイベントを見たセット
 _FLAG_SET(FE_D08R0901_BOSS_TALK)
 
+//N01R0502 N非表示
+_FLAG_SET( FV_N01R0502_BOSS_01 )
+
+//D10R0501 キュレム表示
+_FLAG_RESET( FV_D10R0501_KYUREMU )
+
 //========================================//
 
 _CAMERA_BIND()		//カメラバインド
@@ -406,6 +424,14 @@ _RET
 _ANIME_LABEL  anm_legend_hoeru
   _ANIME_DATA AC_SHIN_MU_HOERU,1
   _ANIME_DATA ACMD_END,0
+ 
+_ANIME_LABEL	anm_re_hoeru
+  _ANIME_DATA	AC_SPPOKE01_RE_BARK,1
+  _ANIME_DATA	ACMD_END,0
+  
+_ANIME_LABEL	anm_ze_hoeru
+  _ANIME_DATA	AC_SPPOKE02_ZE_BARK,1
+  _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //話しかけた場合の回り込み処理
