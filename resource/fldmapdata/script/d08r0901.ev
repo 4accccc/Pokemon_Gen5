@@ -78,6 +78,11 @@ EVENT_START   ev_pos_d08r0901_stone_01
 
       _MSGWIN_CLOSE()
 
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラパージ
+      _CAMERA_MOVE(9688,0,970752,1081344,0,1015808,30)
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
       _TIME_WAIT ( 8 )  //間
 
       //ダーク（ライト）ストーンの演出
@@ -132,6 +137,11 @@ EVENT_START   ev_pos_d08r0901_stone_01
     IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
       _MSGWIN_CLOSE()
+
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラパージ
+      _CAMERA_MOVE(9688,0,970752,1081344,0,1015808,30)
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
       _TIME_WAIT ( 8 )  //間
 
@@ -197,6 +207,9 @@ _OBJ_ADD( D08R0901_POKE_01 )
 
 _DEMO_FADEIN_BLACK_CALL()
 _END_EVENT_BGM_EX( BGM_FADE_VSHORT )
+
+_CAMERA_BIND()		//カメラバインド
+_CAMERA_END()		//カメラ操作終了
 
 _RET
 
