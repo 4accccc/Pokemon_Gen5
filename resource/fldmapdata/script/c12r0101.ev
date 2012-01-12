@@ -33,8 +33,8 @@ _EVENT_DATA    ev_c12r0101_swbell_01
 _EVENT_DATA    ev_bg_c12r0101_wii_01
 _EVENT_DATA    ev_bg_c12r0101_bed_01
 _EVENT_DATA    ev_bg_c12r0101_pc_01
-_EVENT_DATA    ev_c12r0101_prize1_01
-_EVENT_DATA    ev_c12r0101_prize2_01
+_EVENT_DATA    ev_bg_c12r0101_prize1_01
+_EVENT_DATA    ev_bg_c12r0101_prize2_01
 _EVENT_DATA    ev_c12r0101_trorhy1_01
 _EVENT_DATA    ev_c12r0101_trorhy2_01
 _EVENT_DATA    ev_c12r0101_trorhy3_01
@@ -74,6 +74,14 @@ INIT_EVENT_START ev_init_c12r0101
   //ゲーム開始後イベント
   ELSIF $WK_SCENE_C12R0101 == 1 && FLAG_OFF( FV_C12R0101_SWMAMA )  THEN
     _OBJ_POS_CHANGE( C12R0101_SWMAMA_01, 4, 0, 5, DIR_DOWN )
+  ENDIF
+  
+  // 表彰状のBGイベントを移動
+  IF FLAG_OFF( FV_C12R0101_PRIZE1_01 ) THEN
+    _SXY_MOVE_BG_EVENT(BG_C12R0101_PRIZE1,11,0,1)
+  ENDIF
+  IF FLAG_OFF( FV_C12R0101_PRIZE2_01 ) THEN
+    _SXY_MOVE_BG_EVENT(BG_C12R0101_PRIZE2,12,0,1)
   ENDIF
 
 INIT_EVENT_END
@@ -544,7 +552,7 @@ EVENT_END
 /************************************************************/
 /*						表彰状（地方）						*/
 /************************************************************/
-EVENT_START   ev_c12r0101_prize1_01
+EVENT_START   ev_bg_c12r0101_prize1_01
 	_TALK_START_SE_PLAY()
 	
 	//イッシュ図鑑完成の賞状だ！
@@ -559,7 +567,7 @@ EVENT_END
 /************************************************************/
 /*						表彰状（全国）						*/
 /************************************************************/
-EVENT_START   ev_c12r0101_prize2_01
+EVENT_START   ev_bg_c12r0101_prize2_01
 	_TALK_START_SE_PLAY()
 	
 	//イッシュ図鑑完成の賞状だ！
