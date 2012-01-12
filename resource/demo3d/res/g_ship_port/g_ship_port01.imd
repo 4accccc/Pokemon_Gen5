@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2012-01-12T17:38:51" source="g_ship_port.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2012-01-12T18:28:31" source="g_ship_port.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2012-01-12T17:38:51" source="g_ship_port.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2012-01-12T18:28:31" source="g_ship_port.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="2 2"
-	compress_material="on" material_size="17 17"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="18 18"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="9" xyz="-2.258789 -0.093750 -2.090576" whd="4.079102 0.590820 4.490967"/>
 
-<tex_image_array size="16">
+<tex_image_array size="17">
 	<tex_image index="0" name="bench"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
@@ -4837,7 +4837,25 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="sea_mizu1"
+	<tex_image index="15" name="sea_gake02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="sea_gake02_pl"
+		path="C:/home/swan_data3d/demo/g_ship_port/tex/sea_gake02.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 6600 0066 0000
+			6000 7766 6677 0006 7766 9988 8899 6677
+			99bb 5555 5555 bb99 5555 aaa5 5aaa 5555
+			4422 1122 2111 2244 4222 4444 4444 2224
+			2444 2222 2222 4442 4333 4444 4444 3334
+			3000 3333 3333 0033 0000 3300 0033 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="16" name="sea_mizu1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -4881,7 +4899,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="16">
+<tex_palette_array size="17">
 	<tex_palette index="0" name="bench_pl" color_size="16">
 		7c1f 227a 19f5 1d6e 1a5b 156f 110c 1591
 		7fff 318c 18c6 0c63 7fff 7fff 7fff 7fff
@@ -4940,13 +4958,17 @@
 	<tex_palette index="14" name="o23_kumo_a_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="15" name="sea_mizu1_pl" color_size="16">
+	<tex_palette index="15" name="sea_gake02_pl" color_size="16">
+		7fff 7bbc 779a 6eed 7354 7bdd 4a95 4e95
+		5f19 6b5b 7fff 6739 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="16" name="sea_mizu1_pl" color_size="16">
 		6a88 4da0 51c1 6642 6a87 4580 5a01 55e1
 		5e21 6687 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="17">
+<material_array size="18">
 	<material index="0" name="c3_baysaku"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
@@ -5307,7 +5329,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="sea_mizu1_lm1"
+	<material index="15" name="sea_gake02"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -5331,7 +5353,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="sea_mizu1_lm2"
+	<material index="16" name="sea_mizu1_lm1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="16" tex_palette_idx="16"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="17" name="sea_mizu1_lm2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="16"
@@ -5348,7 +5394,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="15" tex_palette_idx="15"
+		tex_image_idx="16" tex_palette_idx="16"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -5357,12 +5403,13 @@
 	/>
 </material_array>
 
-<matrix_array size="2">
+<matrix_array size="3">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 	<matrix index="1" mtx_weight="1" node_idx="1"/>
+	<matrix index="2" mtx_weight="1" node_idx="2"/>
 </matrix_array>
 
-<polygon_array size="17">
+<polygon_array size="18">
 	<polygon index="0" name="polygon0"
 		vertex_size="208" polygon_size="52"
 		triangle_size="0" quad_size="52"
@@ -9300,9 +9347,78 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="17" name="polygon17"
+		vertex_size="22" polygon_size="6"
+		triangle_size="0" quad_size="6"
+		volume_min="0.287354 -0.100098 -1.078857"
+		volume_max="1.735840 -0.062744 -0.480225"
+		volume_r="1.826660"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">2</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="77.375000 14.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="1.714600 -0.100098 -0.480225"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_diff xyz="0.015381 0.001953 -0.057129"/>
+					<tex st="-13.375000 14.000000"/>
+					<pos_xyz xyz="1.214600 -0.100098 -0.480225"/>
+					<tex st="-13.375000 6.000000"/>
+					<pos_diff xyz="0.015381 0.001953 -0.057129"/>
+					<tex st="77.375000 14.000000"/>
+					<pos_xyz xyz="0.715576 -0.100098 -0.686768"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_diff xyz="0.029785 0.001953 -0.051270"/>
+				</primitive>
+				<primitive index="1" type="quads" vertex_size="16">
+					<tex st="77.375000 0.000000"/>
+					<nrm xyz="0.000000 0.613281 0.789063"/>
+					<pos_xyz xyz="1.235840 -0.062744 -0.564941"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_diff xyz="-0.005859 -0.035400 0.027588"/>
+					<tex st="-13.375000 6.000000"/>
+					<pos_xy xy="1.729980 -0.098145"/>
+					<tex st="-13.375000 0.000000"/>
+					<pos_diff xyz="0.005859 0.035400 -0.027588"/>
+					<tex st="-13.375000 6.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="0.745361 -0.098145 -0.738037"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_xz xz="0.329102 -1.057373"/>
+					<tex st="77.375000 14.000000"/>
+					<pos_diff xyz="-0.041748 -0.001953 0.041748"/>
+					<tex st="-13.375000 14.000000"/>
+					<pos_xz xz="0.715576 -0.686768"/>
+					<tex st="-13.375000 6.000000"/>
+					<nrm xyz="-0.300781 0.617188 0.726563"/>
+					<pos_diff xyz="0.029785 0.001953 -0.051270"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_xz xz="1.229980 -0.537354"/>
+					<tex st="77.375000 0.000000"/>
+					<pos_diff xyz="0.005859 0.035400 -0.027588"/>
+					<tex st="-13.375000 0.000000"/>
+					<pos_xz xz="0.756836 -0.763184"/>
+					<tex st="-13.375000 6.000000"/>
+					<nrm xyz="-0.482422 0.607422 0.628906"/>
+					<pos_xyz xyz="0.329102 -0.098145 -1.057373"/>
+					<tex st="77.375000 6.000000"/>
+					<pos_xz xz="0.745361 -0.738037"/>
+					<tex st="77.375000 0.000000"/>
+					<pos_diff xyz="0.011475 0.035400 -0.025146"/>
+					<tex st="-13.375000 0.000000"/>
+					<pos_xz xz="0.345703 -1.078857"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="2">
+<node_array size="3">
 	<node index="0" name="g_ship_port01" kind="mesh"
 		parent="-1"
 		child="1"
@@ -9335,13 +9451,13 @@
 		<display index="11" material="12" polygon="1" priority="0"/>
 		<display index="12" material="13" polygon="3" priority="0"/>
 		<display index="13" material="14" polygon="0" priority="0"/>
-		<display index="14" material="15" polygon="14" priority="0"/>
-		<display index="15" material="16" polygon="15" priority="0"/>
+		<display index="14" material="16" polygon="14" priority="0"/>
+		<display index="15" material="17" polygon="15" priority="0"/>
 	</node>
 	<node index="1" name="polySurface1" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="-1"
+		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
@@ -9358,10 +9474,30 @@
 	>
 		<display index="0" material="11" polygon="16" priority="0"/>
 	</node>
+	<node index="2" name="siranami" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="22" polygon_size="6"
+		triangle_size="0" quad_size="6"
+		volume_min="0.287354 -0.100098 -1.078857"
+		volume_max="1.735840 -0.062744 -0.480225"
+		volume_r="1.826660"
+	>
+		<display index="0" material="15" polygon="17" priority="0"/>
+	</node>
 </node_array>
 
-<output_info vertex_size="1863" polygon_size="537"
-	triangle_size="137" quad_size="400"/>
+<output_info vertex_size="1885" polygon_size="543"
+	triangle_size="137" quad_size="406"/>
 
 </body>
 
