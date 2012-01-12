@@ -41,10 +41,6 @@ ntexconv 039_02_midori.bmp -no -bg -bgb -bgf direct
 ntexconv 039_03_ao.bmp -no -bg -bgb -bgf direct
 ntexconv 039_04_aka.bmp -no -bg -bgb -bgf direct
 ntexconv 040_01_wireless.bmp -no -bg -bgb -bgf direct
-ntexconv 029_02_linkbridge.bmp -no -bg -bgb -bgf direct
-ntexconv 029_03_shitagamen.bmp -no -bg -bgb -bgf direct
-ntexconv 029_04_mission.bmp -no -bg -bgb -bgf direct
-ntexconv 029_05_jump.bmp -no -bg -bgb -bgf direct
 ntexconv 029_01_linktree.bmp -no -bg -bgb -bgf direct
 ntexconv 019_01_taisetu.bmp -no -bg -bgb -bgf direct
 ntexconv 019_02_motaseru.bmp -no -bg -bgb -bgf direct

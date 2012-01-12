@@ -41,10 +41,6 @@ ntrcomp -l -o 039_02_midori_lz77.nbfs 039_02_midori.nbfs
 ntrcomp -l -o 039_03_ao_lz77.nbfs 039_03_ao.nbfs
 ntrcomp -l -o 039_04_aka_lz77.nbfs 039_04_aka.nbfs
 ntrcomp -l -o 040_01_wireless_lz77.nbfs 040_01_wireless.nbfs
-ntrcomp -l -o 029_02_linkbridge_lz77.nbfs 029_02_linkbridge.nbfs
-ntrcomp -l -o 029_03_shitagamen_lz77.nbfs 029_03_shitagamen.nbfs
-ntrcomp -l -o 029_04_mission_lz77.nbfs 029_04_mission.nbfs
-ntrcomp -l -o 029_05_jump_lz77.nbfs 029_05_jump.nbfs
 ntrcomp -l -o 029_01_linktree_lz77.nbfs 029_01_linktree.nbfs
 ntrcomp -l -o 019_01_taisetu_lz77.nbfs 019_01_taisetu.nbfs
 ntrcomp -l -o 019_02_motaseru_lz77.nbfs 019_02_motaseru.nbfs
@@ -61,7 +57,7 @@ ntrcomp -l -o 025_02_yobidasi_lz77.nbfs 025_02_yobidasi.nbfs
 ntrcomp -l -o 025_03_livecasterwificlub_lz77.nbfs 025_03_livecasterwificlub.nbfs
 ntrcomp -l -o 025_04_lockon_lz77.nbfs 025_04_lockon.nbfs
 ntrcomp -l -o 025_05_migibutton_lz77.nbfs 025_05_migibutton.nbfs
-ntrcomp -l -o 026_01_badge_black_lz77.nbfs 026_01_badge_black.nbfs
+ntrcomp -l -o 026_01_badge_white_lz77.nbfs 026_01_badge_white.nbfs
 ntrcomp -l -o 027_01_benrimenu_lz77.nbfs 027_01_benrimenu.nbfs
 ntrcomp -l -o 027_02_checkbox_lz77.nbfs 027_02_checkbox.nbfs
 ntrcomp -l -o 027_04_select_lz77.nbfs 027_04_select.nbfs

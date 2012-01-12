@@ -217,7 +217,9 @@ $manual_reserve_open_flag_col_open_flag_enum   = 2;
   # open_flag_name, open_flag_no, open_flag_enum
   [ "最初",         0,            "START"        ],
   [ "シイギア",     1,            "CGERA"        ],
-  [ "エヌクリア",   2,            "NCLEAR"       ],
+  [ "チャンピオン",   2,          "CHAMPION"     ],
+  [ "メダルボックス", 3,          "MEDALBOX"     ],
+  [ "生息地リスト",   4,          "HLIST"        ],
 );
 
 %manual_reserve_open_flag_tbl_idx_hash_from_open_flag_name = ();  # open_flag名から@manual_open_flag_tblのインデックスを得るためのハッシュ

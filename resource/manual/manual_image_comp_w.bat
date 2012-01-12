@@ -41,10 +41,6 @@ ntrcomp -l -o 039_02_midori_lz77.nbfs 039_02_midori.nbfs
 ntrcomp -l -o 039_03_ao_lz77.nbfs 039_03_ao.nbfs
 ntrcomp -l -o 039_04_aka_lz77.nbfs 039_04_aka.nbfs
 ntrcomp -l -o 040_01_wireless_lz77.nbfs 040_01_wireless.nbfs
-ntrcomp -l -o 029_02_linkbridge_lz77.nbfs 029_02_linkbridge.nbfs
-ntrcomp -l -o 029_03_shitagamen_lz77.nbfs 029_03_shitagamen.nbfs
-ntrcomp -l -o 029_04_mission_lz77.nbfs 029_04_mission.nbfs
-ntrcomp -l -o 029_05_jump_lz77.nbfs 029_05_jump.nbfs
 ntrcomp -l -o 029_01_linktree_lz77.nbfs 029_01_linktree.nbfs
 ntrcomp -l -o 019_01_taisetu_lz77.nbfs 019_01_taisetu.nbfs
 ntrcomp -l -o 019_02_motaseru_lz77.nbfs 019_02_motaseru.nbfs

@@ -31,6 +31,7 @@
 #include "savedata/save_control.h"
 #include "savedata/c_gear_data.h"
 #include "savedata/etc_save.h"
+#include "savedata/medalbox.h"
 #include "field/eventwork.h"
 
 #include "manual_graphic.h"
@@ -276,10 +277,30 @@ BOOL MANUAL_DATA_OpenFlagIsOpen( MANUAL_DATA_WORK* work, u16 open_flag, GAMEDATA
       }
     }
     break;
-  case MANUAL_OPEN_FLAG_NCLEAR:
+  // チャンピオン(エヌクリアから変更)
+  case MANUAL_OPEN_FLAG_CHAMPION:
     {
       if( EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork(gamedata), SYS_FLAG_GAME_CLEAR) )
       {
+        is_open = TRUE;
+      }
+    }
+    break;
+  // メダルボックス
+  case MANUAL_OPEN_FLAG_MEDALBOX:
+    {
+      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+      MEDALBOX *medalbox = SaveData_GetMedalBox( sv );
+      if(MEDALBOX_GetMedalState( medalbox, MDLID_FIRST_MEDAL )==MEDAL_STATE_TITLE_GET){
+        is_open = TRUE;
+      }
+    }
+    break;
+  // 生息地リスト
+  case MANUAL_OPEN_FLAG_HLIST:
+    {
+      ZUKAN_SAVEDATA *zw = GAMEDATA_GetZukanSave( gamedata );
+      if(ZUKANSAVE_GetHabitatListFlag( zw ) == TRUE){
         is_open = TRUE;
       }
     }
