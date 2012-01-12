@@ -1098,7 +1098,7 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 	// Œ‹‰Ê•\Ž¦‚Ì”½‰f
 	id = wk->Param->fmwk->beacon.m_id;
 	lv = wk->Param->fmwk->beacon.m_level;
-	LINK_FESTIVAL_GetMissionResult( wk->Param->fest_sys, &wk->MissionResult, wk->ArcData[id].param.level[lv].time );
+	LINK_FESTIVAL_GetMissionResult( wk->Param->fest_sys, &wk->MissionResult );
 	//
 	// ¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
 	if(wk->MissionResult.clear_f == TRUE){

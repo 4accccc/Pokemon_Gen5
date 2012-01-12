@@ -15,10 +15,9 @@
  *
  * @param fest_sys  LINK_FESTIVAL*
  * @param pl  LINKFEST_MISSION_RESULT構造体型へのポインタ
- * @param mission_time_sec  秒単位のミッション制限時間(FMISSION_ARC_PARAM->m_timeを渡してください)
  *
  *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec );
+extern void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl);
 

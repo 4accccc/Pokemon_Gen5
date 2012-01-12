@@ -25,6 +25,7 @@
 #include "savedata/fmission_save.h"
 #include "savedata/medalbox.h"
 #include "app/mdlid_def.h"  // for MDLID_
+#include "item/itemsym.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
@@ -39,12 +40,11 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
  *
  * @param fest_sys  LINK_FESTIVAL*
  * @param pl  LINKFEST_MISSION_RESULT構造体型へのポインタ
- * @param mission_time_sec  秒単位のミッション制限時間(FMISSION_ARC_PARAM->m_timeを渡してください)
  *
  *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, u16 mission_time_sec )
+void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl )
 {
   BOOL ret;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata );
@@ -103,34 +103,18 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
     switch( wk->m_beacon->pay_bonus ){
      case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
-#if 0
-       { //(残り秒/10)*ミッションレベル
-         u32 value = wk->mission.end_life/10;
-         pl->bonus_num += value*(wk->m_beacon->m_level+1);
-       }
-#else
        {  //(残り秒/10)*MissionLevel*(MyScore/TotalScore)
          fx32 life = FX_Div( FX32_CONST(wk->mission.end_life), FX32_CONST(10));
          fx32 per = FX_Div( FX32_CONST(my_score), FX32_CONST(pl->score) );  //マイスコアとトータルスコアの比率
          per = FX_Mul( FX32_CONST( wk->m_beacon->m_level ), per ); //ミッションレベルを掛ける
          pl->bonus_num = FX_Whole( FX_Mul( life, per ) ); //最後に小数点切捨て
        }
-#endif
-       //スペシャル報酬 level3ミッション以上&&残り時間が制限時間より長ければ
-       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (wk->mission.end_life >= mission_time_sec) );
       break;
      case FMISSION_PAY_BONUS_SCORE: //スコアボーナス(トータルスコアに依存するボーナス)
-#if 0
-       { //(トータルスコア-目標値)/人数*ミッションレベル
-         u32 score = (pl->score-wk->m_beacon->goal)/(wk->log_num+1);
-         pl->bonus_num += score*(wk->m_beacon->m_level+1);
-       }
-#else
        { //MyScore + ( (TotalScore-MyScore)/(参加人数*2) )
           fx32 value = FX_Div( FX32_CONST(pl->score-my_score), FX32_CONST(join_num*2));
           pl->bonus_num = FX_Whole( FX32_CONST(my_score)+value );
        }
-#endif
        //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
        sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
        break;
@@ -138,7 +122,9 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     if( pl->bonus_num > FMISSION_PAY_NUM_BONUS_MAX ){
       pl->bonus_num = FMISSION_PAY_NUM_BONUS_MAX;  //ボーナスには上限がある
     }
-    if( sp_bonus ){
+    if( wk->m_beacon->sp_item != ITEM_DUMMY_DATA &&
+        wk->m_beacon->sp_pay > 0 &&
+        sp_bonus ){
       pl->sp_item = wk->m_beacon->sp_item;
       pl->sp_item_num = wk->m_beacon->sp_pay;
     }

@@ -447,10 +447,15 @@ class CMission
     if @item == nil then
       print_err("アイテム名が不正です",work[COLUMN_ITEM])
     end
-    
-    @ds_item = $item_hash.fetch(work[COLUMN_DSCORE_ITEM],nil)
-    if @ds_item == nil then
-      print_err("DScoreアイテム名が不正です",work[COLUMN_DSCORE_ITEM])
+   
+    if work[COLUMN_DSCORE_ITEM]=='0' then
+      @ds_item = 0
+      print("DScoreアイテム無し")
+    else
+      @ds_item = $item_hash.fetch(work[COLUMN_DSCORE_ITEM],nil)
+      if @ds_item == nil then
+        print_err("DScoreアイテム名が不正です",work[COLUMN_DSCORE_ITEM])
+      end
     end
     
     @ds_pay = work[COLUMN_DSCORE_PAY].to_i
