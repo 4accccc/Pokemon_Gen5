@@ -1808,9 +1808,9 @@ static void fma_chk_log_buffer( FMISSION_APP_WORK *wk )
 	tbl = LINK_FESTIVAL_GetMissionLogStackTbl( wk->Param->fest_sys );
 	FMISSION_LOG_StackTbl_GetLogLatest( tbl, wk->Latest );
 	//
-	// チェック
+	// チェック(逆順に調べる)
 	for(i=0;i<FMISSION_LOG_LATEST_NUM_MAX;i++){
-		fma_chk_latest( wk, i );
+		fma_chk_latest( wk, 2-i );
 	}
 	//
 	j=0;
@@ -1820,6 +1820,18 @@ static void fma_chk_log_buffer( FMISSION_APP_WORK *wk )
 		}
 	}
 	wk->LatestLocal.num = j;
+
+#if 0
+	for(i=0;i<3;i++){
+		OS_Printf("(%d,%d) ",wk->Latest->log[i].tr_id,wk->Latest->log[i].score);
+	}
+	OS_Printf("\n");
+	//
+	for(i=0;i<j;i++){
+		OS_Printf("local (%d,%d) ",wk->LatestLocal.log[i].tr_id, wk->LatestLocal.log[i].score);
+	}
+	OS_Printf("\n");
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1896,6 +1908,11 @@ static void fma_chk_latest( FMISSION_APP_WORK *wk, const s32 num )
 		}
 		wk->LatestLocal.log[0].name = GFL_STR_CreateCopyBuffer( wk->Latest->log[num].name, wk->heapID );
 	}
+	
+#if 0
+	OS_Printf("hit : %d\n",j);
+#endif
+
 #if 0
 	//
 	OS_Printf("buffer : ");
