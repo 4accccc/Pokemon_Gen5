@@ -13,6 +13,8 @@
 #define C04R1101_TRAINER_01                1
 #define C04R1101_ADULTW_01                 2
 #define C04R1101_GLASSES_01                3
+#define C04R1101_WOMAN1_01                 4
+#define C04R1101_BOY2_01                   5
 
 #endif //ZONE_C04R1101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r1101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

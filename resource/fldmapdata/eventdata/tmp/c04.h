@@ -39,6 +39,7 @@
 #define C04_POKE34_01                     16
 #define C04_BABYGIRL1_01                  17
 #define C04_MIDDLEWOMAN1_01               18
+#define C04_TRAINERW_01                   19
 
 #endif //ZONE_C04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

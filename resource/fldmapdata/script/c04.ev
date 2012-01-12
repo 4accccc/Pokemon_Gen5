@@ -55,6 +55,7 @@ _EVENT_DATA		ev_c04_poke34_01
 _EVENT_DATA		ev_c04_babygirl1_01
 _EVENT_DATA		ev_c04_middlewoman1_01
 _EVENT_DATA   ev_pos_c04_trial_01
+_EVENT_DATA	ev_c04_trainerw_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -1184,6 +1185,22 @@ _ANIME_LABEL	anm_player_mark
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
+/************************************************************/
+/*	TRAINERW	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c04_trainerw_01
+
+  _ITEM_CHK( ITEM_BATORUREKOODAA, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //まあ　あなた！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_trainerw_03 )
+  ELSE
+    //まあ　あなた！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_trainerw_04 )
+  ENDIF
+
+EVENT_END
+
 /**************************************************************/
 /*  POS：トライアルハウスイベント                             */
 /**************************************************************/
@@ -1192,9 +1209,9 @@ EVENT_START   ev_pos_c04_trial_01
   DEFINE_LOCAL  DOOR_ANIME_ID
 
   //ドアアニメ再生
-	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 399, 467 )
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 399, 467 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
   //謎の女登場
   _OBJ_ADD_EX( 399, 467, DIR_DOWN, MMDL_ID_EVENTOBJ_00, TRAINERW, MV_DMY )
@@ -1209,32 +1226,64 @@ EVENT_START   ev_pos_c04_trial_01
 
   _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
   _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  DEFINE_LOCAL	LWK_MSG1
+  DEFINE_LOCAL	LWK_MSG2
+  
+  //ゲームクリア後なら
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  
+  	$LWK_MSG1 = msg_c04_trainerw_01
+  	$LWK_MSG2 = msg_c04_trainerw_02
+  
+  //ゲームクリア前
+  ELSE
+
+  	$LWK_MSG1 = msg_c04_trainerw_03
+  	$LWK_MSG2 = msg_c04_trainerw_04
+  	
+  ENDIF
 
   _ITEM_CHK( ITEM_BATORUREKOODAA, 1, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
     //まあ　あなた！
-    _BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_01 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSG1 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
   ELSE
     //まあ　あなた！
-    _BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_02 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSG2 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
   ENDIF
 
   _MSGWIN_CLOSE()
   
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
+  //ゲームクリア後なら
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
 
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+    _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+    _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
-  _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
+    _OBJ_ANIME_WAIT()
 
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
-  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
-  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+    _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+    _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+    _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //ゲームクリア前
+  ELSE
+
+    //========================================//
+    _FLAG_RESET( FV_C04_TRAINERW_01 )
+    //========================================//
+
+    _OBJ_ADD( C04_TRAINERW_01 )
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  	
+  ENDIF
   
   //========================================//
   

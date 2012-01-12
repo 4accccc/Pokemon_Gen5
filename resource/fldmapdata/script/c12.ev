@@ -862,8 +862,12 @@ ev_vs_rival:
 
 	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ ) 
-
-	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_MAP, 8, DIR_LR )
+	
+	IF $LWK_POSX == 37 && $LWK_POSZ == 715 THEN
+		_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_MAP, 8, DIR_UD )
+	ELSE
+		_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_MAP, 8, DIR_LR )
+	ENDIF
 	
 	//========================================//
 	//ライバル非表示
@@ -925,13 +929,13 @@ ev_vs_rival:
 	//ベル：さて！
 	_BALLOONWIN_OBJMSG_POS( msg_c12_white_16 , C12_SWBELL_01 , POS_DEFAULT )
 	_MSGWIN_CLOSE()
-  
-	//暗転処理
-	_BLACK_OUT_SLOW()
 	
 	_OBJ_ANIME( C12_SWBELL_01, anm_sp_walk )
      _TIME_WAIT( 6 )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_sp_walk )
+	_TIME_WAIT( 10 )
+	//暗転処理
+	_BLACK_OUT_SLOW()
 
 	_DISP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
@@ -943,8 +947,8 @@ ev_vs_rival:
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//主人公・ベル：ポケモンセンター前にワープ
-	_OBJ_POS_CHANGE(C12_SWBELL_01,49,1,741,DIR_UP)
-	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,47,1,741,DIR_UP)
+	_OBJ_POS_CHANGE(C12_SWBELL_01,47,1,741,DIR_UP)
+	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,49,1,741,DIR_UP)
 	
 	_TIME_WAIT( 60 )
 	
@@ -997,7 +1001,7 @@ _RET
 //	☆ベルと会う：ポケモンセンターに入る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_goto_pc_bell_01
-  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1012,7 +1016,7 @@ _ANIME_LABEL	anm_goto_pc_bell_02
 //	☆ベルと会う：ポケモンセンターに入る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_goto_pc_player
-  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
   _ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
@@ -1147,10 +1151,18 @@ EVENT_START		ev_scene_c12_townmap_01
   //アニメ：見送り
   _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
-
+  
   //ベル動作モデル非表示
   _OBJ_DEL(C12_SWBELL_01)
   
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //ママ：そうね！
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swmama_06,C12_SWMAMA_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
   //==================================//
 	
 	//C12のSCENE_CHANGE起動をOFFに
@@ -1654,6 +1666,11 @@ EVENT_START ev_pos_c12_rival_pair_01
   //アニメ：妹退場
   _OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 751, FORCE_TYPE_NOT, 8, DIR_LR)
   _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
+  _TIME_WAIT( 16 )
+  //ライバル：さてと
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_03,C12_SWRIVAL_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
   _OBJ_ANIME_WAIT()
   
   //ライバル妹の動作OBJを非表示
@@ -1674,9 +1691,9 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
 
-  //ライバル：さてと
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_03,C12_SWRIVAL_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
+  //ライバル：レッツゴー
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_set_01,C12_SWRIVAL_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //連れ歩き開始

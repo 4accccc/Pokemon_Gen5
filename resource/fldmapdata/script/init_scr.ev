@@ -397,6 +397,9 @@ init_flags:
   //C12GYM0101 ストッパー
   _FLAG_SET( FV_C12GYM0101_GLASSES_01 )
 
+  //C04 バトル検定謎の女
+  _FLAG_SET( FV_C04_TRAINERW_01 )
+
 }
 _RET
 
@@ -682,6 +685,9 @@ ev_first_gameclear:
   
   //C14：ペンションオーナー表示
   _FLAG_RESET( FV_C14_MAN3_01 )
+  
+  //C04：バトル検定謎の女非表示
+  _FLAG_SET( FV_C04_TRAINERW_01 )
 
 _RET
 

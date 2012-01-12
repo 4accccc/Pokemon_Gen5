@@ -329,13 +329,10 @@ ev_leader4_btl:
 
     //ライバルイベントPOSを起動
     $WK_SCENE_C04_SWRIVAL = 1
-		//ライバル表示
+	//ライバル表示
     _FLAG_RESET( FV_C04_SWRIVAL_01 )
-		//プラズマ表示
+	//プラズマ表示
     _FLAG_RESET( FV_C04_SWPLASMAM_01 )
-    
-    //旧ジムのモデル削除
-    _FLAG_SET( FV_C04R1101_ADULTW_01 )
     
     //ローカルライブキャスター・ライバル通話状態を変更（C04ゲート前イベント発生まで）
     _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C04_2 )
