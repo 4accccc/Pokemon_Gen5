@@ -1508,6 +1508,7 @@ EVENT_START   ev_pos_c08_ninja_01
   ELSE
     _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_24 , C08_SWLEADER7_01 , POS_DL)
   ENDIF
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
