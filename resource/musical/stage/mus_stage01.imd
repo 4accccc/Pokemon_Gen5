@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-10-29T16:50:55" source="mus_stage01.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-01-12T13:39:33" source="mus_stage01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="tanoue_reiko" host="W00192" date="2009-10-29T16:50:55" source="mus_stage01.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2012-01-12T13:39:33" source="mus_stage01.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="5"
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="ami_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/ami.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/ami.tga"
 	>
 		<bitmap size="32">
 			0009 5000 0009 5400 0009 1500 0009 0540
@@ -49,7 +49,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ami-kage_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/ami-kage.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/ami-kage.tga"
 	>
 		<bitmap size="128">
 			1133 0000 0000 3300 1133 0001 0000 3330
@@ -75,7 +75,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="ami2_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/ami2.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/ami2.tga"
 	>
 		<bitmap size="32">
 			0009 5000 0009 5400 0009 1500 0009 0540
@@ -89,7 +89,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="h01_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/h01.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/h01.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 3210 0123 0000
@@ -107,7 +107,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="h02.1_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/h02.1.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/h02.1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -125,7 +125,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="h02.2_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/h02.2.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/h02.2.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -143,7 +143,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="h02.3_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/h02.3.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/h02.3.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -161,7 +161,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="kabe_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kabe.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kabe.tga"
 	>
 		<bitmap size="32">
 			1555 1555 2aa9 2aa9 2aa9 2aa9 2aa9 2aa9
@@ -174,7 +174,7 @@
 		width="8" height="16" original_width="8" original_height="16"
 		format="a3i5"
 		palette_name="kage_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kage.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kage.tga"
 	>
 		<bitmap size="64">
 			0303 0303 0303 0101 0303 0303 0303 0303
@@ -192,7 +192,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan.1_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan.1.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan.1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 1110 1111 1111 0111
@@ -210,7 +210,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan.2_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan.2.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan.2.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 1110 1111 1111 0111
@@ -228,7 +228,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="kaidan2.1_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan2.1.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan2.1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 5554 1555 0004 1000 aa84 12aa
@@ -246,7 +246,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="kaidan2.2_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan2.2.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan2.2.tga"
 	>
 		<bitmap size="64">
 			0000 0000 5554 1555 0004 1000 aa84 12aa
@@ -264,7 +264,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan3_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan3.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan3.tga"
 	>
 		<bitmap size="512">
 			1111 1111 1111 1111 1111 1111 1111 1111
@@ -338,7 +338,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan4_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan4.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan4.tga"
 	>
 		<bitmap size="1024">
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -476,7 +476,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan5_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan5.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan5.tga"
 	>
 		<bitmap size="1024">
 			7777 7777 7777 7777 7777 7777 7777 7777
@@ -614,7 +614,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan6_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kaidan6.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kaidan6.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -752,7 +752,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="kuro_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/kuro.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/kuro.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -762,7 +762,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="l01_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/l01.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/l01.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 2020 2020 2020 2020
@@ -775,7 +775,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="l02_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/l02.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/l02.tga"
 	>
 		<bitmap size="32">
 			1818 1818 1818 1818 1818 1818 1818 1818
@@ -788,7 +788,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="l03_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/l03.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/l03.tga"
 	>
 		<bitmap size="32">
 			1c1c 1c1c 1c1c 1c1c 1c1c 1c1c 1c1c 1c1c
@@ -801,7 +801,7 @@
 		width="8" height="32" original_width="8" original_height="32"
 		format="a5i3"
 		palette_name="light01_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/light01.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/light01.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -826,7 +826,7 @@
 		width="8" height="16" original_width="8" original_height="16"
 		format="a5i3"
 		palette_name="light02_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/light02.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/light02.tga"
 	>
 		<bitmap size="64">
 			0303 0303 0303 0303 0a0a 0a0a 0a0a 0a0a
@@ -843,7 +843,7 @@
 		width="8" height="16" original_width="8" original_height="16"
 		format="a5i3"
 		palette_name="light03_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/light03.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/light03.tga"
 	>
 		<bitmap size="64">
 			0303 0303 0303 0303 0a0a 0a0a 0a0a 0a0a
@@ -861,7 +861,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="logo_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/logo.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/logo.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -999,7 +999,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="s01_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/s01.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/s01.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa 5555 5556 5555 9555 5555
@@ -1017,7 +1017,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="s02_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/s02.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/s02.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1043,7 +1043,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="siro_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/siro.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/siro.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1061,7 +1061,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="tenjyou_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/tenjyou.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/tenjyou.tga"
 	>
 		<bitmap size="64">
 			2122 2222 1122 2222 0000 0000 0000 0000
@@ -1079,7 +1079,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="tv.1_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/tv.1.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/tv.1.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1153,7 +1153,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="tv.2_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/tv.2.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/tv.2.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1227,7 +1227,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="tv.3_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/tv.3.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/tv.3.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1301,7 +1301,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="tv.4_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/tv.4.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/tv.4.tga"
 	>
 		<bitmap size="512">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -1375,7 +1375,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="waku_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/waku.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/waku.tga"
 	>
 		<bitmap size="8">
 			0000 0000 5555 5555 5555 5555 0000 0000
@@ -1385,7 +1385,7 @@
 		width="8" height="32" original_width="8" original_height="32"
 		format="a5i3"
 		palette_name="yami_pl"
-		path="C:/home/pokemon_wb/resource/musical/stage/mus_stage01/tex/yami.tga"
+		path="C:/home/swan_data3d/musical/satge/mus_stage01/tex/yami.tga"
 	>
 		<bitmap size="128">
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -5991,7 +5991,7 @@
 					<tex st="8.000000 0.000000"/>
 					<pos_xyz xyz="1.763428 -0.532227 1.465332"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="2.500000 -0.532227"/>
+					<pos_xy xy="2.750000 -0.532227"/>
 					<tex st="8.000000 8.000000"/>
 					<pos_xyz xyz="1.315430 -0.284912 0.704102"/>
 					<tex st="8.000000 0.000000"/>
@@ -6051,13 +6051,13 @@
 					<pos_xyz xyz="2.031250 0.317627 -1.150146"/>
 					<tex st="0.000000 8.000000"/>
 					<pos_xyz xyz="2.043457 0.143799 -0.615234"/>
-					<pos_xy xy="2.500000 0.143799"/>
+					<pos_xy xy="2.750000 0.143799"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_yz yz="0.317627 -1.150146"/>
 					<tex st="0.000000 8.000000"/>
 					<pos_xyz xyz="2.043457 0.027832 -0.258545"/>
 					<tex st="8.000000 8.000000"/>
-					<pos_xyz xyz="2.500000 0.008545 -0.199219"/>
+					<pos_xyz xyz="2.750000 0.008545 -0.199219"/>
 					<tex st="8.000000 0.000000"/>
 					<pos_yz yz="0.143799 -0.615234"/>
 					<tex st="0.000000 0.000000"/>
@@ -6065,7 +6065,7 @@
 					<tex st="0.000000 8.000000"/>
 					<pos_xyz xyz="1.875244 -0.129150 0.224854"/>
 					<tex st="8.000000 8.000000"/>
-					<pos_xyz xyz="2.500000 -0.532227 1.465332"/>
+					<pos_xyz xyz="2.750000 -0.532227 1.465332"/>
 					<tex st="8.000000 0.000000"/>
 					<pos_yz yz="0.008545 -0.199219"/>
 					<tex st="0.000000 0.000000"/>
@@ -6120,9 +6120,9 @@
 					<tex st="0.000000 8.000000"/>
 					<pos_s xyz="-2.500000 -0.562500 1.500000"/>
 					<tex st="8.000000 8.000000"/>
-					<pos_xy xy="2.500000 -0.562500"/>
+					<pos_xy xy="2.750000 -0.562500"/>
 					<tex st="8.000000 0.000000"/>
-					<pos_xy xy="2.500000 -0.375000"/>
+					<pos_xy xy="2.750000 -0.375000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.500000 -0.375000"/>
 					<tex st="0.000000 8.000000"/>
@@ -6194,8 +6194,8 @@
 		vertex_size="68" polygon_size="20"
 		triangle_size="4" quad_size="16"
 		volume_min="-2.437500 -0.514404 -1.375000"
-		volume_max="2.500000 0.093750 1.208252"
-		volume_r="2.823730"
+		volume_max="2.750000 0.093750 1.208252"
+		volume_r="3.047363"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -6287,9 +6287,9 @@
 					<tex st="55.000000 56.000000"/>
 					<pos_yz yz="-0.514404 1.208252"/>
 					<tex st="60.000000 56.000000"/>
-					<pos_xy xy="2.500000 -0.514404"/>
+					<pos_xy xy="2.750000 -0.514404"/>
 					<tex st="60.000000 46.187500"/>
-					<pos_yz yz="-0.321289 0.625000"/>
+					<pos_xyz xyz="2.500000 -0.321289 0.625000"/>
 					<tex st="55.000000 46.187500"/>
 					<pos_xy xy="0.687500 -0.321289"/>
 					<tex st="60.000000 56.000000"/>
@@ -6302,7 +6302,7 @@
 					<pos_yz yz="-0.514404 1.208252"/>
 					<tex st="60.000000 46.187500"/>
 					<clr rgb="12 12 12"/>
-					<pos_s xyz="2.500000 0.093750 -0.656250"/>
+					<pos_s xyz="2.750000 0.093750 -0.656250"/>
 					<tex st="56.375000 46.187500"/>
 					<pos_xy xy="1.281250 0.093750"/>
 					<tex st="56.562500 46.750000"/>
