@@ -57,6 +57,7 @@ static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u8
 static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int data_idx, const VecFx32* ev_pos );
 static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int data_idx, const RAIL_LOCATION* ev_loc );
+static void sub_MMdlDelete( FES_GIMMICK_NPC_WORK* wk, int data_idx );
 
 //----------------------------------------------------------------------
 /*
@@ -100,10 +101,8 @@ void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16
   //非表示設定
   MMDL_SetStatusBitVanish( wk->mmdl_tbl[idx], TRUE );
   //OBJ削除
-  MMDL_Delete( wk->mmdl_tbl[idx] );
-  wk->mmdl_tbl[idx] = NULL;
+  sub_MMdlDelete( wk, idx );
 }
-
 
 //----------------------------------------------------------------------
 /*
@@ -116,9 +115,7 @@ BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
  
   if( wk->point_max > 0 ){
     for(i = 0;i < FES_GIMMICK_MAX;i++){
-      if( wk->mmdl_tbl[i] != NULL ){
-        MMDL_Delete( wk->mmdl_tbl[i] );
-      }
+      sub_MMdlDelete( wk, i );
     }
   }
 
@@ -358,7 +355,7 @@ static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
       if( sub_CheckHitAnotherEventForGrid( sys_wk, wk, i, &vec ) ){
         //他のイベントと重なったので隠す&ゾーンチェンジするまで再チェックしないようにフラグ立てちゃう
         f_tbl->flag[i] = TRUE;
-        MMDL_Delete( wk->mmdl_tbl[i] );
+        sub_MMdlDelete( wk, i );
       }
     }else{
       RAIL_LOCATION loc;
@@ -366,7 +363,7 @@ static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
       if( sub_CheckHitAnotherEventForRail( sys_wk, wk, i, &loc ) ){
         //他のイベントと重なったので隠す&ゾーンチェンジするまで再チェックしないようにフラグ立てちゃう
         f_tbl->flag[i] = TRUE;
-        MMDL_Delete( wk->mmdl_tbl[i] );
+        sub_MMdlDelete( wk, i );
       }
     }
   }
@@ -416,5 +413,19 @@ static BOOL sub_CheckHitAnotherEventForRail( FES_GIMMICK* sys_wk, FES_GIMMICK_NP
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　MMDLを削除
+ */
+//----------------------------------------------------------------------
+static void sub_MMdlDelete( FES_GIMMICK_NPC_WORK* wk, int idx )
+{
+  if( wk->mmdl_tbl[idx] != NULL ){
+    //OBJ削除
+    MMDL_Delete( wk->mmdl_tbl[idx] );
+    wk->mmdl_tbl[idx] = NULL;
+  }
 }
 
