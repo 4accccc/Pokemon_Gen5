@@ -15019,24 +15019,24 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_32_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まけても　プラズマだんの
-せいぎを　つらぬく！　それだけだ！</language>
-		<language name="JPN_KANJI" width="216">負けても　プラズマだんの
-正義を　貫く！　それだけだ！</language>
+		<language name="JPN" width="216">こいつめ！　おれの
+どうぐを　こわしやがって！</language>
+		<language name="JPN_KANJI" width="216">こいつめ！　おれの
+道具を　壊しやがって！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_33_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">たたかうことに　こだわった
-オレたちを　うわまわる　とは……！？</language>
-		<language name="JPN_KANJI" width="216">戦うことに　こだわった
-オレたちを　上回る　とは……！？</language>
+		<language name="JPN" width="216">まけても　プラズマだんの
+せいぎを　つらぬく！　それだけだ！</language>
+		<language name="JPN_KANJI" width="216">負けても　プラズマ団の
+正義を　貫く！　それだけだ！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">くやしい！　バカ！
-もう！　プラーズマー！！</language>
-		<language name="JPN_KANJI" width="216">くやしい！　バカ！
-もう！　プラーズマー！！</language>
+		<language name="JPN" width="216">くやしい！　オタンコナス！
+もう！　ばか！　プラーズマー！！</language>
+		<language name="JPN_KANJI" width="216">くやしい！　オタンコナス！
+もう！　ばか！　プラーズマー！！</language>
 	</row>
 
 	<row id="TRID_SWCHAMPION_01_TRMSG_FIGHT_FIRST_DAMAGE">
