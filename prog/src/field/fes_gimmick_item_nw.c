@@ -149,9 +149,16 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_ITEM_WORK* wk, FEST
   //抽選するポイント数を決定
   {
     FMISSION_MAP_ATTR map_attr = ZONEDATA_GetFesMapAttr( wk->zone_id );
-    int bit_ofs = map_attr*FMISSION_POINT_PATTERN_BIT_NUM;
-    u8 pat_idx = (fmwk->beacon.pattern >> bit_ofs ) & FMISSION_POINT_PATTERN_BIT_MASK;
-    int rnd = FES_GIMMICK_SUB_RndGet( rnd_c, ITEM_MISSION_POINT_NUM_VALUE, NULL, 0 );
+    int bit_ofs, rnd;
+    u8  pat_idx;
+
+    if( map_attr >= FMISSION_MAP_ATTR_MAX ){
+      wk->point_max = 0;
+      return FALSE;
+    }
+    bit_ofs = map_attr*FMISSION_POINT_PATTERN_BIT_NUM;
+    pat_idx = (fmwk->beacon.pattern >> bit_ofs ) & FMISSION_POINT_PATTERN_BIT_MASK;
+    rnd = FES_GIMMICK_SUB_RndGet( rnd_c, ITEM_MISSION_POINT_NUM_VALUE, NULL, 0 );
 
     wk->point_max = DATA_FesItemPointNumTbl[pat_idx][rnd];
 

@@ -135,6 +135,7 @@ typedef enum{
   FMISSION_MAP_ATTR_SP_HIGH,  ///<“ÁŽê‚
   FMISSION_MAP_ATTR_SP_LOW,  ///<“ÁŽê’á
   FMISSION_MAP_ATTR_MAX,  ///<
+  FMISSION_MAP_ATTR_NONE = FMISSION_MAP_ATTR_MAX,  ///<–³‚µ “ÁŽêƒR[ƒh
 }FMISSION_MAP_ATTR;
 
 //=========================================
