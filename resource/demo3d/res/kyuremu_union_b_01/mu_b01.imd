@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2012-01-05T19:52:24" source="kyuremu_union_b_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-12T11:53:54" source="kyuremu_union_b_01_045.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2012-01-05T19:52:24" source="kyuremu_union_b_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-12T11:53:54" source="kyuremu_union_b_01_045.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2110,70 +2110,70 @@
 		path="C:/home/swan_data3d/demo/zekrom/tex/mu_eye.1.tga"
 	>
 		<bitmap size="512">
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd ccdd cccc dddc dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			cccd cccc cccc cccc dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd ccdd cccc
-			cccc bccc bbbb cccb ddcc dddd dddd dddd
-			dddd dddd dddd dddd dddd cddd cccc cccc
-			bbbc bbbb bbbb bbbb dccc dddd dddd dddd
-			dddd dddd dddd dddd cddd cccc bccc bbbb
-			bbbb 999b 9999 bb99 cccb dddd dddd dddd
-			dddd dddd dddd dddd cccd bccc bbbb bbbb
-			9999 9999 9999 9999 ccbb dddc eedd dddd
-			dddd dddd dddd dddd cccc bbbb 9bbb 9999
-			9999 8999 8888 9999 cbb9 eddc ffff dddd
-			dddd dddd dddd ccdd bbcc 9bbb 9999 9999
-			8899 8888 8888 9988 dbb9 fffe deff dddd
-			dddd dddd dddd cccd bbbc 9999 9999 8889
-			8888 8888 8888 b988 ffec efff dddd dddd
-			dddd dddd dddd cccd 9bbb 9999 8889 8888
-			8888 8888 9988 fedb efff dddd dddd dddd
-			dddd dddd dddd bccc 99bb 8999 8888 8888
-			8888 b998 fedc efff cccd dddd dddd dddd
-			dddd dddd dddd bccc 999b 8889 8888 9888
-			cb99 ffed efff bbcd ccbb dddc dddd dddd
-			dddd dddd dddd bccc 999b 9999 bb99 edcb
-			ffff deff bbbc baaa ccbb dddc dddd dddd
-			dddd dddd dddd cddd dccc feed ffff ffff
-			cdee abbc aaaa ba99 ccbb dddc dddd dddd
-			dddd dddd fedd ffff ffff efff ddde bbcc
-			bbbb 9aaa 9999 ba99 ccbb dddd dddd dddd
-			dddd dddd eedd deee ccdd bbcc bbbb bbbb
-			aaaa 9999 9999 bbba dccc dddd dddd dddd
-			dddd dddd deed dddd cccc aabb aaaa aaaa
-			9999 9999 baaa ccbb ddcc dddd dddd dddd
-			dddd dddd dddd dddd cccc 99ab 9999 9999
-			9999 aaa9 bbbb cccc dddc dddd dddd dddd
-			dddd dddd dddd dddd cccc aabb aaaa aaaa
-			aaaa bbba cccc dccc dddd dddd dddd dddd
-			dddd dddd dddd dddd cccc bbbc bbbb bbbb
-			cccb cccc cccc dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd ccdd cccc cccc cccc
-			cccc dccc dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd cccc cccc cccc
-			ddcc dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 0055 0000 5550 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			0005 0000 0000 0000 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 0055 0000
+			0000 3000 3333 0003 5500 5555 5555 5555
+			5555 5555 5555 5555 5555 0555 0000 0000
+			3330 3333 3333 3333 5000 5555 5555 5555
+			5555 5555 5555 5555 0555 0000 3000 3333
+			3333 2223 2222 3322 0003 5555 5555 5555
+			5555 5555 5555 5555 0005 3000 3333 3333
+			2222 2222 2222 2222 0033 5550 44e5 555e
+			5555 5555 5555 5555 0000 3333 2333 2222
+			2222 1222 1111 2222 0332 4e50 4444 5555
+			5555 5555 5555 0055 3300 2333 2222 2222
+			1122 1111 1111 2211 5332 4444 e444 5555
+			5555 5555 5555 0005 3330 2222 2222 1112
+			1111 1111 1111 3211 4440 4444 55e4 5555
+			5555 5555 5555 0005 2333 2222 1112 1111
+			1111 1111 2211 4453 4444 e444 555e 5555
+			5555 5555 5555 3000 2233 1222 1111 1111
+			1111 3221 4450 4444 0554 555e 5555 5555
+			5555 5555 5555 3000 2223 1112 1111 2111
+			0322 4445 4444 3354 0033 5550 5555 5555
+			5555 5555 5555 3000 2223 2222 3322 4503
+			4444 4444 3035 3333 0033 5550 5555 5555
+			5555 5555 5555 0555 5000 444e 4444 4444
+			5444 3305 3333 3322 0033 5550 5555 5555
+			5555 5555 4455 4444 4444 4444 4444 0355
+			3333 2333 2222 3322 0033 5555 5555 5555
+			5555 e555 44ee 4444 5544 3350 3333 3333
+			3333 2222 2222 3333 5000 5555 5555 5555
+			5555 e555 4eee eee4 0000 3333 3333 3333
+			2222 2222 3333 0033 5500 5555 5555 5555
+			5555 5555 eeee 5555 0000 3333 3333 2222
+			3333 3333 3333 0000 5550 5555 5555 5555
+			5555 5555 55e5 5555 0000 3333 3333 3333
+			3333 3333 0000 5000 5555 5555 5555 5555
+			5555 5555 5555 5555 0000 3330 3333 3333
+			0003 0000 0000 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 0055 0000 0000 0000
+			0000 5000 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 0000 0000 0000
+			5500 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="mu_eye.4"
@@ -2184,70 +2184,70 @@
 		path="C:/home/swan_data3d/demo/zekrom/tex/mu_eye.4.tga"
 	>
 		<bitmap size="512">
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd eede deee dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dded dddd cccd cccc dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dedd dddd 0ccc 0000 2000 0222 dddc
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd bbcc b999 2000 2222 2222 2222 ddd0
-			dddd dddd dddd dddd dddd eedd ddde dddd
-			8ccc 4488 8844 2200 2222 2222 2222 ddd0
-			dddd dddd dddd eedd ddde cddd ccdc bccc
-			4bcb 4444 8444 2200 2222 2222 2222 dddc
-			dddd eddd deee ccdd 9bcc 8888 bbc8 bbbb
-			49cb 7777 8447 2220 2222 2222 0222 dddc
-			dddd cddd 00cc 0000 4880 4444 bbb4 bbbb
-			78cb 7777 4477 2220 3222 3333 0233 ddde
-			dddd 000d 2222 0222 4480 7744 bbb7 bbbb
-			74bb 7777 4477 3222 3333 3333 c233 ddde
-			dddd 200c 2222 0222 4480 7777 bb87 bbbb
-			64bb 6666 4776 3322 3333 3333 d033 dddd
-			dddd 200c 2222 2222 7480 7777 9b47 9999
-			6799 6666 4766 3322 1333 1111 e033 dddd
-			dddd 200d 2222 2222 7480 6677 9876 9999
-			6689 6666 4766 1332 1111 1111 ec21 dddd
-			dddd 20ce 2222 2222 7482 6667 9466 9999
-			6649 6666 4766 1132 1111 1111 de03 dddd
-			dddd 20dd 3322 3333 7422 6666 4666 9999
-			5564 5555 4766 1133 1111 1111 dec3 dddd
-			dddd 0ced 3322 3333 7423 5666 6555 7447
-			5556 5555 2476 1113 1111 1111 ddd2 dddd
-			dddd 0edd 3332 3333 7233 5567 5555 5665
-			5555 5555 3476 1113 1111 3111 dde0 dddd
-			dddd dedd 3330 1111 4233 5567 5555 5555
-			5555 6555 3376 1111 1111 3111 ddec dddd
-			dddd eddd 332c 1111 2331 5677 5555 5555
-			5555 6655 1347 1111 1111 2311 dddd dddd
-			dddd dddd 330e 1111 3311 6674 5555 5555
-			5555 7665 1334 1111 1111 c311 ddde dddd
-			dddd dddd 30dd 1113 3111 6743 5556 5555
-			5555 4766 1133 1111 1111 d231 dddd dddd
-			dddd dddd 2ded 1133 1111 7433 6667 5555
-			6655 3476 1113 1111 1111 e031 dddd dddd
-			dddd dddd cedd 1332 1111 3331 6774 6666
-			7766 3344 1111 1111 1111 dd23 dddd dddd
-			dddd dddd eddd 1330 1111 3111 4433 7777
-			4477 1333 1111 1111 3111 de03 dddd dddd
-			dddd dddd dddd 330e 1111 1111 3333 4443
-			3333 1113 1111 1111 3311 ded2 dddd dddd
-			dddd dddd dddd 30de 1113 1111 3311 3333
-			1333 1111 1111 1111 2333 ddec dddd dddd
-			dddd dddd dddd 0ded 1333 1111 1111 3331
-			1113 1111 1111 3311 b233 ddde dddd dddd
-			dddd dddd dddd dedd 3320 1113 1111 1111
-			1111 3311 3333 3333 ec02 dddd dddd dddd
-			dddd dddd dddd eddd 220d 3333 3333 3333
-			3333 3333 2222 c002 deed dddd dddd dddd
-			dddd dddd dddd dddd 0cdd 0000 0000 0000
-			0000 cccb dddc eeed ddde dddd dddd dddd
-			dddd dddd dddd dddd eedd eeee eeee eeee
-			eeee eeee deee dddd dddd dddd dddd dddd
-			ddde dddd dddd dddd dddd eedd dedd ddee
-			dddd dddd dddd dddd dddd dddd dddd eddd
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee 4eee e444 eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee 555e 0005 0000 eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee 5eee a000 aaaa 7aaa a777 eee0
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			5eee 3300 3222 7aaa 7777 7777 7777 eeea
+			eeee eeee eeee eeee eeee 4eee eeee 555e
+			1000 bb11 11bb 77aa 7777 7777 7777 eeea
+			eeee eeee eeee 44ee eee4 055e 0050 3000
+			b303 bbbb 1bbb 77aa 7777 7777 7777 eee0
+			eeee 4eee e444 005e 2300 1111 3301 3333
+			b203 6666 1bb6 777a 7777 7777 a777 eee0
+			eeee 05ee aa00 aaaa b11a bbbb 333b 3333
+			6103 6666 bb66 777a 9777 9999 a799 eeee
+			eeee aaa5 7777 a777 bb1a 66bb 333b 3333
+			6b33 6666 bb66 9777 9999 9999 0799 eee4
+			eeee 7aa0 7777 a777 bb1a 6666 3316 3333
+			db33 dddd b66d 9977 9999 9999 ea99 eeee
+			eeee 7aa0 7777 7777 6b1a 6666 23bd 2222
+			d622 dddd b6dd 9977 8999 8888 4a99 eeee
+			eeee 7aae 7777 7777 6b1a dd66 216d 2222
+			dd12 dddd b6dd 8997 8888 8888 4078 eeee
+			eeee 7a0e 7777 7777 6b17 ddd6 2bdd 2222
+			ddb2 dcdd b6dd 8897 8888 8888 eea9 eeee
+			eeee 7aee 9977 9999 6b77 dddd bddd 2222
+			ccdb cccc b6dd 8899 8888 8888 e409 eeee
+			eeee a04e 9977 9999 6b79 cddd dccc 6bb6
+			cccd cccc 7b6d 8889 8888 8888 eee7 eeee
+			eeee a4ee 9997 9999 6799 ccd6 cccc cdcc
+			cccc cccc 9b6d 8889 8888 9888 ee4a eeee
+			eeee eeee 999a 8888 b799 ccd6 cccc cccc
+			cccc dccc 996d 8888 8888 9888 ee40 eeee
+			eeee 4eee 9970 8888 7998 cd66 cccc cccc
+			cccc ddcc 89b6 8888 8888 7988 eeee eeee
+			eeee eeee 99a4 8888 9988 dd6b cccc cccc
+			cccc 6ddc 899b 8888 8888 0988 eee4 eeee
+			eeee eeee 9aee 8889 9888 d6b9 cccd cccc
+			cccc b6dd 8899 8888 8888 e798 eeee eeee
+			eeee eeee 754e 8899 8888 6b99 ddd6 cccc
+			ddcc 9b6d 8889 8888 8888 4a98 eeee eeee
+			eeee eeee 04ee 8997 8888 9998 d66b dddd
+			66dd 99bb 8888 8888 8888 e579 eeee eeee
+			eeee eeee 4eee 899a 8888 9888 bb99 6666
+			bb66 8999 8888 8888 9888 e4a9 eeee eeee
+			eeee eeee eeee 99ae 8888 8888 9999 bbb9
+			9999 8889 8888 8888 9988 eee7 eeee eeee
+			eeee eeee eeee 9a5e 8889 8888 9988 9999
+			8999 8888 8888 8888 7999 ee40 eeee eeee
+			eeee eeee eeee a54e 8999 8888 8888 9998
+			8899 8888 8888 9988 3799 eee4 eeee eee5
+			eeee eeee eeee 54ee 997a 8889 8888 9988
+			9999 9999 9999 9999 40a7 eeee 5eee eee5
+			eeee eeee eeee 4eee 77a5 9999 9999 9999
+			9999 9999 7777 0aa7 e445 eeee 5eee eee5
+			eeee eeee eeee eeee a0ee aaaa aaaa aaaa
+			aaaa 0003 e550 444e eee4 eeee eeee eeee
+			eeee eeee eeee eeee 44ee 4444 44ee 4444
+			4444 4444 ee44 eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee 55ee eee5 eeee eeee eeee
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="mu_eye.5"
@@ -2258,70 +2258,70 @@
 		path="C:/home/swan_data3d/demo/zekrom/tex/mu_eye.5.tga"
 	>
 		<bitmap size="512">
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd eedd deee dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd deed dddd cccd cccc dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd 0ccc 0000 2000 0222 dddc
-			dddd dddd dddd dddd dddd dddd dddd eeed
-			cdde 0ccc 0000 2200 2222 2222 2222 ddd0
-			dddd dddd dddd dddd dddd eedd deee cccd
-			0000 2200 2222 2222 2222 2222 2222 ddd0
-			dddd dddd dddd eedd ddee ccdd 00cc 2200
-			2222 2222 2222 2222 2222 2222 2222 dddc
-			dddd eddd deee ccdd 000c 2000 2222 2222
-			2222 2222 2222 2222 2222 2222 0222 dddc
-			dddd cddd 00cc 2000 2222 2222 2222 2222
-			2222 2222 2222 2222 3222 3333 0233 ddde
-			dddd 000d 2222 2222 2222 2222 2222 2222
-			2222 2222 3222 3333 3333 3333 c233 ddde
-			dddd 200c 2222 2222 2222 2222 2222 2222
-			2222 3333 3333 3333 3333 3333 d033 dddd
-			dddd 200c 2222 2222 2222 2222 2222 2222
-			3322 3333 3333 3333 1333 1111 e033 dddd
-			dddd 200d 2222 2222 2222 2222 2222 2222
-			3222 3333 3333 1111 1111 1111 ec21 dddd
-			dddd 20ce 2222 3333 3333 2233 4222 4444
-			2224 1333 1111 1111 1111 1111 de03 dddd
-			dddd 20dd 3322 3333 3333 2333 7744 7777
-			4477 1332 1111 1111 1111 1111 dec3 dddd
-			dddd 0ced 3322 1133 3111 4433 6677 6666
-			7766 3324 1111 1111 1111 1111 ddd2 dddd
-			dddd 0edd 3332 1113 3311 7743 5666 5555
-			6665 3347 1113 1111 1111 3111 dde0 dddd
-			dddd dedd 3330 1111 3311 6674 5555 5555
-			6555 3776 1113 1111 1111 3111 ddec dddd
-			dddd eddd 332c 1111 4331 5667 5555 5555
-			5555 7765 1133 1111 1111 2311 dddd dddd
-			dddd dddd 330e 1111 7433 5566 5555 5555
-			5555 7655 1334 1111 1111 c311 ddde dddd
-			dddd dddd 30dd 1113 6733 5556 5555 5555
-			5555 6555 1347 1111 1111 d231 dddd dddd
-			dddd dddd 2ded 3133 6743 5555 6555 6744
-			5555 6555 3347 1111 1111 e031 dddd dddd
-			dddd dddd cedd 3332 6643 5555 8755 8888
-			5556 5555 3476 1111 1111 dd23 dddd dddd
-			dddd dddd eddd 3320 5674 5555 8455 8888
-			5554 5555 3476 1111 3111 de03 dddd dddd
-			dddd dddd dddd 220d 5674 5555 8875 8888
-			5578 5555 3476 1113 3311 ded2 dddd dddd
-			dddd dddd dddd 20dd 5674 5555 8845 8888
-			5588 5555 2476 1133 2333 ddec dddd dddd
-			dddd dddd dddd 0ded 6674 5555 8885 8888
-			5688 5555 2476 3333 b233 ddde dddd dddd
-			dddd dddd dddd dedd 6749 5556 8886 8888
-			5798 6555 2476 3333 ec02 dddd dddd dddd
-			dddd dddd dddd eddd 748d 6666 9987 9999
-			6499 7666 0847 c000 deed dddd dddd dddd
-			dddd dddd dddd dddd 8bdd 4488 bbb8 cccc
-			8bcc b998 ddcc eeed ddde dddd dddd dddd
-			dddd dddd dddd dddd eedd eeee ddde dddd
-			eedd eeee ddee dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee 4eee e444 eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			5eee eee5 eeee eeee 555e 0005 0000 eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee 55ee a000 aaaa 7aaa a777 eee0
+			eeee eeee eeee eeee eeee eeee eeee 44ee
+			05e4 a000 aaaa 77aa 7777 7777 7777 eeea
+			eeee eeee eeee eeee eeee 44ee e444 000e
+			aaaa 77aa 7777 7777 7777 7777 7777 eeea
+			eeee eeee eeee 44ee ee44 005e aa00 77aa
+			7777 7777 7777 7777 7777 7777 7777 eee0
+			eeee 4eee e444 005e aaa0 7aaa 7777 7777
+			7777 7777 7777 7777 7777 7777 a777 eee0
+			eeee 05ee aa00 7aaa 7777 7777 7777 7777
+			7777 7777 7777 7777 9777 9999 a799 eeee
+			eeee aaa5 7777 7777 7777 7777 7777 7777
+			7777 7777 9777 9999 9999 9999 0799 eee4
+			eeee 7aa0 7777 7777 7777 7777 7777 7777
+			7777 9999 9999 9999 9999 9999 ea99 eeee
+			eeee 7aa0 7777 7777 7777 7777 7777 7777
+			9977 9999 9999 9999 8999 8888 4a99 eeee
+			eeee 7aae 7777 7777 7777 7777 7777 7777
+			9777 9999 9999 8888 8888 8888 4078 eeee
+			eeee 7a0e 7777 9999 9999 7779 b777 bbbb
+			777b 9999 8888 8888 8888 8888 eea9 eeee
+			eeee 7aee 9977 9999 9999 7779 66bb 6666
+			bb66 9997 8888 8888 8888 8888 e409 eeee
+			eeee a04e 9977 9999 9999 bb79 dd66 dddd
+			66dd 997b 8888 8888 8888 8888 eee7 eeee
+			eeee a4ee 9997 8889 9999 66b7 cddd cccc
+			dddc 99b6 8889 8888 8888 9888 ee4a eeee
+			eeee eeee 999a 8888 7998 dd6b cccc cccc
+			dccc 966d 8889 8888 8888 9888 ee40 eeee
+			eeee 4eee 9970 8888 b998 cdd6 cccc cccc
+			cccc 66dc 8899 8888 8888 7988 eeee eeee
+			eeee eeee 99a4 8888 6b99 ccdd cccc cccc
+			cccc 6dcc 899b 8888 8888 0988 eee4 eeee
+			eeee eeee 9aee 8889 d699 cccd cccc cccc
+			cccc dccc 89b6 8888 8888 e798 eeee eeee
+			eeee eeee 754e 9999 d6b9 cccc dccc d6bb
+			cccc dccc 99b6 8888 8888 4a98 eeee eeee
+			eeee eeee 04ee 9997 ddb9 cccc 16cc 1111
+			cccd cccc 9b6d 8888 8888 e579 eeee eeee
+			eeee eeee 4eee 997a cd67 cccc 1bcc 1111
+			cccb cccc 9b6d 8888 9888 e4a9 eeee eeee
+			eeee eeee eeee 77ae cd6b cccc 116c 1111
+			cc61 cccc 9b6d 8889 9988 eee7 eeee eeee
+			eeee eeee eeee 7a5e cd6b cccc 11bc 1111
+			cc11 cccc 7b6d 8899 7999 ee40 eeee eeee
+			eeee eeee eeee a54e dd6b cccc 111c 1111
+			cd11 cccc 7b6d 9999 3799 eee4 eeee eee5
+			eeee eeee eeee eeee d6b2 cccd 111d 1111
+			c621 dddd 7b6d 9999 40a7 eeee 5eee eee5
+			eeee eeee eeee eeee 6b15 dddd 2216 2222
+			db22 6ddd a1b6 0aaa e445 eeee 5eee eee5
+			eeee eeee eeee eeee 13ee bb11 3331 0000
+			1300 3221 e500 444e eee4 eeee eeee eeee
+			eeee eeee eeee eeee 44ee 4444 eee4 eeee
+			44ee 4444 ee44 eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee 55ee eee5 eeee eeee eeee
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="mu_head"
@@ -2943,16 +2943,16 @@
 		2528 18c5 2949 1ce7 1084 2d6a 0c63 0841
 	</tex_palette>
 	<tex_palette index="2" name="mu_eye.1_pl" color_size="16">
-		0c8a 2139 14af 1cf4 318e 7bde 6318 4a52
-		1ce7 18c6 14a5 1084 0c63 0842 0421 0000
+		0c63 1ce7 18c6 1084 0421 0842 4a52 14af
+		2139 1cf4 0c8a 318e 7bde 6318 0842 7fff
 	</tex_palette>
 	<tex_palette index="3" name="mu_eye.4_pl" color_size="16">
-		0c8a 2139 14af 1cf4 318e 7bde 6318 4a52
-		1ce7 18c6 14a5 1084 0c63 0842 0421 0000
+		0c63 1ce7 18c6 1084 0421 0842 4a52 14af
+		2139 1cf4 0c8a 318e 7bde 6318 0842 7fff
 	</tex_palette>
 	<tex_palette index="4" name="mu_eye.5_pl" color_size="16">
-		0c8a 2139 14af 1cf4 318e 7bde 6318 4a52
-		1ce7 18c6 14a5 1084 0c63 0842 0421 0000
+		0c63 1ce7 18c6 1084 0421 0842 4a52 14af
+		2139 1cf4 0c8a 318e 7bde 6318 0842 7fff
 	</tex_palette>
 	<tex_palette index="5" name="mu_head_pl" color_size="16">
 		35ac 318b 2108 1ce6 0c63 294a 1ce6 0421

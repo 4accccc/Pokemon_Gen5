@@ -151,10 +151,11 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_b_01_file_unit_bg_b01[] = {
 
 static const u16 res_kyuremu_union_b_01_file_bg02_b01[] = {
  NARC_data_demo3d_bg02_b01_nsbmd,
+ NARC_data_demo3d_bg02_b01_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_kyuremu_union_b_01_file_unit_bg02_b01[] = {
- { res_kyuremu_union_b_01_file_bg02_b01, 1 },
+ { res_kyuremu_union_b_01_file_bg02_b01, 2 },
 };
 
 ///==================================

@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2012-01-05T19:52:24" source="kyuremu_union_b_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-12T11:53:54" source="kyuremu_union_b_01_045.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="1015"
+	frame_size="1100"
 	tool_start_frame="1"
-	tool_end_frame="1015"
+	tool_end_frame="1100"
 	interpolation="frame"
 	compress_material="on" material_size="9 9"
 	frame_step_mode="2"
 	tolerance_color="2"
 />
 
-<mat_color_data size="1018">
+<mat_color_data size="1104">
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
@@ -71,7 +71,12 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 31 25
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 31 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
@@ -106,8 +111,7 @@
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
 	25 25 25 25 25 25 25 25 25 25
-	25 25 25 25 25 25 25 25 25 25
-	25 25 12 12 12 12 12 12 12 12
+	25 25 25 25 25 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
@@ -122,14 +126,19 @@
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
-	12 12 12 12 12 12 12 16
+	12 12 12 12 12 12 12 12 12 12
+	12 12 12 12 12 12 12 12 12 12
+	12 12 12 12 12 12 12 12 12 12
+	12 12 12 12 12 12 12 12 12 12
+	12 12 12 12 12 12 12 12 12 12
+	12 12 12 16
 </mat_color_data>
 
 <mat_color_anm_array size="3">
 	<mat_color_anm index="0" material_name="mu_tail_blue_1">
-		<diffuse_r frame_step="2" data_size="508" data_head="0"/>
-		<diffuse_g frame_step="2" data_size="508" data_head="0"/>
-		<diffuse_b frame_step="2" data_size="508" data_head="0"/>
+		<diffuse_r frame_step="2" data_size="551" data_head="0"/>
+		<diffuse_g frame_step="2" data_size="551" data_head="0"/>
+		<diffuse_b frame_step="2" data_size="551" data_head="0"/>
 		<ambient_r frame_step="1" data_size="1" data_head="353"/>
 		<ambient_g frame_step="1" data_size="1" data_head="353"/>
 		<ambient_b frame_step="1" data_size="1" data_head="353"/>
@@ -139,12 +148,12 @@
 		<emission_r frame_step="1" data_size="1" data_head="353"/>
 		<emission_g frame_step="1" data_size="1" data_head="353"/>
 		<emission_b frame_step="1" data_size="1" data_head="353"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="508"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="551"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="mu_tail_gen_1">
-		<diffuse_r frame_step="2" data_size="508" data_head="0"/>
-		<diffuse_g frame_step="2" data_size="508" data_head="0"/>
-		<diffuse_b frame_step="2" data_size="508" data_head="0"/>
+		<diffuse_r frame_step="2" data_size="551" data_head="0"/>
+		<diffuse_g frame_step="2" data_size="551" data_head="0"/>
+		<diffuse_b frame_step="2" data_size="551" data_head="0"/>
 		<ambient_r frame_step="1" data_size="1" data_head="0"/>
 		<ambient_g frame_step="1" data_size="1" data_head="0"/>
 		<ambient_b frame_step="1" data_size="1" data_head="0"/>
@@ -154,22 +163,22 @@
 		<emission_r frame_step="1" data_size="1" data_head="353"/>
 		<emission_g frame_step="1" data_size="1" data_head="353"/>
 		<emission_b frame_step="1" data_size="1" data_head="353"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="508"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="551"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="mu_tail_white_1">
-		<diffuse_r frame_step="2" data_size="508" data_head="509"/>
-		<diffuse_g frame_step="2" data_size="508" data_head="509"/>
-		<diffuse_b frame_step="2" data_size="508" data_head="509"/>
-		<ambient_r frame_step="1" data_size="1" data_head="508"/>
-		<ambient_g frame_step="1" data_size="1" data_head="508"/>
-		<ambient_b frame_step="1" data_size="1" data_head="508"/>
+		<diffuse_r frame_step="2" data_size="551" data_head="552"/>
+		<diffuse_g frame_step="2" data_size="551" data_head="552"/>
+		<diffuse_b frame_step="2" data_size="551" data_head="552"/>
+		<ambient_r frame_step="1" data_size="1" data_head="551"/>
+		<ambient_g frame_step="1" data_size="1" data_head="551"/>
+		<ambient_b frame_step="1" data_size="1" data_head="551"/>
 		<specular_r frame_step="1" data_size="1" data_head="353"/>
 		<specular_g frame_step="1" data_size="1" data_head="353"/>
 		<specular_b frame_step="1" data_size="1" data_head="353"/>
 		<emission_r frame_step="1" data_size="1" data_head="353"/>
 		<emission_g frame_step="1" data_size="1" data_head="353"/>
 		<emission_b frame_step="1" data_size="1" data_head="353"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="1017"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="1103"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
