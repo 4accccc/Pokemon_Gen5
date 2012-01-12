@@ -139,19 +139,13 @@ EVENT_START ev_scene_c12gym0201_start
   _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_swleader1_03,C12GYM0201_SWLEADER1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+   //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  
   //アニメ：持ち場に移動
   _OBJ_ANIME( C12GYM0201_BOY2_01, anm_staystep_l )
-  _OBJ_ANIME_AUTO( C12GYM0201_GIRL2_01, 13, 9, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
-  
-  //アニメ：方向を整える
-  _OBJ_ANIME( C12GYM0201_GIRL2_01, anm_staystep_r)
-  _OBJ_ANIME_WAIT()
-  
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (24)
-  
-  //チェレン主人公に隣接
+  _OBJ_ANIME_AUTO( C12GYM0201_GIRL2_01, 13, 12, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 20 )
   _OBJ_ANIME_AUTO( C12GYM0201_SWLEADER1_01, 15, 21, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
@@ -167,10 +161,12 @@ EVENT_START ev_scene_c12gym0201_start
   
   //チェレン退場
   _OBJ_ANIME_AUTO( C12GYM0201_SWLEADER1_01, 15, 11, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME( C12GYM0201_GIRL2_01, anm_staystep_r)
   _OBJ_ANIME_WAIT()
   
   //チェレン持ち位置にワープ
   _OBJ_POS_CHANGE( C12GYM0201_SWLEADER1_01, 15, 2, 2, DIR_DOWN )
+  _OBJ_POS_CHANGE( C12GYM0201_GIRL2_01, 13, 0, 9, DIR_RIGHT )
   
   //========================================/
   
@@ -393,6 +389,12 @@ EVENT_START ev_c12gym0201_boy2_01
     //まだ勝利していない
     IF $SCWK_ANSWER ==  FALSE THEN
 
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_01 , C12GYM0201_BOY2_01 )
+      _BALLOONWIN_CLOSE()
+
 	//カメラ操作　画面中央へ
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
@@ -417,14 +419,7 @@ EVENT_START ev_c12gym0201_boy2_01
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
       _OBJ_ANIME_WAIT()
 
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-      //トレーナー曲再生
-      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
-      
-      //
-      _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_01 , C12GYM0201_BOY2_01 )
-      _BALLOONWIN_CLOSE()
+	 _CAMERA_WAIT_MOVE()	//カメラ移動待ち
       
       //一歩前へ
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
@@ -519,11 +514,19 @@ EVENT_START ev_c12gym0201_girl2_01
   
   //ジム未クリア
     IF $SCWK_TEMP0 == 0 THEN
+    
     //既に戦ったかチェック
     _TRAINER_FLAG_CHECK( TRID_MINI_15, SCWK_ANSWER )
     
     //まだ勝利していない
     IF $SCWK_ANSWER ==  FALSE THEN
+
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_MINI_15 )
+
+      //
+     _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_01 , C12GYM0201_GIRL2_01 )
+     _BALLOONWIN_CLOSE()
 
 	//カメラ操作　画面中央へ
 	_CAMERA_START()		//カメラ操作開始
@@ -550,13 +553,6 @@ EVENT_START ev_c12gym0201_girl2_01
       _OBJ_ANIME_WAIT()
       
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-      //トレーナー曲再生
-      _TRAINER_BGM_SET(  TRID_MINI_15 )
-      
-      //
-      _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_01 , C12GYM0201_GIRL2_01 )
-      _BALLOONWIN_CLOSE()
 
       //一歩前へ
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )

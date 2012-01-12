@@ -127,9 +127,11 @@ EVENT_START	ev_wbt_reception_l
 
   _TALK_OBJ_START()
 
-  IF $WK_SCENE_D05R0101 == 1 THEN
+  IF $WK_SCENE_D05R0101 == 3 THEN
     //しばらくこの受付では参加できないことを知らせるメッセージ
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19a, SCWK_TARGET_OBJID, POS_DL )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ELSE
     //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
     _WBT_SYSTEM_START()

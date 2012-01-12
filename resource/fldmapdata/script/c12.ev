@@ -1156,6 +1156,7 @@ EVENT_START		ev_scene_c12_townmap_01
   _OBJ_DEL(C12_SWBELL_01)
   
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //ママ：そうね！
