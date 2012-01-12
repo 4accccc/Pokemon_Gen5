@@ -258,8 +258,8 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   //チェレン、ライバル非表示（外に出ると非表示に）
   _FLAG_SET( FV_D05R0101_SWLEADER1_01 )
   _FLAG_SET( FV_D05R0101_SWRIVAL_01 )
-  //アクロマもこのタイミングで非表示に
-  _FLAG_SET( FV_D05R0101_SWBOSS_01 )
+  //D05R0101アクロマ表示に
+  _FLAG_RESET( FV_D05R0101_SWBOSS_01 )
   //D05 プラズマ団イベントSCENE_CHANGE有効
   $WK_SCENE_D05 = 2
   //プラズマフリゲート・現在地対応
@@ -272,7 +272,12 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_WBT_2 )
   //ローカルライブキャスター・チェレン通話状態を変更（D27搭乗一回目到達まで）
   _PERSON_STATE_SET_CHELEN( CHELEN_STATE_WBT_2 )
+  //D05R0101 イベント進行
+  $WK_SCENE_D05R0101 = 2
   //========================================//
+  
+  //アクロマ動作モデル生成
+  _OBJ_ADD( D05R0101_SWBOSS_01 )
 
 EVENT_END
 

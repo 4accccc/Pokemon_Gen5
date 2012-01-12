@@ -52,6 +52,7 @@ _EVENT_DATA    ev_bg_c05_board_06
 _EVENT_DATA    ev_c05_poke20_01
 _EVENT_DATA    ev_c05_stopper_01
 _EVENT_DATA    ev_pos_c05_sage6_01
+_EVENT_DATA    ev_pos_c05_stopper_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -88,7 +89,7 @@ INIT_EVENT_START   ev_zone_c05
     _SXY_MOVE_NPC_POS( C05_SWRIVAL_01, DIR_DOWN , 211, 0, 403 )
   //ジムクリア後
   ELSIF $WK_SCENE_C05 == 4 THEN
-    _SXY_MOVE_NPC_POS( C05_SWRIVAL_01, DIR_UP , 212, 0, 405 )
+    _SXY_MOVE_NPC_POS( C05_SWRIVAL_01, DIR_LEFT , 213, 0, 405 )
   ENDIF
   
 INIT_EVENT_END
@@ -107,24 +108,25 @@ INIT_EVENT_END
 EVENT_START		ev_scene_c05_swleader5_01
   
   //アニメ：ライバル「！」
-  _OBJ_ANIME( C05_SWRIVAL_01, anm_common_gyoe )
+  _OBJ_ANIME( C05_SWRIVAL_01, anm_gym_swrival_look_player )
+  _TIME_WAIT( 16 )
   //アニメ：主人公隣接
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 213, 402, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  
-  //アニメ：ライバル隣接
-  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 212, 404, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 213, 403, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( C05_SWLEADER5_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //ライバル名タグに代入
   _RIVAL_NAME(1)
   
   //ライバル：オマエも
-  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_05,C05_SWRIVAL_01, POS_DL ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_05,C05_SWRIVAL_01, POS_UR ) 
   _MSGWIN_CLOSE()
   
   //アニメ：ヤーコン主人公とライバルを見比べる
   _OBJ_ANIME( C05_SWLEADER5_01, anm_swleader5_look_player )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( C05_SWRIVAL_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ヤーコン：なんだ
@@ -132,7 +134,7 @@ EVENT_START		ev_scene_c05_swleader5_01
   _MSGWIN_CLOSE()
   
   //ライバル：あのさ
-  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_06,C05_SWRIVAL_01, POS_DL ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_06,C05_SWRIVAL_01, POS_DR ) 
   _MSGWIN_CLOSE()
   
   //ヤーコン：なんにだって
@@ -140,7 +142,7 @@ EVENT_START		ev_scene_c05_swleader5_01
   _MSGWIN_CLOSE()
   
   //ライバル：ふうん
-  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_07,C05_SWRIVAL_01, POS_DL ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_07,C05_SWRIVAL_01, POS_DR ) 
   _MSGWIN_CLOSE()
 
   //ヤーコン：きいたことが　ないか？
@@ -149,21 +151,20 @@ EVENT_START		ev_scene_c05_swleader5_01
   
   //アニメ：ヤーコン退場
   _OBJ_ANIME( C05_SWLEADER5_01, anm_swleader5_bye)
-  _TIME_WAIT(32)
-  _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_pl_look_rival )
-  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
   _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //ライバル：つよい　やつを
-  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_08,C05_SWRIVAL_01, POS_DL ) 
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_08,C05_SWRIVAL_01, POS_DR ) 
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル退場
-  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 202, 405, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 202, 405, FORCE_TYPE_NPC, 4, DIR_UD)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ライバル・ヤーコン動作OBJ削除
@@ -200,18 +201,29 @@ EVENT_END
 //--------------------------------------------------------------------
 //	☆共通処理：その場歩き
 //--------------------------------------------------------------------
+_ANIME_LABEL	anm_gym_swrival_look_player
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader5_look_player
+  _ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	SWLEADER5：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader5_bye
-  _ANIME_DATA	AC_WALK_L_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_WALK_L_8F,6
   _ANIME_DATA	ACMD_END,0
   
@@ -240,6 +252,12 @@ EVENT_START		ev_pos_c05_hakaim_01
   //アニメ：主人公左を向く
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
     _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //自転車に乗ってるなら歩行状態へ
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
   ENDIF
   
   //ネオプラズマM01：いまさら
@@ -454,13 +472,9 @@ EVENT_START		ev_pos_c05_sage6_01
   _OBJ_ANIME( C05_SAGE6_01,anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
-  /*
-  //カメラ操作　ベル追従
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,12943360,131103,25972736,56 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  */
+  //元プラズマ団：こっちです！こっち！
+  _BALLOONWIN_OBJMSG_POS( msg_c05_hakaim_07,C05_HAKAIM_01, POS_UR )
+  _MSGWIN_CLOSE()
   
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
@@ -674,7 +688,7 @@ ev_c05_sage6_btl:
   //予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C05R0501_SAGE6_01 )
 	
-	//C12PC0101マップチェンジ
+	//C05R0501マップチェンジ
 	_MAP_CHANGE( ZONE_ID_C05R0501, 7, 25, DIR_UP )
   
 _RET
@@ -1076,6 +1090,42 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c05_stopper_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			ストッパー：POS起動			  */
+/**************************************************************/
+EVENT_START		ev_pos_c05_stopper_01
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //主人公にふりむき
+  IF $LCW_POSZ == 397 THEN
+    _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_u )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  
+  ELSE
+  
+    _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_d )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+    
+  ENDIF
+  
+  //ストッパー：ジムバッジを
+  _BALLOONWIN_OBJMSG_POS( msg_c05_stop_02,C05_STOPPER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //主人公1歩戻る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C05_STOPPER_01 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
 EVENT_END
 
 //--------------------------------------------------------------------

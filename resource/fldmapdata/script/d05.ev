@@ -324,6 +324,10 @@ EVENT_START		ev_scene_d05_swplazma_01
   _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_02,D05_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //？？？：およしなさい
+  _PLAINWIN_MSG_UP( msg_d05_swboss_04 )
+  _MSGWIN_CLOSE()
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
@@ -537,7 +541,7 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   _FLAG_RESET( FV_R06R0101_SWLEADER1_01 )
   
   //D05R0101 WBTチュートリアル優勝時→WBT通常状態に
-  $WK_SCENE_D05R0101 = 2
+  $WK_SCENE_D05R0101 = 3
   
   //R06異常気象イベントPOS有効
   $WK_SCENE_R06_SWLEADER1 = 1

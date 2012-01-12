@@ -34,5 +34,6 @@
 #define SCRID_C05_POKE20_01 (27)
 #define SCRID_C05_STOPPER_01 (28)
 #define SCRID_POS_C05_SAGE6_01 (29)
+#define SCRID_POS_C05_STOPPER_01 (30)
 
 #endif //_C05_DEF_H_

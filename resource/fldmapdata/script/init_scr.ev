@@ -158,6 +158,7 @@ init_flags:
   //D05R0101：WBT内部
   _FLAG_SET( FV_D05R0101_SWLEADER2_01 ) //ホミカ
   _FLAG_SET( FV_D05R0101_SWRIVAL_01 )   //ライバル
+  _FLAG_SET( FV_D05R0101_SWBOSS_01 )   //アクロマ
   
   //R06
   
