@@ -166,10 +166,10 @@ INIT_EVENT_START ev_init_c08
   //誘導イベント起動（１）
   IF $WK_SCENE_C08_LEADER7 == 2  && $LCWK_VERSION == VERSION_W2 THEN
     _DEBUG_PRINT_WK( 0 )
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 167, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 169, DIR_DOWN )
   ELSIF $WK_SCENE_C08_LEADER7 == 2  && $LCWK_VERSION == VERSION_B2 THEN
     _DEBUG_PRINT_WK( 1 )
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 169, DIR_DOWN )
   //誘導イベント起動（２）ホワイトver
   ELSIF $WK_SCENE_C08_LEADER7 == 3 && $LCWK_VERSION == VERSION_W2 THEN
     _DEBUG_PRINT_WK( 2 )
@@ -344,9 +344,9 @@ EVENT_START   ev_scene_c08_guide_01
   
   //OBJ配置変更
   IF $LCWK_VERSION == VERSION_W2 THEN
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 167, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 169, DIR_DOWN )
   ELSIF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 169, DIR_DOWN )
   ENDIF
   
   //========================================//
@@ -1593,6 +1593,8 @@ EVENT_START   ev_c08_swleader7_01
   
   //主人公名格納
   _PLAYER_NAME( 0 )
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
 
   //ヴィオ戦前（振り向きなし一言メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA <= 4 THEN
@@ -1601,7 +1603,7 @@ EVENT_START   ev_c08_swleader7_01
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   //D10後～クリアまで
-  ELSIF $WK_SCENE_D10R0401_SWSAGE1_01 == 4 THEN
+  ELSIF $SCWK_TEMP0 == 1 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_25 )
   //ヴィオ戦条件を満たしている
   ELSIF $WK_SCENE_C08_SWPLAZMA == 5 && $WK_SCENE_C08_NINJA == 0 THEN
@@ -1623,7 +1625,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c08_swsage7_01
     
-    /*
     //ハイリンク通信ブロック処理
     _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
     
@@ -1648,7 +1649,7 @@ EVENT_START   ev_c08_swsage7_01
     
     //バージョンを取得
     _GET_ROM_VERSION( LCW_VERSION )
-    */
+    
     //暗転処理
     _BLACK_OUT_SLOW()
     _DISP_FADE_END_CHECK()
@@ -1658,12 +1659,10 @@ EVENT_START   ev_c08_swsage7_01
       _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 145, DIR_DOWN )
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d)
       _OBJ_ANIME_WAIT()
-      //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 403, 0, 145, DIR_DOWN )
     ELSE
       _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 145, DIR_DOWN )
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d)
       _OBJ_ANIME_WAIT()
-      //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 404, 0, 145, DIR_DOWN )
     ENDIF
 
     //========================================//
@@ -1694,7 +1693,7 @@ EVENT_START   ev_c08_swsage7_01
     _CALL ev_c08_ninja_comming
     
     //ハイリンク通信ブロック処理終了
-    //_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+    _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
     
 EVENT_END
 
