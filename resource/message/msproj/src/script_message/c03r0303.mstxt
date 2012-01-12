@@ -206,12 +206,12 @@
 			Language="JPN">
 			<Text>かったときは　ポケモンの　おかげ
 まけたときは　じぶんの　せい▽
-そう　かんがえると　つよくなれるよ▼
-ま　それよりも　だいじなのは
-なんでも　たのしむことだね！</Text>
+そう　かんがえると　つよくなれるかな▼
+ま　それよりも　なによりも
+だいじなのは　たのしむことだね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:07:07" />
+				Time="2012-01-12T06:12:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -221,12 +221,12 @@
 			Language="JPN_KANJI">
 			<Text>勝利は　ポケモンの　おかげ
 敗北は　自分の　責任▽
-そう　考えると　強くなれるよ▼
-ま　それよりも　大事なのは
-なんでも　楽しむことだね！</Text>
+そう　考えると　強くなれかな▼
+ま　それよりも　なによりも
+大事なのは　楽しむことだね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:12:25" />
+				Time="2012-01-12T06:12:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -269,13 +269,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よわい　ポケモンを　そだてるなら
-がくしゅうそうちを　つかうと　いい▼
+がくしゅうそうちを　つかうと　いいよ▼
 がくしゅうそうちを　もたせた
 ポケモンは　たたかわなくても▽
 けいけんちを　わけてもらえるからね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:08:06" />
+				Time="2012-01-12T06:10:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -284,13 +284,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>弱い　ポケモンを　育てるなら
-がくしゅうそうちを　使うと　いい▼
+がくしゅうそうちを　使うと　いいよ▼
 がくしゅうそうちを　持たせた
 ポケモンは　戦わなくても▽
 経験値を　わけてもらえるからね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:08:39" />
+				Time="2012-01-12T06:10:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

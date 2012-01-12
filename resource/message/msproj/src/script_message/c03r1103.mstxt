@@ -37,10 +37,10 @@
 			<Comment>♀
 ・メッセージ後、その場ジャンプ
 ・続けてinventor_02
-※swanで新規作成</Comment>
+※swanで新規作成/移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T03:14:52" />
+				Time="2012-01-12T06:39:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -109,10 +109,10 @@
 			Language="JPN">
 			<Comment>♀
 ・続けてinventor_03
-※swanで新規作成</Comment>
+※swanで新規作成/移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:43:05" />
+				Time="2012-01-12T06:39:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -181,10 +181,10 @@
 			Language="JPN">
 			<Comment>♀
 ・続けてinventor_04
-※swanで新規作成</Comment>
+※swanで新規作成/移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:43:09" />
+				Time="2012-01-12T06:39:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -232,12 +232,12 @@
 げんじつと　なっているのよ！！▼
 ゲームシンクって　すごいでしょ！
 アナタも　レポートを　おくってみてね▼
-くわしいことは　おくの
-パソコンに　まとめているから▽
-よければ　チェックしてね！</Text>
+くわしいことは　あたしの
+じょしゅが　まとめているから▽
+よければ　はなしかけてみてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:43:48" />
+				Time="2012-01-12T06:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -249,19 +249,19 @@
 眠らせた　ポケモンは▽
 寝ている　あいだに　夢をみるの▼
 で　ゲームシンクで　眠らせた
-ポケモンを　おこすと▼
+ポケモンを　起こすと▼
 その　ポケモンが　みた　夢は
 イッシュ地方の　中心に　ある▼
 [System:Color name="1" ]ハイリンク[/System:Color]という　空間で
 現実と　なっているのよ！！▼
 ゲームシンクって　すごいでしょ！
 アナタも　レポートを　送ってみてね▼
-詳しいことは　奥の
-パソコンに　まとめているから▽
-よければ　チェックしてね！</Text>
+詳しいことは　あたしの
+助手が　まとめているから▽
+よければ　話しかけてみてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:43:45" />
+				Time="2012-01-12T06:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -402,10 +402,10 @@
 			Language="JPN">
 			<Comment>♀
 ・ゲームシンク利用後
-※swanで新規作成</Comment>
+※swanで新規作成/移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:00:18" />
+				Time="2012-01-12T06:39:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -469,10 +469,10 @@
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
 　「ショウロのパソコン」に変更
-※swanで新規作成</Comment>
+※swanで新規作成/移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:07:23" />
+				Time="2012-01-12T06:39:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -872,10 +872,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・バトルボックス選択時</Comment>
+・ボックス選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:21:12" />
+				Time="2012-01-12T06:40:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1183,11 +1183,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい！
-かわいがって　あげてください！▼</Text>
+			<Text>カントーの　知り合いから
+譲ってもらった　イーブイです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:27:46" />
+				Time="2012-01-12T06:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1541,10 +1541,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたし　マコモさんの
-じょしゅを　つとめております▼</Text>
+助手を　務めております▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T12:02:27" />
+				Time="2012-01-12T06:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1607,10 +1607,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゆめの　けんきゅうで　なにか
-しりたいことは　ありますか？</Text>
+知りたいことは　ありますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T12:02:27" />
+				Time="2012-01-12T06:41:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1948,10 +1948,10 @@
 その　あいだに　みた　ゆめは▼
 イッシュちほうの　ちゅうしんに　ある
 [System:Color name="1" ]ハイリンク[/System:Color]という　くうかんで▽
-げんじつと　なっている　ようす……▼</Text>
+げんじつと　なっている　ようです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T12:04:05" />
+				Time="2012-01-12T06:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1967,10 +1967,10 @@
 その　あいだに　みた　夢は▼
 イッシュ地方の　中心に　ある
 [System:Color name="1" ]ハイリンク[/System:Color]という　空間で▽
-現実と　なっている　様子……▼</Text>
+現実と　なっている　ようです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T12:04:18" />
+				Time="2012-01-12T06:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

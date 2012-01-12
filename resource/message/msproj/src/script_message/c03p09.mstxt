@@ -568,10 +568,10 @@
 とつぜん　おきゃくさんが　さっとう！▼
 うれしい　ひめいで　キャー！
 にんきばくはつ！　ヒウンアイス▽
-なんこ　おかいあげ　ですか？</Text>
+いくつ　おかいあげ　ですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:42:20" />
+				Time="2012-01-12T06:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -586,10 +586,10 @@
 突然　お客さんが　殺到！▼
 うれしい　悲鳴で　キャー！
 人気爆発！　ヒウンアイス▽
-何個　お買い上げ　ですか？</Text>
+いくつ　お買い上げ　ですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:42:26" />
+				Time="2012-01-12T06:02:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -907,11 +907,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドキドキ！　チャンピオンが
+			<Text>ドキドキ！　チャンピオンも
 かってるなんて　イマドキじゃなーい？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:57:32" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T06:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -919,11 +919,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドキドキ！　チャンピオンが
+			<Text>ドキドキ！　チャンピオンも
 買ってるなんて　イマドキじゃなーい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:39:31" />
+				Time="2012-01-12T06:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1019,11 +1019,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むすめに　たのまれて　きたんだが
+			<Text>むすめに　たのまれたんだが
 こんなに　ならんでいるとは…！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:40:10" />
+				Time="2012-01-12T06:03:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1031,11 +1031,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>娘に　頼まれて　来たんだが
+			<Text>娘に　頼まれたんだが
 こんなに　並んでいるとは…！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:40:04" />
+				Time="2012-01-12T06:03:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1076,11 +1076,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは　ヒウンで　わだいの
-スィーツを　かうことが　できるんだよ▼
-きみも　かうために　ならぶかい？</Text>
+スィーツを　かうことが　できるんだよ▽
+きみも　ならぶかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:41:01" />
+				Time="2012-01-12T06:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -1089,11 +1089,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うん？　ここでは　ヒウンで　話題の
-スィーツを　買うことが　できるんだよ▼
-きみも　買うために　並ぶかい？</Text>
+スィーツを　買うことが　できるんだよ▽
+きみも　並ぶかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T03:00:24" />
+				Time="2012-01-12T06:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

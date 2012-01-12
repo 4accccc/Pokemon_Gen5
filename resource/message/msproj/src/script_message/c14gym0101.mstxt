@@ -640,7 +640,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ポケモンジムは
+			<Text>セイガイハの　ポケモンジムは
 はっぱに　のって　すいすいと▽
 すいめんを　すすんでくださいっす！▼
 もうひとつ　アドバイスっす！▼
@@ -651,7 +651,7 @@
 たいさく　してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:53:01" />
+				Time="2012-01-12T05:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -659,7 +659,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ポケモンジムは
+			<Text>セイガイハの　ポケモンジムは
 はっぱに　乗って　すいすいと▽
 水面を　進んでくださいっす！▼
 もうひとつ　アドバイスっす！▼
@@ -670,7 +670,7 @@
 対策してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:49:04" />
+				Time="2012-01-12T05:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

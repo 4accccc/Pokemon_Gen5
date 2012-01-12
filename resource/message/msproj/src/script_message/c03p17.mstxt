@@ -146,13 +146,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウソにも　２つ　あるんだよな▼
-ひとが　よろこぶ　ウソと
-ひとを　かなしませる　ウソ……▽
-いいたいこと　わかるよな？▼</Text>
+			<Text>……あんがと▼
+オレが　がっかり　しないように
+ウソを　つかなくても　いいんだぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:50:07" />
+				Time="2012-01-12T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,13 +159,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウソにも　２つ　あるんだよな▼
-人が　喜ぶ　ウソと
-人を　悲しませる　ウソ……▽
-いいたいこと　わかるよな？▼</Text>
+			<Text>……あんがと▼
+オレが　がっかり　しないように
+ウソを　つかなくても　いいんだぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:50:10" />
+				Time="2012-01-12T05:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -280,12 +278,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>となると　あとは……▼
+			<Text>となると　あと
+さがしていないのは……▼
 [Name:TrainerName ]！
 オマエの　ちから　かりるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:50:44" />
+				Time="2012-01-12T05:58:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,12 +292,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>となると　あとは……▼
+			<Text>となると　あと
+探していないのは……▼
 [Name:TrainerName ]！
 オマエの　力　借りるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:50:55" />
+				Time="2012-01-12T05:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

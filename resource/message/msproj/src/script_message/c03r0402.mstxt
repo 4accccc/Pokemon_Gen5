@@ -418,10 +418,11 @@
 			<Text>プログラムはね
 とにかく　かんがえ　くんで▽
 さいごに　いのる！▼
-うごけ！　うごけっ！　うごけーっ！</Text>
+うごけ！　うごけっ！
+うごけったら　うごけーっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T11:52:03" />
+				Time="2012-01-12T06:14:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -432,10 +433,11 @@
 			<Text>プログラムはね
 とにかく　考え　組んで▽
 最後に　祈る！▼
-動け！　動けっ！　動けーっ！</Text>
+動け！　動けっ！
+動けったら　動けーっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T11:52:18" />
+				Time="2012-01-12T06:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1001,10 +1003,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>すきな　ポケモンで
-かつのが　すきなんだよねー！▼</Text>
+かつのが　すきなんだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T05:09:34" />
+				Time="2012-01-12T06:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1013,10 +1015,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>好きな　ポケモンで
-勝つのが　好きなんだよねー！▼</Text>
+勝つのが　好きなんだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T05:09:48" />
+				Time="2012-01-12T06:15:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

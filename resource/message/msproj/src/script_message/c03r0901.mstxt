@@ -1133,7 +1133,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ありがとう▼
+			<Text>……メロエッタと
+あんたの　おかげだよ▼
 うまれこきょう……
 おさないころ……▼
 きのみあつめを　おえて
@@ -1141,7 +1142,7 @@
 おもいだしちゃったよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T10:06:30" />
+				Time="2012-01-12T06:25:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1149,7 +1150,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ありがとう▼
+			<Text>……メロエッタと
+あんたの　おかげだよ▼
 生まれ故郷……
 幼いころ……▼
 きのみあつめを　終えて
@@ -1157,7 +1159,7 @@
 思い出しちゃったよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T10:06:36" />
+				Time="2012-01-12T06:25:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

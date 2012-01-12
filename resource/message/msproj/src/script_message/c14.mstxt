@@ -1105,13 +1105,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うみべのほらあな　って　ごぞんじ？▼
+			<Text>うみべのどうけつ　って　ごぞんじ？▼
 ２１ばんすいどうを　くだれば
 みつかる　ほらあな　よ▼
 とおりぬければ　サザナミに　つくわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T11:20:49" />
+				Time="2012-01-12T05:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2350,10 +2350,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふああああ……
-きょうは　にちようび　じゃったかの？</Text>
+にちようびは　きょう　じゃったかの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:10:02" />
+				Time="2012-01-12T05:32:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2362,10 +2362,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふああああ……
-今日は　日曜日じゃったかの？</Text>
+日曜日は　今日じゃったかの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:10:10" />
+				Time="2012-01-12T05:32:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
