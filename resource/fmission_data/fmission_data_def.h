@@ -31,9 +31,9 @@ typedef enum{
 //=========================================
 typedef enum{
   FMISSION_TBONUS_0,  ///<‚È‚µ
-  FMISSION_TBONUS_10,  ///<10•b
-  FMISSION_TBONUS_20,  ///<20•b
   FMISSION_TBONUS_30,  ///<30•b
+  FMISSION_TBONUS_60,  ///<60•b
+  FMISSION_TBONUS_180,  ///<180•b
   FMISSION_TBONUS_MAX,  ///<
 }FMISSION_TBONUS;
 

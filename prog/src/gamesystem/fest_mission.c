@@ -353,7 +353,9 @@ BOOL FEST_MISSION_IsSame( const FEST_MISSION* f1, const FEST_MISSION* f2 )
 //---------------------------------------------------------
 static u32 score_CalcTimeBonus( FEST_MISSION* fmwk )
 {
-  return (fmwk->beacon.time_bonus * 10);
+  static const u8 bonus_tbl[FMISSION_TBONUS_MAX] = { 0, 30, 60, 180 };
+
+  return bonus_tbl[fmwk->beacon.time_bonus];
 }
 
 //---------------------------------------------------------
