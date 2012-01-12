@@ -368,8 +368,8 @@
 		<language name="JPN_KANJI" width="256">ポリアンナ『耐えて　クルミル！</language>
 	</row>
 	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">ポリアンナ『いまだ！</language>
-		<language name="JPN_KANJI" width="256">ポリアンナ『今だ！</language>
+		<language name="JPN" width="256">ポリアンナ『いまだーっ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『今だーっ！</language>
 	</row>
 	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『チッ……
@@ -503,11 +503,11 @@
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ちがうわ……
-あとえ　あくにんでも▽
+たとえ　あくにん　だろうと▽
 かってしまえば　せいぎに　なる▽
 それが　げんじつよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『違うわ……
-あとえ　悪人でも▽
+たとえ　悪人　だろうと▽
 勝ってしまえば　正義になる▽
 それが　現実よ！</language>
 	</row>
@@ -650,11 +650,11 @@
 		<language name="JPN" width="256">ポリアンナ『ごめんなさい……
 ごめんなさい……▽
 ごめんなさい……▽
-……</language>
+……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">ポリアンナ『ごめんなさい……
 ごめんなさい……▽
 ごめんなさい……▽
-……</language>
+……　……　……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">りそうの　せいぎを　もとめるあまり

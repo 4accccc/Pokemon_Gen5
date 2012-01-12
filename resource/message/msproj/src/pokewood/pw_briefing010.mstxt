@@ -9,13 +9,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:37:26" />
+				Time="2012-01-12T07:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,13 +23,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:37:31" />
+				Time="2012-01-12T07:00:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,15 +52,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦ０けんきゅうか　Ｅは
-[Ctrl1:xcenter ]おとりの　ＵＦＯを　つかった
-[Ctrl1:xcenter ]デコイさくせんを　ていあん……
-
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　きょうりょくを
-[Ctrl1:xcenter ]いらい　するのだった……</Text>
+			<Text>[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-07T12:23:39" />
+				Time="2012-01-12T07:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -74,15 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦ０研究家　Ｅは
-[Ctrl1:xcenter ]おとりの　ＵＦＯを　使った
-[Ctrl1:xcenter ]デコイ作戦を　提案……
-
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　協力を
-[Ctrl1:xcenter ]依頼　するのだった……</Text>
+			<Text>[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-07T12:23:57" />
+				Time="2012-01-12T07:00:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -94,14 +80,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そして　だいとかいでは
-[Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
+			<Text>[Ctrl1:xcenter ]ＵＦ０けんきゅうか　Ｅは
+[Ctrl1:xcenter ]おとりの　ＵＦＯを　つかった
+[Ctrl1:xcenter ]デコイさくせんを　ていあん……
 
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　きょうりょくを
+[Ctrl1:xcenter ]いらい　するのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-07T12:24:22" />
+				Time="2012-01-12T07:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -109,14 +96,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そして　大都会では
-[Ctrl1:xcenter ]再び　ＵＦＯが　出現……
+			<Text>[Ctrl1:xcenter ]ＵＦ０研究家　Ｅは
+[Ctrl1:xcenter ]おとりの　ＵＦＯを　使った
+[Ctrl1:xcenter ]デコイ作戦を　提案……
 
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]に　協力を
+[Ctrl1:xcenter ]依頼　するのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-07T12:24:29" />
+				Time="2012-01-12T07:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -128,10 +116,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　だいとかいでは
+[Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -139,10 +131,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]そして　大都会では
+[Ctrl1:xcenter ]再び　ＵＦＯが　出現……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -313,13 +309,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:07" />
+				Time="2012-01-12T07:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -330,13 +323,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T03:22:15" />
+				Time="2012-01-12T07:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -355,6 +345,34 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]これは　かのじょらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:01:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]これは　彼女らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:01:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]……ＵＦ０けんきゅうか　Ｅは
 [Ctrl1:xcenter ]おとりの　ＵＦＯを　つかった
 [Ctrl1:xcenter ]デコイさくせんを　ていあん……
@@ -363,7 +381,7 @@
 [Ctrl1:xcenter ]たのむのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:55:31" />
+				Time="2012-01-12T07:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,41 +397,7 @@
 [Ctrl1:xcenter ]頼むのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:55:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いっぽう　だいとかいでは
-[Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
-
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:55:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]一方　大都会では
-[Ctrl1:xcenter ]再び　ＵＦＯが　出現……
-
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:55:36" />
+				Time="2012-01-12T07:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -425,10 +409,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]いっぽう　だいとかいでは
+[Ctrl1:xcenter ]ふたたび　ＵＦＯが　しゅつげん……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -436,10 +424,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]一方　大都会では
+[Ctrl1:xcenter ]再び　ＵＦＯが　出現……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

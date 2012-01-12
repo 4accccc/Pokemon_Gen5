@@ -414,12 +414,12 @@
 どうか　気を　つけてなあ……</language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『そうですか……
-けっこうなギャラも　いただきましたし▽
-いいでしょう　やって　みましょう</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『そうですか……
-結構なギャラも　頂きましたし▽
-いいでしょう　やって　みましょう</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『そうか……
+けっこうなギャラも　いただいたしな▽
+いいだろう　やってみよう</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『そうか……
+結構なギャラも　頂いたしな▽
+いいだろう　やってみよう</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">こえ『わが　ねむりを　さますもの
@@ -519,7 +519,7 @@
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『かねだ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『お金だ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『金だ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">こえ『ウハハハハ……▼
@@ -904,10 +904,12 @@
 なにゆえ　怖い顔を　する？</language>
 	</row>
 	<row id="pw_event8_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ウソは　バレバレです
-はやく　でてきてください</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ウソは　バレバレです
-早く　出てきてください</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『もういい……
+くだらないウソは　バレバレだ▽
+はやく　でてくるんだ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『もういい……
+くだらないウソは　バレバレだ▽
+早く　出てくるんだ……</language>
 	</row>
 	<row id="pw_event8_enemy_1">
 		<language name="JPN" width="256">こえ『……　……　……　……
@@ -918,12 +920,12 @@
 我がパワーで　消し去ってやる！</language>
 	</row>
 	<row id="pw_event8_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-いいかげんに　しないと▽
-ほんとうに　おこりますよ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-いい加減に　しないと▽
-本当に　怒りますよ！！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『いいかげんに　しろ……▼
+それとも　あんたたち
+ゴーストイレイザーを　なめてるのか？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『いい加減に　しろ……
+それとも　あんたたち
+ゴーストイレイザーを　なめてるのか？</language>
 	</row>
 	<row id="pw_event8_enemy_2">
 		<language name="JPN" width="256">こえ『……　……　……　……
@@ -936,10 +938,10 @@
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『やれやれ……
 やっと　ちゃばんげきが▽
-おわりましたか……</language>
+おわったか……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『やれやれ……
 やっと　茶番劇が▽
-終わりましたか……</language>
+終わったか……</language>
 	</row>
 	<row id="pw_event8_enemy_3">
 		<language name="JPN" width="256">こえ『もうしわけ　ありやせん！▼
@@ -996,10 +998,10 @@
 	<row id="pw_event8_hero_6">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ほほう……▼
 あとの　はなしは　ウチの　じむしょで
-じっくり　ききましょうかねえ……</language>
+じっくり　ききましょうか……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ほほう……▼
 あとの話は　ウチの　事務所で
-じっくり　聞きましょうかねえ……</language>
+じっくり　聞きましょうか……</language>
 	</row>
 	<row id="pw_event8_enemy_7">
 		<language name="JPN" width="256">いらいぬし『ああ……</language>

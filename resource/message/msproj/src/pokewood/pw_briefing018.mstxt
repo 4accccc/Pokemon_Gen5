@@ -83,12 +83,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]くちふうじに　[Name:TrainerName Idx="1" ]はかせを
-[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン
-[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
-[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
+[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:28:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -97,12 +95,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]口封じに　[Name:TrainerName Idx="1" ]博士を
-[Ctrl1:xcenter ]駆除すると　迫る　レディアン
-[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
-[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
+[Ctrl1:xcenter ]駆除すると　迫る　レディアン</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:28:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -114,10 +110,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
+[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:08:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -125,10 +122,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
+[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:08:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -366,12 +364,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]くちふうじに　[Name:TrainerName Idx="1" ]はかせを
-[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン
-[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
-[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
+[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:29:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -380,12 +376,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]口封じに　[Name:TrainerName Idx="1" ]博士を
-[Ctrl1:xcenter ]駆除すると　迫る　レディアン
-[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
-[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
+[Ctrl1:xcenter ]駆除すると　迫る　レディアン</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:29:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:07:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -397,10 +391,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
+[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -408,10 +403,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
+[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

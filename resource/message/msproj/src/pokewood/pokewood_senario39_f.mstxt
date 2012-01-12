@@ -1963,14 +1963,14 @@
 		Label="pw_event5_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『はかいを　やめて</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『はかいを　やめて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2012-01-12T03:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2012-01-12T03:45:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

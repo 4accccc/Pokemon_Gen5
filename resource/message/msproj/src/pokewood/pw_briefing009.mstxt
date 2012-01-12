@@ -9,13 +9,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:48" />
+				Time="2012-01-12T06:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,13 +23,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:25:52" />
+				Time="2012-01-12T06:57:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,15 +52,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName Idx="1" ]の
-[Ctrl1:xcenter ]まえに　とつじょ　あらわれた
-[Ctrl1:xcenter ]なぞの　おんな　Ｅ……
-
-[Ctrl1:xcenter ]かのじょは　みずからを
-[Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
+			<Text>[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:29:20" />
+				Time="2012-01-12T06:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -74,15 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName Idx="1" ]の
-[Ctrl1:xcenter ]前に　突如　現れた
-[Ctrl1:xcenter ]なぞの　女　Ｅ……
-
-[Ctrl1:xcenter ]彼女は　自らを
-[Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
+			<Text>[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T06:29:41" />
+				Time="2012-01-12T06:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -94,14 +80,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName Idx="1" ]の
+[Ctrl1:xcenter ]まえに　とつじょ　あらわれた
+[Ctrl1:xcenter ]なぞの　おんな　Ｅ……
 
-
-[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
+[Ctrl1:xcenter ]かのじょは　みずからを
+[Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:56:30" />
+				Time="2012-01-12T06:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -109,14 +96,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName Idx="1" ]の
+[Ctrl1:xcenter ]前に　突如　現れた
+[Ctrl1:xcenter ]なぞの　女　Ｅ……
 
-
-[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
+[Ctrl1:xcenter ]彼女は　自らを
+[Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:57:08" />
+				Time="2012-01-12T06:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -128,10 +116,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+
+
+[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -139,10 +131,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
+
+
+[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -313,13 +309,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:36:18" />
+				Time="2012-01-12T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -330,13 +323,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T02:36:29" />
+				Time="2012-01-12T06:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -355,6 +345,34 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]これは　かのじょらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:59:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]これは　彼女らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:59:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ＵＦＯと　たたかう　[Name:TrainerName Idx="1" ]の
 [Ctrl1:xcenter ]まえに　とつじょ　あらわれた
 [Ctrl1:xcenter ]なぞの　おんな　Ｅ……
@@ -363,7 +381,7 @@
 [Ctrl1:xcenter ]ＵＦ０けんきゅうかと　なのった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:57:17" />
+				Time="2012-01-12T06:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,41 +397,7 @@
 [Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:01:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
-
-
-[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:57:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
-
-
-[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:57:23" />
+				Time="2012-01-12T06:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -425,10 +409,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯしゅうらいから　すうじつご……
+
+
+[Ctrl1:xcenter ]Ｅは　ひとけの　ない　すなはまに
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　よびだしたのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -436,10 +424,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ＵＦＯ襲来から　数日後……
+
+
+[Ctrl1:xcenter ]Ｅは　人気の　ない　砂浜に
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]を　呼び出したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

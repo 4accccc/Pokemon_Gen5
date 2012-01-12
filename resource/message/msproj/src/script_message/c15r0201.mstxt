@@ -218,12 +218,12 @@
 			Language="JPN">
 			<Text>ポケウッドの　さつえい って
 レンタルポケモンでの▽
-チャンレンジ　するじゃん？▼
+チャレンジ　するじゃん？▼
 あたしの　ヨーテリーちゃんは
 えいがに　でられないわけ？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:41:10" />
+				Time="2012-01-12T05:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -233,12 +233,12 @@
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　撮影 って
 レンタルポケモンでの▽
-チャンレンジ　するじゃん？▼
+チャレンジ　するじゃん？▼
 あたしの　ヨーテリーちゃんは
 映画に　出られないわけ？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:41:14" />
+				Time="2012-01-12T05:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -270,14 +270,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>いちど　レンタルポケモンで
-チャレンジして　その　えいがを▽
+さつえいして　その　えいがを▽
 せいこうさせれば　ＯＫらしいぜ！▼
 だから　オレは　この　マッギョと
 スターを　めざすのさっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:26:55" />
+				Time="2012-01-12T06:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -285,15 +285,15 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いちど　レンタルポケモンで
-チャレンジして　その映画を▽
+			<Text>一度　レンタルポケモンで
+撮影して　その映画を▽
 成功させれば　ＯＫらしいぜ！▼
 だからオレは　自分の　マッギョと
 スターを　目指すのさっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:26:51" />
+				Time="2012-01-12T06:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -614,14 +614,14 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よお！　おまえさん　しんじんだろ？▼
+			<Text>よお！　オマエさん　しんじんだろ？▼
 いいか？　やくしゃだったらな
 だいほんの　かくにんは　おこたるなよ▼
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:29:19" />
+				Time="2012-01-12T06:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -747,15 +747,15 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボク　ＶＦＸの　スペシャリスト！▼
+			<Text>ワシ　ＶＦＸの　スペシャリスト！▼
 スタジオにさあ　みどりいろした
-いたが　おいてあるでしょ？▼
+いたが　おいてあるだろ？▼
 あのまえで　さつえいした　えいぞうを
 コンピュータで　だいはくりょくの▽
 えいがに　かえちゃうのだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:37:25" />
+				Time="2012-01-12T06:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -763,7 +763,7 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボク　ＶＦＸの　スペシャリスト！▼
+			<Text>ワシ　ＶＦＸの　スペシャリスト！▼
 スタジオにさあ　緑色した
 板が　置いてあるでしょ！▼
 あの前で　撮影した　映像を
@@ -771,7 +771,7 @@ msg_c15r0301_middleman2_01</Comment>
 映画に　変えちゃうのだよ！　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:37:19" />
+				Time="2012-01-12T06:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -853,8 +853,8 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN">
 			<Text>ポケウッドの　えいがの　さつえいは
 だいほんに　したがって　すすむ！▼
-だいほんは　えいがを　つくる
-きほん　なんだよ！▼
+つまり　だいほんは　えいがを
+つくる　きほん　なんだ！▼
 だいほんには　さつえいを
 せいこう　させる　じょうけんや▽
 きょうえんしゃに　ついての▽
@@ -867,7 +867,7 @@ msg_c15r0301_middleman2_01</Comment>
 すこしずつ　ふえていくよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T11:40:45" />
+				Time="2012-01-12T06:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -877,8 +877,8 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　映画の　撮影は
 台本に　従って　進む！▼
-台本は　映画を　つくる
-基本に　なるものなんだ！▼
+つまり　台本は　映画を
+つくる　基本　なんだ！▼
 台本には　撮影を
 成功させる　条件や▽
 共演者に　ついての▽
@@ -890,8 +890,8 @@ msg_c15r0301_middleman2_01</Comment>
 興行成績の　結果などで▽
 少しずつ　増えていくよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:57:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -917,18 +917,18 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　さつえいにも
-ポケモンは　かかせないよ！▼
+ポケモンは　かかせないんだ！▼
 しゅつえんしゃと　ポケモンの
 えんぎで　さつえいは　すすむからね▼
 だいほんごとに　しゅつえんする
 ポケモンを　レンタルして　もらえるよ！▼
 しかも　いちど　いい　さくひんを
-かんせい　させることが　できれば▼
-じぶんの　ポケモンだって
-えいがに　しゅつえん　させられるよ！▼</Text>
+かんせい　させることが　できれば▽
+じぶんの　ポケモンも　えいがに▽
+しゅつえん　できるように　なるよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:58:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -937,18 +937,18 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　撮影にも
-ポケモンは　欠かせないよ！▼
+ポケモンは　欠かせないんだ！▼
 出演者と　ポケモンの
 演技で　撮影は　進むからね▼
-台本ごとに　出演する
+ここでは　台本ごとに　出演する
 ポケモンを　レンタルして　もらえるよ！▼
 しかも　一度　いい　作品を
-完成させることが　できれば▼
-自分の　ポケモンだって
-映画に　出演させられるよ！▼</Text>
+完成させることが　できれば▽
+自分の　ポケモンも　映画に▽
+出演　できるように　なるよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:57:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1032,15 +1032,15 @@ msg_c15r0201_pwmoji_01_01</Comment>
 			Language="JPN">
 			<Text>さつえいを　すすめていると
 セリフが　えらべることが　あるよ！▼
-じぶんが　これはイイ！　って
+これはイイ！　って
 おもう　セリフを　えらんでね！▼
 きみが　どんな　セリフを　えらぶかで
 きょうえんしゃの　えんぎや▽
 できあがる　えいがの▽
 おはなしが　かわっていくよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:58:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1050,15 +1050,15 @@ msg_c15r0201_pwmoji_01_01</Comment>
 			Language="JPN_KANJI">
 			<Text>撮影を　進めていると
 セリフが　選べることが　あるよ！▼
-自分が　これはイイ！　って
+これはイイ！　って
 思う　セリフを　選んでね！▼
 君が　どんな　セリフを　選ぶかで
 共演者の　演技や▽
 できあがる　映画の▽
 ストーリーが　変わっていくよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:58:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:11:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

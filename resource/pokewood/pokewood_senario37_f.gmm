@@ -356,14 +356,14 @@
 	<row id="pw_turn_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『うっ……
 くうきが　よどんでいる……▼
-いっきに　かたを　つけないと……
-のみこまれて　しまいそうだ……▽
+いっきに　カタを　つけないと……
+のみこまれて　しまいそう……▽
 かくじつに　しとめないと……
 </language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『うっ……
 空気が　よどんでいる……▼
-いっきに　かたを　つけないと……
-飲みこまれて　しまいそうだ……▽
+いっきに　カタを　つけないと……
+飲みこまれて　しまいそう……▽
 確実に　仕留めよう……
 </language>
 	</row>
@@ -678,11 +678,11 @@
 もらってもいい？</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『はわわわ……
 うう……　からだが　おもい……▽
 ちからが　はいらない……▽
 やめて……　やめ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『はわわわ……
 うう……　体が　重い……▽
 力が　入らない……▽
 やめて……　やめ……</language>
@@ -698,8 +698,8 @@
 たし　には　なるんだからさァ……</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ぎゃああああーっ</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ぎゃああああーっ</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ぴぎゃああああーっ！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ぴぎゃあああーっ！！</language>
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">しょうじょ『キャハハハー▼
@@ -748,11 +748,11 @@
 もらってもいい？</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『はわわわ……
 からだが　いうことを　きかない……▽
 ちからが　はいらない……▽
 やめろ……　やめ……ろ</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『はわわわ……
 体が　いうことを　きかない……▽
 力が　入らない……▽
 やめて……　やめ……て</language>
@@ -816,12 +816,12 @@
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……　……
 ……　……　……おじょうちゃん▼
-もう　ウソは　バレバレよ
-だから　もう　やめなさい！！</language>
+みえすいたウソは　バレバレ……
+がくげいかいは　おわりよ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『……　……
 ……　……　……お嬢ちゃん▼
-もう　ウソは　バレバレよ
-だから　もう　止めなさい！！</language>
+見え透いたウソは　バレバレ……
+学芸会は　終わりよ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">しょうじょ『……　……あれ？▼
@@ -830,10 +830,10 @@
 てへへ　ばれた？　ごめんなさーい！</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-はじめから　おみとおしです！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-初めから　お見通しです！！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あのねえ　そんなの
+さいしょから　おみとおしよ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あのねえ　そんなの
+最初から　お見通しよ……</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">しょうじょ『えー！　ホンマ！？▼
@@ -906,7 +906,7 @@
 コードネーム　[1:02:ポケモンニックネーム:0]</language>
 		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
 ……　……　……　……　……　……▼
-『ゴーストイレイザー　ほうこくしょ
+『ゴーストイレイザー　報告書
 ファイルＮｏ．００２への　追記』▼
 幽霊少女　デタラメ　なり
 最近　ニセ　情報　多し▽

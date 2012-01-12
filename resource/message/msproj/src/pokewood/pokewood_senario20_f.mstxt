@@ -923,31 +923,31 @@
 		Label="pw_event1_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミロ『うっとおしいぞ！
-きみの　ことなんて▼
-なんだとも　おもってなんか
+			<Text>カミロ『うっとおしいぞ！▼
+きみの　ことなんて
+なんだとも　おもってなんか▽
 いないんだからな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T07:37:06" />
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T07:37:06" />
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミロ『うっとおしいぞ！
-きみの　事なんて▼
-何だとも　思ってなんか
+			<Text>カミロ『うっとおしいぞ！▼
+きみの　事なんて
+何だとも　思ってなんか▽
 いないんだからな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T07:37:06" />
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T07:37:06" />
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1410,33 +1410,33 @@
 		Label="pw_event2_hero_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶが　ちからだけで
+			<Text>……しょうぶが　ちからだけで
 きまるわけでは　ないように▼
 ひとと　ひととの　かんけいも
 つねに　つよいものが▽
 かつとも　かぎらない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負が　力だけで
+			<Text>……勝負が　力だけで
 決まる訳では　ないように▼
 人と　人との　関係も
 常に　強い者が▽
 勝つとも　限らない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1578,34 +1578,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カミロ『ざんねんだけど
-オレ　きみみたいな▽
+オレ　きみ　みたいな▽
 ふつうの　おんなのコには
 きょうみ　ないんでね……▼
 もう　あうことも　ないだろう
 いくぞ　ドーブルちゃん！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『残念だけど
-オレ　きみみたいな▽
+オレ　きみ　みたいな▽
 普通の　女のコには
 興味　無いんでね……▼
 もう　会うことも　ないだろう
 行くぞ　ドーブルちゃん！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1645,33 +1645,33 @@
 		Label="pw_event3_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶの　けっかが
+			<Text>……しょうぶの　けっかが
 ひととおりでは　ないように▼
 ひとと　ひととの　かんけいも
 つねに　おもいどおりに▽
 いくとは　かぎらない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負の　結果が
+			<Text>……勝負の　結果が
 一通りでは　ないように▼
 人と　人との　関係も
 常に　思い通りに▽
 いくとは　限らない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1806,31 +1806,31 @@
 		Label="pw_event4_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶの　せかいに
+			<Text>……しょうぶの　せかいに
 ばんくるわせが　あるように▼
 ひとと　ひととの　かんけいも
 なにがおこるか　わからない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負の　世界に
+			<Text>……勝負の　世界に
 番狂わせが　あるように▼
 人と　人との　関係も
 何が起こるか　分からない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2026,33 +2026,33 @@
 		Label="pw_event5_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶの　けっかが
+			<Text>……しょうぶの　けっかが
 ひととおりでは　ないように▼
 ひとと　ひととの　かんけいも
 つねに　おもいどおりに▽
 いくとは　かぎらない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:43:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:43:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負の　結果が
+			<Text>……勝負の　結果が
 一通りでは　ないように▼
 人と　人との　関係も
 常に　思い通りに▽
 いくとは　限らない</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T02:51:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

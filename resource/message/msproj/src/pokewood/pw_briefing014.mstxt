@@ -9,13 +9,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:03:51" />
+				Time="2012-01-12T07:05:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,13 +23,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:08:10" />
+				Time="2012-01-12T07:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,12 +52,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい　ほんぶに
-[Ctrl1:xcenter ]サイレンが　なりひびく……
-[Ctrl1:xcenter ]それは　しゅつどうの　あいず……</Text>
+			<Text>[Ctrl1:xcenter ]これは　かれらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:05:45" />
+				Time="2012-01-12T07:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -71,12 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]イッシュ防衛隊　本部に
-[Ctrl1:xcenter ]サイレンが　鳴りひびく……
-[Ctrl1:xcenter ]それは　出動の　合図……</Text>
+			<Text>[Ctrl1:xcenter ]これは　彼らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:06:22" />
+				Time="2012-01-12T07:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -88,14 +80,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ふたたび　だいバンギラスが
-[Ctrl1:xcenter ]しゅつげんしたとの　しらせ……
-
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
+			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい　ほんぶに
+[Ctrl1:xcenter ]サイレンが　なりひびく……
+[Ctrl1:xcenter ]それは　しゅつどうの　あいず……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:47:57" />
+				Time="2012-01-12T07:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,15 +93,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]再び　大バンギラスが
-[Ctrl1:xcenter ]出現したとの　報せ……
-
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]現場に　急行　したのだった……
-</Text>
+			<Text>[Ctrl1:xcenter ]イッシュ防衛隊　本部に
+[Ctrl1:xcenter ]サイレンが　鳴りひびく……
+[Ctrl1:xcenter ]それは　出動の　合図……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:03:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -123,10 +110,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ふたたび　だいバンギラスが
+[Ctrl1:xcenter ]しゅつげんしたとの　しらせ……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -134,10 +125,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]再び　大バンギラスが
+[Ctrl1:xcenter ]出現したとの　報せ……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……
+</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -308,13 +304,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい……
 
 [Ctrl1:xcenter ]それは　イッシュちほうの
-[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……
-
-[Ctrl1:xcenter ]これは　かれらの　たたかいを
-[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+[Ctrl1:xcenter ]へいわを　まもる　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:08:15" />
+				Time="2012-01-12T07:06:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -325,13 +318,10 @@
 			<Text>[Ctrl1:xcenter ]イッシュ防衛隊……
 
 [Ctrl1:xcenter ]それは　イッシュ地方の
-[Ctrl1:xcenter ]平和を　守る　チームで　ある……
-
-[Ctrl1:xcenter ]これは　彼らの　戦いを
-[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+[Ctrl1:xcenter ]平和を　守る　チームで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:08:22" />
+				Time="2012-01-12T07:06:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -350,12 +340,47 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]これは　かのじょらの　たたかいを
+[Ctrl1:xcenter ]えがいた　きろくで　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:06:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]これは　彼女らの　戦いを
+[Ctrl1:xcenter ]描いた　記録で　ある……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:06:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あらすじ♀用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:06:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]イッシュぼうえいたい　ほんぶに
 [Ctrl1:xcenter ]サイレンが　なりひびく……
 [Ctrl1:xcenter ]それは　しゅつどうの　あいず……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:08:15" />
+				Time="2012-01-12T07:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -368,41 +393,7 @@
 [Ctrl1:xcenter ]それは　出動の　合図……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T05:08:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ふたたび　だいバンギラスが
-[Ctrl1:xcenter ]しゅつげんしたとの　しらせ……
-
-[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:58:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]再び　大バンギラスが
-[Ctrl1:xcenter ]出現したとの　報せ……
-
-[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
-[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T07:58:54" />
+				Time="2012-01-12T07:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -414,10 +405,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]ふたたび　だいバンギラスが
+[Ctrl1:xcenter ]しゅつげんしたとの　しらせ……
+
+[Ctrl1:xcenter ]わかき　たいいん　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]げんばに　きゅうこう　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -425,10 +420,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]再び　大バンギラスが
+[Ctrl1:xcenter ]出現したとの　報せ……
+
+[Ctrl1:xcenter ]若き　隊員　[Name:TrainerName Idx="1" ]は
+[Ctrl1:xcenter ]現場に　急行　したのだった……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T07:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

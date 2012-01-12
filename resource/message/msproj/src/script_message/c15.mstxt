@@ -647,14 +647,14 @@ x31,z54辺りに配置
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいっ！　ＡＤ！！▼
+			<Text>おい！　ＡＤ！！▼
 あそこの　さつえいスタジオが
 わしの　さくひんの　じゃまだッ！▼
 さつえいが　すすまんから
 いますぐ　ブッつぶして　こいッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:29:49" />
+				Time="2012-01-12T06:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -662,14 +662,14 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいっ！　ＡＤ！！▼
+			<Text>おい！　ＡＤ！！▼
 あの　撮影スタジオが
 わしの　作品の　邪魔だッ！▼
 撮影が　すすまんから
 いますぐ　ブッつぶして　こいッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:44:41" />
+				Time="2012-01-12T06:28:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -705,14 +705,14 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいっ！　ＡＤ！！▼
-あの　そらの　くもが
-わしの　さくひんの　じゃまだっ！▼
+			<Text>おい！　ＡＤ！！▼
+あの　そらの　くもの　かたちは
+わしのさくひんに　ふさわしくないッ！▼
 さつえいが　すすまんから
-いますぐ　どかして　こいっ！</Text>
+いますぐ　どかして　こいッ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-22T06:21:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:30:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -721,13 +721,13 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おいっ！　ＡＤ！！▼
-あの　空の　雲の　形が
-わしの　イメージと　違うッ！▼
+あの　空の　雲の　形は
+わしの作品に　相応しくないッ！▼
 撮影が　進まんから
 今すぐ　どかして　こいっッ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-22T06:21:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -769,7 +769,7 @@ msg_c15_oldman1_01_04
 ゼロから　とりなおすぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:48:10" />
+				Time="2012-01-12T06:31:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -819,14 +819,14 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいっ！　ＡＤ！！▼
+			<Text>おい！　ＡＤ！！▼
 この　ヨーテリーの　けなみは
 わしの　イメージと　ちがうッ！！▼
 さっさと　べつの　ヨーテリーを
 つれてこんかッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:48:39" />
+				Time="2012-01-12T06:29:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -834,14 +834,14 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいっ！　ＡＤ！！▼
+			<Text>おい！　ＡＤ！！▼
 この　ヨーテリーの　毛並みは
 わしの　イメージと　違うッ！！▼
 さっさと　別の　ヨーテリーを
 連れてこんかッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:48:47" />
+				Time="2012-01-12T06:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -878,14 +878,14 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>おお！　ＡDかと　おもったら
-[Name:TrainerName ]ではないか！▼
+[Name:TrainerName ]　ではないか！▼
 おまえほどの　スター　ならば
 わしの　えいがに　だしてもよいぞ！▼
-あのヨーテリーの　かわりに
+あの　ヨーテリーの　かわりに
 ポケモンやくを　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:02:26" />
+				Time="2012-01-12T06:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -894,14 +894,14 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おお！　ＡDかと　思ったら
-[Name:TrainerName ]ではないか！▼
+[Name:TrainerName ]　ではないか！▼
 お前ほどの　スター　ならば
 わしの　映画に　だしてもよいぞ！▼
-あのヨーテリーの　かわりに
+あの　ヨーテリーの　かわりに
 ポケモン役を　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:02:28" />
+				Time="2012-01-12T06:31:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -942,13 +942,13 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>あーあ　あのカントク
 またムチャクチャ　いってる……▼
-たしかに　あのひとの　さくひん
+たしかに　あの　ひとの　さくひん
 すばらしいんだけどね……▼
 こだわりと　ワガママ　って
 かみひとえ　だよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:38:01" />
+				Time="2012-01-12T06:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -958,13 +958,13 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>あーあ　あの監督
 またムチャクチャ　いってる……▼
-たしかに　あの人の　作品
+たしかに　あの　人の　作品
 素晴らしいんだけどね……▼
 こだわりと　ワガママ　って
 紙一重　だよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:37:58" />
+				Time="2012-01-12T06:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1035,7 +1035,7 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくは　ＡＤ▼
+			<Text>ぼくは　しんまい　ＡＤ▼
 えいがは　だいすきだけど
 つくりてと　しては　まだまださ▼
 いつも　きびしい カントクに
@@ -1045,7 +1045,7 @@ msg_c15_oldman1_01_04
 すごく　べんきょうに　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:37:37" />
+				Time="2012-01-12T06:32:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1053,7 +1053,7 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくは　ＡＤ▼
+			<Text>ぼくは　新米　ＡＤ▼
 映画は　大好きだけど
 作り手としては　まだまださ▼
 いつも　きびしい 監督に
@@ -1063,7 +1063,7 @@ msg_c15_oldman1_01_04
 すごく　勉強に　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:37:39" />
+				Time="2012-01-12T06:32:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1244,7 +1244,7 @@ msg_c15_oldman1_01_04
 つくってた　からなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:40:14" />
+				Time="2012-01-12T06:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1259,7 +1259,7 @@ msg_c15_oldman1_01_04
 つくってた　からなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:53:34" />
+				Time="2012-01-12T06:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1289,7 +1289,7 @@ msg_c15_oldman1_01_04
 きょうは　なにを　みる？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:04:32" />
+				Time="2012-01-12T06:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1297,11 +1297,11 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ　ダーリン！
+			<Text>ねえねえ　パパ！
 今日は　何を　観る？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:12:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:34:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1337,7 +1337,7 @@ msg_c15_oldman1_01_04
 えいが　みましょうよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:19:14" />
+				Time="2012-01-12T06:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1345,12 +1345,12 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ！　ダーリン！
+			<Text>ねえねえ！　パパ！
 今日は　[Name:TrainerName ]の▽
 映画　観ましょうよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:09:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:35:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1387,7 +1387,7 @@ msg_c15_oldman1_01_04
 ラブストーリーなど　どうだね？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:15:20" />
+				Time="2012-01-12T06:36:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1484,7 +1484,7 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド　めいぶつ
+			<Text>ハイハイ　ポケウッド　めいぶつ
 スター　ブロマイドは　いかが？▼
 いまの　にんきは　ですね……▼
 おとなの　じょせいや　おこさんには
@@ -1495,7 +1495,7 @@ msg_c15_oldman1_01_04
 いやあ　ウチで　あつかって　ないねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:28:01" />
+				Time="2012-01-12T06:36:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1503,7 +1503,7 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド　名物
+			<Text>ハイハイ　ポケウッド　名物
 スター　ブロマイドは　いかが？▼
 いまの　人気は　ですね……▼
 大人の　女性や　お子さんには
@@ -1511,10 +1511,10 @@ msg_c15_oldman1_01_04
 男性には　圧倒的に
 ナツメさんが　ウケてますよ▼
 え？　[Name:TrainerName ]さん？
-いやあ　ウチで　あつかって　ないねえ</Text>
+いやあ　ウチで　扱って　ないねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:55:11" />
+				Time="2012-01-12T06:36:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1546,7 +1546,7 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド　めいぶつ
+			<Text>ドモドモ　ポケウッド　めいぶつ
 スター　ブロマイドは　いかが？▼
 いまの　にんきは　ですね……▼
 おとなの　じょせいや　おこさんには
@@ -1557,8 +1557,8 @@ msg_c15_oldman1_01_04
 さいきんに　にゅうか　はじめたけど▽
 うりあげは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:59:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1566,7 +1566,7 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド　名物
+			<Text>ドモドモ　ポケウッド　名物
 スター　ブロマイドは　いかが？▼
 今の　人気は　ですね……▼
 大人の　女性や　お子さんには
@@ -1578,7 +1578,7 @@ msg_c15_oldman1_01_04
 売り上げは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T03:35:44" />
+				Time="2012-01-12T06:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1610,7 +1610,7 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド　めいぶつ
+			<Text>やあやあ　ポケウッド　めいぶつ
 スター　ブロマイドは　いかが？▼
 いまの　にんきは　ですね……▼
 やっぱり　ダントツで
@@ -1620,7 +1620,7 @@ msg_c15_oldman1_01_04
 スターに　にてるなんて　うらやましい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:48:14" />
+				Time="2012-01-12T06:37:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1628,7 +1628,7 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド　名物
+			<Text>やあやあ　ポケウッド　名物
 スター　ブロマイドは　いかが？▼
 今の　人気は　ですね……▼
 やっぱり　ダントツで
@@ -1637,8 +1637,8 @@ msg_c15_oldman1_01_04
 [Name:TrainerName ]さんに　似てるねえ！▽
 スターに　似てるなんて　うらやましい！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:12:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:37:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2012,13 +2012,13 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいったな……
+			<Text>やれやれ　まいったな……
 もう　３じかんも　まってるのに……▼
 いったい　いつに　なったら
 メイクが　おわるんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:36:34" />
+				Time="2012-01-12T06:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2026,13 +2026,13 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まいったな……
+			<Text>やれやれ　まいったな……
 もう　３時間も　待ってるのに……▼
 いったい　いつに　なったら
 メイクが　終わるんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:48:47" />
+				Time="2012-01-12T06:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2109,13 +2109,13 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクね　ナツメって　この
-だいファン　なわけ▼
-だけど　さいきんは　[Name:TrainerName ]って
-やくしゃさんが　きになっちゃっててね</Text>
+			<Text>せっしゃ　ナツメさまという　スターの
+しんえいたい　たいちょうで　ある！▼
+しかし　さいきん　[Name:TrainerName ]って
+やくしゃが　きに　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:50:58" />
+				Time="2012-01-12T06:44:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2123,13 +2123,13 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクね　ナツメって　子の
-大ファン　なわけ▼
-だけど　最近は　[Name:TrainerName ]って
-役者さんが　気になっちゃっててね</Text>
+			<Text>拙者　ナツメ様という　スターの
+親衛隊　隊長で　ある！▼
+しかし　最近　[Name:TrainerName ]って
+役者が　気に　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:51:20" />
+				Time="2012-01-12T06:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2158,10 +2158,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>さいきん　[Name:TrainerName ]って　やくしゃの
-えいがが　わだい　らしいわね</Text>
+えいがが　わだい　らしいわね▼
+……　って　あなた　[Name:TrainerName ]？
+サインしきし　もってくれば　よかった！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:07:00" />
+				Time="2012-01-12T06:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2170,10 +2172,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>最近　[Name:TrainerName ]って　役者の
-映画が　話題　らしいわね</Text>
+映画が　話題　らしいわね▼
+……　って　あなた　[Name:TrainerName ]？
+サイン色紙　持ってくれば　よかった！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:07:20" />
+				Time="2012-01-12T06:47:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2320,7 +2324,7 @@ are way beyond yours, rookie!</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アタシ　彼女の　マネージャーなの▼
+			<Text>アタシ　彼女の　マネージャー▼
 彼女はね……▼
 あたしは　天才子役と
 呼ばれている　スターなのよ！▽
@@ -2330,7 +2334,7 @@ are way beyond yours, rookie!</Text>
 って　いってますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T11:55:19" />
+				Time="2012-01-12T06:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2360,11 +2364,11 @@ are way beyond yours, rookie!</Text>
 			Language="JPN">
 			<Text>Grüß Gott▼
 キミが　ポケウッドに　でるようになって
-ぼくら　スーツアクターも　いそがしくて！▽
+ぼくら　スーツアクターも　いそがしくて！▼
 Bis  bald.</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:22:02" />
+				Time="2012-01-12T06:50:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2374,11 +2378,11 @@ Bis  bald.</Text>
 			Language="JPN_KANJI">
 			<Text>Grüß Gott▼
 キミが　ポケウッドに　出るようになって
-僕ら　スーツアクターも　忙しくて！▽
+僕ら　スーツアクターも　忙しくて！▼
 Bis  bald.</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:50:40" />
+				Time="2012-01-12T06:50:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2406,11 +2410,11 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ！　[Name:TrainerName ]　だっ！
+			<Text>あー！　[Name:TrainerName ]　だっ！
 ファンなんだ！　サインして　おくれよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:27:01" />
+				Time="2012-01-12T06:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2418,11 +2422,11 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ！　[Name:TrainerName ]　だっ！
+			<Text>あー！　[Name:TrainerName ]　だっ！
 ファンなんだ！　サインして　おくれよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:27:04" />
+				Time="2012-01-12T06:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2833,7 +2837,7 @@ Bis  bald.</Text>
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T04:02:33" />
+				Time="2012-01-12T06:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2913,7 +2917,7 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>うむ……▼
-[Name:TrainerName ]ちゃん……
+ねえ　[Name:TrainerName ]ちゃん……
 きょうは　きねんすべき　ひ　なんだ……▼
 ……ボクはね　ここを　つくったとき
 ひとつの　ねがいと　ちかいを　たてたの▼
@@ -2932,7 +2936,7 @@ Bis  bald.</Text>
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T05:25:22" />
+				Time="2012-01-12T06:51:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2941,7 +2945,7 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うむ……▼
-[Name:TrainerName ]ちゃん……
+ねえ　[Name:TrainerName ]ちゃん……
 今日は　記念すべき日　なんだ……▼
 ……ボクはね　ここを　つくったとき
 一つの　願いと　誓いを　立てたの▼
@@ -2960,7 +2964,7 @@ Bis  bald.</Text>
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T05:25:19" />
+				Time="2012-01-12T06:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -1179,10 +1179,10 @@
 		Label="msg_pw_studio_sel_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>せつめいをきく</Text>
+			<Text>せつめいを　きく</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:21:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -1190,10 +1190,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>説明をきく</Text>
+			<Text>説明を　きく</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:51:14" />
+				Time="2012-01-12T04:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ジャンプスーツは
+			<Text>オレのきてる　ジャンプスーツは
 ＶＦＸに　かかせないのだっ！▼
 さいしんぎじゅつなのは　いいけど
 けっこう　はずかしいのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:49:24" />
+				Time="2012-01-12T06:25:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ジャンプスーツは
+			<Text>オレの着てる　ジャンプスーツは
 ＶＦＸに　欠かせないのだっ！▼
 最新技術なのは　いいけど
-けっこう　はずかしいのだっ！</Text>
+結構　はずかしいのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:37:37" />
+				Time="2012-01-12T06:25:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -55,13 +55,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＦＸとは　コンピュータを　つかった
-えいぞうを　かこうする　ぎじゅつ▼
+			<Text>ＶＦＸって　いうのはね
+Ｖｉｓｕａｌ　Ｅｆｆｅｃｔｓの　りゃく▼
+コンピュータを　つかって　えいぞうを
+かこうする　ぎじゅつの　ことです▼
 ポケウッドの　えいがは
-このＶＦＸが　いのち　なんです</Text>
+このＶＦＸが　いのち　なんですな</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:22:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:24:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -69,13 +71,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＦＸとは　コンピュータを　使った
-映像を　加工する　技術▼
+			<Text>ＶＦＸって　いうのはね
+Ｖｉｓｕａｌ　Ｅｆｆｅｃｔｓの　略▼
+コンピュータを　使って　映像を
+加工する　技術の　ことです▼
 ポケウッドの　映画は
-このＶＦＸが　命なんです</Text>
+このＶＦＸが　命なんですな</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:22:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T06:24:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -101,10 +105,10 @@
 えいがの　ストーリーに　なる
 だいほんを　つくっています▼
 あたまの　なかは　いつだって
-おはなしで　パツンパツンですわ</Text>
+おはなしで　パッツンパッツンですわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:04:22" />
+				Time="2012-01-12T06:18:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -112,14 +116,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>私は　ライター▼
+			<Text>わたくしは　ライター▼
 映画の　ストーリーに　なる
-台本を　つくっています▼
+台本を　つくっていますの▼
 頭の　中は　いつだって
-お話で　パツンパツンですわ</Text>
+お話で　パッツンパッツンですわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T08:16:18" />
+				Time="2012-01-12T06:19:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -223,15 +227,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクは　ろくおんぎし！▼
-やくしゃさんの　セリフを
-とったりするのが　しごとさ！▼
+			<Text>やあ！　オラ　ろくおんぎし！▼
+やくしゃの　みんなの　セリフを
+とったりするのが　しごとだぞ！▼
 ポケウッドの　えいがさくひんは
 ほとんどが　アフレコだから▽
-いまは　ヒマ　なんだけどね</Text>
+いまは　ヒマ　なんだけどな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:03:34" />
+				Time="2012-01-12T06:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -239,15 +243,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクは　録音技師！▼
-役者さんの　セリフを
-録ったりするのが　仕事さ！▼
+			<Text>やあ！　オラ　録音技師！▼
+役者の　みんなの　セリフを
+録ったりするのが　仕事だぞ！▼
 ポケウッドの　映画作品は
 ほとんどが　アフレコだから▽
-いまは　ヒマ　なんだけどね</Text>
+いまは　ヒマ　なんだけどな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T08:24:20" />
+				Time="2012-01-12T06:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -271,12 +275,14 @@
 			Language="JPN">
 			<Text>もう……　どこ　いったのよ……▼
 メガホンが　ないと　かんとくに
-また　しかられるよ……▼
-アナタ　やくしゃさん？
-ワタシは　ＡＤ　やってます</Text>
+また　しかられるじゃない……▼
+あら　アナタ　やくしゃさん？
+ワタシは　ＡＤ　やってます▼
+ちなみに　ＡＤって　いうのは
+かんとくの　タマゴ　かな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T09:10:08" />
+				Time="2012-01-12T06:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -287,11 +293,13 @@
 			<Text>もう……　どこ　行ったのよ……▼
 メガホンが　ないと　監督に
 また　しかられるよ……▼
-アナタ　役者さん？
-ワタシは　ＡＤ　やってます</Text>
+あら　アナタ　役者さん？
+ワタシは　ＡＤ　やってます▼
+ちなみに　ＡＤって　いうのは
+監督の　タマゴ　かな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:10:28" />
+				Time="2012-01-12T06:17:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

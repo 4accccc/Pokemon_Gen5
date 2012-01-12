@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>映画を観る</Text>
+			<Text>映画を　観る</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:29:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:05:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -50,10 +50,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>説明をきく</Text>
+			<Text>説明を　きく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:29:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:05:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -508,13 +508,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
-さくひん　だけどね……▼
+さくひん　だけどさあ……▼
 ハッキリいって　コケちゃったけど
 なかなか　オリジナリティが　あって▽
 よかったとおもうの　ボクはさ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:44:08" />
+				Time="2012-01-12T04:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -523,13 +523,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
-作品だけどね……▼
+作品だけどさあ……▼
 ハッキリいって　コケちゃったけど
 なかなか　オリジナリティが　あって▽
 良かったと思うの　ボクはさ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:29:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -563,7 +563,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
-さくひん　だけどね……▼
+さくひん　だけどさあ……▼
 よそうを　うらぎる　さくひんだって
 ちまたで　わだいに　なってんのよー▼
 こんな　さくひん　とっちゃったら
@@ -571,7 +571,7 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 いちもく　おかれちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:44:21" />
+				Time="2012-01-12T04:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -580,15 +580,15 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
-作品だけどね……▼
+作品だけどさあ……▼
 予想を　裏切る　作品だって
 ちまたで　話題に　なってんのよー▼
 こんな作品　撮っちゃったら
 お客さんにも　スタッフにも▽
 一目　置かれちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:30:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -627,10 +627,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 さすが　[Name:TrainerName ]ちゃん　だよー▼
 こうやって　イイさくひんに　でてれば
 おきゃくさんにも　スタッフにも▽
-あいされていく　とおもうよー▼</Text>
+あいされていくと　おもうよー▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:30:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-12T04:06:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
