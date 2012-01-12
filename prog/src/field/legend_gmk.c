@@ -194,7 +194,8 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   gmk_wk->Count = 0;
   
   //必要なリソースの用意(バージョン分岐)
-  if ( GetVersion() == VERSION_WHITE )
+  // swanではバージョンが逆 B2でゼクロム
+  if ( GetVersion() == VERSION_B2 )
   {
     FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupWhite, LEGEND_UNIT_IDX );
   }
