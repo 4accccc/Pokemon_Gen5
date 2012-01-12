@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがねタイプの　コイルとか
-コンビナートにも　ポケモンが　いて▽
-ポケモンを　きたえるには　ぴったり！</Text>
+			<Text>ひよわだった　わしの　ポケモンも
+コンビナートで　きたえて▽
+いまでは　ムキムキの　ポケモンさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T13:15:35" />
+				Time="2012-01-12T02:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はがねタイプの　コイルとか
-コンビナートにも　ポケモンが　いて▽
-ポケモンを　鍛えるには　ぴったり！</Text>
+			<Text>ひよわだった　わしの　ポケモンも
+コンビナートで　鍛えて▽
+いまでは　ムキムキの　ポケモンさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T13:15:29" />
+				Time="2012-01-12T02:59:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -205,10 +205,10 @@
 			Language="JPN">
 			<Text>いろんなことを　おしえてくれる
 こどもは　わたしの　せんせい▽
-ポケモンは　あなたの　せんせい</Text>
+ポケモンは　あなたの　せんせいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:59:30" />
+				Time="2012-01-12T02:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -218,10 +218,10 @@
 			Language="JPN_KANJI">
 			<Text>いろんなことを　教えてくれる
 こどもは　わたしの　先生▽
-ポケモンは　あなたの　先生</Text>
+ポケモンは　あなたの　先生ね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:59:41" />
+				Time="2012-01-12T02:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -475,11 +475,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくらの　わざマシン
-よろこぶ　ポケモンが　いるといいな！</Text>
+			<Text>わざマシン４０「つばめがえし」！▼
+しょうぶの　きめてに　なったら
+あげた　ぼくたちも　うれしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T06:27:45" />
+				Time="2012-01-12T02:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -487,11 +488,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくらの　わざマシン
-喜ぶ　ポケモンが　いるといいな！</Text>
+			<Text>わざマシン４０「つばめがえし」！▼
+勝負の　決め手に　なったら
+あげた　ぼくたちも　うれしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T06:27:54" />
+				Time="2012-01-12T02:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

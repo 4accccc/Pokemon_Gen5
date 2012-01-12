@@ -73,13 +73,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『アンタらも
+			<Text>[Name:TrainerName Idx="1" ]『……アンタらも
 プラズマだん　だよな？▼
 さっきの　プラズマだんと
 なにが　ちがうか　おしえろよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:22:29" />
+				Time="2012-01-12T01:37:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -87,13 +87,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『アンタらも
+			<Text>[Name:TrainerName Idx="1" ]『……アンタらも
 プラズマ団　だよな？▼
 さっきの　プラズマ団と
 なにが　違うか　教えろよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:22:37" />
+				Time="2012-01-12T01:37:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1101,14 +1101,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　ゾロアは
-Ｎさまが　トモダチとして▽
-あいされた　ポケモンだ▼
+Ｎさまの　トモダチとして▽
+Ｎさまを　ささえていた　ポケモン▼
 イッシュには　ゾロアの　ほかにも
-Ｎさまが　トモダチと　なさった▽
+Ｎさまに　ちからを　かしていた▽
 ポケモンが　おおく　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T10:51:40" />
+				Time="2012-01-12T01:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1117,14 +1117,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　ゾロアは
-Ｎさまが　トモダチとして▽
-愛された　ポケモンだ▼
-イッシュには　ゾロアの　他にも
-Ｎさまが　トモダチと　なさった▽
+Ｎさまの　トモダチとして▽
+Ｎさまを　支えていた　ポケモン▼
+イッシュには　ゾロアの　ほかにも
+Ｎさまに　力を　貸していた▽
 ポケモンが　多く　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T10:51:50" />
+				Time="2012-01-12T01:43:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1202,10 +1202,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ポケモン入手後、自動で表示
-・データコンバート（仮称）実行していない</Comment>
+・おもいでリンク実行していない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:25:19" />
+				Time="2012-01-12T01:43:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1242,12 +1242,12 @@
 そだって　おられなかったのだろう……▼
 とはいえ　プラズマだんの
 おう　として　イッシュを　さわがせた▼
-その　つみを　つぐなえるよう
+つみを　つぐなえるよう
 でんせつの　ポケモンとの　たびで▽
-せいちょう　なされると　いいのだが</Text>
+そだっておられると　いいのだが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T10:10:28" />
+				Time="2012-01-12T01:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1261,13 +1261,13 @@
 理解する　力は　まだまだ▽
 未成育だったのだろう……▼
 とはいえ　プラズマ団の
-王として　イッシュを　さわがせた▼
-その罪を　つぐなえるよう
+王として　イッシュを　騒がせた▼
+罪を　つぐなえるよう
 伝説の　ポケモンとの　旅で▽
-成長なされると　いいのだが</Text>
+成熟なされていると　いいのだが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T10:10:59" />
+				Time="2012-01-12T01:44:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2156,14 +2156,14 @@ Nの　気持ちは　わかりません▼
 			<Text>[Name:TrainerName Idx="1" ]『なんだよ▼
 にげた　プラズマだんが
 おきざりに　した　ポケモンが▽
-けっこう　いるんだってよ▼
+けっこう　いるんだって▼
 で　オレも
 もちぬしさがしを　てつだうんだ▼
 オマエ　せっかく　きたんだから
 オレと　しょうぶ　していけよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T11:42:13" />
+				Time="2012-01-12T01:47:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2174,14 +2174,14 @@ Nの　気持ちは　わかりません▼
 			<Text>[Name:TrainerName Idx="1" ]『なんだよ▼
 逃げた　プラズマ団が
 おきざりに　した　ポケモンが▽
-けっこう　いるんだってよ▼
+けっこう　いるんだって▼
 で　オレも
 持ち主探しを　手伝うんだ▼
 オマエ　せっかく　来たんだから
 オレと　勝負していけよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T11:42:20" />
+				Time="2012-01-12T01:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

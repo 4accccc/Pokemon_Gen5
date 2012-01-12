@@ -1665,10 +1665,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サンヨウレストラン　名物
-[Name:PokemonName Idx="1" ]ショー　見ていかない？</Text>
+[Name:PokemonName Idx="1" ]ショー　みていかない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T08:25:49" />
+				Time="2012-01-11T14:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1774,11 +1774,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そっかあ……　おもしろさには
-じしんが　あるから　また　きてね！</Text>
+			<Text>そっかあ……　おもしろさは
+おりがみつき　なんだけどな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T06:56:49" />
+				Time="2012-01-11T14:17:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1786,11 +1786,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そっかあ……　おもしろさには
-自信が　あるから　また　来てね！</Text>
+			<Text>そっかあ……　おもしろさは
+折り紙つき　なんだけどな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T06:56:55" />
+				Time="2012-01-11T14:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2301,10 +2301,10 @@
 			Language="JPN">
 			<Comment>♀
 ・あたりの場合
-・0＝アイテム名（No584「こだいのどうか」）</Comment>
+・0＝アイテム名（No000「おおきなキノコ」）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:52:28" />
+				Time="2012-01-11T14:17:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -104,6 +104,13 @@
 				Time="2011-09-21T07:29:27" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T14:10:36" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -164,6 +171,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-21T07:29:29" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T14:10:37" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

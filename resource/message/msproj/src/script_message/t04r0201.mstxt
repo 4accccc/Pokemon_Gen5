@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブルジョワールいっかの　みなさんは
-とおくへ　ひっこし　したのに▽
-おとうさんだけ　ここに　のこって……</Text>
+			<Text>ブルジョワールいっかの　みなさん▼
+おとうさんを　のこして
+とおくへ　ひっこし　したそうだよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:47:48" />
+				Time="2012-01-12T03:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブルジョワール一家の　みなさんは
-遠くへ　引越し　したのに▽
-お父さんだけ　ここに　残って……</Text>
+			<Text>ブルジョワール一家の　みなさん▼
+お父さんを　残して
+遠くへ　引越し　したそうだよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:47:49" />
+				Time="2012-01-12T03:23:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -324,12 +324,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ……
-だいじなのは　じぶんが▽
+			<Text>フフフ……▼
+だいじなのは　じぶんが
 なっとく　したか　どうかさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:48:31" />
+				Time="2012-01-12T03:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -337,12 +337,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ……
-大事なのは　自分が▽
+			<Text>フフフ……▼
+大事なのは　自分が
 納得したか　どうかさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:08:20" />
+				Time="2012-01-12T03:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

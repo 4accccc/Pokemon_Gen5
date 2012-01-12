@@ -618,12 +618,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　たくさん　いるだろ？▼
-しゅるいによって　おぼえられる　わざ
-おぼえられない　わざが　あるんだ</Text>
+			<Text>ポケモンによって　おぼえられる　わざ
+おぼえられない　わざが　あるんだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T08:52:11" />
+				Time="2012-01-12T01:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -631,12 +630,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　たくさん　いるだろ？▼
-種類によって　覚えられる技
-覚えられない技が　あるんだ</Text>
+			<Text>ポケモンによって　覚えられる技
+覚えられない技が　あるんだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T08:52:16" />
+				Time="2012-01-12T01:53:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

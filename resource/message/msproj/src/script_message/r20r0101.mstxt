@@ -92,16 +92,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つれている　ポケモンは　１ぴき！
-[Name:PokemonName ]が　　とても　すきなのね▼
-でも　だいじょうぶ？
-[Name:PokemonName ]が　にがてな▽
-タイプが　でてきたら　くろうするわよ▼
+			<Text>連れている　ポケモンは　１匹！
+[Name:PokemonName ]が　　とても　好きなのね▼
+でも　大丈夫？
+[Name:PokemonName ]が　苦手な▽
+タイプが　でてきたら　苦労するわよ▼
 ほら！　これを　あげるから
-なかまを　ふやしたら　どうかしら？▼</Text>
+仲間を　増やしたら　どうかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T07:35:00" />
+				Time="2012-01-12T02:36:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -162,13 +162,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！▼
-でも　なかまは　おおければ
-おおいほど　たびは　たのしいはずよ！▼
+でも　仲間は　多ければ
+多いほど　旅は　楽しいはずよ！▼
 ほら！　これを　あげるから
-ポケモンを　いっぱい　つかまえたら？▼</Text>
+ポケモンを　いっぱい　捕まえたら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T05:09:12" />
+				Time="2012-01-12T02:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -12,13 +12,13 @@
 ずいぶんと　たいへんな
 ルートを　えらぶもんだな▼
 まあ　いいや
-オマエの　かってだもんな▽
+オマエの　かって　だもんな▽
 そのかわり　はやく　こいよ▼
 セイガイハシティには　サザナミの
 マリンチューブからも　いけるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T10:40:25" />
+				Time="2012-01-11T14:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -61,6 +61,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-07T10:30:56" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T14:12:51" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

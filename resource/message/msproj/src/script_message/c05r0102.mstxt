@@ -190,12 +190,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じぶんを　たかめるには
-じぶんよりも　すごい　ひとたちの▽
-たたかいを　さんこうに　することね</Text>
+			<Text>じぶんよりも　すごい　ひとたちの
+たたかいを　さんこうに　すれば▽
+なにか　まなべることが　あるかもね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:30:37" />
+				Time="2012-01-12T01:57:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -203,12 +203,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分を　より　高めるには
-自分よりも　すごい　人たちの▽
-戦いを　参考に　することね</Text>
+			<Text>自分よりも　すごい　人たちの
+戦いを　参考に　すれば▽
+なにか　学べることが　あるかもね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:31:02" />
+				Time="2012-01-12T01:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

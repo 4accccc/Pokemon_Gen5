@@ -2035,12 +2035,12 @@ BREEDERW</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>こういう　しょうぶを　みてると
-ホドモエに　できた　という▼
-ポケモンワールドトーナメントに
-いってみたく　なっちゃうね</Text>
+ホドモエに　できる　という▼
+ポケモンワールドトーナメントも
+どんな　ところか　きになっちゃうね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:05:37" />
+				Time="2012-01-12T04:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2049,12 +2049,12 @@ BREEDERW</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こういう　勝負を　みてると
-ホドモエに　できた　という▼
-ポケモンワールドトーナメントに
-行ってみたく　なっちゃうね</Text>
+ホドモエに　できる　という▼
+ポケモンワールドトーナメントも
+どんな　施設か　気になっちゃうね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:05:32" />
+				Time="2012-01-12T04:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3673,11 +3673,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>うあ！　ここ！！▼
-はいれそうな　スキマが　あるよ
+はいれそうな　すきまが　あるよ
 ね！　みてみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:31:39" />
+				Time="2012-01-12T04:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3686,11 +3686,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うあ！　ここ！！▼
-入れそうな　スキマが　あるよ
+入れそうな　すきまが　あるよ
 ね！　みてみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:00:17" />
+				Time="2012-01-12T04:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4033,10 +4033,10 @@ musician_01</Text>
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>A</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-10T02:44:20" />
+				Time="2012-01-12T04:03:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -4062,10 +4062,10 @@ musician_01</Text>
 Nという　ポケモントレーナーと
 であったんだってね▼
 だから　というわけでは　ないけど
-ぼくと　たたかってくれないか？</Text>
+ぼくと　たたかってくれない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:42:23" />
+				Time="2012-01-12T04:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4077,10 +4077,10 @@ Nという　ポケモントレーナーと
 Nという　ポケモントレーナーと
 出会ったんだってね▼
 だから　というわけでは　ないけど
-ぼくと　戦ってくれないか？</Text>
+ぼくと　戦ってくれない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:43:44" />
+				Time="2012-01-12T04:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4217,10 +4217,11 @@ Nという　ポケモントレーナーと
 			Language="JPN">
 			<Comment>♂：データコンバート
 ・はい選択時
-・続けてトレーナー戦闘に</Comment>
+・続けてトレーナー戦闘に
+・1＝データコンバートした前作主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:31:17" />
+				Time="2012-01-12T04:04:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4457,10 +4458,10 @@ Nという　ポケモントレーナーと
 			Language="JPN">
 			<Text>きみ　すごかったぜ！▼
 チャールズも……
-まあ　すごかったな！▼</Text>
+まあ　それなりに　すごかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-10T02:48:16" />
+				Time="2012-01-12T04:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4470,10 +4471,10 @@ Nという　ポケモントレーナーと
 			Language="JPN_KANJI">
 			<Text>きみ　すごかったぜ！▼
 チャールズも……
-まあ　すごかったな！▼</Text>
+まあ　それなりに　すごかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-10T02:48:19" />
+				Time="2012-01-12T04:04:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

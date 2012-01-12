@@ -119,11 +119,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いま　あなたが　であった
-ポケモンは　テラキオン！▼</Text>
+			<Text>いま　あなたの　めのまえで
+そんざいかんを　はなつ▽
+その　ポケモンは　テラキオン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T09:12:42" />
+				Time="2012-01-12T02:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,11 +132,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　あなたが　であった
-ポケモンは　テラキオン！▼</Text>
+			<Text>いま　あなたの　眼前で
+存在感を　放つ▽
+その　ポケモンは　テラキオン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T09:12:46" />
+				Time="2012-01-12T02:31:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

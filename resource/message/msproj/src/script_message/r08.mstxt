@@ -13,10 +13,10 @@
 つりをする　チーム！▼
 くわしいことを　ききたければ
 ビレッジブリッジに　ある▽
-オレの　いえに　きてよ！▼</Text>
+オレの　いえに　カモン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T05:29:37" />
+				Time="2012-01-12T03:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -31,10 +31,10 @@
 釣りをする　チーム！▼
 詳しいことを　ききたければ
 ビレッジブリッジに　ある▽
-オレの　家に　来てよ！▼</Text>
+オレの　家に　カモン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T05:29:29" />
+				Time="2012-01-12T03:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -593,10 +593,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-09T04:30:36" />
+				Time="2012-01-12T03:42:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

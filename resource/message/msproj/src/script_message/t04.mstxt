@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まてッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『まちなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T02:30:59" />
+				Time="2012-01-12T03:07:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待てッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『待ちなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T02:31:00" />
+				Time="2012-01-12T03:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -248,13 +248,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>というわけで　[Name:TrainerName ]！
-おまえも　てつだってくれよッ！▼
+これからも　たすけてくれよッ！▼
 あと　ポケモンずかんも　がんばれよ！▼
 せいしきに　かんせいを
 たのまれたのは　オマエ　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T07:36:39" />
+				Time="2012-01-12T03:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -263,13 +263,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>というわけで　[Name:TrainerName ]！
-おまえも　手伝ってくれよッ！▼
+これからも　助けてくれよッ！▼
 あと　ポケモン図鑑も　がんばれよ！▼
 正式に　完成を
 頼まれたのは　オマエ　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-27T09:14:47" />
+				Time="2012-01-12T03:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -316,14 +316,13 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……なんだよ！▼
 べつに　シロナさんの　ウワサをきいて
-ちょうせん　とかじゃないからッ！▼
+ちょうせんに　きたんじゃないぜッ！▼
 きになったのは
 かいていいせき　だよッ！▼
-ほら！
-オマエにも　コレ　やるよッ！▼</Text>
+ほら！　コレッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T08:45:22" />
+				Time="2012-01-12T03:10:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -333,14 +332,13 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……なんだよ！▼
 別に　シロナさんの　ウワサをきいて
-挑戦とかじゃ　ないからッ！▼
+挑戦に　来たんじゃないぜッ！▼
 気になったのは
 海底遺跡　だよッ！▼
-ほら！
-オマエにも　コレ　やるよッ！▼</Text>
+ほら！　コレッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T08:45:30" />
+				Time="2012-01-12T03:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

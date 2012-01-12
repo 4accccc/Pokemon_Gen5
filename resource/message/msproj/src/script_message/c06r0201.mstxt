@@ -135,10 +135,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃ　いきましょ！</Text>
+			<Text>ウフフ
+それでは　とばしますよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:11:11" />
+				Time="2012-01-12T02:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -146,10 +147,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃ　行きましょ！</Text>
+			<Text>ウフフ
+それでは　飛ばしますよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:11:20" />
+				Time="2012-01-12T02:17:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
