@@ -79,6 +79,7 @@ struct _DEBUG_POKEWOOD_WORK
   u32         num;
   DEBUG_MENU_EVENT_WORK *d_work;
   u16 list_pos, cursor_pos;
+  u8  ending; // シナリオフラグ制御のモード設定
 };
 
 //typedef DEBUG_MENU_EVENT_WORK POKEWOOD_FUNC_WORK;
@@ -157,6 +158,10 @@ static BOOL debugMenu_scenario_full_open(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk);
 static GMEVENT_RESULT debugMenuPokewoodBattleSetupEvent( GMEVENT *event, int *seq, void *wk );
 static BOOL debugMenuPokewoodCallBattleSetupEvent( DEBUG_POKEWOOD_WORK *wk );
+static GMEVENT_RESULT debugMenuPokewoodScenarioFlagEvent( GMEVENT *event, int *seq, void *wk );
+static BOOL debugMenuCallPokewoodScenarioSuccessFlagEvent( DEBUG_POKEWOOD_WORK *wk );
+static BOOL debugMenuCallPokewoodScenarioBadFlagEvent( DEBUG_POKEWOOD_WORK *wk );
+static BOOL debugMenuCallPokewoodScenarioStrangeFlagEvent( DEBUG_POKEWOOD_WORK *wk );
 
 
 #define NUMINPUT_NONE (0xFFFF)
@@ -200,6 +205,9 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
 //  { DEBUG_STRID_POKEWOOD_REC_03, (void*)debugMenuCallProc_PokewoodRec3, GFL_OVERLAY_BLANK_ID },  // 
 //  { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
   { DEBUG_STRID_POKEWOOD_BATTLE_SETUP, (void*)debugMenuPokewoodCallBattleSetupEvent, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_PKWD_LIST_SUCCESS, (void*)debugMenuCallPokewoodScenarioSuccessFlagEvent, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_PKWD_LIST_BAD, (void*)debugMenuCallPokewoodScenarioBadFlagEvent, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_PKWD_LIST_STRANGE, (void*)debugMenuCallPokewoodScenarioStrangeFlagEvent, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
@@ -1098,7 +1106,9 @@ static void DrawNum( POKEWOOD_FUNC_WORK *work )
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
-
+//----------------------------------------------------------------------------------
+// バトル用デバッグフラグ設定BMPLIST呼び出し
+//----------------------------------------------------------------------------------
 static BOOL debugMenuPokewoodCallBattleSetupEvent( DEBUG_POKEWOOD_WORK *wk )
 {
   GAMESYS_WORK *gsys       = wk->gmSys;
@@ -1277,6 +1287,401 @@ static u16 getPokewoodBattleSetupList( GAMESYS_WORK* gsys, void* cb_work )
   return DEBUG_POKEWOOD_BATTLE_SETUP_NUM;
 }
 
+
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+// ポケウッドシナリオ達成状況変更用BMPLIST呼び出し
+//----------------------------------------------------------------------------------
+static DEBUG_POKEWOOD_WORK *_init_debugScenarioFlagMenu( DEBUG_POKEWOOD_WORK *wk );
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	シナリオ成功フラグ制御BMPLIST呼び出し
+ */
+//----------------------------------------------------------------------------------
+static BOOL debugMenuCallPokewoodScenarioSuccessFlagEvent( DEBUG_POKEWOOD_WORK *wk )
+{
+  DEBUG_POKEWOOD_WORK *work = _init_debugScenarioFlagMenu( wk );
+
+  work->ending    = 0;    // 成功ENDリスト開始
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	シナリオ失敗フラグ制御BMPLIST呼び出し
+ */
+//----------------------------------------------------------------------------------
+static BOOL debugMenuCallPokewoodScenarioBadFlagEvent( DEBUG_POKEWOOD_WORK *wk )
+{
+  DEBUG_POKEWOOD_WORK *work = _init_debugScenarioFlagMenu( wk );
+
+  work->ending    = 1;    // 成功ENDリスト開始
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	シナリオストレンジフラグ制御BMPLIST呼び出し
+ */
+//----------------------------------------------------------------------------------
+static BOOL debugMenuCallPokewoodScenarioStrangeFlagEvent( DEBUG_POKEWOOD_WORK *wk )
+{
+  DEBUG_POKEWOOD_WORK *work = _init_debugScenarioFlagMenu( wk );
+
+  work->ending    = 2;    // 成功ENDリスト開始
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	シナリオフラグ制御BMPLIST呼び出しサブ
+ *
+ * @param   wk		
+ *
+ * @retval  DEBUG_POKEWOOD_WORK *		
+ */
+//----------------------------------------------------------------------------------
+static DEBUG_POKEWOOD_WORK *_init_debugScenarioFlagMenu( DEBUG_POKEWOOD_WORK *wk )
+{
+  GAMESYS_WORK *gsys       = wk->gmSys;
+  GMEVENT *event           = wk->gmEvent;
+  HEAPID heapID            = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_POKEWOOD_WORK *work;
+
+  GMEVENT_Change( event, debugMenuPokewoodScenarioFlagEvent, sizeof(DEBUG_POKEWOOD_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_POKEWOOD_WORK) );
+
+  work->gmSys     = gsys;
+  work->gmEvent   = event;
+  work->heapID    = heapID;
+  work->fieldWork = fieldWork;
+
+  return work;
+}
+
+//-----------------------------------------------------------------------------
+///リスト メニューヘッダー
+//-----------------------------------------------------------------------------
+static const FLDMENUFUNC_HEADER DebugPokewoodScenarioFlagMenuHeader =
+{
+  1,    //リスト項目数
+  10,   //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+// リスト起動モードで集計するフラグ指定を変えるためのテーブル
+static const ending_tbl[]={
+  PWSV_TYPE_SENARIO_SUCCESS,    ///< シナリオ成功終了済みフラグ
+  PWSV_TYPE_SENARIO_BAD,        ///< バッドEND取得済みフラグ  
+  PWSV_TYPE_SENARIO_STRANGE,    ///< ストレンジEND取得済みフラグ
+};
+
+//-----------------------------------------------------------------------------
+///メニューリスト
+//-----------------------------------------------------------------------------
+
+#define DEBUG_POKEWOOD_SCENARIO_FLAG_NUM  ( 40 )   /// 項目数
+static void makePokewoodScenarioSuccessFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static void makePokewoodScenarioBadFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static void makePokewoodScenarioStrangeFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static u16 getPokewoodScenarioFlagListNum( GAMESYS_WORK* gsys, void* cb_work );
+
+//-----------------------------------------------------------------------------
+/// デバッグメニュー初期化パラメータ
+//-----------------------------------------------------------------------------
+static const DEBUG_MENU_INITIALIZER DebugMenuPokewoodScenarioSuccessFlagInitializer = {
+  NARC_debug_message_debug_pokewood_dat,
+  0,
+  NULL,
+  &DebugPokewoodScenarioFlagMenuHeader,
+  1, 1, 14, 17,
+  makePokewoodScenarioSuccessFlagList,
+  getPokewoodScenarioFlagListNum,
+};
+static const DEBUG_MENU_INITIALIZER DebugMenuPokewoodScenarioBadFlagInitializer = {
+  NARC_debug_message_debug_pokewood_dat,
+  0,
+  NULL,
+  &DebugPokewoodScenarioFlagMenuHeader,
+  1, 1, 14, 17,
+  makePokewoodScenarioBadFlagList,
+  getPokewoodScenarioFlagListNum,
+};
+static const DEBUG_MENU_INITIALIZER DebugMenuPokewoodScenarioStrangeFlagInitializer = {
+  NARC_debug_message_debug_pokewood_dat,
+  0,
+  NULL,
+  &DebugPokewoodScenarioFlagMenuHeader,
+  1, 1, 14, 17,
+  makePokewoodScenarioStrangeFlagList,
+  getPokewoodScenarioFlagListNum,
+};
+
+static const DEBUG_MENU_INITIALIZER *DebugMenuPokewoodScenarioFlagInitializer[]={
+  &DebugMenuPokewoodScenarioSuccessFlagInitializer,
+  &DebugMenuPokewoodScenarioBadFlagInitializer,
+  &DebugMenuPokewoodScenarioStrangeFlagInitializer,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	バトル用デバッグ設定を行うBMPLISTイベント
+ *
+ * @param   event	
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  static		
+ */
+//----------------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuPokewoodScenarioFlagEvent( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_POKEWOOD_WORK *work = wk;
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(work->gmSys) );
+  u32 ret;
+
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID, 
+                                        DebugMenuPokewoodScenarioFlagInitializer[work->ending],
+                                        work->list_pos, work->cursor_pos );
+    (*seq)++;
+    break;
+
+  case 1:
+
+    ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+    switch( ret ){
+    case FLDMENUFUNC_NULL:    // 操作無し
+      break;
+
+    case FLDMENUFUNC_CANCEL:  // キャンセル
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+    default:
+      // Aボタンを押すと項目反転
+      {
+        int flag = POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, ending_tbl[work->ending], ret );
+        OS_Printf("ret:%d, flag:%d\n", ret,flag);
+        POKEWOOD_SAVEDATA_ChangePokewoodFlag( ps, ending_tbl[work->ending], ret, flag^1 );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    // メニュー再描画
+    FLDMENUFUNC_GetListCursor( work->menuFunc, &work->list_pos, &work->cursor_pos );
+    FLDMENUFUNC_DeleteMenu( work->menuFunc );
+    (*seq) = 0;
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+  
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト生成
+ *
+ *	@param	GAMESYS_WORK * gsys
+ *	@param	*list
+ *	@param	heapID
+ *	@param	msgData
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void makePokewoodScenarioSuccessFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  int i;
+  STRBUF *strBuf1   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *strBuf2   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *expandBuf = GFL_STR_CreateBuffer( 64, heapID );
+  FIELDMAP_WORK * fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
+  GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_debug_pokewood_dat );
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
+  WORDSET * wset;
+
+  wset = WORDSET_Create( heapID );
+
+   GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_SCENARIO01, strBuf1 );
+
+  for( i = 0; i < DEBUG_POKEWOOD_SCENARIO_FLAG_NUM; i++ ){
+    // デバッグ項目反映の場合は赤文字、反映していない時は白文字
+    if(POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_SUCCESS, i)){
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_MARU, strBuf2 );
+    }else{
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_BATU, strBuf2 );
+    }
+    WORDSET_RegisterNumber( wset, 0, i+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_RegisterWord( wset, 1, strBuf2, 0, 0, 0 );
+    WORDSET_ExpandStr( wset, expandBuf, strBuf1 );
+    FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
+  }
+
+  WORDSET_Delete( wset );
+  
+  GFL_MSG_Delete( pMsgData );
+  GFL_HEAP_FreeMemory( expandBuf );
+  GFL_HEAP_FreeMemory( strBuf2   );
+  GFL_HEAP_FreeMemory( strBuf1   );
+
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト生成
+ *
+ *	@param	GAMESYS_WORK * gsys
+ *	@param	*list
+ *	@param	heapID
+ *	@param	msgData
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void makePokewoodScenarioBadFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  int i;
+  STRBUF *strBuf1   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *strBuf2   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *expandBuf = GFL_STR_CreateBuffer( 64, heapID );
+  FIELDMAP_WORK * fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
+  GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_debug_pokewood_dat );
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
+  WORDSET * wset;
+
+  wset = WORDSET_Create( heapID );
+
+   GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_SCENARIO01, strBuf1 );
+
+  for( i = 0; i < DEBUG_POKEWOOD_SCENARIO_FLAG_NUM; i++ ){
+    // デバッグ項目反映の場合は赤文字、反映していない時は白文字
+    if(POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_BAD, i)){
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_MARU, strBuf2 );
+    }else{
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_BATU, strBuf2 );
+    }
+    WORDSET_RegisterNumber( wset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_RegisterWord( wset, 1, strBuf2, 0, 0, 0 );
+    WORDSET_ExpandStr( wset, expandBuf, strBuf1 );
+    FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
+  }
+
+  WORDSET_Delete( wset );
+  
+  GFL_MSG_Delete( pMsgData );
+  GFL_HEAP_FreeMemory( expandBuf );
+  GFL_HEAP_FreeMemory( strBuf2   );
+  GFL_HEAP_FreeMemory( strBuf1   );
+
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト生成
+ *
+ *	@param	GAMESYS_WORK * gsys
+ *	@param	*list
+ *	@param	heapID
+ *	@param	msgData
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void makePokewoodScenarioStrangeFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  int i;
+  STRBUF *strBuf1   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *strBuf2   = GFL_STR_CreateBuffer( 64, heapID );
+  STRBUF *expandBuf = GFL_STR_CreateBuffer( 64, heapID );
+  FIELDMAP_WORK * fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
+  GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_debug_pokewood_dat );
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
+  WORDSET * wset;
+
+  wset = WORDSET_Create( heapID );
+
+   GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_SCENARIO01, strBuf1 );
+
+  for( i = 0; i < DEBUG_POKEWOOD_SCENARIO_FLAG_NUM; i++ ){
+    // デバッグ項目反映の場合は赤文字、反映していない時は白文字
+    if(POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_STRANGE, i)){
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_MARU, strBuf2 );
+    }else{
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_PKWD_FLAG_BATU, strBuf2 );
+    }
+    WORDSET_RegisterNumber( wset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+    WORDSET_RegisterWord( wset, 1, strBuf2, 0, 0, 0 );
+    WORDSET_ExpandStr( wset, expandBuf, strBuf1 );
+    FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
+  }
+
+  WORDSET_Delete( wset );
+  
+  GFL_MSG_Delete( pMsgData );
+  GFL_HEAP_FreeMemory( expandBuf );
+  GFL_HEAP_FreeMemory( strBuf2   );
+  GFL_HEAP_FreeMemory( strBuf1   );
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト項目数を返す
+ *
+ *	@param	GAMESYS_WORK* gsys
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u16 getPokewoodScenarioFlagListNum( GAMESYS_WORK* gsys, void* cb_work )
+{
+  return DEBUG_POKEWOOD_SCENARIO_FLAG_NUM;
+}
 
 
 #endif  //  PM_DEBUG

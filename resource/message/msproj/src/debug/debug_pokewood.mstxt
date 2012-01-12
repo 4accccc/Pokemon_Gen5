@@ -2289,4 +2289,160 @@
 				Time="2011-09-14T12:17:54" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_LIST_SUCCESS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シナリオ成功制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:33:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シナリオ成功制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:33:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_LIST_BAD"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シナリオ失敗制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:33:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シナリオ失敗制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:34:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_LIST_STRANGE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シナリオSTRANGE制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:33:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シナリオSTRANGE制御</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:34:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_FLAG_SCENARIO01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シナリオ[Digit:2digits ]：[Digit:1digit Idx="1" ]</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:32:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シナリオ[Digit:2digits ]：[Digit:1digit Idx="1" ]</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:32:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_FLAG_BATU"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>×</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:13:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>×</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T09:13:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_PKWD_FLAG_MARU"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>○</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T10:12:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>○</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2012-01-07T10:12:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

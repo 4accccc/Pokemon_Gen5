@@ -65,6 +65,8 @@ extern void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
 extern void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys );
 extern void PKWDSYS_SetKanban( GAMEDATA * gamedata, PKWDSYS *pkwdsys, int rec_pos );
 
+extern void PKWDSYS_MoveKanbanTemporary( PKWDSYS *pkwdsys, u8 *Temporary );
+
 
 
 extern void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPARTY *entry_party );

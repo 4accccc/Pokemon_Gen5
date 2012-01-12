@@ -314,6 +314,7 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
   }else if(result==BTL_POKEWOOD_RESULT_BAD){
     POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_BAD,     scenario_no );
   }
+  OS_Printf("ending result=%d\n",result);
 }
 
 
@@ -437,10 +438,12 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
   // ストレンジEND関連
   {
     int strange_count = POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_STRANGE);
+    OS_Printf("すとれんじENDカウント=%d\n", strange_count);
 
     // 初めてのストレンジENDチェック
     if(strange_count!=0){
       MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_STRANGE_FIRST );
+      OS_Printf("初すとれんじENDメダル\n");
     }
 
     // 全ての映画でストレンジENDにしたかチェック
@@ -618,6 +621,24 @@ void PKWDSYS_SetKanban( GAMEDATA * gamedata, PKWDSYS *pkwdsys, int rec_pos )
 
   if(pkwdsys->scenario_no<POKEWOOD_PLAY_MAX){
     // 看板の扱いは0=無しなので、＋１して渡す
-    POKEWOOD_SAVEDATA_SetKanbanNo( ps, rec_pos, scenario_logo_tbl[pkwdsys->scenario_no]+1 );
+    POKEWOOD_SAVEDATA_SetKanbanNo( ps, rec_pos, scenario_logo_tbl[pkwdsys->scenario_no]+1, 
+                                   pkwdsys->KanbanTemporary );
   }
 }
+
+//=============================================================================================
+/**
+ * @brief   ポケウッド録画データから取得した全ての上映映画の看板情報を移動するための関数
+ *
+ * @param   pkwdsys		  
+ * @param   Temporary		
+ */
+//=============================================================================================
+void PKWDSYS_MoveKanbanTemporary( PKWDSYS *pkwdsys, u8 *Temporary )
+{
+  int i;
+  for(i=0;i<POKEWOOD_SAVEDATA_MAX;i++){
+    pkwdsys->KanbanTemporary[i] = Temporary[i];
+  }
+}
+

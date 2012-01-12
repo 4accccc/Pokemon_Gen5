@@ -102,6 +102,8 @@ typedef struct {
   PKWD_BRIEFING_PARAM pkwd_briefing_param;  ///< 上映前あらすじアプリ呼び出しパラメータ
   PKWD_BRIEFING_PARAM pkwd_endroll_param;   ///< エンドロールアプリ呼び出しパラメータ
   STRBUF              *TrainerTypeName;     ///< 戦闘内の敵トレーナータイプ名使用用STRBUF
+  
+  u8 KanbanTemporary[8];
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
@@ -630,7 +632,7 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
   {
     // デバッグフラグを設定する
     int i;
-    for(i=0;i<8;i++){
+    for(i=0;i<POKEWOOD_SAVEDATA_MAX;i++){
       if(POKEWOOD_SAVEDATA_GetBattleDebugFlag(i)){
         bsp->DebugFlagBit |= 1<<(debug_flag_tbl[i]);
       }
@@ -969,7 +971,6 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
 
 // シナリオ毎に使用するポスター定義
 #include "../app/pkwd_announce/pkwd_movie_poster.cdat"
-
 //----------------------------------------------------------------------------------
 /**
  * @brief	看板書き換え用の情報収集
@@ -978,10 +979,11 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
  * @param   heapID		heapID
  */
 //----------------------------------------------------------------------------------
-static void getKanbanInfomation( GAMEDATA *gamedata, HEAPID heapID )
+static void getKanbanInfomation( GAMEDATA *gamedata, HEAPID heapID, PREW *prew )
 {
   POKEWOOD_SAVEDATA *pokewood_sv = GAMEDATA_GetPokewoodSavedata(gamedata);
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+
   LOAD_RESULT load_result;
   int scenario_no,i;
   BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
@@ -995,11 +997,15 @@ static void getKanbanInfomation( GAMEDATA *gamedata, HEAPID heapID )
       // シナリオＮＯ取得
       scenario_no = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL);
       // 看板NOを保存
-      POKEWOOD_SAVEDATA_SetKanbanTemporary( pokewood_sv, i, scenario_logo_tbl[scenario_no]+1);
-    
+//      POKEWOOD_SAVEDATA_SetKanbanTemporary( pokewood_sv, i, scenario_logo_tbl[scenario_no]+1);
+//      PKWDSYS_SetKanbanTemporary( *pkwdsys, i, scenario_logo_tbl[scenario_no]+1 );
+      prew->KanbanTemporary[i] = scenario_logo_tbl[scenario_no]+1;
     }else{
       // i番目のシナリオには看板が無いことを保存
-      POKEWOOD_SAVEDATA_SetKanbanTemporary( pokewood_sv, i, 0 );
+//      POKEWOOD_SAVEDATA_SetKanbanTemporary( pokewood_sv, i, 0 );
+//      PKWDSYS_SetKanbanTemporary( *pkwdsys, i, 0 );
+      prew->KanbanTemporary[i] = 0;
+
     }
 
   }
@@ -1069,7 +1075,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
     { // 逃げてなかったらセーブする
 
       // 看板書き換え用の情報収集
-      getKanbanInfomation( gamedata, prew->heapID );
+      getKanbanInfomation( gamedata, prew->heapID, prew );
 
       rewritePokewoodRec( gamedata, pbew->bp, prew->heapID );
     }
@@ -1113,7 +1119,8 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
       }
       // 興行収入データの作成
       PKWDSYS_MakeBoxofficeRecord( pkwdsys, pbew->bp, pbew->bp->pokewoodSenario );
-
+      // 看板情報の移動
+      PKWDSYS_MoveKanbanTemporary( pkwdsys, prew->KanbanTemporary );
     }
     deletePokewoodBSP( pbew->bp );
     (*seq) ++;

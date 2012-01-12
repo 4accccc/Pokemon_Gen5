@@ -65,5 +65,8 @@ struct _POKEWOOD_SYSTEM {
 
   /// ポケウッド撮影結果
   int pokewoodResult;
+
+  /// ポケウッド看板情報テンポラリ（録画データの全ての看板情報を保持するため）
+  u8  KanbanTemporary[POKEWOOD_SHOWING_MAX];
 };
 
