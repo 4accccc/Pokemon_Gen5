@@ -205,6 +205,8 @@ EVENT_START ev_pos_d10r0101_swplazmam_03
   _FLAG_SET( FV_D10R0101_SWPLAZMAM_01 )
   _FLAG_SET( FV_D10R0101_SWPLAZMAM_03 )
   _FLAG_SET( FV_D10R0101_SWRIVAL_01 )
+  //W21ƒ`ƒFƒŒƒ“”ñ•\Ž¦
+  _FLAG_SET( FV_W21_SWLEADER1_01 )
   //D10R0101 POS–³Œø
   $WK_SCENE_D10R0101_SWPLAZMA_01 = 2
   //========================================//
