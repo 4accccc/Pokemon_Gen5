@@ -1965,7 +1965,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
       }
       else
       {
-        WORDSET_RegisterHobbyName( p_word, 1, hobby-1 );
+        WORDSET_RegisterHobbyName( p_word, 1, hobby );
         *p_ret_wk = resort_offreco_sys_11_01;
       }
     }
@@ -1979,7 +1979,7 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
       }
       else
       {
-        WORDSET_RegisterNumber(p_word,1,1,2, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
+        WORDSET_RegisterNumber(p_word,1,lv,3, STR_NUM_DISP_LEFT,STR_NUM_CODE_DEFAULT);
         *p_ret_wk = resort_offreco_sys_12_01;
       }
     }

@@ -605,9 +605,8 @@ static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
 typedef struct
 {
   u8  special_deliverly :1;
-  u8  city_lv           :5;
-  u8  dummy             :2;
-  u8  dummy2;
+  u8  city_lv           :7;
+  u8  dummy;
   u16 want_job;       //‚È‚è‚½‚¢Ž{ÝID‚ª“ü‚Á‚Ä‚¢‚é
 }RESORT_BASIC2_DATA;
 
@@ -625,7 +624,6 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
 
-  p_wk->special_deliverly = 0; //»•i”Å‚Å‚±‚±‚ª‚OˆÈŠO‚Í‚ ‚è‚¦‚È‚¢
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
     RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
@@ -638,6 +636,12 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
     p_wk->city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
     p_wk->want_job = RESORT_OWNER_DATA_GetWantJob( p_own, p_mystatus );
     GF_ASSERT( p_wk->want_job < RESORT_SHOP_ID_MAX );
+
+#ifdef PM_DEBUG
+  p_wk->special_deliverly = RESORT_RECV_DATA_GetData( p_own, RESORT_DATA_PARAM_SPECIAL, NULL );
+#else
+  p_wk->special_deliverly = 0; //»•i”Å‚Å‚±‚±‚ª‚OˆÈŠO‚Í‚ ‚è‚¦‚È‚¢
+#endif
   }
 }
 
@@ -654,6 +658,10 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 {
   if( cp_wk->want_job >= RESORT_SHOP_ID_MAX )
+  {
+    return FALSE;
+  }
+  if( cp_wk->city_lv > 100 )
   {
     return FALSE;
   }
