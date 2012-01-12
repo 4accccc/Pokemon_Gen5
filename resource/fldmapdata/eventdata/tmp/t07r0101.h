@@ -11,6 +11,7 @@
 
 #define T07R0101_OLDMAN1_02                0
 #define T07R0101_MIDDLEMAN1_01             1
+#define T07R0101_WOMAN2_01                 2
 
 #endif //ZONE_T07R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t07r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

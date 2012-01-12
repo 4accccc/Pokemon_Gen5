@@ -25,6 +25,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t07r0101_middleman1_01
+_EVENT_DATA    ev_t07r0101_woman2_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -55,4 +56,11 @@ EVENT_START   ev_t07r0101_middleman1_01
   
   _EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
 }
+EVENT_END
+
+/**************************************************************/
+/*  WOMAN2：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_t07r0101_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_woman2_01 )
 EVENT_END

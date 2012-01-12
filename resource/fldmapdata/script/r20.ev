@@ -63,6 +63,10 @@ INIT_EVENT_START   ev_zone_r20
   ELSIF $WK_SCENE_R20 == 5 THEN
     _SXY_MOVE_NPC_POS( R20_SWRIVAL_01, DIR_DOWN , 141, 2, 645 )
   ENDIF
+  
+  IF $WK_SCENE_R20 >= 2 THEN
+    _SXY_MOVE_NPC_POS( R20_MOUNTMAN_01, DIR_DOWN , 160, 2, 643 )
+  ENDIF
 }
 INIT_EVENT_END
 
@@ -83,15 +87,14 @@ EVENT_START   ev_pos_r20_mountman_01
 
   IF $LCW_POSZ == 644 THEN
     _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z644 )
-    _TIME_WAIT(16)
+    _TIME_WAIT(46)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-    _OBJ_ANIME_WAIT()
   ELSIF $LCW_POSZ == 646 THEN
     _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z646 )
-    _TIME_WAIT(16)
+    _TIME_WAIT(46)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-    _OBJ_ANIME_WAIT()
   ENDIF
+  _OBJ_ANIME_WAIT()
   
   //メッセージ：おいおい！
   _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_02, R20_MOUNTMAN_01, POS_DEFAULT )
@@ -160,8 +163,14 @@ EVENT_START   ev_pos_r20_mountman_02
   
   //メッセージ：まいった
   _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_04, R20_MOUNTMAN_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  //アニメ：山男わきにどく
+  _OBJ_ANIME_AUTO( R20_MOUNTMAN_01, 160,643, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( R20_MOUNTMAN_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   
   //==================================//
   //R20 POS無効
