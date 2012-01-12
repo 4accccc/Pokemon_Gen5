@@ -20,7 +20,9 @@
 #include "resort_people.h"
 
 #ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) | defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_PEOPLE_BUFF_PRINT
+#endif
 #endif //PM_DEBUG
 
 //=============================================================================

@@ -23,7 +23,9 @@
 #include "resort_debug.h"
 
 #ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) | defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_RESORT_PRINT_ON
+#endif
 #endif
 
 #if defined(DEBUG_RESORT_PRINT_ON)
