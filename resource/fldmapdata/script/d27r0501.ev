@@ -100,7 +100,7 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
   //アニメ：主人公はじへ移動
-  IF $LCW_POSX == 12 THEN
+  IF $LCW_POSX == 11 THEN
     _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x11)
   ELSIF $LCW_POSX == 13 THEN
     _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x13)
@@ -137,19 +137,20 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   //カメラ操作　キュレム中心
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,643072,819200,0,1032192,56 )
+  _CAMERA_MOVE( 9688,0,643072,819200,0,1032192,24 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
-  _TIME_WAIT( 20 )
+  _TIME_WAIT( 12 )
   
   //キュレム：ヒュララ……
   _VOICE_PLAY(MONSNO_653,0)
   _GIZAPLAINWIN_MSG_POS( msg_d27r0501_poke10_02_01, POS_DOWN )
+  _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
   
   //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (32)
+  _CAMERA_DEF_MOVE ( 32 )
   //カメラ待ち
   _CAMERA_WAIT_MOVE()
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
@@ -166,10 +167,6 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   //ヴィオ：さて……
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_04 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
-  
-  //主人公向き合う
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_left_x12)
-  _OBJ_ANIME_WAIT()
   
   _TIME_WAIT( 12 )
   
@@ -194,10 +191,6 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_07 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
   _MSGWIN_CLOSE()
   
-  //アニメ：したっぱ主人公と向き合う
-  _OBJ_ANIME( D27R0501_SWPLAZMAM_01 , anm_swplazmam_look_rival)
-  _OBJ_ANIME_WAIT()
-  
   //ヴィオ：むう！
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_05 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
@@ -205,6 +198,10 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   //アニメ：主人公・ライバル、ヴィオに向き合う
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_u)
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
+  _OBJ_ANIME( D27R0501_SWPLAZMAM_01 , anm_swplazmam_look_rival)
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x13)
   _OBJ_ANIME_WAIT()
   
   //マルチバトル
@@ -309,7 +306,6 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   //W21マップチェンジ1
   _MAP_CHANGE_NO_FADE( ZONE_ID_W21, 795, -5, 241, DIR_DOWN )
   
-
 EVENT_END
 
 /************************************************************/
