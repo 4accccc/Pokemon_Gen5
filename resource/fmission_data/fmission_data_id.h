@@ -54,17 +54,17 @@
 #define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 42 )  ///<エモンガを 探せ！
 #define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 43 )  ///<メタグロスを 探せ！
 #define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 44 )  ///<ノコッチを 探せ！
-#define  FMISSION_ID_ITEM_KINOMI_MOVIE  ( 45 )  ///<木の実探し（メロエッタ用）
+#define  FMISSION_ID_ITEM_KINOMI_MOVIE  ( 45 )  ///<きのみ探しで 大冒険！(映画)
 #define  FMISSION_ID_EVENT_TRAIL_SP1  ( 46 )  ///<かくしあな_配信
 #define  FMISSION_ID_NPC_POKEQUIZ_SP1  ( 47 )  ///<図鑑クイズ_配信
 #define  FMISSION_ID_ITEM_KINOMI_SP1  ( 48 )  ///<きのみ_配信
 #define  FMISSION_ID_ITEM_TREASURE_SP1  ( 49 )  ///<宝探し_配信
 #define  FMISSION_ID_NPC_SHOCKSHOP_SP1  ( 50 )  ///<ショッキング_配信
 #define  FMISSION_ID_NPC_PRESENT_SP1  ( 51 )  ///<プレゼント_配信
-#define  FMISSION_ID_NPC_POKEQUIZ_GIFT  ( 52 )  ///<図鑑クイズ_おくりもの
-#define  FMISSION_ID_NPC_TRBTL_GIFT  ( 53 )  ///<戦闘_おくりもの
-#define  FMISSION_ID_NPC_PRESENT_GIFT  ( 54 )  ///<プレゼント_おくりもの
-#define  FMISSION_ID_ITEM_KINOMI_GIFT  ( 55 )  ///<きのみ_おくりもの
+#define  FMISSION_ID_NPC_POKEQUIZ_GIFT  ( 52 )  ///<ポケモン 図鑑クイズ(贈り物)
+#define  FMISSION_ID_NPC_TRBTL_GIFT  ( 53 )  ///<終わりなき 戦い……(贈り物)
+#define  FMISSION_ID_NPC_PRESENT_GIFT  ( 54 )  ///<ＰＣの お姉さん(贈り物)
+#define  FMISSION_ID_ITEM_KINOMI_GIFT  ( 55 )  ///<幻の きのみを 探せ！(贈り物)
 #define  FMISSION_ID_MAX  ( 56 )
 #define  FMISSION_ID_END  ( FMISSION_ID_MAX-1 )
 #define  FMISSION_ID_NULL ( 0x7F )
