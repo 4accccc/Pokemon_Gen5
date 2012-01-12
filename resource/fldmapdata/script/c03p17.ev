@@ -25,7 +25,8 @@ _EVENT_DATA		ev_c03p17_swchampion_01
 _EVENT_DATA		ev_c03p17_workman_01
 _EVENT_DATA		ev_zone_c03p17
 _EVENT_DATA		ev_init_c03p17
-_EVENT_DATA		ev_pos_c03p17_swchampion_03
+_EVENT_DATA		ev_pos_c03p17_swchampion_03_01
+_EVENT_DATA		ev_pos_c03p17_swchampion_03_02
 _EVENT_DATA		ev_c03p17_badman_01
 _EVENT_DATA_END
 
@@ -55,7 +56,7 @@ INIT_EVENT_START ev_init_c03p17
 INIT_EVENT_END
 
 /**************************************************************/
-/*		SCENE_CHANGE：アイリス誘導イベント
+/*		SCENE_CHANGE：アイリス誘導イベント                      */
 /**************************************************************/
 EVENT_START		ev_scene_c03p17_swchampion_02
   
@@ -173,9 +174,9 @@ _ANIME_LABEL	anm_swrival_go_d11
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*		POS：下水道クリア後
+/*		POS：下水道クリア後                                     */
 /**************************************************************/
-EVENT_START		ev_pos_c03p17_swchampion_03
+EVENT_START		ev_pos_c03p17_swchampion_03_01
 
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
@@ -210,7 +211,46 @@ EVENT_START		ev_pos_c03p17_swchampion_03
 EVENT_END
 
 /**************************************************************/
-/*		アイリス話しかけ
+/*		POS：下水道クリア後                                     */
+/**************************************************************/
+EVENT_START		ev_pos_c03p17_swchampion_03_02
+
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：アイリス主人公の前に移動
+  _OBJ_ANIME_AUTO( C03P17_SWCHAMPION_01, 6 , LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：アイリス左を向く
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+   
+  //アイリス：きみのともだち
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_03, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  
+  //アイリス：これから
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_04, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //==================================//
+  //C03P17_POS無効
+  $WK_SCENE_C03P17 = 4
+  //C03P07ジム前ストッパー解除
+  _FLAG_SET( FV_C03P07_SUNGLASSES_01 )
+  //==================================//
+  
+EVENT_END
+
+/**************************************************************/
+/*		アイリス話しかけ                                        */
 /**************************************************************/
 EVENT_START		ev_c03p17_swchampion_01
   
@@ -225,7 +265,7 @@ EVENT_START		ev_c03p17_swchampion_01
 EVENT_END
 
 /**************************************************************/
-/*		badman話しかけ
+/*		badman話しかけ                                          */
 /**************************************************************/
 EVENT_START		ev_c03p17_badman_01
 
@@ -234,7 +274,7 @@ EVENT_START		ev_c03p17_badman_01
 EVENT_END
 
 /**************************************************************/
-/*		ストッパー：workman
+/*		ストッパー：workman                                     */
 /**************************************************************/
 EVENT_START		ev_c03p17_workman_01
   //下水道開始前

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/25 19:01:44
+#save date:2012/01/12 16:50:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03p17.wms
 #SECTION START:OBJ_EVENT
@@ -153,12 +153,12 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
-POS_C03P17_SWCHAMPION_03
+POS_C03P17_SWCHAMPION_03_01
 #Pos Script Name
-SCRID_POS_C03P17_SWCHAMPION_03
+SCRID_POS_C03P17_SWCHAMPION_03_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
@@ -171,6 +171,23 @@ EVENTDATA_POSTYPE_GRID
 -104 0 -56
 #size
 3 1
+#event number: 1
+#Pos Event Label
+POS_C03P17_SWCHAMPION_03_02
+#Pos Script Name
+SCRID_POS_C03P17_SWCHAMPION_03_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03P17
+#Event Trigger Work Value
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 104
+#size
+1 10
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
