@@ -23,6 +23,7 @@
 #include "poke_tool/poke_memo.h"
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx 
 #include "item/itemsym.h"
+#include "script_def.h"           // for LOVE_LV_xxxx
 
 #include "fieldmap.h"
 #include "pokemon_egg.h" 
@@ -44,18 +45,6 @@
 #define EXP_PER_WALK         (1) // 歩くたびに加算する経験値
 #define EGG_CHECK_INTERVAL (256) // 産卵判定の頻度
 #define MAX_LEVEL          (100)
-
-// 相性(タマゴができる確率[%])
-#define LOVE_LV_GOOD   (70)  // 「とっても よい ようじゃ」
-#define LOVE_LV_NORMAL (50)  // 「まずまずの ようじゃ」
-#define LOVE_LV_BAD    (20)  // 「それほど よくないがなぁ」
-#define LOVE_LV_WORST   (0)  // 「ちがう ポケモンたちと あそんでおるがなぁ」
-
-// 相性(タマゴができる確率[%])
-// ※「まるいおまもり」を所持していた場合
-#define LOVE_LV_GOOD_EX   (88)    // 4.375% → 5.5%
-#define LOVE_LV_NORMAL_EX (80)    // 3.125% → 5%
-#define LOVE_LV_BAD_EX    (40)    // 1.25%  → 2.5%
 
 //========================================================================================
 // ■育て屋さんワーク

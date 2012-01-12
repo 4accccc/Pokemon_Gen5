@@ -177,16 +177,23 @@ love_check:
   // 相性チェック
   _SODATEYA_LOVE_CHECK( love )
 
-  // 相性に応じて表示するメッセージを決定
-  IF $love >= 70 THEN 
+  // 選択結果で分岐
+  SWITCH $love
+  CASE LOVE_LV_GOOD_EX THEN     // 「とっても よい ようじゃ」
     $message_id = msg_sodateya_oldman_03
-  ELSIF $love >= 50 THEN
+  CASE LOVE_LV_GOOD THEN        // 「とっても よい ようじゃ」
+    $message_id = msg_sodateya_oldman_03
+  CASE LOVE_LV_NORMAL_EX THEN   // 「まずまずの ようじゃ」
     $message_id = msg_sodateya_oldman_04
-  ELSIF $love >= 20 THEN
+  CASE LOVE_LV_NORMAL THEN      // 「まずまずの ようじゃ」
+    $message_id = msg_sodateya_oldman_04
+  CASE LOVE_LV_BAD_EX THEN      // 「それほど よくないがなぁ」
     $message_id = msg_sodateya_oldman_05
-  ELSE
+  CASE LOVE_LV_BAD THEN         // 「それほど よくないがなぁ」
+    $message_id = msg_sodateya_oldman_05
+  CASE LOVE_LV_WORST THEN       // 「ちがう ポケモンたちと あそんでおるがなぁ」
     $message_id = msg_sodateya_oldman_06
-  ENDIF
+  ENDSWITCH
 
   // 結果発表
   _SODATEYA_NICK_NAME( 0, 0 )
