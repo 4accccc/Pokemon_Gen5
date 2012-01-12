@@ -214,8 +214,14 @@ EVENT_START   ev_c15r0201_middleman1_01
   //メッセージ代入変数定義
   DEFINE_LOCAL LCWK_MSGID
   
-  $LCWK_MSGID = msg_c15r0201_middleman1_01
-  $LCWK_MSGID += $LOCALWORK15
+  SWITCH $LOCALWORK15
+  CASE 0 THEN
+  	$LCWK_MSGID = msg_c15r0201_middleman1_01
+  CASE 1,2,3 THEN
+  	$LCWK_MSGID = msg_c15r0201_middleman1_02
+  CASE 4 THEN
+  	$LCWK_MSGID = msg_c15r0201_middleman1_03
+  ENDSWITCH
 
   _EASY_BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
   }
