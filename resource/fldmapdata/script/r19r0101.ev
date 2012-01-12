@@ -32,6 +32,9 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+ 
+// 先頭ポケモンインデックス
+DEFINE_LOCAL LWK_FRONT
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -50,6 +53,7 @@ EVENT_END
 /*  POS：受付嬢イベント                                       */
 /**************************************************************/
 EVENT_START   ev_pos_r19r0101_informationw_01
+  
 
   //！マーク
   _OBJ_ANIME( R19R0101_INFORMATIONW_01, anm_common_gyoe )
@@ -76,8 +80,11 @@ EVENT_START   ev_pos_r19r0101_informationw_01
   //主人公名代入
   _PLAYER_NAME( 0 )
   
+  // 戦闘のポケモン番号を取得
+  _GET_PARTY_FRONT_POKEMON( LWK_FRONT ,POKECOUNT_MODE_BATTLE_ENABLE )
+  
   //種族名代入
-  _TEMOTI_MONS_NAME( 1, 0 )
+  _TEMOTI_MONS_NAME( 1, LWK_FRONT )
   
   //受付嬢：ポケモンと　いっしょなんだ！▼
   _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_02, R19R0101_INFORMATIONW_01, POS_DEFAULT )
@@ -104,7 +111,7 @@ EVENT_END
 /*  受付嬢：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_r19r0101_informationw_01
-
+  
   _TALK_OBJ_START()
 
   //POSイベントを発生させていない
@@ -118,8 +125,11 @@ EVENT_START   ev_r19r0101_informationw_01
     //主人公名代入
     _PLAYER_NAME( 0 )
     
+    // 戦闘のポケモン番号を取得
+    _GET_PARTY_FRONT_POKEMON( LWK_FRONT ,POKECOUNT_MODE_BATTLE_ENABLE )
+   
     //種族名代入
-    _TEMOTI_MONS_NAME( 1, 0 )
+    _TEMOTI_MONS_NAME( 1, LWK_FRONT )
     
     //受付嬢：ポケモンと　いっしょなんだ！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_02 )
