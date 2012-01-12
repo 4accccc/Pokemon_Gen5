@@ -652,14 +652,14 @@
 			<Text>この　ポケモンは　こう　たたかう
 この　どうぐは　こう　つかう……▽
 だれかの　いけんで　きめてない？▼
-それでも　いいけどさ　だいじなのは
+それでも　いいけど　だいじなのは
 あんたが　どうしたいか　ってこと！▼
 いくよ！　あんたの　じょーしき
 ぶっとばして　あたらしい　せかいに▽
 つれていって　あ・げ・る！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T05:52:12" />
+				Time="2012-01-12T11:14:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -670,14 +670,14 @@
 			<Text>この　ポケモンは　こう　戦う
 この　道具は　こう　使う……▽
 だれかの　意見で　決めてない？▼
-それでも　いいけどさ　大事なのは
+それでも　いいけど　大事なのは
 あんたが　どうしたいか　ってこと！▼
 いくよ！　あんたの　じょーしき
 ぶっとばして　新しい　世界に▽
 連れていって　あ・げ・る！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T05:51:57" />
+				Time="2012-01-12T11:14:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -871,11 +871,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダメ　ダメー！
+			<Text>ダメ　ダメ　ダメ　ダメー！
 もっと　じぶんを　さらけださないと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T04:02:21" />
+				Time="2012-01-12T11:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -883,11 +883,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダメ　ダメー！
+			<Text>ダメ　ダメ　ダメ　ダメー！
 もっと　自分を　さらけださないと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T04:02:29" />
+				Time="2012-01-12T11:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1030,10 +1030,10 @@
 しょーじき　ムリじゃん！▼
 だから　負けたり　失敗するたびに
 カッコつけるなんて　しんどーい！▽
-じぶんを　さらけだしてりゃ　いーの▼</Text>
+自分を　さらけだしてりゃ　いーの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T03:59:57" />
+				Time="2012-01-12T11:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2886,12 +2886,12 @@
 			<Text>アタシが　すきなのは　たのしいこと！▼
 ポケモンと　そらを　とんだり
 ポケモンしょうぶで　ポケモンの▽
-いいところを　ひきだせたり……▼
+いいところを　ひきだしたり……▼
 さ！　アタシと　アナタで
 たのしいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:20:44" />
+				Time="2012-01-12T11:20:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2902,12 +2902,12 @@
 			<Text>アタシが　好きなのは　楽しいこと！▼
 ポケモンと　空を　飛んだり
 ポケモン勝負で　ポケモンの▽
-いいところを　ひきだせたり……▼
+いいところを　ひきだしたり……▼
 さ！　アタシと　アナタで
 楽しいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:23:04" />
+				Time="2012-01-12T11:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3253,13 +3253,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『ホウエンちほうの
+			<Text>フウロ『ホウエン地方の
 ジムリーダー　ナギさん！▼
 あの人と　大空で　戦えたら
 きっと　楽しいと　思うの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:24:37" />
+				Time="2012-01-12T11:20:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4479,11 +4479,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみと　ポケモンしょうぶ！
+			<Text>あなたと　ポケモンしょうぶ！
 なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:56:20" />
+				Time="2012-01-12T11:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4491,11 +4491,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみと　ポケモン勝負！
+			<Text>あなたと　ポケモン勝負！
 なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:55:51" />
+				Time="2012-01-12T11:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4546,14 +4546,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンを　ヒオウギに　とどけたとき
-きみと　ここで　たたかうだなんて▽
+あなたと　ここで　たたかうだなんて▽
 ぜんぜん　そうぞう　できなかった！▼
 そう　ポケモンが　あたしたちを
 ひきあわせて　くれたんだよお！▽
 これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:34:38" />
+				Time="2012-01-12T11:22:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4562,14 +4562,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンを　ヒオウギに　届けたとき
-きみと　ここで　戦うだなんて▽
+あなたと　ここで　戦うだなんて▽
 全然　想像できなかった！▼
 そう　ポケモンが　あたしたちを
 引き合わせて　くれたんだよお！▽
 これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:34:56" />
+				Time="2012-01-12T11:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4626,10 +4626,10 @@
 やりたいことも　みつかって……▼
 うまく　いえないけれど
 この　きもち　あたしの　ポケモンを▽
-つうじて　きみに　とどけたいな！▼</Text>
+つうじて　あなたに　とどけたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:38:29" />
+				Time="2012-01-12T11:25:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4644,10 +4644,10 @@
 やりたいことも　みつかって……▼
 うまく　いえないけれど
 この気持ち　あたしの　ポケモンを▽
-通じて　きみに　届けたいな！▼</Text>
+通じて　あなたに　届けたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:38:23" />
+				Time="2012-01-12T11:25:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4698,11 +4698,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふえええ！▼
-やっぱり　きみは
+やっぱり　あなたは
 すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:53:10" />
+				Time="2012-01-12T11:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4711,11 +4711,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふえええ！▼
-やっぱり　きみは
+やっぱり　あなたは
 すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:53:13" />
+				Time="2012-01-12T11:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4907,13 +4907,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あたし　きみが　する
+			<Text>ベル『あたし　あなたが　する
 ポケモンしょうぶ　だいすきだよ▼
 なんだか　ポケモンも
 とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:47:50" />
+				Time="2012-01-12T11:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4921,13 +4921,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あたし　きみが　する
+			<Text>ベル『あたし　あなたが　する
 ポケモン勝負　大好きだよ▼
 なんだか　ポケモンも
 とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:47:17" />
+				Time="2012-01-12T11:22:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5790,10 +5790,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まいったな……
-この　コーンが　やぶれるとは▼</Text>
+この　コーンが　とめられるとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:02:47" />
+				Time="2012-01-12T11:26:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5802,10 +5802,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まいったな……
-この　コーンが　破れるとは▼</Text>
+この　コーンが　とめられるとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:04:48" />
+				Time="2012-01-12T11:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7697,11 +7697,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイス　マスク！
+			<Text>しずかなる　アイス　マスク！
 ハチク！　アクションッ　スタートッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:27:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7709,11 +7709,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイス　マスク！
+			<Text>静かなる　アイス　マスク！
 ハチク！　アクションッ　スタートッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:27:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7843,11 +7843,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレは　トレーナー　だからな▼
-つよい　ヤツが　いたら
-たたかいたく　なっちまうんだ▼</Text>
+強い　ヤツが　いたら
+戦いたく　なっちまうんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8585,11 +8585,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どんな　ときも　あきらめない
+			<Text>どんな　ときでも　あきらめない
 それは　きみだって　おなじだろ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8597,11 +8597,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どんな　ときも　あきらめない
+			<Text>どんな　ときでも　あきらめない
 それは　きみだって　同じだろ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:29:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10134,7 +10134,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あいてが　トレーナーなら
+			<Text>相手が　トレーナーなら
 勝負すれば　どんな人か　わかる▼
 どんな　ポケモンに
 どんな　技を　覚えさせているのか▽
@@ -10143,7 +10143,7 @@
 言葉は　いらないの……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T03:54:17" />
+				Time="2012-01-12T11:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11035,11 +11035,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウルガモスの　おもいでを　むねに
+			<Text>ウルガモスとの　おもいでを　むねに
 つよさ　やさしさを　つたえよ　アデク▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T05:13:47" />
+				Time="2012-01-12T11:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11047,11 +11047,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウルガモスの　思い出を　胸に
+			<Text>ウルガモスとの　思い出を　胸に
 強さ　優しさを　伝えよ　アデク▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T05:18:19" />
+				Time="2012-01-12T11:37:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16436,11 +16436,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アカネ『あんた　そんだけ
-ポケモン　つかうの　うまいんやから▽
+わざを　えらぶの　うまいんやから▽
 つぎは　かてるんとちゃう？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16449,11 +16449,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アカネ『あんた　そんだけ
-ポケモン　使うの　うまいんやから▽
+技を　選ぶの　うまいんやから▽
 次は　勝てるんとちゃう？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42887,14 +42887,14 @@
 			<Text>この　ポケモンは　こう　たたかう
 この　どうぐは　こう　つかう……▽
 だれかの　いけんで　きめてない？▼
-それでも　いいけどさ　だいじなのは
+それでも　いいけど　だいじなのは
 あんたが　どうしたいか　ってこと！▼
 いくよ！　あんたの　じょーしき
 ぶっとばして　あたらしい　せかいに▽
 つれていって　あ・げ・る！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T05:52:12" />
+				Time="2012-01-12T11:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -42905,14 +42905,14 @@
 			<Text>この　ポケモンは　こう　戦う
 この　道具は　こう　使う……▽
 だれかの　意見で　決めてない？▼
-それでも　いいけどさ　大事なのは
+それでも　いいけど　大事なのは
 あんたが　どうしたいか　ってこと！▼
 いくよ！　あんたの　じょーしき
 ぶっとばして　新しい　世界に▽
 連れていって　あ・げ・る！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T05:51:57" />
+				Time="2012-01-12T11:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43270,10 +43270,10 @@
 しょーじき　ムリじゃん！▼
 だから　負けたり　失敗するたびに
 カッコつけるなんて　しんどーい！▽
-じぶんを　さらけだしてりゃ　いーの▼</Text>
+自分を　さらけだしてりゃ　いーの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T03:59:57" />
+				Time="2012-01-12T11:16:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43391,13 +43391,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクの　ポケモンが　きみと
+			<Text>レンタルした　ポケモンが
 たたかいたいって　さわいでさ▼
 ではでは
 さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:31:22" />
+				Time="2012-01-12T12:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43405,13 +43405,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクの　ポケモンが　きみと
+			<Text>レンタルした　ポケモンが
 戦いたいって　騒いでさ▼
 ではでは
 さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:31:31" />
+				Time="2012-01-12T12:19:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43466,13 +43466,11 @@
 ひきだせる　たたかいを　すれば▼
 かっても　まけても
 こころおどる　こうけいに　なるよ！▼
-ぼくの　むしポケモンも
-そう　さわいで　くれてるし！▼
 ではでは
 さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:31:25" />
+				Time="2012-01-12T12:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43484,13 +43482,11 @@
 ひきだせる　戦いを　すれば▼
 勝っても　負けても
 心踊る　光景に　なるよ！▼
-ぼくの　むしポケモンも
-そう　騒いで　くれてるし！▼
 ではでは
 さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:31:28" />
+				Time="2012-01-12T12:18:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43965,11 +43961,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いとしの　ポケモンたちで
+			<Text>おかりした　ポケモンたちで
 あなたを　クラクラ　させちゃうけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T03:20:27" />
+				Time="2012-01-12T12:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43977,11 +43973,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>愛しの　ポケモンたちで
+			<Text>お借りした　ポケモンたちで
 あなたを　クラクラ　させちゃうけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T03:20:41" />
+				Time="2012-01-12T12:18:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44035,12 +44031,10 @@
 			<Text>わたしが　わたしで　あること！
 ポケモンが　ポケモンで　あること！▼
 それを　かんじるために
-ポケモンの　わざを　やりとりするの▼
-さあ！　いとしの　ポケモンたちで
-あなたを　クラクラ　させちゃうけど▼</Text>
+ポケモンの　わざを　やりとりするの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T06:00:45" />
+				Time="2012-01-12T12:18:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44051,12 +44045,10 @@
 			<Text>わたしが　わたしで　あること！
 ポケモンが　ポケモンで　あること！▼
 それを　感じるために
-ポケモンの　技を　やりとりするの▼
-さあ！　愛しの　ポケモンたちで
-あなたを　クラクラ　させちゃうけど▼</Text>
+ポケモンの　技を　やりとりするの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T06:01:06" />
+				Time="2012-01-12T12:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44111,11 +44103,10 @@
 そう　かくしん　したとき
 からだに　でんきが　ながれるの！▼
 その　かいかんを　もとめて
-いとしの　ポケモンたちで▽
 あなたを　クラクラ　させちゃうけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T05:59:22" />
+				Time="2012-01-12T12:17:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44127,11 +44118,10 @@
 そう　確信したとき
 体に　電気が　流れるの！▼
 その　快感を　求めて
-愛しの　ポケモンたちで▽
 あなたを　クラクラ　させちゃうけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T06:01:37" />
+				Time="2012-01-12T12:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45153,12 +45143,12 @@
 			<Text>アタシが　すきなのは　たのしいこと！▼
 ポケモンと　そらを　とんだり
 ポケモンしょうぶで　ポケモンの▽
-いいところを　ひきだせたり……▼
+いいところを　ひきだしたり……▼
 さ！　アタシと　アナタで
 たのしいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:20:44" />
+				Time="2012-01-12T11:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45169,12 +45159,12 @@
 			<Text>アタシが　好きなのは　楽しいこと！▼
 ポケモンと　空を　飛んだり
 ポケモン勝負で　ポケモンの▽
-いいところを　ひきだせたり……▼
+いいところを　ひきだしたり……▼
 さ！　アタシと　アナタで
 楽しいこと　しましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:23:04" />
+				Time="2012-01-12T11:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45525,13 +45515,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『ホウエンちほうの
+			<Text>フウロ『ホウエン地方の
 ジムリーダー　ナギさん！▼
 あの人と　大空で　戦えたら
 きっと　楽しいと　思うの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:24:37" />
+				Time="2012-01-12T11:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46769,11 +46759,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみと　ポケモンしょうぶ！
+			<Text>あなたと　ポケモンしょうぶ！
 なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:56:20" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46781,11 +46771,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみと　ポケモン勝負！
+			<Text>あなたと　ポケモン勝負！
 なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:55:51" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46837,14 +46827,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンを　ヒオウギに　とどけたとき
-きみと　ここで　たたかうだなんて▽
+あなたと　ここで　たたかうだなんて▽
 ぜんぜん　そうぞう　できなかった！▼
 そう　ポケモンが　あたしたちを
 ひきあわせて　くれたんだよお！▽
 これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:34:38" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46853,14 +46843,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンを　ヒオウギに　届けたとき
-きみと　ここで　戦うだなんて▽
+あなたと　ここで　戦うだなんて▽
 全然　想像できなかった！▼
 そう　ポケモンが　あたしたちを
 引き合わせて　くれたんだよお！▽
 これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:34:56" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46918,10 +46908,10 @@
 やりたいことも　みつかって……▼
 うまく　いえないけれど
 この　きもち　あたしの　ポケモンを▽
-つうじて　きみに　とどけたいな！▼</Text>
+つうじて　あなたに　とどけたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:38:29" />
+				Time="2012-01-12T11:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46936,10 +46926,10 @@
 やりたいことも　みつかって……▼
 うまく　いえないけれど
 この気持ち　あたしの　ポケモンを▽
-通じて　きみに　届けたいな！▼</Text>
+通じて　あなたに　届けたいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:38:23" />
+				Time="2012-01-12T11:25:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46991,11 +46981,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふえええ！▼
-やっぱり　きみは
+やっぱり　あなたは
 すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:53:10" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47004,11 +46994,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふえええ！▼
-やっぱり　きみは
+やっぱり　あなたは
 すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:53:13" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47203,13 +47193,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あたし　きみが　する
+			<Text>ベル『あたし　あなたが　する
 ポケモンしょうぶ　だいすきだよ▼
 なんだか　ポケモンも
 とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:47:50" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47217,13 +47207,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あたし　きみが　する
+			<Text>ベル『あたし　あなたが　する
 ポケモン勝負　大好きだよ▼
 なんだか　ポケモンも
 とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:47:17" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47274,11 +47264,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　つよさを　ひきだせ！
-ベルなら　それが　できるはず！▼</Text>
+			<Text>しんじつを　もとめて　すすみつづける
+わかき　けんきゅうしゃ　ベルゥッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T13:24:42" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47286,11 +47276,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　強さを　ひきだせ！
-ベルなら　それが　できるはず！▼</Text>
+			<Text>真実を　求めて　進み続ける
+若き　研究者　ベルゥッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T13:24:46" />
+				Time="2012-01-12T11:23:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48099,10 +48089,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まいったな……
-この　コーンが　やぶれるとは▼</Text>
+この　コーンが　とめられるとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:02:47" />
+				Time="2012-01-12T11:26:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48111,10 +48101,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まいったな……
-この　コーンが　破れるとは▼</Text>
+この　コーンが　とめられるとは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:04:48" />
+				Time="2012-01-12T11:26:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -49059,13 +49049,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さあて　トレーナーさん▼
-あいじょう　こめて
-そだてた　ポケモンで▼
+レンタルした　ポケモンに
+どんな　あいじょう　こめて▼
 どんな　たたかいかたを　するのか
 けんきゅう　させて　もらうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:11:02" />
+				Time="2012-01-12T12:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -49074,13 +49064,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さあて　トレーナーさん▼
-愛情　こめて
-育てた　ポケモンで▼
+レンタルした　ポケモンに
+どんな　愛情こめて▼
 どんな　戦い方を　するのか
 研究させて　もらうよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:11:45" />
+				Time="2012-01-12T12:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50238,11 +50228,10 @@
 			<Text>おれは　タケシ！
 いわタイプの　エキスパートさ！▼
 ちょっとや　そっとの　こうげきじゃ
-おれの　ポケモンたちは　へいき▽
-いたくも　かゆくも　ないぜ！▼</Text>
+おれの　いしは　おれないぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50253,11 +50242,10 @@
 			<Text>おれは　タケシ！
 いわタイプの　エキスパートさ！▼
 ちょっとや　そっとの　攻撃じゃ
-おれの　ポケモンたちは　平気▽
-痛くも　かゆくも　ないぜ！▼</Text>
+おれの　いしは　折れないぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50783,11 +50771,11 @@
 			Language="JPN">
 			<Text>あたしは　カスミ！
 みずタイプの　つかいて　よ！▼
-そう！　あたしの　みずタイプの
-ポケモンは　とても　つよいわよっ！▼</Text>
+もちろん　どんな　ポケモンで
+たたかっても　とても　つよいわよっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50797,11 +50785,11 @@
 			Language="JPN_KANJI">
 			<Text>あたしは　カスミ！
 みずタイプの　使い手よ！▼
-そう！　あたしの　みずタイプの
-ポケモンは　とても　強いわよっ！▼</Text>
+もちろん　どんな　ポケモンで
+戦っても　とても　強いわよっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51194,11 +51182,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ナンバー　ワン　ねー！▼</Text>
+ユーの　ポケモン
+びりびり　まけさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51207,11 +51195,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ナンバー　ワン　ねー！▼</Text>
+ユーの　ポケモン
+びりびり　まけさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51262,13 +51250,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ナンバー　ワン　ねー！▼
 ユーの　ポケモン
-びりびり　シビレさせるよ！▼</Text>
+びりびり　まけさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51277,13 +51263,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ナンバー　ワン　ねー！▼
 ユーの　ポケモン
-びりびり　シビレさせるよ！▼</Text>
+びりびり　まけさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51334,14 +51318,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ワールドで　ナンバー　ワン　ねー！▼
+ミーの　レンタルした　ポケモン
+かなり　グッドねー！▼
 ミーに　たたかいを　いどむなんて
 ユーは　みのほどしらず！▽
 びりびり　シビレさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51350,14 +51334,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミーの　ネームは　マチス！▼
-ミーの　エレクトリック　ポケモン
-ワールドで　ナンバー　ワン　ねー！▼
+ミーの　レンタルした　ポケモン
+かなり　グッドねー！▼
 ミーに　たたかいを　いどむなんて
 ユーは　みのほどしらず！▽
 びりびり　シビレさせるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51610,11 +51594,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>マチス『オー　イエー！
-ミーの　エレクトリック　ポケモン▽
+ミーの　レンタルした　ポケモン▽
 ワールド　ナンバー　ワーン！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51623,11 +51607,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マチス『オー　イエー！
-ミーの　エレクトリック　ポケモン▽
+ミーの　レンタルした　ポケモン▽
 ワールド　ナンバー　ワーン！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52843,12 +52827,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
-つわもの　ばかり　なのだー！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52856,12 +52839,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わしの　ポケモンは
-炎で　焼いて　焦がしまくる▽
-つわもの　ばかり　なのだー！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52911,13 +52893,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うおおーいっ！▼
-わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
-つわもの　ばかり　なのだー！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52925,13 +52905,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うおおーいっ！▼
-わしの　ポケモンは
-炎で　焼いて　焦がしまくる▽
-つわもの　ばかり　なのだー！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52981,14 +52959,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うおおーいっ！▼
-わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
-つわもの　ばかり　なのだー！▼
-さあ　いくぞ！　うおおーす！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52996,14 +52971,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うおおーいっ！▼
-わしの　ポケモンは
-炎で　焼いて　焦がしまくる▽
-つわもの　ばかり　なのだー！▼
-さあ　いくぞ！　うおおーす！▼</Text>
+			<Text>さあ　いくぞ！
+うおおーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53259,11 +53231,10 @@
 			Language="JPN">
 			<Text>カツラ『うおおーいっ！▼
 この　しょうりの　ねつで
-わしの　ほのお　ポケモンを▽
-パワーアップ　させるぞ！▼</Text>
+ポケモンを　パワーアップ　させるぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53273,11 +53244,10 @@
 			Language="JPN_KANJI">
 			<Text>カツラ『うおおーいっ！▼
 この　勝利の　熱で
-わしの　ほのお　ポケモンを▽
-パワーアップ　させるぞ！▼</Text>
+ポケモンを　パワーアップ　させるぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53923,12 +53893,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
+			<Text>とりポケモンと　ともに　たたかい
+しゅぎょうした　オレの　すごさ▽
 おもいしらせて　やるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53936,12 +53906,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大空を　華麗に　舞う
-とりポケモンの　本当の　すごさ▽
+			<Text>とりポケモンと　共に　戦い
+修行した　オレの　すごさ▽
 思い知らせて　やるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53991,13 +53961,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
+			<Text>とりポケモンと　ともに　たたかい
+しゅぎょうした　オレの　すごさ▽
 おもいしらせて　やるよ！▽
 さあ！　かぜよ　ふけ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54005,13 +53975,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大空を　華麗に　舞う
-とりポケモンの　本当の　すごさ▽
+			<Text>とりポケモンと　共に　戦い
+修行した　オレの　すごさ▽
 思い知らせて　やるよ！▽
 さあ！　風よ　吹け！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54061,14 +54031,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
+			<Text>とりポケモンと　ともに　たたかい
+しゅぎょうした　オレの　すごさ▽
 おもいしらせて　やるよ！▼
 ……とうさん！　おれの　たたかい
 そらから　みていてくれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54076,14 +54046,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大空を　華麗に　舞う
-とりポケモンの　本当の　すごさ▽
+			<Text>とりポケモンと　共に　戦い
+修行した　オレの　すごさ▽
 思い知らせて　やるよ！▼
 ……とうさん！　おれの　戦い
 空から　みていてくれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:12:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54471,11 +54441,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしポケモンの　ことなら
+			<Text>ポケモンの　けんきゅう　なら
 だれにも　まけないよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:10:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54483,11 +54453,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むしポケモンの　ことなら
+			<Text>ポケモンの　研究なら
 だれにも　負けないよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:10:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54537,14 +54507,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしポケモンの　ことなら
+			<Text>ポケモンの　けんきゅう　なら
 だれにも　まけないよ！▼
-なんたって　しょうらいは
-むしポケモン　けんきゅうで▽
-えらい　はかせに　なるんだから！▼</Text>
+それを　いまから
+ポケモンしょうぶで　おしえるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54552,14 +54521,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むしポケモンの　ことなら
+			<Text>ポケモンの　研究なら
 だれにも　負けないよ！▼
-なんたって　将来は
-むしポケモン　研究で▽
-偉い　博士に　なるんだから！▼</Text>
+それを　いまから
+ポケモン勝負で　教えるよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54609,13 +54577,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしポケモンの　ことなら
-だれにも　まけないよ！▼
+			<Text>むしポケモンを　しらべて
+まなんだ　かずかずの　ちしき！▼
 ポケモンしょうぶで　ぼくの
 けんきゅう　せいか　みせてあげるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:09:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54623,13 +54591,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むしポケモンの　ことなら
-だれにも　負けないよ！▼
+			<Text>むしポケモンを　調べて
+学んだ　数々の　知識！▼
 ポケモン勝負で　ぼくの
 研究成果　みせてあげるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:09:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -55436,11 +55404,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アカネ『あんた　そんだけ
-ポケモン　つかうの　うまいんやから▽
+わざを　えらぶの　うまいんやから▽
 つぎは　かてるんとちゃう？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -55449,11 +55417,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アカネ『あんた　そんだけ
-ポケモン　使うの　うまいんやから▽
+技を　選ぶの　うまいんやから▽
 次は　勝てるんとちゃう？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T11:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56395,11 +56363,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうだあ！　わしの　ポケモンたち
-いったとおり　つよかっただろぉ！▼</Text>
+			<Text>どうだあ！　わしと　たたかってくれた
+ポケモンたち　つよかっただろぉ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56407,11 +56375,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうだあ！　わしの　ポケモンたち
-いったとおり　強かっただろぉ！▼</Text>
+			<Text>どうだあ！　わしと　戦ってくれた
+ポケモンたち　強かっただろぉ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56664,12 +56632,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしは　ミカン▼
-つかう　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼</Text>
+ポケモンに　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56678,12 +56644,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしは　ミカン▼
-使う　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼</Text>
+ポケモンに　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56734,14 +56698,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしは　ミカン▼
-つかう　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼
-……はがねタイプって
-ごぞんじ　ですか？▼</Text>
+やさしさを　つたえて
+ポケモンと　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:07:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56750,14 +56711,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしは　ミカン▼
-使う　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼
-……はがねタイプって
-ご存知ですか？▼</Text>
+優しさを　伝えて
+ポケモンと　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56808,17 +56766,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしは　ミカン▼
-つかう　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼
-……はがねタイプって
-ごぞんじ　ですか？▼
-とっても　かたくて　つめたくて
-するどくて　つ　つよいんですよ？▽
-ほんと　なんですよ？▼</Text>
+つよさと　やさしさを　つたえて
+ポケモンと　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56827,17 +56779,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしは　ミカン▼
-使う　ポケモンは
-シャキーン！！▼
-は……　はがねタイプ　です▼
-……はがねタイプって
-ご存知ですか？▼
-とっても　硬くて　冷たくて
-鋭くて　つ　強いんですよ？▽
-ほんと　なんですよ？▼</Text>
+強さと　優しさを　伝えて
+ポケモンと　がんばってもらいます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58329,12 +58275,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたいが　アンズ！▼
-どくポケモンの　おそろしさ
-うけてみると　いいわ！▼</Text>
+			<Text>あたいが　アンズ！
+げんだいに　いきる　しのびよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58342,12 +58287,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたいが　アンズ！▼
-どくポケモンの　恐ろしさ
-受けてみると　いいわ！▼</Text>
+			<Text>あたいが　アンズ！
+現代に　生きる　忍びよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58398,13 +58342,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたいが　アンズ！
-げんだいに　いきる　しのびよ！▼
-あたいが　つかう
-どくポケモンの　おそろしさ▽
-うけてみると　いいわ！▼</Text>
+げんだいに　いきる　しのびよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58413,13 +58354,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたいが　アンズ！
-現代に　生きる　忍びよ！▼
-あたいが　使う
-どくポケモンの　恐ろしさ▽
-受けてみると　いいわ！▼</Text>
+現代に　生きる　忍びよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T13:11:53" />
+				Time="2012-01-12T12:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58471,13 +58409,11 @@
 			Language="JPN">
 			<Text>あたいが　アンズ！▼
 しゅぎょうの　すえ　えとくした
-しのびの　わざの　ごくい！▼
-それを　みにつけた
-どくポケモンの　おそろしさ▽
+しのびの　わざの　ごくい！▽
 うけてみると　いいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:05:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58487,13 +58423,11 @@
 			Language="JPN_KANJI">
 			<Text>あたいが　アンズ！▼
 修行の　末　会得した
-忍びの　技の　極意！▼
-それを　身につけた
-どくポケモンの　恐ろしさ▽
+忍びの　技の　極意！▽
 受けてみると　いいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60661,13 +60595,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>これまでに　みにつけた
-じぶんと　ポケモンの　つよさ▼
+じぶんの　つよさ▼
 だしきるには　むりせず
 じぶんらしく　ふるまうこと▽
 いまから　それを　おしえてあげるね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:05:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60676,13 +60610,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これまでに　身につけた
-自分と　ポケモンの　強さ▼
+自分の　強さ▼
 だしきるには　無理せず
 自分らしく　ふるまうこと▽
 今から　それを　教えてあげるね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61762,15 +61696,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とりポケモンと　こころを　かよわし
-いっしょに　おおぞらを　まい……▼
-どんな　くるしい　しょうぶも
+			<Text>どんな　くるしい　しょうぶも
 ゆうがに　かってみせる……▼
 さあ　わたしと　ポケモンが　おりなす
 かれいな　まいを　みせましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61778,15 +61710,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とりポケモンと　心を　通わし
-一緒に　大空を　舞い……▼
-どんな　苦しい　勝負も
+			<Text>どんな　苦しい　勝負も
 優雅に　勝ってみせる……▼
 さあ　わたしと　ポケモンが　織りなす
 華麗な　舞を　みせましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61968,10 +61898,10 @@
 			Language="JPN">
 			<Text>ナギ『あなたには　まけました　けど
 わたしは　これからも▽
-とりポケモンに　こだわって　いきます▼</Text>
+かれいに　まってみせます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61981,10 +61911,10 @@
 			Language="JPN_KANJI">
 			<Text>ナギ『あなたには　負けました　けど
 わたしは　これからも▽
-とりポケモンに　こだわって　いきます▼</Text>
+華麗に　舞ってみせます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63284,10 +63214,10 @@
 			Language="JPN">
 			<Text>さあ　ぞんぶんに　ごらんなさい▼
 わたしと　ポケモンが　おりなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63297,10 +63227,10 @@
 			Language="JPN_KANJI">
 			<Text>さあ　存分に　ごらんなさい▼
 わたしと　ポケモンが　織りなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63354,10 +63284,10 @@
 こだわるのは　はなやかさ！▼
 さあ　ぞんぶんに　ごらんなさい▼
 わたしと　ポケモンが　おりなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:28:06" />
+				Time="2012-01-12T12:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63369,10 +63299,10 @@
 こだわるのは　はなやかさ！▼
 さあ　存分に　ご覧なさい▼
 わたしと　ポケモンが　織りなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:27:57" />
+				Time="2012-01-12T12:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63426,10 +63356,10 @@
 それを　みせつけつつ　かちましょう！▼
 さあ　ぞんぶんに　ごらんなさい▼
 わたしと　ポケモンが　おりなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63441,10 +63371,10 @@
 それを　みせつけつつ　勝ちましょう！▼
 さあ　存分に　ごらんなさい▼
 わたしと　ポケモンが　織りなす
-みずの　イリュージョンを！▼</Text>
+イリュージョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-12T12:03:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63911,13 +63841,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まいにち　まいにち
-かせきを　ほりつづけ▽
-きたえに　きたえた　ボクの　ポケモン▼
-その　すごさを
+かせきを　ほりつづけ▼
+きたえに　きたえた　ボクの　すごさを
 しょうぶで　みてくれないかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:09:29" />
+				Time="2012-01-12T12:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63926,13 +63855,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>毎日　毎日
-カセキを　掘り続け▽
-鍛えに　鍛えた　ボクの　ポケモン▼
-その　すごさを
+カセキを　掘り続け▼
+鍛えに　鍛えた　ボクの　すごさを
 勝負で　みてくれないかな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:09:36" />
+				Time="2012-01-12T12:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63982,11 +63910,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いくよ！　これが　じまんの
-ロックな　ポケモンたち　だよ！▼</Text>
+			<Text>いくよ！
+ロックな　しょうぶ　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:08:25" />
+				Time="2012-01-12T12:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63994,11 +63922,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いくよ！　これが　自慢の
-ロックな　ポケモンたち　だよ！▼</Text>
+			<Text>いくよ！
+ロックな　勝負だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:08:35" />
+				Time="2012-01-12T12:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64048,11 +63976,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まっ　まさか！
-きたえた　ポケモンたちが！！▼</Text>
+			<Text>まっ　まさか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T05:49:12" />
+				Time="2012-01-12T12:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64060,11 +63987,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まっ　まさか！
-鍛えた　ポケモンたちが！！▼</Text>
+			<Text>まっ　まさか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T05:49:39" />
+				Time="2012-01-12T12:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64115,10 +64041,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どう？　これが　じまんの
-ロックな　ポケモンたち　だよ！▼</Text>
+ロックな　しょうぶ　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:10:03" />
+				Time="2012-01-12T12:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64127,10 +64053,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どう？　これが　自慢の
-ロックな　ポケモンたち　だよ！▼</Text>
+ロックな　勝負だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:10:10" />
+				Time="2012-01-12T12:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64450,13 +64376,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしの　くさポケモンたち
-いい　かんじに　そだったの！▼
-ね！　ね！
+			<Text>ね！　ね！
 ちょっとでいいから　あいてしてよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:31:36" />
+				Time="2012-01-12T12:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64464,13 +64388,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　くさポケモンたち
-いい　感じに　育ったの！▼
-ね！　ね！
+			<Text>ね！　ね！
 ちょっとでいいから　相手してよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:55:31" />
+				Time="2012-01-12T12:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64522,13 +64444,13 @@
 			Language="JPN">
 			<Text>くさタイプを　あいする
 あたし　ナタネ！▼
-たしかに　くさタイプって
-じゃくてんが　おおいけれど▼
+たしかに　タイプが
+かちまけを　さゆう　するけれど▼
 それだけでは　かちまけは
 きまらないこと　おしえてあげるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:31:27" />
+				Time="2012-01-12T12:01:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64538,13 +64460,13 @@
 			Language="JPN_KANJI">
 			<Text>くさタイプを　愛する
 あたし　ナタネ！▼
-たしかに　くさタイプって
-弱点が　多いけれど▼
+たしかに　タイプが
+勝ち負けを　左右するけれど▼
 それだけでは　勝ち負けは
 決まらないこと　教えてあげるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:29:06" />
+				Time="2012-01-12T12:01:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64594,11 +64516,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしの　くさポケモンたち
-いい　かんじに　そだったのに……▼</Text>
+			<Text>あたしの　やりかたで
+ポケモン　まけちゃった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:31:12" />
+				Time="2012-01-12T11:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64606,11 +64528,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　くさポケモンたち
-いい　感じに　育ったのに……▼</Text>
+			<Text>あたしの　やりかたで
+ポケモン　負けちゃった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:29:17" />
+				Time="2012-01-12T11:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64660,11 +64582,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やったね！　あたしと　あたしの
+			<Text>やったね！　あたしと　レンタルした
 ポケモン　ばっちり　いい　かんじ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:46:09" />
+				Time="2012-01-12T12:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64672,11 +64594,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やったね！　あたしと　あたしの
+			<Text>やったね！　あたしと　レンタルした
 ポケモン　ばっちり　いい感じ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:46:24" />
+				Time="2012-01-12T12:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64797,12 +64719,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ナタネ『こんかいは　かてたけど……
-あなたの　ポケモンも　いい　かんじ！▼
+あなたも　いい　かんじ！▼
 だから　だからね
 また　ここで　おあいて　してほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:46:15" />
+				Time="2012-01-12T12:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64811,12 +64733,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ナタネ『今回は　勝てたけど……
-あなたの　ポケモンも　いい感じ！▼
+あなたも　いい感じ！▼
 だから　だからね
 また　ここで　お相手してほしいな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:45:54" />
+				Time="2012-01-12T12:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65285,12 +65207,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メリッサ『アタシ　ビックリ　です！▼
-アナタも　アナタの　ポケモンも
-とても　つよーい！▼
+アナタ　とても　つよーい！
 その　つよさを　たたえます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:34:34" />
+				Time="2012-01-12T11:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65299,12 +65220,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メリッサ『アタシ　ビックリ　です！▼
-アナタも　アナタの　ポケモンも
-とても　つよーい！▼
+アナタ　とても　つよーい！
 その　つよさを　たたえます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:34:38" />
+				Time="2012-01-12T11:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66115,13 +66035,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>みずのちからで　きたえた
-おれさまの　ポケモンはぁ！▼
+おれさまの　たたかいかた　はぁ！▼
 おまえの　こうげきを
 ぜんぶ　うけとめた　うえで▽
 しょうり　するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T08:01:23" />
+				Time="2012-01-12T11:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66130,13 +66050,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>水の力で　鍛えた
-おれさまの　ポケモンはぁ！▼
+おれさまの　戦い方はぁ！▼
 おまえの　攻撃を
 全部　受け止めた　うえで▽
 勝利するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T08:02:15" />
+				Time="2012-01-12T11:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66189,13 +66109,13 @@
 			<Text>おれさまは
 そのなも　マキシマムかめん！▼
 みずのちからで　きたえた
-おれさまの　ポケモンはぁ！▼
+おれさまの　たたかいかた　はぁ！▼
 おまえの　こうげきを
 ぜんぶ　うけとめた　うえで▽
 しょうり　するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:56:43" />
+				Time="2012-01-12T11:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66206,13 +66126,13 @@
 			<Text>おれさまは
 その名も　マキシマム仮面！▼
 水の力で　鍛えた
-おれさまの　ポケモンはぁ！▼
+おれさまの　戦い方はぁ！▼
 おまえの　攻撃を
 全部　受け止めた　うえで▽
 勝利するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T08:02:08" />
+				Time="2012-01-12T11:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66829,10 +66749,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーむッ！
-きたえた　ポケモンたちが！！▼</Text>
+ポケモンたちが！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T09:21:10" />
+				Time="2012-01-12T11:57:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66841,10 +66761,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーむッ！
-鍛えた　ポケモンたちが！！▼</Text>
+ポケモンたちが！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:54:00" />
+				Time="2012-01-12T11:57:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66895,10 +66815,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グハハハハ！　どうだ！
-きたえた　わたしの　ポケモンたちは！！▼</Text>
+わたしの　たたかいかたは！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:52:48" />
+				Time="2012-01-12T11:57:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66907,10 +66827,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グハハハハ！　どうだ！
-鍛えた　わたしの　ポケモンたちは！！▼</Text>
+わたしの　戦い方は！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:54:04" />
+				Time="2012-01-12T11:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66961,13 +66881,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>トウガン『グハハハハ！▼
-わたしの　じまんの　ポケモンたちを
-たおした　その　つよさを　みとめよう▼
+わたしを　たおした
+その　つよさを　みとめよう▼
 できるなら　その　つよさを
 ほかの　トレーナーにも　つたえてくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:50:52" />
+				Time="2012-01-12T11:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66976,13 +66896,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トウガン『グハハハハ！▼
-わたしの　自慢の　ポケモンたちを
-倒した　その　強さを　認めよう▼
+わたしを　倒した
+その　強さを　認めよう▼
 できるなら　その　強さを
 他の　トレーナーにも　伝えてくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T12:54:26" />
+				Time="2012-01-12T11:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
