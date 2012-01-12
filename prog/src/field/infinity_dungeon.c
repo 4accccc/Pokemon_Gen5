@@ -1341,6 +1341,7 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
 //-----------------------------------------------------------------------------
 static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data )
 {
+  int i,n;
   u8 dungeon_status;
   FIELD_WFBC_CORE_TYPE wfbc_type;
 
@@ -1395,7 +1396,16 @@ static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA
     };
 
     // データをクリア
-    GFL_STD_MemFill(p_dungeon_data->room_data, 0, sizeof(p_dungeon_data->room_data));
+    for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX; i++ )
+    {
+      for( n = 0; n < ROOM_MAX; n++ )
+      {
+        ROOM_DATA *p_rd = &p_dungeon_data->room_data[i][n];
+        GFL_STD_MemFill(p_rd, 0, sizeof(ROOM_DATA));
+        p_rd->room_type   = ROOM_TYPE_DEFAULT;
+        p_rd->tr_pos_type = INF_ROOM_POS_TYPE_NONE;
+      }
+    }
 
     // ダンジョンの状態を設定
     if( p_dungeon_data->version == VERSION_B2 )
