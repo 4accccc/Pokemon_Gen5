@@ -56,6 +56,10 @@ enum {
   NG_INDEX_NULL = 0xffff, ///< u16の最大値を無効値として使用する
 };
 
+enum {
+  RENTAL_POKE_TRID = 41122, ///< レンタルポケモンの親TRID
+};
+
 //--------------------------------------------------------------
 /// ポケモン抽選処理でのNGポケモン情報
 //--------------------------------------------------------------
@@ -643,7 +647,7 @@ static void WBTSYS_SetupRentalParty(
 void WBTSYS_SetupMyRentalParty(
     WBTSYS * wbtsys, WBTRENT_TYPE rent_type, const MYSTATUS * mystatus, u16 place_id )
 {
-  u32 tr_id = GFUser_GetPublicRand( 0 );
+  u32 tr_id = RENTAL_POKE_TRID;
     
   WBTSYS_SetupRentalParty( wbtsys, wbtsys->sp_party, tr_id, MY_RENTAL_POWER_RND, TEMOTI_POKEMAX, NULL );
 
@@ -667,7 +671,8 @@ void WBTSYS_SetupMyRentalParty(
       POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_CAPTURE,
           mystatus, place_id, tempHeapID );
       PP_Put( pp, ID_PARA_oyaname, (u32)oyaname );  //親の名前は「？？？？？」を上書き
-      PP_Put( pp, ID_PARA_oyasex, PM_MALE );  //仮：とりあえず男で
+      PP_Put( pp, ID_PARA_oyasex, PM_MALE );        //とりあえず男で
+      PP_Put( pp,ID_PARA_id_no,tr_id);              // トレーナーIDをセット
     }
     GFL_STR_DeleteBuffer( oyaname );
   }
