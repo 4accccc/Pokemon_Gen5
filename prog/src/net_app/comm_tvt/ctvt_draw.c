@@ -1132,6 +1132,20 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->state = CDS_DRAW;
     drawWork->barScroll = 24;
     drawWork->isTouch = TRUE;
+    // BTS238 【落書きツールを閉じると同時に画面をタッチすると書けなくなる】
+    // 原因はXボタンを押した瞬間にタッチをするとdrawWork->isHoldの値がFALSEなのにタッチとしているから。
+    // 対処としてボタンを押した瞬間のタッチ情報を格納しておく
+    {
+      if( GFL_UI_TP_GetCont() == TRUE )
+      {
+        u32 tpx,tpy;
+        GFL_UI_TP_GetPointCont( &tpx,&tpy );
+
+        drawWork->isHold = TRUE;
+        drawWork->befPenX = tpx;
+        drawWork->befPenY = tpy;
+      }
+    }
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
     CTVT_DRAW_EreseSubWindow( work , drawWork );
     PMSND_PlaySystemSE( CTVT_SND_CANCEL );
@@ -1397,7 +1411,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
               }
               else //isFull == TRUE
               {
-                drawWork->isHold = FALSE+
+                drawWork->isHold = FALSE;
               }
             }
             drawWork->befPenX = drawWork->tpData.TPDataTbl[i].x;
