@@ -29,6 +29,7 @@
 #define SWPLAZMAW_15                       4
 #define SWPLAZMAM_42                       5
 #define SWPLAZMAW_16                       6
+#define D27R0701_SWRIVAL_01                7
 
 #endif //ZONE_D27R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

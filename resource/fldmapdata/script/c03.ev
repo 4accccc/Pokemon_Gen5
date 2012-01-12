@@ -237,6 +237,8 @@ DEFINE_LOCAL  LCW_POSS
   $WK_SCENE_C03_RALLY_01 = 2
   //じてんしゃヒントメダル取得
   _SET_MEDAL_HINT_ACHIEVE( MDLID_CYCLE_LV1 )
+  //C03到着フラグセット
+  _FLAG_SET( SYS_FLAG_ARRIVE_C03 )
   //==================================//
   
 }

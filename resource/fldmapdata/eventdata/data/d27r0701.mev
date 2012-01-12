@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/26 22:11:17
+#save date:2012/01/12 19:16:31
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #hold event type:
 1
 #hold event number:
-7
+8
 #event number: 0
 #type
 1
@@ -227,6 +227,37 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 -584
+#event number: 7
+#type
+1
+#ID name
+D27R0701_SWRIVAL_01
+#OBJ CODE Number
+SWRIVAL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R0701_SWRIVAL_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -440
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -271,9 +302,9 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -104
+8 0 -104
 #size
-3 1
+1 1
 #event number: 1
 #Door Event Label
 DOOR_ID_D27R0701_D27R0101_EXIT02
@@ -288,9 +319,9 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -472
+8 0 -472
 #size
-3 1
+1 1
 #event number: 2
 #Door Event Label
 DOOR_ID_D27R0701_D27R0801_EXIT01
