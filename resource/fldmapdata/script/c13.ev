@@ -61,8 +61,12 @@ INIT_EVENT_START	ev_zone_c13
   //ネオプラズマ団イベント起動後なら
   IF $WK_SCENE_C13 == 5 THEN
   	
-  	_SXY_MOVE_NPC_POS( C13_SWRIVAL_01, DIR_RIGHT, 239, 0, 671 )
-  
+  	_SXY_MOVE_NPC_POS( C13_SWRIVAL_01, DIR_RIGHT, 240, 0, 671 )
+  	_SXY_MOVE_NPC_POS( C13_SWLEADER2_02, DIR_RIGHT, 240, 0, 669 )
+  	_SXY_MOVE_NPC_POS( C13_SWPLAZMAM_01, DIR_LEFT, 240, 0, 670 )
+  	_SXY_MOVE_NPC_POS( C13_SWPLAZMAM_01, DIR_LEFT, 240, 0, 670 )
+  	_SXY_MOVE_NPC_POS( C13_SWPLAZMAM_01, DIR_LEFT, 240, 0, 670 )
+ 
   ELSIF $WK_SCENE_C13 == 7 THEN
   
   	_SXY_MOVE_NPC_POS( C13_SWLEADER2_01, DIR_RIGHT, 241, 0, 670 )
@@ -77,6 +81,15 @@ INIT_EVENT_END
 /*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START ev_init_c13
+
+  //ネオプラズマ団イベント起動後なら
+  IF $WK_SCENE_C13 == 5 THEN
+  	_OBJ_POS_CHANGE( C13_SWRIVAL_01, 240, 0, 671, DIR_RIGHT )
+  	_OBJ_POS_CHANGE( C13_SWLEADER2_02, 240, 0, 669, DIR_RIGHT )
+  	_OBJ_POS_CHANGE( C13_SWPLAZMAM_01, 240, 0, 670, DIR_LEFT )
+  	_OBJ_POS_CHANGE( C13_SWPLAZMAM_02, 241, 0, 671, DIR_LEFT )
+  	_OBJ_POS_CHANGE( C13_SWPLAZMAW_01, 241, 0, 669, DIR_LEFT )
+  ENDIF
 
 INIT_EVENT_END
 
@@ -452,7 +465,9 @@ EVENT_START		ev_pos_c13_swplazma
 EVENT_END
 
 ev_swplazma:
-
+	
+	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	
 	//ホミカ：あんたら……　もしかして
 	_BALLOONWIN_OBJMSG( msg_c13_swleader2_03 , C13_SWLEADER2_02 )
 	_MSGWIN_CLOSE()
@@ -460,6 +475,10 @@ ev_swplazma:
 	//ネオプラズマ団男：そうとも！
 	_BALLOONWIN_OBJMSG( msg_c13_swplazmam1_01 , C13_SWPLAZMAM_01 )
 	_MSGWIN_CLOSE()
+
+	//ライバル：一歩前へ出る
+	_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_r )
+	_OBJ_ANIME_WAIT()
 
 	//ライバル名代入
 	_RIVAL_NAME( 1 )
@@ -480,10 +499,18 @@ ev_swplazma:
 	_BALLOONWIN_OBJMSG( msg_c13_swplazmam1_02 , C13_SWPLAZMAM_01 )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT( 10 )
+	//プラズマ団：一歩前へ
+	_OBJ_ANIME( C13_SWPLAZMAM_01, anm_walk_l )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( C13_SWPLAZMAM_02, anm_walk_l )
+	_OBJ_ANIME( C13_SWPLAZMAW_01, anm_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 20 )
 	
 	//ライバル：一歩前へ出る
 	_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_r )
+	_OBJ_ANIME( C13_SWLEADER2_02, anm_walk_r )
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( C13_SWRIVAL_01, anm_swrival_anime )
 	_OBJ_ANIME_WAIT()
@@ -491,6 +518,8 @@ ev_swplazma:
 	//ライバル：ボコボコに　されるのは
 	_BALLOONWIN_OBJMSG( msg_c13_swrival_02 , C13_SWRIVAL_01 )
 	_MSGWIN_CLOSE()
+	
+	_END_EVENT_BGM()
 	
 	//========================================/
 	
@@ -521,11 +550,9 @@ EVENT_START		ev_c13_swleader2_02
 		_OBJ_ANIME_WAIT()
 
 	ELSE
-		_TALK_OBJ_START()
+		_TALK_START_TURN_NOT()
 		
 		_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 239, 670, FORCE_TYPE_NOT, 8, DIR_UD )
-		_TIME_WAIT( 10 )
-		_OBJ_ANIME( C13_SWLEADER2_02, anm_staystep_r )
 		_OBJ_ANIME_WAIT()
 		
 		_CALL	ev_swplazma
@@ -546,17 +573,14 @@ EVENT_START		ev_c13_swrival_01
 		//ライバル名代入
 		_RIVAL_NAME( 1 )
 		
-		_TALK_OBJ_START()
+		_TALK_START_TURN_NOT()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swrival_03 )
 		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
-
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_r )
-		_OBJ_ANIME_WAIT()
 		
 	ELSE
 		
-		_TALK_OBJ_START()
+		_TALK_START_TURN_NOT()
 		
 		DEFINE_LOCAL	LWK_DIR
 	
@@ -567,8 +591,6 @@ EVENT_START		ev_c13_swrival_01
 		CASE DIR_DOWN THEN
 			_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 239, 670, FORCE_TYPE_NOT, 8, DIR_LR )
 		ENDSWITCH
-		_TIME_WAIT( 10 )
-		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_r )
 		_OBJ_ANIME_WAIT()
 
 		_CALL	ev_swplazma
@@ -591,6 +613,8 @@ _TALK_OBJ_START()
 	
 	//はいの場合
 	IF $SCWK_ANSWER == SCR_YES THEN
+		
+		_TRAINER_BGM_SET( TRID_SWPLAZMAW_12 )
 		
 		//ネオプラズマ団男：オマエの　ポケモン
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13_swplazmam1_04 )
@@ -615,6 +639,9 @@ _TALK_OBJ_START()
 		
 		//ネオプラズマ団男：一歩後ずさり
 		_OBJ_ANIME( C13_SWPLAZMAM_01, anm_swplazmam_back )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( C13_SWPLAZMAM_02, anm_swplazmam_back )
+		_OBJ_ANIME( C13_SWPLAZMAW_01, anm_swplazmam_back )
 		_OBJ_ANIME_WAIT()
 		
 		//ネオプラズマ団男：まさか！　こんな　こどもたちに
@@ -633,11 +660,10 @@ _TALK_OBJ_START()
 		_OBJ_ANIME_AUTO( C13_SWPLAZMAW_01, 228, 670, FORCE_TYPE_NPC, 4, DIR_UD )
 		_TIME_WAIT( 4 )
 		_OBJ_ANIME_AUTO( C13_SWPLAZMAM_02, 228, 670, FORCE_TYPE_NPC, 4, DIR_UD )
-		_OBJ_ANIME_WAIT()
-		
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 		_OBJ_ANIME( C13_SWLEADER2_02, anm_staystep_l )
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_l )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 		_OBJ_ANIME_WAIT()
 		
 		//ネオプラズマ団一同のOBJ削除
@@ -685,7 +711,7 @@ _TALK_OBJ_START()
 		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_staystep_u )
 		_TIME_WAIT( 8 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
 		_OBJ_ANIME_WAIT()
 		
 		//ライバル名代入
@@ -746,7 +772,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader2_leave2
 	_ANIME_DATA	AC_WALK_D_4F,1
-	_ANIME_DATA	AC_WALK_L_4F,3
+	_ANIME_DATA	AC_WALK_L_4F,5
 	_ANIME_DATA	AC_WALK_L_16F,1
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_DIR_R,1

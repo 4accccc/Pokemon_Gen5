@@ -1370,7 +1370,7 @@ EVENT_START   ev_debug_suginaka
 			
 		ELSIF $SCWK_ANSWER == 3 THEN
 			//C13：ネオプラズマ団イベント
-			$WK_SCENE_C13 = 5
+			$WK_SCENE_C13 = 4
 
 			_FLAG_RESET( FV_C13_SWPLAZMA )	//ネオプラズマ団イベント用　表示
 
