@@ -217,6 +217,8 @@ static void _wbts_init_string( WBTSUBSCRN_WORK* wk );
 static void _wbts_disp_string( WBTSUBSCRN_WORK* wk, const s32 mode, const s32 x, const s32 y, STRBUF* strbuf );
 static void _wbts_exit_string( WBTSUBSCRN_WORK* wk );
 static void _wbts_disp_info(   WBTSUBSCRN_WORK* wk );
+//
+static void _wbts_init_obj( WBTSUBSCRN_WORK* wk );
 
 //------------------------------------------------------------------------------
 /**
@@ -373,6 +375,8 @@ static void _modeInit(WBTSUBSCRN_WORK* pWork)
 	_wbts_init_string( pWork );
 	// トーナメント情報表示
 	_wbts_disp_info( pWork );
+	// objの初期化
+	_wbts_init_obj( pWork );
 	
 	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 }
@@ -680,5 +684,23 @@ static void _wbts_disp_info( WBTSUBSCRN_WORK* wk )
 	WBTTOOL_GetRuleName( WBTSYS_GetRule(*wbtsys), strbuf );
 	_wbts_disp_string( wk, 1, 112, 0, strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJの初期化(現在は通信アイコン)
+ *
+ *	@param	WBTSUBSCRN_WORK*
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _wbts_init_obj( WBTSUBSCRN_WORK* wk )
+{
+	// 通信アイコンセット(下画面)
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
+	// 表示
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
