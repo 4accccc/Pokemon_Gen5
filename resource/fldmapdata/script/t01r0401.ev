@@ -27,6 +27,7 @@ _EVENT_DATA   ev_bg_t01r0401_note_01
 _EVENT_DATA   ev_t01r0401_hakase2_01
 _EVENT_DATA   ev_t01r0401_hakase1_01
 _EVENT_DATA   ev_t01r0401_poke29_01
+_EVENT_DATA	ev_t01r0401_poke60_01
 _EVENT_DATA_END
 
 
@@ -171,6 +172,10 @@ SWITCH $LWK_TALK
 CASE 0 THEN	//何も話がない
 
 CASE 1 THEN	//初回・許可証を持っていない話
+	
+	_OBJ_ANIME( T01R0401_HAKASE2_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+	
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_06 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -274,6 +279,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_t01r0401_poke29_01
   _EASY_TALK_POKEVOICE( MONSNO_538, msg_t01r0401_poke29_01 )
+EVENT_END
+
+/**************************************************************/
+/*  チラチーノ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t01r0401_poke60_01
+  _EASY_TALK_POKEVOICE( MONSNO_534, msg_t01r0401_poke_01 )
 EVENT_END
 
 //--------------------------------------------------------------------
