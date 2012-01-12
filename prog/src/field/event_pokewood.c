@@ -1115,6 +1115,7 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
     GFL_STR_DeleteBuffer( prew->TrainerTypeName );
     { //途中でキャンセルしてないかをスクリプトに返す
       PKWDSYS * pkwdsys = *(GAMEDATA_GetPKWDSysPointer( gamedata ) );
+      RECORD  * record  = GAMEDATA_GetRecordPtr( gamedata );
       u16 * ret_wk = PKWDSYS_GetScriptAnswerWork( pkwdsys );
       if ( ret_wk != NULL )
       {
@@ -1124,6 +1125,9 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
       PKWDSYS_MakeBoxofficeRecord( pkwdsys, pbew->bp, pbew->bp->pokewoodSenario );
       // 看板情報の移動
       PKWDSYS_MoveKanbanTemporary( pkwdsys, prew->KanbanTemporary );
+      // 効果バツグンの回数を足す
+      RECORD_Add( record, RECID_WEAK_ATTACK, pbew->bp->WeakAtcNum );
+
     }
     deletePokewoodBSP( pbew->bp );
     (*seq) ++;
