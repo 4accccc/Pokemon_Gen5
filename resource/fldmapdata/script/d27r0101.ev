@@ -699,6 +699,21 @@ ev_d27r0101_first_end:
   _RIVAL_NAME(1)
   _PLAYER_NAME(0)
   
+  //歓声があがる
+  _SUBWIN_MSG( msg_d27r0101_sub_01 , 6 , 20 , 1 )
+  _TIME_WAIT( 26 )
+  _SUBWIN_MSG( msg_d27r0101_sub_02 , 4 , 11 , 2 )
+  _TIME_WAIT( 26 )
+  _SUBWIN_CLOSE( 1 )
+  _SUBWIN_MSG( msg_d27r0101_sub_03 , 13 , 2 , 3 )
+  _TIME_WAIT( 26 )
+  _SUBWIN_CLOSE( 2 )
+  _SUBWIN_MSG( msg_d27r0101_sub_04 , 18 , 14, 4 )
+  _TIME_WAIT( 26 )
+  _SUBWIN_CLOSE( 3 )
+  _TIME_WAIT( 26 )
+  _SUBWIN_CLOSE( 4 )
+  
   //ライバル：ほら！ぜんいん
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_06 , D27R0101_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
@@ -794,8 +809,20 @@ ev_d27r0101_first_end:
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
-  //ダークトリニティ：ということだ
+  //ダークトリニティ：いっておくが
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_ninja_01 , D27R0101_NINJA_01 ,POS_DL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオ下を見る
+  _OBJ_ANIME( D27R0101_SWSAGE7_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：わかっておる！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_04 , D27R0101_SWSAGE7_01 ,POS_UR )
+  _MSGWIN_CLOSE()
+  
+   //ダークトリニティ：ということだ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_ninja_02 , D27R0101_NINJA_01 ,POS_DL )
   _MSGWIN_CLOSE()
   
 _RET
