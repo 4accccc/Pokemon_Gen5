@@ -2481,6 +2481,37 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
  * @brief パレスから自分のフィールドに戻るとき
  */
 //------------------------------------------------------------------
+#ifdef  DISABLE_INTRUDE
+GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
+{
+  GMEVENT* event;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSystem);
+  {
+    FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gameSystem );
+    LOCATION loc;
+    //覚えておいた戻り先をそのまま代入
+    loc = *(GAMEDATA_GetPalaceReturnLocation( gamedata ) );
+    event = EVENT_ChangeMapPalace( gameSystem, fieldWork, &loc );
+  }
+
+  { //LAST_STATUSをクリアしておく　※swanで必要かどうかは不明だが念のため
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSystem);
+    //他の通信が起動している場合は起動時にクリアされているのでよい
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+      GameCommSys_ClearLastStatus(game_comm);
+    }
+  }
+  
+  GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+  GAMEDATA_SetIntrudeMyID(gamedata, 0);
+  GAMEDATA_SetIntrudePalaceArea(gamedata, 0);
+  GAMEDATA_SetIntrudeNum(gamedata, 1);
+
+  return event;
+}
+
+#else
+
 GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
 {
   MAPCHANGE_WORK* work;
@@ -2526,7 +2557,6 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
     }
   }
   
-#ifndef  DISABLE_INTRUDE // swanで進入を削除
   {
     FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
     if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
@@ -2534,7 +2564,6 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
       IntrudeField_PlayerDisguise(NULL, gameSystem, 0, 0, 0);
     }
   }
-#endif  //undef(DISABLE_INTRUDE)
   
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
   if(Intrude_Check_CommConnect(GAMESYSTEM_GetGameCommSysPtr(gameSystem)) == NULL){
@@ -2546,6 +2575,7 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
 
   return event;
 }
+#endif  //DISABLE_INTRUDE
 
 //------------------------------------------------------------------
 /// 現在位置をLOCATIONにセット（GRID/RAIL両対応）
@@ -3551,6 +3581,65 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
   return GMEVENT_RES_CONTINUE;
 }
 
+#ifdef  DISABLE_INTRUDE
+
+//パレスにもぐれるかをチェックして、ＯＫならもぐるイベント
+static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk )
+{
+  PALACE_JUMP* work = (PALACE_JUMP*)wk;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(work->gameSystem);
+  enum{
+    SEQ_INIT,
+    SEQ_WARP,
+    SEQ_FINISH,
+  };
+  
+  switch(*seq)
+  {
+  case SEQ_INIT:
+    {
+      u32 scr_id;
+      //進入可能座標チェック
+      if ( PLC_WP_CHK_Check(work->gameSystem) == FALSE )
+      { //進入不可能メッセージコール
+        scr_id = SCRID_FLD_EV_WARP_FAILED;
+        (*seq) = SEQ_FINISH;
+      }
+      else if( PAIRSYS_CheckPairFlag( work->gameData ) )
+      { //でも連れ歩き中はダメ。場所チェックメッセージを優先したいので、ここでチェック
+        scr_id = SCRID_FLD_EV_WARP_FAILED_PAIR;
+        (*seq) = SEQ_FINISH;
+      }
+      else
+      { //進入可能メッセージコール
+        scr_id = SCRID_FLD_EV_WARP_SUCCESS;
+        //swanではハイリンクに移動するときは必ず通信を切る
+        GameCommSys_ExitReq( game_comm );
+        //マップチェンジイベント変更シーケンスへ
+        (*seq) = SEQ_WARP;
+      }
+      SCRIPT_CallScript( event, scr_id, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+    }
+    break;
+  case SEQ_WARP:
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL)
+    {
+      GMEVENT* call_event;
+      GameCommSys_ClearLastStatus(game_comm);
+      GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);
+      GAMEDATA_SetIntrudeMyID(work->gameData, GFL_NET_SystemGetCurrentID());
+      call_event = EVENT_ChangeMapPalace( work->gameSystem, work->fieldmap, &work->Loc );
+      GMEVENT_CallEvent(event, call_event);
+      *seq = SEQ_FINISH;
+    }
+    break;
+  case SEQ_FINISH:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+#else
 //パレスにもぐれるかをチェックして、ＯＫならもぐるイベント
 static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk )
 {
@@ -3570,16 +3659,12 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
       BOOL is_target = FALSE;   //ミッションターゲットになってる？
       BOOL is_partner = FALSE;  //ミッションパートナーとして侵入しようとしてる？
 
-#ifdef  DISABLE_INTRUDE // swanで進入を削除
-      GF_ASSERT( intcomm == NULL ); //swanでは侵入状態になるはずがないので
-#else
       if(intcomm != NULL){
         is_target = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
         if(Intrude_GetIntrudeStatus(game_comm) == INTRUDE_CONNECT_MISSION_PARTNER){
           is_partner = TRUE;
         }
       }
-#endif  //undef(DISABLE_INTRUDE)
 
       //進入可能座標チェック
       if ( is_target == FALSE && PLC_WP_CHK_Check(work->gameSystem) )
@@ -3648,7 +3733,6 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     
     {
       GMEVENT* call_event;
-#ifndef  DISABLE_INTRUDE // swanで進入を削除
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
 
       if(intcomm != NULL){
@@ -3659,7 +3743,6 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
           MISSION_SetMissionEntry(intcomm, &intcomm->mission);
         }
       }
-#endif  //undef(DISABLE_INTRUDE)
       
       GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);
       GAMEDATA_SetIntrudeMyID(work->gameData, GFL_NET_SystemGetCurrentID());
@@ -3670,12 +3753,10 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     break;
   case SEQ_WARP_AFTER:
     {
-#ifndef  DISABLE_INTRUDE // swanで進入を削除
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
       if(intcomm != NULL){
         Intrude_SetSendMyPositionStopFlag(intcomm, FALSE);
       }
-#endif  //undef(DISABLE_INTRUDE)
     }
     *seq = SEQ_FINISH;
     break;
@@ -3684,6 +3765,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
   }
   return GMEVENT_RES_CONTINUE;
 }
+#endif  //DISABLE_INTRUDE
 
 
 

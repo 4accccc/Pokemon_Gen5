@@ -543,6 +543,7 @@ BOOL Intrude_CheckZonePalaceConnect(u16 zone_id)
 #endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
+#ifndef  DISABLE_INTRUDE //swanで侵入を削除
 //--------------------------------------------------------------
 /**
  * チュートリアルを全てこなしているかチェックする
@@ -569,6 +570,7 @@ BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata)
   }
   return TRUE;
 }
+#endif
 
 //==================================================================
 /**
