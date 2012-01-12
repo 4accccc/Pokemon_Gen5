@@ -27,7 +27,8 @@ _EVENT_DATA    ev_init_t06
 _EVENT_DATA    ev_pos_t06_champion_guide_01
 _EVENT_DATA    ev_pos_t06_champion_guide_02
 _EVENT_DATA    ev_pos_t06_champion_guide_03
-_EVENT_DATA    ev_pos_t06_champion_guide_04
+_EVENT_DATA    ev_pos_t06_champion_guide_04_01
+_EVENT_DATA    ev_pos_t06_champion_guide_04_02
 _EVENT_DATA    ev_t06_champion_01
 _EVENT_DATA    ev_t06_boy1_01
 _EVENT_DATA    ev_t06_girl1_01
@@ -258,19 +259,10 @@ EVENT_START   ev_pos_t06_champion_guide_03
 EVENT_END
 
 /**************************************************************/
-/* POS：アデクのガイド（迷子ポケモン終了）                    */
+/* アデクのガイド上下共通処理                                 */
 /**************************************************************/
-EVENT_START   ev_pos_t06_champion_guide_04
-
-  //プレイヤー位置取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  
-  //アニメ：アデク主人公と向き合う
-  _OBJ_ANIME_AUTO( T06_CHAMPION_01, LCW_POSX, 669, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( T06_CHAMPION_01, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
-  
+champion_guide_04:
+ 
   //メッセージ：おう！ぶじに
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_09,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -305,6 +297,46 @@ EVENT_START   ev_pos_t06_champion_guide_04
   //T06アデクを非表示に
   _FLAG_SET( FV_T06_CHAMPION_01 )
   //========================================//
+_RET
+
+/**************************************************************/
+/* POS：アデクのガイド（迷子ポケモン終了）                    */
+/* 主人公が上から来た場合                                     */
+/**************************************************************/
+EVENT_START   ev_pos_t06_champion_guide_04_01
+
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //アニメ：アデク主人公と向き合う
+  _OBJ_ANIME_AUTO( T06_CHAMPION_01, LCW_POSX, 669, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T06_CHAMPION_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  // 上下共通処理実行
+  _CALL champion_guide_04
+ 
+EVENT_END
+
+/**************************************************************/
+/* POS：アデクのガイド（迷子ポケモン終了）                    */
+/* 主人公が下から来た場合                                     */
+/**************************************************************/
+EVENT_START   ev_pos_t06_champion_guide_04_02
+
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //アニメ：アデク主人公と向き合う
+  _OBJ_ANIME_AUTO( T06_CHAMPION_01, LCW_POSX, 668, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T06_CHAMPION_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+ 
+  // 上下共通処理実行
+  _CALL champion_guide_04
+ 
 EVENT_END
 
 //--------------------------------------------------------------------
