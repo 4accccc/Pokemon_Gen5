@@ -13,6 +13,7 @@
   .include  "d26r0701.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,6 +26,7 @@ _EVENT_DATA   ev_zone_d26r0701
 _EVENT_DATA   ev_pos_d26r0701_poke23_01
 _EVENT_DATA	ev_init_d26r0701
 _EVENT_DATA	ev_d26r0701_poke23_01
+_EVENT_DATA   ev_pos_d26r0701_poke23_02
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -38,16 +40,6 @@ DEFINE_LOCAL  LCW_POSZ
 /**************************************************************/
 INIT_EVENT_START  ev_zone_d26r0701
 
-  //クリア後イベントを一度も見ていないのならば、ゾロアークを表示（１回のみ）
-  IF $WK_SCENE_D26_POKE23_01 <= 1 THEN
-
-	//==================================//
-	//ゾロアーク表示
-	_FLAG_RESET( FV_D26_POKE23_01 )
-	//==================================//
-
-  ENDIF
-
 INIT_EVENT_END
 
 /************************************************************/
@@ -59,6 +51,10 @@ INIT_EVENT_START	ev_init_d26r0701
 	
 		_OBJ_POS_CHANGE( D26R0701_POKE23_01, 35, 2, 32, DIR_DOWN )
 	
+	ELSIF $WK_SCENE_D26_POKE23_01 == 2 THEN
+	
+		_OBJ_POS_CHANGE( D26R0701_POKE23_01, 30, 2, 33, DIR_LEFT )
+	
 	ENDIF
 
 INIT_EVENT_END
@@ -67,6 +63,37 @@ INIT_EVENT_END
 /*  POS：ゾロアーク・Ｎの城誘導01                             */
 /**************************************************************/
 EVENT_START   ev_pos_d26r0701_poke23_01
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  //ゾロアーク：くあぁああああぁん！！
+  _VOICE_PLAY( MONSNO_530, 0 ) 
+  _BALLOONWIN_OBJMSG_POS( msg_d26r1101_poke23_01, D26R0701_POKE23_01, POS_DEFAULT )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：ゾロアーク、洞窟へ移動
+  _OBJ_ANIME_AUTO( D26R0701_POKE23_01, 44, 19, FORCE_TYPE_NPC, 6, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D26R0701_POKE23_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  _SE_PLAY( SEQ_SE_KAIDAN )   //階段SE再生
+  _OBJ_DEL( D26R0701_POKE23_01 )  //動作モデル削除
+  _SE_WAIT()  //SE待ち
+
+  //========================================//
+  //POS進行
+  $WK_SCENE_D26_POKE23_01 = 2
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ゾロアーク・Ｎの城誘導02                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0701_poke23_02
 
   //ゾロアーク：くあぁああああぁん！！
   _VOICE_PLAY( MONSNO_530, 0 ) 
@@ -86,13 +113,12 @@ EVENT_START   ev_pos_d26r0701_poke23_01
 
   //========================================//
   //POS進行
-  $WK_SCENE_D26_POKE23_01 = 2
+  $WK_SCENE_D26_POKE23_01 = 3
   //ゾロアーク非表示
   _FLAG_SET( FV_D26_POKE23_01 )
   //========================================//
 
 EVENT_END
-
 
 //--------------------------------------------------------------------
 //☆共通処理：その場歩き

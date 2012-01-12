@@ -335,9 +335,6 @@ init_flags:
   //T04：シロナ
   _FLAG_SET( FV_T04R0301_SHIRONA_01 )
 
-  //D26:チャンピオンロードのゾロアーク
-  _FLAG_SET( FV_D26_POKE23_01 )
-
   //BC10:ブラックシティのトレーナー
   _FLAG_SET( FV_BC10_TRAINER_01 )
   _FLAG_SET( FV_BC10_TRAINER_02 )

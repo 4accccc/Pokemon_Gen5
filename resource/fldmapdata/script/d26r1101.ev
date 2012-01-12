@@ -13,6 +13,7 @@
   .include  "d26r1101.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -37,7 +38,7 @@ DEFINE_LOCAL  LCW_POSZ
 INIT_EVENT_START  ev_zone_d26r1101
 
   //クリア後ならばゾロアークを表示（１回のみ）
-  IF $WK_SCENE_D26_POKE23_01 == 2 THEN
+  IF $WK_SCENE_D26_POKE23_01 == 3 THEN
 
     //==================================//
     //ゾロアーク表示
@@ -71,7 +72,7 @@ EVENT_START   ev_pos_d26r1101_poke23_01
 
   //========================================//
   //POS進行
-  $WK_SCENE_D26_POKE23_01 = 3
+  $WK_SCENE_D26_POKE23_01 = 4
   //ゾロアーク非表示
   _FLAG_SET( FV_D26_POKE23_01 )
   //========================================//
