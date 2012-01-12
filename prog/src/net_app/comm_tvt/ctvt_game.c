@@ -45,6 +45,14 @@
 //debug
 #include "debug/debug_str_conv.h"
 
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#define CTVT_GAME_DEBUG_MENU
+#endif //PM_DEBUG
+
+
 //======================================================================
 //	global
 //======================================================================
@@ -581,6 +589,22 @@ static void TaskFuncPlate( GFL_TCB* p_tcb, void* p_work );
 // 結果発表画面でのプレート
 static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk );
 static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work );
+
+
+#ifdef CTVT_GAME_DEBUG_MENU
+#include "debug/debugwin_sys.h"
+//-------------------------------------
+///	デバッグメニュー
+//=====================================
+static void DEBUGMENU_Init( CTVT_GAME_WORK *p_wk, HEAPID heapID );
+static void DEBUGMENU_Exit( void );
+
+static s32 debug_score[CTVT_MEMBER_NUM];
+static BOOL debug_trg;  // R+Yを押下フラグ
+static BOOL debug_on; // デバッグ入力ONフラグ
+
+#endif // CTVT_GAME_DEBUG_MENU
+
 
 //------------------------------------------------------------------
 //  処理時間AVERAGE
@@ -1335,6 +1359,9 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
       p_wk->score[ netId ] += 2;
       p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_OK_2PT;
     }
+    // 最大得点表示は999
+    if( p_wk->score[ netId ] > 999 ){ p_wk->score[ netId ] = 999; }
+
     // 自分だけ鳴らす
     if( selfId == netId )
     {
@@ -1517,6 +1544,8 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
       if( ret == TRUE )
       {
         p_wk->score[ i ] += 5;
+        // 最大得点表示は999
+        if( p_wk->score[ i ] > 999 ){ p_wk->score[ i ] = 999; }
         // プレートの得点更新
         GAME_PLATE_SetPoint( p_wk, i, p_wk->score[ i ] );
       }
@@ -2571,6 +2600,14 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   gameWork->isRecvFrame   = FALSE;
   gameWork->title_cnt = 0;
 
+#ifdef CTVT_GAME_DEBUG_MENU
+  if( selfId == 0 )
+  {
+    DEBUGWIN_InitProc( CTVT_GAME_FRAME_M_MSG, COMM_TVT_GetFontHandle( work ) );
+    DEBUGMENU_Init( gameWork, heapID );
+  }
+#endif // CTVT_GAME_DEBUG_MENU
+
   ICHI_Printf("ゲーム共通初期化完了\n");
 }
 
@@ -3196,6 +3233,7 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
 #ifdef PM_DEBUG
+#if 0
   // Rボタン押しながらでデバッグ
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R)
   {
@@ -3247,6 +3285,7 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       OS_Printf("debug_wait %d \n", gameWork->debug_wait);
     }
   }
+#endif
 
   // 制限時間早める処理
   // デバッグ 制限時間早める
@@ -3259,6 +3298,16 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     gameWork->plate_move = TRUE;
     GAME_PLATE_SetMovePlate( gameWork, FALSE );
   }
+#ifdef CTVT_GAME_DEBUG_MENU
+  if( (GFL_UI_KEY_GetCont()& DEBUGWIN_CONT_KEY) )
+  {
+    debug_trg = TRUE;
+  }
+  else
+  {
+    debug_trg = FALSE;
+  }
+#endif
 
   // ↑までデバッグ
 #endif
@@ -3314,15 +3363,25 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // 受信していない場合
   // TRUEで受信していると、frameの値は更新されている
+#if 0
   if( gameWork->isRecvFrame == FALSE )
   {
     gameWork->frame++;
   }
   gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
+#endif
 
   if( selfId == 0 )
   {
+#ifdef PM_DEBUG
+    // デバッグ機能：Rボタン押していると制限時間を止める
+    if( debug_trg == FALSE )
+    {
+      gameWork->oya_frame++;
+    }
+#else
     gameWork->oya_frame++;
+#endif
   }
   //ICHI_Printf("フレーム %d\n", gameWork->frame);
 
@@ -3357,6 +3416,15 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       ICHI_Printf("-----送信スコア-------------\n");
       for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
+        // デバッグ機能
+#ifdef CTVT_GAME_DEBUG_MENU
+        if( debug_on )
+        {
+          // デバッグ値
+          gameWork->score[i] = debug_score[i];
+          ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
+        }
+#endif
         score.score[i] = gameWork->score[i];
         ICHI_Printf("%d -> %d\n",i, score.score[i]);
       }
@@ -3470,6 +3538,58 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   u16   anmseq_l;
   u16   anmseq_off;
   u8 i;
+
+
+#ifdef PM_DEBUG
+#if 0
+  // Rボタン押しながらでデバッグ
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R)
+  {
+    // タッチ範囲
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_UP)
+    {
+      gameWork->debug_touch_r += 1;    // 半径特定用
+      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
+    }
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)
+    {
+      gameWork->debug_touch_r -= 1;    // 半径特定用
+      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
+    }
+
+    // ピンポイント範囲
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_RIGHT)
+    {
+      gameWork->debug_touch_ex_r += 1;    // 半径特定用
+      OS_Printf("debug_touch_ex_r %d \n", gameWork->debug_touch_ex_r );
+    }
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_LEFT)
+    {
+      gameWork->debug_touch_ex_r -= 1;    // 半径特定用
+      OS_Printf("debug_touch_ex_r %d \n", gameWork->debug_touch_ex_r );
+    }
+  }
+#endif
+  // 制限時間早める処理
+  // デバッグ 制限時間早める
+  if( selfId == 0 && GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
+  {
+    gameWork->oya_frame += 10;
+  }
+
+#ifdef CTVT_GAME_DEBUG_MENU
+  if( (GFL_UI_KEY_GetCont()& DEBUGWIN_CONT_KEY) )
+  {
+    debug_trg = TRUE;
+  }
+  else
+  {
+    debug_trg = FALSE;
+  }
+#endif
+
+  // ↑までデバッグ
+#endif
 
   // 残り時間でタッチボタンを変更
   if( gameWork->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
@@ -3667,15 +3787,25 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // 受信していない場合
   // TRUEで受信していると、frameの値は更新されている
+#if 0
   if( gameWork->isRecvFrame == FALSE )
   {
     gameWork->frame++;
   }
   gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
+#endif
 
   if( selfId == 0 )
   {
+#ifdef PM_DEBUG
+    // デバッグ機能：Rボタン押していると制限時間を止める
+    if( debug_trg == FALSE )
+    {
+      gameWork->oya_frame++;
+    }
+#else
     gameWork->oya_frame++;
+#endif
   }
 
   // 制限時間処理
@@ -3715,6 +3845,15 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       ICHI_Printf("-----送信スコア-------------\n");
       for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
+        // デバッグ機能
+#ifdef CTVT_GAME_DEBUG_MENU
+        if( debug_on )
+        {
+          // デバッグ値
+          gameWork->score[i] = debug_score[i];
+          ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
+        }
+#endif
         score.score[i] = gameWork->score[i];
         ICHI_Printf("%d -> %d\n",i, score.score[i]);
       }
@@ -3757,43 +3896,6 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   // 風船の更新 & 描画
   GRAPHIC_Draw2( gameWork );
 
-
-#ifdef PM_DEBUG
-  // Rボタン押しながらでデバッグ
-  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R)
-  {
-    // タッチ範囲
-    if(GFL_UI_KEY_GetTrg()&PAD_KEY_UP)
-    {
-      gameWork->debug_touch_r += 1;    // 半径特定用
-      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
-    }
-    if(GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)
-    {
-      gameWork->debug_touch_r -= 1;    // 半径特定用
-      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
-    }
-
-    // ピンポイント範囲
-    if(GFL_UI_KEY_GetTrg()&PAD_KEY_RIGHT)
-    {
-      gameWork->debug_touch_ex_r += 1;    // 半径特定用
-      OS_Printf("debug_touch_ex_r %d \n", gameWork->debug_touch_ex_r );
-    }
-    if(GFL_UI_KEY_GetTrg()&PAD_KEY_LEFT)
-    {
-      gameWork->debug_touch_ex_r -= 1;    // 半径特定用
-      OS_Printf("debug_touch_ex_r %d \n", gameWork->debug_touch_ex_r );
-    }
-  }
-  // 制限時間早める処理
-  // デバッグ 制限時間早める
-  if( selfId == 0 && GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
-  {
-    gameWork->oya_frame += 10;
-  }
-  // ↑までデバッグ
-#endif
 
   return FALSE;
 }
@@ -3858,6 +3960,12 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // プレートをスコアのものに変更
   {
+    // スコアをプレートに適応
+    for( i=0;i<CTVT_MEMBER_NUM; i++ )
+    {
+      gameWork->p_plate[i]->point = gameWork->score[i];
+    }
+
     // プレート変更
     for( i=0;i<CTVT_MEMBER_NUM; i++ )
     {
@@ -4465,7 +4573,16 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 //-----------------------------------------------------------------------------
 static void game_update_seq_exit_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork )
 {
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   u8  i;
+
+#ifdef CTVT_GAME_DEBUG_MENU
+  if( selfId == 0 )
+  {
+    DEBUGMENU_Exit();
+    DEBUGWIN_ExitProc();
+  }
+#endif // CTVT_GAME_DEBUG_MENU
 
   // サウンド
   // グループをアンロードしていなかった場合考えて
@@ -7313,6 +7430,207 @@ static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work )
   }
 }
 
+
+#ifdef CTVT_GAME_DEBUG_MENU
+//=============================================================================
+/**
+ *    デバッグメニュー
+ */
+//=============================================================================
+//-------------------------------------
+///	マクロ
+//=====================================
+#define DEBUGMENU_CTVT_GAME (2)
+
+//-------------------------------------
+///	static
+//=====================================
+// キー入力でデータ変更
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
+// 音量の変更
+static void DebugWin_Update_ChangeScore1( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeScore1( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeScore2( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeScore2( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeScore3( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeScore3( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeScore4( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeScore4( void *userWork, DEBUGWIN_ITEM *item );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  R+Yにデバッグメニュー追加
+ *
+ *	@param	*p_wk       ギミックワーク
+ *	@param	*p_fieldmap フィールドマップワーク
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Init( CTVT_GAME_WORK *p_wk, HEAPID heapID )
+{
+
+  // デバッグメニューグループ追加
+  DEBUGWIN_AddGroupToTop( DEBUGMENU_CTVT_GAME, "ライブキャスター", heapID );
+
+  // 
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeScore1,
+                              DebugWin_Draw_ChangeScore1,
+                              p_wk,
+                              DEBUGMENU_CTVT_GAME,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeScore2,
+                              DebugWin_Draw_ChangeScore2,
+                              p_wk,
+                              DEBUGMENU_CTVT_GAME,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeScore3,
+                              DebugWin_Draw_ChangeScore3,
+                              p_wk,
+                              DEBUGMENU_CTVT_GAME,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeScore4,
+                              DebugWin_Draw_ChangeScore4,
+                              p_wk,
+                              DEBUGMENU_CTVT_GAME,
+                              heapID );
+
+  // デバッグ入力フラグOFF
+  debug_trg = FALSE;
+  debug_on = FALSE;
+  GFL_STD_MemClear( debug_score, sizeof(s32)*CTVT_MEMBER_NUM );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  R+Yからデバッグメニュー破棄
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGMENU_CTVT_GAME );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ数値入力
+ *
+ *	@param	*p_param  変更する値のポインタ
+ *	@param	min       入力する時の最小値
+ *	@param	max       入力する時の最大値
+ *
+ *	@retval TRUE 入力あり
+ *	@retval FALSE 入力なし
+ */
+//-----------------------------------------------------------------------------
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
+{
+  int value = 0;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  { 
+    value = -1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    value = +1;
+  }
+
+  (*p_param) += value;
+  (*p_param)  = MATH_CLAMP( (*p_param), min, max );
+
+  if( value == 0 )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  得点変更 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeScore1( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_score[0];
+
+  if( DebugWin_ChangeData( &value, 0, 999 ) )
+  {
+    // 更新あり
+    debug_score[0] = value;
+    debug_on = TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+// 子機1
+static void DebugWin_Update_ChangeScore2( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_score[1];
+
+  if( DebugWin_ChangeData( &value, 0, 999 ) )
+  {
+    // 更新あり
+    debug_score[1] = value;
+    debug_on = TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+// 子機2
+static void DebugWin_Update_ChangeScore3( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_score[2];
+
+  if( DebugWin_ChangeData( &value, 0, 999 ) )
+  {
+    // 更新あり
+    debug_score[2] = value;
+    debug_on = TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+// 子機3
+static void DebugWin_Update_ChangeScore4( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_score[3];
+
+  if( DebugWin_ChangeData( &value, 0, 999 ) )
+  {
+    // 更新あり
+    debug_score[3] = value;
+    debug_on = TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  得点変更 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeScore1( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "おやき SCORE[%d]", debug_score[0] );
+}
+// 子機1
+static void DebugWin_Draw_ChangeScore2( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "こき1 SCORE[%d]", debug_score[1] );
+}
+// 子機2
+static void DebugWin_Draw_ChangeScore3( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "こき2 SCORE[%d]", debug_score[2] );
+}
+// 子機3
+static void DebugWin_Draw_ChangeScore4( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "こき3 SCORE[%d]", debug_score[3] );
+}
+
+
+
+#endif // CTVT_GAME_DEBUG_MENU
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 

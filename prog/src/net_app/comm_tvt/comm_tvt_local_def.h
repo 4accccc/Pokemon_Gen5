@@ -101,7 +101,7 @@
 //------------------------------------------------------------------
 #ifdef PM_DEBUG
 
-#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 #endif
 
