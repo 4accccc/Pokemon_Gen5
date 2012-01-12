@@ -638,7 +638,8 @@ static void PLIST_BATTLE_TermTimeLimit( PLIST_WORK *work )
 //--------------------------------------------------------------
 static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work )
 {
-  if( work->befTimeLimit != work->plData->time_limit )
+  if( work->befTimeLimit != work->plData->time_limit
+      && PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitNumStr )) == FALSE)
   {
     const u8 min = work->plData->time_limit/60;
     const u8 sec = work->plData->time_limit%60;
