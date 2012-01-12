@@ -1418,7 +1418,7 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
     }
     break;
   case SHOPSELECT_SEQ_BUY:
-    PMSND_PlaySE( SEQ_SE_DECIDE1 );
+    //PMSND_PlaySE( SEQ_SE_DECIDE1 );
 
     if( RESORT_LIST_SELECT_INSTATITUTION_DEL )
     {
