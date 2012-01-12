@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-08T22:34:48" source="kyuremu_union_w_01_011.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-12T22:10:27" source="kyuremu_union_w_01_014.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="1100"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="14 14"
+	compress_material="on" material_size="17 17"
 	frame_step_mode="2"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -365,7 +365,7 @@
 	-2.000000 -2.000000 -2.000000 -2.000000 -2.000000 -2.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="7">
+<tex_srt_anm_array size="8">
 	<tex_srt_anm index="0" material_name="q_beam03_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
@@ -387,21 +387,21 @@
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="2" data_size="551" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="q_beam04_3">
+	<tex_srt_anm index="3" material_name="q_beam04_4">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="2" data_size="551" data_head="552"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="4" material_name="q_beam04_4">
+	<tex_srt_anm index="4" material_name="q_beam04_5">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="2" data_size="551" data_head="1103"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="5" material_name="q_beam04_2">
+	<tex_srt_anm index="5" material_name="q_beam04_3">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
@@ -409,6 +409,13 @@
 		<tex_translate_t frame_step="2" data_size="551" data_head="1654"/>
 	</tex_srt_anm>
 	<tex_srt_anm index="6" material_name="k_head_p_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="2" data_size="551" data_head="2205"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="7" material_name="k_head_p_2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
