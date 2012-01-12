@@ -1509,19 +1509,19 @@
 	<row id="MDL_HINT_BATTLE_052">
 		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５の　いずれかを
-せんとう　３かい　いないで　クリア！</language>
+せんとう　４かい　いないで　クリア！</language>
 		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５の　いずれかを
-戦闘回数　３回以内で　クリアしろ！</language>
+戦闘回数　４回以内で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
 		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０の　いずれかを
-せんとう　５かい　いないで　クリア！</language>
+せんとう　６かい　いないで　クリア！</language>
 		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０の　いずれかを
-戦闘回数　５回以内で　クリアしろ！</language>
+戦闘回数　６回以内で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">

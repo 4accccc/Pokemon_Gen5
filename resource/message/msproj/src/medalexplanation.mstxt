@@ -2219,16 +2219,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１日の　うちに　５０匹もの
+			<Text>１日の　うちに　５０匹　もの
 ポケモンを　捕まえた
 捕獲の　記録の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:43:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2659,16 +2659,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目に　みえない　隠された
-道具を　初めて　みつけた
+			<Text>目に　見えない　隠された
+道具を　初めて　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:02" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2703,16 +2703,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目に　みえない　隠された
-道具を　１０個　みつけた
+			<Text>目に　見えない　隠された
+道具を　１０個　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:08" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2747,16 +2747,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目に　みえない　隠された
-道具を　５０個　みつけた
+			<Text>目に　見えない　隠された
+道具を　５０個　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:13" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2792,15 +2792,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>隠された　道具を
-１５０個も　みつけた　希にみる
+１５０個も　見つけた　希に見る
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -4243,15 +4243,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カナワタウンで　すべての
-車両の　説明を　きいた
+車両の　説明を　聞いた
 電車好きの　ための　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:52" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -4288,14 +4288,14 @@
 			Language="JPN_KANJI">
 			<Text>マリンチューブに　まれに　現れる
 ポケモン　ホエルオーの　泳ぐ姿を
-みた　証しの　メダル。</Text>
+見た　証しの　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:44:57" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -4331,15 +4331,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セイガイハシティの
-顔出し看板から　顔を　だした
+顔出し看板から　顔を　出した
 旅の　思い出の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:45:04" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -4461,16 +4461,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めったに　みることが　できない
-ダイヤモンドダストを　みた
+			<Text>めったに　見ることが　できない
+ダイヤモンドダストを　見た
 証明 の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:45:12" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -5074,16 +5074,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果のない技を　だしてしまった
+			<Text>効果のない技を　出してしまった
 お茶目な　ミステイクを
 笑って　許す　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:45:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6852,28 +6852,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュのなんかん　エリア２から５を
-せんとう　３かい　いないで
+せんとう　４かい　いないで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関　エリア２から５を
-戦闘回数　３回以内で
+戦闘回数　４回以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6889,28 +6889,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュのなんかん　エリア６から１０を
-せんとう　５かい　いないで
+せんとう　６かい　いないで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関　エリア６から１０を
-戦闘回数　５回以内で
+戦闘回数　６回以内で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -7268,14 +7268,14 @@
 			Language="JPN_KANJI">
 			<Text>メールを書き　ポケモンに持たせる
 ノスタルジックな　通信手段に
-価値を　みいだす　メダル。</Text>
+価値を　見出す　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:46:12" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -8498,15 +8498,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニューを　発展させ
-オリジナルの　名前を　つける
+オリジナルの　名前を　付ける
 権利を　得た　記念の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:46:37" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9510,15 +9510,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　すべての　映画で
-グッドエンドの　ストーリーに　でた
+グッドエンドの　ストーリーに　出た
 実力派俳優の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:47:02" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9598,15 +9598,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドで　初めて　ストレンジな
-ストーリーの　映画に　でた
+ストーリーの　映画に　出た
 鬼才の　誕生を　記念する　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:47:09" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9642,15 +9642,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　すべての　映画で
-ストレンジな　ストーリーに　でた
+ストレンジな　ストーリーに　出た
 カルト映画の　名優の　メダル。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:47:12" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-01-12T03:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

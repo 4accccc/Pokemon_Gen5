@@ -667,16 +667,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いろいろな　場所に　ある
+			<Text>色々な　場所に　ある
 お得な　掲示板を
 チェックしよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:50:23" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2526,15 +2526,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２本の　棒が　指し示す
-まだみぬ　宝を　探し求めて
+まだ見ぬ　宝を　探し求めて
 右へ　左へ　注意を　こらせ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:50:51" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2734,15 +2734,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テレビを　たくさん　みて
-いろいろな　情報を
+色々な　情報を
 手に入れよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:50:59" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3074,15 +3074,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＣーＧＥＡＲを　開いて
-いろいろな　人と
+色々な　人と
 すれ違って　みよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:51:12" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3239,14 +3239,14 @@
 			Language="JPN_KANJI">
 			<Text>不思議な　力
 デルパワーを　使って
-冒険を　より　楽しくしよう！</Text>
+冒険を　より　楽しく　しよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:51:31" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3561,14 +3561,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すべての　隠し穴を
-みつけることが　できるか！？</Text>
+見つけることが　できるか！？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:51:38" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3602,15 +3602,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴから　なにが　生まれる？
+			<Text>タマゴから　何が　生まれる？
 確かめてみよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:51:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3765,16 +3765,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>育て屋さんに　ポケモンを
+			<Text>そだてやさんに　ポケモンを
 預けて　預けて　預けまくれ！
 ……引き取ることも　忘れずに</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:51:56" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6122,14 +6122,14 @@
 			Language="JPN_KANJI">
 			<Text>果てなく　続く　摩天楼
 自分の　力で
-進んで　行こう！</Text>
+進んで　いこう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:52:36" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6512,27 +6512,27 @@
 			Language="JPN">
 			<Text>イッシュのなんかんの
 エリア２から５の　いずれかを
-せんとう　３かい　いないで　クリア！</Text>
+せんとう　４かい　いないで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関の
 エリア２から５の　いずれかを
-戦闘回数　３回以内で　クリアしろ！</Text>
+戦闘回数　４回以内で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6548,27 +6548,27 @@
 			Language="JPN">
 			<Text>イッシュのなんかんの
 エリア６から１０の　いずれかを
-せんとう　５かい　いないで　クリア！</Text>
+せんとう　６かい　いないで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関の
 エリア６から１０の　いずれかを
-戦闘回数　５回以内で　クリアしろ！</Text>
+戦闘回数　６回以内で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:40:02" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6701,15 +6701,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信交換で
-いろいろな　ポケモンを
+色々な　ポケモンを
 集めよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:52:47" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -7497,15 +7497,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>高得点を　目指して
-いろいろな　友達と
+色々な　友達と
 フィーリングチェックを　しよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:53:05" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:54" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9428,16 +9428,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>開催された
+			<Text>開催　された
 フェスミッションに
-参加しよう！</Text>
+参加　しよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:53:36" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9514,14 +9514,14 @@
 			Language="JPN_KANJI">
 			<Text>みんなで　協力して
 フェスミッションを
-クリアしよう！</Text>
+クリア　しよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T05:53:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-12T03:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-12T03:07:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
