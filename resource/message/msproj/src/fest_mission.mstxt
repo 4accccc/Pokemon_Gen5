@@ -28,10 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-29T11:32:48" />
+				Time="2012-01-12T13:40:41" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:40:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -73,6 +80,20 @@
 				User="iwasawa:W00270"
 				Time="2011-07-22T09:12:49" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:40:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:40:43" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>
@@ -113,6 +134,20 @@
 				User="masafumi_saitou:W00225"
 				Time="2011-09-18T08:49:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:40:24" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:40:24" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -873,6 +908,54 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fm_title_item_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>まぼろしの　きのみを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>幻の　きのみを　探せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:26" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:27" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fm_title_npc_01"
 		Style="Large">
 		<LanguageCell
@@ -1593,10 +1676,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンセンターの　お姉さん！</Text>
+			<Text>ポケモンセンターの　お姉さん</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:44:51" />
+				Time="2012-01-12T11:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1745,17 +1828,209 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T14:09:42" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T14:09:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_npc_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター　クイズおう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:03:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター　クイズ王！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:03:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
 			<Comment>ミッション名（配信）</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:56:33" />
+				Time="2012-01-12T11:03:31" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション名（配信）</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:56:34" />
+				Time="2012-01-12T11:03:31" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_npc_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>クイズおう　けっていせん</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クイズ王　決定戦</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:06:24" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_npc_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン　ずかんクイズ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン　図鑑クイズ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの
+</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:46" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの
+</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:07:49" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_npc_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンターの　おねえさん</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンターの　お姉さん</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:55" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:45:56" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2381,10 +2656,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくしあな　だいちょうさ！</Text>
+			<Text>ポケモンを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:12:20" />
+				Time="2012-01-12T10:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2392,10 +2667,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>隠し穴　大調査！</Text>
+			<Text>ポケモンを　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:50:15" />
+				Time="2012-01-12T10:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2414,6 +2689,98 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-11-20T12:12:08" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_evt_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエンの　ポケモンを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:50:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T10:52:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエンの　ポケモンを　探せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T10:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T10:52:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T10:52:40" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T10:52:40" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_title_evt_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン　しょうぶを　しよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:02:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:02:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン　勝負を　しよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:03:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:02:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:02:01" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T11:02:01" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -3301,6 +3668,60 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-12-16T03:47:59" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_item_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>まぼろしの　きのみが　みつかった！
+もりや　ほらあなの　キラキラひかる
+ばしょを　さがして
+きのみを　あつめよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>幻の　きのみが　みつかった！
+森や　洞穴の　キラキラ光る
+場所を　探して
+きのみを　集めよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:43:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:44:00" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:44:02" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -4322,6 +4743,221 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fm_explain_npc_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちや　みちにいる
+けんきゅういんに　はなしかけて
+ポケモンクイズに　こたえよう！
+トレーナーの　ちしきが　ためされる！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>街や道にいる
+けんきゅういんに　話しかけて
+ポケモンクイズに　答えよう！
+トレーナーの　知識が　試される！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:33:53" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ポケモンセンター用</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:32:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_npc_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちや　みちにいる
+けんきゅういんに　はなしかけて
+ポケモンクイズに　こたえよう！
+トレーナーの　ちしきが　ためされる！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>街や道にいる
+けんきゅういんに　話しかけて
+ポケモンクイズに　答えよう！
+トレーナーの　知識が　試される！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:33:56" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:03" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_npc_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちや　みちにいる
+けんきゅういんに　はなしかけて
+ポケモンクイズに　こたえよう！
+トレーナーの　ちしきが　ためされる！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>街や道にいる
+けんきゅういんに　話しかけて
+ポケモンクイズに　答えよう！
+トレーナーの　知識が　試される！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの
+</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:08:05" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（配信）
+※ふしぎなおくりもの
+</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T12:09:03" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_npc_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちや　みちにいる
+ポケモンセンターの　おねえさんに
+はなしかけて　みよう！
+ステキな　プレゼントが　あるかも？？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>街や道にいる
+ポケモンセンターの　お姉さんに
+話しかけて　みよう！
+ステキな　プレゼントが　あるかも？？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:23" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文（配信）
+※ふしぎなおくりもの</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:47:25" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fm_explain_poke_01"
 		Style="Large">
 		<LanguageCell
@@ -5144,17 +5780,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※通常隠し穴</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:40:57" />
+				Time="2012-01-12T13:54:03" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※通常隠し穴</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2012-01-12T13:54:11" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -5197,17 +5835,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※ゲーム内レア</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:40:57" />
+				Time="2012-01-12T13:53:54" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※ゲーム内レア</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2012-01-12T13:54:11" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -5250,17 +5890,127 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション説明文（配信）</Comment>
+			<Comment>ミッション説明文（配信）
+※イーブイ系</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:18:14" />
+				Time="2012-01-12T13:53:26" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文（配信）</Comment>
+			<Comment>ミッション説明文（配信）
+※イーブイ系</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:18:14" />
+				Time="2012-01-12T13:53:38" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_evt_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエンちほうの　ポケモンの
+はっけん　ほうこくが　あった！
+かくちの　かくしあなを　めぐって
+ホウエンの　ポケモンを　さがせ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:48:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:48:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエン地方の　ポケモンの
+発見　報告が　あった！
+各地の　隠し穴を　巡って
+ホウエンの　ポケモンを　探せ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:50:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:48:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文（配信）
+※ホウエン系</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:53:31" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文（配信）
+※ホウエン系</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:53:38" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_evt_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションで　ポケモンを　つかまえて
+そだてよう！
+ポケモンしょうぶで　つかいやすい
+ポケモンに　しんかするぞ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:52:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:48:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションで　ポケモンを
+捕まえて　育てよう！
+ポケモン勝負で　使いやすい
+ポケモンに　進化するぞ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:52:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:48:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文（配信）
+※バトル系</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:53:36" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文（配信）
+※バトル系</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-01-12T13:53:38" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
