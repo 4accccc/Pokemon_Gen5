@@ -171,6 +171,7 @@ static const ARRIVE_MEDAL_TD sc_arrive_hint_mdl_table[] =
   { MDLID_MUGEN_WIN_LV1         , SYS_FLAG_ARRIVE_D31R0201   }, // 受付両方でチェック
   { MDLID_MUGEN_WIN_LV1         , SYS_FLAG_ARRIVE_D31R0101   },
   { MDLID_MUSICAL_TOTAL_POINT   , SYS_FLAG_ARRIVE_C04   },
+  { MDLID_SAISEN_LV1            , SYS_FLAG_ARRIVE_C04   },
 };
 #define ARRIVE_HINT_MDL_TBL_SIZE (NELEMS(sc_arrive_hint_mdl_table))
 
