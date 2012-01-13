@@ -2532,6 +2532,13 @@ static BOOL VmWait_RankWindow( VMHANDLE *p_core, void *p_wk_adrs )
     p_subwk->seq++;
     break;
   case SEQ_START_DRAW:
+
+    //レコードの更新を行う。
+    {
+      RESORT_WORK *p_reso_wk = GAMEDATA_GetReosrtWork( p_gamedata );
+      RESORT_WORK_ReLoadData( p_reso_wk, GAMEDATA_GetSaveControlWork(p_gamedata) );
+    }
+
     RESORT_UTIL_RANKWND_Write( p_subwk->p_msg_win, RESORT_SYSTEM_GetPeopleAllData(p_sys), p_msgbg, p_wordset, p_gamedata, p_subwk->param, heapID );
     p_subwk->seq++;
     break;
