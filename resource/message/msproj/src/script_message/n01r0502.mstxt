@@ -1892,10 +1892,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ダークストーンを　もって
-リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]</Text>
+リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T13:17:06" />
+				Time="2012-01-13T01:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1904,10 +1904,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ダークストーンを　持って
-リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]</Text>
+リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T13:17:12" />
+				Time="2012-01-13T01:37:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1949,10 +1949,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ライトストーンを　もって
-リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]</Text>
+リュウラセンのとう　へ　いくんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T13:17:09" />
+				Time="2012-01-13T01:37:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1961,10 +1961,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ライトストーンを　持って
-リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]</Text>
+リュウラセンの塔へ　行くんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T13:17:15" />
+				Time="2012-01-13T01:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

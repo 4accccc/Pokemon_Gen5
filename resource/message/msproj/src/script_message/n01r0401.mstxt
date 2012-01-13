@@ -272,10 +272,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]さあ！
-ボクを　あんない　したまえ[Ctrl2:CtrlSpeed ]</Text>
+ボクを　あんない　したまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:51:55" />
+				Time="2012-01-13T01:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -284,10 +284,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]さあ！
-ボクを　案内したまえ[Ctrl2:CtrlSpeed ]</Text>
+ボクを　案内したまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:52:25" />
+				Time="2012-01-13T01:33:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
