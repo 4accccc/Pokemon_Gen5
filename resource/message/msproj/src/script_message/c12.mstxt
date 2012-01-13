@@ -687,12 +687,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ポケモンを　もらったら
-とうぜん　たびを　するよな▼
+とうぜん　たびに　でるよな▼
 そのときは　ちょっと
 オレの　てつだいを　してもらうぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T11:08:03" />
+				Time="2012-01-13T00:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -701,12 +701,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ポケモンを　もらったら
-当然　旅を　するよな▼
+当然　旅に　でるよな▼
 そのときは　ちょっと
 オレの　手伝いを　してもらうぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T11:08:13" />
+				Time="2012-01-13T00:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3037,10 +3037,10 @@ GIRL2</Text>
 アララギはかせ　ったら！▼
 ふつうは　オーケーの
 へんじを　もらってから▽
-しゅっぱつ　させるよね？</Text>
+しゅっぱつ　させるよねえ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:09:01" />
+				Time="2012-01-13T00:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3052,10 +3052,10 @@ GIRL2</Text>
 アララギ博士　ったら！▼
 普通は　オーケーの
 返事を　もらってから▽
-出発　させるよね？</Text>
+出発　させるよねえ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:08:57" />
+				Time="2012-01-13T00:45:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3260,14 +3260,14 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……オレにも
-ポケモンずかんを　くれませんか？▼
+ポケモンずかんを　ください▼
 オレは　つよくなりたい！▼
 ポケモンずかんが　あれば
 ポケモンに　くわしく　なれる……▽
 つまり　つよくなれるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:09:49" />
+				Time="2012-01-13T00:46:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3276,14 +3276,14 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……オレにも
-ポケモン図鑑を　くれませんか？▼
+ポケモン図鑑を　ください▼
 オレは　強くなりたい！▼
 ポケモン図鑑が　あれば
 ポケモンに　詳しく　なれる……▽
 つまり　強くなれるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:09:51" />
+				Time="2012-01-13T00:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3708,10 +3708,10 @@ GIRL2</Text>
 			<Text>[Name:TrainerName Idx="1" ]『はじめての　しょうぶで
 そこまで　たたかえれば　じゅうぶん！▼
 じゃ　オレ　さきにいくからな！
-オマエ　もっと　つよくなっておけッ！▼</Text>
+オマエ　もっと　つよくなっておけよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:17:28" />
+				Time="2012-01-13T00:46:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3722,10 +3722,10 @@ GIRL2</Text>
 			<Text>[Name:TrainerName Idx="1" ]『はじめての　勝負で
 そこまで　戦えれば　充分！▼
 じゃ　オレ　先に行くからな！
-オマエ　もっと　強くなっておけッ！▼</Text>
+オマエ　もっと　強くなっておけよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:17:30" />
+				Time="2012-01-13T00:46:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3773,10 +3773,10 @@ GIRL2</Text>
 			<Text>ベル『どっちの ポケモンも
 すごく　がんばったよね！▼
 だけど　そのコは　まだ　よわいから
-たたかわせて　そだててあげないとね▼</Text>
+たたかわせて　そだててあげないと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:49:52" />
+				Time="2012-01-13T00:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3787,10 +3787,10 @@ GIRL2</Text>
 			<Text>ベル『どっちの ポケモンも
 すごく　がんばったよね！▼
 だけど　そのコは　まだ　弱いから
-戦わせて　育ててあげないとね▼</Text>
+戦わせて　育ててあげないと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:49:44" />
+				Time="2012-01-13T00:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6718,11 +6718,11 @@ GIRL2</Text>
 はなしを　きくと　どうやら▼
 その　ゆめのなかの　ゾロアーク
 チャンピオンロードに　いるらしいんだ▼
-ま　はなしは　それだけ
+いいたいことは　それだけ
 じゃーな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:32:38" />
+				Time="2012-01-13T00:44:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6731,14 +6731,14 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『よく　わかんないけど
-はなしを　きくと　どうやら▼
+話を　きくと　どうやら▼
 その夢の　中の　ゾロアーク
 チャンピオンロードに　いるらしいんだ▼
-話は　それだけ
+いいたいことは　それだけ
 じゃーな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:32:47" />
+				Time="2012-01-13T00:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
