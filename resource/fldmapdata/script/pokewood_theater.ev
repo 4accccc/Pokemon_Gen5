@@ -510,6 +510,18 @@ ev_pkwd_show_watch_movie:
     _CALL sub_pkwd_fan_appear
   ENDIF
 
+  //ごほうびイベントチェック
+  IF $WK_SCENE_C15_BONUS_EVENT_01 == 0 THEN
+    
+    // 全てのシナリオのGOODENDチェック
+    _PKWD_CHECK_ALL_SUCCESS( SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+
+      // 全てのシナリオでGOODEND達成した
+      $WK_SCENE_C15_BONUS_EVENT_01 = 1     //ごほうびイベント起動
+    ENDIF
+  ENDIF
+
   _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
   //閉まるアニメの1フレーム目で止めておく
   _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
@@ -715,18 +727,6 @@ ev_pkwd_show_owner_judge:
   //「じゃーね！
   _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
   _MSGWIN_CLOSE()
-
-  //ごほうびイベントチェック
-  IF $WK_SCENE_C15_BONUS_EVENT_01 == 0 THEN
-    
-    // 全てのシナリオのGOODENDチェック
-    _PKWD_CHECK_ALL_SUCCESS( SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
-
-      // 全てのシナリオでGOODEND達成した
-      $WK_SCENE_C15_BONUS_EVENT_01 = 1     //ごほうびイベント起動
-    ENDIF
-  ENDIF
 
 
   //オーナー去っていく
