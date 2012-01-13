@@ -705,6 +705,42 @@ IF $SCWK_ANSWER == 0 THEN
 			//退場演出
 			_CALL ev_badrider_leave
 
+			_TIME_WAIT( 30 )
+
+			_CAMERA_RECV_MOVE(20)
+			_CAMERA_WAIT_MOVE()
+			_CAMERA_BIND()		//カメラのバインドを解く
+			_CAMERA_END()
+
+			//彼氏が主人公に近づく
+			_OBJ_ANIME( R05_STOP01_01, anm_walk_u )
+			_TIME_WAIT( 8 )
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+			_OBJ_ANIME( R05_STOP05_01, anm_staystep_r )
+			_OBJ_ANIME( R05_STOP06_01, anm_staystep_r )
+			_OBJ_ANIME( R05_STOP07_01, anm_staystep_r )
+			_OBJ_ANIME( R05_STOP08_01, anm_staystep_r )
+			_OBJ_ANIME( R05_STOP09_01, anm_staystep_r )
+			_OBJ_ANIME_WAIT()
+
+			//きみ　すごかったぜ
+			_BALLOONWIN_OBJMSG_POS( msg_r05_stop01_03 ,R05_STOP01_01 ,POS_DEFAULT )
+			_MSGWIN_CLOSE()
+			
+			//サブウィン表示
+			//歓声があがる
+			_SUBWIN_MSG( msg_r05_sub_01 , 3 , 3 , 1 )
+			_TIME_WAIT( 10 )
+			_SUBWIN_MSG( msg_r05_sub_02 , 20 , 13 , 2 )
+			_TIME_WAIT( 10 )
+			_SUBWIN_MSG( msg_r05_sub_03 , 5 , 20 , 3 )
+			_TIME_WAIT( 30 )
+			_SUBWIN_CLOSE( 1 )
+			_TIME_WAIT( 5 )
+			_SUBWIN_CLOSE( 2 )
+			_TIME_WAIT( 5 )
+			_SUBWIN_CLOSE( 3 )
+
 			_OBJ_ANIME( R05_STOP01_01, anm_stop01_leave )
 			_OBJ_ANIME( R05_STOP02_01, anm_stop02_leave )
 			_OBJ_ANIME( R05_STOP03_01, anm_stop03_leave )
@@ -744,14 +780,7 @@ IF $SCWK_ANSWER == 0 THEN
 			
 			//画面暗転解除
 			_BLACK_IN_SLOW()
-			
-			_CAMERA_RECV_MOVE(20)
-			
 			_DISP_FADE_END_CHECK()
-
-			_CAMERA_WAIT_MOVE()
-			_CAMERA_BIND()		//カメラのバインドを解く
-			_CAMERA_END()
 
 		ENDIF
 	
@@ -954,12 +983,14 @@ _ANIME_LABEL	anm_stop01_move
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stop01_leave
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stop02_leave
-	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
 	_ANIME_DATA	ACMD_END,0
 
