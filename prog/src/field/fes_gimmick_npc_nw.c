@@ -82,9 +82,9 @@ static const FES_NPC_OBJ_PARAM DATA_FesNpcPresentItem[FES_NPC_PARAM_FIXED] = {
   { BOY2, 0 },
 };
 static const FES_NPC_OBJ_PARAM DATA_FesNpcItemTrade[FMISSION_EXP_ITEM_TRADE_SET_MAX] = {
+  { GIRL4, 1 },
   { BACKPACKERM, 0 },
-  { GIRL4, 1 },
-  { GIRL4, 1 },
+  { BACKPACKERM, 0 },
 };
 static const FES_NPC_OBJ_PARAM DATA_FesNpcShopping[FMISSION_EXP_SHOPPING_SET_MAX] = {
   { SHOPM1, 0 },
