@@ -264,7 +264,9 @@ static void PMSND_InitCore( BOOL systemSEload )
   TAMADA_Printf("Snd heap after Player %d\n", heapRemainsAfterPlayer );
   TAMADA_Printf("Snd heap after Preset %d\n", heapRemainsAfterPresetSE );
 #endif
+#ifndef MULTI_BOOT_MAKE
   GF_ASSERT_MSG( heapRemainsAfterPresetSE > 165792, "SoundHeap not enough!!\n");
+#endif
 }
 
 
