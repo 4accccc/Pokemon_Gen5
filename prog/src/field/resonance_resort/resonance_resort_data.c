@@ -2177,6 +2177,8 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
     GFL_STD_MemCopy( (const void*)data, p_wk->extend7.thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
     break;
+  case RESORT_DATA_PARAM_EXTEND_NUM:
+    break;
 
   default:
     GF_ASSERT(0);
