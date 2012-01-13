@@ -3313,6 +3313,15 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 #endif
 
 
+  // データ受信していないならメインを回さない
+  // ずれが発生するため
+  if( gameWork->isRecvFrame == FALSE )
+  {
+    ICHI_Printf("データ受信していない");
+    return FALSE;
+  }
+  gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
+
     // 風船出現管理(親だけ)
   if( selfId == 0 )
   {
@@ -3361,15 +3370,6 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     }
   }
 
-  // 受信していない場合
-  // TRUEで受信していると、frameの値は更新されている
-#if 0
-  if( gameWork->isRecvFrame == FALSE )
-  {
-    gameWork->frame++;
-  }
-  gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
-#endif
 
   if( selfId == 0 )
   {
@@ -3591,6 +3591,15 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   // ↑までデバッグ
 #endif
 
+  // データ受信していないならメインを回さない
+  // ずれが発生するため
+  if( gameWork->isRecvFrame == FALSE )
+  {
+    ICHI_Printf("データ受信していない");
+    return FALSE;
+  }
+  gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
+
   // 残り時間でタッチボタンを変更
   if( gameWork->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
   {
@@ -3784,16 +3793,6 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     gameWork->swing_interval--;
   }
 
-
-  // 受信していない場合
-  // TRUEで受信していると、frameの値は更新されている
-#if 0
-  if( gameWork->isRecvFrame == FALSE )
-  {
-    gameWork->frame++;
-  }
-  gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
-#endif
 
   if( selfId == 0 )
   {
@@ -6153,6 +6152,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 
 
   //ICHI_Printf("風船出現 %d unit %d ", p_wk->tcb, unit_idx);
+  ICHI_Printf("風船出現 %d \n", p_game_wk->frame );
 
   {
     // 風船の初期位置
