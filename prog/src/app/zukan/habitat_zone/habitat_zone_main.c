@@ -1861,7 +1861,7 @@ static void MAINSEQ_MovePokeCursor( HABITAT_ZONE_WK *p_wk )
         ONOUE_Printf("カーソルON(選択インデックス%d)\n",p_wk->select_index);
 
         // カーソル有効化の時は移動音は鳴らさない
-        if( p_wk->select_index != SEQ_CHANGE_PARAM_NONE )
+        if( p_wk->seq_param != SEQ_CHANGE_PARAM_NONE )
         {
           // 動いている時のみ音を鳴らす
           if( old_index != p_wk->select_index )
