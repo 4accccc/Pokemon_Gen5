@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/10 16:30:21
+#save date:2012/01/13 11:04:54
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t03.wms
 #SECTION START:OBJ_EVENT
@@ -390,7 +390,7 @@ T03_SWRIVAL_01
 #OBJ CODE Number
 SWRIVAL
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name

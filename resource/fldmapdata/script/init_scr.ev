@@ -650,11 +650,6 @@ ev_first_gameclear:
 
   //14番道路ゲートのストッパーを非表示
   _FLAG_SET( FV_R14R0101_MAN3_01 )
-
-  //c12:ヒオウギシティにライバルと妹をセット
-  _FLAG_RESET( FV_C12_SWRIVAL )
-  _FLAG_RESET( FV_C12_SWRIVAL_SISTER )
-  $WK_SCENE_SPPOKE_EVENT_01 = 1
   
   //D33:心の空洞にアララギ娘を表示
   _FLAG_RESET( FV_D33R0101_HAKASE2_01 )

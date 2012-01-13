@@ -381,16 +381,17 @@ EVENT_START ev_pos_c12r0101_gameclear
   //BGM終了
   _END_EVENT_BGM()
   
+  //アニメ：主人公・ママ向き合う
+  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_r)
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
   //ママ：いっちゃった
   _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_end_05, C12R0101_SWMAMA_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   _ITEM_EVENT_KEYWAIT( ITEM_GENKINOKATAMARI, 2 )
-  
-  //アニメ：主人公・ママ向き合う
-  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_r)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
-  _OBJ_ANIME_WAIT()
 	
   //ママ：なにをしても
   _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_end_06, C12R0101_SWMAMA_01, POS_DEFAULT )
@@ -400,6 +401,12 @@ EVENT_START ev_pos_c12r0101_gameclear
   //========================================//
   //POSイベント無効
   $WK_SCENE_C12R0101 = 3
+
+  //c12:ヒオウギシティにライバルと妹をセット
+  _FLAG_RESET( FV_C12_SWRIVAL )
+  _FLAG_RESET( FV_C12_SWRIVAL_SISTER )
+  $WK_SCENE_SPPOKE_EVENT_01 = 1
+
   //========================================//
 
 EVENT_END
