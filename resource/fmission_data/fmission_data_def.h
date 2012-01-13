@@ -157,7 +157,7 @@ typedef enum{
 //=========================================
 typedef enum{
   FMISSION_ITEM_SET_KAKERA1,  ///<イロのカケラセット1
-  FMISSION_ITEM_SET_TREASURE1,  ///<宝探しセット１
+  FMISSION_ITEM_SET_TREASURE1,  ///<宝探しセット１B
   FMISSION_ITEM_SET_LOST_ITEM,  ///<落し物
   FMISSION_ITEM_SET_LOST_ITEM_W,  ///<落し物W
   FMISSION_ITEM_SET_LOST_ITEM_B,  ///<落し物B
@@ -165,7 +165,7 @@ typedef enum{
   FMISSION_ITEM_SET_KINOMI2,  ///<きのみセット２
   FMISSION_ITEM_SET_STONE_W,  ///<進化の石セットW
   FMISSION_ITEM_SET_STONE_B,  ///<進化の石セットB
-  FMISSION_ITEM_SET_HERB,  ///<漢方薬セット
+  FMISSION_ITEM_SET_HERB,  ///<漢方薬セット　→　宝探しセット１W
   FMISSION_ITEM_SET_MANURE,  ///<○○のこやし
   FMISSION_ITEM_SET_HEART,  ///<ハートのうろこ他
   FMISSION_ITEM_SET_TREASURE2,  ///<宝探しセット２

@@ -18,8 +18,8 @@
 #define  FMISSION_ID_EFFECT_ENC_GLASS_01S  ( 6 )  ///<ポケモンサーチ3！
 #define  FMISSION_ID_NPC_BTLNPC_01  ( 7 )  ///<格闘家と 修行！
 #define  FMISSION_ID_NPC_BTLNPC_01S  ( 8 )  ///<10人組み手！
-#define  FMISSION_ID_ITEM_KAKERA_02  ( 9 )  ///<いっかく せんきん！
-#define  FMISSION_ID_ITEM_KANPO_01  ( 10 )  ///<トレジャー　ハント！
+#define  FMISSION_ID_ITEM_TREASURE1B  ( 9 )  ///<いっかく せんきん！
+#define  FMISSION_ID_ITEM_TREASURE1W  ( 10 )  ///<トレジャー　ハント！
 #define  FMISSION_ID_NPC_TRADE_02B  ( 11 )  ///<ドキドキ 物々交換！
 #define  FMISSION_ID_NPC_TRADE_02W  ( 12 )  ///<ウキウキ 物々交換！
 #define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 13 )  ///<エモンガを 探せ！
