@@ -5205,17 +5205,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション説明文
-ノコッチ</Comment>
+未使用</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:32:29" />
+				Time="2012-01-13T03:17:12" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+未使用</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:52:39" />
+				Time="2012-01-13T03:17:41" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -5232,11 +5233,11 @@
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
 [Name:PokemonName ]を　さがしてみよう！
-ジャイアントホールにて
+ネジやまにて
 はっけん　ほうこくアリ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:29:51" />
+				Time="2012-01-13T03:18:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5246,11 +5247,11 @@
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらにいる
 [Name:PokemonName ]を　探してみよう！
-ジャイアントホールにて
+ネジ山にて
 発見　報告アリ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:46:18" />
+				Time="2012-01-13T03:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5311,17 +5312,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション説明文
-チラチーノ</Comment>
+未使用</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:32:39" />
+				Time="2012-01-13T03:17:08" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+未使用</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:52:39" />
+				Time="2012-01-13T03:17:44" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
