@@ -44,17 +44,17 @@ EVENT_START   ev_d32r0101_fighterm_01
   _TALK_OBJ_START()
 
   // ※ ソウリュウイベント終了チェック
-  // ソウリュウイベント前
   IF $WK_SCENE_C08_NINJA == 2 THEN
+    // ソウリュウイベント後
+    //カラテおうバトル呼出
+    _CALL ev_battle_start
+
+  ELSE
+    // ソウリュウイベント前
     //カラテおう：つわものとしか　たたかわない！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_d32r0101_fighterm_01 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
-
-  // ソウリュウイベント後
-  ELSE
-    //カラテおうバトル呼出
-    _CALL ev_battle_start
   ENDIF
 
 EVENT_END
