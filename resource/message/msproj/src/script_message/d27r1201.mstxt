@@ -63,11 +63,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……だまって
-オマエらの　ポケモン　みせな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　いかるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:43:46" />
+				Time="2012-01-12T13:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -75,11 +75,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……黙って
-オマエらの　ポケモン　みせな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　怒るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:43:46" />
+				Time="2012-01-12T13:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -303,10 +303,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……バリア　だな▼</Text>
+			<Text>バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:52:39" />
+				Time="2012-01-12T13:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -314,10 +314,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……バリア　だな▼</Text>
+			<Text>バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:52:46" />
+				Time="2012-01-12T13:15:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -426,10 +426,10 @@
 パスワードを　さがすか　ききだして
 バリアを　けすしかないか▼
 [Name:TrainerName ]！　てわけして
-パスワードを　さがすぞ！▼</Text>
+パスワードを　さがすぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:37:56" />
+				Time="2012-01-12T13:16:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -441,10 +441,10 @@
 パスワードを　探すか　ききだして
 バリアを　解除しないとな▼
 [Name:TrainerName ]　手分けして
-パスワードを　探すぞ！▼</Text>
+パスワードを　探すぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:15:06" />
+				Time="2012-01-12T13:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

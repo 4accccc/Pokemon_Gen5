@@ -417,11 +417,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……ぜんいん　たおす
-まとめて　かかってこいよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　いかるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T03:29:20" />
+				Time="2012-01-12T09:44:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -429,11 +429,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……全員　倒す
-まとめて　かかってこいよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　怒るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T03:29:32" />
+				Time="2012-01-12T09:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -543,10 +543,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『これだけ　いるのに
-かてるわけ　ないだろ！▼</Text>
+おこったぐらいで　かてるものか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T03:32:45" />
+				Time="2012-01-12T13:24:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -555,10 +555,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『これだけ　いるのに
-勝てるわけ　ないだろ！▼</Text>
+怒ったぐらいで　勝てるものか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T03:32:54" />
+				Time="2012-01-12T13:24:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1319,10 +1319,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『あの　ヤロウ
-ひっし　すぎるだろ……！</Text>
+ひっし　すぎるだろ……！▼
+ハリーセンみたいな　
+トゲトゲあたま　してるくせに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T07:44:40" />
+				Time="2012-01-12T13:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1331,10 +1333,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『あの　ヤロウ
-必死すぎるだろ……！</Text>
+必死すぎるだろ……！▼
+ハリーセンみたいな　
+トゲトゲ頭　してるくせに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T07:44:45" />
+				Time="2012-01-12T13:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

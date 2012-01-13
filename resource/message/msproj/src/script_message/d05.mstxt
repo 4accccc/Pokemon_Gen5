@@ -75,12 +75,12 @@
 			<Text>どうだ！
 りっぱな　たてもの　だろ！▼
 ポケモンワールドトーナメントの
-かいじょう　だぞ！　ホレボレするよな▼
+かいじょう　だぞ！　ホレボレするだろ▼
 さ！
 おまえら　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T02:07:22" />
+				Time="2012-01-12T13:58:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -91,12 +91,12 @@
 			<Text>どうだ！
 立派な　建物だろ！▼
 ポケモンワールドトーナメントの
-会場だぞ！　ホレボレするよな▼
+会場だぞ！　ホレボレするだろ▼
 さ！
 おまえら　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T02:07:16" />
+				Time="2012-01-12T13:58:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1572,10 +1572,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひとまえで　しょうぶ　するなら
-まいあがらないように　しないとね</Text>
+まいあがらないように　しないとね▼
+そんなこといいつつ　あたしは
+はなびらのまい　ちょうのまいに▽
+ほのおのまい　りゅうのまい▼
+めずらしいところでは
+みかづきのまい　の　わざが　すきよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:47:39" />
+				Time="2012-01-12T13:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1584,10 +1589,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人前で　勝負するなら
-舞い上がらないように　しないとね</Text>
+舞い上がらないように　しないとね▼
+そんなこといいつつ　あたしは
+はなびらのまい　ちょうのまいに▽
+ほのおのまい　りゅうのまい▼
+珍しいところでは
+みかづきのまい　の　技が　好きよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:47:32" />
+				Time="2012-01-12T13:55:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1803,10 +1813,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:18" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1863,10 +1873,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1925,10 +1935,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1987,10 +1997,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2046,10 +2056,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2104,10 +2114,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2164,10 +2174,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2229,10 +2239,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:20" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -2282,7 +2292,7 @@
 			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:23:20" />
+				Time="2012-01-12T13:57:24" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2297,10 +2307,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あの　くろい　ふねから
+ポケモンの　なきごえが　きこえたの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T01:48:50" />
+				Time="2012-01-12T13:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2308,10 +2319,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あの　黒い船から
+ポケモンの　鳴き声が　きこえたの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T01:48:58" />
+				Time="2012-01-12T13:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2336,7 +2348,7 @@
 			<Text>C</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T01:48:37" />
+				Time="2012-01-12T13:57:25" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

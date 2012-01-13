@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『きましたね！▼</Text>
+			<Text>アクロマ『ようこそっ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:05:46" />
+				Time="2012-01-12T10:46:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『来ましたね！▼</Text>
+			<Text>アクロマ『ようこそっ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:43:45" />
+				Time="2012-01-12T10:47:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,11 +136,11 @@
 プラズマだんの　ように
 むじひな　アプローチで　むりやり▽
 ポケモンの　つよさを　ひきだしても！▼
-そう　そして　そのけっか
+そう！　そして　そのけっか
 せかいが　ほろぶ　としても！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:12:23" />
+				Time="2012-01-12T10:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -153,12 +153,12 @@
 ポケモンの　強さを　発揮させても！▼
 プラズマ団の　ように
 無慈悲な　アプローチで　無理やり▽
-ポケモンの　強さを　ひきだしても！▼
-そう　そして　その結果
+ポケモンの　強さを　引き出しても！▼
+そう！　そして　その結果
 世界が　滅ぶ　としても！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:12:27" />
+				Time="2012-01-12T10:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -205,17 +205,17 @@
 わたくしが　イッシュの　かくちで
 かずおおくの　ポケモントレーナーと▽
 しょうぶを　していたのは▼
-ポケモンの　つよさを　ひきだす……
+ポケモンの　つよさを　ひきだせるか？
 その　ししつを　みていたからです！▼
-そういう　いみで
-あなたは　ゆうしゅう　です！▼
-あなたが　わたくしの　のぞむ
-こたえを　もっているか　たしかめる！▼
+そういう　いみで　あなた
+とても　ゆうしゅう　です！▼
+さあ！　わたくしの　のぞむ
+こたえを　もつのか　おしえなさいっ！▼
 こころの　じゅんびが　できたなら
-わたくしに　かかってきなさい！</Text>
+わたくしに　かかってくるのです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:02:05" />
+				Time="2012-01-12T12:30:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -227,17 +227,17 @@
 わたくしが　イッシュの　各地で
 数多くの　ポケモントレーナーと▽
 勝負を　していたのは▼
-ポケモンの　強さを　ひきだす……
+ポケモンの　強さを　引き出せるか？
 その資質を　みていたからです！▼
-そういう　意味で
-あなたは　優秀です！▼
-あなたが　わたくしの　望む
-答えを　持っているか　確かめる！▼
+そういう　意味で　あなた
+とても　優秀です！▼
+さあ！　わたくしの　望む
+答えを　持つのか　教えなさいっ！▼
 心の　準備が　できたなら
-わたくしに　かかってきなさい！</Text>
+わたくしに　かかってくるのです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:02:09" />
+				Time="2012-01-12T12:30:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -550,14 +550,14 @@
 			<Text>くりかえしますが　わたくしは
 ポケモンを　つよくするなら▽
 しゅだんは　なんでも　いいのです！▼
-ひとと　ポケモンの　こうりゅうで
+ひとと　ポケモンの　こうりゅうでは
 とどかない　たかみが　あるなら▼
 そこに　こころは　なくても
-かがくてきアプローチのみで▽
+かがくてき　アプローチのみで▽
 ちからを　はっき　させてもいいのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:03:25" />
+				Time="2012-01-12T12:35:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -568,14 +568,14 @@
 			<Text>繰り返しますが　わたくしは
 ポケモンを　強くするなら▽
 手段は　なんでも　いいのです！▼
-人と　ポケモンの　交流だけで
+人と　ポケモンの　交流では
 届かない　高みが　あるなら▼
 そこに　心は　なくても
 科学的アプローチのみ　で▽
 能力を　発揮させてもいいのです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T10:03:29" />
+				Time="2012-01-12T12:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -629,11 +629,11 @@
 では　どこで　きめるのか？▼
 もういちど　とらわれた　キュレムの
 まえを　とおり　はんたいがわにあった▽
-ワープゾーンに　のりなさい！▼
+ワープゾーンに　のりなさいっ！▼
 では　ごぶうんを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T07:49:38" />
+				Time="2012-01-12T10:01:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -652,11 +652,11 @@
 では　どこで　決めるのか？▼
 もう一度　捕われた　キュレムの
 前を　通り　反対側にあった▽
-ワープゾーンに　乗りなさい！▼
+ワープゾーンに　乗りなさいっ！▼
 では　ご武運を！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T07:25:01" />
+				Time="2012-01-12T10:01:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -726,7 +726,7 @@
 わたくしが　解散させました▼
 ここに　残っているのは
 これから　どうするか▽
-決めかねている　もの　たち▼
+決めかねている　者たち▼
 わたくし　としては
 自分の　生き方は▽
 自分で　決めてもらいたい！▼
@@ -734,7 +734,7 @@
 問題の　ほうが　多いのですっ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:51:08" />
+				Time="2012-01-12T10:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -922,12 +922,12 @@
 			Language="JPN">
 			<Text>これを　もっていきなさい！▼
 どのような　ポケモンでも　かならず
-つかまえる　マスターボールです▼
+つかまえる　マスターボール　です▼
 ゲーチスが　ようい　していましたが
 あなたが　つかうほうが　いいでしょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:04:20" />
+				Time="2012-01-12T10:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -936,13 +936,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これを　持っていきなさい！▼
-どのような　ポケモンでも　かならず
-つかまえる　マスターボールです▼
+どのような　ポケモンでも　必ず
+捕まえる　マスターボール　です▼
 ゲーチスが　用意していましたが
 あなたが　使うほうが　いいでしょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:04:29" />
+				Time="2012-01-12T10:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

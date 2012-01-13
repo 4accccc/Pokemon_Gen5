@@ -63,11 +63,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……だまって
-オマエらの　ポケモン　みせな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　いかるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:32:33" />
+				Time="2012-01-12T09:45:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -75,11 +75,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……黙って
-オマエらの　ポケモン　みせな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　怒るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:32:41" />
+				Time="2012-01-12T09:45:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -303,10 +303,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリア　か……▼</Text>
+			<Text>バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T03:59:35" />
+				Time="2012-01-12T13:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -314,10 +314,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリア　か……▼</Text>
+			<Text>バリア　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T03:59:37" />
+				Time="2012-01-12T13:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -366,7 +366,7 @@
 スイッチを　さがすぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:33:11" />
+				Time="2012-01-12T09:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

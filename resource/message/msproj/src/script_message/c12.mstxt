@@ -808,12 +808,12 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まてまてッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『まちなッ！▼
 さっきまで　ポケセンに　いたけど
 それっぽい　ひとは　いなかったって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:44:13" />
+				Time="2012-01-12T23:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -821,12 +821,12 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待て待てッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『待ちなッ！▼
 さっきまで　ポケセンに　いたけど
 それっぽい　人は　いなかったって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:44:07" />
+				Time="2012-01-12T23:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1005,15 +1005,15 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『スパークしたぜッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『なるほどなッ！▼
 ヒオウギといえば　たかだい▼
 ベルって　ひとも　きっと
-たかだいで　けしきを　みているはずッ▼
+あそこで　けしきを　みているはずッ▼
 さあ！
-ポケモン　もらってこい！▼</Text>
+ポケモン　もらってこいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:03:32" />
+				Time="2012-01-12T23:55:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1021,15 +1021,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『スパークしたぜッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『なるほどなッ！▼
 ヒオウギといえば　高台▼
 ベルって　人も　きっと
-高台で　景色を　みているはずッ▼
+あそこで　景色を　みているはずッ▼
 さあ！
-ポケモン　もらってこい！▼</Text>
+ポケモン　もらってこいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:03:48" />
+				Time="2012-01-12T23:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1075,11 +1075,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
-まちがいは　ないぜッ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　よみに
+まちがい　ないってッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:04:01" />
+				Time="2012-01-13T00:08:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1087,11 +1087,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
-間違いは　ないぜッ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　読みに
+間違い　ないってッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:04:19" />
+				Time="2012-01-13T00:08:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1134,11 +1134,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
-まちがいは　ないぜッ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　よみに
+まちがい　ないってッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:04:04" />
+				Time="2012-01-13T00:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1146,11 +1146,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
-間違いは　ないぜッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　読みに
+間違い　ないってッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:04:16" />
+				Time="2012-01-13T00:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3150,13 +3150,14 @@ GIRL2</Text>
 			Language="JPN">
 			<Text>そいつが
 オマエの　パートナー！▼
+……よかったな▼
 いもうとも　いってたけど　ポケモンは
 ぜったい　たいせつに　しろよな！▼
 で　オマエ
 もってる　ソレ　なに？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:09:35" />
+				Time="2012-01-13T00:18:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3166,13 +3167,14 @@ GIRL2</Text>
 			Language="JPN_KANJI">
 			<Text>そいつが
 オマエの　パートナー！▼
+……よかったな▼
 妹も　いってたけど　ポケモンは
 絶対　大切に　しろよな！▼
 で　オマエ
 持ってる　ソレ　なに？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:09:28" />
+				Time="2012-01-13T00:18:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3566,12 +3568,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さあて！　オマエが
-つかえる　トレーナーか　たしかめる！▼
+どれだけの　トレーナーか　たしかめる！▼
 オレが　タマゴから
 そだてた　[Name:PokemonName Idx="3" ]　でッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T11:35:45" />
+				Time="2012-01-13T00:19:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3580,12 +3582,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さあて！　オマエが
-使える　トレーナーか　確かめる！▼
+どれだけの　トレーナーか　確かめる！▼
 オレが　タマゴから
 育てた　[Name:PokemonName Idx="3" ]　でッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T11:35:45" />
+				Time="2012-01-13T00:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

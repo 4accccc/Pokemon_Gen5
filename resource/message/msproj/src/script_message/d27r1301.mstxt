@@ -542,10 +542,10 @@
 そこから　すくいだすことは　できぬ▼
 といっても　あきらめきれぬか？
 なら　いんどうを　わたすのが▽
-ワタシなりの　やさしさ　だ！▼</Text>
+ワタシなりの　やさしさ　なのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:55:07" />
+				Time="2012-01-12T13:14:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -558,10 +558,10 @@
 そこから　救い出すことは　できない▼
 といっても　あきらめきれぬか？
 なら　引導を　渡すのが▽
-ワタシなりの　優しさ　だ！▼</Text>
+ワタシなりの　優しさ　なのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:55:07" />
+				Time="2012-01-12T13:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -878,11 +878,11 @@
 			Language="JPN_KANJI">
 			<Text>なにー！　アクロマさまを
 やっつけた　だとー！！▼
-うわー！　つよがっていたが
-ポケモンを　もっていないんだ！▼</Text>
+うわー！　強がっていたが
+ポケモンを　持っていないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T09:13:52" />
+				Time="2012-01-12T13:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -933,10 +933,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キュレム……　むりやり
-こきつかわれて　かなしかっただろうな</Text>
+こきつかわれて　悲しかっただろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:02:49" />
+				Time="2012-01-12T13:13:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -990,12 +990,12 @@
 			<Text>この　プラズマフリゲートは
 キュレムの　こおりエネルギー　とか▼
 ソーラーパネル　とか
-エコロジーな　ふね　なんだ▼
+エコロジーな　船なんだ▼
 まあね　イッシュを　ボロボロにしちゃ
-しはいするときに　こまるけどさ</Text>
+支配するときに　困るけどさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:02:49" />
+				Time="2012-01-12T13:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1079,7 +1079,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r1301_barrier_01">
+		Label="msg_d27r1301_barrier_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あぶない！
