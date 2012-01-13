@@ -42,6 +42,7 @@ _EVENT_DATA    ev_bg_c12r0101_souvenir_01
 _EVENT_DATA    ev_bg_c12r0101_souvenir_02
 _EVENT_DATA    ev_pos_c12r0101_gameclear
 _EVENT_DATA	ev_reserve_c12r0101_event_01
+_EVENT_DATA    ev_recover_c12r0101
 _EVENT_DATA_END
 
 //ママのPOSイベントで使用
@@ -77,6 +78,22 @@ INIT_EVENT_START ev_init_c12r0101
   ENDIF
   
   // 表彰状のBGイベントを移動
+  _CALL set_prize_bg
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_recover_c12r0101
+
+  // 表彰状のBGイベントを移動
+  _CALL set_prize_bg
+
+INIT_EVENT_END
+
+set_prize_bg:
+
   IF FLAG_OFF( FV_C12R0101_PRIZE1_01 ) THEN
     _SXY_MOVE_BG_EVENT(BG_C12R0101_PRIZE1,11,0,1)
   ENDIF
@@ -84,7 +101,7 @@ INIT_EVENT_START ev_init_c12r0101
     _SXY_MOVE_BG_EVENT(BG_C12R0101_PRIZE2,12,0,1)
   ENDIF
 
-INIT_EVENT_END
+_RET
 
 /************************************************************/
 /*	リザーブ：オープニング用							*/
