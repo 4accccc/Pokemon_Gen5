@@ -104,6 +104,11 @@ INIT_EVENT_START	ev_init_d27r0101
     _OBJ_POS_CHANGE(MMDL_ID_PLAYER,8,0,30,DIR_RIGHT)
   ENDIF
   
+  //搭乗1回目開始前
+  IF $WK_SCENE_D27R0101_FIRST_01 == 1 THEN
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,9,0,30,DIR_RIGHT)
+  ENDIF
+  
   //搭乗1回目終了前
   IF $WK_SCENE_D27R0101_FIRST_01 == 2  ||  $WK_SCENE_D27R0101_FIRST_01 == 3 THEN
     _DEBUG_PRINT_WK( 22 )
@@ -199,14 +204,14 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _DEBUG_PRINT_WK( 8 )
 
   //アニメ：3人右方向に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 13, 32, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 12, 31, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 31, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 13, 32, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_AUTO( D27R0101_SWLEADER1_01 , 14, 31, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
   //主人公・ライバル名格納
-  _PLAYER_NAME( 1 )
-  _RIVAL_NAME( 0 )
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //アニメ：ライバル「？」
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_common_hatena )
@@ -232,34 +237,27 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swleader1_02 , D27R0101_SWLEADER1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //カメラ操作　プラズマ団（上）にフォーカス
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,819200,0,1765376,64 )
-  
-  //アニメ：プラズマ団（上）登場
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_01, anm_swplazma_firstcome_u_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_02, anm_swplazma_firstcome_u_02 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_04, anm_swplazma_firstcome_u_02 )
-  
+  //プラズマ団（１）登場
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_01 , 13, 29, FORCE_TYPE_NPC, 8, DIR_UD)
   _TIME_WAIT( 16 )
-  
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_u )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
-  
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_03, anm_swplazma_firstcome_u_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_05, anm_swplazma_firstcome_u_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAW_01, anm_swplazma_firstcome_u_02 )
   _OBJ_ANIME_WAIT()
-  
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //プラズマ団員：まっ　どうでも
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam1_01 , D27R0101_SWPLAZMAM_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //他のプラズマ団員も登場
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_03 , 12, 27, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_04 , 11, 27, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_10 , 14, 28, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_11 , 13, 26, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAW_02 , 14, 27, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+
   //ライバル名格納
   _RIVAL_NAME( 1 )
   
@@ -267,51 +265,34 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_02 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //プラズマ団（１）登場
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_02 , 14, 33, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT( 32 )
+  //アニメ：「！」
+  _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_look_d_gyoe )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_look_d_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_look_d_gyoe )
+  _OBJ_ANIME_WAIT()
+  
   //プラズマ団員：せいかーい
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_01 , D27R0101_SWPLAZMAM_07 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_01 , D27R0101_SWPLAZMAM_02 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //アニメ：「！」
-  _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_common_gyoe )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_common_gyoe )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
-  
-  //カメラ操作　プラズマ団（下）にフォーカス
-  _CAMERA_MOVE( 9688,0,970752,819200,0,2326528,64 )
-  
   //アニメ：プラズマ団（下）登場
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_07, anm_swplazma_firstcome_d_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_08, anm_swplazma_firstcome_d_02 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_10, anm_swplazma_firstcome_d_02 )
-  
-  _TIME_WAIT( 16 )
-  
-  _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_d )
-  _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_d )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_09, anm_swplazma_firstcome_d_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_11, anm_swplazma_firstcome_d_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAW_02, anm_swplazma_firstcome_d_02 )
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAW_01 , 12, 35, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_05 , 13, 35, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_07 , 14, 36, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_08 , 11, 36, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWPLAZMAM_09 , 15, 35, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
   //プラズマ団員：そう！　だから
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_04 , D27R0101_SWPLAZMAM_07 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_04 , D27R0101_SWPLAZMAM_02 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //ライバル名格納
   _RIVAL_NAME( 1 )
-  
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (30)
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
   
   //ライバル：だからなんだよ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
@@ -321,31 +302,27 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam1_04 , D27R0101_SWPLAZMAM_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //暗転処理
-  _BLACK_OUT_SLOW()
-  _DISP_FADE_END_CHECK()
+  //アニメ：主人公たち向き合う
+  _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_staystep_u )
+  _OBJ_ANIME( D27R0101_SWLEADER1_01 , anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   
-  //全員配置を変更
-  _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,13,0,34,DIR_DOWN)
-  _OBJ_POS_CHANGE(D27R0101_SWLEADER1_01,11,0,28,DIR_UP)
-  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,12,0,31,DIR_UP)
+  //ライバル：（解散前メッセージ）
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_07 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_01,10,0,31,DIR_RIGHT) //初回戦う人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_02,14,0,31,DIR_LEFT) //初回戦う人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_03,12,0,27,DIR_DOWN) //チェレンマルチバトルの人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_04,11,0,27,DIR_DOWN) //チェレンマルチバトルの人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_05,13,0,35,DIR_UP) //ライバルマルチバトルの人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAW_01,12,0,35,DIR_UP) //ライバルマルチバトルの人
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_07,14,0,36,DIR_UP)  //その他
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_08,11,0,36,DIR_UP)  //その他
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_09,15,0,35,DIR_LEFT)  //その他
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_10,14,0,28,DIR_LEFT)  //その他
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_11,13,0,26,DIR_DOWN)  //その他
-  _OBJ_POS_CHANGE(D27R0101_SWPLAZMAW_02,14,0,27,DIR_LEFT)  //その他
-  
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
+  //アニメ：プラズマ団と対峙
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_01 , anm_swplazmam01_come_01 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_02 , anm_swplazmam02_come_01 )
+  _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_swrival_vs_01 )
+  _OBJ_ANIME( D27R0101_SWLEADER1_01 , anm_swleader1_vs_01 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAW_02 , anm_staystep_l )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_09 , anm_staystep_l)
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_10 , anm_staystep_l )
+  _OBJ_ANIME_WAIT()
   
   //プラズマ団：うでにじしんが
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam1_02 , D27R0101_SWPLAZMAM_01 ,POS_DEFAULT )
@@ -353,7 +330,6 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   
   //アニメ：プラズマ団接近
   _OBJ_ANIME( D27R0101_SWPLAZMAM_01, anm_walk_r )
-  _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
@@ -376,7 +352,6 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   
   //アニメ：プラズマ団接近
   _OBJ_ANIME( D27R0101_SWPLAZMAM_02, anm_walk_l )
-  _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
@@ -445,6 +420,40 @@ _ANIME_LABEL	anm_swplazma_firstcome_d_01
 _ANIME_LABEL	anm_swplazma_firstcome_d_02
   _ANIME_DATA	AC_WALK_U_8F,8
   _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プラズマ団：01主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazmam01_come_01
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プラズマ団：02主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazmam02_come_01
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：プラズマ団と対峙
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_vs_01
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：プラズマ団と対峙
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_vs_01
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------------
 //	プラズマ団：ポーズで左に移動
@@ -1545,7 +1554,15 @@ _ANIME_LABEL	anm_staystep_l
 _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	☆共通処理：下向き+ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_look_d_gyoe
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	☆共通処理：ギョエ
 //--------------------------------------------------------------------
