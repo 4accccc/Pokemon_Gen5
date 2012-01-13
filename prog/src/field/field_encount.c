@@ -551,6 +551,25 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per, EN
     }
   }
 
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  {
+    int i,j;
+    u16 prob[101];
+    MI_CpuClear16(prob,sizeof(u16)*100);
+    for( i = 0; i < 100;i++){
+      prob[enc_GetPercentRand()]++;
+    }
+    for( i = 0;i < 101;i++){
+      OS_Printf("%d->%d\n",i,prob[i]);
+    }
+    for( i = 0;i < 10;i++){
+      for(j = 1;j < 10;j++){
+        prob[i*10] += prob[i*10+j];
+      }
+      OS_Printf("%d->%d\n",i,prob[i*10]);
+    }
+  }
+#endif
   if( enc_GetPercentRand() <= per ){
     return( TRUE );
   }
@@ -750,8 +769,14 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
 //--------------------------------------------------------------
 static u32 enc_GetPercentRand( void )
 {
+#if 0
+  u32 per = (0xffffffff/100) + 1;
+  u32 val = GFUser_GetPublicRand(GFL_STD_RAND_MAX) / per;
+#else
   u32 per = (0xffff/100) + 1;
   u32 val = GFUser_GetPublicRand(0xffff) / per;
+//  val = GFUser_GetPublicRand(1000000)/10000;
+#endif
   return( val );
 }
 
@@ -778,11 +803,38 @@ static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
  */
 static void encwork_CheckProbReset( ENCOUNT_WORK* ewk, MAPATTR attr )
 {
-  if( ewk->player.o_attr == attr ){
-    return; //同じエンカウントフィールド内の移動
+  MAPATTR_VALUE n_value, o_value;
+  BtlBgAttr n_btl_bg_attr, o_btl_bg_attr;
+  BOOL n_enc_f = MAPATTR_GetAttrFlag( attr )&MAPATTR_FLAGBIT_ENCOUNT;
+  BOOL o_enc_f = MAPATTR_GetAttrFlag( ewk->player.o_attr )&MAPATTR_FLAGBIT_ENCOUNT;
+
+  if( n_enc_f != o_enc_f ){
+    //エンカウントフィールドと非エンカウントフィールドをまたいだので補整値クリア
+    ENCOUNT_WORK_EncountProbReset( ewk, attr );
+    return;
   }
-  //異なるフィールドに移動したので、エンカウト率補整値クリア
-  ENCOUNT_WORK_EncountProbReset( ewk, attr );
+  n_value = MAPATTR_GetAttrValue( attr );
+  o_value = MAPATTR_GetAttrValue( ewk->player.o_attr );
+
+  if( n_value == o_value ){
+    //同じアトリビュート値なので更新要らない
+    return;
+  }
+  if( !n_enc_f ){
+    //現在地点が非エンカウントアトリビュートならリセットはせずに現在地の更新だけする
+    ewk->player.o_attr = attr;
+    return;
+  }
+  n_btl_bg_attr = MAPATTR_GetBattleAttrID( n_value );
+  o_btl_bg_attr = MAPATTR_GetBattleAttrID( o_value );
+
+  if( n_btl_bg_attr == o_btl_bg_attr ){
+    //前と同じバトル背景属性だったら、リセットはせずに現在地の更新だけする
+    ewk->player.o_attr = attr;
+  }else{
+    //異なる属性のフィールドに移動したので、エンカウト率補整値クリア
+    ENCOUNT_WORK_EncountProbReset( ewk, attr );
+  }
 }
 
 static void encwork_AddWalkCountAndProb( FIELD_ENCOUNT* enc, ENCOUNT_WORK* ewk, MAPATTR attr )
