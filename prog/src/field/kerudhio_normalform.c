@@ -36,8 +36,9 @@ void KERUDHIO_FORM_ChangeNormal( GAMESYS_WORK * gsys )
   for ( poke_count = 0; poke_count < max; poke_count ++ )
   {
     POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, poke_count );
+    u16 monsno = PP_Get(pp, ID_PARA_monsno, NULL);
     if ( PP_Get(pp, ID_PARA_tamago_flag, NULL) == FALSE
-        && PP_Get(pp, ID_PARA_monsno, NULL) == MONSNO_KERUDHIO
+        && monsno == MONSNO_KERUDHIO
         && PP_Get(pp, ID_PARA_form_no, NULL) == FORMNO_KERUDHIO_SWORD )
     {//タマゴ以外でケルディオでソードフォルムだったらチェックする
       int waza_count;
@@ -53,6 +54,13 @@ void KERUDHIO_FORM_ChangeNormal( GAMESYS_WORK * gsys )
         OS_Printf("kerudhio form change!(%d)\n", poke_count );
         PP_ChangeFormNo( pp, FORMNO_KERUDHIO_NORMAL );
       }
+    }
+
+    // ボスポケ潰し
+    if(monsno>MONSNO_GENOSEKUTO){
+      u8 *buf = (u8*)pp;
+      buf[30] = 0xff;   // チェックサムを書き潰す
+      buf[31] = 0xff;   // チェックサムを書き潰す
     }
   }
 }
