@@ -2000,8 +2000,6 @@ recover_trainer:
     $LWK_END_MSG_ID     = msg_nurse_msg_02
   ENDIF
  
-  _TALK_OBJ_START()
- 
   /// トレーナーID取得
   _INFINITY_DUNGEON_GET_TRID_BY_IDPOS( LWK_TRID_POS, LWK_TRID )
  
