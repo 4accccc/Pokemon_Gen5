@@ -178,10 +178,23 @@ EVENT_START	ev_pos_w21_swrival_01
   // メッセージBG面以外のフェード
   // この後にマップチェンジを必ず呼ばなければならない
   _MAP_FADE_OUT_MSG_ENABLE( MSG_FADE_BLACK, 1 )
+  
+  //タラップ音再生
+  _SE_PLAY( SEQ_SE_SW_RENBU_02 )
 
   //？？？：画面暗転中のメッセージ
   _PLAINWIN_MSG_DOWN( msg_w21_swleader8_08 )
   _MSGWIN_CLOSE()
+  
+  //タラップ音再生
+  _SE_WAIT()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (1)
+   //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //マップ差し替え:W21アジト船タラップ表示
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
