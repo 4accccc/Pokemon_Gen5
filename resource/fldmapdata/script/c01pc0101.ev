@@ -87,7 +87,7 @@ EVENT_START ev_c01pc0101_woman2_01
   IF $LWK_POKE_CK == TRUE THEN
 
     //既にグラシデアの花を入手している？
-    IF FLAG_ON( FE_T03PC0101_ITEMGET_01 ) THEN
+    IF FLAG_ON( FE_C01PC0101_ITEMGET_01 ) THEN
 
       //お姉さん：むかしからね　シンオウちほう　では
       _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01pc0101_woman2_02 )
