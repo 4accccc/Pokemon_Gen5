@@ -448,6 +448,7 @@ ELSE
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1c_05 )
 		ENDSWITCH
 
+	  _LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
 		//à√ì]èàóù
