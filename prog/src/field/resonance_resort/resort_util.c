@@ -1959,6 +1959,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
 
   int i, j;
   int cnt = 0;
+  int rank = 0;
 
   RESORT_WORK *p_reso_wk = GAMEDATA_GetReosrtWork( p_gamedata );
   MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
@@ -2063,7 +2064,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
       }
       //順位
       GFL_MSG_GetString( p_msg, resort_rnkwnd_rank_00, p_src_str );
-      WORDSET_RegisterNumber( p_wordset, 0, i+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 0, rank+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
       w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
       FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 5*8-w, (3+i*2)*8, p_dst_str );
@@ -2096,6 +2097,18 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
       WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
       w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
       FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 27*8-w, (3+i*2)*8, p_dst_str );
+
+
+      //順位チェック（同率順位チェック）
+      rank++;
+      if( i+1 < cnt )
+      {
+        //同じだったらカウントしない
+        if( rnkdata[i].value == rnkdata[i+1].value )
+        {
+          rank--;
+        }
+      }
     }
 
     GFL_MSG_Delete( p_msg );
@@ -2249,6 +2262,7 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
 
   int i, j;
   int cnt = 0;
+  int rank = 0;
 
   GF_ASSERT( param <= 8 );
 
@@ -2319,7 +2333,16 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
       }
       else
       {
-        return i;
+        return rank;
+      }
+    }
+
+    rank++;
+    if( i+1 < cnt )
+    {
+      if( rnkdata[i].value == rnkdata[i+1].value )
+      {
+        rank--;
       }
     }
   }
