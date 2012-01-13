@@ -965,11 +965,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:15:43" />
+				Time="2012-01-13T03:59:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1084,11 +1083,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・仮メッセージ
 ・下記ポケモンの近く</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:06:22" />
+				Time="2012-01-13T03:59:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

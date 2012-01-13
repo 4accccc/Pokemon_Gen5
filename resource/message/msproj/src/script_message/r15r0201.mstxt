@@ -46,6 +46,13 @@
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T06:57:44" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -96,6 +103,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-01T08:58:27" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T06:57:45" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r15r0201_assistantm_01"
@@ -106,11 +120,11 @@
 なにを　かうのか▽
 それを　チェックしつづける……▼
 それで　わかったことが　あります▼
-あたる　かくりつは
-３パーセント！！</Text>
+もういっぽん　あたる
+かくりつは　３パーセント！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T03:24:31" />
+				Time="2012-01-13T06:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -122,11 +136,11 @@
 なにを　買うのか▽
 それを　チェックしつづける……▼
 それで　わかったことが　あります▼
-当たる　確率は
-３パーセント！！</Text>
+もう１本　当たる
+確率は　３パーセント！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T03:24:47" />
+				Time="2012-01-13T06:57:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,6 +161,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T06:57:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
