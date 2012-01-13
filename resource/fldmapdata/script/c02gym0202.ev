@@ -147,6 +147,7 @@ EVENT_START   ev_c02gym0202_leader2_01
       CASE 2 THEN   //いいえ
         //アロエ：なんだい　なんだい！▼
         _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_10, C02GYM0202_LEADER2_01, POS_DOWN )
+        _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
         //========================================/
         //繰り返し脱出
@@ -156,6 +157,7 @@ EVENT_START   ev_c02gym0202_leader2_01
       DEFAULT
         //アロエ：なんだい　なんだい！▼
         _BALLOONWIN_OBJMSG_POS( msg_c02gym0202_leader2_10, C02GYM0202_LEADER2_01, POS_DOWN )
+        _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
         //========================================/
         //繰り返し脱出
