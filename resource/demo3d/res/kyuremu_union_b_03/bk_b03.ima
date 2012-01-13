@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-03T17:50:42" source="kyuremu_union_b_03.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2012-01-13T17:03:14" source="kyuremu_union_b_03_v03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -20,7 +20,7 @@
 	tolerance_color="2"
 />
 
-<mat_color_data size="9095">
+<mat_color_data size="10105">
 	5 17 21 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -728,7 +728,108 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 12 12 12 12 12
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
@@ -897,43 +998,43 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31
+	0 0 0 0 0 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16 16 16 16 16 16
+	16 16 16 16 16
 </mat_color_data>
 
-<mat_color_anm_array size="6">
+<mat_color_anm_array size="13">
 	<mat_color_anm index="0" material_name="bq_blue">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="1"/>
@@ -994,22 +1095,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="3"/>
 		<polygon_alpha frame_step="1" data_size="1010" data_head="6065"/>
 	</mat_color_anm>
-	<mat_color_anm index="4" material_name="bq_white_gen">
-		<diffuse_r frame_step="1" data_size="1010" data_head="7075"/>
-		<diffuse_g frame_step="1" data_size="1010" data_head="7075"/>
-		<diffuse_b frame_step="1" data_size="1010" data_head="7075"/>
-		<ambient_r frame_step="1" data_size="1" data_head="748"/>
-		<ambient_g frame_step="1" data_size="1" data_head="748"/>
-		<ambient_b frame_step="1" data_size="1" data_head="748"/>
-		<specular_r frame_step="1" data_size="1" data_head="3"/>
-		<specular_g frame_step="1" data_size="1" data_head="3"/>
-		<specular_b frame_step="1" data_size="1" data_head="3"/>
-		<emission_r frame_step="1" data_size="1" data_head="3"/>
-		<emission_g frame_step="1" data_size="1" data_head="3"/>
-		<emission_b frame_step="1" data_size="1" data_head="3"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="742"/>
-	</mat_color_anm>
-	<mat_color_anm index="5" material_name="bq_wht_tail">
+	<mat_color_anm index="4" material_name="bq_tail_gen">
 		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
@@ -1022,7 +1108,127 @@
 		<emission_r frame_step="1" data_size="1" data_head="3"/>
 		<emission_g frame_step="1" data_size="1" data_head="3"/>
 		<emission_b frame_step="1" data_size="1" data_head="3"/>
-		<polygon_alpha frame_step="1" data_size="1010" data_head="8085"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="5" material_name="bq_tail_genS">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="6" material_name="bq_tail_genSb">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="7" material_name="bq_tail_genSc">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="8" material_name="bq_tail_genSd">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="9" material_name="bq_tail_genSe">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="10" material_name="bq_tail_genb">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
+	</mat_color_anm>
+	<mat_color_anm index="11" material_name="bq_white_gen">
+		<diffuse_r frame_step="1" data_size="1010" data_head="8085"/>
+		<diffuse_g frame_step="1" data_size="1010" data_head="8085"/>
+		<diffuse_b frame_step="1" data_size="1010" data_head="8085"/>
+		<ambient_r frame_step="1" data_size="1" data_head="748"/>
+		<ambient_g frame_step="1" data_size="1" data_head="748"/>
+		<ambient_b frame_step="1" data_size="1" data_head="748"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="9095"/>
+	</mat_color_anm>
+	<mat_color_anm index="12" material_name="bq_wht_tail">
+		<diffuse_r frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="1014"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="1014"/>
+		<ambient_r frame_step="1" data_size="1" data_head="3"/>
+		<ambient_g frame_step="1" data_size="1" data_head="3"/>
+		<ambient_b frame_step="1" data_size="1" data_head="3"/>
+		<specular_r frame_step="1" data_size="1" data_head="3"/>
+		<specular_g frame_step="1" data_size="1" data_head="3"/>
+		<specular_b frame_step="1" data_size="1" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1010" data_head="7075"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
