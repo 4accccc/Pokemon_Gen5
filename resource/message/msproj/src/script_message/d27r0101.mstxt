@@ -417,11 +417,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
-オレは　いまから　いかるぜッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T09:44:33" />
+				Time="2012-01-13T03:47:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -429,11 +428,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
-オレは　いまから　怒るぜッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T09:44:35" />
+				Time="2012-01-13T03:47:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -532,6 +530,55 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swrival_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　いかるぜッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
+オレは　いまから　怒るぜッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:54" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:40" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-13T03:45:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
