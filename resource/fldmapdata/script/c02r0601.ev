@@ -253,7 +253,6 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
       //男性：それ！　その　ハンカチ！
       _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_02 )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //システム：ハンカチを　てわたした！
