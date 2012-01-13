@@ -1423,8 +1423,11 @@ EVENT_START		ev_scene_c12_gymclear_01
   //C12のSCENECHANGE無効
   $WK_SCENE_C12GYM_OPEN = 3
   
-  //R20 せいそくちリストPOS有効
+  //R20 ストッパー戦POS有効
   $WK_SCENE_R20 = 1
+  //T06 せいそくちリストPOS有効（2012.01.13 水口）
+  $WK_SCENE_T06_ZUKAN_01 = 1
+  
   
   //チェレン非表示
   _FLAG_SET(FV_C12_SWANLEADER1)

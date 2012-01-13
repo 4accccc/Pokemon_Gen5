@@ -13,7 +13,7 @@
   .include  "t06.h"
 
   //@author fujimura_souichirou
-  //@author Mizuguchi_Mai（アデク・メダルおやじ）
+  //@author Mizuguchi_Mai（アデク・メダルおやじ・せいそくちリスト）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -38,6 +38,7 @@ _EVENT_DATA    ev_bg_t06_board_01
 _EVENT_DATA    ev_t06_woman2_01
 _EVENT_DATA    ev_bg_t06_board_02
 _EVENT_DATA    ev_t06_boy1_02
+_EVENT_DATA    ev_pos_t06_zukan_01
 _EVENT_DATA_END
 
 //ドア変数定義
@@ -346,6 +347,135 @@ _ANIME_LABEL  anm_champion_guide04_bye
   _ANIME_DATA AC_WALK_L_8F,6
   _ANIME_DATA AC_WALK_U_8F,7
   _ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+/* POS：せいそくちリスト開放                                        */
+/**************************************************************/
+EVENT_START   ev_pos_t06_zukan_01
+  
+  //主人公名格納
+  _PLAYER_NAME( 0 )
+  
+  //フィールド上にベル配置
+  _OBJ_ADD_EX( 113, 662, DIR_UP, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+{
+
+  //性別が格納されるローカル変数を定義
+  DEFINE_LOCAL SCWK_SEX
+  _GET_MY_SEX(SCWK_SEX)
+  
+  //呼びかけ：男性だった場合
+  IF $SCWK_SEX == PM_MALE THEN
+    _PLAINWIN_MSG_DOWN( msg_t06_swbell_01 )
+  ELSE
+    _PLAINWIN_MSG_DOWN( msg_t06_swbell_02 )
+  ENDIF
+  _MSGWIN_CLOSE()
+
+}
+
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_BERU )
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 2
+  
+  //アニメ：ベル隣接
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //ベル：ごめんね！
+  _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベル隣接
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
+  _OBJ_ANIME_WAIT()
+  
+  //システム：パワーアップした
+  _SE_PLAY( SEQ_SE_SW_ZKN_KAIHOU  )
+  _SYSWIN_MSG(msg_t06_swbell_04, POS_DEFAULT)
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _SYSWIN_CLOSE()
+  
+  //せいそくちリスト開放
+  _SET_ZUKAN_HABITAT_FLAG()
+  
+  //ベル：せいそくちリストは
+  _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  
+  //つかいかたは
+  _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はいなら再度説明
+  IF $SCWK_ANSWER == SCR_YES THEN
+    {
+    //再質問にyesと答えるまでループ
+    DEFINE_LOCAL	ans_yes
+    $ans_yes = SCR_YES
+    
+     WHILE $ans_yes == SCR_YES
+      _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+      _YES_NO_WIN( ans_yes )
+     ENDWHILE
+     }
+  ENDIF
+  
+  _MSGWIN_CLOSE()
+  
+  //アニメ：「！」
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ベル：じゃあアドバイス！
+  _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：上を向いて振り向きなおす
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //ベル：ポケモンずかんをうめることは
+  _BALLOONWIN_OBJMSG_POS( msg_t06_swbell_08, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベル退場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 113, 662, FORCE_TYPE_NPC, 8, DIR_LR)
+  
+  _TIME_WAIT( 16 )
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
+  
+  _OBJ_ANIME_WAIT()
+  
+  //動作モデル削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+  //========================================//
+  //T06階段方面のPOSを有効
+  $WK_SCENE_T06_ZUKAN_01 = 2
+  //ローカルライブキャスター・ベル通話状態を変更（D06到着まで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_HOME )
+  //C12のベル・ライバルを非表示
+  _FLAG_SET( FV_C12_SWBELL )
+  _FLAG_SET( FV_C12_SWANLEADER1 )
+  //C12の動作モデル操作を終了（C12ジムクリア関連イベント終了）
+  $WK_SCENE_C12GYM_OPEN = 4
+  //========================================//
+
+EVENT_END
+
 
 /**************************************************************/
 /*  CHAMPION：話しかけ                                        */

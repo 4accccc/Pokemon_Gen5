@@ -362,7 +362,8 @@ ev_leader1_btl:
    _FLAG_SET( FV_R19_BOY2_01 )
    
    //R19イベント起動
-   $WK_SCENE_R19 = 5
+   //イベントがT06に引っ越したため起動を削除（2012.01.13 水口）
+   //$WK_SCENE_R19 = 5
    
    //C12GYMクリアヒントメダル取得
    _SET_MEDAL_HINT_ACHIEVE( MDLID_EFFECT_ENCOUNT_LV1 )
