@@ -405,6 +405,8 @@ sub_receipt_rekidai_download:
   
   //フィールド通信切断
   _CALL sub_common_exit_field_comm
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
     /*
@@ -851,6 +853,9 @@ sub_receipt_challenge_multi_comm:
   IF $ret != SCR_REPORT_OK THEN //レポートしない
     _RET
   ENDIF
+  
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   IF $irc == TRUE THEN //IRC通信
     //irc接続
@@ -1329,6 +1334,8 @@ sub_receipt_challenge_wifi:
     
     //フィールド通信切断
     _CALL sub_common_exit_field_comm
+    //フェスミッション強制終了
+    _FMISSION_END_FORCE()
     
     IF $SCWK_ANSWER == FALSE THEN //切断失敗
       /*
@@ -3163,6 +3170,8 @@ sub_common_wifi_upload_score:
   
   //フィールド通信切断
   _CALL sub_common_exit_field_comm
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
     /*
