@@ -15478,11 +15478,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]に
-[Name:TrainerName Idx="0" ]が　やってきた！▼
-</Text>
+[Name:TrainerName Idx="0" ]が　やってきた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T12:24:14" />
+				User="shimoyamada:W00184"
+				Time="2012-01-14T10:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15548,11 +15547,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
-</Text>
+			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T12:24:37" />
+				User="shimoyamada:W00184"
+				Time="2012-01-14T10:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15560,11 +15558,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼
-</Text>
+			<Text>[Name:TrainerName Idx="2" ]『[Name:ResortGreet Idx="3" ]！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T12:24:38" />
+				User="shimoyamada:W00184"
+				Time="2012-01-14T10:30:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15768,11 +15765,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]の　人気が
+			<Text>[Name:ResortTown Idx="0" ]の　人気が
 [Digit:4digits Idx="7" ]　あがった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-14T06:26:46" />
+				User="shimoyamada:W00184"
+				Time="2012-01-14T10:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60952,11 +60949,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet ]
 特に　ないです！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:58:32" />
+				User="shimoyamada:W00184"
+				Time="2012-01-14T10:44:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83114,10 +83111,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いっかくせんきんを
-狙いたいんだけど▼</Text>
+ねらいたいんだけど▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T12:40:07" />
+				Time="2012-01-14T10:24:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83179,10 +83176,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いっかくせんきんを
-狙いたいんだけど▼</Text>
+ねらいたいんだけど▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T12:40:13" />
+				Time="2012-01-14T10:24:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -99677,11 +99674,10 @@ PWT
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すきな　ひと　いる？……▼
-</Text>
+			<Text>すきな　ひと　いる？……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-17T08:32:09" />
+				Time="2012-01-14T10:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
