@@ -1146,6 +1146,8 @@ EVENT_START ev_wbt_entry_checker
     CASE msg_wbt_pc_menu_02 THEN
       _REPORT_EVENT_CALL( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
+        //フェスミッション強制終了
+        _FMISSION_END_FORCE()
         _CALL ev_downloader
       ENDIF
 
