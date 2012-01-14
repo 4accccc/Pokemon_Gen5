@@ -127,7 +127,7 @@ EVENT_START	ev_wbt_reception_l
 
   _TALK_OBJ_START()
 
-  IF $WK_SCENE_D05R0101 == 3 THEN
+  IF $WK_SCENE_D05R0101 == 2 || $WK_SCENE_D05R0101 == 3 THEN
     //しばらくこの受付では参加できないことを知らせるメッセージ
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19a, SCWK_TARGET_OBJID, POS_DL )
     _LAST_KEYWAIT()
