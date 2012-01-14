@@ -199,6 +199,11 @@ EVENT_START   ev_r04r0901_trainerm_01
       //========================================//
 
     ELSE
+      _MSGWIN_CLOSE()
+      
+      //アニメ：「…」
+      _OBJ_ANIME( R04R0901_TRAINERM_01 , anm_common_tenten )
+      _OBJ_ANIME_WAIT()
 
       //エリート♂：いいんだよ！　ポケモンの　よさは
       _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_06 )
@@ -220,5 +225,9 @@ EVENT_START   ev_r04r0901_trainerm_01
 EVENT_END
 
 
-
-
+//--------------------------------------------------------------
+//	共通アニメ：「…」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+  _ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0

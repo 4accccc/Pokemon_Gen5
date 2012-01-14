@@ -89,13 +89,21 @@ EVENT_START   ev_reserve_r06r0101_swleader1_01
   //チェレン：で　さきほどの
   _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_03, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
 
-  //チェレン：あしどめして
+  //チェレン：きみに
   _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_04, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
-  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン隣接
+  _OBJ_ANIME_AUTO( R06R0101_SWLEADER1_01, 6, 6, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
 
   //アイテム入手：秘伝マシン「なみのり」
   _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN03, 1 )
+  
+  //チェレン：あしどめして
+  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_05, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
   
   //========================================//
   //なみのりフラグセット・せいそくちリスト用

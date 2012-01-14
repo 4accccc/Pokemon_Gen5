@@ -40,6 +40,14 @@ DEFINE_LOCAL  LCW_POSZ
 /*ポケモン捕獲デモ                                */
 /**************************************************************/
 EVENT_START   ev_pos_r19_pokeget_01
+
+  //カメラ操作　ベル追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  //カメラ操作
+  _CAMERA_MOVE( 9688,0,970752,3506176,65551,45776896,16 )
+  _CAMERA_WAIT_MOVE()
   
   //ベル：おうい！こっちだよ
   _BALLOONWIN_OBJMSG_MF( msg_r19_white_01a, msg_r19_white_01b, R19_SWBELL_01, POS_DEFAULT )
@@ -65,10 +73,7 @@ EVENT_START   ev_pos_r19_pokeget_01
   //プレイヤー位置取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  //カメラ操作　ベル追従
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  
+  //カメラ操作
   _CAMERA_MOVE( 9688,0,970752,4030464,65551,45645824,72 )
   
   _OBJ_ANIME( R19_SWBELL_01, r19_swbell_goto_kusa )
@@ -127,7 +132,7 @@ EVENT_START   ev_pos_r19_pokeget_01
   
   //アニメ：ベル退場
   _CALL ev_r19_swbell_bye_01
-
+  
   //==================================//
   
   //アデクのイベントPOS有効
@@ -165,7 +170,8 @@ ev_r19_swbell_commeing_01:
   IF $LCW_POSX != 53 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 53, 698, FORCE_TYPE_NPC, 8, DIR_LR)
     _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_upwalk )
     _OBJ_ANIME_WAIT()
   ENDIF
   _OBJ_ANIME_WAIT()

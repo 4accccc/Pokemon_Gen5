@@ -247,7 +247,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _CAMERA_MOVE( 9688,0,970752,3375104,0,413696,32 )
   
   //アニメ：主人公・ライバル所定の位置に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 51,8, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 52,8, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_AUTO( PAIR_TRAINER_01, 50,8, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
@@ -298,7 +298,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
-   
+  
   //マルチバトル
   IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
     //初期３匹で草タイプを選択
@@ -315,7 +315,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     
-    //カメラ操作　アデク追従
+    //カメラ操作　プラズマ団追従
     _CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//カメラのバインドを解く
     _CAMERA_MOVE( 9688,0,970752,3375104,0,413696,1 )
@@ -326,7 +326,6 @@ EVENT_START		ev_pos_d11r0101_plasma_01
     _TRAINER_LOSE()
   ENDIF
   
-  
   //プラズマ団：チッ
   _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_04, D11R0101_PLASMAM_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -335,12 +334,9 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME( D11R0101_PLASMAM_01 , anm_swplazma_bye_l )
   _TIME_WAIT( 4 )
   _OBJ_ANIME( D11R0101_PLASMAM_02 , anm_swplazma_bye_r )
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_backstep )
-  _TIME_WAIT ( 4 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 	
 	//プラズマ団員の動作モデルを削除
@@ -361,13 +357,12 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アニメ：アーティ隣接
-  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 50,6, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 51,7, FORCE_TYPE_NOT, 8, DIR_LR )
   _TIME_WAIT( 8*5 )
   _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( D11R0101_SWLEADER3_01, anm_staystep_d )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_return_pos )
   _OBJ_ANIME_WAIT()
   
   //ライバル：あっ　アーティ！
@@ -399,6 +394,10 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_20, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //アニメ：ライバル隣接
+	_OBJ_ANIME( PAIR_TRAINER_01 , anm_walk_r )
+	_OBJ_ANIME_WAIT()
+  
   //ひでんマシン「かいりき」入手処理
 	_ITEM_EVENT_KEYWAIT(ITEM_HIDENMASIN04, 1)
 	
@@ -410,6 +409,10 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME( PAIR_TRAINER_01 , anm_swrival_bye )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：アーティ・主人公に隣接
+  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 50,8, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
   //アーティ：いっちゃった
@@ -458,8 +461,6 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アニメ：アーティ：「？」
-  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 52,8, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
   _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_common_hatena )
   _OBJ_ANIME_WAIT()
   
@@ -468,9 +469,9 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //アニメ：アーティと主人公向き合う
-  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_l )
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_r )
   _TIME_WAIT( 4 )
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //アーティ：まあいいや
@@ -623,9 +624,8 @@ _ANIME_LABEL	anm_swboss_comming
 //	アクロマ：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swboss_bye
-  _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,9
+  _ANIME_DATA	AC_WALK_R_8F,10
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

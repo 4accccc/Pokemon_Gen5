@@ -56,6 +56,8 @@ EVENT_START   ev_pos_r06_swleader1_01
     _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z371 )
   CASE 372 THEN
     _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z372 )
+  CASE 373 THEN
+    _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z373 )
   CASE 374 THEN
     _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z374 )
   CASE 375 THEN
@@ -116,7 +118,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader_come_z371
   _ANIME_DATA	AC_WALK_U_8F,2
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -124,7 +126,14 @@ _ANIME_LABEL	anm_swleader_come_z371
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader_come_z372
   _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：接近z373
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader_come_z373
+  _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -132,7 +141,7 @@ _ANIME_LABEL	anm_swleader_come_z372
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader_come_z374
   _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -140,7 +149,7 @@ _ANIME_LABEL	anm_swleader_come_z374
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swleader_come_z375
   _ANIME_DATA	AC_WALK_D_8F,2
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -180,6 +189,7 @@ EVENT_START   ev_pos_r06_legend_meet_01
    //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   
+  /*
   //主人公中央に移動
   IF $LCW_POSX != 103 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 103, 365, FORCE_TYPE_NPC, 8, DIR_LR)
@@ -189,6 +199,7 @@ EVENT_START   ev_pos_r06_legend_meet_01
   ENDIF
   
   _TIME_WAIT( 15 )
+  */
   
   // 移動ポケモンアニメ作成
   _EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
@@ -237,56 +248,70 @@ EVENT_START   ev_pos_r06_legend_meet_01
    //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  IF $LCW_POSX == 103 THEN
-    $LCW_POSX -= 1
-  ENDIF
-  
   //事情通老人・配置箇所変更
-  _OBJ_POS_CHANGE( R06_OLDMAN1_01, LCW_POSX, 0, 372, DIR_UP )
+  _OBJ_POS_CHANGE( R06_OLDMAN1_01, 102, 0, 372, DIR_UP )
   
   _TIME_WAIT( 30 )
   
   $LCW_POSZ += 2
   //アニメ：ロット接近
-  _OBJ_ANIME_AUTO( R06_SAGE6_01, 103, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_UD)
+  _OBJ_ANIME_AUTO( R06_SAGE6_01, 103, 367, FORCE_TYPE_NPC, 16, DIR_UD)
   _TIME_WAIT(8)
   //アニメ：事情通老人接近
-  _OBJ_ANIME_AUTO( R06_OLDMAN1_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_UD)
-  _TIME_WAIT(16)
+  _OBJ_ANIME_AUTO( R06_OLDMAN1_01, 102, 367, FORCE_TYPE_NPC, 16, DIR_UD)
+  _TIME_WAIT(30)
+  
   //アニメ：主人公振り向く
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  IF $LCW_POSX == 102 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_look_sage_x102 )
+  ELSIF $LCW_POSX == 104 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_look_sage_x104 )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //ロット：いまのポケモンは…！
-  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_01,R06_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_01,R06_SAGE6_01, POS_DR ) 
   _MSGWIN_CLOSE()
   
   //事情通：でんせつの
-  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_01,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_01,R06_OLDMAN1_01, POS_DL ) 
   _MSGWIN_CLOSE()
   
   //ロット：おお！
-  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_02,R06_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_02,R06_SAGE6_01, POS_DR ) 
   _MSGWIN_CLOSE()
   
   //事情通：コバルオン
-  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_02,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_02,R06_OLDMAN1_01, POS_DL ) 
   
   //事情通：ひとが　たたかいを
-  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_03,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_03,R06_OLDMAN1_01, POS_DL ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：事情通「？」
+  _OBJ_ANIME( R06_OLDMAN1_01 , anm_common_hatena )
+  _OBJ_ANIME_WAIT()
   
   //事情通：…しかしなぜ
-  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_04,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_04,R06_OLDMAN1_01, POS_DL ) 
   
   //事情通：2年前
-  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_05,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_05,R06_OLDMAN1_01, POS_DL ) 
   _MSGWIN_CLOSE()
   
   //ロット：ぐぬぬ
-  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_03,R06_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_03,R06_SAGE6_01, POS_DR ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ロット一歩前に出る
+  _OBJ_ANIME( R06_SAGE6_01 , anm_walk_u )
+  _OBJ_ANIME_WAIT()
   
   //ロット：コバルオンがおまえの
-  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_04,R06_SAGE6_01, POS_DEFAULT ) 
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_04,R06_SAGE6_01, POS_DR ) 
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
@@ -297,6 +322,20 @@ EVENT_START   ev_pos_r06_legend_meet_01
   //========================================//
 
 EVENT_END
+
+//--------------------------------------------------------------------
+//	主人公：ロットに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_look_sage_x102
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_look_sage_x104
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*  話しかけ：事情通老人  */

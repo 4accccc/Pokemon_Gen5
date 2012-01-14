@@ -252,14 +252,20 @@ EVENT_END
 /*					話しかけ：プラズマ団（４）						*/
 /************************************************************/
 EVENT_START ev_d10r0101_swplazmam_04
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam3_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam3_01 , D10R0101_SWPLAZMAM_04 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：プラズマ団（５）						*/
 /************************************************************/
 EVENT_START ev_d10r0101_swplazmam_05
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0101_swplazmam4_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam4_01 , D10R0101_SWPLAZMAM_05 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------

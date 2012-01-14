@@ -56,6 +56,13 @@
   .include  "w21.h" //w21への遷移参照用
   .include  "w21_def.h" //w21への遷移参照用
   .include  "c09p03_def.h" //c09p03への遷移参照用
+  
+  .include  "c08.h" //予約スクリプト用（水口
+  .include  "c08_def.h" //予約スクリプト用（水口
+  .include  "c05r0501.h" //予約スクリプト用（水口
+  .include  "c05r0501_def.h" //予約スクリプト用（水口
+  .include  "w21.h" //予約スクリプト用（水口
+  .include  "w21_def.h" //予約スクリプト用（水口
 
 
 //--------------------------------------------------------------
@@ -601,8 +608,18 @@ EVENT_START   ev_debug_mizuguchi
 			_FLAG_RESET( FV_R04_SWBOSS_01 )
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
 			_FLAG_SET( FV_R04_WORKMAN_01 )
-			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
-			//_MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
+			
+			// ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_UP )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
+      ENDIF
+      
 		ELSIF $SCWK_TEMP2 == 4 THEN
 		  //C08アイリス表示
       $WK_SCENE_C08_SWCHAMPION = 1
@@ -822,7 +839,6 @@ EVENT_START   ev_debug_mizuguchi
       
     ELSIF $SCWK_TEMP2 == 11 THEN
       
-      _FLAG_SET(FV_D27R0501_SWSAGE7_01)
       _FLAG_SET(FV_D27R0501_NINJA_01)
       $WK_SCENE_D27R0501_SWSAGE7_01 = 1
       
@@ -864,12 +880,20 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_D27_SWITCH_02 = 1
       $WK_SCENE_D27_SWITCH_01 = 1
       
-      //@仮】トレーナーフラグをリセット
-      _TRAINER_FLAG_RESET( TRID_SCHOOLB_11 )
-      _TRAINER_FLAG_RESET( TRID_SCHOOLG_09 )
+      //【仮】トレーナーフラグをリセット
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
       
-      //マップ遷移
-      _MAP_CHANGE( ZONE_ID_D27R1001, 15, 19, DIR_UP )
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R1001, 15, 19, DIR_UP )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R1301, 15, 19, DIR_UP )
+      ENDIF
     
     ELSIF $SCWK_TEMP2 == 13 THEN
       _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
@@ -891,8 +915,11 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FV_D10R0401_POKE_03 )
       _FLAG_SET( FV_D10R0401_POKE_02 )
       _FLAG_RESET( FV_D10R0401_POKE_01 )
+      _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0501_WAND_01 )
       _FLAG_SET( FV_D10R0401_BOSS_01 )
       _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_D10R0401, 16, 4, DIR_UP )
     
@@ -928,26 +955,186 @@ EVENT_START   ev_debug_mizuguchi
     ELSIF $SCWK_TEMP2 == 21 THEN
       
       /*
+      //W21イベント開始
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      $WK_SCENE_W21_01 = 1
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      _MAP_CHANGE( ZONE_ID_W21, 793, 241, DIR_RIGHT )
+      */
+      
+      /*
+      //D22R0101 牧場イベント（２）起動
+      _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D22R0101_BREEDER_01)
+      $WK_SCENE_D22R0101 = 2
+      */
+      //D24初期化
+      //_FLAG_RESET( FE_D24_SWBELL_FIRSTTALK )
+      
+      /*
+      //乗船二回目誘導イベント起動
+      _FLAG_RESET(FV_D27R0701_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0701_SWPLAZMAM_01)
+      $WK_SCENE_D27R0701_PLAZMAM_01 = 1
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R0701, 16, 24, DIR_DOWN )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R0701, 16, 44, DIR_UP )
+      ENDIF
+      */
+      
+      /*
+      //C05ポケモンハウス起動
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_C05R0501_SAGE6_01 )
+      //C05R0501マップチェンジ
+      _MAP_CHANGE( ZONE_ID_C05R0501, 7, 25, DIR_UP )
+      */
+      
+      //_FLAG_SET( FV_D05R0101_SWBOSS_01 )   //アクロマ
+      
+      /*
+      //C05 SCENE_CHANGE有効
+      $WK_SCENE_C05 = 4
+     //C05ヤーコン表示
+     _FLAG_RESET(FV_C05_SWLEADER5_01)
+     _FLAG_RESET(FV_C05_SWRIVAL_01)
+      */
+      
+      /*
+      //クリア後アクロマ戦起動
+      _FLAG_RESET( FE_D27R0401_SWBOSS_WIN_01 )
+      //D27R0101アクロマ表示
+      _FLAG_SET( FV_D27R0101_SWBOSS_01 )
+      //D27R0401アクロマ非表示
+      _FLAG_RESET( FV_D27R0401_SWBOSS_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0401, 7, 7, DIR_UP )
+      */
+      
+      /*
+      //N城起動・初期化
+      $WK_SCENE_N01R0502_BOSS = 1
+      //N01R0502 N配置
+      _FLAG_SET( FV_N01R0502_BOSS_01 )
+      _FLAG_SET( FV_N01R0502_NPOKE_01 )
+      _FLAG_SET( FV_N01R0502_PLAYER_01 )
+      _MAP_CHANGE( ZONE_ID_N01R0502, 16, 44, DIR_UP )
+      */
+      
+      /*
+      //C08：オノノクスイベント再生
+      //========================================//
+      //C08R0101伝説解説イベント終了
+      $WK_SCENE_C08R0101 = 2
+      //C08R0101シャガ非表示
+      _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
+      //C08シャガ表示
+      _FLAG_RESET( FV_C08_SWLEADER7_01 )
+      //C08ダミー主人公表示
+      _FLAG_RESET( FV_C08_PLAYER_01 )
+      //C08プラズマ団襲来イベント開始
+      $WK_SCENE_C08_SWPLAZMA = 1
+      //========================================//
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_C08_PLAZMA_COMMING_02 )
+      _GET_ROM_VERSION( LCWK_VERSION )
+      IF $LCWK_VERSION == VERSION_B2 THEN
+       _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_DOWN )
+      ELSE
+       _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
+      ENDIF
+      */
+      
+      /*
+      //R20イベント進行
+      $WK_SCENE_R20 = 4
+      _FLAG_RESET( FV_R20_SWPLAZMA_01 )
+      _FLAG_RESET( FV_R20_SWRIVAL_01 )
+      _FLAG_SET( SYS_FLAG_BGM_R20_PLAZMA )
+      */
+      
+      /*
+      //C03アイリス誘導イベント起動
+      _FLAG_RESET( FV_C03_SWCHAMPION_01 )
+      _FLAG_SET( FV_C03_SWCHAMPION_02 )
+      $WK_SCENE_C03GYM_STOPPER = 1
+      */
+      
+      /*
+      //T04,D20 LCTVT起動
+      $WK_SCENE_T04_D20_TVT = 1
+      */
+      
+      /*
+      //R20R0101
+      $WK_SCENE_R20R0101 = 0
+      */
+      
+      /*
+      //心の空洞
+      $WK_SCENE_SPPOKE_EVENT_01 = 3
+      _FLAG_RESET( FV_D33R0101_HAKASE2_01 )
+      
+      //19番道路初期化
+      $WK_SCENE_R19 = 0
+      _FLAG_RESET( FV_R19_SWBELL_01 )
+      */
+      
+      /*
+      //R06 季節研究所イベント起動
+      $WK_SCENE_R06_SWLEADER1 = 1
+      _FLAG_RESET( FV_R06_SWLEADER1_01 )
+      _FLAG_RESET( FV_R06R0101_SWLEADER1_01 )
+      */
+      
+      /*
+      //D09R1401初期化
+      $WK_SCENE_D09R1401_SWRIVAL_01 = 0
+      */
+      
+      //ローカルライブキャスター通話可能
       _PERSON_TVT_CALL_SET_MOTHER()
       _PERSON_TVT_CALL_SET_DOCTOR()
       _PERSON_TVT_CALL_SET_RIVAL()
       _PERSON_TVT_CALL_SET_CHELEN()
       _PERSON_TVT_CALL_SET_BELL()
+      
+      
+      /*
+      //D10R0501 ゲーチス戦前
+      _FLAG_RESET( FV_D10R0401_BOSS_01 )
+      _FLAG_SET( FV_D10R0501_WAND_01 )
+      _FLAG_RESET( FV_D10R0401_POKE_02 )
+      _FLAG_SET( FV_D10R0401_POKE_03 )
+      _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D10R0401, 16, 2, DIR_UP )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 3
       */
       
+      /*
       //D10R0501 キュレム戦前
       _FLAG_RESET( FV_D10R0401_BOSS_01 )
       _FLAG_SET( FV_D10R0501_WAND_01 )
       _FLAG_SET( FV_D10R0401_POKE_02 )
       _FLAG_RESET( FV_D10R0401_POKE_03 )
       _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
-      _MAP_CHANGE( ZONE_ID_D10R0501, 13, 18, DIR_UP )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D10R0401, 16, 2, DIR_UP )
       $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+      */
       
       /*
       //D10R0501ゼクロム・N表示
       _FLAG_RESET( FV_D10R0401_BOSS_01 )
       _FLAG_RESET( FV_D10R0401_POKE_02 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
       _MAP_CHANGE( ZONE_ID_D10R0501, 15, 21, DIR_UP )
       $WK_SCENE_D10R0401_SWSAGE1_01 = 2
       */
@@ -961,6 +1148,7 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_D10R0301_SWPLAZMA_01 = 0
       _MAP_CHANGE( ZONE_ID_D10R0301, 26, 74, DIR_UP )
       */
+      
       /*
       //D27R0101 ヴィオイベント起動前
       $WK_SCENE_D27R0101_FIRST_01 = 3
@@ -983,9 +1171,9 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
       _TRAINER_FLAG_RESET( TRID_NINJA_02 )
       _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0601_PLAZMA )
       _MAP_CHANGE( ZONE_ID_D27R1301, 6, 11, DIR_UP )
       */
-      
       /*
       //アクロマ戦起動
       $WK_SCENE_D27R0401_SWBOSS_01 = 2
@@ -1171,8 +1359,23 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_D11R0101, 84, 21, DIR_DOWN )
       */
       
+      
     ELSIF $SCWK_TEMP2 == 22 THEN
-    
+      
+      //W21終了イベント開始
+      //W21イベント進行
+      $WK_SCENE_W21_01 = 4
+      //W21ライバル表示
+      _FLAG_RESET( FV_W21_SWRIVAL_01 )
+      //W21チェレン非表示
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
+      //W21マップチェンジ1
+      _MAP_CHANGE_NO_FADE( ZONE_ID_W21, 798, -5, 242, DIR_RIGHT )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      
       /*
       //C08R0101伝説解説SCENE_CHANGEイベント起動
       $WK_SCENE_C08R0101 = 1
@@ -2492,7 +2695,7 @@ EVENT_START ev_debug_common
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
 			//ボックス壁紙を追加
-			_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
+			//_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
 			
       //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
       _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )

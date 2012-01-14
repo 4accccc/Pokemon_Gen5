@@ -108,16 +108,17 @@ EVENT_START   ev_scene_c03p15_first_01
   _SE_PLAY( SEQ_SE_SW_LC_NO )
   _SE_WAIT()
   
-  //アニメ：ライバル停泊している船を見てコメント
-  _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_r )
-  
   //カメラ移動
   _CAMERA_START()   //カメラ操作開始
   _CAMERA_PURGE()   //カメラのバインドを解く
   _CAMERA_MOVE( 9467,0,1552384,1269760,0,622592,56 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
+  //アニメ：ライバル右に移動
+  _OBJ_ANIME_AUTO( C03P15_SWRIVAL_01, 16, 9, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //ライバル：変な船
   _BALLOONWIN_OBJMSG_POS( msg_c03p15_swrival_03,C03P15_SWRIVAL_01, POS_DEFAULT )
@@ -162,7 +163,6 @@ EVENT_END
 //☆ライバル退場
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_swrival_bye
-  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_WALK_U_8F,10
   _ANIME_DATA ACMD_END,0
 

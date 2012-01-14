@@ -194,10 +194,15 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _TIME_WAIT( 32 )    //間
   
   //アニメ：ユクシー上を向く
-  _OBJ_ANIME( D33R0101_TPOKE_0523_01, anm_dir_u )
+  _OBJ_ANIME( D33R0101_TPOKE_0523_01, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  //ユクシー退場
-  _OBJ_TRANS( D33R0101_TPOKE_0523_01, 17, 0, 7, 8*3 )
+  //ユクシー退場（１）
+  _OBJ_TRANS( D33R0101_TPOKE_0523_01, 19, 0, 20, 16 )
+  //アニメ：ユクシー上を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0523_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  //ユクシー退場（２）
+  _OBJ_TRANS( D33R0101_TPOKE_0523_01, 18, 0, 24, 10 )
   _OBJ_DEL( D33R0101_TPOKE_0523_01 )
 
   //システム：ユクシーは
@@ -209,8 +214,13 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   //アニメ：エムリット左を向く
   _OBJ_ANIME( D33R0101_TPOKE_0524_01, anm_dir_l )
   _OBJ_ANIME_WAIT()
-  //エムリット退場
-  _OBJ_TRANS( D33R0101_TPOKE_0524_01, 9, 0, 16, 8*3 )
+  //エムリット退場（１）
+  _OBJ_TRANS( D33R0101_TPOKE_0524_01, 15, 0, 20, 12 )
+  //アニメ：エムリット左を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0524_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  //エムリット退場（２）
+  _OBJ_TRANS( D33R0101_TPOKE_0524_01, 18, 0, 24, 12 )
   _OBJ_DEL( D33R0101_TPOKE_0524_01 )
 
   //システム：エムリットは
@@ -223,7 +233,12 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _OBJ_ANIME( D33R0101_TPOKE_0525_01, anm_dir_r )
   _OBJ_ANIME_WAIT()
   //アグノム退場
-  _OBJ_TRANS( D33R0101_TPOKE_0525_01, 27, 0, 18, 8*3 )
+  _OBJ_TRANS( D33R0101_TPOKE_0525_01, 21, 0, 20, 10 )
+  //アニメ：アグノム右を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0525_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  //アグノム退場
+  _OBJ_TRANS( D33R0101_TPOKE_0525_01, 18, 0, 24, 12 )
   _OBJ_DEL( D33R0101_TPOKE_0525_01 )
 
   //システム：アグノムは
