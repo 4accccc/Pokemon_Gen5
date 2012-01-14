@@ -1804,6 +1804,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
               PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
     
               work->changeTarget = work->pokeCursor;
+              work->plData->ret_mode = PL_RET_BAG;
               work->mainSeq = PSMS_KYUREMU_UNION;
               work->canExit = FALSE;
     
@@ -2461,17 +2462,21 @@ static KYUREMU_UNION_CHECK PLIST_KyuremuUnionCheck( PLIST_WORK* work, u8 target 
 {
   POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, target );
   u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL ); 
+  u16 hp = PP_Get( pp, ID_PARA_hp, NULL );
 
   if( PP_Get( pp, ID_PARA_fusei_tamago_flag, NULL) ||
       PP_Get( pp, ID_PARA_tamago_flag, NULL) ){
     return KYUREMU_UNION_NG_EGG;  //É^É}ÉSÇÕNG
   }
-  if( PP_Get( pp, ID_PARA_hp, NULL ) <= 0 ){
-    return KYUREMU_UNION_NG_DETH; //ïméÄÇÕNG
-  }
   if( monsno == MONSNO_RESIRAMU ){
+    if( hp == 0 ){
+      return KYUREMU_UNION_NG_DETH; //ïméÄÇÕNG
+    }
     return KYUREMU_UNION_RESIRAMU;
   }else if( monsno == MONSNO_ZEKUROMU ){
+    if( hp == 0 ){
+      return KYUREMU_UNION_NG_DETH; //ïméÄÇÕNG
+    }
     return KYUREMU_UNION_ZEKUROMU;
   }
   return KYUREMU_UNION_NG_POKE;
