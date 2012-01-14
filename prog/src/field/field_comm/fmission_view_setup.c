@@ -98,6 +98,7 @@ FMISSION_VIEW* FVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
   wk->fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
   wk->subscreen = subscreen;
+  wk->wifi_list = GAMEDATA_GetWiFiList( wk->gdata );
  
   wk->heap_sID = HEAPID_FIELD_SUBSCREEN;
   wk->heapID = HEAPID_FIELDMAP;

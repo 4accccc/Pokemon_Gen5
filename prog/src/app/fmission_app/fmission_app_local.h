@@ -10,6 +10,9 @@
 
 #pragma once
 
+//通信アイコン
+#include "net/wih_dwc.h"
+
 //FONT
 #include "print/gf_font.h"
 #include "font/font.naix"
@@ -300,6 +303,9 @@ typedef struct
 	FMISSION_APP_OBJ_WORK	wk_obj;
 	//描画設定
 	FMISSION_APP_GRAWK		*graphic;
+  //すれ違いアイコン表示更新用
+  WIFI_LIST* wifi_list;
+
 	//
 	GFL_FONT				*font;							// フォント
 	PRINT_QUE				*print_que;						// プリントキュー

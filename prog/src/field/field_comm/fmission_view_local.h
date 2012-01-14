@@ -24,11 +24,12 @@
 #include "savedata/intrude_save.h"
 #include "savedata/misc.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/wifilist.h"
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
 #include "item/itemsym.h"
 #include "msg/msg_fmission_log.h"
-
+#include "net/wih_dwc.h"
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
 

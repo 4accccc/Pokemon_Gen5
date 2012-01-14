@@ -253,13 +253,10 @@ static int seq_Main( FMISSION_VIEW_PTR wk )
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
-#if 0
-  //通信関連特殊イベント発動チェック
-  if( FMissionView_CheckCommEvent( wk )){
-    return SEQ_MAIN;
-  }
-#endif
-
+	
+  //ビーコンの電波強度アイコン反映	
+  (void)WIH_DWC_GetAllBeaconTypeBit( wk->wifi_list );
+  
   //メイン入力チェック
   ret = FMissionView_CheckInput( wk );
   if( ret != SEQ_MAIN ){

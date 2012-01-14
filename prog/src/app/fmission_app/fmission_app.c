@@ -289,6 +289,9 @@ static GFL_PROC_RESULT FMissionAppProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	wk->heapID = HEAPID_FMISSION_APP;
 	
 	wk->Param = param;
+  
+  //通信アイコン表示更新に必要
+  wk->wifi_list = GAMEDATA_GetWiFiList( param->gdata );
 	
 	//描画設定初期化
 	wk->graphic	= FMISSION_APP_GRA_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -495,6 +498,9 @@ static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk
 	//3D描画
 	FMISSION_APP_GRA_3D_StartDraw( wk->graphic );
 	FMISSION_APP_GRA_3D_EndDraw( wk->graphic );
+  
+  //ビーコンの電波強度アイコン反映	
+  (void)WIH_DWC_GetAllBeaconTypeBit( wk->wifi_list );
 	
 	return GFL_PROC_RES_CONTINUE;
 }
