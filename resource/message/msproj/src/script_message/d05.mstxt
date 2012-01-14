@@ -753,12 +753,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『アイツら　なんだよッ！？▼
+			<Text>[Name:TrainerName Idx="1" ]『ダークトリニティ？
+アイツら　なんだよッ！？▼
 あーッ！　もうッ！
 プラズマだん　どこ　きえたッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T09:14:02" />
+				Time="2012-01-14T03:46:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -766,12 +767,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『アイツら　なんだよッ！？▼
+			<Text>[Name:TrainerName Idx="1" ]『ダークトリニティ？
+アイツら　なんだよッ！？▼
 あーッ！　もうッ！
 プラズマ団　どこ　消えたッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T09:14:07" />
+				Time="2012-01-14T03:46:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -822,17 +824,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『さっきの　ことば……▼
+			<Text>チェレン『ダークトリニティは……▼
+ひとの　うごきを　ふうじて　つれさる
+ちょうじんてきな　れんちゅう……▼
+それよりも　さっきの　ことば……！▼
 「われわれは　いまいちど
 でんせつの　ドラゴンポケモンを▽
 したがえ　イッシュを　しはいする！」▽
-とは　どういうことだろう？▼
+とは　どういう　ことだろう？▼
 でんせつの　ドラゴンポケモン
 レシラムも　ゼクロムも▽
 イッシュには　いないはずなのに……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:44:09" />
+				Time="2012-01-14T04:00:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -840,17 +845,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『さっきの　言葉……▼
+			<Text>チェレン『ダークトリニティは……▼
+人の　動きを　封じて　連れ去る
+超人的な　連中……▼
+それよりも　さっきの　言葉……！▼
 「われわれは　いまいちど
 伝説の　ドラゴンポケモンを▽
 従え　イッシュを　支配する！」▽
-とは　どういうことだろう？▼
+とは　どういう　ことだろう？▼
 伝説の　ドラゴンポケモン
 レシラムも　ゼクロムも▽
 イッシュには　いないはずなのに……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:44:14" />
+				Time="2012-01-14T04:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

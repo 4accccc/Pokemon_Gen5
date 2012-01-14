@@ -898,14 +898,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……だまれ▼
+			<Text>[Name:TrainerName Idx="1" ]『……くちを　とじろ▼
 なにが　ポケモン　かいほうだ
 おまえらは　ただの　ポケモンどろぼう▼
 しかも　うばった　ポケモンを
 どうぐとして　あつかいやがって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:14:26" />
+				Time="2012-01-14T06:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -913,14 +913,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……黙れ▼
+			<Text>[Name:TrainerName Idx="1" ]『……口を　閉じろ▼
 なにが　ポケモン解放だ
 おまえらは　ただの　ポケモンどろぼう▼
 しかも　奪った　ポケモンを
 道具として　扱いやがって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:14:17" />
+				Time="2012-01-14T06:12:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

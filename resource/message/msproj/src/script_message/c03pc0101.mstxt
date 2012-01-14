@@ -399,12 +399,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　タブンネ！　ひとや　ポケモンの
-きもちや　たいちょうの　へんかを▽
-よく　さっして　くれるんだって！</Text>
+			<Text>マコモさんが
+ヒウンシティに　ひっこしてきた！▼
+マコモさんは
+ポケモントレーナーに　ついて▽
+けんきゅう　している　はかせ　だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:15:26" />
+				Time="2012-01-14T03:41:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -412,12 +414,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの　タブンネ！　人や　ポケモンの
-気持ちや　体調の　変化を▽
-よく　察して　くれるんだって！</Text>
+			<Text>マコモさんが
+ヒウンシティに　引越してきた！▼
+マコモさんは
+ポケモントレーナーに　ついて▽
+研究している　博士だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:15:30" />
+				Time="2012-01-14T03:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -441,10 +445,10 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>B</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T06:07:00" />
+				Time="2012-01-14T03:29:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
