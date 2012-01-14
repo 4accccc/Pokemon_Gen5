@@ -134,9 +134,6 @@ EVENT_START		ev_pos_r05_swbell_01
 
   _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
   _OBJ_ANIME_WAIT()
-  
-  //ベル曲再生
-  _START_EVENT_BGM( SEQ_BGM_E_BERU )
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
@@ -144,7 +141,16 @@ EVENT_START		ev_pos_r05_swbell_01
   //アニメ：ベル隣接・主人公振り向き
   _OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_bell_to_player)
  _TIME_WAIT( 8 )
- 
+
+  //自転車に乗ってるなら歩行状態へ
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+  ENDIF
+
+  //ベル曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_BERU )
+
   //アニメ：主人公中央へ
   IF $LCW_POSZ != 438 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 372, 438, FORCE_TYPE_NPC, 8, DIR_LR)

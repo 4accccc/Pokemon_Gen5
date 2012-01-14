@@ -192,9 +192,17 @@ EVENT_START   ev_pos_t03_hakase2_01
   _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_01, T03_HAKASE2_01, LWK_POSMSG )
   _MSGWIN_CLOSE()
 
+
+
   //POSイベントをマップ上方（付近）で発生させた？
   IF $LCW_POSX == 667 THEN
-
+    
+    	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+    
 	//アニメ：主人公博士の前へ（Aパターン）
 	IF $LCW_POSZ == 171 THEN
 		_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 666, 171, FORCE_TYPE_NPC, 8, DIR_LR )
@@ -210,6 +218,12 @@ EVENT_START   ev_pos_t03_hakase2_01
     
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
     _OBJ_ANIME_WAIT()
+    
+    	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
     
     //アニメ：主人公博士の前へ（Bパターン）
     IF $LCW_POSX == 669 THEN
@@ -597,6 +611,13 @@ EVENT_START   ev_pos_t03_swrival_02
     _YES_NO_WIN( SCWK_ANSWER )
 
     IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+
       //ライバル：よし
       _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_03, T03_SWRIVAL_01, POS_DEFAULT )
       _MSGWIN_CLOSE()
@@ -682,6 +703,12 @@ ev_pos_t03_swrivalev_01:
       _OBJ_ANIME_WAIT()
 
     ENDIF
+
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
 
     //ライバル名代入
     _RIVAL_NAME( 1 )
