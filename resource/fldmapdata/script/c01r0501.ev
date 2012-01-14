@@ -351,7 +351,6 @@ EVENT_START   ev_c01r0501_trainerm_01
       IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
         //ウィンドウ消し
-        _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
 
         //トレーナー戦呼び出し
@@ -402,7 +401,6 @@ EVENT_START   ev_c01r0501_trainerm_01
     IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
       //ウィンドウ消し
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //トレーナー戦呼び出し
