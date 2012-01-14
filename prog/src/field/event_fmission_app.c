@@ -135,7 +135,7 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
         fade_event = EVENT_FieldFadeIn_Black(gsys, fwork, FIELD_FADE_WAIT);
       }else{
         FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
-        FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_BEACON_VIEW );
+        FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
         fade_event = EVENT_FieldFadeIn_White(gsys, fwork, FIELD_FADE_WAIT);
       }
       
