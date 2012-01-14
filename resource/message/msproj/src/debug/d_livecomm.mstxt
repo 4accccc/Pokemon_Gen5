@@ -1092,10 +1092,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
+			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1103,10 +1103,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
+			<Text>monsno=[Digit:3digits Idx="0" ] [Name:PokemonName Idx="1" ] name=[Name:PokemonNickname Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1132,10 +1132,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
+			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1143,10 +1143,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
+			<Text>item=[Digit:4digits Idx="0" ] [Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1172,10 +1172,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
+			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1183,10 +1183,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
+			<Text>play_time=[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1212,10 +1212,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
+			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1223,10 +1223,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
+			<Text>すれちがいかいすう=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1252,10 +1252,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
+			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1263,10 +1263,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
+			<Text>はくしゅかいすう=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1292,10 +1292,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
+			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1303,10 +1303,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
+			<Text>waza=[Digit:1digit Idx="0" ] [Name:Move Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1332,10 +1332,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
+			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1343,10 +1343,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
+			<Text>Subwayれんしょう=[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1372,10 +1372,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
+			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1383,10 +1383,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
+			<Text>t_house_rank=[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1412,10 +1412,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
+			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1423,10 +1423,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
+			<Text>Dパワー=[Digit:2digits Idx="0" ] [Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1452,10 +1452,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>fword=[Name:PMS Idx="3" ]</Text>
+			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1463,10 +1463,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>fword=[Name:PMS Idx="3" ]</Text>
+			<Text>tr_id=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1492,10 +1492,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>score=[Digit:5digits Idx="0" ]</Text>
+			<Text>fword=[Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1503,10 +1503,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>score=[Digit:5digits Idx="0" ]</Text>
+			<Text>fword=[Name:PMS Idx="3" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1531,10 +1531,10 @@
 		Label="dlc_beacon_req_param16">
 		<LanguageCell
 			Language="JPN">
-			<Text>senario=[Digit:2digits Idx="0" ][Name:PokewoodScenarioName Idx="1" ]</Text>
+			<Text>score=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:28:20" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1542,10 +1542,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>senario=[Digit:2digits Idx="0" ][Name:PokewoodScenarioName Idx="1" ]</Text>
+			<Text>score=[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:28:23" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1553,10 +1553,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>SWAN追加</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:27:25" />
+				Time="2012-01-13T09:10:37" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1570,10 +1570,10 @@
 		Label="dlc_beacon_req_param17">
 		<LanguageCell
 			Language="JPN">
-			<Text>tournament=[Digit:2digits Idx="0" ][Name:WBTTournament Idx="1" ]</Text>
+			<Text>senario=[Digit:2digits Idx="0" ][Name:PokewoodScenarioName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:28:52" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1581,10 +1581,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>tournament=[Digit:2digits Idx="0" ][Name:WBTTournament Idx="1" ]</Text>
+			<Text>senario=[Digit:2digits Idx="0" ][Name:PokewoodScenarioName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:28:58" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1609,10 +1609,10 @@
 		Label="dlc_beacon_req_param18">
 		<LanguageCell
 			Language="JPN">
-			<Text>area=[Digit:5digits Idx="0" ]</Text>
+			<Text>tournament=[Digit:2digits Idx="0" ][Name:WBTTournament Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:44:11" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1620,10 +1620,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>area=[Digit:5digits Idx="0" ]</Text>
+			<Text>tournament=[Digit:2digits Idx="0" ][Name:WBTTournament Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-09T10:44:14" />
+				Time="2012-01-13T09:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1635,6 +1635,45 @@
 			<CommentModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-11-09T10:27:27" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_beacon_req_param19">
+		<LanguageCell
+			Language="JPN">
+			<Text>area=[Digit:5digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>area=[Digit:5digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWAN追加</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-13T09:10:37" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
