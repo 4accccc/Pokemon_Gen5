@@ -579,12 +579,71 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
 
 //----------------------------------------------------------------------------
 /**
+ * @brief           マップなどの現在ステータスを見て、表示するべき下画面モードを返します
+ * @param pWork     FIELD_SUBSCREEN_WORK
+ * @param new_mode    切り替えるモード
+ * @return  mode    切り替わるモード
+ */
+//----------------------------------------------------------------------------
+static FIELD_SUBSCREEN_MODE subscreen_SpModeCheck(FIELD_SUBSCREEN_WORK* pWork, GAMESYS_WORK* gsys, GAMEDATA* pGame )
+{
+  u16 zone_id = FIELDMAP_GetZoneID(pWork->fieldmap);
+  
+  //遊覧船|バトルサブウェイ|ハイリンク島|ハイリンクの森 ではNOGEARとなる
+  if( ZONEDATA_IsPlBoat(zone_id) ||
+      ZONEDATA_IsSubway(zone_id) ||
+      ZONEDATA_IsPalace(zone_id) ||
+      ZONEDATA_IsBingo(zone_id))
+  {
+    return FIELD_SUBSCREEN_NOGEAR;
+  }
+  //CギアOFFの場合はNOGEARになる
+  if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
+    return FIELD_SUBSCREEN_NOGEAR;
+  }
+  //フェスミッション中はミッションログになる
+  if(LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork( gsys ) )){
+    return FIELD_SUBSCREEN_FMISSION_VIEW;
+  }
+  return FIELD_SUBSCREEN_MODE_MAX;
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief         CGEARのフラグを見て何も無いかどうか切り替えます
  * @param pWork     FIELD_SUBSCREEN_WORK
  * @param new_mode    切り替えるモード
  * @return  mode    切り替わるモード
  */
 //----------------------------------------------------------------------------
+FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
+{
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  GAMEDATA* pGame = GAMESYSTEM_GetGameData(gsys);
+  FIELD_SUBSCREEN_MODE sp_mode = subscreen_SpModeCheck( pWork, gsys, pGame );
+  
+  if(FIELD_SUBSCREEN_NORMAL==new_mode){
+    FIELD_SUBSCREEN_STATUS status = GAMEDATA_GetSubScreenStatus(pGame);
+    
+    if( sp_mode != FIELD_SUBSCREEN_MODE_MAX ){
+      return sp_mode;
+    }
+    //ステータスによってCギアを呼ぶか、すれ違いログを呼ぶか決定(この分岐ないで一番最後に判定すること)
+    if( status == FIELD_SUBSCREEN_STATUS_BEACON_VIEW ){ 
+      if( GAMESYSTEM_GetAlwaysNetFlag(gsys) ){
+        return FIELD_SUBSCREEN_BEACON_VIEW;
+      }
+      //常時通信できない状態なのでステータスをCギアに戻しておく
+      GAMEDATA_SetSubScreenStatus( pGame, FIELD_SUBSCREEN_STATUS_CGEAR );
+    }
+  }else if( FIELD_SUBSCREEN_BEACON_VIEW==new_mode ){
+    if( sp_mode != FIELD_SUBSCREEN_MODE_MAX ){
+      return sp_mode;
+    }
+  }
+  return new_mode;
+}
+#if 0
 FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
 {
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
@@ -643,6 +702,7 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_BeaconViewCheck( FIELD_SUBSCREEN_WORK* pWor
   }
   return FIELD_SUBSCREEN_BEACON_VIEW;
 }
+#endif
 
 //----------------------------------------------------------------------------
 /**

@@ -4927,7 +4927,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
     GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_HOT );
     GAMEDATA_SetSubScreenStatus( pWork->pGameData, FIELD_SUBSCREEN_STATUS_BEACON_VIEW );
 
-    p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));
+    p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW );
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
     {
