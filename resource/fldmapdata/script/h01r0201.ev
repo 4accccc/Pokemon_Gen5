@@ -90,26 +90,28 @@ EVENT_START   ev_pos_h01r0201_workman_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
 
+  _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
   //主人公の位置で振り向き分岐
   IF $LCW_POSX == 8 THEN
     //アニメ：主人公とストッパー向かい合う
     _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_l )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
     _OBJ_ANIME_WAIT()
 
   ELSIF $LCW_POSX == 10 THEN
     //アニメ：主人公とストッパー向かい合う
     _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_r )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
     _OBJ_ANIME_WAIT()
 
   ENDIF
 
-  _TALK_START_SE_PLAY()
-
   //働くおじさん:ちょっと　とおるのは　まってよ
   _BALLOONWIN_OBJMSG_POS( msg_h01r0201_workman_02, H01R0201_WORKMAN_01, POS_DEFAULT )
-  _AB_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //アニメ：主人公一歩下がり、ストッパー上を向く
@@ -244,5 +246,11 @@ _ANIME_LABEL  anm_common_turn_d
 _ANIME_LABEL  anm_walk_u
   _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
-
+	
+//-----------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 

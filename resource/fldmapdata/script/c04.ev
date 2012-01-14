@@ -1271,7 +1271,6 @@ EVENT_START   ev_pos_c04_trial_01
 
     _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
     _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-    _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
   
   //ゲームクリア前
   ELSE
@@ -1287,6 +1286,8 @@ EVENT_START   ev_pos_c04_trial_01
     _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   	
   ENDIF
+  
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
   
   //========================================//
   

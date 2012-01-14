@@ -134,7 +134,7 @@ EVENT_START  ev_h03_middlewoman2_01
     _AB_KEYWAIT_MARK()
 
     //—”‚Å0`4•‚ÅŽŸ‚Ì‘äŽŒ‚ðŒˆ‚ß‚é
-    _GET_RND( LOCALWORK2, 3 )
+    _GET_RND( LOCALWORK2, 4 )
 
     IF $LOCALWORK2 == 0 THEN
 
