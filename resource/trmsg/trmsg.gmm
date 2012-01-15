@@ -5067,7 +5067,7 @@
 じゃなかった　テイク　オフ！！▼</language>
 		<language name="JPN_KANJI" width="216">右よし！　左よし！▼
 それでは　勝負の　フライト
-テイク　オフ！▼
+テイク　アウト！▼
 じゃなかった　テイク　オフ！！▼</language>
 	</row>
 
@@ -5382,10 +5382,10 @@
 
 	<row id="TRID_SWRIVAL_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
-また　まけちまったか
+まさか　まけちまうとはな！
 あいぼうに　あやまらないと……</language>
 		<language name="JPN_KANJI" width="216">……！▼
-また　負けちまったか
+まさか　負けちまうとはな！
 相棒に　謝らないと……</language>
 	</row>
 
@@ -5405,10 +5405,10 @@
 
 	<row id="TRID_SWRIVAL_05_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
-また　まけちまったか
+まさか　まけちまうとはな！
 あいぼうに　あやまらないと……</language>
 		<language name="JPN_KANJI" width="216">……！▼
-また　負けちまったか
+まさか　負けちまうとはな！
 相棒に　謝らないと……</language>
 	</row>
 
@@ -5428,10 +5428,10 @@
 
 	<row id="TRID_SWRIVAL_06_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……！▼
-また　まけちまったか
+まさか　まけちまうとはな！
 あいぼうに　あやまらないと……</language>
 		<language name="JPN_KANJI" width="216">……！▼
-また　負けちまったか
+まさか　負けちまうとはな！
 相棒に　謝らないと……</language>
 	</row>
 
@@ -5688,9 +5688,9 @@
 
 	<row id="TRID_HEADS_06_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ブッとばされた！
-だが　スカッとした　きぶんだぜ！</language>
+だが　スカッとしたぜ！</language>
 		<language name="JPN_KANJI" width="216">ブッとばされた！
-だが　スカッとした　気分だぜ！</language>
+だが　スカッとしたぜ！</language>
 	</row>
 
 	<row id="TRID_HEADS_06_TRMSG_FIGHT_AFTER">
@@ -5792,9 +5792,9 @@
 
 	<row id="TRID_TANPAN_34_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">オレ　つよくなって
-ホミカちゃんに　いいとこ　みせるんだ！</language>
+ホミカちゃんに　いいとこ　みせるんだ！▼</language>
 		<language name="JPN_KANJI" width="216">オレ　強くなって
-ホミカちゃんに　いいとこ　みせるんだ！</language>
+ホミカちゃんに　いいとこ　みせるんだ！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_34_TRMSG_FIGHT_LOSE">
