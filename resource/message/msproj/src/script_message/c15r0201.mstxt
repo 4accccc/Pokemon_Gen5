@@ -522,15 +522,15 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　撮影スタジオへ▼
 あら……
-[Name:TrainerName ]さん　お疲れ様▼
+[Name:TrainerName ]さん　おつかれ様▼
 最近は　あなたの　映画が
 公開すると　シアターが▽
 満員なんですってね！▼
 ウフフ！　いつの間にか　あなたも
 映画スターの　仲間入りね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T05:29:00" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T04:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1001,11 +1001,11 @@ msg_c15r0201_pwmoji_01_01</Comment>
 台本に　その辺りの
 ヒントが　書いてあるから▽
 よーく　参考に　してね！▼
-あと　監督が　言ってることも
+あと　監督が　いってることも
 なんとなく　参考になるかもね▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:40:45" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T04:08:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

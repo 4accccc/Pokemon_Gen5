@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_pw_studio_01">
+		Label="msg_pw_studio_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド　スタジオへ　ようこそ！▼</Text>
@@ -38,7 +39,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_02">
+		Label="msg_pw_studio_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！
@@ -90,7 +92,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_03">
+		Label="msg_pw_studio_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>えいがの　さつえいに
@@ -200,7 +203,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_05">
+		Label="msg_pw_studio_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ワオ！　いま　こうかいちゅうの
@@ -252,7 +256,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_06">
+		Label="msg_pw_studio_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃあ　こうかいを　しゅうりょうする
@@ -289,7 +294,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_07">
+		Label="msg_pw_studio_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！　じゃあ　さつえいする
@@ -330,7 +336,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_08">
+		Label="msg_pw_studio_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！　じゃあ　さくひんに
@@ -382,7 +389,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_09">
+		Label="msg_pw_studio_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！　オーケー！▼
@@ -423,7 +431,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_10">
+		Label="msg_pw_studio_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！　オーケー！▼
@@ -463,7 +472,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_11">
+		Label="msg_pw_studio_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうか！
@@ -503,7 +513,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_12">
+		Label="msg_pw_studio_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！
@@ -543,7 +554,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_13">
+		Label="msg_pw_studio_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やー　さつえい　おつかれ！▼
@@ -560,13 +572,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やー　撮影　お疲れ！▼
+			<Text>やー　撮影　おつかれ！▼
 今回　撮影した　作品を
 映画にして　シアターで▽
 公開するかい？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T09:21:36" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T04:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -590,7 +602,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_14">
+		Label="msg_pw_studio_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！▼
@@ -629,7 +642,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_15">
+		Label="msg_pw_studio_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ソーリー！▼
@@ -673,7 +687,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_16">
+		Label="msg_pw_studio_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オウ！　ざんねんだが　そのポケモンは
@@ -714,7 +729,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_17">
+		Label="msg_pw_studio_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほんとに　さつえい　した　さくひんを
@@ -800,7 +816,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_19">
+		Label="msg_pw_studio_19"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！
@@ -857,7 +874,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_20">
+		Label="msg_pw_studio_20"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！▼
@@ -907,7 +925,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_21">
+		Label="msg_pw_studio_21"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！▼
@@ -960,7 +979,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_22">
+		Label="msg_pw_studio_22"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！▼
@@ -1005,7 +1025,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_23">
+		Label="msg_pw_studio_23"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！
@@ -1048,7 +1069,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_24">
+		Label="msg_pw_studio_24"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！
@@ -1100,7 +1122,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_25">
+		Label="msg_pw_studio_25"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！▼
@@ -1151,7 +1174,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_sel_01">
+		Label="msg_pw_studio_sel_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チャレンジする</Text>
@@ -1176,7 +1200,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_sel_02">
+		Label="msg_pw_studio_sel_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せつめいを　きく</Text>
@@ -1201,7 +1226,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_sel_03">
+		Label="msg_pw_studio_sel_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -1226,7 +1252,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_sel_04">
+		Label="msg_pw_studio_sel_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんの　ポケモン</Text>
@@ -1251,7 +1278,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_sel_05">
+		Label="msg_pw_studio_sel_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レンタル　ポケモン</Text>
@@ -1276,7 +1304,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_01">
+		Label="msg_pw_director_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さつえい……　はじめ……▼</Text>
@@ -1310,7 +1339,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_02">
+		Label="msg_pw_director_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゅんびは　いいかっ！？
@@ -1346,7 +1376,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_03">
+		Label="msg_pw_director_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃあ　はじめますかねえ
@@ -1382,7 +1413,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_04">
+		Label="msg_pw_director_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃ　さつえい　はじめるぞい！
@@ -1418,7 +1450,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_05">
+		Label="msg_pw_director_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アー　ユー　ＯＫ？
@@ -1454,7 +1487,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_system_01">
+		Label="msg_pw_system_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レポートを　かいています
@@ -1488,7 +1522,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_06">
+		Label="msg_pw_director_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よし……
@@ -1561,7 +1596,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_08">
+		Label="msg_pw_director_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これにて　クランクアップです！
@@ -1597,7 +1633,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_09">
+		Label="msg_pw_director_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>みんな　おつかれじゃの！
@@ -1633,7 +1670,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_10">
+		Label="msg_pw_director_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>コレデ　サツエイ　フィニッシュ！
@@ -1669,7 +1707,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_11">
+		Label="msg_pw_director_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうした……？
@@ -1709,7 +1748,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_12">
+		Label="msg_pw_director_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おいおい！　どうしたんだ！？
@@ -1749,7 +1789,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_13">
+		Label="msg_pw_director_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おやおや　どうしたんです？
@@ -1789,7 +1830,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_14">
+		Label="msg_pw_director_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おーい　どうしたんじゃ？
@@ -1828,7 +1870,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_director_15">
+		Label="msg_pw_director_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ソレデ　ユー　ハ　イイノネ？
@@ -1867,7 +1910,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_01">
+		Label="msg_pw_tutorial_rec_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　ボス！▼
@@ -1906,7 +1950,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_02">
+		Label="msg_pw_tutorial_rec_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いやあー　おつかれさまね！▼
@@ -1971,7 +2016,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_03">
+		Label="msg_pw_tutorial_rec_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>イエス！　ボス！▼
@@ -2015,7 +2061,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_04">
+		Label="msg_pw_tutorial_rec_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>だよねー　だよねー▼
@@ -2067,7 +2114,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_04_1">
+		Label="msg_pw_tutorial_rec_04_1"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーイ！
@@ -2108,7 +2156,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_05">
+		Label="msg_pw_tutorial_rec_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクだ……
@@ -2147,7 +2196,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_06">
+		Label="msg_pw_tutorial_rec_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクくんはね　わが　ポケウッドが
@@ -2193,7 +2243,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_07">
+		Label="msg_pw_tutorial_rec_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>その　め……
@@ -2234,7 +2285,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_08">
+		Label="msg_pw_tutorial_rec_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>んー！
@@ -2282,7 +2334,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_09">
+		Label="msg_pw_tutorial_rec_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>えいが！　それは　アメイジング！▼
@@ -2325,7 +2378,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_10">
+		Label="msg_pw_tutorial_rec_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おねがいします！　[Name:TrainerName Idx="0" ]さん！
@@ -2368,7 +2422,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_11">
+		Label="msg_pw_tutorial_rec_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いやあー！　おつかれさまね！
@@ -2428,7 +2483,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_11_01">
+		Label="msg_pw_tutorial_rec_11_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　ボス！
@@ -2472,7 +2528,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_11_02">
+		Label="msg_pw_tutorial_rec_11_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうだったな……
@@ -2516,7 +2573,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_11_03">
+		Label="msg_pw_tutorial_rec_11_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わーん　ごめんー　[Name:TrainerName Idx="0" ]ちゃん！
@@ -2572,7 +2630,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_rec_17">
+		Label="msg_pw_tutorial_rec_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド……▼
