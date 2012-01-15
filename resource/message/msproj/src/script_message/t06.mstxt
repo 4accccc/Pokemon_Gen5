@@ -650,8 +650,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
-ヒオウギに　できた
-あたらしい　ポケモンジム　だがな▼
+ヒオウギに　できたばかりの
+あたらしい　トレーナーズスクール▽
+アンド　ポケモンジム　だがな▼
 ジムリーダーが　とうちゃくしたと
 れんらくが　あったぞ！▼
 そこで　アドバイスだ！▼
@@ -660,7 +661,7 @@
 ジムリーダーに　いどむと　いい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T12:11:27" />
+				Time="2012-01-15T01:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -669,8 +670,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
-ヒオウギに　できた
-新しい　ポケモンジム　だがな▼
+ヒオウギに　できたばかりの
+新しい　トレーナーズスクール▽
+アンド　ポケモンジム　だがな▼
 ジムリーダーが　到着したと
 連絡が　あったぞ！▼
 そこで　アドバイスだ！▼
@@ -679,7 +681,7 @@
 ジムリーダーに　挑むと　いい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T12:11:30" />
+				Time="2012-01-15T01:57:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -733,14 +735,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あさは　おなかが　へったと
-ポケモンが　おこしに　くる▼
+ポケモンが　おこしに　きて▼
 よるは　あそびつかれた
 ポケモンが　ベッドを　ひとりじめ▼
-ひどく　きこえるかも　しれないけど
-ぼくは　しあわせ　なんだなあ</Text>
+ああ！　みたされてるなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:51:06" />
+				Time="2012-01-15T01:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -749,14 +750,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>朝は　おなかが　減ったと
-ポケモンが　起こしに　くる▼
+ポケモンが　起こしに　来て▼
 夜は　遊びつかれた
 ポケモンが　ベッドを　独り占め▼
-ひどく　きこえるかも　しれないけど
-ぼくは　しあわせ　なんだなあ</Text>
+ああ！　満たされてるなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:51:07" />
+				Time="2012-01-15T01:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

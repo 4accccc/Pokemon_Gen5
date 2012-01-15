@@ -161,14 +161,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　[Digit:1digit Idx="1" ]ひき　つれているのね！▼
+			<Text>ポケモンを　[Digit:1digit Idx="1" ]匹　つれているのね！▼
 でも　仲間は　多ければ
 多いほど　旅は　楽しいはずよ！▼
 ほら！　これを　あげるから
 ポケモンを　いっぱい　捕まえたら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T02:36:44" />
+				Time="2012-01-14T11:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

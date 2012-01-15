@@ -2245,10 +2245,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanでメッセージ修正予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:26:06" />
+				Time="2012-01-14T12:39:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3096,13 +3096,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
-水を　さして　すまないな……▼
+水を　差して　すまないな……▼
 ローテーションバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T09:34:48" />
+				Time="2012-01-14T12:30:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3676,13 +3676,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
-水を　さして　すまないな……▼
+水を　差して　すまないな……▼
 トリプルバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T09:34:55" />
+				Time="2012-01-14T12:30:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

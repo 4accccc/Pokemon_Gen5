@@ -822,10 +822,11 @@ GRIDX=15、GRIDZ=26
 		<LanguageCell
 			Language="JPN">
 			<Text>コンビナートの　しごとは
-まいにち　おんなじでも　いいんだ！</Text>
+まいにち　おんなじでも　いいんだ！▽
+もんだい　ないって　ことだもんな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:23:07" />
+				Time="2012-01-15T03:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -834,10 +835,11 @@ GRIDX=15、GRIDZ=26
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コンビナートの　仕事は
-毎日　おんなじでも　いいんだ！</Text>
+毎日　おんなじでも　いいんだ！▽
+問題ないって　ことだもんな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T09:23:13" />
+				Time="2012-01-15T03:03:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

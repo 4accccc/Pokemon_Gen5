@@ -141,10 +141,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は
-リフトの　スイッチを　おした！</Text>
+リフトの　スイッチを　押した！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T03:24:39" />
+				Time="2012-01-14T12:43:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

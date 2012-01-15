@@ -406,14 +406,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・デモ中のメッセージ（早口で表示）
 ・主人公に氷が迫るデモに
 　雷が落ちる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:26:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -467,14 +466,13 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・デモ中のメッセージ（早口で表示）
 ・主人公に氷が迫るデモに
 　火柱が落ちる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:26:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -608,12 +606,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・続けてmu_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:26:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -685,12 +682,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・続けてshin_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:26:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1251,12 +1247,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・続けてswsage01_10b</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:35:14" />
+				User="matsumiya:W00224"
+				Time="2012-01-14T11:27:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1310,12 +1305,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・続けてswsage01_10w</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:35:21" />
+				User="matsumiya:W00224"
+				Time="2012-01-14T11:27:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1836,12 +1830,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・合体キュレムと戦闘するまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1905,12 +1898,11 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・合体キュレムと戦闘するまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2466,15 +2458,13 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・このときキュレム不在
 　ゼクロムだけを表示
-・表示後、トレーナー戦闘へ
-</Comment>
+・表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T11:11:37" />
+				Time="2012-01-14T11:27:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2544,15 +2534,13 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・このときキュレム不在
 　レシラムだけを表示
-・表示後、トレーナー戦闘へ
-</Comment>
+・表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T11:11:35" />
+				Time="2012-01-14T11:27:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2612,13 +2600,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・全滅処理用
 ・表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T11:11:53" />
+				Time="2012-01-14T11:27:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2671,13 +2658,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・全滅処理用
 ・表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T11:11:55" />
+				Time="2012-01-14T11:27:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3712,13 +3698,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・出入り口前
 ・続けてboss_13b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3788,13 +3773,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・出入り口前
 ・続けてboss_13w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3854,13 +3838,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・表示後、N,退場
 ・以降、主人公フリームーブ可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3920,13 +3903,12 @@ N</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・表示後、N,退場
 ・以降、主人公フリームーブ可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2012-01-14T11:27:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -451,13 +451,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
-水を　さして　すまないな……▼
+水を　差して　すまないな……▼
 トリプルバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-14T12:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1170,13 +1170,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
-水を　さして　すまないな……▼
+水を　差して　すまないな……▼
 ローテーションバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-14T12:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3057,15 +3057,13 @@ musician_01</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・r16でイベント発生の場合
-　このイベントは発生しない
 ・主人公＝♂
 ・posイベント
 　GRIDX＝？、GRIDZ＝？
 ・続けてswbell_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T12:48:19" />
+				Time="2012-01-14T12:32:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4062,10 +4060,10 @@ musician_01</Text>
 Nという　ポケモントレーナーと
 であったんだってね▼
 だから　というわけでは　ないけど
-ぼくと　たたかってくれない？</Text>
+ぼくと　たたかってくれないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T04:03:43" />
+				Time="2012-01-14T12:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4077,10 +4075,10 @@ Nという　ポケモントレーナーと
 Nという　ポケモントレーナーと
 出会ったんだってね▼
 だから　というわけでは　ないけど
-ぼくと　戦ってくれない？</Text>
+ぼくと　戦ってくれないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T04:03:44" />
+				Time="2012-01-14T12:34:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4129,10 +4127,10 @@ Nという　ポケモントレーナーと
 			Language="JPN">
 			<Text>チェレン『きみとの　しょうぶで
 たしかめたいことが　あるんだ▼
-ぼくと　たたかってくれないか？</Text>
+ぼくと　たたかってくれないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:35:24" />
+				Time="2012-01-14T12:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4142,10 +4140,10 @@ Nという　ポケモントレーナーと
 			Language="JPN_KANJI">
 			<Text>チェレン『きみとの　勝負で
 確かめたいことが　あるんだ▼
-ぼくと　戦ってくれないか？</Text>
+ぼくと　戦ってくれないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:43:59" />
+				Time="2012-01-14T12:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4556,10 +4554,10 @@ Nという　ポケモントレーナーと
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こいをしよう！</Text>
+			<Text>ラブだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-10T02:47:03" />
+				Time="2012-01-14T12:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4567,10 +4565,10 @@ Nという　ポケモントレーナーと
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>恋をしよう！</Text>
+			<Text>ラブだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-10T02:47:12" />
+				Time="2012-01-14T12:35:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

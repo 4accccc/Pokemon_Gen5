@@ -2384,10 +2384,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オーナー『ありがとう！　きみと
-きみの　ポケモンの　おかげだねー！</Text>
+きみの　ポケモンの　おかげだねー！▼
+すごいねー！　あれかい？
+アデクさんに　きたえてもらったのー？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:47:33" />
+				Time="2012-01-15T01:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2396,10 +2398,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『ありがとう！　きみと
-きみの　ポケモンの　おかげだねー！</Text>
+きみの　ポケモンの　おかげだねー！▼
+すごいねー！　あれかい？
+アデクさんに　鍛えてもらったのー？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:47:43" />
+				Time="2012-01-15T01:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2450,13 +2454,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーナー『この　ぼくじょうは
+			<Text>この　ぼくじょうは
 もともと　ポケモンを　まもるため▼
 かきねを　つくったのが
 はじまり　なんだよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:26:02" />
+				Time="2012-01-15T01:45:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2464,13 +2468,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーナー『この　牧場は
+			<Text>この　牧場は
 もともと　ポケモンを　守るため▼
 垣根を　つくったのが
 はじまり　なんだよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:25:53" />
+				Time="2012-01-15T01:45:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
