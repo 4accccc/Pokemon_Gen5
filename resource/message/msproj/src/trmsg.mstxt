@@ -41498,27 +41498,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よろしいッ！
+			<Text>よろしいっ！
 なかなかの　ものです！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よろしいッ！
+			<Text>よろしいっ！
 なかなかの　ものです！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:47" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -78510,30 +78510,84 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_SWBOSS_01_TRMSG_FIGHT_LOSE">
+		Label="TRID_SWBOSS_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<LanguageCell
 			Language="JPN">
-			<Text>よろしいッ！
-なかなかの　ものです！！</Text>
+			<Text>さあっ！　もっとです
+ポケモンの　ちからを　ひきだしなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:09:42" />
+				Time="2012-01-15T05:47:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:09:42" />
+				Time="2012-01-15T05:47:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よろしいッ！
-なかなかの　ものです！！</Text>
+			<Text>さあっ！　もっとです
+ポケモンの　力を　ひきだしなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:09:42" />
+				Time="2012-01-15T05:47:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:09:42" />
+				Time="2012-01-15T05:47:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_01_TRMSG_FIGHT_POKE_LAST">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいこうに　こうふん　してきましたっ
+まだまだ　つづけましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最高に　興奮してきましたっ
+まだまだ　続けましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_01_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンの　ひめている　のうりょくを
+ひきだすとは　こういうことですかっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンの　秘めている　能力を
+ひきだすとは　こういうことですかっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-15T05:47:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
