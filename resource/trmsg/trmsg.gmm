@@ -9606,9 +9606,9 @@
 	</row>
 
 	<row id="TRID_SWBOSS_1_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">よろしいッ！
+		<language name="JPN" width="216">よろしいっ！
 なかなかの　ものです！！</language>
-		<language name="JPN_KANJI" width="216">よろしいッ！
+		<language name="JPN_KANJI" width="216">よろしいっ！
 なかなかの　ものです！！</language>
 	</row>
 
@@ -18077,11 +18077,25 @@
 ポケモンに　なぐさめて　もらうもん</language>
 	</row>
 
+	<row id="TRID_SWBOSS_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">さあっ！　もっとです
+ポケモンの　ちからを　ひきだしなさい！</language>
+		<language name="JPN_KANJI" width="216">さあっ！　もっとです
+ポケモンの　力を　ひきだしなさい！</language>
+	</row>
+
+	<row id="TRID_SWBOSS_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">さいこうに　こうふん　してきましたっ
+まだまだ　つづけましょう！</language>
+		<language name="JPN_KANJI" width="216">最高に　興奮してきましたっ
+まだまだ　続けましょう！</language>
+	</row>
+
 	<row id="TRID_SWBOSS_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">よろしいッ！
-なかなかの　ものです！！</language>
-		<language name="JPN_KANJI" width="216">よろしいッ！
-なかなかの　ものです！！</language>
+		<language name="JPN" width="216">ポケモンの　ひめている　のうりょくを
+ひきだすとは　こういうことですかっ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンの　秘めている　能力を
+ひきだすとは　こういうことですかっ！</language>
 	</row>
 
 	<row id="TRID_KARATE_19_TRMSG_FIGHT_START">
