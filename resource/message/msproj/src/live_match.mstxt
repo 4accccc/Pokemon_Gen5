@@ -3046,11 +3046,11 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]　残り　[Digit:1digit Idx="2" ]匹
 [Name:TrainerName Idx="1" ]　残り　[Digit:1digit Idx="3" ]匹▽
-[Name:TrainerName ]　が　降参したので▽
+[Name:TrainerName Idx="1" ]　が　降参したので▽
 [Name:TrainerName ]　は　勝ちました▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-27T09:26:27" />
+				User="matsumiya:W00224"
+				Time="2012-01-16T05:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
