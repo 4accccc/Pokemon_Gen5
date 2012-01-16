@@ -63,7 +63,7 @@
 #include "savedata/pokewood_rec.h"
 #include "savedata/fmission_save.h"
 #include "savedata/pokewood_savedata.h"
-#include "savedata/cygnus_savedata.h"
+#include "savedata/dummy3ds_savedata.h"
 #include "savedata/options_savedata.h"
 
 //--------------------------------------------------------------
@@ -431,9 +431,9 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_INIT_WORK)POKEWOOD_SAVEDATA_Init,
   },
   { //3DSŠO•”˜A“®—p
-    GMDATA_ID_CYGNUS,
-    (FUNC_GET_SIZE)CYGNUS_SAVEDATA_GetWorkSize,
-    (FUNC_INIT_WORK)CYGNUS_SAVEDATA_Init,
+    GMDATA_ID_DUMMY3DS,
+    (FUNC_GET_SIZE)DUMMY3DS_SAVEDATA_GetWorkSize,
+    (FUNC_INIT_WORK)DUMMY3DS_SAVEDATA_Init,
   },
 };
 
