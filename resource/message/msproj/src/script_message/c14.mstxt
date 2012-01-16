@@ -123,7 +123,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -137,10 +137,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『はやく
 ジムバッジを　もらってこいよ▼
 そうしたら　てわけして
-プラズマだんを　さがすぜッ！</Text>
+プラズマだんを　さがすぜッ！▼
+……イッシュを
+こおりづけに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T10:27:50" />
+				Time="2012-01-16T09:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -151,10 +153,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『はやく
 ジムバッジを　もらってこいよ▼
 そうしたら　手分けして
-プラズマ団を　探すぜッ！</Text>
+プラズマ団を　探すぜッ！▼
+……イッシュを
+氷漬けに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:00:57" />
+				Time="2012-01-16T09:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -247,7 +251,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

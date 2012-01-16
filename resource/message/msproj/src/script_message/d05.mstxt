@@ -2258,11 +2258,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　くろい　ふねから
-ポケモンの　なきごえが　きこえたの</Text>
+			<Text>うみを　わたってこそ　ふね！
+みなとに　いる　ふねは　さびしそうね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:36:21" />
+				Time="2012-01-16T09:23:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2270,11 +2270,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの　黒い船から
-ポケモンの　鳴き声が　きこえたの</Text>
+			<Text>海を　航海してこそ　船！
+港にいる　船は　寂しそうね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:36:41" />
+				Time="2012-01-16T09:24:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2315,11 +2315,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　くろい　ふねから
-ポケモンの　なきごえが　きこえたの</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:57:29" />
+				Time="2012-01-16T09:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2327,11 +2326,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの　黒い船から
-ポケモンの　鳴き声が　きこえたの</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:57:29" />
+				Time="2012-01-16T09:23:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2339,10 +2337,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※バグ対処用</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T01:49:08" />
+				Time="2012-01-16T09:23:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2353,14 +2351,14 @@
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
-			<Text>C</Text>
+			<Text>unknown</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:57:25" />
+				Time="2012-01-16T09:23:02" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
