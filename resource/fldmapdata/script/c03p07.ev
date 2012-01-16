@@ -106,6 +106,7 @@ EVENT_START   ev_c03p07_sunglasses_01
     
     //ダンペイ：やれやれ
     _BALLOONWIN_OBJMSG_POS( msg_c03p07_glasses_03, C03P07_SUNGLASSES_01, POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
     //自機にカメラを戻す

@@ -50,6 +50,10 @@ EVENT_START   ev_pos_r06_swleader1_01
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
   
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
   //アニメ：チェレン接近
   SWITCH $LCW_POSZ
   CASE 371 THEN
