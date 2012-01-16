@@ -26277,4 +26277,29 @@
 				Time="2011-12-14T06:48:48" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="swboss_2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:58" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

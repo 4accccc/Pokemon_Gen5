@@ -828,6 +828,7 @@ _EVENT_DATA ev_TRID_SWPLAZMAW_17
 _EVENT_DATA ev_TRID_SWPLAZMAW_18
 _EVENT_DATA ev_TRID_DOCTOR_11
 _EVENT_DATA ev_TRID_SWPLAZMAM_42
+_EVENT_DATA ev_TRID_SWBOSS_2_01
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1646,6 +1647,7 @@ ev_TRID_SWPLAZMAW_17:
 ev_TRID_SWPLAZMAW_18:
 ev_TRID_DOCTOR_11:
 ev_TRID_SWPLAZMAM_42:
+ev_TRID_SWBOSS_2_01:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------

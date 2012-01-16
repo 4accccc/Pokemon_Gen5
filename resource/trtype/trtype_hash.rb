@@ -236,6 +236,7 @@
 		"PKWD_LADYBUG♂みらいじん"=>232,
 		"JUGGLING_1♂クラウン"=>233,
 		"RED♂レッド"=>234,
+		"SWBOSS_2♂ポケモントレーナー"=>235,
 	}
 #
 	$trtype_id_hash = {
@@ -474,4 +475,5 @@
 		"TRTYPE_PKWD_LADYBUG" =>232,
 		"TRTYPE_JUGGLING_1" =>233,
 		"TRTYPE_RED" =>234,
+		"TRTYPE_SWBOSS_2" =>235,
 	}

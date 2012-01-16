@@ -7740,4 +7740,29 @@
 				Time="2011-12-14T02:47:56" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_SWBOSS_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナー</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-01-16T02:28:52" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

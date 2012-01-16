@@ -947,6 +947,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		187,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.235 SWBOSS_2♂ポケモントレーナー
+		148,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {

@@ -245,4 +245,5 @@
 #define	TRTYPE_PKWD_LADYBUG    ( 232 )    //PKWD_LADYBUG♂みらいじん
 #define	TRTYPE_JUGGLING_1    ( 233 )    //JUGGLING_1♂クラウン
 #define	TRTYPE_RED    ( 234 )    //RED♂レッド
-#define	TRTYPE_MAX	( 235 )
+#define	TRTYPE_SWBOSS_2    ( 235 )    //SWBOSS_2♂ポケモントレーナー
+#define	TRTYPE_MAX	( 236 )
