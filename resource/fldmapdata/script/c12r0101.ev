@@ -455,19 +455,22 @@ EVENT_END
 
 //ママの回復イベント
 ev_everyday:
-	//回復済みなら一言メッセージ
-	IF $LOCALWORK15 == 999 THEN
-	  _PLAYER_NAME( 0 )
+
+  _TALK_OBJ_START()
+  //回復済みなら一言メッセージ
+  IF $LOCALWORK15 == 999 THEN
+    _PLAYER_NAME( 0 )
+    
+    _CALL	ev_rndmes
+    
     //ランダムでメッセージ分岐（５パターン）
     _BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
-		_RET
-	ENDIF
+_RET
+  ENDIF
 
   //上記の条件に当てはまらなければ回復イベント開始
-  _TALK_OBJ_START()
-
    //ポケモンは元気？
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_cure_01 )
@@ -475,11 +478,10 @@ ev_everyday:
 
   _CALL	ev_kaifuku		//回復処理
 
-  //ランダムでメッセージ分岐（５パターン）
-  _PLAYER_NAME( 0 )
-  $SCWK_TEMP0 = msg_c12r0101_swmama_cure_02
-  _GET_RND( SCWK_TEMP1, 5 )
-  $SCWK_TEMP0 += SCWK_TEMP1
+  _GET_RND( LOCALWORK10, 5 )
+
+  _CALL	ev_rndmes
+
   _BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
@@ -503,6 +505,26 @@ ev_kaifuku:
 
   //レコードをカウント（自宅休憩回数）
   _ADD_RECORD( RECID_RECOVERY_HOME, 1 )
+
+_RET
+
+//ランダムメッセージ処理
+ev_rndmes:
+
+  //ランダムでメッセージ分岐（５パターン）
+  _PLAYER_NAME( 0 )
+  SWITCH $LOCALWORK10
+  CASE 0 THEN
+	$SCWK_TEMP0 = msg_c12r0101_swmama_cure_02
+  CASE 1 THEN
+	$SCWK_TEMP0 = msg_c12r0101_swmama_cure_03
+  CASE 2 THEN
+	$SCWK_TEMP0 = msg_c12r0101_swmama_cure_04
+  CASE 3 THEN
+	$SCWK_TEMP0 = msg_c12r0101_swmama_cure_05
+  CASE 4 THEN
+	$SCWK_TEMP0 = msg_c12r0101_swmama_cure_06
+  ENDSWITCH
 
 _RET
 
