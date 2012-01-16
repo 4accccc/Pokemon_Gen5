@@ -2509,6 +2509,7 @@ static void PLIST_SelectPokeTerm_KyuremuUnion( PLIST_WORK *work )
     PMSND_PlaySystemSE( PLIST_SND_CANCEL );
     return;
   }
+  PMSND_PlaySystemSE( PLIST_SND_DECIDE );
 
   ret = PLIST_KyuremuUnionCheck( work, work->pokeCursor );
   if( ret == KYUREMU_UNION_RESIRAMU || ret == KYUREMU_UNION_ZEKUROMU ){

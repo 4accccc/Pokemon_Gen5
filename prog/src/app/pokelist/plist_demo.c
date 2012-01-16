@@ -349,7 +349,8 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
     //チラツキを消すため一回非表示にした面の再表示
     GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
     //SEの再生
-    PMSND_PlaySystemSE( work->demoSeNo );
+    PMSND_PlaySE_byPlayerID( work->demoSeNo, SEPLAYER_SE1 ); //BTS419対処 決定音とプレイヤーを変える
+
     work->demoSeq++;
     //break throw
   case 1:
