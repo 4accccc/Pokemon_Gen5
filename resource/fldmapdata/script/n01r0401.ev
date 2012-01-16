@@ -33,6 +33,15 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_N_POSX
+DEFINE_LOCAL  LCW_N_POSZ
+
+//------------------------------注意--------------------------------//
+//下記のローカルワークを使用しているため注意して下さい。
+
+// LOCALWORK15→N戻り位置設定
+//------------------------------------------------------------------//
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -77,13 +86,17 @@ ev_n01r0401_pairstart_01:
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-    
+  //N座標取得
+  _OBJ_POS_GET( N01R0401_BOSS_01,LCW_N_POSX,LCW_N_POSZ ) 
+
   $LCW_POSX += 2
-    
-  _OBJ_ANIME_AUTO( N01R0401_BOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 16, DIR_LR )
-  _OBJ_ANIME_WAIT()
   
-  IF $LCW_POSZ != 14 THEN
+  IF $LCW_POSZ != $LCW_N_POSX || $LOCALWORK15 == 0 THEN
+    _OBJ_ANIME_AUTO( N01R0401_BOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 16, DIR_LR )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  IF $LCW_POSZ != $LCW_N_POSZ THEN
     _OBJ_ANIME( N01R0401_BOSS_01, anm_staystep_l )
     _OBJ_ANIME_WAIT()
   ENDIF
@@ -121,6 +134,8 @@ ev_n01r0401_pairstart_01:
     //連れ歩き開始
     _PAIR_TRAINER_SET( N01R0401_BOSS_01 , PAIR_ID_N01_BOSS, PAIR_TYPE_FREE_ZONE, 0, SCRID_N01R0401_BOSS )
     //==================================//
+    //入室イベント初期化
+    $LOCALWORK15 = 0
     //N01R0501_POS起動
     $WK_SCENE_N01R0501_BOSS = 1
     //N01R0502_POS起動
@@ -145,12 +160,19 @@ ev_n01r0401_pairstart_01:
     _MSGWIN_CLOSE()
     
     //アニメ：主人公戻す・N戻る
+    /*
     _OBJ_ANIME_AUTO( N01R0401_BOSS_01,12,14, FORCE_TYPE_NOT, 8, DIR_LR )
     _OBJ_ANIME_WAIT()
     
     _OBJ_ANIME( N01R0401_BOSS_01, anm_staystep_l )
+    */
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
+    
+    //==================================//
+    //入室イベント終了状態（マップ遷移で初期化）
+    $LOCALWORK15 = 1
+    //==================================//
 
   ENDIF
   }

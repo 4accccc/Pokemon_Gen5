@@ -371,11 +371,38 @@ _TALK_OBJ_START()
   _YES_NO_WIN( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
+    
+    _MSGWIN_CLOSE()
+    
+    //プレイヤーの向きを取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    IF $LWK_DIR != DIR_UP THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_d )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+  
+    //アニメ：アデク演技
+    _OBJ_ANIME( T06R0101_CHAMPION_01, anm_champion_act_01 )
+    _OBJ_ANIME_WAIT()
+    
+    _TIME_WAIT( 8 )
+    
+    IF $LWK_DIR == DIR_DOWN THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+    ELSIF $LWK_DIR == DIR_LEFT THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_r )
+      _OBJ_ANIME_WAIT()
+    ELSIF $LWK_DIR == DIR_RIGHT THEN
+      _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+      _OBJ_ANIME_WAIT()
+    ENDIF
 
     //アデク：こころが　おどる！▼
     _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_03, T06R0101_CHAMPION_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
-
+    
     //トレーナー戦呼び出し
     _TRAINER_BTL_SET( TRID_CHAMPION_01, 0 )
 
@@ -544,7 +571,7 @@ _TALK_OBJ_START()
     //無限ダンジョンストッパー解除
     _FLAG_SET( FV_D31D32_MUGEN_STOPPER )
     //========================================//
-
+    
   ELSE
 
     //アデク：ふむう……
@@ -702,6 +729,12 @@ EVENT_START   ev_t06r0101_boy3_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_boy3_03 )
 EVENT_END
 
+//--------------------------------------------------------------
+//	アデク：髪の毛ゆれ演出
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_champion_act_01
+	_ANIME_DATA	AC_CHAMPION_ACT0,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：方向転換
