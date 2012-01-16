@@ -58,7 +58,7 @@ EVENT_START   ev_h06_man3_01
   IF $WK_SCENE_BRIDGE_MANIA_01 == 5 THEN
 
     //太った兄さん：のどが　かわいた……▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_01 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_bridge_01,POS_UP )
 
     //アイテム「おいしいみず」をあげる？
     _YES_NO_WIN( SCWK_ANSWER )
@@ -78,7 +78,7 @@ EVENT_START   ev_h06_man3_01
         _SE_WAIT()
 
         //太った兄さん：げんき　でてきたー！　ありがとう▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_02 )
+        _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_bridge_02 , POS_UP )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
@@ -114,7 +114,7 @@ EVENT_START   ev_h06_man3_01
       ELSE
 
         //太った兄さん：でも　おいしいみず　ないよね……
-        _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_03 )
+        _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_bridge_03 , POS_UP )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
 
@@ -123,7 +123,7 @@ EVENT_START   ev_h06_man3_01
     ELSE    //いいえ
 
       //太った兄さん：おいしいみずが　ないと……
-      _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_04 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_bridge_04 , POS_UP )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
@@ -133,7 +133,7 @@ EVENT_START   ev_h06_man3_01
   ELSIF $WK_SCENE_BRIDGE_MANIA_01 == 6 THEN
 
     //太った兄さん：げんき　でてきたー！　ありがとう▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_h06_bridge_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_bridge_02 , POS_UP )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
@@ -164,14 +164,20 @@ _ANIME_LABEL	anm_player_ou
 /*  カラテ王：話しかけ                                        */
 /**************************************************************/
 EVENT_START   ev_h06_fighterm_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_fighterm_01 )
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_fighterm_01, POS_UP )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  男性：話しかけ                                            */
 /**************************************************************/
 EVENT_START   ev_h06_man3_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_man3_01 )
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_man3_01, POS_UP )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -192,7 +198,10 @@ EVENT_END
 /*  マダム：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_h06_lady_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h06_lady_01 )
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_h06_lady_01, POS_UP )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
