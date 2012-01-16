@@ -382,12 +382,19 @@ EVENT_START  ev_r06r0101_ambrella_01
   DEFINE_LOCAL LWK_POKE_WAZA_CLEAR    //条件の技を持つポケモン
 
   DEFINE_LOCAL LWK_TENKI        //天気
+
+  // 以下の変数は内部の値を定数として使用
   DEFINE_LOCAL LWK_CLEAR_HARE   //晴れ系
   DEFINE_LOCAL LWK_CLEAR_AME    //雨系
   DEFINE_LOCAL LWK_CLEAR_ARARE  //霰系
   DEFINE_LOCAL LWK_CLEAR_SUNA   //砂嵐系
   DEFINE_LOCAL LWK_CLEAR_NOOTEN //天候打消し系
 
+  $LWK_CLEAR_HARE    = 1 //晴れ系
+  $LWK_CLEAR_AME     = 2 //雨系
+  $LWK_CLEAR_ARARE   = 3 //霰系
+  $LWK_CLEAR_SUNA    = 4 //砂嵐系
+  $LWK_CLEAR_NOOTEN  = 5 //天候打消し系
 
   _TALK_OBJ_START()
 
@@ -400,20 +407,19 @@ EVENT_START  ev_r06r0101_ambrella_01
 
     //パラソル：はれやかで　あることを　ねがいますわ……
     _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_06 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+
+  ENDIF
 
   //12/31のダイヤモンドダストの日？
-  ELSIF $LWK_MONTH == 12 && $LWK_DAY == 31 THEN
+  IF $LWK_MONTH == 12 && $LWK_DAY == 31 THEN
 
     //パラソル：みてみたい　ですわ！　うふふ！
     _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_07 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
 
   //それ以外の日
-  ELSE
+  ENDIF
 
+  {
     //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
     _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
 
@@ -426,7 +432,7 @@ EVENT_START  ev_r06r0101_ambrella_01
       //指定POSのポケモンの特性は「ひでり」か
       IF $LWK_POKE_TOKUSEI == TOKUSYU_HIDERI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
         //条件を満たしていたら、晴れ状態の説明へ
-        $LWK_TENKI = LWK_CLEAR_HARE
+        $LWK_TENKI = $LWK_CLEAR_HARE
         //指定POSのポケモンの名前取得
         _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
         //特性「ひでり」タグセット
@@ -437,7 +443,7 @@ EVENT_START  ev_r06r0101_ambrella_01
       //指定POSのポケモンの特性は「あめふらし」か
       ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_AMEHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
         //条件を満たしていたら、雨状態の説明へ
-        $LWK_TENKI = LWK_CLEAR_AME
+        $LWK_TENKI = $LWK_CLEAR_AME
         //指定POSのポケモンの名前取得
         _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
         //特性「あめふらし」タグセット
@@ -448,7 +454,7 @@ EVENT_START  ev_r06r0101_ambrella_01
       //指定POSのポケモンの特性は「ゆきふらし」か
       ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_YUKIHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
         //条件を満たしていたら、霰状態の説明へ
-        $LWK_TENKI = LWK_CLEAR_AME
+        $LWK_TENKI = $LWK_CLEAR_ARARE
         //指定POSのポケモンの名前取得
         _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
         //特性「ゆきふらし」タグセット
@@ -459,7 +465,7 @@ EVENT_START  ev_r06r0101_ambrella_01
       //指定POSのポケモンの特性は「すなおこし」か
       ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_SUNAOKOSI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
         //条件を満たしていたら、砂嵐状態の説明へ
-        $LWK_TENKI = LWK_CLEAR_SUNA
+        $LWK_TENKI = $LWK_CLEAR_SUNA
         //指定POSのポケモンの名前取得
         _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
         //特性「すなおこし」タグセット
@@ -470,7 +476,7 @@ EVENT_START  ev_r06r0101_ambrella_01
       //指定POSのポケモンの特性は「ノーてんき」「エアロック」か
       ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_NOOTENKI || $LWK_POKE_TOKUSEI == TOKUSYU_EAROKKU && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
         //条件を満たしていたら、天候打消しの説明へ
-        $LWK_TENKI = LWK_CLEAR_NOOTEN
+        $LWK_TENKI = $LWK_CLEAR_NOOTEN
         //指定POSのポケモンの名前取得
         _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
         //特性「ノーてんき」「エアロック」タグセット
@@ -484,23 +490,23 @@ EVENT_START  ev_r06r0101_ambrella_01
       IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
 
         //「ひでり」
-        IF $LWK_TENKI == LWK_CLEAR_HARE THEN
+        IF $LWK_TENKI == $LWK_CLEAR_HARE THEN
           _CALL ev_r06r0101_hare_01
 
         //「あめふらし」
-        ELSIF $LWK_TENKI == LWK_CLEAR_AME THEN
+        ELSIF $LWK_TENKI == $LWK_CLEAR_AME THEN
           _CALL ev_r06r0101_ame_01
 
         //「ゆきふらし」
-        ELSIF $LWK_TENKI == LWK_CLEAR_ARARE THEN
+        ELSIF $LWK_TENKI == $LWK_CLEAR_ARARE THEN
           _CALL ev_r06r0101_arare_01
 
         //「すなおこし」
-        ELSIF $LWK_TENKI == LWK_CLEAR_SUNA THEN
+        ELSIF $LWK_TENKI == $LWK_CLEAR_SUNA THEN
           _CALL ev_r06r0101_suna_01
 
         //「ノーてんき」「エアロック」
-        ELSIF $LWK_TENKI == LWK_CLEAR_NOOTEN THEN
+        ELSIF $LWK_TENKI == $LWK_CLEAR_NOOTEN THEN
           _CALL ev_r06r0101_nooten_01
 
         ENDIF
@@ -524,7 +530,7 @@ EVENT_START  ev_r06r0101_ambrella_01
           IF $LWK_POKE_WAZA == WAZANO_NIHONBARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
 
             //条件を満たしていたら、晴れ状態の説明へ
-            $LWK_TENKI = LWK_CLEAR_HARE
+            $LWK_TENKI = $LWK_CLEAR_HARE
             //「にほんばれ」を覚えているポケモンの名前取得
             _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
             //「にほんばれ」タグセット
@@ -536,7 +542,7 @@ EVENT_START  ev_r06r0101_ambrella_01
           ELSIF $LWK_POKE_WAZA == WAZANO_AMAGOI && $LWK_POKE_WAZA_CLEAR == 0 THEN
 
             //条件を満たしていたら、雨状態の説明へ
-            $LWK_TENKI = LWK_CLEAR_AME
+            $LWK_TENKI = $LWK_CLEAR_AME
             //「あまごい」を覚えているポケモンの名前取得
             _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
             //「あまごい」タグセット
@@ -548,7 +554,7 @@ EVENT_START  ev_r06r0101_ambrella_01
           ELSIF $LWK_POKE_WAZA == WAZANO_ARARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
 
             //条件を満たしていたら、霰状態の説明へ
-            $LWK_TENKI = LWK_CLEAR_ARARE
+            $LWK_TENKI = $LWK_CLEAR_ARARE
             //「あられ」を覚えているポケモンの名前取得
             _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
             //「あられ」タグセット
@@ -560,7 +566,7 @@ EVENT_START  ev_r06r0101_ambrella_01
           ELSIF $LWK_POKE_WAZA == WAZANO_SUNAARASI && $LWK_POKE_WAZA_CLEAR == 0 THEN
 
             //条件を満たしていたら、砂嵐状態の説明へ
-            $LWK_TENKI = LWK_CLEAR_SUNA
+            $LWK_TENKI = $LWK_CLEAR_SUNA
             //「すなあらし」を覚えているポケモンの名前取得
             _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
             //「すなあらし」タグセット
@@ -572,21 +578,21 @@ EVENT_START  ev_r06r0101_ambrella_01
 
           //指定POSのポケモンは条件の技を持っていたか
           IF $LWK_POKE_WAZA_CLEAR == 1 THEN
-
+          
             //「にほんばれ」
-            IF $LWK_TENKI == LWK_CLEAR_HARE THEN
+            IF $LWK_TENKI == $LWK_CLEAR_HARE THEN
               _CALL ev_r06r0101_hare_01
 
             //「あまごい」
-            ELSIF $LWK_TENKI == LWK_CLEAR_AME THEN
+            ELSIF $LWK_TENKI == $LWK_CLEAR_AME THEN
               _CALL ev_r06r0101_ame_01
 
             //「あられ」
-            ELSIF $LWK_TENKI == LWK_CLEAR_ARARE THEN
+            ELSIF $LWK_TENKI == $LWK_CLEAR_ARARE THEN
               _CALL ev_r06r0101_arare_01
 
             //「すなあらし」
-            ELSIF $LWK_TENKI == LWK_CLEAR_SUNA THEN
+            ELSIF $LWK_TENKI == $LWK_CLEAR_SUNA THEN
               _CALL ev_r06r0101_suna_01
 
             ENDIF
@@ -615,8 +621,7 @@ EVENT_START  ev_r06r0101_ambrella_01
 
     ENDIF
 
-  ENDIF
-
+  }
 EVENT_END
 
 
