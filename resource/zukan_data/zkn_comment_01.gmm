@@ -669,35 +669,45 @@
 		<language name="JPN">１キロさきに　おちた　はりの　おとも
 きこえるほど　みみが　いいので
 ふだんは　しずかな　ところに　いる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">１キロ先に　落ちた　針の　音も
+きこえるほど　耳が　いいので
+普段は　静かな　ところに　いる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_037_000">
 		<language name="JPN">６ほんの　シッポは　そだつごとに
 けなみが　よくなり　うつくしくなる。
 だきしめると　ほんのり　あたたかい。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">６本の　シッポは　育つごとに
+毛並みが　よくなり　美しくなる。
+抱きしめると　ほんのり　暖かい。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_038_000">
 		<language name="JPN">９ほんの　ながい　シッポ　それぞれに
 じんつうりきが　こめられており
 １０００ねん　いきることが　できる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">９本の　長い　シッポ　それぞれに
+神通力が　こめられており
+１０００年　生きることが　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_039_000">
-		<language name="JPN">つぶらな　ひとみを　みるめていると
+		<language name="JPN">つぶらな　ひとみを　みつめていると
 ねむらずには　いられないほどの
 ここちよい　うたを　うたいはじめる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">つぶらな　ひとみを　みつめていると
+眠らずには　いられないほどの
+心地よい　歌を　歌いはじめる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_040_000">
 		<language name="JPN">きめこまやかな　たいもうは
 てざわりが　よすぎて　うっかり
 さわると　はなれられなくなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">きめこまやかな　体毛は
+手触りが　よすぎて　うっかり
+触ると　離れられなくなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_041_000">
@@ -1109,21 +1119,27 @@
 		<language name="JPN">さむくなるほど　げんきになって
 こおりの　うかぶ　つめたい　うみを
 うれしそうに　およぎまわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">寒くなるほど　元気になって
+氷の　浮かぶ　冷たい　海を
+うれしそうに　泳ぎまわる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_087_000">
 		<language name="JPN">りゅうせんけいの　からだは　みずの
-ていこうも　すくなく　８ノット。
-ふだんは　こおりのうえで　ねむる。</language>
-		<language name="JPN_KANJI">NoData</language>
+ていこうも　すくなく　８ノットの
+スピードで　つめたい　うみをおよぐ。</language>
+		<language name="JPN_KANJI">流線型の　体は　水の
+抵抗も　少なく　８ノットの
+スピードで　冷たい　海を泳ぐ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_088_000">
 		<language name="JPN">ヘドロが　ポケモンに　なった。
-ばいきんだらけの　からだで
-きたない　ばしょに　あつまってくる。</language>
-		<language name="JPN_KANJI">NoData</language>
+きたない　ばしょに　あつまって
+からだの　ばいきんを　ふやしていく。</language>
+		<language name="JPN_KANJI">ヘドロが　ポケモンに　なった。
+汚い　場所に　集まって
+体の　ばい菌を　増やしていく。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_089_000">
@@ -1300,8 +1316,10 @@
 	<row id="ZKN_COMMENT_01_108_000">
 		<language name="JPN">ながい　ベロは　だえきまみれで
 なめられると　ぴりぴり　しびれる。
-ベロが　のびると　シッポが　ちぢむ。</language>
-		<language name="JPN_KANJI">NoData</language>
+ベロが　のびると　しっぽが　ちぢむ。</language>
+		<language name="JPN_KANJI">長い　ベロは　だえきまみれで
+なめられると　ぴりぴり　しびれる。
+ベロが　伸びると　しっぽが　縮む。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_109_000">
@@ -1350,10 +1368,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_114_000">
-		<language name="JPN">たくさんの　ツルに　おおわれて
-なかは　しょうたいふめい。
+		<language name="JPN">たくさんの　うごめく　ツルに
+おおわれて　しょうたいふめい。
 あおいツルは　いっしょう　のびる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">たくさんの　うごめく　ツルに
+被われて　正体不明。
+青いツルは　一生　伸びる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_115_000">
@@ -1405,14 +1425,18 @@
 		<language name="JPN">あかい　コアが　あるかぎり
 からだは　ちぎれても　いっしゅんで
 もとどおりに　じこさいせい　できる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">赤い　コアが　あるかぎり
+体は　ちぎれても　一瞬で
+元通りに　自己再生　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_121_000">
 		<language name="JPN">なないろに　かがやく　コアから
-うちゅうに　むけて　でんぱを　だして
+うちゅうに　むけて　でんぱを　だし
 なにかしらの　こうしんを　している。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">七色に　輝く　コアから
+宇宙に　向けて　電波を　だし
+なにかしらの　交信を　している。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_122_000">
@@ -1461,10 +1485,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_127_000">
-		<language name="JPN">ツノを　ふりまわして　こうげき。
-２ほんの　ツノで　はさんだ　えものが
+		<language name="JPN">パワフルな　ツノを　ふりまわす。
+２ほんの　ツノで　はさんだ　えものは
 ちぎれるまで　ぜったい　はなさない。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">パワフルな　ツノを　ふりまわす。
+２本の　ツノで　挟んだ　獲物は
+ちぎれるまで　絶対　離さない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_128_000">
@@ -1513,24 +1539,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_133_000">
-		<language name="JPN">いでんしが　ふあんていな　おかげで
-かずおおくの　しんかの　かのうせいを
+		<language name="JPN">ふあんていな　いでんしの　おかげで
+さまざまな　しんかの　かのうせいを
 ひめている　とくしゅな　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">不安定な　遺伝子の　おかげで
+さまざまな　進化の　可能性を
+秘めている　特殊な　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_134_000">
 		<language name="JPN">からだの　さいぼうの　つくりが
 みずの　ぶんしに　にているため
 みずに　とけると　みえなくなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">体の　細胞の　つくりが
+水の　分子に　似ているため
+水に　溶けると　みえなくなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_135_000">
 		<language name="JPN">たいないに　でんきを　ためることで
 さかだてた　ぜんしんの　たいもうを
 ミサイルのように　つぎつぎ　とばす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">体内に　電気を　ためることで
+逆立てた　全身の　体毛を
+ミサイルのように　次々　飛ばす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_136_000">
@@ -1831,10 +1863,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_169_000">
-		<language name="JPN">りょうあしも　はねに　へんかして
-さらに　はやく　しずかに　とべる。
-ただし　あるくのは　へたになった。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">４まいに　ふえた　はねを　つかい
+さらに　はやく　しずかに　とんで
+えものに　きづかれず　しのびよる。</language>
+		<language name="JPN_KANJI">４枚に　増えた　羽を　使い
+さらに　速く　静かに　飛んで
+獲物に　気づかれず　忍びよる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_170_000">
@@ -1865,17 +1899,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_173_000">
-		<language name="JPN">ピィを　よく　みかける　ばしょに
-ながれぼしが　おちたに　ちがいないと
+		<language name="JPN">ピィを　よく　みかける　ばしょは
+ながれぼしが　おちた　ばしょと
 じもとでは　うわさ　されている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">ピィを　よく　みかける　場所は
+流れ星が　落ちた　場所と
+地元では　うわさ　されている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_174_000">
-		<language name="JPN">よく　はずむ　やわらかい　からだは
-いちど　はずみだすと　とまらない。
-ほんのり　あまい　かおりが　する。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">ほんのり　あまい　かおりが　して
+よく　はずむ　やわらかい　からだは
+いちど　はずみだすと　とまらない。</language>
+		<language name="JPN_KANJI">ほんのり　甘い　香りが　して
+よく　弾む　柔らかい　体は
+一度　弾みだすと　止まらない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_175_000">
@@ -1927,14 +1965,18 @@
 		<language name="JPN">うぶげすら　はえなくなった　ぶぶんの
 ひふは　ゴムのように　でんきを　
 さえぎるので　じぶんは　しびれない。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">産毛すら　はえなくなった　部分の
+皮膚は　ゴムのように　電気を　
+さえぎるので　自分は　しびれない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_181_000">
-		<language name="JPN">シッポの　さきは　あかるく　ひかり
+		<language name="JPN">シッポの　さきは　まぶしく　ひかり
 とおく　はなれた　がいこくまで
 とどき　うみのみちしるべ　となる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">シッポの　先は　まぶしく　光り
+遠く　離れた　外国まで
+届き　海の道標　となる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_182_000">
@@ -2024,7 +2066,7 @@
 ひたすら　えいようを　ためこむ。</language>
 		<language name="JPN_KANJI">ある　朝　突然　降ってくる。
 弱いのを　知っており　進化まで
-ひたすら　栄養を　溜めこむ。</language>
+ひたすら　栄養を　ためこむ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_192_000">
@@ -2067,14 +2109,18 @@
 		<language name="JPN">ぜんしんの　こまやかな　たいもうで
 くうきの　ながれを　かんじて　てきの
 かんがえや　てんこうを　よそくする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">全身の　細やかな　体毛で
+空気の　流れを　感じて　敵の
+考えや　天候を　予測する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_197_000">
 		<language name="JPN">つきの　はどうを　あびると
 ぜんしんの　わっかもようが　ひかり
-ふしぎな　ちからに　めざめるのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+ふしぎな　ちからに　あふれるのだ。</language>
+		<language name="JPN_KANJI">月の　波動を　浴びると
+全身の　輪っか模様が　光り
+不思議な　力に　あふれるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_198_000">
@@ -2152,15 +2198,19 @@
 	<row id="ZKN_COMMENT_01_206_000">
 		<language name="JPN">くらいばしょに　めいろを　つくる。
 だれかに　みられると　シッポで
-じめんを　ほって　にげだしてしまう。</language>
-		<language name="JPN_KANJI">NoData</language>
+じめんを　ほって　にげようとする。</language>
+		<language name="JPN_KANJI">暗い場所に　迷路を　つくる。
+だれかに　みられると　シッポで
+地面を　掘って　逃げようとする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_207_000">
-		<language name="JPN">ねらった　えものの　かおに　はりつき
+		<language name="JPN">ねらった　えものに　はりついて
 おどろきとまどっている　あいだに
 シッポの　トゲを　さしこんでくる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">狙った　獲物に　貼りついて
+驚き戸惑っている　あいだに
+シッポの　トゲを　刺しこんでくる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_208_000">
@@ -2212,21 +2262,27 @@
 		<language name="JPN">ツボのような　こうらの　なかに
 ためこんだ　きのみは　いつのまか
 ドロドロの　ジュースに　かわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">ツボのような　甲羅の　中に
+ためこんだ　きのみは　いつのまか
+ドロドロの　ジュースに　変わる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_214_000">
-		<language name="JPN">ツノを　つかって　どんな　おもい
-あいてでも　ほりなげるとき　あしの
-ツメを　じめんに　くいこませている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">どんなに　おもい　あいてでも
+じまんの　ツノを　つかい　じめんごと
+とおくまで　ほうりなげてしまう。</language>
+		<language name="JPN_KANJI">どんなに　重い　相手でも
+自慢の　ツノを　使い　地面ごと
+遠くまで　放り投げてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_215_000">
 		<language name="JPN">ずるがしこい　ポケモンで　ゆびに
 かくした　ながい　ツメを　いきなり
 のばして　あいてを　ひるませる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">ずるがしこい　ポケモンで　指に
+隠した　長い　ツメを　いきなり
+伸ばして　相手を　ひるませる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_216_000">
@@ -2320,17 +2376,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_226_000">
-		<language name="JPN">スピードが　のってくると
+		<language name="JPN">およいで　スピードが　のってくると
 なみのうえに　とびだし　そのまま
-そらを　とんでいく　ポケモンだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+１００メートルも　かっくう　する。</language>
+		<language name="JPN_KANJI">泳いで　スピードが　のってくると
+波の上に　飛びだし　そのまま
+１００メートルも　滑空　する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_227_000">
 		<language name="JPN">がんじょうで　おもそうな　てつの
-からだは　うすく　かるいので
+からだだが　うすくて　かるいので
 じそく３００キロで　とべる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">頑丈で　重そうな　鉄の
+体だが　薄くて　軽いので
+時速３００キロで　とべる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_228_000">
@@ -2784,17 +2844,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_278_000">
-		<language name="JPN">だんがいぜっぺきに　すを　つくり
-うみかぜを　りようして　じょうしょう
-ひろい　そらを　かっくう　するのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">きりたった　がけに　すを　つくり
+うみかぜを　りようして　ひろいそらを
+じょうしょうし　かっくう　するのだ。</language>
+		<language name="JPN_KANJI">きりたった　がけに　巣を　作り
+海風を　利用して　広い空を
+上昇し　滑空　するのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_279_000">
 		<language name="JPN">かいめん　すれすれを　とんで
-おおきな　くちばしで　うみのみずごと
-えさを　すくいとって　はこぶのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+おおきな　くちばしで　かいすいごと
+エサを　すくいとって　はこぶのだ。</language>
+		<language name="JPN_KANJI">海面　すれすれを　飛んで
+大きな　くちばしで　海水ごと
+エサを　すくいとって　運ぶのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_280_000">
@@ -2879,12 +2943,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_289_000">
-		<language name="JPN">ねころがったまま　せいかつして
-じぶんの　まわりに　たべる　くさが
-なくなると　ねがえりで　うごく。</language>
-		<language name="JPN_KANJI">寝転がったまま　生活して
-自分の　周りに　食べる　草が
-なくなると　寝返りで　動く。</language>
+		<language name="JPN">ねころがったまま　せいかつ　する。
+まわりに　たべる　くさが　なくなると
+ようやく　ねがえりをして　うごく。</language>
+		<language name="JPN_KANJI">寝転がったまま　生活　する。
+周りに　食べる　草が　なくなると
+ようやく　寝返りをして　動く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_290_000">
@@ -2969,24 +3033,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_299_000">
-		<language name="JPN">はなが　じしゃくなので　いつも
-きたを　むいている。まわりの　てつを
-じりょくで　ひきよせて　まもる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">いつも　きたを　むいている
+じしゃくの　はなで　まわりの　てつを
+ひきよせて　まもりを　かためるのだ。</language>
+		<language name="JPN_KANJI">いつも　来たを　向いている
+磁石の　鼻で　周りの　鉄を
+引き寄せて　守りを　固めるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_300_000">
-		<language name="JPN">じぶんの　シッポを　おいかけ　あそぶ
-あいきょうの　ある　ポケモンだが
-なぜだか　あまり　なついてくれない。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">じぶんの　シッポを　おいかけて
+あそんでいると　めを　まわすといった
+かわいらしい　いちめんを　みせる。</language>
+		<language name="JPN_KANJI">自分の　シッポを　追いかけて
+遊んでいると　目を　回すといった
+可愛らしい　一面を　みせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_301_000">
 		<language name="JPN">きまった　すみかを　もたないのは
 いごこちが　よく　きれいな　ばしょを
 さがして　ねどこに　しているから。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">決まった　すみかを　持たないのは
+居心地が　よく　きれいな　場所を
+探して　寝床に　しているから。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_302_000">
@@ -3107,10 +3177,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_315_000">
-		<language name="JPN">きれいな　みずを　のめば　のむほど
-きれいな　はなを　さかせる。かおりが
-つよいのは　げんきな　しょうこだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">みぎてと　ひだりてで　２しゅるいの
+どくを　つかいわけて　こうげきする。
+かおりが　つよいほど　げんきだ。</language>
+		<language name="JPN_KANJI">右手と　左手で　２種類の
+毒を　使いわけて　攻撃する。
+香りが　強いほど　元気だ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_316_000">
@@ -3153,14 +3225,18 @@
 		<language name="JPN">まいにち　１トンの　エサをたべる。
 はなから　ためこんだ　かいすいを
 いきおいよく　ふきだして　あそぶ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">毎日　１トンの　エサを食べる。
+鼻から　ためこんだ　海水を
+勢いよく　吹きだして　遊ぶ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_321_000">
 		<language name="JPN">おおきな　からだを　なみのうえで
-ジャンプさせて　その　しょうげきで
+ジャンプさせ　しょうげきを　うみだし
 あいてを　きぜつ　させることがある。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">大きな　体を　波の上で
+ジャンプさせ　衝撃を　生みだし
+相手を　気絶　させることがある。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_322_000">
@@ -3168,7 +3244,7 @@
 ためこんでいる。ほのおの　わざを
 つかうと　コブは　ちいさく　しぼむ。</language>
 		<language name="JPN_KANJI">１２００度の　マグマを　体内に
-溜めこんでいる。炎の　技を
+ためこんでいる。炎の　技を
 使うと　コブは　小さく　しぼむ。</language>
 	</row>
 
@@ -3176,7 +3252,9 @@
 		<language name="JPN">せなかの　コブの　かざんは
 １０ねんごとに　だいふんか　するが
 はげしく　おこっても　ふんかする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">背中の　コブの　火山は
+１０年ごとに　大噴火　するが
+激しく　怒っても　噴火する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_324_000">
@@ -3192,14 +3270,18 @@
 		<language name="JPN">シッポを　バネがわりに　して
 とびはねることで　しんぞうを
 うごかしているので　とまると　しぬ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">シッポを　バネがわりに　して
+飛び跳ねることで　心臓を
+動かしているので　止まると　死ぬ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_326_000">
 		<language name="JPN">くろしんじゅで　サイコパワーを
-つよめる。きみょうな　ステップで
-あいての　こころを　あやつる。</language>
-		<language name="JPN_KANJI">NoData</language>
+つよめ　きみょうな　ステップで
+あいての　こころを　あやつるぞ。</language>
+		<language name="JPN_KANJI">黒真珠で　サイコパワーを
+強め　奇妙な　ステップで
+相手の　心を　操るぞ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_327_000">
@@ -3213,16 +3295,20 @@
 
 	<row id="ZKN_COMMENT_01_328_000">
 		<language name="JPN">ぜったいに　だっしゅつ　ふかのうな
-すりばちじょうの　すあなを　つくり
+すりばちじょうの　すあなを　つくって
 えものが　おちてくるのを　まつ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">絶対に　脱出　不可能な
+すりばち状の　巣穴を　つくって
+獲物が　落ちてくるのを　待つ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_329_000">
-		<language name="JPN">２まいの　はねを　こうそくで
+		<language name="JPN">２まいの　ハネを　こうそくで
 しんどうさせて　だす　ちょうおんぱは
 はげしい　ずつうを　ひきおこす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">２枚の　ハネを　高速で
+振動させて　だす　超音波は
+激しい　頭痛を　ひきおこす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_330_000">
@@ -3262,10 +3348,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_334_000">
-		<language name="JPN">わたぐもに　まぎれながら
-おおぞらを　じゆうに　とぶまわり
+		<language name="JPN">はれたひ　わたぐもに　まぎれながら
+おおぞらを　じゆうに　とびまわり
 うつくしい　ソプラノで　うたう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">晴れた日　綿雲に　まぎれながら
+大空を　自由に　飛びまわり
+美しい　ソプラノで　歌う。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_335_000">
@@ -3343,8 +3431,10 @@
 	<row id="ZKN_COMMENT_01_343_000">
 		<language name="JPN">こだいの　いせきから　はっけん。
 かいてん　しながら　いどうして
-なかまを　さがして　むれを　つくる。</language>
-		<language name="JPN_KANJI">NoData</language>
+なかまを　みつけ　むれを　なす。</language>
+		<language name="JPN_KANJI">古代の　遺跡から　発見。
+回転　しながら　移動して
+仲間を　みつけ　群れを　なす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_344_000">
@@ -3414,7 +3504,9 @@
 		<language name="JPN">きおんや　しつどが　さいぼうに
 えいきょう　するため　てんきによって
 すがたが　かわってしまう　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">気温や　湿度が　細胞に
+影響　するため　天気によって
+姿が　変わってしまう　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_352_000">
@@ -3430,14 +3522,18 @@
 		<language name="JPN">だれかが　だれかを　うらむ
 くらく　かなしい　きもちを
 すいとって　じわじわ　つよくなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">だれかが　だれかを　恨む
+暗く　哀しい　気持ちを
+吸い取って　じわじわ　強くなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_354_000">
-		<language name="JPN">すてられた　ヌイグルミに　おんねんが
+		<language name="JPN">すてられた　ヌイグルミに　うらみが
 たまって　ポケモンに　なった。
 じぶんをすてた　こどもを　さがすぞ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">捨てられた　ヌイグルミに　恨みが
+たまって　ポケモンに　なった。
+自分を捨てた　こどもを　探すぞ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_355_000">
@@ -3459,10 +3555,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_357_000">
-		<language name="JPN">くびに　できる　くだものは
-あまくて　こどもに　だいにんき。
-おおきな　はっぱで　そらをとべる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">おおきな　はっぱで　そらをとんで
+こどもたちに　だいにんきの　くびに
+できる　あまい　くだものを　くばる。</language>
+		<language name="JPN_KANJI">大きな　はっぱで　空を飛んで
+こどもたちに　大人気の　首に
+できる　甘い　くだものを　配る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_358_000">
@@ -3475,10 +3573,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_359_000">
-		<language name="JPN">ツノで　わざわいを　かんちすると
-きけんを　ひとに　しらせようとして
-みんなのまえに　すがたをあらわす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">ツノで　さっちした　わざわいを
+ひとに　しらせようとして
+やまおくから　すがたを　あらわす。</language>
+		<language name="JPN_KANJI">ツノで　察知した　災いを
+人に　知らせようとして
+山奥から　姿を　表す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_360_000">
@@ -3527,10 +3627,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_365_000">
-		<language name="JPN">ぶあつい　しぼうは　さむさだけでなく
+		<language name="JPN">ぶあつい　しぼうは　さむさ　いがいに
 てきの　こうげきも　よせつけない。
 じまんのキバで　こおりを　くだくぞ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">分厚い　脂肪は　寒さ　以外に
+敵の　こうげきも　よせつけない。
+自慢のキバで　氷を　砕くぞ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_366_000">
@@ -3608,8 +3710,10 @@
 	<row id="ZKN_COMMENT_01_374_000">
 		<language name="JPN">さいぼう　すべてが　じしゃくで
 からだから　じりょくを　はっしんし
-なかまと　こうしん　している。</language>
-		<language name="JPN_KANJI">NoData</language>
+なかまと　かいわ　している。</language>
+		<language name="JPN_KANJI">細胞　すべてが　磁石で
+体から　磁力を　発信し
+仲間と　会話　している。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_375_000">
@@ -3623,9 +3727,11 @@
 
 	<row id="ZKN_COMMENT_01_376_000">
 		<language name="JPN">４つの　のうみそが　つらなり
-スーパーコンピューターいじょうの
+スーパーコンピューターより　すごい
 けいさんで　あいてを　ぶんせきする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">４つの　のうみそが　連なり
+スーパーコンピューターより　すごい
+計算で　相手を　分析する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_377_000">
@@ -3893,14 +3999,18 @@
 		<language name="JPN">まわりの　おんどへんかに　びんかん。
 あたたかくなると　つぼみが　ひらき
 どくをふくんだ　かふんを　ばらまく。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">周りの　温度変化に　敏感。
+暖かくなると　つぼみが　開き
+毒を含んだ　花粉を　ばらまく。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_407_000">
-		<language name="JPN">あまい　かおりで　さそった　えものを
+		<language name="JPN">あまい　かおりで　えものを　さそい
 りょううでの　どくのムチを　つかって
 さしたり　しめたりして　しとめる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">甘い　香りで　獲物を　誘い
+両腕の　毒のムチを　使って
+刺したり　締めたりして　仕留める。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_408_000">
@@ -3967,10 +4077,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_415_000">
-		<language name="JPN">３びきセットの　ポケモン。ねむるとき
-１００ひきの　ミツハニーが　あつまり
-おおきな　かたまりを　つくりだす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">３びきセットの　ポケモン。
+ねむるとき　ミツハニーが　１００ひき
+あつまり　おおきな　すをつくる。</language>
+		<language name="JPN_KANJI">３匹セットの　ポケモン。
+眠るとき　ミツハニーが　１００匹
+集まり　大きな　巣をつくる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_416_000">
@@ -3993,9 +4105,11 @@
 
 	<row id="ZKN_COMMENT_01_418_000">
 		<language name="JPN">くびの　うきぶくろを　ふくらませ
-ぜったいに　しずまない　じょうたいで
-すいめんに　かおを　だして　うかぶ。</language>
-		<language name="JPN_KANJI">NoData</language>
+すいめんから　かおを　だして
+あたりの　ようすを　うかがっている。</language>
+		<language name="JPN_KANJI">首の　浮き袋を　ふくらませ
+水面から　顔を　だして
+辺りの　様子を　うかがっている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_419_000">
@@ -4083,7 +4197,9 @@
 		<language name="JPN">けいかいしんが　とても　つよい。
 きけんを　かんじると　かろやかに
 とびはねて　はしりさってしまう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">警戒心が　とても　強い。
+危険を　感じると　軽やかに
+飛び跳ねて　走り去ってしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_429_000">
@@ -4249,17 +4365,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_447_000">
-		<language name="JPN">かんじょうによって　かたちが　かわる
-はどうを　だすことで　なかまどうし
+		<language name="JPN">かんじょうで　かたちが　かわる
+はどうを　だしあって　なかまどうし
 コミュニケーションを　とっている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">感情で　形が　変わる
+波動を　だしあって　仲間同士
+コミュニケーションを　とっている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_448_000">
 		<language name="JPN">あらゆる　ものが　だす　はどうを
 よみとることで　１キロさきに　いる
-あいての　きもちを　りかいできる。</language>
-		<language name="JPN_KANJI">NoData</language>
+あいての　きもちも　りかいできる。</language>
+		<language name="JPN_KANJI">あらゆる　ものが　だす　波動を
+読みとることで　１キロ先に　いる
+相手の　気持ちも　理解できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_449_000">
@@ -4281,24 +4401,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_451_000">
-		<language name="JPN">いちねんかん　なにも　たべずに
-えものを　まちぶせ　できる。シッポの
-はさみが　とじると　どくがでる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">かんそうした　とちに　くらし
+いちねんかん　なにも　たべずに
+えものを　まちぶせ　できる。</language>
+		<language name="JPN_KANJI">乾燥した　土地に　暮らし
+一年間　なにも　食べずに
+獲物を　待ちぶせ　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_452_000">
-		<language name="JPN">じまんの　ちからで　どんな　あいても
+		<language name="JPN">じまんの　パワーで　あいてを
 ばらばらに　できるのに　さらに
-もうどくで　とどめを　さしてくる。</language>
-		<language name="JPN_KANJI">NoData</language>
+もうどくで　とどめを　さすのだ。</language>
+		<language name="JPN_KANJI">自慢の　パワーで　相手を
+ばらばらに　できるのに　さらに
+猛毒で　とどめを　刺すのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_453_000">
-		<language name="JPN">もうどくが　にじむ　ゆびさき。
-どくぶくろを　ふくらませて　ならすと
-あたりに　ぶきみな　おとが　ひびく。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">どくぶくろを　ふくらませて　ならし
+あたりに　ぶきみな　おとが　ひびかせ
+あいてが　ひるむと　どくづきをする。</language>
+		<language name="JPN_KANJI">毒袋を　ふくらませて　鳴らし
+辺りに　不気味な　音が　響かせ
+相手が　ひるむと　どくづきをする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_454_000">
@@ -4307,7 +4433,7 @@
 ためこんだ　どくを　ねりこむためだ。</language>
 		<language name="JPN_KANJI">ドクロッグが　戦いの　前に
 のどを　鳴らすのは　毒袋に
-溜めこんだ　毒を　練りこむためだ。</language>
+ためこんだ　毒を　練りこむためだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_455_000">
@@ -4383,10 +4509,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_463_000">
-		<language name="JPN">ものを　とかす　だえきまみれの
-ベロを　のばして　あいてを　なめる。
-なめられると　しびれが　とれないぞ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">だえきには　どんな　ものを　とかす
+せいぶんが　たっぷり　ふくまれており
+なめられると　いつまでも　しびれる。</language>
+		<language name="JPN_KANJI">だえきには　どんな　物を　溶かす
+成分が　たっぷり　含まれており
+なめられると　いつまでも　しびれる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_464_000">
@@ -4402,14 +4530,18 @@
 		<language name="JPN">うでを　たべられても　へっちゃら。
 さいせいのうりょくが　たかいので
 あっ　というまに　もとどおりになる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">腕を　食べられても　へっちゃら。
+再生能力が　高いので
+あっ　というまに　元通りになる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_466_000">
-		<language name="JPN">シッポの　さきを　おしつけて
-あいてに　２まんボルト　いじょうの
+		<language name="JPN">あいてに　シッポのさきを　おしつけ
+しゅんじに　２まんボルト　いじょうの
 こうあつ　でんりゅうを　おくりこむ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">相手に　シッポの先を　押しつけ
+瞬時に　２万ボルト　以上の
+高圧　電流を　送りこむ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_467_000">
@@ -4442,22 +4574,28 @@
 	<row id="ZKN_COMMENT_01_470_000">
 		<language name="JPN">しょくぶつの　ような　さいぼうになり
 たいないで　こうごうせいを　して
-きれいな　くうきを　つくりだす。</language>
-		<language name="JPN_KANJI">NoData</language>
+きれいな　くうきを　つくりだせる。</language>
+		<language name="JPN_KANJI">植物の　ような　細胞になり
+体内で　光合成を　して
+きれいな　空気を　つくりだせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_471_000">
 		<language name="JPN">たいおんを　さげることで　ぜんしんの
 たいもうを　こおらせて　するどく
 とがった　ハリのようにして　とばす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">体温を　さげることで　全身の
+体毛を　凍らせて　鋭く
+とがった　ハリのようにして　飛ばす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_472_000">
-		<language name="JPN">おとをたてずに　そらを　とんで
+		<language name="JPN">おとをたてずに　そらを　まい
 えものに　ちかづくと　いっしゅんで
 きゅうしょを　ひとつき　するぞ！</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">音をたてずに　空を　舞い
+獲物に　近づくと　一瞬で
+急所を　一突き　するぞ！</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_473_000">
@@ -4758,10 +4896,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_506_000">
-		<language name="JPN">ゆうもうな　ポケモンだが　ふりなら
-じっと　いきをひそめて　たたかいを
+		<language name="JPN">ゆうもうな　ポケモンだが　あいての
+つよさを　たしかめて　たたかいを
 さける　かしこさも　あわせもつ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">勇猛な　ポケモンだが　相手の
+強さを　確かめて　戦いを
+避ける　賢さも　併せ持つ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_507_000">
@@ -4802,46 +4942,56 @@
 
 	<row id="ZKN_COMMENT_01_511_000">
 		<language name="JPN">きのみを　さがすのが　じょうずで
-なかまのために　あちこちで　あつめて
+あちこちで　あつめて　なかまに　
 わけあたえる　やさしさを　もつ。</language>
 		<language name="JPN_KANJI">きのみを　探すのが　上手で
-仲間のために　あちこちで　集めて
+あちこちで　集めて　仲間に
 わけあたえる　優しさを　もつ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_512_000">
-		<language name="JPN">あたまの　はっぱは　にがくなった。
-トゲのついた　シッポを　ふりまわし
-ちかづくもの　すべてを　こうげき。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">トゲのついた　シッポを　ふりまわし
+たたきつけて　あいてを　こうげき。
+あたまの　はっぱは　とても　にがい。</language>
+		<language name="JPN_KANJI">トゲのついた　シッポを　振り回し
+たたきつけて　相手を　攻撃。
+頭の　はっぱは　とても　苦い。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_513_000">
 		<language name="JPN">ちのうが　たかく　きのみは
 やいてから　たべる　しゅうせい。
 ひとの　てつだいを　このんでいる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">知能が　高く　きのみは
+焼いてから　食べる　しゅうせい。
+人の　手伝いを　好んでいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_514_000">
 		<language name="JPN">こうふんすると　あたまや　シッポから
-ひのこが　まいあがり　あたりの
-きおんが　じゃっかん　たかくなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+ひのこが　まいあがって　あつくなる。
+なぜか　あまいものが　だいこうぶつ。</language>
+		<language name="JPN_KANJI">興奮すると　頭や　シッポから
+火の粉が　舞いあがって　熱くなる。
+なぜか　甘いものが　大好物。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_515_000">
 		<language name="JPN">あたまのふさに　ためこんだ　みずは
-えいよう　たっぷり。その　みずを
-シッポで　くさきに　かけている。</language>
-		<language name="JPN_KANJI">NoData</language>
+えいよう　たっぷり。シッポをつかって
+その　みずを　くさきに　かけている。</language>
+		<language name="JPN_KANJI">頭の房に　ためこんだ　水は
+栄養　たっぷり。シッポを使って
+その　水を　草木に　かけている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_516_000">
-		<language name="JPN">みずが　きれいな　ばしょを　このみ
+		<language name="JPN">みずが　きれいな　ばしょを　このむ。
 あたまに　ためこんだ　みずがへると
 シッポから　すいあげて　ほきゅう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">水が　きれいな　場所を　好む。
+頭に　ためこんだ　水が減ると
+シッポから　吸いあげて　補給。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_517_000">
@@ -4872,11 +5022,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_520_000">
-		<language name="JPN">じぶんの　すが　どこに　あるのか
-わかるので　どれだけ　はなれても
-トレーナーの　もとに　もどってくる。</language>
-		<language name="JPN_KANJI">せかいの　どこに　いても
-じぶんの　すの　ばしょは　わかる。</language>
+		<language name="JPN">せかいの　どこに　いても
+じぶんの　すの　ばしょは　わかるので
+トレーナーとも　はぐれたりしない。</language>
+		<language name="JPN_KANJI">世界の　どこに　いても
+自分の　巣の　場所は　わかるので
+トレーナーとも　はぐれたりしない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_521_000">
@@ -4891,8 +5042,10 @@
 	<row id="ZKN_COMMENT_01_522_000">
 		<language name="JPN">ほうでんすると　たてがみが　ひかる。
 たてがみが　かがやく　かいすうや
-リズムで　なかまと　かいわできる。</language>
-		<language name="JPN_KANJI">NoData</language>
+リズムで　なかまと　かいわしている。</language>
+		<language name="JPN_KANJI">放電すると　たてがみが　光る。
+たてがみが　輝く　回数や
+リズムで　仲間と　会話している。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_523_000">
@@ -4908,28 +5061,36 @@
 		<language name="JPN">ろっかくけいの　あなは　みみ。
 おとの　なるほうに　あるいていく
 しゅうせいを　もっている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">六角形の　穴は　耳。
+音の　なるほうに　歩いていく
+習性を　持っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_525_000">
 		<language name="JPN">げんきだと　コアが　とびだしてくる。
 からだの　むきを　かえることなく
 ぜんごさゆうに　すばやく　うごける。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">元気だと　コアが　飛びだしてくる。
+体の　向きを　変えることなく
+戦後左右に　すばやく　動ける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_526_000">
-		<language name="JPN">コアに　たいようこうせんを　とりこみ
-ぼうちょうした　エネルギーを
-あっしゅくして　うちだしてくる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">とりこんだ　たいようこうせんを
+エネルギーコアで　はんのう　させて
+ひかりのたまとして　うちだしてくる。</language>
+		<language name="JPN_KANJI">取りこんだ　太陽光線を
+エネルギーコアで　反応　させて
+光の玉として　撃ちだしてくる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_527_000">
-		<language name="JPN">コロモリの　はなを　すいつかせて
+		<language name="JPN">コロモリの　はなを　くっつけた
 からだに　ハートがたの　あとがつくと
 いいことが　おこると　いわれている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">コロモリの　鼻を　くっつけた
+体に　ハート型の　跡がつくと
+いいことが　起こると　いわれている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_528_000">
@@ -4962,8 +5123,10 @@
 	<row id="ZKN_COMMENT_01_531_000">
 		<language name="JPN">みみの　しょっかくで　あいての
 たいちょうや　タマゴから　ポケモンが
-いつ　でてくるかも　わかるのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+いつ　でてくるのかも　わかるのだ。</language>
+		<language name="JPN_KANJI">耳の　触覚で　相手の
+体調や　タマゴから　ポケモンが
+いつ　でてくるのかも　わかるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_532_000">
@@ -4994,24 +5157,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_535_000">
-		<language name="JPN">ほほにある　しんどうまくを　ふるわせ
+		<language name="JPN">ほほの　しんどうまくを　ふるわせ
 ひとには　きこえない　おんぱを　だし
 なかまたちに　きけんを　つたえる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">ほほの　振動膜を　震わせ
+人には　きこえない　音波を　だし
+仲間たちに　危険を　伝える。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_536_000">
-		<language name="JPN">ながく　ねばねばする　したをつかい
-あいての　うごきを　ふうじこめる。
-すいちゅうと　りくちで　くらせる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">すいちゅうと　りくちで　くらしつつ
+ながく　ねばねばする　ベロをつかって
+あいての　うごきを　ふうじこめる。</language>
+		<language name="JPN_KANJI">水中と　陸地で　暮らしつつ
+長く　ねばねばする　ベロを使って
+相手の　動きを　封じこめる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_537_000">
-		<language name="JPN">コブに　ちからを　いれると
+		<language name="JPN">コブに　ちからを　いれることで
 バイブレーションが　はっせいして
 パンチの　いりょくが　アップする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">コブに　力を　いれることで
+バイブレーションが　発生して
+パンチの　威力が　アップする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_538_000">
@@ -5044,8 +5213,10 @@
 	<row id="ZKN_COMMENT_01_541_000">
 		<language name="JPN">うすぐらく　じめじめした　ばしょを
 このみ　じぶんの　まわりにある
-おちばを　たべおえると　いどうする。</language>
-		<language name="JPN_KANJI">NoData</language>
+おちばを　たべて　いちにち　すごす。</language>
+		<language name="JPN_KANJI">薄暗く　じめじめした　場所を
+好み　自分の　周りにある
+落ち葉を　食べて　一日　過ごす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_542_000">
@@ -5071,15 +5242,17 @@
 ためているが　てきが　ちかづくと
 どくのトゲを　さすため　うごきだす。</language>
 		<language name="JPN_KANJI">じっとして　進化の　エネルギーを
-溜めているが　敵が　近づくと
+ためているが　敵が　近づくと
 毒のトゲを　刺すため　動きだす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_545_000">
-		<language name="JPN">すばやい　うごきで　おいつめた
-えものを　くびのツメで　はさみこみ
-もうどくを　あたえ　とどめをさす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">えものを　くびのツメで　はさみこみ
+みうごきを　とれなくしてから
+もうどくを　あたえ　とどめを　さす。</language>
+		<language name="JPN_KANJI">獲物を　首のツメで　挟みこみ
+身動きを　とれなくしてから
+猛毒を　与え　とどめを　刺す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_546_000">
@@ -5110,26 +5283,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_549_000">
-		<language name="JPN">きちんと　ていれ　しないと　あたまの
-はなかざりは　すぐかれるが　はっする
-かおりを　かぐと　リラックスできる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">あたまの　はなかざりから　はっする
+かおりを　かぐと　リラックスできるが
+ていれが　とても　むずかしい。</language>
+		<language name="JPN_KANJI">頭の　花飾りから　発する
+香りを　かぐと　リラックスできるが
+手入れが　とても　難しい。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_550_000">
 		<language name="JPN">とても　らんぼうで　いつも　あかと
-あおの　バスラオは　あらそっているが
+あおの　バスラオは　あらそっている。
 たべると　いがいと　おいしいらしい。</language>
 		<language name="JPN_KANJI">とても　乱暴で　いつも　あかと
-あおの　バスラオは　争っているが
+あおの　バスラオは　争っている。
 食べると　意外と　おいしいらしい。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_551_000">
-		<language name="JPN">たいおんを　あたためるため
+		<language name="JPN">たいおんを　さげないように
 さばくの　あつい　すなに　もぐり
 かくれながら　せいかつ　している。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">体温を　さげないように
+砂漠の　熱い　砂に　潜り
+隠れながら　生活　している。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_552_000">
@@ -5151,10 +5328,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_554_000">
-		<language name="JPN">たいないで　６００どの　ほのおを
-もやすことで　いきている。
-ねるときは　てあしを　ひっこめる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">ねるときは　てあしを　ひっこめ
+たいないで　もえている　６００どの
+ほのおも　ちいさくなり　おちつくよ。</language>
+		<language name="JPN_KANJI">寝るときは　手足を　ひっこめ
+体内で　燃えている　６００度の
+炎も　小さくなり　落ち着くよ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_555_000">
@@ -5176,17 +5355,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_557_000">
-		<language name="JPN">てごろな　おおきさの　いしが　あると
+		<language name="JPN">てごろな　サイズの　いしが　あると
 くちから　えきたいを　ぶんぴつして
 なかに　はいるための　あなをあける。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">てごろな　サイズの　石が　あると
+口から　液体を　分泌して
+中に　入るための　穴をあける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_558_000">
-		<language name="JPN">いい　がんばんを　もとめるため
-おもたい　がんばんを　せおいながら
-どこまでも　あるく　パワーをもつ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">いい　いわが　とれる　ばしょを
+テリトリーに　したがる。せなかの
+いわを　こわされると　おいだされる。</language>
+		<language name="JPN_KANJI">いい　岩が　採れる　場所を
+テリトリーに　したがる。背中の
+岩を　壊されると　追いだされる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_559_000">
@@ -5200,9 +5383,11 @@
 
 	<row id="ZKN_COMMENT_01_560_000">
 		<language name="JPN">だっぴした　かわを　ずりあげて
-ダメージを　へらすつつ　キック！
+ダメージを　へらしつつ　キック！
 とさかが　おおきいほど　えらそうだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">脱皮した　皮を　ずりあげて
+ダメージを　　減らしつつ　キック！
+とさかが　大きいほど　偉そうだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_561_000">
@@ -5233,10 +5418,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_564_000">
-		<language name="JPN">かせきから　ふっかつした　ポケモン。
-およぎが　たっしゃで　ふかさ
+		<language name="JPN">カセキから　ふっかつした　ポケモン。
+たっしゃに　およいで　ふかさ
 １０００メートルまで　もぐっていた。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">化石から　復活した　ポケモン。
+達者に　泳いで　深さ
+１０００メートルまで　潜っていた。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_565_000">
@@ -5286,9 +5473,11 @@
 
 	<row id="ZKN_COMMENT_01_570_000">
 		<language name="JPN">あいてそっくりに　ばけているように
-みせかけて　だましたり　おどろかして
+みせかけ　だましたり　おどろかして
 そのすきに　にげだすことが　おおい。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">相手そっくりに　化けているように
+みせかけ　だましたり　驚かして
+そのすきに　逃げだすことが　多い。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_571_000">
@@ -5355,24 +5544,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_578_000">
-		<language name="JPN">ぶんれつした　２つの　のうみそが
+		<language name="JPN">ぶんれつした　２つの　のうみそで
 おなじことを　かんがえると　だせる
 サイコパワーは　さいこうと　なる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">分裂した　２つの　脳みそで
+同じことを　考えると　だせる
+サイコパワーは　最高と　なる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_579_000">
-		<language name="JPN">サイコパワーを　はっき　して
+		<language name="JPN">はっきした　サイコパワーを　つかい
 とくしゅな　えきたいで　つくられた
 うでを　あやつり　いわを　くだく。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">発揮した　サイコパワーを　使い
+特殊な　液体で　つくられた
+腕を　操り　岩を　砕く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_580_000">
 		<language name="JPN">とぶよりも　およぐのが　とくいで
 すいちゅうに　もぐっては　だいすきな
 みずゴケを　うれしそうに　たべる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">飛ぶよりも　泳ぐのが　得意で
+水中に　潜っては　大好きな
+水ゴケを　うれしそうに　食べる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_581_000">
@@ -5395,9 +5590,11 @@
 
 	<row id="ZKN_COMMENT_01_583_000">
 		<language name="JPN">あたりの　くうきを　ひやして
-こおりの　きりを　はっせい　させて
+こおりの　つぶを　はっせい　させて
 てきの　からだを　こおりつかせる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">辺りの　空気を　冷やして
+氷の　粒を　発生　させて
+敵の　体を　氷つかせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_584_000">
@@ -5410,24 +5607,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_585_000">
-		<language name="JPN">きせつが　へんかしたとき　だけでなく
+		<language name="JPN">きせつが　かわったとき　だけでなく
 きおんや　しつどに　よっても
-からだのいろは　すこし　かわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+からだのいろは　すこし　へんかする。</language>
+		<language name="JPN_KANJI">季節が　変わったとき　だけでなく
+気温や　湿度に　よっても
+体の色は　少し　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_000">
 		<language name="JPN">きせつの　うつりかわりと　ともに
 すみかを　かえるので　メブキジカが
-はるをはこぶと　おもう　ひともいる。</language>
-		<language name="JPN_KANJI">NoData</language>
+はるをはこぶと　いう　ひともいる。</language>
+		<language name="JPN_KANJI">季節の　移り変わりと　ともに
+すみかを　変えるので　メブキジカが
+春を運ぶと　いう　人もいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_587_000">
-		<language name="JPN">ほほの　でんきぶくろに　ためこんだ
-でんきを　まくの　うちがわから
-はなちながら　かっくう　するのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">まくを　ひろげて　そらを　とびつつ
+ほほの　でんきぶくろに　ためこんだ
+でんきで　あいてを　かんでんさせる。</language>
+		<language name="JPN_KANJI">膜を　広げて　空を　飛びつつ
+ほほの　電気袋に　ためこんだ
+電気で　相手を　感電させる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_588_000">
@@ -5487,8 +5690,10 @@
 	<row id="ZKN_COMMENT_01_594_000">
 		<language name="JPN">きずついたり　よわった　ポケモンを
 ヒレで　やさしく　かかえながら
-きしまで　はこんでくれる　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+とくしゅな　ねんまくで　なおすのだ。</language>
+		<language name="JPN_KANJI">傷ついたり　弱った　ポケモンを
+ヒレで　優しく　抱えながら
+特殊な　粘膜で　治すのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_595_000">
@@ -5503,29 +5708,37 @@
 	<row id="ZKN_COMMENT_01_596_000">
 		<language name="JPN">でんきを　おびた　いとで　つくる
 バリアは　あいてを　しびれさせるので
-まもりだけでなく　ぶきにもなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+まもるだけでなく　ぶきにもなる。</language>
+		<language name="JPN_KANJI">電気を　帯びた　糸で　つくる
+バリアは　相手を　しびれさせるので
+守るだけでなく　武器にもなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_597_000">
 		<language name="JPN">ほらあなの　てんじょうに　つきささり
 いわの　てつぶんを　すいとる。
-あぶなくなると　トゲを　うちだすぞ。</language>
-		<language name="JPN_KANJI">NoData</language>
+きけんがせまると　トゲを　うちだす。</language>
+		<language name="JPN_KANJI">洞穴の　天井に　突きささり
+岩の　鉄分を　吸いとる。
+危険がせまると　トゲを　撃ちだす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_598_000">
-		<language name="JPN">トゲのついた　３ぼんの　しょくしゅを
-たたきつけたり　トゲを　とばしながら
-あいてを　こなごなに　ふんさいする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">３ぼんの　しょくしゅを　たたきつけ
+さらに　トゲを　とばして　あいてを
+あとかたのこらず　ふんさいする。</language>
+		<language name="JPN_KANJI">３本の　触手を　たたきつけ
+さらに　トゲを　飛ばして　相手を
+跡形残らず　粉砕する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_599_000">
-		<language name="JPN">くみあわせが　かならず　きまっている
-２つの　からだを　かいてんさせて
+		<language name="JPN">かならず　きまった　くみあわせの
+２つの　からだを　かいてん　させて
 エネルギーを　うみだしている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">必ず　決まった　組み合わせの
+２つの　体を　回転　させて
+エネルギーを　生みだしている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_600_000">
@@ -5540,29 +5753,37 @@
 	<row id="ZKN_COMMENT_01_601_000">
 		<language name="JPN">ちびギアを　こうそくかいてん　させ
 あかいコアに　ためた　エネルギーを
-いっきに　はなつ　おおわざを　だす。</language>
-		<language name="JPN_KANJI">NoData</language>
+ちびギアに　こめて　いっきにはなつ。</language>
+		<language name="JPN_KANJI">ちびギアを　高速回転　させ
+あかいコアに　ためた　エネルギーを
+ちびギアに　こめて　いっきにはなつ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_602_000">
-		<language name="JPN">まだ　よわい　でんきしか　だせないが
-すうひゃっぴきで　むれを　つくって
-１ぴきでの　よわさを　カバーしあう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">よわい　でんきしか　だせないので
+たくさんの　シビシラスで　あつまり
+きょうりょくな　でんきを　はなつ。</language>
+		<language name="JPN_KANJI">弱い　電気しか　だせないので
+たくさんの　シビシラスで　集まり
+強力な　電気を　放つ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_603_000">
-		<language name="JPN">まるい　はんてんで　はつでんする。
-あいてに　まきつき　でんきをながし
+		<language name="JPN">あいてに　まきつき　まるい
+はんてんから　でんきを　ながして
 しびれたところを　まるかじりする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">相手に　巻きつき　丸い
+斑点から　電気を　流して
+しびれたところを　まるかじりする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_604_000">
 		<language name="JPN">きゅうばんに　なっている　くちで
-はりついてから　キバを　さしこんで
-そこから　つよい　でんきを　ながす。</language>
-		<language name="JPN_KANJI">NoData</language>
+はりついて　キバを　さしこみ
+きょうりょくな　でんきを　ながす。</language>
+		<language name="JPN_KANJI">吸盤に　なっている　口で
+貼りついて　キバを　刺しこみ
+強力な　電気を　流す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_605_000">
@@ -5612,37 +5833,47 @@
 
 	<row id="ZKN_COMMENT_01_610_000">
 		<language name="JPN">おおきな　キバは　まだ　もろく
-おれることもあるが　はえかわるごとに
+おれたりするが　はえかわるごとに
 かたく　じょうぶに　なっていく。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">大きな　キバは　まだ　もろく
+折れたりするが　生え変わるごとに
+硬く　丈夫に　なっていく。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_611_000">
-		<language name="JPN">おおいわも　くだく　キバを　つかって
-オノンドたちは　いつも　はげしい
-なわばりあらそいを　くりかえす。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">キバは　にどと　はえかわらないので
+たたかいおわると　かわらの　いわを
+つかって　たんねんに　みがきあげる。</language>
+		<language name="JPN_KANJI">キバは　二度と　生え変わらないので
+戦い終わると　川原の　岩を
+使って　丹念に　磨きあげる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_612_000">
 		<language name="JPN">キバの　はかいりょくは　ばつぐん。
 ふとくかたい　こうてつの　はしらも
 いとも　かんたんに　きりさけるのだ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">キバの　破壊力は　抜群。
+太く硬い　鋼鉄の　柱も
+いとも　簡単に　切りさけるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_613_000">
 		<language name="JPN">はなみずは　けんこうの　バロメータ。
 ちょうしが　いいと　ねばりづよくなり
 こおりの　わざの　いりょくも　ます。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">鼻水は　健康の　バロメータ。
+調子が　いいと　粘り強くなり
+氷の　技の　威力も　増す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_614_000">
 		<language name="JPN">きたの　つめたい　うみを　このむ。
-くちから　はきだした　いきを
-こおらせて　うみのうえに　あるく。</language>
-		<language name="JPN_KANJI">NoData</language>
+くちから　はきだした　いきをこおらせ
+うみのうえに　みちをつくり　あるく。</language>
+		<language name="JPN_KANJI">北の　冷たい　海を　好む。
+口から　吐きだした　息を凍らせ
+海の上に　道をつくり　歩く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_615_000">
@@ -5673,31 +5904,39 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_618_000">
-		<language name="JPN">しびれてくれない　あいてからは
-からだを　くねらせ　とびはねて
-にげるのだが　いがいと　すばやい。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">あいてが　しびれてくれないときは
+よそうがいの　すばやさで　からだを
+くねらせ　とびはね　にげるのだ。</language>
+		<language name="JPN_KANJI">相手が　しびれてくれないときは
+予想外の　すばやさで　体を
+くねらせ　飛び跳ね　逃げるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_619_000">
 		<language name="JPN">わざをくりだす　スピードが　じまん。
-こうげきりょくは　ひくくても
-てかずを　だすことで　カバーする。</language>
-		<language name="JPN_KANJI">NoData</language>
+たとえ　パワーは　ひくくても
+てかずの　おおさで　カバーする。</language>
+		<language name="JPN_KANJI">技を繰りだす　スピードが　自慢。
+たとえ　パワーは　低くても
+手数の　多さで　カバーする。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_620_000">
 		<language name="JPN">りょうての　たいもうを　ムチのように
-つかいこなしての　れんぞくこうげきが
-はじまると　だれにも　とめられない。</language>
-		<language name="JPN_KANJI">NoData</language>
+つかいこなし　れんぞくこうげきを
+はじめると　だれにも　とめられない。</language>
+		<language name="JPN_KANJI">両手の　体毛を　ムチのように
+使いこなし　連続攻撃を
+はじめると　だれにも　止められない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_621_000">
 		<language name="JPN">ドリュウズや　イワークが　ほった
-せまい　トンネルを　すみかにして
-そのなかを　はしりまわっている。</language>
-		<language name="JPN_KANJI">NoData</language>
+せまい　トンネルを　はしりまわって
+するどいツメで　えものを　とらえる。</language>
+		<language name="JPN_KANJI">ドリュウズや　イワークが　掘った
+狭い　トンネルを　走りまわって
+するどいツメで　獲物を　捕らえる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_622_000">
@@ -5720,30 +5959,38 @@
 
 	<row id="ZKN_COMMENT_01_624_000">
 		<language name="JPN">じぶんが　きずついても　きにせず
-ぜんしんの　はものを　くいこませる
-こうげきを　しゅうだんで　おこなう。</language>
-		<language name="JPN_KANJI">NoData</language>
+しゅうだんで　ぜんしんの　はものを
+くいこませ　あいてを　こうげきする。</language>
+		<language name="JPN_KANJI">自分が　傷ついても　気にせず
+集団で　全身の　刃物を
+食いこませ　相手を　攻撃する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_625_000">
 		<language name="JPN">すうひきの　コマタナを　たたかわせ
 きずつき　うごけなくなった　えものを
 まっぷたつにする　こわい　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">数匹の　コマタナを　戦わせ
+傷つき　動けなくなった　獲物を
+まっぷたつにする　怖い　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_626_000">
-		<language name="JPN">あらい　きしょうで　かれらの
-テリトリーに　しんにゅう　すると
+		<language name="JPN">みさかいなく　とっしん　しており
+かれらの　テリトリーに　はいると
 れっしゃでも　ふきとばされてしまう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">見境なく　突進　しており
+かれらの　テリトリーに　はいると
+列車でも　吹き飛ばされてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_627_000">
 		<language name="JPN">おおきな　あいてに　たちむかうのは
 ゆうかん　ではなく　むぼうだから。
 でも　そうして　きたえ　つよくなる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">大きな　相手に　立ち向かうのは
+勇敢　ではなく　無謀だから。
+でも　そうして　鍛え　強くなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_628_000">
@@ -5759,7 +6006,9 @@
 		<language name="JPN">つばさは　ちいさく　まだ　とべない。
 バルジーナが　あつめてきた
 ガイコツで　おしりを　まもっている。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">翼は　小さく　まだ　飛べない。
+バルジーナが　集めてきた
+ガイコツで　お尻を　守っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_630_000">
@@ -5773,9 +6022,11 @@
 
 	<row id="ZKN_COMMENT_01_631_000">
 		<language name="JPN">シッポから　とりこんだ　くうきを
-ほのおにかえて　したのように　つかい
+ほのおにかえて　ベロのように　つかい
 アイアントを　とかして　たべるぞ。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">シッポから　取りこんだ　空気を
+炎に変えて　ベロのように　使い
+アイアントを　溶かして　食べるぞ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_632_000">
@@ -5806,10 +6057,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_635_000">
-		<language name="JPN">うごく　ものに　はんのうすると
+		<language name="JPN">うごく　ものに　はんのうして
 おそいかかり　３つの　あたまで
 くらいつくす　おそろしい　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">動く　ものに　反応して
+襲いかかり　３つの　頭で
+食らい尽くす　恐ろしい　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_636_000">
@@ -5861,46 +6114,54 @@
 		<language name="JPN">しほうはっぽうを　とびまわる。
 このときに　だす　かぜは　つよすぎて
 どんなものでも　ふきとばしてしまう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">四方八方を　飛びまわる。
+このときに　だす　風は　強すぎて
+どんなものでも　吹きとばしてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_642_000">
 		<language name="JPN">おおぞらを　とびまわりながら
 あちこちに　カミナリを　おとして
 やまかじを　おこすので　きらわれる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">大空を　飛びまわりながら
+あちこちに　カミナリを　落として
+山火事を　起こすので　嫌われる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_643_000">
-		<language name="JPN">しんじつを　おいもとめる　ものを
-ためし　みとめると　ちからを　かし
-てきは　ひばしらで　やきはらう。</language>
-		<language name="JPN_KANJI">しんじつを　おいもとめる　ものに
-ながねん　たくわえた　ちしきを
-さずけ　ともに　くにを　つくる。　</language>
+		<language name="JPN">ほのおで　せかいを　もやしつくせる
+でんせつの　ポケモン。しんじつの
+せかいを　きずく　ひとを　たすける。</language>
+		<language name="JPN_KANJI">炎で　世界を　燃やし尽くせる
+でんせつの　ポケモン。真実の
+世界を　きずく　人を　たすける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_644_000">
-		<language name="JPN">りそうを　おいもとめる　ものを
-ためし　みとめると　ちからを　かし
-てきは　いなずまで　やきはらう。</language>
-		<language name="JPN_KANJI">りそうを　おいもとめる　ものに
-ながねん　たくわえた　ちしきを
-さずけ　ともに　くにを　つくる。　</language>
+		<language name="JPN">いなずまで　せかいを　やきつくせる
+でんせつの　ポケモン。りそうの
+せかいを　つくる　ひとを　ほさする。</language>
+		<language name="JPN_KANJI">稲妻で　世界を　焼き尽くせる
+伝説の　ポケモン。理想の
+世界を　つくる　人を　補佐する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_000">
 		<language name="JPN">かぜや　かみなりを　とりこみ　かえた
 エネルギーが　つちに　えいようを
 あたえて　だいちを　ゆたかに　する。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">風や　雷を　取りこみ　変えた
+エネルギーが　土に　栄養を
+与えて　大地を　豊かに　する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_646_000">
-		<language name="JPN">レシラムと　ゼクロムが　わかれたとき
-うまれたとされる　ポケモン。こおりで
-ふあんていな　からだを　ガードする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">うしなった　からだを　しんじつと
+りそうで　うめてくれる　えいゆうを
+まつ　こおりの　でんせつポケモン。</language>
+		<language name="JPN_KANJI">失った　体を　真実と
+理想で　埋めてくれる　英雄を
+待つ　氷の　伝説ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_647_000">
@@ -6182,21 +6443,27 @@
 		<language name="JPN">きおんや　しつどが　さいぼうに
 えいきょう　するため　てんきによって
 すがたが　かわってしまう　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">気温や　湿度が　細胞に
+影響　するため　天気によって
+姿が　変わってしまう　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_351_002">
 		<language name="JPN">きおんや　しつどが　さいぼうに
 えいきょう　するため　てんきによって
 すがたが　かわってしまう　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">気温や　湿度が　細胞に
+影響　するため　天気によって
+姿が　変わってしまう　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_351_003">
 		<language name="JPN">きおんや　しつどが　さいぼうに
 えいきょう　するため　てんきによって
 すがたが　かわってしまう　ポケモン。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">気温や　湿度が　細胞に
+影響　するため　天気によって
+姿が　変わってしまう　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_386_001">
@@ -6498,10 +6765,10 @@
 
 	<row id="ZKN_COMMENT_01_550_001">
 		<language name="JPN">とても　らんぼうで　いつも　あかと
-あおの　バスラオは　あらそっているが
+あおの　バスラオは　あらそっている。
 たべると　いがいと　おいしいらしい。</language>
 		<language name="JPN_KANJI">とても　乱暴で　いつも　あかと
-あおの　バスラオは　争っているが
+あおの　バスラオは　争っている。
 食べると　意外と　おいしいらしい。</language>
 	</row>
 
@@ -6515,80 +6782,102 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_585_001">
-		<language name="JPN">きせつが　へんかしたとき　だけでなく
+		<language name="JPN">きせつが　かわったとき　だけでなく
 きおんや　しつどに　よっても
-からだのいろは　すこし　かわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+からだのいろは　すこし　へんかする。</language>
+		<language name="JPN_KANJI">季節が　変わったとき　だけでなく
+気温や　湿度に　よっても
+体の色は　少し　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_585_002">
-		<language name="JPN">きせつが　へんかしたとき　だけでなく
+		<language name="JPN">きせつが　かわったとき　だけでなく
 きおんや　しつどに　よっても
-からだのいろは　すこし　かわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+からだのいろは　すこし　へんかする。</language>
+		<language name="JPN_KANJI">季節が　変わったとき　だけでなく
+気温や　湿度に　よっても
+体の色は　少し　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_585_003">
-		<language name="JPN">きせつが　へんかしたとき　だけでなく
+		<language name="JPN">きせつが　かわったとき　だけでなく
 きおんや　しつどに　よっても
-からだのいろは　すこし　かわる。</language>
-		<language name="JPN_KANJI">NoData</language>
+からだのいろは　すこし　へんかする。</language>
+		<language name="JPN_KANJI">季節が　変わったとき　だけでなく
+気温や　湿度に　よっても
+体の色は　少し　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_001">
 		<language name="JPN">きせつの　うつりかわりと　ともに
 すみかを　かえるので　メブキジカが
-はるをはこぶと　おもう　ひともいる。</language>
-		<language name="JPN_KANJI">NoData</language>
+はるをはこぶと　いう　ひともいる。</language>
+		<language name="JPN_KANJI">季節の　移り変わりと　ともに
+すみかを　変えるので　メブキジカが
+春を運ぶと　いう　人もいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_002">
 		<language name="JPN">きせつの　うつりかわりと　ともに
 すみかを　かえるので　メブキジカが
-はるをはこぶと　おもう　ひともいる。</language>
-		<language name="JPN_KANJI">NoData</language>
+はるをはこぶと　いう　ひともいる。</language>
+		<language name="JPN_KANJI">季節の　移り変わりと　ともに
+すみかを　変えるので　メブキジカが
+春を運ぶと　いう　人もいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_003">
 		<language name="JPN">きせつの　うつりかわりと　ともに
 すみかを　かえるので　メブキジカが
-はるをはこぶと　おもう　ひともいる。</language>
-		<language name="JPN_KANJI">NoData</language>
+はるをはこぶと　いう　ひともいる。</language>
+		<language name="JPN_KANJI">季節の　移り変わりと　ともに
+すみかを　変えるので　メブキジカが
+春を運ぶと　いう　人もいる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_641_001">
 		<language name="JPN">しほうはっぽうを　とびまわる。
 このときに　だす　かぜは　つよすぎて
 どんなものでも　ふきとばしてしまう。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">四方八方を　飛びまわる。
+このときに　だす　風は　強すぎて
+どんなものでも　吹きとばしてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_642_001">
 		<language name="JPN">おおぞらを　とびまわりながら
 あちこちに　カミナリを　おとして
 やまかじを　おこすので　きらわれる。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">大空を　飛びまわりながら
+あちこちに　カミナリを　落として
+山火事を　起こすので　嫌われる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_001">
 		<language name="JPN">かぜや　かみなりを　とりこみ　かえた
 エネルギーが　つちに　えいようを
 あたえて　だいちを　ゆたかに　する。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN_KANJI">風や　雷を　取りこみ　変えた
+エネルギーが　土に　栄養を
+与えて　大地を　豊かに　する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_646_001">
-		<language name="JPN">レシラムと　ゼクロムが　わかれたとき
-うまれたとされる　ポケモン。こおりで
-ふあんていな　からだを　ガードする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">うしなった　からだを　しんじつと
+りそうで　うめてくれる　えいゆうを
+まつ　こおりの　でんせつポケモン。</language>
+		<language name="JPN_KANJI">失った　体を　真実と
+理想で　埋めてくれる　英雄を
+待つ　氷の　伝説ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_646_002">
-		<language name="JPN">レシラムと　ゼクロムが　わかれたとき
-うまれたとされる　ポケモン。こおりで
-ふあんていな　からだを　ガードする。</language>
-		<language name="JPN_KANJI">NoData</language>
+		<language name="JPN">うしなった　からだを　しんじつと
+りそうで　うめてくれる　えいゆうを
+まつ　こおりの　でんせつポケモン。</language>
+		<language name="JPN_KANJI">失った　体を　真実と
+理想で　埋めてくれる　英雄を
+待つ　氷の　伝説ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_647_001">
