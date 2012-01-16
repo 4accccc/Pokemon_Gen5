@@ -54,6 +54,7 @@ _TALK_OBJ_START()
 		
 		//わたし　ポケモンの　わざには
 		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_01 )
+		_AB_KEYWAIT_MARK()
 	
 		//========================================/
 
@@ -66,6 +67,7 @@ _TALK_OBJ_START()
 		
 		//わざマシンを　たくさん　あつめたら
 		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_02 )
+		_AB_KEYWAIT_MARK()
 	
 	ENDIF
 	
@@ -76,6 +78,7 @@ _TALK_OBJ_START()
 	
 	//個数を知らせる
 	_BALLOONWIN_TALKOBJ_MSG( msg_c06r0301collect_04 )
+	_AB_KEYWAIT_MARK()
 	
 	//わざマシン所持個数が10個以上かつ　ご褒美をもらっていないか？
 	IF $LWK_WAZAMA_CHK >= 10 && FLAG_OFF( FE_C06R0301_ITEMGET_01 ) THEN 
