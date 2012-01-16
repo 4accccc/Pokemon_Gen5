@@ -480,7 +480,9 @@ enum {
 	NARC_face_gra_trwb_juggling_1_LZ_bin = 466,
 	NARC_face_gra_trwb_juggling_1_NCLR = 467,
 	NARC_face_gra_trwb_red_LZ_bin = 468,
-	NARC_face_gra_trwb_red_NCLR = 469
+	NARC_face_gra_trwb_red_NCLR = 469,
+	NARC_face_gra_trwb_swboss_2_LZ_bin = 470,
+	NARC_face_gra_trwb_swboss_2_NCLR = 471
 };
 
 /* NARC_FACE_GRA_NAIX_ */

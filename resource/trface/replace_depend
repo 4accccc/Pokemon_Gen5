@@ -2207,3 +2207,14 @@ cnv_tmp/trwb_red_LZ.bin : cnv_tmp/trwb_red.NCGR
 cnv_tmp/trwb_red.NCLR : ./../../../swan_doc/trgra/trwb_red.ncl 
 	@g2dcvtr $< -bg -o/cnv_tmp
 
+cnv_tmp/trwb_swboss_2.NCGR : ./../../../swan_doc/trgra/trwb_swboss.ncg 
+	@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp
+	cp cnv_tmp/trwb_swboss.NCGR cnv_tmp/trwb_swboss_2.NCGR 
+
+cnv_tmp/trwb_swboss_2_LZ.bin : cnv_tmp/trwb_swboss_2.NCGR 
+	ntrcomp -l 2 cnv_tmp/trwb_swboss_2.NCGR
+
+cnv_tmp/trwb_swboss_2.NCLR : ./../../../swan_doc/trgra/trwb_swboss.ncl 
+	@g2dcvtr $< -bg -o/cnv_tmp
+	cp cnv_tmp/trwb_swboss.NCLR cnv_tmp/trwb_swboss_2.NCLR 
+
