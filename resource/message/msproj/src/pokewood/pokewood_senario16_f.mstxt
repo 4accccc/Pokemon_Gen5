@@ -2337,7 +2337,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおむかしの　せかいでは
+			<Text>……おおむかしの　せかいでは
 てんそうきは　しゅうりできない▼
 えいえんに　もとの　じだいには
 かえれないのだ……▼
@@ -2348,16 +2348,16 @@
 わるくはない……▽
 わたしは　そう　おもうことにした</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T05:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T05:55:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大昔の　世界では
+			<Text>……大昔の　世界では
 時間転送機は　修理できない▼
 永遠に　元の　時代には
 帰れないのだ……▼
@@ -2368,12 +2368,12 @@
 悪くはない……▽
 わたしは　そう　思うことにした</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T05:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T05:55:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

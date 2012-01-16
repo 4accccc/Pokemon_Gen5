@@ -1222,7 +1222,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めざましどけいの　おとに
-[Name:PokemonNickname Idx="0" ]キッド　こと
+[Name:PokemonNickname Idx="0" ]キッド　こと▽
 [Name:TrainerName Idx="1" ]　しょうねんは▽
 ねむい　めを　こする……▼
 へいわで　へいぼんな　まいにちは
@@ -1230,16 +1230,16 @@
 たいくつなのかも　しれない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……目覚まし時計の　音に
-[Name:PokemonNickname Idx="0" ]キッド　こと
+[Name:PokemonNickname Idx="0" ]キッド　こと▽
 [Name:TrainerName Idx="1" ]　少年は▽
 眠い　目を　こする……▼
 平和で　平凡な　毎日は
@@ -1247,11 +1247,11 @@
 退屈なのかも　しれない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1451,7 +1451,7 @@
 			<Text>ハチクマン『グムム……▼
 きさまが　そんな　ありさまでは
 わがはいのな　まで　けがれるわ……▼
-やむえぬ……▼
+やむを　えぬな……▼
 こうなれば　わがはいが　じきじきに
 きさまを　きたえなおして　やろう！▼
 さあ！　[Name:PokemonNickname Idx="0" ]キッド！！
@@ -1461,18 +1461,18 @@
 トレーニングするのだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グムム……▼
 貴様が　そんな　有様では
 我輩の名まで　けがれるわ……▼
-止む得ぬ……▼
+止むを　得ぬ……▼
 こうなれば　我輩が　直々に
 貴様を　きたえ直して　やろう！▼
 さあ！　[Name:PokemonNickname Idx="0" ]キッド！！
@@ -1482,11 +1482,11 @@
 トレーニングするのだっ！！　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-24T12:00:23" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-24T12:00:23" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2333,7 +2333,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めざましどけいの　おとに
-[Name:PokemonNickname Idx="0" ]キッド こと
+[Name:PokemonNickname Idx="0" ]キッド こと▽
 [Name:TrainerName Idx="1" ]　しょうねんは▽
 ねむい　めを　こする……▼
 ハチクマンの　ことば……
@@ -2343,16 +2343,16 @@
 りそう　なのかも　しれない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……目覚まし時計の　音に
-[Name:PokemonNickname Idx="0" ]キッド　こと
+[Name:PokemonNickname Idx="0" ]キッド　こと▽
 [Name:TrainerName Idx="1" ]　少年は▽
 眠い　目を　こする……▼
 ハチクマンの　言葉……
@@ -2362,11 +2362,11 @@
 理想なのかも　しれない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:55:42" />
+				Time="2012-01-16T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:55:42" />
+				Time="2012-01-16T03:09:39" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

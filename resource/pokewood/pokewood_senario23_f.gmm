@@ -1027,7 +1027,7 @@
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『……なんで
-そんなこと　おしえて　くれるんだ？▼
+そんなこと　おしえて　くれるの？▼
 あなた　ここの　もんばん　でしょ？
 ヒントは　さっきで▽
 おしまい　じゃないの？</language>
@@ -1239,10 +1239,10 @@
 	</row>
 	<row id="pw_event10_enemy_5">
 		<language name="JPN" width="256">ぬいぐるみ『ははは……▼
-（カッコイイほうだと　おもうけど
+（まあカッコイイほうだと　おもうけど
 なんか　プレッシャーだな……）</language>
 		<language name="JPN_KANJI" width="256">ぬいぐるみ『ははは……▼
-（カッコイイほうだと　思うけど
+（まあカッコイイほうだと　思うけど
 何か　プレッシャーだな……）</language>
 	</row>
 	<row id="pw_event11_enemy_0">

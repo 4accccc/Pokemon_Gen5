@@ -829,15 +829,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『困ったわ……
-まずは　どうにかして　アタシに
+まずは　どうにかして　アタシに▽
 気がついて　もらわないと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:40:27" />
+				Time="2012-01-16T03:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:40:27" />
+				Time="2012-01-16T03:08:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

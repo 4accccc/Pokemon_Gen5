@@ -775,10 +775,10 @@
 	</row>
 	<row id="pw_event5_enemy_4">
 		<language name="JPN" width="256">モニカ『キャッ！？　なに　これ！！
-なんで　かってに　ボールが
+どうして　かってに　ボールが▽
 ひらいていくのよっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『キャッ！？　なに　これ！！
-なんで　勝手に　ボールが
+どうして　勝手に　ボールが▽
 開いていくのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_5">
@@ -788,8 +788,8 @@
 ボールを　開いちゃ　ダメだよ！！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
-		<language name="JPN" width="256">モニカ『知らないわよっ！
-ボールが　勝手に！！</language>
+		<language name="JPN" width="256">モニカ『しらないわよっ！
+ボールが　かってに！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『知らないわよっ！
 ボールが　勝手に！！</language>
 	</row>

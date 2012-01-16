@@ -1993,7 +1993,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『暗黒星雲だか
-１１次元だか　知らないけどが▽
+１１次元だか　知らないけど▽
 この星は　わたしのものよ！▼
 そう……　わたしは！　わたしこそが
 人間を　超越した▽
@@ -2003,12 +2003,12 @@
 宇宙の　かなたで
 ひきこもってなさい！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:08:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:08:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

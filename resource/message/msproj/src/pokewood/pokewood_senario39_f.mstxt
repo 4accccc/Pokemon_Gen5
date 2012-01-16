@@ -327,16 +327,16 @@
 ズバリ　[Name:TrainerName Idx="1" ]　じゃろ！？▼
 アーカムから　聞いてるでごじゃる！
 オイラの　復活のために　力を▽
-かしてくれた　ごじゃるな！▼
+かしてくれたので　ごじゃるな！▼
 やー　助けてくれて　どうも
 ありがとうで　ごじゃるるる♪</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T01:35:39" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T01:35:39" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1176,25 +1176,25 @@
 		Label="pw_event2_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『かんがえることね！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『かんがえないことね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:19:02" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:19:02" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『考えることね！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『考えないことね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:19:02" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T03:19:02" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1440,26 +1440,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まじん『ふんがあぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉ！！</Text>
+そんな　デリケートなこと　ズバっと▽
+いっちゃ　ダメなんだぞぉぉ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>魔神『ふんがあぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉ！！</Text>
+そんな　デリケートなこと　ズバっと▽
+いっちゃ　ダメなんだぞぉぉ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1493,33 +1495,33 @@
 			Language="JPN">
 			<Text>まじん『るるるーん♪
 うーん！　さすがで　ごじゃる！▼
-デリケートな　オイラの　ハートを
-みぬいてるで　ごじゃるね！！▼
+オイラの　ワイルドな　みりょくを
+つかんでいるで　ごじゃるね！！▼
 うれしくて　おどっちゃうでごじゃる♪
 るーん♪　るるるーん♪</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:29" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:29" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>魔神『るるるーん♪
 うーん！　流石で　ごじゃる！▼
-デリケートな　オイラの　ハートを
-見抜いてるで　ごじゃるね！！▼
+オイラの　ワイルドな　魅力を
+つかんでいるで　ごじゃるね！！▼
 うれしくて　踊っちゃうでごじゃる♪
 るーん♪　るるるーん♪</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:29" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:29" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2392,15 +2394,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まじん『ふんがあぁぁぁぁぁ！！
-こんな　あいなき　せかい　なんて▽
+こんな　ラブなき　せかい　なんて▽
 ブチこわすだけなんだぞぉぉぉぉ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:43:28" />
+				Time="2012-01-16T03:09:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

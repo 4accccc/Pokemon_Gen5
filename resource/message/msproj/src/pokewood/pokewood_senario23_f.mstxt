@@ -2732,17 +2732,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『……なんで
-そんなこと　おしえて　くれるんだ？▼
+そんなこと　おしえて　くれるの？▼
 あなた　ここの　もんばん　でしょ？
 ヒントは　さっきで▽
 おしまい　じゃないの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3564,28 +3564,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『ははは……▼
-（カッコイイほうだと　おもうけど
+（まあカッコイイほうだと　おもうけど
 なんか　プレッシャーだな……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『ははは……▼
-（カッコイイほうだと　思うけど
+（まあカッコイイほうだと　思うけど
 何か　プレッシャーだな……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T08:37:57" />
+				Time="2012-01-16T03:08:27" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

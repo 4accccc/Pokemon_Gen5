@@ -1347,7 +1347,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょしゅ『はかせ……▼
-Ｆー００は　メモリを　けされ
+Ｆー００は　メモリーを　けされ
 プログラムを　かえられた……▼
 そのけっか　Ｆー００は　いつ
 ぼうそうしても　おかしくない▽
@@ -1358,16 +1358,16 @@
 どうなって　いたことか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:08" />
+				Time="2012-01-16T03:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:08" />
+				Time="2012-01-16T03:09:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『博士……▼
-Ｆー００は　メモリを　消され
+Ｆー００は　メモリーを　消され
 プログラムを　変えられた……▼
 その結果　Ｆー００は　いつ
 暴走しても　おかしくない▽
@@ -1378,11 +1378,11 @@
 どうなって　いたことか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:08" />
+				Time="2012-01-16T03:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:08" />
+				Time="2012-01-16T03:09:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1439,7 +1439,7 @@
 つごうよく　ありません……▼
 ほんとうに　こわれてしまえば
 ロボットでも　なおらない……▼
-きえさった　メモリだって
+きえさった　メモリーだって
 とりもどすことは　できない……▼
 ……でも▼
 でも　なぜか　Ｆー００には
@@ -1453,11 +1453,11 @@
 さいごを　たくしたんです……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:05:51" />
+				Time="2012-01-16T03:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:05:51" />
+				Time="2012-01-16T03:09:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1466,7 +1466,7 @@
 万能では　ありません……▼
 本当に　壊れてしまえば
 ロボットでも　直らない……▼
-消え去った　メモリだって
+消え去った　メモリーだって
 取り戻すことは　できない……▼
 ……でも▼
 でも　なぜか　Ｆー００には
@@ -1480,11 +1480,11 @@
 最期を　たくしたんです……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:05:51" />
+				Time="2012-01-16T03:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:05:51" />
+				Time="2012-01-16T03:09:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

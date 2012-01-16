@@ -2178,28 +2178,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『あれ！？　なによ　これ！！
-かってに　ボールが　ひらいてく！！</Text>
+			<Text>モニカ『キャッ！？　なに　これ！！
+どうして　かってに　ボールが▽
+ひらいていくのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッ！？　なに　これ！！
-なんで　勝手に　ボールが
+どうして　勝手に　ボールが▽
 開いていくのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2249,15 +2250,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『しらないよ！
+			<Text>モニカ『しらないわよっ！
 ボールが　かってに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2012-01-16T03:08:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

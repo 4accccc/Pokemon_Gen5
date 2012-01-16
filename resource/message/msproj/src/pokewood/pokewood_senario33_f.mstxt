@@ -259,31 +259,31 @@
 それより　アタシは　Ｆー００に
 いろいろなことを　おしえて▽
 このこの　メモリーを　もっと▽
-じゅうじつして　あげたいの……</Text>
+じゅうじつさせて　あげたいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-16T03:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-16T03:09:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ほっておけば……▼
 どうせ　そんなもの　だれにでも
-できるような　研究だろ？▼
+できるような　研究でしょ？▼
 それより　アタシは　Ｆー００に
 色々なことを　教えて▽
 コイツの　メモリーを　もっと▽
-充実して　あげたいの……</Text>
+充実させて　あげたいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-16T03:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-16T03:09:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1651,14 +1651,14 @@
 			<Text>じょしゅ『すっ　すいません……▼
 ふたりが　あそんでる　すがたが
 なんだか　とても　なかの　いい▽
-していみたい　だから……</Text>
+きょうだいみたい　だから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1687,14 +1687,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『してい……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きょうだい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1755,14 +1755,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『してい　か……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きょうだい　か……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:52:03" />
+				Time="2012-01-16T03:09:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

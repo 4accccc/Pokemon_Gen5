@@ -2175,28 +2175,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『キャッ！？　なに　これ！！
-なんで　かってに　ボールが
+どうして　かってに　ボールが▽
 ひらいていくのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッ！？　なに　これ！！
-なんで　勝手に　ボールが
+どうして　勝手に　ボールが▽
 開いていくのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2246,15 +2246,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『知らないわよっ！
-ボールが　勝手に！！</Text>
+			<Text>モニカ『しらないわよっ！
+ボールが　かってに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-16T03:08:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

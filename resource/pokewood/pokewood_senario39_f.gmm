@@ -415,7 +415,7 @@
 ズバリ　[1:00:トレーナー名:1]　じゃろ！？▼
 アーカムから　聞いてるでごじゃる！
 オイラの　復活のために　力を▽
-かしてくれた　ごじゃるな！▼
+かしてくれたので　ごじゃるな！▼
 やー　助けてくれて　どうも
 ありがとうで　ごじゃるるる♪</language>
 	</row>
@@ -642,8 +642,8 @@
 るーん♪　るるるーん♪</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『かんがえることね！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『考えることね！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『かんがえないことね！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『考えないことね！</language>
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">まじん『るるるーん♪
@@ -709,9 +709,11 @@
 	</row>
 	<row id="pw_event3_react_enemy_1">
 		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉ！！</language>
+そんな　デリケートなこと　ズバっと▽
+いっちゃ　ダメなんだぞぉぉ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁぁぁ！！
-そなた！　ウソは　ダメだぞぉぉ！！</language>
+そんな　デリケートなこと　ズバっと▽
+いっちゃ　ダメなんだぞぉぉ！！</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『らんぼうものかな</language>
@@ -720,14 +722,14 @@
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">まじん『るるるーん♪
 うーん！　さすがで　ごじゃる！▼
-デリケートな　オイラの　ハートを
-みぬいてるで　ごじゃるね！！▼
+オイラの　ワイルドな　みりょくを
+つかんでいるで　ごじゃるね！！▼
 うれしくて　おどっちゃうでごじゃる♪
 るーん♪　るるるーん♪</language>
 		<language name="JPN_KANJI" width="256">魔神『るるるーん♪
 うーん！　流石で　ごじゃる！▼
-デリケートな　オイラの　ハートを
-見抜いてるで　ごじゃるね！！▼
+オイラの　ワイルドな　魅力を
+つかんでいるで　ごじゃるね！！▼
 うれしくて　踊っちゃうでごじゃる♪
 るーん♪　るるるーん♪</language>
 	</row>
@@ -986,7 +988,7 @@
 	</row>
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">まじん『ふんがあぁぁぁぁぁ！！
-こんな　あいなき　せかい　なんて▽
+こんな　ラブなき　せかい　なんて▽
 ブチこわすだけなんだぞぉぉぉぉ！！</language>
 		<language name="JPN_KANJI" width="256">魔神『ふんがあぁぁぁぁぁ！！
 こんな　愛なき　世界　なんて▽

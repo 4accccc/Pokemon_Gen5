@@ -303,26 +303,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こえ『わが　ねむりを　さますもの
-なんの　ようだ？</Text>
+いったい　なんの　ようだ？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:09:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:09:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>声『わが　眠りを　覚ますもの
-何のようだ？</Text>
+一体　何の用だ？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:09:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-16T03:09:25" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

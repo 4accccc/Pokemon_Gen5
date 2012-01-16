@@ -2250,30 +2250,30 @@
 			Language="JPN">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]ひめと
 ぬいぐるみは　むすばれたのです▼
-ふたりのあいは　ひととと　ワタという
-かんけいを　こえて　すえながく
-しあわせに　つづいたとさ……</Text>
+ふたりのあいは　ひと　と　ワタという
+かんけいを　こえて　すえながく▽
+しあわせに　つづきましたとさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:14" />
+				Time="2012-01-16T03:08:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T06:49:14" />
+				Time="2012-01-16T03:08:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]姫と
 ぬいぐるみは　結ばれたのです▼
-二人の愛は　人と　ワタと　いう関係を
-越えて　幸せに　続いたとさ……</Text>
+二人の愛は　人と　ワタという関係を
+越えて　幸せに　続きましたとさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:12" />
+				Time="2012-01-16T03:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:12" />
+				Time="2012-01-16T03:36:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

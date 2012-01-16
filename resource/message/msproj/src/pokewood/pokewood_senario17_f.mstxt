@@ -108,30 +108,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『ふうん
-みなれない　ニンゲン▼
+みなれない　ニンゲン……▼
 ケンキューインに　にているけど
-めずらしい　しゅるい</Text>
+めずらしい　しゅるい　だわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『ふうん
-見慣れない　ニンゲン▼
+見慣れない　ニンゲン……▼
 ケンキューインに　似ているけど
-珍しい　種類</Text>
+珍しい　種類　だわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -182,34 +182,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『あの　ニンゲン
-ためらって　いるのね▼
-おなじ　ニンゲンを
-きずつける　ことを▼
-よわい　いきものに
-よくある　しゅうせい</Text>
+ためらって　いるのね……▼
+おなじ　しゅぞくで　ある
+ニンゲンを　きずつける　ことを……▼
+フン……　よわい　いきものに
+よく　ある　おろかな　しゅうせい……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『あの　ニンゲン
-ためらって　いるのね▼
-同じ　ニンゲンを
-傷つける　ことを▼
-弱い　生き物に
-よくある　習性</Text>
+ためらって　いるのね……▼
+同じ　種族で　ある
+ニンゲンを　傷つける　ことを……▼
+フン……　弱い　生き物に
+よくある　おろかな　習性ね……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -224,31 +224,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『あなたは
-なんとも　おもわないの！？▼
-おなじ　ポケモンを
+			<Text>[Name:TrainerName Idx="1" ]はかせ『きみは
+なんとも　おもわないのか！？▼
+じぶんと　おなじ　ポケモンを
 きずつける　ことが！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『あなたは
-なんとも　思わないの！？▼
-同じ　ポケモンを
+			<Text>[Name:TrainerName Idx="1" ]博士『きみは
+なんとも　思わないのか！？▼
+自分と　同じ　ポケモンを
 傷つける　ことが！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -263,29 +263,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『ニンゲンに　したがう……
-ポケモンの　つらよごし▽
-まとめて　くじょ　たいしょう</Text>
+			<Text>レディアン『ニンゲンに　したがう
+ポケモンの　つらよごし……▽
+まとめて　くじょ　たいしょうよ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『ニンゲンに　したがう……
-ポケモンの　面汚し▽
-まとめて　駆除対象</Text>
+			<Text>レディアン『ニンゲンに　従う
+ポケモンの　面汚し……▽
+まとめて　駆除対象よ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -337,29 +337,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『くちさきさんずん……▼
-ケンキューインの　とくせい
-こうか　はつどう　かしら</Text>
+			<Text>レディアン『くちから　でまかせ……▼
+ケンキューインがもつ　とくせいの
+こうかが　はじまったのかしら……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『口先三寸……▼
-ケンキューインの　特性
-効果発動　かしら</Text>
+ケンキューインが持つ　特性の
+効果発動　したのかしら……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -374,27 +374,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『まちなさい
-そこの　のらニンゲン</Text>
+			<Text>レディアン『こら　まちなさい！
+そこの　のらニンゲン！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『待ちなさい
-そこの　野良ニンゲン</Text>
+			<Text>レディアン『こら　待ちなさい！
+そこの　野良ニンゲン！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -443,30 +443,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『のらニンゲンが
-まちに　あらわれる　なんて▼
+まちに　あらわれる　なんて……▼
 ヤバンだわ　キケンだわ
-すぐに　くじょ　しないと</Text>
+すぐに　くじょ　しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:08:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:08:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『野良ニンゲンが
-都市部に　出現するなんて▼
+都市部に　出現するなんて……▼
 ヤバンだわ　キケンだわ
-早急に　駆除　しないと</Text>
+早急に　駆除　しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:08:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:08:44" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -514,28 +514,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『…………？
-ニンゲンが　ポケモンを　つかう▽
-わけが　わからないわ</Text>
+ニンゲンが　ポケモンを　つかう？▽
+わけが　わからないわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『…………？
-ニンゲンが　ポケモンを　使う▽
-訳が　分からないわ</Text>
+ニンゲンが　ポケモンを　使う？▽
+訳が　分からないわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -578,33 +578,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『きさまら　ニンゲンは
+			<Text>レディアン『どうなっているだと？▼
+きさまら　ニンゲンは
 この　ヒューマンボールに　はいり▽
-ポケモンのために　はたらく！▼
+われわれ　ポケモンの　ために▽
+はたらくのが　ルール　なのだ！▼
 ボールに　はいらぬ　のらニンゲンは
-くじょ！　くじょ　よ！</Text>
+くじょ　するよう　いわれている！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『きさまら　ニンゲンは
+			<Text>レディアン『どうなっているだと？▼
+貴様ら　ニンゲンは
 この　ヒューマンボールに　入り▽
-ポケモンのために　働く！▼
+我々　ポケモンのために▽
+働くのが　ルール　なのだ！▼
 ボールに　入らぬ　野良ニンゲンは
-駆除！　駆除よ！</Text>
+駆除せよと　命じられている！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -658,27 +662,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『みらい……？
+			<Text>レディアン『みらいですって……？
 おおむかしから　きたとでも？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『未来……？
+			<Text>レディアン『未来ですって……？
 大昔から　来たとでも？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -693,32 +697,32 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『さて……▼
+			<Text>[Name:TrainerName Idx="1" ]はかせ『それは……▼
 （タイムスリップ　してきたことを
 はなすべきかしら……？▽
 しんじて　もらえるとは▽
 おもえないけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:11:20" />
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:11:20" />
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『さて……▼
+			<Text>[Name:TrainerName Idx="1" ]博士『それは……▼
 （タイムスリップ　してきたことを
 話すべきかしら……？▽
 信じてもらえるとは　思えないけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:11:20" />
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:11:20" />
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -735,29 +739,29 @@
 			Language="JPN">
 			<Text>レディアン『それとも　ただの
 うそつきの　ニンゲン？▼
-うそつきは　ヒレツだわ
-ヒレツは　つみ……　くじょ　しないと</Text>
+うそつきは　ヒレツだわ！
+ヒレツは　つみ！　くじょ　しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:32:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:32:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『それとも　ただの
 うそつきの　ニンゲン？▼
-うそつきは　ヒレツだわ
-ヒレツは　罪……　駆除しないと</Text>
+うそつきは　ヒレツだわ！
+ヒレツは　罪！　駆除しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:32:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:32:50" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -772,25 +776,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『たすけて！</Text>
+			<Text>[Name:TrainerName Idx="1" ]はかせ『たすけて！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『助けて！</Text>
+			<Text>[Name:TrainerName Idx="1" ]博士『助けて！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -808,32 +812,32 @@
 			<Text>レディアン『いのちごい？
 おくびょうものの　ニンゲンは▽
 くじょ　する　まえに▽
-いたぶって　やるわ▼
+いたぶって　やるわ！▼
 わが　しもべ　カラテオー
-ヤツの　うごきを　とめなさい</Text>
+ヤツの　うごきを　とめなさい！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『命ごい？
-おくびょうものの　ニンゲンは▽
-駆除　する　前に▽
-いたぶって　やるわ▼
+おくびょう者の　ニンゲンは▽
+駆除する　前に▽
+いたぶって　やるわ！▼
 わが　しもべ　カラテオー
-ヤツの　動きを　止めなさい</Text>
+ヤツの　動きを　止めなさい！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:43:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -884,28 +888,28 @@
 			<Text>レディアン『なに　それ？
 ニンゲンの　くせに　ポケモンと▽
 たいとうに　はなそう　なんて▽
-ひじょうしきにも　ほどがある</Text>
+ひじょうしきにも　ほどがある！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『なに　それ？
+			<Text>レディアン『何　それ？
 ニンゲンの　くせに　ポケモンと▽
 対等に　話そう　なんて▽
-非常識にも　ほどがある</Text>
+非常識にも　ほどがある！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T09:07:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -954,28 +958,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『うそつきは　つみ……
-くじょ　だわ　くじょ　しか　ない▽
-カラテオー　しとめなさい</Text>
+くじょ　だわ　くじょ　しか　ない……▽
+カラテオー　しとめなさい！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『うそつきは　罪……
-駆除だわ　駆除しか　ない▽
-カラテオー　仕留めなさい</Text>
+駆除だわ　駆除しか　ない……▽
+カラテオー　仕留めなさい！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -990,27 +994,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『ても　あしも
-でない　のね</Text>
+			<Text>レディアン『あら　どうしたの？
+ても　あしも　でないの？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『手も　足も
-出ない　のね</Text>
+			<Text>レディアン『あら　どうしたの？
+手も　足も　出ないの？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1060,27 +1064,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『だったら
-[Name:PokemonNickname Idx="0" ]を　にがしなさい</Text>
+			<Text>レディアン『だったら　その
+[Name:PokemonNickname Idx="0" ]を　にがしなさいな</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『だったら
-[Name:PokemonNickname Idx="0" ]を　逃がしなさい</Text>
+			<Text>レディアン『だったら　その
+[Name:PokemonNickname Idx="0" ]を　逃がしなさいな</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1128,33 +1132,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『ポケモンが　いないと
-みを　まもれない　ものね▼
-そらも　とべないし
+			<Text>レディアン『むり　なんでしょ……
+そらも　とべなければ
 うでも　２ほんしか　ない▽
-よわい　ニンゲンは</Text>
+よわい　ニンゲンに　とって▽
+ポケモンは　ボディガード……▼
+あるいは　つごうの　いい
+どうぐ　なんでしょう？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『ポケモンが　いないと
-身を　守れない　ものね▼
-空も　飛べないし
-腕も　２本しか　ない▽
-弱い　ニンゲンは</Text>
+			<Text>レディアン『無理なんでしょ……
+空も　飛べなければ
+腕も　２ほんしか　ない▽
+弱い　ニンゲンに　とって▽
+ポケモンは　ボディガード……▼
+あるいは　都合の　いい
+道具　なんでしょう？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1206,35 +1214,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『あら　そう　でも
-ポケモンに　とって　ニンゲン　なんて▼
-かわりに　しごとを　させる　どうぐ
+			<Text>レディアン『ふうん……▼
+でも　わたしたち　ポケモンに
+とって　ニンゲン　なんて▽
+たんなる　どうぐ　でしかない……▼
+もしくは　ニンゲン　どうしを
 たたかわせて　あそぶ　オモチャ▼
-ダメになっても　かわりなんて
+ダメに　なっても　かわりなんて
 いくらでも　いるわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『あら　そう　でも
-ポケモンに　とって　ニンゲン　なんて▼
-代わりに　仕事を　させる　道具
+			<Text>レディアン『ふうん……▼
+でも　わたしたち　ポケモンに
+とって　ニンゲン　なんて▽
+単なる　道具　でしかない……▼
+もしくは　ニンゲン同士を
 戦わせて　遊ぶ　オモチャ▼
-ダメになっても　代わりなんて
+ダメに　なっても　代わりなんて
 いくらでも　いるわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1274,29 +1286,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カラテオー『ポケモン　ツカウ
-ニンゲン……▽
+			<Text>カラテオー『オイ……
+ポケモン　ツカウ　ニンゲン……▽
 オレノ　コエ　ワカル……　カ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カラテオー『ポケモン　使ウ
-ニンゲン……▽
+			<Text>カラテオー『オイ……
+ポケモン　使ウ　ニンゲン……▽
 オレノ　声　分カル……　カ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1348,35 +1360,35 @@
 			Language="JPN">
 			<Text>カラテオー『ボールニ　イレラレ
 モノ　アツカイ　サレ……▼
-ニンゲンノ　ココロ
+ニンゲン　ダッタコロノ　ココロ
 モウスグ　キエル　カモ……▼
 ソノ　マエニ　イイタイ　コト　アル
 アンタ……　カコ　カラ　キタ▽
 オレ　アンタ　シンジル……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カラテオー『ボールニ　入レラレ
 モノ　扱イ　サレ……▼
-ニンゲンノ　心
+ニンゲン　ダッタコロノ　心
 モウスグ　消エル　カモ……▼
 ソノ　前ニ　イイタイ　コト　アル
 アンタ……　過去　カラ　来タ▽
 オレ　アンタ　信ジル……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1427,30 +1439,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カラテオー『ムシポケモン
-ツヨクナリ　ハンラン　オコシタ▼
+ツヨクナリ　ハンラン　オコシタ……▼
 ニンゲン　タクサン　クジョ　シタ
-ゲンイン……　チョウシンカノイシ……</Text>
+ツヨクナッタ　ゲンイン……▽
+チョウシンカ　ノ　イシ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カラテオー『ムシポケモン
-強クナリ　反乱　起コシタ▼
+強クナリ　反乱　オコシタ……▼
 ニンゲン　タクサン　駆除　シタ
-原因……　超進化ノ石……</Text>
+強クナッタ　原因……▽
+超進化　ノ　石……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1500,31 +1514,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カラテオー『チョウシンカノイシ
+			<Text>カラテオー『チョウシンカ　ノ　イシ
 ムシポケモン　チノウ　タカク　スル▼
 ポケモン　チカラ　アリ　カシコイ
 ニンゲン　カナワナカッタ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カラテオー『超進化ノ石
+			<Text>カラテオー『超進化　ノ　石
 ムシポケモン　知能　高ク　スル▼
 ポケモン　チカラアリ　賢イ
 ニンゲン　敵ワナカッタ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1574,35 +1588,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『カラテオー　きさま
-さっきから　その　ニンゲンと▽
-なにを　はなしている……▼
+			<Text>レディアン『カラテオー……
+さっきから　そのニンゲンと▽
+なにを　はなしている……？▼
 どうぐは　どうぐらしく　だまって
-めいれいに　したがいなさい▽
-ほぞんしょくに　するわよ</Text>
+めいれいに　したがえばいいの▼
+さからったりすれば
+ほぞんしょくに　するわよ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『カラテオー　貴様
-さっきから　その　ニンゲンと▽
-何を　話している……▼
+			<Text>レディアン『カラテオー……
+さっきから　そのニンゲンと▽
+何を　話している……？▼
 道具は　道具らしく　だまって
-命令に　したがいなさい▽
-保存食に　するわよ</Text>
+命令に　従えばいいの▼
+逆らったりすれば
+保存食に　するわよ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1730,33 +1746,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『じぶんの
+			<Text>レディアン『……じぶんの
 みを　まもる　ためなら▽
-いくらでも　ウソをつく▼
+いくらでも　ウソを　つく……▼
 おろかな　くせに　ずるがしこい
-やはり　くじょ　しないと</Text>
+やはり　きさまは　くじょ　しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『自分の
+			<Text>レディアン『……自分の
 身を　守る　ためなら▽
-いくらでも　ウソをつく……▼
+いくらでも　ウソを　つく……▼
 愚かな　くせに　ずる賢い
-やはり　駆除しないと</Text>
+やはり　貴様は　駆除しないと！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1804,31 +1820,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『カラテオー
-さっさと　くじょ　なさい▼
+			<Text>レディアン『さあ　カラテオー
+さっさと　くじょ　なさい……▼
 こんな　ニンゲンを　あいてに
-さいている　じかんなど　ない</Text>
+さいている　じかんなど　ない！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『カラテオー
-さっさと　駆除なさい▼
+			<Text>レディアン『さあ　カラテオー
+さっさと　駆除なさい……▼
 こんな　ニンゲンを　相手に
-割いている　時間など　ない</Text>
+割いている　時間など　ない！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1848,36 +1864,38 @@
 じぶんの　ポケモンを▽
 まもりぬいた……▼
 …………▼
-おもしろい　ニンゲンね
-くじょは　やめるわ▼
+……おもしろい　ニンゲンね
+くじょは　やめて　あげるわ▼
 そして　かこから　きた　ということも
-しんじて　あげる……　でも</Text>
+しんじて　あげる……▼
+……でも</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『…………！？
 私の　ニンゲンを　倒さずに▽
 自分の　ポケモンを▽
-守り抜いた……
+守り抜いた……▼
 …………▼
-面白い　ニンゲンね
-駆除は　やめるわ▼
+……面白い　ニンゲンね
+駆除は　やめて　あげるわ▼
 そして　過去から　来た　ということも
-信じて　あげる……　でも</Text>
+信じて　あげる……▼
+……でも</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2007,27 +2025,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『こっちの　ようは
-まだ　すんでない</Text>
+			<Text>レディアン『あら　そう……▼
+でも　こっちの　ようは
+まだ　すんでないから……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『こっちの　用は
-まだ　済んでない</Text>
+			<Text>レディアン『あら　そう……▼
+でも　こっちの　用は
+まだ　済んでないから……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2042,27 +2062,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『よう……
+			<Text>[Name:TrainerName Idx="1" ]はかせ『え……
 どういうこと……？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『用……
+			<Text>[Name:TrainerName Idx="1" ]博士『え……
 どういうこと……？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2077,31 +2097,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン（われわれ　むしポケモンが
+			<Text>レディアン『ふふふ……▼
+（われわれ　むしポケモンの　かがくで
 つくれなかった　じかん　てんそうき▼
-それを　てにいれれば
-わたしは　えいゆう……</Text>
+それを　てに　いれれば
+わたしは　きっと　えいゆう……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン（我々　むしポケモンが
+			<Text>レディアン『ふふふ……▼
+（我々　むしポケモンの　科学で
 作れなかった　時間転送機▼
-それを　手に入れれば
-私は　英雄……</Text>
+それを　手に　入れれば
+私は　きっと　英雄……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2151,31 +2173,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン（あらゆる　じだいの
-ニンゲンどもを　とらえれば▼
-むしポケモンは
-いま　いじょうに　さかえる</Text>
+			<Text>レディアン『さてと……▼
+（……あらゆる　じだいの
+ニンゲンどもを　とらえれば▽
+われわれ　むしポケモンは
+いま　いじょうに　さかえる……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン（あらゆる　時間軸の
-ニンゲン共を　捕らえれば▼
-労働力　エネルギー　食料
+			<Text>レディアン『さてと…▼
+（あらゆる　時間軸の
+ニンゲン共を　捕らえれば▽
+労働力　エネルギー　食料▽
 多くの　社会問題が　解決する</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2230,15 +2254,15 @@
 ロクなものを　もっていないな▼
 ん……　これは
 ヒューマンボール？▼
-いや　ちがう
+いや　ちがう……▼
 なるほど　これが……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2247,15 +2271,15 @@
 ロクなものを　持っていないな▼
 ん……　これは
 ヒューマンボール？▼
-いや　違う
+いや　違う……▼
 なるほど　これが……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2305,31 +2329,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『やはりね
+			<Text>レディアン『……ビンゴね
 これが　じかん　てんそうき▼
 ずいぶんと　ちいさい　カプセルに
 おさめた　ものだ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『やはりね
+			<Text>レディアン『……ビンゴね
 これが　時間転送機▼
 ずいぶんと　小さい　カプセルに
 収納した　ものだ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2344,37 +2368,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくして　わたしは
+			<Text>……かくして　わたしは
 てんそうきを　うばわれ▽
 レディアンに　とらえられた▼
-しかし　あきらめは　しない
+……しかし　あきらめは　しない
 きちょうな　けんきゅう　サンプルを▽
 もとの　じだいに　もちかえり▽
 ちょうさする……　それまでは</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくして　わたしは
+			<Text>……かくして　わたしは
 転送機を　奪われ▽
 レディアンに　捕らえられた▼
-しかし　あきらめは　しない
-貴重な　研究　サンプルを▽
+……しかし　あきらめは　しない
+貴重な　研究サンプルを▽
 元の　時代に　持ち帰り▽
 調査する……　それまでは</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2425,32 +2449,32 @@
 			<Text>レディアン『おろかで　みじめ
 むりょくな　ニンゲン……▼
 あまりに　かわいそうだから
-みのがして　あげる▼
+みのがして　あげる……▼
 ぶざまに　にげる　すがたで
 わたしを　たのしませてよ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『愚かで　惨め
 無力な　ニンゲン……▼
 あまりに　可哀相だから
-見逃して　あげる▼
+見逃して　あげる……▼
 無様に　逃げる　姿で
 私を　楽しませてよ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2498,35 +2522,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『くじょ　する　だけじゃ
-たいくつ　だから　たまには▽
+			<Text>レディアン『いつも　いつも
+くじょ　する　だけじゃ　たいくつ▼
+……だから　たまには
 こういう　あそびかたも　しないと▽
 オモチャなんて　あきてしまうもの▼
-あんなに　ほそい　からだでは
-ひじょうしょくにも　ならないし</Text>
+それに　あんな　ほそい　からだでは
+ひじょうしょく　にも　ならないし</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『駆除する　だけじゃ
-退屈　だから　たまには▽
+			<Text>レディアン『いつも　いつも
+駆除する　だけじゃ　退屈▼
+……だから　たまには
 こういう　遊び方も　しないと▽
 オモチャなんて　飽きてしまうもの▼
-あんなに　細い　身体では
-非常食にも　ならないし</Text>
+それに　あんな　細い　身体では
+非常食　にも　ならないし</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2541,35 +2567,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いのちからがら　にげのびた　わたしは
-ニンゲンを　たおしたり▽
-つかまえようとする▽
+			<Text>……いのちからがら　にげのびた
+わたしは　ニンゲンを　たおしたり▽
+つかまえようと　する▽
 ポケモンの　めを　さけて▼
 くさむらや　ほらあなに　かくれて
 せいかつ　しなければ　ならなくなった</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>命からがら　逃げのびた　わたしは
-ニンゲンを　倒したり▽
+			<Text>……命からがら　逃げのびた
+わたしは　ニンゲンを　倒したり▽
 捕まえようとする▽
 ポケモンの　目を　さけて▼
-くさむらや　洞穴に　隠れて
+草むらや　洞穴に　隠れて
 生活　しなければ　ならなくなった</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2584,7 +2610,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしが　もといた　じだいの
+			<Text>……わたしが　もといた　じだいの
 ポケモンが　もし　にんげんを▽
 おそれて　いたのだとしたら▼
 きっと　いまの　わたしのような
@@ -2595,16 +2621,16 @@
 くるしみ　いがいの▽
 なにもの　でもない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしが　元いた　時代の
+			<Text>……わたしが　元いた　時代の
 ポケモンが　もし　人間を▽
 恐れて　いたのだとしたら▼
 きっと　今の　わたしのような
@@ -2615,12 +2641,12 @@
 苦しみ　以外の▽
 なにもの　でもない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2668,31 +2694,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『あら
+			<Text>レディアン『……あら？
 カラテオーが　こわれてしまったわ▼
 また　あたらしい　ニンゲンを
-つかまえないと</Text>
+つかまえないと……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『あら
+			<Text>レディアン『……あら？
 カラテオーが　壊れてしまったわ▼
 また　新しい　ニンゲンを
-捕まえないと</Text>
+捕まえないと……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2708,30 +2734,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]はかせ『ああ……
-やってしまった……！
+やってしまった……！▼
 にんげんを　たおして……
 なんて　ことを……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『ああ……
-やってしまった……！
+やってしまった……！▼
 人間を　倒して……
 なんて　ことを……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2746,27 +2772,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『チャンスね
-ヒューマンボールを　なげるわ</Text>
+			<Text>レディアン『ちょうど　いいわ！
+アンタを　つかまえて　やる！▽
+ゆけ！　ヒューマンボール！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『チャンスね
-ヒューマンボールを　投げるわ</Text>
+			<Text>レディアン『ちょうど　いいわ！
+アンタを　捕まえて　やる！▽
+ゆけ！　ヒューマンボール！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T13:01:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2781,33 +2809,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おなじ　にんげんを　たおしてしまった
-ショックで　きをうしなった　わたしは▽
-レディアンに　つかまえられ▽
-かのじょの　てもちニンゲンとなった▼
+			<Text>……おなじ　にんげんを
+たおして　しまった　ショックで▽
+きを　うしなった　わたしは▽
+レディアンに　つかまり　かのじょの▽
+てもちニンゲンと　なった▼
 そして……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>同じ　人間を　倒してしまった
-ショックで　気を失った　わたしは▽
-レディアンに　捕まえられ▽
-彼女の　手持ちニンゲンとなった▼
+			<Text>……同じ　人間を
+倒して　しまった　ショックで▽
+気を　失った　わたしは▽
+レディアンに　捕まり　彼女の▽
+てもちニンゲンと　なった▼
 そして……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2822,29 +2852,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『[Name:TrainerName Idx="1" ]
-こんどは　あのニンゲンを▽
-くじょ　なさい</Text>
+			<Text>レディアン『ゆけ！　[Name:TrainerName Idx="1" ]！
+こんどは　あの　ニンゲンを▽
+くじょ　なさい！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『[Name:TrainerName Idx="1" ]
-今度は　あのニンゲンを▽
-駆除なさい</Text>
+			<Text>レディアン『ゆけ！　[Name:TrainerName Idx="1" ]！
+今度は　あの　ニンゲンを▽
+駆除なさい！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2893,32 +2923,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『ごくろう　[Name:TrainerName Idx="1" ]▼
-きさま　なかなか
+ふふふ……　きさま　なかなか
 たのもしく　なったわね▼
 きょうは　とくべつに
 けづくろい　して　あげるわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『ご苦労　[Name:TrainerName Idx="1" ]▼
-貴様　なかなか
+ふふふ……　貴様　なかなか
 頼もしく　なったわね▼
 今日は　特別に
 毛づくろい　して　あげるわ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2933,37 +2963,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアンは　れいこくだったが
+			<Text>……レディアンは　れいこくだったが
 ゆうしゅうな　ニンゲンには▽
 やさしい　いちめんも　あった▼
-いつしか　わたしは
+……いつしか　わたしは
 そんな　かのじょの▽
 ちからに　なりたい　と▽
 おもうように　なっていた……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアンは　冷酷だったが
+			<Text>……レディアンは　冷酷だったが
 優秀な　ニンゲンには▽
 優しい　一面も　あった▼
-いつしか　わたしは
+……いつしか　わたしは
 そんな　彼女の▽
 力に　なりたい　と▽
 思うように　なっていた……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2978,37 +3008,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかし　これが
-じだいの　ながれなら▽
-しかたがない……▼
+			<Text>……ひとが　ポケモンに
+つかわれる　せかい……▼
+……これが　じだいの　ながれなら
+うけいれるしか　ないのだ……▼
 そういえば　わたしが　つれていた
 [Name:PokemonNickname Idx="0" ]は　どうなった　だろうか？▼
 どこかで　ニンゲントレーナーとして
-ぼうけんを　しているかも……</Text>
+ぼうけんを　しているのか……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかし　これが
-時代の　流れなら▽
-仕方がない……▼
+			<Text>……人が　ポケモンに
+使われる　世界……▼
+……これが　時代の　流れなら
+受け入れるしか　ないのだ……▼
 そういえば　わたしが　連れていた
 [Name:PokemonNickname Idx="0" ]は　どうなった　だろうか？▼
 どこかで　ニンゲントレーナーとして
-冒険を　しているかも……</Text>
+冒険を　しているのか……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-14T08:23:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

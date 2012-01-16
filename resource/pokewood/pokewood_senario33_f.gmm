@@ -396,14 +396,14 @@
 それより　アタシは　Ｆー００に
 いろいろなことを　おしえて▽
 このこの　メモリーを　もっと▽
-じゅうじつして　あげたいの……</language>
+じゅうじつさせて　あげたいの……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほっておけば……▼
 どうせ　そんなもの　だれにでも
-できるような　研究だろ？▼
+できるような　研究でしょ？▼
 それより　アタシは　Ｆー００に
 色々なことを　教えて▽
 コイツの　メモリーを　もっと▽
-充実して　あげたいの……</language>
+充実させて　あげたいの……</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　Ｆー００！▼
@@ -657,14 +657,14 @@
 		<language name="JPN" width="256">じょしゅ『すっ　すいません……▼
 ふたりが　あそんでる　すがたが
 なんだか　とても　なかの　いい▽
-していみたい　だから……</language>
+きょうだいみたい　だから……</language>
 		<language name="JPN_KANJI" width="256">助手『すっ　すいません……▼
 二人が　遊んでいる　姿が
 何だか　とても　仲の良い▽
 姉弟みたい　だから……</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『してい……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『きょうだい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『姉弟……</language>
 	</row>
 	<row id="pw_event4_enemy_4">
@@ -674,7 +674,7 @@
 別に　悪気は　ないんです！</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『してい　か……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『きょうだい　か……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『姉弟か……</language>
 	</row>
 	<row id="pw_event4_hero_6">
