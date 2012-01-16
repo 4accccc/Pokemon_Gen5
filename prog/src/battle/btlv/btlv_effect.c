@@ -329,6 +329,10 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
                                      tr_type, mainModule, viewSCU, heapID );
 }
 
+
+#define __BTLV_EFFECT_C__
+#include "..\..\..\resource\pokewood\pokewood_parameter.cdat"
+
 //============================================================================================
 /**
  * @brief ƒVƒXƒeƒ€‰Šú‰»
@@ -363,7 +367,8 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   bew->bmw  = BTLV_MCSS_Init( besp->rule, bew->tcb_sys, heapID );
 
   if(BTLV_EFFECT_GetPokewoodMode(besp->mainModule)==BTL_POKEWOOD_SHOW){
-    BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, FALSE );
+    int senario_no = BTL_MAIN_GetPokewoodSenarioNo(besp->mainModule);
+    BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, pokewood_mcss_shadow[senario_no] );
   }else{
     BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, TRUE );
   }

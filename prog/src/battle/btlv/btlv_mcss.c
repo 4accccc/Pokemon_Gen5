@@ -102,7 +102,7 @@ struct  _BTLV_MCSS
   u32             henge_flag          :1;     //変化した
   u32             push_vanish_flag    :1;     //バニッシュフラグのプッシュ領域
   u32             anm_restart_flag    :1;     //アニメリスタートフラグ
-  u32             shadow_on           :1;     //影を表示するか
+  u32             shadow_on           :1;     //影を表示するか( TRUE:表示ON, FALSE:表示OFF)
   u32                                 :19;
   int             evy;
   int             evy_dir;
@@ -767,9 +767,6 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
   bmw->btlv_mcss[ index ].position = position;
 
   bmw->btlv_mcss[ index ].shadow_on           = bmw->mcss_shadow_enable;
-//  if( bmw->btlv_mcss[ index ].shadow_on==FALSE ){
-//    BTLV_MCSS_SetShadowVanishFlag( bmw, index, TRUE );
-//  }
 
 
   BTLV_MCSS_MakeMAWTrainer( tr_type, &maw, position );
@@ -777,6 +774,9 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &maw );
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
+
+  // shadow_onなら影バニッシュフラグはFALSEになるように代入
+  BTLV_MCSS_SetShadowVanishFlag( bmw, position, bmw->btlv_mcss[ index ].shadow_on^1 );
 }
 
 //============================================================================================
@@ -1294,10 +1294,8 @@ void  BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag 
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { 
     return; 
   }
-//  if( !bmw->btlv_mcss[ index ].shadow_on ){ 
-//    return; 
-//  }
 
+  // 全体影フラグがFALSEであれば影バニッシュは有効にする
   if(bmw->mcss_shadow_enable==FALSE){
     flag = TRUE;
   }
