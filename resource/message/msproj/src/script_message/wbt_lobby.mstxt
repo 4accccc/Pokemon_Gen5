@@ -7480,14 +7480,12 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-ただいま　スペシャルな
-トーナメントを　じゅんびちゅうです▼
-じかんが　かかりそうなので
-きながに　おまちくださいませ！</Text>
+			<Text>ただいま　スペシャルな
+トーナメントを　じゅんびちゅうです▽
+もうしばらく　おまちくださいませ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-10T03:59:05" />
+				User="matsumiya:W00224"
+				Time="2012-01-16T08:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7495,14 +7493,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-ただいま　スペシャルな
-トーナメントを　準備中です▼
-時間が　かかりそうなので
-気長に　お待ちくださいませ！</Text>
+			<Text>ただいま　スペシャルな
+トーナメントを　準備中です▽
+もうしばらく　お待ちくださいませ！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-10T03:59:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-16T08:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
