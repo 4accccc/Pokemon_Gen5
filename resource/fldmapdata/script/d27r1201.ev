@@ -117,10 +117,6 @@ EVENT_START	ev_reserve_d27r1201_rival_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r1201_swrival_02_04 , D27R1201_SWRIVAL_01 ,POS_DR )
   _MSGWIN_CLOSE()
   
-  //プラズマ団：やばい！
-  _BALLOONWIN_OBJMSG_POS( msg_d27r1201_swplazmam1_02_02 , D27R1201_SWPLAZMAM_01 ,POS_UR )
-  _MSGWIN_CLOSE()
-  
   //マルチバトル
   IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
     //初期３匹で草タイプを選択
@@ -134,6 +130,15 @@ EVENT_START	ev_reserve_d27r1201_rival_01
   ENDIF
   
   _CALL ev_battle_check
+  
+  //アニメ：プラズマ団員向き合う
+  _OBJ_ANIME( D27R1201_SWPLAZMAM_01 , anm_staystep_l )
+  _OBJ_ANIME( D27R1201_SWPLAZMAW_01 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //プラズマ団：やばい！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r1201_swplazmam1_02_02 , D27R1201_SWPLAZMAM_01 ,POS_UR )
+  _MSGWIN_CLOSE()
   
   //プラズマ団：仲間に知らせなきゃ！
   _BALLOONWIN_OBJMSG_POS( msg_d27r1201_swplazmaw1_02_01 , D27R1201_SWPLAZMAW_01 ,POS_UL )

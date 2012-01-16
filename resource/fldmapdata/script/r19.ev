@@ -154,6 +154,9 @@ EVENT_START   ev_pos_r19_pokeget_01
 	
 	//ローカルライブキャスター・ママ通話状態を変更（デフォルト）
 	_PERSON_STATE_SET_MOTHER( MOTHER_STATE_HOME )
+	
+	//C12R0202ライバル妹表示
+	$WK_SCENE_C12_WHITE_MEET = 8
 
   //==================================//
   

@@ -63,10 +63,15 @@ EVENT_START   ev_r06r0301_babygirl1_01
     _MSGWIN_CLOSE()
 
     //アイテム「ひかりのいし」入手
-    _ITEM_EVENT_NOWAIT( ITEM_HIKARINOISI, 1 )
+    _ITEM_EVENT_KEYWAIT( ITEM_HIKARINOISI, 1 )
+    
+    //女の子：なのね　ポケモンの　チラーミィにね
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0301_babygirl1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //========================================//
-    //タイムフラグON
+    //アイテム入手フラグセット
     _FLAG_SET( FE_R06R0301_ITEMGET_01 )
     //========================================//
 

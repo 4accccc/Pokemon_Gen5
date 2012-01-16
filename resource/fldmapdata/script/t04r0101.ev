@@ -87,7 +87,6 @@ EVENT_START		ev_pos_t04r0101_stopper_01
   
   //ストッパー：メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_t04r0101_cleaningm_01,T04R0101_STOPPER_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //主人公1歩戻る

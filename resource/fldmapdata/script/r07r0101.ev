@@ -111,7 +111,6 @@ EVENT_START   ev_r07r0101_hakase2_01
 
     //アララギ：じゃ　フキヨセで　まってるわね！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_07 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //自機座標取得

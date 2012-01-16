@@ -315,6 +315,12 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
     
+    //手持ちが0匹だったら
+    _GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+    IF $SCWK_TEMP0 == 0 THEN
+      _TEMOTI_POKEMON_KAIFUKU() //回復処理
+    ENDIF
+    
     //カメラ操作　プラズマ団追従
     _CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//カメラのバインドを解く

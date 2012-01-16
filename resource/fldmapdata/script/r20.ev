@@ -133,6 +133,16 @@ EVENT_START   ev_pos_r20_mountman_02
   
   //アニメ：山男「！」
   _OBJ_ANIME( R20_MOUNTMAN_01, anm_common_gyoe )
+  
+  //プレイヤーの向きを取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //主人公が上向きのケース
+  IF $LWK_DIR != DIR_RIGHT  THEN
+    _TIME_WAIT( 20 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  ENDIF
+  
   _OBJ_ANIME_WAIT()
   
   //自機座標取得
@@ -176,6 +186,7 @@ EVENT_START   ev_pos_r20_mountman_02
   //R20 POS無効
   $WK_SCENE_R20 = 2
   //==================================//
+
 EVENT_END
 
 //--------------------------------------------------------------------

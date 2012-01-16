@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/15 18:15:34
+#save date:2012/01/16 18:33:11
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1101.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ FV_D27R1101_SWPLAZMA_03
 #Event Script Name
 SCRID_D27R1101_SWPLAZMAM_03_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 0 -264
+200 0 -296
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 0 -248
+200 0 -280
 #event number: 2
 #type
 1
@@ -88,7 +88,7 @@ FV_D27R1101_SWPLAZMA_03
 #Event Script Name
 SCRID_D27R1101_SWPLAZMAM_03_04
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -102,7 +102,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 0 -216
+200 0 -248
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 0 -200
+168 0 -216
 #event number: 4
 #type
 1
@@ -150,7 +150,7 @@ FV_D27R1101_SWPLAZMA_03
 #Event Script Name
 SCRID_D27R1101_SWRIVAL_01
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 0 -232
+184 0 -296
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

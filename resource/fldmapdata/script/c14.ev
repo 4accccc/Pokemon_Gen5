@@ -111,7 +111,7 @@ INIT_EVENT_START  ev_init_c14
 INIT_EVENT_END
 
 /************************************************************/
-/*  SCENE_CHANGE01：街到着ライバルイベント                  */
+/*  POS：街到着ライバルイベント                  */
 /************************************************************/
 EVENT_START   ev_pos_c14_swrival_01
 
@@ -130,10 +130,8 @@ EVENT_START   ev_pos_c14_swrival_01
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：いでんしのくさび
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01a, C14_SWRIVAL_01, POS_DEFAULT )
-
-  //ライバル：はやく
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01, C14_SWRIVAL_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //========================================//
@@ -318,7 +316,6 @@ EVENT_START   ev_scene_c14_swleader8_01
   _RIVAL_NAME( 1 )
   //ライバル：なんだ
   _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_06, C14_SWRIVAL_01, POS_UR )
-  _AB_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバル退散
@@ -361,9 +358,7 @@ EVENT_START   ev_c14_swrival_01
     //ライバル名代入
     _RIVAL_NAME( 1 )
     //ライバル：いでんしのくさび
-    _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01a, C14_SWRIVAL_01, POS_DEFAULT )
-    //ライバル：はやく
-    _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01, C14_SWRIVAL_01, POS_DEFAULT )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     //========================================//
@@ -373,7 +368,7 @@ EVENT_START   ev_c14_swrival_01
   ELSE
     //ライバル名代入
     _RIVAL_NAME( 1 )
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_03 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_02 )
   ENDIF
 
 EVENT_END

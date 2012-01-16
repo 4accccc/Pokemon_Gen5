@@ -250,6 +250,9 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   //アニメ：主人公振り向き
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
+  
+  //主人公名代入
+  _PLAYER_NAME( 0 )
 
   //アララギ娘：あの　３びきは……
   _BALLOONWIN_OBJMSG_POS( msg_d33r0101_hakase2_06, D33R0101_HAKASE2_01, POS_DEFAULT )

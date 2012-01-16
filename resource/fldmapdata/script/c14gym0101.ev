@@ -160,7 +160,6 @@ ev_leader8_btl:
 
   //シズイ：ほな　いっとこかい！
   _BALLOONWIN_TALKOBJ_MSG( msg_c14gym0101_swleader8_06 )
-  _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
   //================================================//

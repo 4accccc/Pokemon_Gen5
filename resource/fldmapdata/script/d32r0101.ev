@@ -96,7 +96,6 @@ ev_battle_start:
 
     //カラテおう：いっておくが　オレの　ダンゴロは
     _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_03 ,D32R0101_FIGHTERM_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し
@@ -108,7 +107,7 @@ ev_battle_start:
     //勝利時
     //カラテおう：きみの　つよさは　ほんものだ！▼
     _BALLOONWIN_OBJMSG( msg_d32r0101_fighterm_05 ,D32R0101_FIGHTERM_01 )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     _TIME_WAIT( 15 )  //暗転前の間

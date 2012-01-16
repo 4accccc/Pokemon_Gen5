@@ -690,7 +690,7 @@ EVENT_END
 //	トレーナー[!]マーク
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_MARK_GYOE_NO_SE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

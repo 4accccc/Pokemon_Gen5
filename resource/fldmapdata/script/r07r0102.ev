@@ -199,7 +199,6 @@ EVENT_START   ev_pos_r07r0102_girl3_01
 
   //女の子：ヒトモシちゃんの　あかりに　たよれば
   _BALLOONWIN_OBJMSG( msg_r07r0101_girl3_01, R07R0102_GIRL3_01 )
-  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
   //トレーナー戦呼び出し
@@ -251,7 +250,7 @@ _ANIME_LABEL  anm_staystep_r
 //☆共通処理：ギョエ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_gyoe
-  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_MARK_GYOE_NO_SE,1
   _ANIME_DATA ACMD_END,0
 
 

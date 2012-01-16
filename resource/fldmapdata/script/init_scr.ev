@@ -574,8 +574,8 @@ INIT_EVENT_START  ev_init_gameclear_script
     _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
   ENDIF
   
-  //キュレム未捕獲時の復活処理
-  IF FLAG_ON(FV_D10R0501_KYUREMU) && FLAG_OFF(FE_D10R0401_POKE10_GET) THEN
+  //キュレム未捕獲時の復活処理(Nイベントを終えているならば）
+  IF FLAG_ON(FV_D10R0501_KYUREMU) && FLAG_OFF(FE_D10R0401_POKE10_GET) && FLAG_ON( FE_D08R0901_BOSS_TALK ) THEN
     //OBJを消していて、捕まえていなければ復活させる
     _FLAG_RESET( FV_D10R0501_KYUREMU )
     //いでんしのくさびを非表示に
