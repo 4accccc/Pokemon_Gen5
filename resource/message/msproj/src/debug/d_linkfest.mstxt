@@ -619,10 +619,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マイスコアせってい</Text>
+			<Text>チュートリアルクリア</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:11" />
+				Time="2012-01-16T07:29:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -630,10 +630,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マイスコア設定</Text>
+			<Text>チュートリアルクリア</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:34" />
+				Time="2012-01-16T07:29:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -666,10 +666,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　じかんストップ</Text>
+			<Text>ミッションかいさいフラグ かいほう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:11" />
+				Time="2012-01-16T09:00:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -677,10 +677,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　時間ストップ</Text>
+			<Text>ミッション開催フラグ　開放</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:34" />
+				Time="2012-01-16T09:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -713,10 +713,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションきょうせいしゅうりょう</Text>
+			<Text>ミッションさんかフラグ かいほう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:11" />
+				Time="2012-01-16T09:00:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -724,10 +724,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション強制終了</Text>
+			<Text>ミッション参加フラグ　開放</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-28T06:05:34" />
+				Time="2012-01-16T09:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +760,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チュートリアルクリア</Text>
+			<Text>ミッションレベルかいほう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:34" />
+				Time="2012-01-16T07:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -771,10 +771,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チュートリアルクリア</Text>
+			<Text>ミッションレベル開放</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:37" />
+				Time="2012-01-16T07:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -806,10 +806,10 @@
 		Label="dlf_fldmenu_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションレベルかいほう</Text>
+			<Text>ミッションビーコンかんかく</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -817,10 +817,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションレベル開放</Text>
+			<Text>ミッションビーコン間隔</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -845,10 +845,10 @@
 		Label="dlf_fldmenu_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションかいし</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -856,10 +856,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション開始</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -884,10 +884,10 @@
 		Label="dlf_fldmenu_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションリクエスト</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -895,10 +895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションリクエスト</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -923,10 +923,10 @@
 		Label="dlf_fldmenu_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションビーコンかんかく</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -934,10 +934,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションビーコン間隔</Text>
+			<Text>やめる</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-10-26T11:30:27" />
+				Time="2012-01-16T07:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
