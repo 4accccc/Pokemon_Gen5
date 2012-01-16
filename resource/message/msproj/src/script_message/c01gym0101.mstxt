@@ -2145,10 +2145,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さあ！　さっきの
-[Name:PokemonName Idx="1" ]を　あててみて！▼</Text>
+[Name:PokemonName Idx="1" ]を　あててみて！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-22T08:23:35" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2157,10 +2157,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さあ！　さっきの
-[Name:PokemonName Idx="1" ]を　当ててみて！▼</Text>
+[Name:PokemonName Idx="1" ]を　当ててみて！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-22T08:25:01" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:22:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2203,10 +2203,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　[Name:PokemonName Idx="1" ]が
-こだいのどうかを　もっているのね？</Text>
+[Name:Item ]を　もっているのね？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T07:19:06" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T12:22:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2215,10 +2215,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　[Name:PokemonName Idx="1" ]が
-こだいのどうかを　持っているのね？</Text>
+[Name:Item ]を　持っているのね？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T07:19:10" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T12:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2272,8 +2272,8 @@
 けいひんの　[Name:Item ]は
 [Name:PokemonName Idx="1" ]から　もらえまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-22T08:29:36" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T12:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2290,8 +2290,8 @@
 景品の　[Name:Item ]は
 [Name:PokemonName Idx="1" ]から　もらえまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-22T08:29:45" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T13:00:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3251,6 +3251,126 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+あれ？　[Name:PokemonName Idx="1" ]　あててくれないの？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:24:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:23:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+あれ？　[Name:PokemonName Idx="1" ]　当ててくれないの？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:25:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:23:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ショー中に帰ろうとした（POSを踏んだ）時のメッセージ
+・はい/いいえ選択肢表示
+・はい→msg_c01gym0101_woman2_16
+・いいえ→msg_c01gym0101_woman2_09</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:57:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:23:00" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T07:23:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+そっかー　また　きが　むいたら
+ショーを　みにきてね！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:57:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:56:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+そっかー　また　きが　むいたら
+ショーを　みにきてね！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:57:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:56:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ショー中に帰ろうとした（POSを踏んだ）時のメッセージ
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:57:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:56:26" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-16T11:56:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

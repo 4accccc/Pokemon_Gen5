@@ -22,6 +22,7 @@
 #define C01GYM0101_LEADER1A_01            10
 #define C01GYM0101_LEADER1C_01            11
 #define C01GYM0101_GLASSES_01             12
+#define C01GYM0101_WKOBJCODE03            13
 
 #endif //ZONE_C01GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
