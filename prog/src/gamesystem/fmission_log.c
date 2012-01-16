@@ -613,10 +613,12 @@ BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *
     return TRUE;
   }
   //ゲーム内で1つしか入手不可能なアイテム(大切なもの、技マシン)or無効アイテムは不可(マスターボール可)
-  if( ITEM_IsDisableItem(beacon->sp_item) ||
-      ITEM_IsOnlyOneItem(beacon->sp_item) ){
-    GF_ASSERT_MSG(0,"%d\n",beacon->sp_item);
-    return TRUE;
+  if( beacon->sp_item != ITEM_DUMMY_DATA ){
+    if( ITEM_IsDisableItem(beacon->sp_item) ||
+        ITEM_IsOnlyOneItem(beacon->sp_item) ){
+      GF_ASSERT_MSG(0,"%d\n",beacon->sp_item);
+      return TRUE;
+    }
   }
   //アクションパラメータチェック
   {
