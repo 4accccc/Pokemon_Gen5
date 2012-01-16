@@ -539,13 +539,10 @@
 			Language="JPN">
 			<Text>ヴィオ『その　そうちは　こわせぬ▼
 ということは　キュレムを
-そこから　すくいだすことは　できぬ▼
-といっても　あきらめきれぬか？
-なら　いんどうを　わたすのが▽
-ワタシなりの　やさしさ　なのだ！▼</Text>
+そこから　すくいだすことは　できぬ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:14:39" />
+				Time="2012-01-16T02:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -555,13 +552,10 @@
 			Language="JPN_KANJI">
 			<Text>ヴィオ『その装置は　壊せぬ▼
 ということは　キュレムを
-そこから　救い出すことは　できない▼
-といっても　あきらめきれぬか？
-なら　引導を　渡すのが▽
-ワタシなりの　優しさ　なのだ！▼</Text>
+そこから　救い出すことは　できぬ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:14:41" />
+				Time="2012-01-16T02:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -572,11 +566,11 @@
 			<Comment>♂
 ・アジト船：３回目
 ・バリア解除後のposイベント
-　画面下から来てメッセージ表示
-・メッセージ表示後、トレーナー戦闘へ</Comment>
+・まずキュレムにカメラ移動
+　メッセージ表示、続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:19:35" />
+				Time="2012-01-16T02:56:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -593,6 +587,53 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1301_sage7_03_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>といっても　あきらめきれぬか？
+なら　いんどうを　わたすのが▽
+ワタシなりの　やさしさ　なのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:55:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:55:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>といっても　あきらめきれぬか？
+なら　引導を　渡すのが▽
+ワタシなりの　優しさ　なのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:55:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ登場、メッセージ表示
+・表示後、トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:56:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T02:55:53" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r1301_sage7_03_02"
