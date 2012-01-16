@@ -741,7 +741,7 @@ static BOOL CheckTypeComplete( u8 type_id ,MEDALREC_DATA *p_recdata, GAMEDATA* p
 {
   if( CheckZukanData( p_recdata , p_gamedata ,heapID ) )
   {
-    return p_recdata->zukan_type_flag[ POKETYPE_NORMAL ];
+    return p_recdata->zukan_type_flag[ type_id ];
   }
   return FALSE;
 }
