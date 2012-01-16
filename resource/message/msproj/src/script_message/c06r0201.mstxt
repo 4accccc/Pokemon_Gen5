@@ -439,10 +439,12 @@
 			Language="JPN">
 			<Text>ベル『ふええ……▼
 まって……　ください……
-あたしも　ひこうきに　のりますよお▼</Text>
+あたしも　ひこうきに　のりますよお▼
+リ……　リバースマウンテンの
+ちょうさを　したいんですう……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T08:05:24" />
+				Time="2012-01-16T12:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -452,10 +454,12 @@
 			Language="JPN_KANJI">
 			<Text>ベル『ふええ……▼
 待って……　ください……
-あたしも　飛行機に　乗りますよお▼</Text>
+あたしも　飛行機に　乗りますよお▼
+リ……　リバースマウンテンの
+調査を　したいんですう……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T08:05:20" />
+				Time="2012-01-16T12:43:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -498,12 +502,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『あら！？　ベルったら▼
-では　また　わたしの
-ボディガードを　おねがい　ね▼</Text>
+			<Text>アララギ『あら！？　ベルったら
+すっかり　けんきゅうしゃの　かおね！▼
+じゃあ　みんなで　いっしょに
+ヤマジタウンに　まいりましょう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:22:38" />
+				Time="2012-01-16T12:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -511,12 +516,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『あら！？　ベルったら▼
-では　また　わたしの
-ボディガードを　お願い　ね▼</Text>
+			<Text>アララギ『あら！？　ベルったら
+すっかり　研究者の　顔ね！▼
+じゃあ　みんなで　一緒に
+ヤマジタウンに　参りましょう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:24:59" />
+				Time="2012-01-16T12:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

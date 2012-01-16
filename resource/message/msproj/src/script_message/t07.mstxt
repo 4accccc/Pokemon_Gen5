@@ -817,12 +817,12 @@
 			Language="JPN">
 			<Text>ベル『では　あたしは
 このさきに　ある　かざん……▼
-リバースマウンテンで
-ほのおポケモンの　せいそくを▽
-ちょうさ　してますねえ▼</Text>
+リバースマウンテンに　いるといわれる
+めずらしい　ほのおポケモン　について▽
+ちょうさ　してきますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T08:12:46" />
+				Time="2012-01-16T12:48:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -832,12 +832,12 @@
 			Language="JPN_KANJI">
 			<Text>ベル『では　あたしは
 この先に　ある　火山……▼
-リバースマウンテンで
-ほのおポケモンの　生息を▽
-調査してますねえ▼</Text>
+リバースマウンテンに　いるといわれる
+珍しい　ほのおポケモン　について▽
+調査してきますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T08:12:53" />
+				Time="2012-01-16T12:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -997,12 +997,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どんな　ポケモンが　いるのか？▼
-しらない　まちに　いくたび
-こころが　おどりだしちゃいますよ！</Text>
+			<Text>おいら……　なんで
+たびを　してるんだろ？▼
+きみは　たびの　りゆう
+きちんと　おぼえているかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T09:27:01" />
+				Time="2012-01-16T12:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1010,12 +1011,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どんな　ポケモンが　いるのか？▼
-知らない　街に　行くたび
-心が　おどりだしちゃいますよ！</Text>
+			<Text>おいら……　なんで
+旅を　してるんだろ？▼
+君は　旅の　理由
+きちんと　覚えているかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T09:27:14" />
+				Time="2012-01-16T12:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1023,11 +1025,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:11" />
+				Time="2012-01-16T12:51:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
