@@ -1956,7 +1956,7 @@
 		<language name="JPN">さむくなり　せいでんきが　たまると
 たいもうが　２ばいに　ふくれあがり
 シッポの　さきが　ほんのり　ひかる。</language>
-		<language name="JPN_KANJI">寒くなり　静電気が　溜まると
+		<language name="JPN_KANJI">寒くなり　静電気が　たまると
 体毛が　２倍に　ふくれあがり
 シッポの　先が　ほんのり　光る。</language>
 	</row>
@@ -2208,7 +2208,7 @@
 		<language name="JPN">ねらった　えものに　はりついて
 おどろきとまどっている　あいだに
 シッポの　トゲを　さしこんでくる。</language>
-		<language name="JPN_KANJI">狙った　獲物に　貼りついて
+		<language name="JPN_KANJI">ねらった　獲物に　はりついて
 驚き戸惑っている　あいだに
 シッポの　トゲを　刺しこんでくる。</language>
 	</row>
@@ -3729,7 +3729,7 @@
 		<language name="JPN">４つの　のうみそが　つらなり
 スーパーコンピューターより　すごい
 けいさんで　あいてを　ぶんせきする。</language>
-		<language name="JPN_KANJI">４つの　のうみそが　連なり
+		<language name="JPN_KANJI">４つの　脳みそが　連なり
 スーパーコンピューターより　すごい
 計算で　相手を　分析する。</language>
 	</row>
@@ -5459,7 +5459,7 @@
 いつも　どくガスを　はきだしている。</language>
 		<language name="JPN_KANJI">さらなる　ゴミを　求めて
 ポイ捨てをする　人を　つけまわす。
-いつも　どくガスを　吐きだしている。</language>
+いつも　毒ガスを　吐きだしている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_569_000">
@@ -5522,7 +5522,7 @@
 あそぶ　はなしが　おおく　のこる。</language>
 		<language name="JPN_KANJI">星明かりが　輝く　夜に
 寝ている　こどもたちを　操って
-遊ぶ　話しが　多く　残る。</language>
+遊ぶ　話が　多く　残る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_576_000">
@@ -5756,7 +5756,7 @@
 ちびギアに　こめて　いっきにはなつ。</language>
 		<language name="JPN_KANJI">ちびギアを　高速回転　させ
 あかいコアに　ためた　エネルギーを
-ちびギアに　こめて　いっきにはなつ。</language>
+ちびギアに　こめて　一気に放つ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_602_000">
@@ -5773,7 +5773,7 @@
 はんてんから　でんきを　ながして
 しびれたところを　まるかじりする。</language>
 		<language name="JPN_KANJI">相手に　巻きつき　丸い
-斑点から　電気を　流して
+はん点から　電気を　流して
 しびれたところを　まるかじりする。</language>
 	</row>
 
@@ -5782,7 +5782,7 @@
 はりついて　キバを　さしこみ
 きょうりょくな　でんきを　ながす。</language>
 		<language name="JPN_KANJI">吸盤に　なっている　口で
-貼りついて　キバを　刺しこみ
+はりついて　キバを　刺しこみ
 強力な　電気を　流す。</language>
 	</row>
 
@@ -6008,7 +6008,7 @@
 ガイコツで　おしりを　まもっている。</language>
 		<language name="JPN_KANJI">翼は　小さく　まだ　飛べない。
 バルジーナが　集めてきた
-ガイコツで　お尻を　守っている。</language>
+ガイコツで　おしりを　守っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_630_000">
@@ -6133,8 +6133,8 @@
 でんせつの　ポケモン。しんじつの
 せかいを　きずく　ひとを　たすける。</language>
 		<language name="JPN_KANJI">炎で　世界を　燃やし尽くせる
-でんせつの　ポケモン。真実の
-世界を　きずく　人を　たすける。</language>
+伝説の　ポケモン。真実の
+世界を　築く　人を　たすける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_644_000">
