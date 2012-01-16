@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/17 19:55:34
+#save date:2012/01/16 15:16:38
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -392,9 +392,9 @@ WK_SCENE_R11_POKE6
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 0 56
+104 0 40
 #size
-1 8
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

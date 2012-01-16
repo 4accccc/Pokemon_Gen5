@@ -25,6 +25,8 @@ _EVENT_DATA    ev_bg_r11_sign_01
 _EVENT_DATA    ev_bg_r11_sign_02
 _EVENT_DATA    ev_pos_r11_poke6_01
 _EVENT_DATA    ev_r11_poke6_01
+_EVENT_DATA    ev_zone_r11
+_EVENT_DATA    ev_init_r11
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -32,6 +34,24 @@ DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_r11
+  //
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r11
+
+  //POSイベント後・ビリジオン表示状態なら配置位置を変更
+  IF $WK_SCENE_R11_POKE6 == 1 && FLAG_OFF( FV_R11_POKE6_01 ) THEN
+    _OBJ_POS_CHANGE(R11_POKE6_01,468,0,175,DIR_RIGHT)
+  ENDIF
+  
+INIT_EVENT_END
 
 /**************************************************************/
 /*  R02 看板1のイベントスクリプト                             */
