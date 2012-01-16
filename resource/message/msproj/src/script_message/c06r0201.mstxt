@@ -6,13 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タワーオブヘブンは
+			<Text>アララギはかせが　ポケモンの
+ちょうさを　なさっている▼
+タワーオブヘブンは
 ７ばんどうろを　いった　さきだよ！▼
 とちゅうで　まよわないよう
 かんばんに　ちゅうい　してくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T10:51:08" />
+				Time="2012-01-16T11:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,13 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タワーオブヘブンは
+			<Text>アララギ博士が　ポケモンの
+調査を　なさっている▼
+タワーオブヘブンは
 ７番道路を　行った　先だよ！▼
 途中で　迷わないよう
 看板に　注意してくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T10:51:13" />
+				Time="2012-01-16T11:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1577,12 +1581,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そっかー▼
+			<Text>……そっかー▼
 ひこうポケモンや　エスパーポケモンに
 てつだって　もらいたかったなー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T06:35:41" />
+				Time="2012-01-16T11:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1590,12 +1594,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そっかー▼
+			<Text>……そっかー▼
 ひこうポケモンや　エスパーポケモンに
 手伝って　もらいたかったなー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T06:35:49" />
+				Time="2012-01-16T11:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1604,11 +1608,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・仮メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:44:01" />
+				Time="2012-01-16T11:46:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

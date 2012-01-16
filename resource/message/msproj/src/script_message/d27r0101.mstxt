@@ -706,6 +706,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r0101_swplazmam1_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『いけ　いけ！▼
+だれか　おれの　かわりに
+こいつらを　やっつけてくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:51:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:51:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『いけ　いけ！▼
+だれか　おれの　代わりに
+こいつらを　やっつけてくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:52:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:51:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:50:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:50:20" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:50:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0101_swplazmam2_02"
 		Style="Large">
 		<LanguageCell
@@ -770,11 +829,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『なに　こいつ……！▼
-２ねんまえ　おれたちの　じゃまをした
+２ねんまえ　おれたちの　ジャマをした
 あの　トレーナー　みたいだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:37:33" />
+				Time="2012-01-16T11:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -783,11 +842,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『なに　こいつ……！▼
-２年前　おれたちの　じゃまをした
+２年前　おれたちの　ジャマをした
 あの　トレーナー　みたいだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:37:40" />
+				Time="2012-01-16T11:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -817,6 +876,65 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2012-01-08T07:30:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam2_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『なに　こいつ……！▼
+２ねんまえ　おれたちの　ジャマをした
+あの　トレーナー　みたいだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:52:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:52:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『なに　こいつ……！▼
+２年前　おれたちの　ジャマをした
+あの　トレーナー　みたいだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:52:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:52:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:51:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:50:58" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-16T11:50:58" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
