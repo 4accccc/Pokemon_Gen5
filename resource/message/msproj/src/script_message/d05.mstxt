@@ -2337,10 +2337,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-16T09:23:13" />
+				Time="2012-01-16T09:56:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
