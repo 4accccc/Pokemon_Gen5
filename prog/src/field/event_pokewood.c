@@ -336,6 +336,8 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
   {
     BTL_FIELD_SITUATION sit;
     BTL_FIELD_SITUATION_Init( &sit );
+    sit.bgType = BATTLE_BG_TYPE_ROOM;
+    sit.bgAttr = BATTLE_BG_ATTR_E_INDOOR;
     BTL_SETUP_Single_Trainer( bsp, gamedata, &sit, TRID_NULL, heapID );
     BTL_SETUP_AllocRecBuffer( bsp, heapID );
   }
