@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-11-10T19:20:56" source="map24_06.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2012-01-16T12:14:54" source="map24_06_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-11-10T19:20:56" source="map24_06.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2012-01-16T12:14:54" source="map24_06_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1303,7 +1303,7 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.000000 -1.625000 -4.000000"
-		volume_max="4.000000 -1.625000 4.000000"
+		volume_max="4.000000 -1.625000 3.500000"
 		volume_r="5.885742"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -1313,10 +1313,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="128.000000 -96.000000"/>
+					<tex st="128.000000 -80.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 -1.625000 4.000000"/>
-					<tex st="-128.000000 -96.000000"/>
+					<pos_s xyz="-4.000000 -1.625000 3.500000"/>
+					<tex st="-128.000000 -80.000000"/>
 					<pos_xy xy="4.000000 -1.625000"/>
 					<tex st="-128.000000 160.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
@@ -1330,7 +1330,7 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.000000 -1.421875 -4.000000"
-		volume_max="4.000000 -1.421875 4.000000"
+		volume_max="4.000000 -1.421875 3.500000"
 		volume_r="5.832764"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
@@ -1345,9 +1345,9 @@
 					<pos_s xyz="4.000000 -1.421875 -4.000000"/>
 					<tex st="-128.000000 -96.000000"/>
 					<pos_xy xy="-4.000000 -1.421875"/>
-					<tex st="-128.000000 160.000000"/>
-					<pos_xz xz="-4.000000 4.000000"/>
-					<tex st="128.000000 160.000000"/>
+					<tex st="-128.000000 144.000000"/>
+					<pos_xz xz="-4.000000 3.500000"/>
+					<tex st="128.000000 144.000000"/>
 					<pos_xy xy="4.000000 -1.421875"/>
 				</primitive>
 			</primitive_array>
@@ -11289,7 +11289,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface856" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
