@@ -40,7 +40,7 @@ INIT_EVENT_START   ev_zone_c12r0202
 
   //ヒオウギジムクリア後からタウンマップ入手まで不在状態？
   //タウンマップをライバルに届けるまで不在状態
-  IF $WK_SCENE_D22R0101 == 0 && $WK_SCENE_C12_WHITE_MEET == 6 THEN
+  IF $WK_SCENE_D22R0101 == 0 && $WK_SCENE_C12_WHITE_MEET == 7 THEN
 
     //========================================//
     //ライバル妹非表示
