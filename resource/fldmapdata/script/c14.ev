@@ -236,20 +236,14 @@ _ANIME_LABEL	anm_swleader8_bye_z157
 /*  SCENE_CHANGE02：ジムバッチ後ジムリーダーイベント        */
 /************************************************************/
 EVENT_START   ev_scene_c14_swleader8_01
-{
-
-  //アニメ：主人公移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 783, 176, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
-
+{ 
   //アニメ：ライバル「！」
   _OBJ_ANIME( C14_SWRIVAL_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
 
-  //アニメ：ライバル移動
+  //アニメ：主人公・ライバル移動
   _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 784, 176, FORCE_TYPE_NPC, 8, DIR_LR )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gym_clear )
   _OBJ_ANIME_WAIT()
 
   //ライバル名代入
@@ -347,6 +341,14 @@ EVENT_START   ev_scene_c14_swleader8_01
 }
 EVENT_END
 
+//--------------------------------------------------------------------
+//	主人公：ライバルに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_gym_clear
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  ライバル：話しかけ                                        */
 /**************************************************************/
@@ -362,6 +364,7 @@ EVENT_START   ev_c14_swrival_01
     _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01a, C14_SWRIVAL_01, POS_DEFAULT )
     //ライバル：はやく
     _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     //========================================//
     //C14 POS無効
