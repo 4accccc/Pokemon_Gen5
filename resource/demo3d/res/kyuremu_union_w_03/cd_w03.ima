@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-12-28T19:46:26" source="kyuremu_union_w_03_v02b.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2012-01-16T19:01:34" source="kyuremu_union_w_03_v03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -15,7 +15,7 @@
 	tool_start_frame="1"
 	tool_end_frame="1010"
 	interpolation="frame"
-	compress_material="on" material_size="7 7"
+	compress_material="on" material_size="8 8"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
@@ -1196,7 +1196,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="1010" data_head="9092"/>
 	</mat_color_anm>
-	<mat_color_anm index="4" material_name="wq_flow">
+	<mat_color_anm index="4" material_name="wq_flow_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>

@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-12-28T19:48:50" source="kyuremu_union_w_03_v02b.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2012-01-16T19:04:29" source="kyuremu_union_w_03_v03.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -41,7 +41,7 @@
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="wq_eye" data_size="7" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="wq_eye_1" data_size="7" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
