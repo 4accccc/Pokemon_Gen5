@@ -44,10 +44,43 @@ _EVENT_DATA_END
 /*  R03R0101 WOMAN3（回復処理）                               */
 /**************************************************************/
 EVENT_START   ev_r03r0101_woman3_02
+{
+
+  //体力の満タンではないポケモンのための変数定義
+  DEFINE_LOCAL LWK_PARTY_NUM  //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_RET_HP     //HPチェックの帰り値
+  DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
+  DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
+
   _TALK_OBJ_START()
 
-  //入室して初回話しかけ
-  IF $LOCALWORK1 == 0 THEN
+  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+  //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのHPを取得
+    _CHECK_TEMOTI_HP( LWK_RET_HP, LWK_COUNT_NUM )
+
+    //指定POSのポケモンのPPを取得
+    _CHECK_TEMOTI_PP( LWK_RET_PP, LWK_COUNT_NUM )
+
+    //チェックしたポケモンのHP（またはPP）が満タンではないのならば
+    IF $LWK_RET_HP == FALSE || $LWK_RET_PP == FALSE THEN
+      //HPかPPが満タンではないポケモンの数に＋１
+      $LWK_DAME += 1
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+  
+  //手持ちにHPかPPが満タンではないポケモンがいた場合
+  IF $LWK_DAME >= 1 THEN
 
     //やすんでいきなさい
     _BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_02,R03R0101_WOMAN3_02 )
@@ -61,10 +94,11 @@ EVENT_START   ev_r03r0101_woman3_02
     _ME_WAIT()
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
-
-    //========================================//
-    $LOCALWORK1 = 1
-    //========================================//
+    
+    //元気ね
+    _BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_01,R03R0101_WOMAN3_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
 
   //入室して２回目以降の話しかけ
   ELSE
@@ -76,6 +110,7 @@ EVENT_START   ev_r03r0101_woman3_02
 
   ENDIF
 
+}
 EVENT_END
 
 /**************************************************************/

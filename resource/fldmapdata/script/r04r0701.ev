@@ -79,8 +79,6 @@ EVENT_START   ev_r04r0701_veteranw_01
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    _TIME_WAIT( 8 )  //暗転前の間
-
     //暗転して手持ちポケモンを回復
     _BLACK_OUT()
     _DISP_FADE_END_CHECK()
@@ -91,8 +89,11 @@ EVENT_START   ev_r04r0701_veteranw_01
 
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
-
-    _TIME_WAIT( 8 )  //暗転後の間
+    
+    //ベテラン♀：おや！　げんきいっぱいの
+    _BALLOONWIN_TALKOBJ_MSG( msg_r04r0701_veteranw_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
   //手持ちのポケモンはHPもPPも満タン
   ELSE

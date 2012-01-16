@@ -84,6 +84,11 @@ EVENT_START	ev_r23r0101_trainerw_01
     _ME_WAIT()
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
+    
+    //女性：うん！　あなたと　ポケモンの
+    _BALLOONWIN_TALKOBJ_MSG( msg_r23r0101_trainerw_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
   //手持ちのポケモンはHPもPPも満タン
   ELSE

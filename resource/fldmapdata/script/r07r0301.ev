@@ -158,10 +158,10 @@ EVENT_START   ev_r07r0301_woman3_01
     _ME_WAIT()
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
-
-    //========================================//
-    $LOCALWORK1 = 1
-    //========================================//
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0301_woman_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //éËéùÇøÇÃÉ|ÉPÉÇÉìÇÕHPÇ‡PPÇ‡ñûÉ^Éì
   ELSE

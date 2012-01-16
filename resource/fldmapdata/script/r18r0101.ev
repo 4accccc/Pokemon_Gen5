@@ -35,11 +35,42 @@ _EVENT_DATA_END
 /*						トレーナー女性						*/
 /************************************************************/
 EVENT_START	ev_r18r0101_trainerw_01
-	_TALK_OBJ_START()
+{
+  _TALK_OBJ_START()
 
-	//回復済みかチェック
-	IF $LOCALWORK15 != 999 THEN
-		//マップ遷移して初回会話なら回復処理
+  //体力の満タンではないポケモンのための変数定義
+  DEFINE_LOCAL LWK_PARTY_NUM  //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+  DEFINE_LOCAL LWK_RET_HP     //HPチェックの帰り値
+  DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
+  DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
+
+  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+  //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのHPを取得
+    _CHECK_TEMOTI_HP( LWK_RET_HP, LWK_COUNT_NUM )
+
+    //指定POSのポケモンのPPを取得
+    _CHECK_TEMOTI_PP( LWK_RET_PP, LWK_COUNT_NUM )
+
+    //チェックしたポケモンのHP（またはPP）が満タンではないのならば
+    IF $LWK_RET_HP == FALSE || $LWK_RET_PP == FALSE THEN
+      //HPかPPが満タンではないポケモンの数に＋１
+      $LWK_DAME += 1
+
+    ENDIF
+
+    //カウント
+     $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+  
+	//手持ちにHPかPPが満タンではないポケモンがいた場合
+  IF $LWK_DAME >= 1 THEN
 		
 		//遠慮せず休みなよ！
 		_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_02 )
@@ -54,16 +85,21 @@ EVENT_START	ev_r18r0101_trainerw_01
 		_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 
-		//回復済みチェック用にローカルワークに値を代入
-		$LOCALWORK15 = 999
+    
+    //あなたのポケモン エネルギッシュ！
+  	_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_01 )
+  	_LAST_KEYWAIT()
+  	_MSGWIN_CLOSE()
 		
-	ENDIF
+	ELSE
 	
-	//あなたのポケモン エネルギッシュ！
-	_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
+  	//あなたのポケモン エネルギッシュ！
+  	_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_trainerw_01 )
+  	_LAST_KEYWAIT()
+  	_MSGWIN_CLOSE()
+	
+	ENDIF
+}
 EVENT_END
 
 

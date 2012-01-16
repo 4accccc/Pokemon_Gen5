@@ -81,6 +81,11 @@ EVENT_START   ev_h04r0601_woman3_01
     _ME_WAIT()
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
+    
+    //女性：あなたも　あなたの　ポケモンも
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0601_woman3_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
   //手持ちのポケモンはHPもPPも満タン
   ELSE
