@@ -1666,6 +1666,11 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
         ITEMDISP_upMessageClean( pWork ); // クリア
       }
+      else
+      {
+        // 上画面を更新
+        ITEMDISP_upMessageRewrite(pWork);
+      }
       // タッチ遷移なら非表示に
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
       ITEMDISP_ChangeActive( pWork, TRUE );
@@ -5392,9 +5397,14 @@ static void _itemRepositorySortSelectWait(FIELD_ITEMMENU_WORK* pWork)
       break;
     // ----------やめる------------
     case BAG_REPSORT_MENU_STR_CANCEL:
-      // タッチ状態で抜けたのならクリア
       if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
+        // タッチ状態で抜けたのならクリア
         ITEMDISP_upMessageClean( pWork ); // クリア
+      }
+      else
+      {
+        // キーで抜けたのなら更新
+        ITEMDISP_upMessageRewrite(pWork);
       }
       // タッチ遷移なら非表示に
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
