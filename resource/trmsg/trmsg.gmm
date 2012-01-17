@@ -18454,24 +18454,30 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">しんにゅうしゃは
-あなたで　あってますか？▼</language>
-		<language name="JPN_KANJI" width="216">侵入者は
-あなたで　あってますか？▼</language>
+		<language name="JPN" width="216">なんだい……？　プラズマだんの
+クイーン　とよばれる　アタシに▽
+かてると　おもってんの？▼</language>
+		<language name="JPN_KANJI" width="216">なんだい……？　プラズマ団の
+クイーン　と呼ばれる　アタシに▽
+勝てると　思ってんの？▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">たしかに　あなたは
-しんにゅうしゃ！</language>
-		<language name="JPN_KANJI" width="216">たしかに　あなたは
-侵入者！</language>
+		<language name="JPN" width="216">アンタの　その　かお……
+ほんと　ムカつくわね！</language>
+		<language name="JPN_KANJI" width="216">アンタの　その顔……
+ほんと　ムカつくわね！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">しんにゅうしゃの　あなたを　たおせば
-もっと　いい　ポケモンを……</language>
-		<language name="JPN_KANJI" width="216">侵入者の　あなたを　倒せば
-もっと　いい　ポケモンを……</language>
+		<language name="JPN" width="216">アタシはね　せかいせいふくを　して
+Ｎって　やろうを　いためるのさ！▼
+あの　うらぎりもの……
+すかした　かおが　ムカつくんだよ！</language>
+		<language name="JPN_KANJI" width="216">アタシはね　世界征服を　して
+Ｎって　野郎を　痛めるのさ！▼
+あの　裏切り者……
+すかした　顔が　ムカつくんだよ！</language>
 	</row>
 
 	<row id="TRID_DOCTOR_11_TRMSG_FIGHT_START">
@@ -18606,10 +18612,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_14_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">なのった　じてんで
-きづかれないとか　ムリだしぃ！</language>
-		<language name="JPN_KANJI" width="216">名乗った　時点で
-気づかれないとか　ムリだしぃ！</language>
+		<language name="JPN" width="216">あなたたちは　１００パーセント
+パーフェクトに　しんにゅうしゃ！</language>
+		<language name="JPN_KANJI" width="216">あなたたちは　１００パーセント
+パーフェクトに　侵入者！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_14_TRMSG_FIGHT_AFTER">
@@ -18651,7 +18657,7 @@
 	<row id="TRID_SWPLAZMAW_16_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ここは　あたしたちの　ばしょ！
 だれにも　あらさせないよ！▼</language>
-		<language name="JPN_KANJI" width="216">ここは　あたしたちの　ばしょ！
+		<language name="JPN_KANJI" width="216">ここは　あたしたちの　場所！
 だれにも　荒らさせないよ！▼</language>
 	</row>
 
@@ -18663,10 +18669,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_16_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ここ……　プラズマだんで　しか
-いきられない　にんげんも　いるのに！</language>
-		<language name="JPN_KANJI" width="216">ここ……　プラズマ団で　しか
-生きられない　人間も　いるのに！</language>
+		<language name="JPN" width="216">なによ！　ここでしか　いきられない
+にんげん　だって　いるのよ！</language>
+		<language name="JPN_KANJI" width="216">なによ！　ここでしか　生きられない
+人間だって　いるのよ！</language>
 	</row>
 
 	<row id="TRID_SWBOSS_2_01_TRMSG_FIGHT_FIRST_DAMAGE">
