@@ -1530,6 +1530,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_16, 12 )	//ローカルライブキャスターＰＯＳ起動
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_17, 13 )	//せいそくち・水上釣り到着フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_18, 14 )	//ライモンシティ・ライバルイベント
+		_BMPMENU_MAKE_LIST( msg_debug_01, 17 )	//C12のイベント消化済みにする
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -1824,6 +1825,30 @@ EVENT_START   ev_debug_suginaka
 			
 			//マップチェンジ
 			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDD06R0101, 9, 0, 19, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 17 THEN
+
+			//========================================//
+			_FLAG_RESET( FV_C12R0101_SWMAMA )
+			//C12のSCENE_CHANGE起動をOFFに
+			$WK_SCENE_C12_WHITE_MEET = 7
+			//SCENE_CHANGE無効
+			$WK_SCENE_C12GYM0201 = 1
+			//R19イベント終了
+			$WK_SCENE_R19 = 4
+			//R19アデク非表示
+			_FLAG_SET( FV_R19_CHAMPION_01 )
+			//C12のベル・ライバルを非表示
+			_FLAG_SET( FV_C12_SWBELL )
+			_FLAG_SET( FV_C12_SWANLEADER1 )
+			//C12の動作モデル操作を終了（C12ジムクリア関連イベント終了）
+			$WK_SCENE_C12GYM_OPEN = 4
+			//========================================//
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C12R0101, 14, 3, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 
