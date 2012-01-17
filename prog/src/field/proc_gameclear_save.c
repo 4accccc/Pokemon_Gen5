@@ -729,6 +729,21 @@ static void DendouSave_init( GAMECLEAR_MSG_WORK* work )
   if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
 
   DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
+
+
+#ifdef PM_DEBUG
+  // MAX回数デバッグ用に99、999、9997回殿堂入りデータを書き込む
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X && GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
+    int i,count;
+    if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){ count=99;}
+    if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){ count=999;}
+    if(GFL_UI_KEY_GetCont()&PAD_KEY_RIGHT){ count=9997;}
+    for(i=0;i<count;i++){
+      DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
+      if((i%100)==0){ OS_Printf("dendou write i=%d\n", i);}
+    }
+  }
+#endif
   GAMEDATA_ExtraSaveAsyncStart( work->gamedata, SAVE_EXTRA_ID_DENDOU ); 
 
   work->dendouSaveInitFlag = TRUE;
