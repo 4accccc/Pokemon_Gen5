@@ -5799,14 +5799,14 @@ SWANで名称とデザイン変更した</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]おくびょう[/System:Color]
 [/System:Color]すばやさが　成長しやすい。
 攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-14T03:36:30" />
+				Time="2012-01-17T02:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5912,13 +5912,13 @@ SWANで名称とデザイン変更した</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]まじめ[/System:Color]
 [/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-14T03:36:08" />
+				Time="2012-01-17T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
