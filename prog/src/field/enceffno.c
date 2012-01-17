@@ -232,6 +232,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
     SEQ_BGM_VS_ELITE_PLASMA, ///<TRTYPE_GRP_SAGE3  ヴィオ
     SEQ_BGM_VS_BANJIROU,  ///<TRTYPE_GRP_INFINITY 無限ダンジョンボス
     SEQ_BGM_VS_ACHROMA,   ///<TRTYPE_GRP_CLEAR_SWBOSS クリア後のアクロマ
+    SEQ_BGM_VS_RIVAL,     ///<TRTYPE_GRP_RIVAL2 ライバル2
                
   };
   static const u8 DATA_EncEffTbl[] = {

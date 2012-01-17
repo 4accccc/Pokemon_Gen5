@@ -80,8 +80,9 @@
 #define TRTYPE_GRP_SAGE3          (10)// ヴィオ
 #define TRTYPE_GRP_INFINITY       (11)// 無限ダンジョンボス
 #define TRTYPE_GRP_CLEAR_SWBOSS   (12)// クリア後のアクロマ
-#define TRTYPE_GRP_BCHAMP         (13) //サブウェイマスター
-#define TRTYPE_GRP_MAX            (14)
+#define TRTYPE_GRP_RIVAL2         (13)// ライバル2
+#define TRTYPE_GRP_BCHAMP         (14) //サブウェイマスター
+#define TRTYPE_GRP_MAX            (15)
 #define TRTYPE_GRP_NONE           (TRTYPE_GRP_MAX)
 
 /*
@@ -101,6 +102,8 @@
 #define TRTYPE_GRP_IDX_BIGFOUR3		(10)// 四天王
 #define TRTYPE_GRP_IDX_BIGFOUR4		(11)// 四天王
 #define TRTYPE_GRP_IDX_DPCHAMP		(12)// DPチャンピオン(シロナ)
+// 13 BCHAMP
+// 14 BCHAMP2
 //swan
 #define TRTYPE_GRP_IDX_SWRIVAL	  (15)// ライバル
 #define TRTYPE_GRP_IDX_TRAINER_SWBOSS (16)  // ポケモントレーナーのアクロマ
@@ -114,8 +117,10 @@
 #define TRTYPE_GRP_IDX_SWSAGE1	  (24)// ゲーチス
 #define TRTYPE_GRP_IDX_MUGENBOSS	(25)// 無限ダンジョンボス
 #define TRTYPE_GRP_IDX_CLEAR_SWBOSS (26)  // クリア後のアクロマ
+#define TRTYPE_GRP_IDX_SWLEADER1_1  (27)  // チェレン
+#define TRTYPE_GRP_IDX_SUPPORT    (28)  // サポート
 
-#define TRTYPE_GRP_IDX_MAX        (27)
+#define TRTYPE_GRP_IDX_MAX        (29)
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
