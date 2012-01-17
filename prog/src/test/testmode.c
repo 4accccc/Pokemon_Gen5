@@ -179,6 +179,7 @@ static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx 
 static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncPGL( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNCL( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncCygnus( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
@@ -275,6 +276,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"ÇŸÇ≥Ç©Å@Ç∞ÇÒÇ‚"      ,TESTMODE_ITEM_SelectFuncHosaka},
   {L"Ç©ÇÌÇæÅ@Ç±Ç§Ç∂"      ,TESTMODE_ITEM_SelectFuncKawada},
   {L"PGL"                 ,TESTMODE_ITEM_SelectFuncPGL},
+  {L"CYGNUS"              ,TESTMODE_ITEM_SelectFuncCygnus},
   {L"Ç…ÇÒÇƒÇÒÇ«Ç§"        ,TESTMODE_ITEM_SelectFuncNCL},
 };
 
@@ -1164,6 +1166,15 @@ extern const GFL_PROC_DATA DebugPGLProcData;
 static BOOL TESTMODE_ITEM_SelectFuncPGL( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pgl_debug), &DebugPGLProcData, NULL);
+  return TRUE;
+}
+
+// CYGNUS
+FS_EXTERN_OVERLAY(cygnus_debug);
+extern const GFL_PROC_DATA DebugCygnusProcData;
+static BOOL TESTMODE_ITEM_SelectFuncCygnus( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(cygnus_debug), &DebugCygnusProcData, NULL);
   return TRUE;
 }
 

@@ -22,6 +22,19 @@ typedef enum {
 //----------------------------------------------------------
 //----------------------------------------------------------
 enum {
+  MAGICNUMBER_SP_POKE01 = 0x80808080,
+  MAGICNUMBER_SP_POKE02,
+  MAGICNUMBER_SP_POKE03,
+  MAGICNUMBER_SP_POKE04,
+  MAGICNUMBER_SP_POKE05,
+  MAGICNUMBER_SP_POKE06,
+  MAGICNUMBER_SP_POKE07,
+  MAGICNUMBER_SP_POKE08,
+};
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+enum {
   CYGDATA_SP_POKE01 = 0,
   CYGDATA_SP_POKE02,
   CYGDATA_SP_POKE03,
@@ -109,6 +122,10 @@ extern CYGSAVE_STATE CYGNUS_SAVEDATA_Receive(
 //----------------------------------------------------------
 //----------------------------------------------------------
 extern CYGSAVE_STATE CYGNUS_SAVEDATA_DEBUG_Write( CYGNUS_SAVEDATA * sv, u32 * rec_buf );
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+extern u32 CYGNUS_SAVEDATA_DEBUG_GetFlags( const CYGNUS_SAVEDATA * sv );
 
 #endif
 

@@ -61,6 +61,8 @@ CYGSAVE_STATE CYGNUS_SAVEDATA_GetStatus( const CYGNUS_SAVEDATA * sv )
 {
   if ( sv->magic_number != CYGNUS_MAGIC_NUMBER ) return CYGSAVE_STATE_NON;
   if ( sv->overwrite_enable_flag == TRUE ) return CYGSAVE_STATE_SEND;
+
+  return CYGSAVE_STATE_RECEIVE;
 }
 
 //----------------------------------------------------------
@@ -100,7 +102,7 @@ CYGSAVE_STATE CYGNUS_SAVEDATA_Receive( const CYGNUS_SAVEDATA * sv, u32 onetime_k
 //============================================================================================
 //----------------------------------------------------------
 /**
- * @brief デバッグ用：CYGNUSからの書き込み
+ * @brief デバッグ用：CYGNUSから：書き込み
  */
 //----------------------------------------------------------
 CYGSAVE_STATE CYGNUS_SAVEDATA_DEBUG_Write( CYGNUS_SAVEDATA * sv, u32 * rec_buf )
@@ -119,6 +121,18 @@ CYGSAVE_STATE CYGNUS_SAVEDATA_DEBUG_Write( CYGNUS_SAVEDATA * sv, u32 * rec_buf )
   sv->onetime_key = 0;
   return state;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief デバッグ用：CYGNUSから：フラグ取得
+ */
+//----------------------------------------------------------
+u32 CYGNUS_SAVEDATA_DEBUG_GetFlags( const CYGNUS_SAVEDATA * sv )
+{
+  u32 xor_value = rand( sv->onetime_key ) >> 32;
+  return sv->flags ^ xor_value;
+}
+
 #endif
 
 

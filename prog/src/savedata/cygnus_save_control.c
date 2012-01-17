@@ -7,9 +7,11 @@
  */
 //============================================================================================
 
+#include <gflib.h>
+#include "system/gfl_use.h"
 #include "savedata/save_control.h"
-#include "savedata/save_tbl.h"
 #include "savedata/cygnus_savedata.h"
+#include "savedata/cygnus_save_control.h"
 
 
 //============================================================================================
@@ -61,7 +63,6 @@ void CYGNUSSAVE_CONTROL_SaveAsyncInit( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
   GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_SVLD);
 
   cygsave_ctrl->save_seq = 0;
-  cygsave_ctrl->
 }
 
 //----------------------------------------------------------
@@ -73,7 +74,7 @@ BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
   switch (cygsave_ctrl->save_seq)
   {
   case 0:
-    outsv_ctrl->lock_id = GFL_BACKUP_DirectFlashSaveAsyncInit(
+    cygsave_ctrl->lock_id = GFL_BACKUP_DirectFlashSaveAsyncInit(
         CYGSAVE_FLASH_ADRS, &cygsave_ctrl->savedata, sizeof(CYGNUS_SAVEDATA) );
     cygsave_ctrl->save_seq ++;
     break;
@@ -84,7 +85,6 @@ BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
     }
     break;
   case 2:
-    cygsave_ctrl->cygsave_state = CYGSAVE_STATE_EXISTS;
     GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
     GFL_UI_SleepEnable(GFL_UI_SLEEP_EXTRA_SAVE);
     return TRUE;  //ÉZÅ[ÉuäÆóπ
