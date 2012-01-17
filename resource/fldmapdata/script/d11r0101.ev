@@ -536,7 +536,7 @@ EVENT_START		ev_pos_d11r0101_stopper_01
 
   //アニメ：MAN2「！」
   _OBJ_ANIME( D11R0101_MAN2_01, anm_stopper_gyoe_01 )
-  _TIME_WAIT( 8 )
+  _TIME_WAIT( 20 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
