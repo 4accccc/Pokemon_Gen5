@@ -65,7 +65,7 @@ filenames.each{|filename|
         else
           # 通常トレーナーは視線０ではいけない
           if event.Parameter_0_Number.to_i <= 0 then
-            set_error_data( error_array ,filename ,event ,"通常（釣り、回復以外）は視線0以下になっている")
+            set_error_data( error_array ,filename ,event ,"通常トレーナー（釣り、回復以外）の視線が0以下になっている")
           end
       end
 
@@ -75,14 +75,13 @@ filenames.each{|filename|
       # ランダム移動チェック
       # ランダム移動は原則禁止
       if event.MOVE_CODE_Number == "MV_RND" then
-        set_error_data( error_array ,filename ,event ,"ランダム移動(MV_RND)が設定されている")
-      end
 
-      # 移動可能方数チェック
-      # どちらかが0以上の必要がある
-      if (( event.Move_Limit_X_Number.to_i > 0 ) &&
-          ( event.Move_Limit_Z_Number.to_i > 0) ) then
-        set_error_data( error_array ,filename ,event ,"limit_x,limit_yが両方とも0に設定されている")
+        # 移動可能方数チェック
+        # どちらかが0以上の必要がある
+        if (( event.Move_Limit_X_Number.to_i > 0 ) ||
+            ( event.Move_Limit_Z_Number.to_i > 0) ) then
+          set_error_data( error_array ,filename ,event ,"ランダム移動(MV_RND)が設定されていているが、limit_xとlimit_yが0になっていない。")
+        end
       end
 
       # 視線が6以上
