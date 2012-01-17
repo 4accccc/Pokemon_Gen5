@@ -143,6 +143,7 @@ void MP_JumpMovePokemon(ENC_SV_PTR inEncData, u8 season, const u8 inTarget)
 //--------------------------------------------------------------------------------------------
 void MP_JumpMovePokemonAll( GAMEDATA* gdata )
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	u8 i,season;
   ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
   season = GAMEDATA_GetSeasonID( gdata );
@@ -154,6 +155,7 @@ void MP_JumpMovePokemonAll( GAMEDATA* gdata )
 			MP_JumpMovePokemon(enc_sv, season, i);
 		}
 	}
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 //-----------------------------------------------------------------------------
@@ -167,6 +169,7 @@ void MP_JumpMovePokemonAll( GAMEDATA* gdata )
 //-----------------------------------------------------------------------------
 void MP_MovePokemonNeighboring( GAMEDATA* gdata )
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	u8 i, season;
   ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
   season = GAMEDATA_GetSeasonID( gdata );
@@ -182,6 +185,7 @@ void MP_MovePokemonNeighboring( GAMEDATA* gdata )
 		MP_JumpMovePokemon(enc_sv, season, i);
 	  IWASAWA_Printf("%d:ジャンプします\n",i);
 	}
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 //--------------------------------------------------------------------------------------------
@@ -225,12 +229,14 @@ u16 MP_MovePokeZoneIdx2ID( const u8 inZoneIdx )
 //--------------------------------------------------------------------------------------------
 BOOL MP_CheckMovePoke(ENC_SV_PTR inEncData)
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	u8 i;
 	for(i=0;i<MOVE_POKE_MAX;i++){
 		if ( EncDataSave_IsMovePokeValid(inEncData, i) ){
 			return TRUE;
 		}
 	}
+#endif //SWAN_MOVE_POKE_DISABLE
 	return FALSE;
 }
 
@@ -246,6 +252,7 @@ BOOL MP_CheckMovePoke(ENC_SV_PTR inEncData)
 //--------------------------------------------------------------------------------------------
 void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	POKEMON_PARAM *poke_param;
 	MPD_PTR	 mpd;
 	ENC_SV_PTR enc;
@@ -312,6 +319,7 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
   
   //ステータス更新
   EncDataSave_SetMovePokeState( enc, inTargetPoke, MVPOKE_STATE_MOVE );
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 //--------------------------------------------------------------------------------------------
@@ -326,6 +334,7 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 //--------------------------------------------------------------------------------------------
 void MP_RecoverMovePoke( GAMEDATA* gdata )
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
   int i;
   ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
 
@@ -334,6 +343,7 @@ void MP_RecoverMovePoke( GAMEDATA* gdata )
       MP_AddMovePoke( gdata, i);
     }
   }
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 
@@ -349,6 +359,7 @@ void MP_RecoverMovePoke( GAMEDATA* gdata )
 //-----------------------------------------------------------------------------
 void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	u16 hp;
 	u8 cond;
   u8 move_poke_id;
@@ -415,6 +426,7 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
     //移動ポケモンのジャンプ
     MP_JumpMovePokemonAll( gdata );
   }
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 //--------------------------------------------------------------------------------------------
@@ -429,6 +441,7 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 //--------------------------------------------------------------------------------------------
 u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	ENC_SV_PTR enc;
 	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
 	
@@ -442,6 +455,7 @@ u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
       return WEATHER_NO_KAZAKAMI;
     }
   }
+#endif //SWAN_MOVE_POKE_DISABLE
   return WEATHER_NO_NONE; //変更なし 
 }
 
@@ -455,6 +469,7 @@ u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
 //--------------------------------------------------------------------------------------------
 BOOL MP_CheckMovePokeValid( GAMEDATA* gdata )
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	ENC_SV_PTR enc;
 	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
 	
@@ -462,6 +477,7 @@ BOOL MP_CheckMovePokeValid( GAMEDATA* gdata )
        EncDataSave_IsMovePokeValid( enc, MOVE_POKE_KAZAKAMI) ){
     return TRUE;
   }
+#endif //SWAN_MOVE_POKE_DISABLE
   return FALSE;
 }
 
@@ -634,11 +650,13 @@ void MP_DebugUpdateData(	ENC_SV_PTR data,
 						const u8 inTargetPoke,
 						const u8  inZoneIdx)
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
 	MPD_PTR mpd;
 	mpd = EncDataSave_GetMovePokeDataPtr(data, inTargetPoke);
 	//更新
 	EncDataSave_SetMovePokeZoneIdx(data,inTargetPoke,inZoneIdx);
 	//移動ポケモンデータも書き換える
 	EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_ZONE_ID, GetZoneID( inZoneIdx ));
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 #endif

@@ -110,6 +110,7 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
     // フラッシュOFF
 		FIELD_STATUS_SetFieldSkillFlash(fldstatus, FALSE);
 	}
+#ifndef SWAN_MOVE_POKE_DISABLE
 	//移動ポケモン処理
 	{
 		ENC_SV_PTR data;
@@ -117,6 +118,7 @@ void FIELD_FLAGCONT_INIT_MapJump(GAMEDATA * gdata, u16 zone_id)
 	  //移動ポケモン全部ジャンプ
 	  MP_JumpMovePokemonAll( gdata );
 	}
+#endif //SWAN_MOVE_POKE_DISABLE
 
   { //イベントフラグ
     EVENTWORK *eventwork = GAMEDATA_GetEventWork( gdata );
@@ -342,11 +344,13 @@ void FIELD_FLAGCONT_INIT_GameOver(GAMEDATA * gdata, u16 zone_id)
 //-----------------------------------------------------------------------------
 void FIELD_FLAGCONT_INIT_Continue(GAMEDATA * gdata, u16 zone_id)
 {
+#ifndef SWAN_MOVE_POKE_DISABLE
   //移動ポケモン処理
 	{
 	  //移動ポケモン全部ジャンプ
 	  MP_JumpMovePokemonAll( gdata );
 	}
+#endif //SWAN_MOVE_POKE_DISABLE
 }
 
 //----------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 //============================================================================================
 #pragma once
 
+#define SWAN_MOVE_POKE_DISABLE  //有効にするると、移動ポケモンエンカウントチェックが無効になる
+
 #include "gamesystem/game_data.h"
 #include "savedata/save_control.h"
 #include "savedata/encount_sv.h"

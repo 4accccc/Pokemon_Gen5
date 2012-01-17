@@ -226,18 +226,23 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     RECORD_Inc(GAMEDATA_GetRecordPtr( enc->gdata), RECID_EFFECT_ENCOUNT_NUM );
   }else{
     u16 zone_id = FIELDMAP_GetZoneID( enc->fwork );
-#if 0
+#ifndef SWAN_MOVE_POKE_DISABLE
     //移動ポケモンチェック
     mpd = ENCPOKE_GetMovePokeEncountData( &fld_spa, zone_id );
-#endif
+#endif  //SWAN_MOVE_POKE_DISABLE
     //Ｎポケエンカウントチェック
     n_poke_id = ENCPOKE_CheckNPokeEncount( &fld_spa, zone_id );
   }
+
+#ifndef SWAN_MOVE_POKE_DISABLE
   if( mpd != NULL){
     //移動ポケモンバトルパラメータセット
     bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
     enc_CreateBattleParamMovePoke( enc, &fld_spa, bp, HEAPID_BTLPARAM, mpd );
   }else if( n_poke_id != ENC_N_POKE_NONE ){
+#else
+  if( n_poke_id != ENC_N_POKE_NONE ){
+#endif  //SWAN_MOVE_POKE_DISABLE
     //Ｎポケモンバトルパラメータセット
     bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
     enc_CreateBattleParamNPoke( enc, &fld_spa, bp, HEAPID_BTLPARAM, n_poke_id );

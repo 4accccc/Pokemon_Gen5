@@ -1216,8 +1216,10 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 {
   GAMEDATA_SetLastBattleResult( gamedata, bew->battle_param->result );
 
+#ifndef SWAN_MOVE_POKE_DISABLE
   //移動ポケモン戦闘後処理
   MP_SetAfterBattle( gamedata, bew->battle_param);
+#endif  //SWAN_MOVE_POKE_DISABLE
 
   //ビーコンリクエスト
   BeaconReq_BattleEnd( bew );
