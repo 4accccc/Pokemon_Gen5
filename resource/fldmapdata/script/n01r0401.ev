@@ -122,7 +122,6 @@ ev_n01r0401_pairstart_01:
   //はい
   IF $SCWK_ANSWER == SCR_YES THEN
     _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_05, N01R0401_BOSS_01, POS_DEFAULT )
-    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
     //自転車に乗ってるなら歩行状態へ
@@ -130,6 +129,9 @@ ev_n01r0401_pairstart_01:
     IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
       _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
     ENDIF
+    
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
     
     //連れ歩き開始
     _PAIR_TRAINER_SET( N01R0401_BOSS_01 , PAIR_ID_N01_BOSS, PAIR_TYPE_FREE_ZONE, 0, SCRID_N01R0401_BOSS )
@@ -149,9 +151,6 @@ ev_n01r0401_pairstart_01:
       $WK_SCENE_N01R0402_BOSS = 1
     ENDIF
     //==================================//
-    
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-    _OBJ_ANIME_WAIT()
     
   //いいえ
   ELSE
@@ -267,6 +266,7 @@ EVENT_START		ev_scene_n01r0401_boss_03
   
   //Ｎ：さあ！案内したまえ
   _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_05, N01R0401_BOSS_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //連れ歩き開始
