@@ -507,6 +507,9 @@
 #define FE_C05R0501_RIVAL_BTL_END          491 /* 0x01eb ホドモエシティ：クリア後ライバルと戦闘済み */
 #define FE_C13_BADMAN_ITEMGET_01           492 /* 0x01ec タチワキシティ：不良・アイテム入手フラグ */
 #define FE_D27R0101_SWBOSS_TALK            493 /* 0x01ed プラズマフリゲート：クリア後アクロマ初回会話フラグ */
+#define FE_C08_LINKEV_ZONE                 494 /* 0x01ee ソウリュウシティ：シャガ宅から出てきた判定フラグ */
+#define FE_C02GYM0101_LINKEV_ZONE          495 /* 0x01ef シッポウシティ：図書館から出てきた判定フラグ */
+#define FE_C06_LINKEV_ZONE                 496 /* 0x01f0 フキヨセシティ：ジムから出てきた判定フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 

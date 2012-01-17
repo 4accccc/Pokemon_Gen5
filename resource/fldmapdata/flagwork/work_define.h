@@ -311,9 +311,9 @@
 #define WK_SCENE_D07                     16699 /* 0x413b ネジ山フィールド：ストッパーイベント制御ワーク */
 #define WK_SCENE_C15_BONUS_EVENT_01      16700 /* 0x413c ポケウッド：ごほうびイベント制御ワーク */
 #define WK_SCENE_C15R0401                16701 /* 0x413d ポケウッド：初回入室時イベント */
-#define WK_SCENE_C08_LINK_EVENT          16702 /* 0x413e ソウリュウシティ：リンクイベントPOS制御ワーク */
+#define WK_SCENE_C08_LINK_EVENT          16702 /* 0x413e ソウリュウシティ：リンクイベント制御ワーク */
 #define WK_SCENE_C05R0501_LINK_EVENT     16703 /* 0x413f ホドモエシティ：リンクイベントSCENE_CHANGE制御ワーク */
-#define WK_SCENE_C02_LINK_EVENT          16704 /* 0x4140 シッポウシティ：リンクイベントPOS制御ワーク */
+#define WK_SCENE_C02_LINK_EVENT          16704 /* 0x4140 シッポウシティ：リンクイベント制御ワーク */
 #define WK_SCENE_C04_TRIAL               16705 /* 0x4141 ライモンシティ：トライアルハウスイベント用 */
 #define WK_SCENE_C04GYM0101_GUIDE        16706 /* 0x4142 ライモンシティジム：ジムガイドイベント用 */
 #define WK_SCENE_D22_BOY2                16707 /* 0x4143 サンギ牧場：誘導用POS制御ワーク */
@@ -333,6 +333,7 @@
 #define WK_SCENE_R20R0101                16721 /* 0x4151 20番道路ゲート：POS制御用ワーク */
 #define WK_SCENE_D32R0101_FIGHTERM_01    16722 /* 0x4152 海辺の洞穴：POS制御用ワーク */
 #define WK_SCENE_T06_ZUKAN_01            16723 /* 0x4153 サンギタウン：せいそくちリストPOS制御用ワーク */
+#define WK_SCENE_C06_LINK_EVENT          16724 /* 0x4154 フキヨセシティ：リンクイベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
