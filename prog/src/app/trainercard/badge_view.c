@@ -1200,7 +1200,7 @@ static void ClActInit(BADGEVIEW_WORK *wk)
 
 static const int clact_dat[][8]={
   //   X      Y  anm, chr,               pltt,               cell,             bgprio, up/down
-  {  1*8,  21*8,  11, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         0, OBJ_DEFREND_DOWN, },// カードに戻る
+  {    4,  21*8,  11, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         0, OBJ_DEFREND_DOWN, },// カードに戻る
   { 28*8,  21*8,   1, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR,   0, OBJ_DEFREND_DOWN, },// もどる
   { 24*8,  21*8,   0, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR,   0, OBJ_DEFREND_DOWN, },// ×
   { 20*8,  21*8+4,   7, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR, 0, OBJ_DEFREND_DOWN, },// Ｙチェック
@@ -2340,7 +2340,7 @@ static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*5,  BADGE_TP_X+BADGE_TP_W*6 },   // 
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*6,  BADGE_TP_X+BADGE_TP_W*7 },   // 
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*7,  BADGE_TP_X+BADGE_TP_W*8 },   // 
-  { 168, 191,    8,  8+32  },   // TOUCH_CHANGE_CARD
+  { 168, 191,    4,  4+32  },   // TOUCH_CHANGE_CARD
   { 168, 191, 20*8, 24*8-1 },   // TOUCH_SHORTCUT
   { 168, 191, 24*8, 28*8-1 },   // TOUCH_END
   { 168, 191, 28*8, 32*8-1 },   // TOUCH_RETURN
@@ -3499,8 +3499,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			wk->Step = STEP_LV1+10;
 			wk->Flag |= FLG_SET_BGOFFSET;
 			// 非表示
-			bv_set_btn_visible( wk, BUTTON_CARD, FALSE );
-			bv_set_btn_visible( wk, BUTTON_END,  FALSE );
+//			bv_set_btn_visible( wk, BUTTON_CARD, FALSE );
+//			bv_set_btn_visible( wk, BUTTON_END,  FALSE );
 			bv_set_btn_visible( wk, BUTTON_BOOKMARK,  FALSE );
 			// パレットチェンジ初期化
 			bv_init_chgpal( wk );
@@ -3584,8 +3584,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			bv_set_model_visible( wk, FALSE );
 			//
 			// 表示
-			bv_set_btn_visible( wk, BUTTON_CARD, TRUE );
-			bv_set_btn_visible( wk, BUTTON_END,  TRUE );
+//			bv_set_btn_visible( wk, BUTTON_CARD, TRUE );
+//			bv_set_btn_visible( wk, BUTTON_END,  TRUE );
 			bv_set_btn_visible( wk, BUTTON_BOOKMARK,  TRUE );
 			//
 			// パレットチェンジ開始
