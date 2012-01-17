@@ -364,7 +364,6 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
   GFL_HEAP_FreeMemory( pp );
   bsp->PokewoodMode = BTL_POKEWOOD_REC;
   bsp->pokewoodSenario = senario_no; //‰¼
-//  bsp->DebugFlagBit = 1<<BTL_DEBUGFLAG_SKIP_BTLIN;
 
   // ŠÏ‹q”‚ðÝ’è
   {
@@ -614,16 +613,19 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     // í“¬ƒAƒjƒ‚ðOFF‚É‚Å‚«‚È‚¢‚æ‚¤‚É‚·‚é
     CONFIG_SetWazaEffectMode( (CONFIG*)bsp->configData, WAZAEFF_MODE_ON );
     
-    // ã‰fƒLƒƒƒ“ƒZƒ‹‰Â”\‚É‚·‚é‚©?
-    if(bsp->pokewoodSenario<POKEWOOD_PLAY_MAX){   //ƒ`ƒ…[ƒgƒŠƒAƒ‹ã‰f‚Íí‚ÉƒLƒƒƒ“ƒZƒ‹‹ÖŽ~
+    //ã‰fƒLƒƒƒ“ƒZƒ‹‹ÖŽ~‚ð‚ ‚ç‚©‚¶‚ßÝ’è
+    bsp->PokewoodShowNoCancelFlag = TRUE; 
+
+    // ã‰fƒLƒƒƒ“ƒZƒ‹‰Â”\‚É‚·‚é‚©?iƒ`ƒ…[ƒgƒŠƒAƒ‹ã‰f‚Íí‚É‹ÖŽ~j
+    if(bsp->pokewoodSenario<POKEWOOD_PLAY_MAX){
       // ‚±‚Ì˜^‰æƒf[ƒ^‚Íˆê“xã‰f‚µ‚Ä‚¢‚é‚©H
       if(POKEWOOD_SAVEDATA_GetMovieShowed( ps, prew->rec_id )==0){
         OS_Printf("ã‰f‚µ‚Ä‚È‚¢ id=%d\n", prew->rec_id);
-        bsp->PokewoodShowNoCancelFlag = TRUE;
       }else{
         OS_Printf("ã‰fÏ‚Ý id=%d\n", prew->rec_id);
+        bsp->PokewoodShowNoCancelFlag = FALSE;
       }
-    }
+    } 
     break;
   }
 
