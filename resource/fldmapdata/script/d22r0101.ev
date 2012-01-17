@@ -773,9 +773,9 @@ _ANIME_LABEL	anm_pokeserch05_goto_poke
 //	ライバル退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pokeserch05_goto_out
-  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 
@@ -815,18 +815,18 @@ _ANIME_LABEL	anm_pokeserch05_poke_x52
 //	ブリーダー主人公周辺に
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pokeserch05_goto_poke02
-	_ANIME_DATA	AC_WALK_D_8F,11
+	_ANIME_DATA	AC_WALK_D_8F,12
 	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ライバル主人公周辺に
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pokeserch05_goto_poke03
-	_ANIME_DATA	AC_WALK_D_8F,12
+	_ANIME_DATA	AC_WALK_D_8F,13
 	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
