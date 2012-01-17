@@ -41051,30 +41051,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>みずは　ながれている　かぎり
-くさらないと　いう……▼
-わたしも　たたかいつづける　かぎり
-いまより　かならず　つよくなる！▼</Text>
+くさらないと　いう……▽
+わたしも　たたかいつづければ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>水は　流れている　かぎり
-くさらないと　いう……▼
-わたしも　戦い続ける　かぎり
-今より　必ず　強くなる！▼</Text>
+くさらないと　いう……▽
+わたしも　戦い続ければ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -41141,16 +41139,16 @@
 			Language="JPN_KANJI">
 			<Text>流れる　葉っぱ　はね
 乗るときの　方向に　よって▽
-行き先が　変わるます▼
+行き先が　変わります▼
 そう！　あきらめなければ　必ず
 ジムリーダーに　会えますから</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -41167,27 +41165,27 @@
 			Language="JPN">
 			<Text>かっても……　まんがいち　まけても
 その　りゆうを　ぶんせき　して▽
-つよくなった　あたしに　かてますか？</Text>
+つよくなった　あたしに　かてますか？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>勝っても……　万が一　負けても
 その理由を　分析して▽
-強くなった　あたしに　勝てますか？</Text>
+強くなった　あたしに　勝てますか？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -80701,6 +80699,114 @@
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-15T09:45:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_2_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ！　わたくしを
+まんぞく　させるのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ！　わたくしを
+満足させるのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_2_01_TRMSG_FIGHT_POKE_LAST">
+		<LanguageCell
+			Language="JPN">
+			<Text>よろしい！　では　わたくしも
+ポケモンを　しんじましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よろしい！　では　わたくしも
+ポケモンを　信じましょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_2_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<LanguageCell
+			Language="JPN">
+			<Text>もっと！　もっと　しんじれば
+ポケモンの　ちからを　ひきだせるか！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もっと！　もっと　信じれば
+ポケモンの　力を　ひきだせるか！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWBOSS_2_01_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>きずな……
+みえないものこそ　しんじつか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きずな……
+みえないものこそ　真実か？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T07:38:34" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
