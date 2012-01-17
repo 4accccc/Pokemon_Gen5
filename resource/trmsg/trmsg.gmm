@@ -11933,9 +11933,9 @@
 
 	<row id="TRID_RANGERM_20_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">あんたの　ポケモンへの　あい
-なんとなく　わかったぜ！</language>
+ビチッと　わかったぜ！</language>
 		<language name="JPN_KANJI" width="216">あんたの　ポケモンへの　愛
-なんとなく　わかったぜ！</language>
+ビチッと　わかったぜ！</language>
 	</row>
 
 	<row id="TRID_RANGERM_20_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
@@ -11973,8 +11973,10 @@
 	</row>
 
 	<row id="TRID_RANGERW_20_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
-		<language name="JPN" width="216">これは　キーのみ▼</language>
-		<language name="JPN_KANJI" width="216">これは　キーのみ▼</language>
+		<language name="JPN" width="216">あなたにも
+キーのみ　あげたい！▼</language>
+		<language name="JPN_KANJI" width="216">あなたにも
+キーのみ　あげたい！▼</language>
 	</row>
 
 	<row id="TRID_RANGERW_20_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
