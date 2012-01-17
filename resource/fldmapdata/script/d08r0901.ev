@@ -14,7 +14,7 @@
   .include  "d08_def.h"
 
   //@author fujimura_souichirou
-  //@author suginaka_katsunori //演出修正
+  //@author suginaka_katsunori //演出修正・スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,7 +30,9 @@ _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LWK_VERSION
-
+//座標取得
+DEFINE_LOCAL LWK_POSX
+DEFINE_LOCAL LWK_POSZ
 
 /**************************************************************/
 /*  ZONE_CHANGE_LABEL                                         */
@@ -78,9 +80,20 @@ EVENT_START   ev_pos_d08r0901_stone_01
 
       _MSGWIN_CLOSE()
 
+      _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+      
+      IF $LWK_POSX != 16  THEN
+      
+          _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 16, LWK_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+          _OBJ_ANIME_WAIT()
+          _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_up )
+          _OBJ_ANIME_WAIT()
+      
+      ENDIF
+
       _CAMERA_START()		//カメラ操作開始
       _CAMERA_PURGE()		//カメラパージ
-      _CAMERA_MOVE(9688,0,970752,1081344,0,1015808,30)
+      _CAMERA_MOVE(9688,0,970752,1081344,0,688128,30)
       _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
       _TIME_WAIT ( 8 )  //間
@@ -140,7 +153,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
 
       _CAMERA_START()		//カメラ操作開始
       _CAMERA_PURGE()		//カメラパージ
-      _CAMERA_MOVE(9688,0,970752,1081344,0,1015808,30)
+      _CAMERA_MOVE(9688,0,970752,1081344,0,688128,30)
       _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
       _TIME_WAIT ( 8 )  //間
