@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-16T22:46:34" source="kyuremu_union_b_02_028.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-17T17:47:41" source="kyuremu_union_b_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-16T22:46:34" source="kyuremu_union_b_02_028.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-17T17:47:41" source="kyuremu_union_b_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,14 +20,14 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="38 29"
-	compress_material="on" material_size="15 15"
+	compress_node="merge" node_size="39 30"
+	compress_material="on" material_size="17 17"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.244385 0.324463 -0.038330" whd="2.579346 3.555908 7.816406"/>
+<box_test pos_scale="5" xyz="-0.622314 0.162109 -0.839844" whd="1.289551 1.777832 4.728760"/>
 
 <tex_image_array size="11">
 	<tex_image index="0" name="beam_light"
@@ -1183,7 +1183,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="15">
+<material_array size="17">
 	<material index="0" name="beam_light_t"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -1280,7 +1280,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="tex"
 	/>
-	<material index="4" name="q_beam05_2"
+	<material index="4" name="q_beam05_t1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="0"
@@ -1304,7 +1304,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="q_beam07_t"
+	<material index="5" name="q_beam05_t3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="3"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="flip repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="6" name="q_beam07_t"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="0"
@@ -1328,7 +1352,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="q_beam08_t"
+	<material index="7" name="q_beam07_t1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="5" tex_palette_idx="5"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="8" name="q_beam08_t"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="0"
@@ -1352,7 +1400,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="q_beam08_t1"
+	<material index="9" name="q_beam08_t1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -1376,7 +1424,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="q_beam08_t2"
+	<material index="10" name="q_beam08_t2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -1400,7 +1448,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="q_beam09_t"
+	<material index="11" name="q_beam09_t"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="0"
@@ -1424,7 +1472,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="q_beam11_t"
+	<material index="12" name="q_beam11_t"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -1448,7 +1496,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="q_beam11_t2"
+	<material index="13" name="q_beam11_t2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -1472,7 +1520,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="q_beam11_t3"
+	<material index="14" name="q_beam11_t3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -1496,7 +1544,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="q_beam11_t4"
+	<material index="15" name="q_beam11_t4"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
@@ -1520,7 +1568,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="stone_b_1"
+	<material index="16" name="stone_b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1546,7 +1594,7 @@
 	/>
 </material_array>
 
-<matrix_array size="28">
+<matrix_array size="29">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
@@ -1575,9 +1623,10 @@
 	<matrix index="25" mtx_weight="1" node_idx="26"/>
 	<matrix index="26" mtx_weight="1" node_idx="27"/>
 	<matrix index="27" mtx_weight="1" node_idx="28"/>
+	<matrix index="28" mtx_weight="1" node_idx="29"/>
 </matrix_array>
 
-<polygon_array size="31">
+<polygon_array size="33">
 	<polygon index="0" name="polygon0"
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
@@ -3310,6 +3359,81 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="30" name="polygon30"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.089600 1.043213 -1.542236"
+		volume_max="0.072266 1.377930 -1.457764"
+		volume_r="2.069336"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">27</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="-16.000000 32.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-0.089600 1.377930 -1.457764"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_xz xz="0.072266 -1.542236"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xy xy="0.072266 1.043213"/>
+					<tex st="-16.000000 0.000000"/>
+					<pos_xz xz="-0.089600 -1.457764"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="31" name="polygon31"
+		vertex_size="12" polygon_size="3"
+		triangle_size="0" quad_size="3"
+		volume_min="-0.285156 1.006104 -1.679199"
+		volume_max="0.256348 1.463135 -1.472656"
+		volume_r="2.198242"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">27</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="12">
+					<mtx idx="0"/>
+					<tex st="0.000000 54.812500"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-0.069824 1.243408 -1.472656"/>
+					<tex st="16.000000 54.812500"/>
+					<pos_xy xy="0.000000 1.137695"/>
+					<tex st="16.000000 0.000000"/>
+					<clr rgb="30 20 30"/>
+					<pos_xyz xyz="-0.234863 1.011963 -1.614990"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.285156 1.146240"/>
+					<tex st="0.000000 73.875000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="0.000000 1.137695 -1.472656"/>
+					<tex st="16.000000 73.875000"/>
+					<pos_xy xy="0.069824 1.243408"/>
+					<tex st="16.000000 0.000000"/>
+					<clr rgb="30 20 30"/>
+					<pos_xyz xyz="0.256348 1.141113 -1.679199"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.223145 1.006104"/>
+					<tex st="16.000000 54.812500"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="0.069824 1.243408 -1.472656"/>
+					<tex st="0.000000 54.812500"/>
+					<pos_xy xy="-0.069824 1.243408"/>
+					<tex st="0.000000 -10.687500"/>
+					<clr rgb="30 20 30"/>
+					<pos_yz yz="1.463135 -1.638916"/>
+					<tex st="16.000000 -10.687500"/>
+					<pos_xy xy="0.069824 1.463135"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="32" name="polygon32"
 		vertex_size="246" polygon_size="116"
 		triangle_size="36" quad_size="80"
 		volume_min="-0.388184 -0.379150 -0.386475"
@@ -3319,7 +3443,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">27</mtx_list>
+			<mtx_list size="1">28</mtx_list>
 			<primitive_array size="25">
 				<primitive index="0" type="quad_strip" vertex_size="30">
 					<mtx idx="0"/>
@@ -3980,7 +4104,7 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="29">
+<node_array size="30">
 	<node index="0" name="eff01_b02" kind="null"
 		parent="-1"
 		child="1"
@@ -4013,7 +4137,7 @@
 		volume_max="0.895752 2.114746 4.244385"
 		volume_r="4.623291"
 	>
-		<display index="0" material="6" polygon="0" priority="0"/>
+		<display index="0" material="8" polygon="0" priority="0"/>
 	</node>
 	<node index="2" name="beam02_03" kind="mesh"
 		parent="0"
@@ -4023,8 +4147,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.899902"
-		rotate="5.411377 -2.125488 -0.155518"
-		translate="17.540283 35.834229 30.449219"
+		rotate="5.274170 -2.128662 -0.156494"
+		translate="17.540283 34.885986 30.852783"
 		visibility="off"
 		display_size="1"
 		vertex_size="6" polygon_size="2"
@@ -4033,7 +4157,7 @@
 		volume_max="0.000000 0.060791 1.751709"
 		volume_r="1.752930"
 	>
-		<display index="0" material="7" polygon="13" priority="0"/>
+		<display index="0" material="9" polygon="13" priority="0"/>
 	</node>
 	<node index="3" name="beam02_04" kind="mesh"
 		parent="0"
@@ -4043,8 +4167,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.850098"
-		rotate="-3.586182 -2.125488 -0.155518"
-		translate="17.528809 29.469727 30.293457"
+		rotate="-3.723389 -2.128662 -0.156494"
+		translate="17.528320 28.521240 30.712402"
 		visibility="off"
 		display_size="1"
 		vertex_size="6" polygon_size="2"
@@ -4053,7 +4177,7 @@
 		volume_max="0.000000 0.060791 1.761963"
 		volume_r="1.762939"
 	>
-		<display index="0" material="7" polygon="14" priority="0"/>
+		<display index="0" material="9" polygon="14" priority="0"/>
 	</node>
 	<node index="4" name="beam02_05" kind="mesh"
 		parent="0"
@@ -4063,8 +4187,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.883789"
-		rotate="-2.652100 -1.637695 -0.174316"
-		translate="17.528809 29.469727 30.293457"
+		rotate="-2.789307 -1.640869 -0.176514"
+		translate="17.528320 28.521240 30.712402"
 		visibility="off"
 		display_size="1"
 		vertex_size="8" polygon_size="3"
@@ -4073,7 +4197,7 @@
 		volume_max="0.000000 0.082031 3.812500"
 		volume_r="3.813477"
 	>
-		<display index="0" material="7" polygon="15" priority="0"/>
+		<display index="0" material="9" polygon="15" priority="0"/>
 	</node>
 	<node index="5" name="beam02_06" kind="mesh"
 		parent="0"
@@ -4083,8 +4207,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.883789"
-		rotate="1.140869 -2.125488 -0.155518"
-		translate="17.540283 35.834229 30.449219"
+		rotate="1.003662 -2.128662 -0.156494"
+		translate="17.540283 34.885986 30.852783"
 		visibility="off"
 		display_size="1"
 		vertex_size="8" polygon_size="3"
@@ -4093,7 +4217,7 @@
 		volume_max="0.000000 0.082031 3.831299"
 		volume_r="3.832275"
 	>
-		<display index="0" material="8" polygon="16" priority="0"/>
+		<display index="0" material="10" polygon="16" priority="0"/>
 	</node>
 	<node index="6" name="beam02_07" kind="mesh"
 		parent="0"
@@ -4103,8 +4227,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.883789"
-		rotate="-0.507080 1.790771 -64.928467"
-		translate="-16.784912 35.240479 31.979248"
+		rotate="-0.571777 1.657959 -64.923828"
+		translate="-16.784912 34.223389 32.352783"
 		visibility="off"
 		display_size="1"
 		vertex_size="8" polygon_size="3"
@@ -4113,7 +4237,7 @@
 		volume_max="0.000000 0.082031 3.808594"
 		volume_r="3.809326"
 	>
-		<display index="0" material="8" polygon="17" priority="0"/>
+		<display index="0" material="10" polygon="17" priority="0"/>
 	</node>
 	<node index="7" name="beam02_08" kind="mesh"
 		parent="0"
@@ -4123,8 +4247,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.883789"
-		rotate="-1.782715 -3.777588 -63.122803"
-		translate="-16.753174 28.877197 31.783691"
+		rotate="-1.852051 -3.908203 -63.111572"
+		translate="-16.752441 27.859619 32.173584"
 		visibility="off"
 		display_size="1"
 		vertex_size="8" polygon_size="3"
@@ -4133,7 +4257,7 @@
 		volume_max="0.000000 0.082031 3.871826"
 		volume_r="3.872803"
 	>
-		<display index="0" material="7" polygon="18" priority="0"/>
+		<display index="0" material="9" polygon="18" priority="0"/>
 	</node>
 	<node index="8" name="beam02_r03" kind="mesh"
 		parent="0"
@@ -4143,8 +4267,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.899902"
-		rotate="5.770264 1.796875 0.340576"
-		translate="-16.784912 35.240479 31.979248"
+		rotate="5.622314 1.800049 0.342529"
+		translate="-16.784912 34.223389 32.352783"
 		visibility="off"
 		display_size="1"
 		vertex_size="6" polygon_size="2"
@@ -4153,7 +4277,7 @@
 		volume_max="0.000000 0.060791 1.750977"
 		volume_r="1.752197"
 	>
-		<display index="0" material="7" polygon="19" priority="0"/>
+		<display index="0" material="9" polygon="19" priority="0"/>
 	</node>
 	<node index="9" name="beam02_r04" kind="mesh"
 		parent="0"
@@ -4163,8 +4287,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 0.850098"
-		rotate="-3.227051 1.796875 0.340576"
-		translate="-16.753174 28.877197 31.783691"
+		rotate="-3.375000 1.800049 0.342529"
+		translate="-16.752441 27.859619 32.173584"
 		visibility="off"
 		display_size="1"
 		vertex_size="6" polygon_size="2"
@@ -4173,7 +4297,7 @@
 		volume_max="0.000000 0.060791 1.762451"
 		volume_r="1.763428"
 	>
-		<display index="0" material="7" polygon="20" priority="0"/>
+		<display index="0" material="9" polygon="20" priority="0"/>
 	</node>
 	<node index="10" name="beam_l03" kind="mesh"
 		parent="0"
@@ -4183,8 +4307,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.100098 1.000000 1.000000"
-		rotate="-9.778076 -9.769043 1.241943"
-		translate="17.646729 36.538818 43.164551"
+		rotate="-9.917480 -9.768555 1.259277"
+		translate="17.646240 35.621094 43.566406"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4203,8 +4327,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="0.899902 1.000000 1.000000"
-		rotate="-9.823730 -11.197021 1.492676"
-		translate="17.588623 29.873047 42.895264"
+		rotate="-9.963623 -11.196045 1.513672"
+		translate="17.587402 28.954590 43.313232"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4243,8 +4367,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.764160 -9.247559 2.006592"
-		translate="-15.956543 36.021973 44.726074"
+		rotate="-9.913818 -9.239990 2.037109"
+		translate="-15.956055 35.037842 45.097412"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4263,8 +4387,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.684326 -5.695557 1.392822"
-		translate="-15.639404 29.285156 45.129883"
+		rotate="-9.832764 -5.689453 1.414063"
+		translate="-15.638184 28.302246 45.518555"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4293,10 +4417,10 @@
 		volume_max="1.335205 3.880615 0.900635"
 		volume_r="4.023682"
 	>
-		<display index="0" material="10" polygon="23" priority="0"/>
-		<display index="1" material="11" polygon="24" priority="0"/>
-		<display index="2" material="12" polygon="25" priority="0"/>
-		<display index="3" material="13" polygon="22" priority="0"/>
+		<display index="0" material="12" polygon="23" priority="0"/>
+		<display index="1" material="13" polygon="24" priority="0"/>
+		<display index="2" material="14" polygon="25" priority="0"/>
+		<display index="3" material="15" polygon="22" priority="0"/>
 	</node>
 	<node index="16" name="beamhead01" kind="mesh"
 		parent="0"
@@ -4316,7 +4440,7 @@
 		volume_max="0.080811 0.187744 0.237305"
 		volume_r="0.260986"
 	>
-		<display index="0" material="9" polygon="1" priority="0"/>
+		<display index="0" material="11" polygon="1" priority="0"/>
 	</node>
 	<node index="17" name="beamhead02" kind="mesh"
 		parent="0"
@@ -4336,7 +4460,7 @@
 		volume_max="0.080811 0.187744 0.237305"
 		volume_r="0.260986"
 	>
-		<display index="0" material="9" polygon="2" priority="0"/>
+		<display index="0" material="11" polygon="2" priority="0"/>
 	</node>
 	<node index="18" name="beamhead03" kind="mesh"
 		parent="0"
@@ -4356,7 +4480,7 @@
 		volume_max="0.080811 0.187744 0.237305"
 		volume_r="0.260986"
 	>
-		<display index="0" material="9" polygon="3" priority="0"/>
+		<display index="0" material="11" polygon="3" priority="0"/>
 	</node>
 	<node index="19" name="beamhead04" kind="mesh"
 		parent="0"
@@ -4376,7 +4500,7 @@
 		volume_max="0.080811 0.187744 0.237305"
 		volume_r="0.260986"
 	>
-		<display index="0" material="9" polygon="4" priority="0"/>
+		<display index="0" material="11" polygon="4" priority="0"/>
 	</node>
 	<node index="20" name="discharge_L1" kind="mesh"
 		parent="0"
@@ -4386,8 +4510,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.755859 8.983154 -1.970947"
-		translate="18.094727 36.607178 38.702637"
+		rotate="-9.894531 8.975830 -1.998779"
+		translate="18.094482 35.678467 39.104492"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4396,7 +4520,7 @@
 		volume_max="0.072021 0.071533 0.208984"
 		volume_r="0.221436"
 	>
-		<display index="0" material="5" polygon="7" priority="0"/>
+		<display index="0" material="6" polygon="7" priority="0"/>
 	</node>
 	<node index="21" name="discharge_L2" kind="mesh"
 		parent="0"
@@ -4406,8 +4530,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.755859 8.983154 -1.970947"
-		translate="18.288330 30.076904 38.559814"
+		rotate="-9.894531 8.975830 -1.998779"
+		translate="18.287354 29.147949 38.977295"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4416,7 +4540,7 @@
 		volume_max="0.072021 0.071533 0.208984"
 		volume_r="0.221436"
 	>
-		<display index="0" material="5" polygon="8" priority="0"/>
+		<display index="0" material="6" polygon="8" priority="0"/>
 	</node>
 	<node index="22" name="discharge_R1" kind="mesh"
 		parent="0"
@@ -4426,8 +4550,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.764160 -9.247559 2.006592"
-		translate="-15.555176 36.035400 40.506836"
+		rotate="-9.913818 -9.239990 2.037109"
+		translate="-15.555176 35.040283 40.878174"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4436,7 +4560,7 @@
 		volume_max="0.004883 0.075195 0.220703"
 		volume_r="0.221436"
 	>
-		<display index="0" material="5" polygon="11" priority="0"/>
+		<display index="0" material="6" polygon="11" priority="0"/>
 	</node>
 	<node index="23" name="discharge_R2" kind="mesh"
 		parent="0"
@@ -4446,8 +4570,8 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="-9.764160 -9.247559 2.006592"
-		translate="-15.317139 29.520508 40.238525"
+		rotate="-9.913818 -9.239990 2.037109"
+		translate="-15.316162 28.524902 40.626465"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -4456,7 +4580,7 @@
 		volume_max="0.004883 0.075195 0.220703"
 		volume_r="0.221436"
 	>
-		<display index="0" material="5" polygon="12" priority="0"/>
+		<display index="0" material="6" polygon="12" priority="0"/>
 	</node>
 	<node index="24" name="hikari01" kind="mesh"
 		parent="0"
@@ -4538,11 +4662,32 @@
 	>
 		<display index="0" material="2" polygon="29" priority="0"/>
 	</node>
-	<node index="28" name="stone" kind="mesh"
+	<node index="28" name="plazma" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="29"
+		brother_prev="27"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="2"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-0.285156 1.006104 -1.679199"
+		volume_max="0.256348 1.463135 -1.457764"
+		volume_r="2.198242"
+	>
+		<display index="0" material="5" polygon="30" priority="0"/>
+		<display index="1" material="7" polygon="31" priority="0"/>
+	</node>
+	<node index="29" name="stone" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="27"
+		brother_prev="28"
 		draw_mtx="on"
 		billboard="off"
 		scale="0.399902 0.399902 0.399902"
@@ -4556,12 +4701,12 @@
 		volume_max="0.388184 0.379150 0.386475"
 		volume_r="0.389893"
 	>
-		<display index="0" material="14" polygon="30" priority="0"/>
+		<display index="0" material="16" polygon="32" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="718" polygon_size="304"
-	triangle_size="36" quad_size="268"/>
+<output_info vertex_size="734" polygon_size="308"
+	triangle_size="36" quad_size="272"/>
 
 </body>
 
