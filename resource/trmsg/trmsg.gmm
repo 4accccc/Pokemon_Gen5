@@ -5195,9 +5195,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER6_01_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">あいてが　どう　せめてくるのかって
+		<language name="JPN" width="216">アナタが　どう　せめてくるのかって
 すごく　ドキドキしちゃうよね！</language>
-		<language name="JPN_KANJI" width="216">あいてが　どう　攻めてくるのかって
+		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのかって
 すごく　ドキドキしちゃうよね！</language>
 	</row>
 
@@ -16926,8 +16926,8 @@
 	<row id="TRID_TENNIS_14_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">いつか　ひとと　ポケモンで
 ダブルスを　くんで　テニスしたいな</language>
-		<language name="JPN_KANJI" width="216">いつか　ひとと　ポケモンで
-ダブルスを　くんで　テニスしたいな</language>
+		<language name="JPN_KANJI" width="216">いつか　人と　ポケモンで
+ダブルスを　組んで　テニスしたいな</language>
 	</row>
 
 	<row id="TRID_BASKET_13_TRMSG_FIGHT_START">
@@ -17313,9 +17313,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER6_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">あいてが　どう　せめてくるのかって
+		<language name="JPN" width="216">アナタが　どう　せめてくるのかって
 すごく　ドキドキしちゃうよね！</language>
-		<language name="JPN_KANJI" width="216">あいてが　どう　攻めてくるのかって
+		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのかって
 すごく　ドキドキしちゃうよね！</language>
 	</row>
 
@@ -17907,11 +17907,11 @@
 	</row>
 
 	<row id="TRID_ELITEM_45_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">イッツ　トレーニング！
+		<language name="JPN" width="216">レッツ　トレーニング！
 ポケモンと　ともに　つよくなり▼
 ソウリュウや　セイガイハの
 ポケモンジムに　いどむ！▼</language>
-		<language name="JPN_KANJI" width="216">イッツ　トレーニング！
+		<language name="JPN_KANJI" width="216">レッツ　トレーニング！
 ポケモンと　ともに　強くなり▼
 ソウリュウや　セイガイハの
 ポケモンジムに　挑む！▼</language>
@@ -17965,11 +17965,11 @@
 	</row>
 
 	<row id="TRID_ELITEW_50_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">イッツ　トレーニング！
+		<language name="JPN" width="216">レッツ　トレーニング！
 ポケモンと　ともに　つよくなり▼
 ソウリュウや　セイガイハの
 ポケモンジムに　いどむの！▼</language>
-		<language name="JPN_KANJI" width="216">イッツ　トレーニング！
+		<language name="JPN_KANJI" width="216">レッツ　トレーニング！
 ポケモンと　ともに　強くなり▼
 ソウリュウや　セイガイハの
 ポケモンジムに　挑むの！▼</language>
