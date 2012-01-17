@@ -20,6 +20,7 @@
 #include "print/printsys.h"
 #include "gamesystem/game_data.h"
 
+#include "savedata/save_tbl.h"
 #include "savedata/wifilist.h"
 #include "savedata/dreamworld_data.h"
 #include "savedata/mystatus.h"
@@ -81,6 +82,7 @@ typedef enum
 typedef enum
 {
   MENU_ITEM_SAVE,
+  MENU_ITEM_EXSAVE,
   MENU_ITEM_CGEAR,
   MENU_ITEM_DAMMY,
   MENU_ITEM_NUM
@@ -90,6 +92,7 @@ typedef enum
 static const STRCODE* str_menu[] =
 {
   L"セーブアドレス",
+  L"セーブアドレスEX",
   L"Cギアデータセット",
   L"戻る",
 };
@@ -128,6 +131,7 @@ static void SetNextFunc( PROC_WORK *p_wk );
 // メニューの数と同じ
 static void NextFunc_CGearDummyData( PROC_WORK *p_wk );
 static void NextFunc_SaveAdrs( PROC_WORK *p_wk );
+static void NextFunc_ExSaveAdrs( PROC_WORK * p_wk );
 
 //============================================================================================
 /**
@@ -359,6 +363,10 @@ static void SetNextFunc( PROC_WORK *p_wk )
   switch( p_wk->curPos ){
   case MENU_ITEM_SAVE:
     NextFunc_SaveAdrs(p_wk);
+    OS_Printf("SAVE\n");
+    break;
+  case MENU_ITEM_EXSAVE:
+    NextFunc_ExSaveAdrs(p_wk);
     OS_Printf("SAVE\n");
     break;
   case MENU_ITEM_CGEAR:
@@ -787,6 +795,158 @@ static void NextFunc_SaveAdrs( PROC_WORK *p_wk )
     OS_TPrintf("%d total\n",sizetotal);
   }
 
+}
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
+enum {
+  LAST_DATA_SIZE = 4 + 4 + 4 + 2 + 2,
+  BLOCK_FOOTER_SIZE = 4,
+  TOTAL_FOOTER_SIZE = 16,
+};
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void printInnerSaveAdrsList( SAVE_CONTROL_WORK * svctrl, u32 adrs_ofs, u32 id_ofs )
+{
+  int i;
+  u32 size, adrs;
+  u32 total_size;
+  u32 top_adrs = (u32)SaveControl_GetSaveWorkAdrs( svctrl, &total_size );
+  u32 crc_total_size = MATH_ROUNDUP(sizeof(u16) * SaveParam_Normal.table_max, 4 );
+
+  // blocks
+  for ( i = 0; i < GMDATA_ID_MAX; i ++ )
+  {
+    adrs = (u32)SaveControl_DataPtrGet( svctrl, i ) - top_adrs + adrs_ofs;
+    size = SaveParam_Normal.table[i].get_size();
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    if ( id_ofs == 0 ) {
+      OS_TPrintf(" |   内部BLOCK%d\n", i );
+    } else {
+      OS_TPrintf(" |   内部BLOCK%d ミラー\n", i );
+    }
+    //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+  }
+  //CRC Table
+  size = crc_total_size;
+  adrs = adrs_ofs + total_size - LAST_DATA_SIZE - crc_total_size;
+  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+  if ( id_ofs == 0 ) {
+    OS_TPrintf(" |   内部 CRC テーブル\n" );
+  } else {
+    OS_TPrintf(" |   内部 CRC テーブル ミラー\n" );
+  }
+  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+
+  // Footer
+  i ++;
+  size = LAST_DATA_SIZE;
+  adrs = adrs_ofs + total_size - LAST_DATA_SIZE;
+  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+  OS_TPrintf(" |   内部 フッター\n" );
+  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+}
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void printInnerSaves( SAVE_CONTROL_WORK * svctrl )
+{
+  //OS_TPrintf("INNER SAVE AREA ADRS\n");
+  printInnerSaveAdrsList( svctrl, SaveParam_Normal.savearea_top_address, 0 );
+  printInnerSaveAdrsList( svctrl, SaveParam_Normal.savearea_mirror_address, GMDATA_ID_MAX + 2 );
+}
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void printOuterSave( const GFL_SVLD_PARAM * params, u32 id_ofs, u32 adrs_ofs )
+{
+  int i;
+  u32 size, adrs;
+  u32 total_size;
+  u32 top_adrs = (u32)params->savearea_top_address;
+  u32 crc_total_size = MATH_ROUNDUP(sizeof(u16) * params->table_max, 4 );
+
+  total_size = 0;
+  //blocks
+  for (i = 0; i < params->table_max; i ++ )
+  {
+    size = params->table[i].get_size();
+    adrs = adrs_ofs + top_adrs + total_size;
+    //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+    total_size += MATH_ROUNDUP( size + BLOCK_FOOTER_SIZE, 256 );
+  }
+  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+  OS_TPrintf(" |   外部 BLOCK%d\n", id_ofs );
+  //CRC Table
+  size = crc_total_size;
+  adrs = adrs_ofs + top_adrs + total_size;// - LAST_DATA_SIZE - crc_total_size;
+  i = 100;
+  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+  OS_TPrintf(" |   外部 BLOCK%d CRC テーブル\n", id_ofs );
+  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, 0 );
+  // Footer
+  i = 101;
+  size = LAST_DATA_SIZE;
+  adrs = adrs_ofs + top_adrs + total_size + crc_total_size;
+  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+  OS_TPrintf(" |   外部 BLOCK%d フッター\n", id_ofs );
+  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i, adrs, size, size, adrs + size - 2 );
+}
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void printOuterSaves( void )
+{
+  int i;
+  OS_TPrintf("OUTER SAVE AREA ADRS\n");
+  for ( i = 0; i < SAVE_EXTRA_ID_MAX; i ++ )
+  {
+    const GFL_SVLD_PARAM * params = &SaveParam_ExtraTbl[i];
+    printOuterSave( params, i, 0 );
+    if (params->savearea_top_address != params->savearea_mirror_address )
+    {
+      printOuterSave( params, 0, params->savearea_mirror_address - params->savearea_top_address );
+    }
+  }
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief
+ */
+//---------------------------------------------------------------------------
+static void NextFunc_ExSaveAdrs( PROC_WORK * p_wk )
+{
+  OS_TPrintf("SAVE_NORMAL NUM %d\n", SaveParam_Normal.table_max );
+  OS_TPrintf("SAVE_NORMAL               %08x(%08x)\n",  0, SAVESIZE_NORMAL );
+  OS_TPrintf("SAVE_MIRROR               %08x(%08x)\n",  MIRROR_SAVE_ADDRESS, SAVESIZE_NORMAL );
+  OS_TPrintf("EXTRA_SAVE_START_ADDRESS  %08x(%08x)\n",  EXTRA_SAVE_START_ADDRESS, EXTRA_MM_SAVE_SIZE );
+  OS_PutString("\n");
+
+  OS_TPrintf("EXTRA_MM_REC_MINE         %08x(%08x)\n", EXTRA_MM_REC_MINE, SAVESIZE_EXTRA_BATTLE_REC);
+  OS_TPrintf("EXTRA_MM_CGEAR            %08x(%08x)\n", EXTRA_MM_CGEAR, SAVESIZE_EXTRA_CGEAR_PICTURE);
+  OS_TPrintf("EXTRA_MM_BATTLE_EXAMINAT  %08x(%08x)\n", EXTRA_MM_BATTLE_EXAMINATION,
+      SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+  OS_TPrintf("EXTRA_MM_STREAMING        %08x(%08x)\n", EXTRA_MM_STREAMING, SAVESIZE_EXTRA_STREAMING);
+  OS_TPrintf("EXTRA_MM_DENDOU           %08x(%08x)\n", EXTRA_MM_DENDOU, SAVESIZE_EXTRA_DENDOU );
+  OS_TPrintf("EXTRA_MM_DENDOU_MIRROR    %08x(%08x)\n", EXTRA_MM_DENDOU_MIRROR, SAVESIZE_EXTRA_DENDOU );
+  OS_TPrintf("EXTRA_MM_POKEWOOD_00      %08x(%08x)\n", EXTRA_MM_POKEWOOD_00, SAVESIZE_EXTRA_POKEWOOD);
+  OS_TPrintf("EXTRA_MM_WBT_00           %08x(%08x)\n", EXTRA_MM_WBT_00, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_WBT_01           %08x(%08x)\n", EXTRA_MM_WBT_01, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_WBT_02           %08x(%08x)\n", EXTRA_MM_WBT_02, SAVESIZE_EXTRA_WBT );
+  OS_TPrintf("EXTRA_MM_3DS              %08x(%08x)\n", EXTRA_MM_3DS, SAVESIZE_EXTRA_3DS );
+  OS_TPrintf("EXTRA_MM_SAVE_END         %08x(%08x)\n", EXTRA_MM_SAVE_END, EXTRA_MM_SAVE_SIZE );
+  OS_PutString("\n");
+
+  OS_TPrintf("OUTSIDE_MM_MYSTERY        %08x(%08x)\n", OUTSIDE_MM_MYSTERY, SAVESIZE_OUTSIDE_MYSTERY );
+  OS_TPrintf("OUTSIDE_MM_MYSTERY_MIRROR %08x(%08x)\n", OUTSIDE_MM_MYSTERY_MIRROR, SAVESIZE_OUTSIDE_MYSTERY );
+  OS_TPrintf("OUTSIDE_MM_PERMANENT      %08x(%08x)\n", OUTSIDE_MM_PERMANENT, SAVESIZE_OUTSIDE_PERMANENT);
+  OS_PutString("\n");
+
+  OS_TPrintf("DEBUG_FIGHT_SAVE          %08x(%08x)\n", DEBUG_FIGHT_SAVE, 0 );
+  
+  printInnerSaves( p_wk->pSaveData );
+  printOuterSaves();
 }
 
 #endif // PM_DEBUG
