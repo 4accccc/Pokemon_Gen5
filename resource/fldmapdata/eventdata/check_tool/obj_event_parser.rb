@@ -54,7 +54,8 @@ class OBJEvent
               :OBJ_CODE_Number, :MOVE_CODE_Number, :EVENT_TYPE_Number, :Flag_Name, 
               :Event_Script_Name, :Direction_Type_Number, 
               :Parameter_0_N, :Parameter_1_Number, :Parameter_2_Number, 
-              :Move_Limit_X_Number, :Move_Limit_Z_Number, :Pos_Type, :position
+              :Move_Limit_X_Number, :Move_Limit_Z_Number, :Pos_Type, :position,
+              :Parameter_0_Number, :Parameter_1_Number, :Parameter_2_Number
 
   private
   #======================
