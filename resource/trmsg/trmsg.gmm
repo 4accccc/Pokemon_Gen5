@@ -9495,13 +9495,11 @@
 
 	<row id="TRID_ELITEW_26_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">みずは　ながれている　かぎり
-くさらないと　いう……▼
-わたしも　たたかいつづける　かぎり
-いまより　かならず　つよくなる！▼</language>
+くさらないと　いう……▽
+わたしも　たたかいつづければ！▼</language>
 		<language name="JPN_KANJI" width="216">水は　流れている　かぎり
-くさらないと　いう……▼
-わたしも　戦い続ける　かぎり
-今より　必ず　強くなる！▼</language>
+くさらないと　いう……▽
+わたしも　戦い続ければ！▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_26_TRMSG_FIGHT_LOSE">
@@ -9519,7 +9517,7 @@
 ジムリーダーに　あえますから</language>
 		<language name="JPN_KANJI" width="216">流れる　葉っぱ　はね
 乗るときの　方向に　よって▽
-行き先が　変わるます▼
+行き先が　変わります▼
 そう！　あきらめなければ　必ず
 ジムリーダーに　会えますから</language>
 	</row>
@@ -9527,10 +9525,10 @@
 	<row id="TRID_ELITEW_27_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">かっても……　まんがいち　まけても
 その　りゆうを　ぶんせき　して▽
-つよくなった　あたしに　かてますか？</language>
+つよくなった　あたしに　かてますか？▼</language>
 		<language name="JPN_KANJI" width="216">勝っても……　万が一　負けても
 その理由を　分析して▽
-強くなった　あたしに　勝てますか？</language>
+強くなった　あたしに　勝てますか？▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_27_TRMSG_FIGHT_LOSE">
@@ -18669,6 +18667,34 @@
 いきられない　にんげんも　いるのに！</language>
 		<language name="JPN_KANJI" width="216">ここ……　プラズマ団で　しか
 生きられない　人間も　いるのに！</language>
+	</row>
+
+	<row id="TRID_SWBOSS_2_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">さあ！　わたくしを
+まんぞく　させるのです！</language>
+		<language name="JPN_KANJI" width="216">さあ！　わたくしを
+満足させるのです！</language>
+	</row>
+
+	<row id="TRID_SWBOSS_2_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">よろしい！　では　わたくしも
+ポケモンを　しんじましょう！</language>
+		<language name="JPN_KANJI" width="216">よろしい！　では　わたくしも
+ポケモンを　信じましょう！</language>
+	</row>
+
+	<row id="TRID_SWBOSS_2_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">もっと！　もっと　しんじれば
+ポケモンの　ちからを　ひきだせるか！？</language>
+		<language name="JPN_KANJI" width="216">もっと！　もっと　信じれば
+ポケモンの　力を　ひきだせるか！？</language>
+	</row>
+
+	<row id="TRID_SWBOSS_2_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">きずな……
+みえないものこそ　しんじつか？</language>
+		<language name="JPN_KANJI" width="216">きずな……
+みえないものこそ　真実か？</language>
 	</row>
 
 	<flowchart-group-list>
