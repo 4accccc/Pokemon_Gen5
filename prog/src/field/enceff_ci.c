@@ -376,6 +376,22 @@ GMEVENT *ENCEFF_CI_CreateMugenBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateSwBoss2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SWBOSS2, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
 GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;

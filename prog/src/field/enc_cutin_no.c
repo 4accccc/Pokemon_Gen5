@@ -35,6 +35,7 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {FLDCIID_WBT,        0,     0x7fff,0x0000},  //WBT
   {FLDCIID_POKEWOOD,   0,     0x7fff,0x0000},  //ポケウッド
   {FLDCIID_MUGEN_BOSS, SPTR_MUGEN_BOSS, 0x7fff ,0x0000}, //無限ダンジョンボス
+  {FLDCIID_SWBOSS2,SPTR_SWBOSS,0x7fff,0x0000},  //ボス(アクロマ クリア後)
   //
   {FLDCIID_SHIN_MU,  0, 0x7fff,0x0000}, //パッケージ
   {FLDCIID_IDOU, 0, 0x7fff,0x0000}, //移動ポケ

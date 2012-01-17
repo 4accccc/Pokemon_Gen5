@@ -64,6 +64,7 @@ TARGET_LIST = \
 	cnv_tmp\medal_icon_24_8_4_4_LZ.bin \
 	cnv_tmp\enc_mugen_0_0_16_16_LZ.bin \
 	cnv_tmp\enc_mugen.NCLR \
+	cnv_tmp\enc_boss_0_0_16_16_LZ.bin \
 	cnv_tmp\enc_hero_LZ.bin \
 	cnv_tmp\enc_hero.NCLR \
 	cnv_tmp\enc_hero_up_down_0_0_16_16_LZ.bin \

@@ -31,6 +31,7 @@ typedef enum{
   ENC_CUTIN_WBT,    // WBT
   ENC_CUTIN_POKEWOOD,// ポケウッド
   ENC_CUTIN_MUGEN_BOSS,// 無限ダンジョンボス
+  ENC_CUTIN_SWBOSS2, // クリア後のアクロマ
   //
   ENC_CUTIN_PACKAGE,
   ENC_CUTIN_MOVEPOKE,

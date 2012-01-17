@@ -448,6 +448,7 @@ static const CutinUseFldHeapSize[FLDCIID_MAX] = {
   0xcf20, //FLDCIID_WBT 
   0xcf20, //FLDCIID_POKEWOOD 
   0xe570, // FLDCIID_MUGEN_BOSS
+  0xd530, //FLDCIID_SWBOSS2 
 
 };
 

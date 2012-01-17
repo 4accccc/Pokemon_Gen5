@@ -374,6 +374,13 @@ cnv_tmp\enc_mugen_0_0_16_16_LZ.bin : cnv_tmp\enc_mugen_0_0_16_16.NCGR
 cnv_tmp\enc_mugen.NCLR : replace_tex/VSdemo_Face/enc_mugen.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
+cnv_tmp\enc_boss_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_boss.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_boss.NCGR cnv_tmp\enc_boss_0_0_16_16.NCGR
+
+cnv_tmp\enc_boss_0_0_16_16_LZ.bin : cnv_tmp\enc_boss_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_boss_0_0_16_16.NCGR
+
 cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp
 

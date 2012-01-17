@@ -126,7 +126,8 @@ enum {
 	NARC_fld3d_ci_setup_ci_112_bin = 112,
 	NARC_fld3d_ci_setup_ci_113_bin = 113,
 	NARC_fld3d_ci_setup_ci_114_bin = 114,
-	NARC_fld3d_ci_setup_ci_115_bin = 115
+	NARC_fld3d_ci_setup_ci_115_bin = 115,
+	NARC_fld3d_ci_setup_ci_116_bin = 116
 };
 
 /* NARC_FLD3D_CI_SETUP_NAIX_ */

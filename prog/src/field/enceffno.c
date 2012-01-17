@@ -231,6 +231,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
     SEQ_BGM_VS_NEW_G_CIS, ///<TRTYPE_GRP_SAGE1  ゲーチス
     SEQ_BGM_VS_ELITE_PLASMA, ///<TRTYPE_GRP_SAGE3  ヴィオ
     SEQ_BGM_VS_BANJIROU,  ///<TRTYPE_GRP_INFINITY 無限ダンジョンボス
+    SEQ_BGM_VS_ACHROMA,   ///<TRTYPE_GRP_CLEAR_SWBOSS クリア後のアクロマ
                
   };
   static const u8 DATA_EncEffTbl[] = {
@@ -259,6 +260,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		ENCEFFID_CHAMP,       ///<TRTYPE_GRP_IDX_SWCHAMPION       
 		ENCEFFID_SAGE,        ///<TRTYPE_GRP_IDX_SWSAGE1           
 		ENCEFFID_MUGEN_BOSS,  ///<TRTYPE_GRP_IDX_MUGENBOSS             
+		ENCEFFID_SWBOSS2,     ///<TRTYPE_GRP_IDX_CLEAR_SWBOSS  
     
   };
 
