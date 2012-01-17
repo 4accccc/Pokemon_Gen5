@@ -1001,6 +1001,11 @@ static u32 eps_EncPokeCalcPersonalRand(
   if ( poke->rare == POKE_RARE_SEL_NOT ){
     return p_rnd; //この時点ですでにレアにしない乱数を引いているので、このまま帰る
   }
+  //必ずレアに設定してる場合の処理
+  else if ( poke->rare == POKE_RARE_SEL_MUST ){
+    return p_rnd; //この時点ですでにレアになる乱数を引いているので、このまま帰る
+  }
+
   { //HGSS以前よりレアを出しやすくする処理
 
     /*
