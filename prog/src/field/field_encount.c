@@ -69,7 +69,7 @@ static void enc_CreateBattleParamNPoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PA
 
 static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork );
 
-static u32 enc_GetPercentRand( void );
+static inline u32 enc_GetPercentRand( void );
 
 static int enc_GetWalkCount( FIELD_ENCOUNT *enc );
 static void enc_AddWalkCount( FIELD_ENCOUNT *enc );
@@ -226,8 +226,10 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     RECORD_Inc(GAMEDATA_GetRecordPtr( enc->gdata), RECID_EFFECT_ENCOUNT_NUM );
   }else{
     u16 zone_id = FIELDMAP_GetZoneID( enc->fwork );
+#if 0
     //移動ポケモンチェック
     mpd = ENCPOKE_GetMovePokeEncountData( &fld_spa, zone_id );
+#endif
     //Ｎポケエンカウントチェック
     n_poke_id = ENCPOKE_CheckNPokeEncount( &fld_spa, zone_id );
   }
@@ -551,6 +553,7 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per, EN
     }
   }
 
+#if 0
 #ifdef DEBUG_ONLY_FOR_iwasawa
   {
     int i,j;
@@ -569,6 +572,7 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per, EN
       OS_Printf("%d->%d\n",i,prob[i*10]);
     }
   }
+#endif
 #endif
   if( enc_GetPercentRand() <= per ){
     return( TRUE );
@@ -767,17 +771,9 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
  * @retval  u32 確率
  */
 //--------------------------------------------------------------
-static u32 enc_GetPercentRand( void )
+static inline u32 enc_GetPercentRand( void )
 {
-#if 0
-  u32 per = (0xffffffff/100) + 1;
-  u32 val = GFUser_GetPublicRand(GFL_STD_RAND_MAX) / per;
-#else
-  u32 per = (0xffff/100) + 1;
-  u32 val = GFUser_GetPublicRand(0xffff) / per;
-//  val = GFUser_GetPublicRand(1000000)/10000;
-#endif
-  return( val );
+  return GFUser_GetPublicRand(100);
 }
 
 

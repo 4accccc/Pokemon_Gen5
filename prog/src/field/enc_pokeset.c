@@ -76,14 +76,14 @@ static const u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 #include "generate_enc_def.h"
 #include "generate_enc.cdat"
 
-#define GENERATE_ENC_PROB (40*10)
+#define GENERATE_ENC_PROB (40)
 
 //エンカウント率テーブル
 #include "enc_pokeset.cdat"
 
 ////////////////////////////////////////////////////////////
 //プロトタイプ
-static u32 eps_GetPercentRand( void );
+static inline u32 eps_GetPercentRand( void );
 static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp, const WEATHER_NO weather );
 static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level );
 static const GENERATE_ENCOUNT* encpoke_GetGenerateData( const GAMEDATA* gdata );
@@ -361,25 +361,25 @@ u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
 
   //確率判定
   {
-    int per = 50;
+    int per = 5;
     int num = EncDataSave_GetNPokeCaptureNum( efp->enc_save );
 
     if(num == 0){
-      per = 400;  
+      per = 40;  
     }else if( num < 6 ){
-      per = 200;
+      per = 20;
     }else if( num < 12 ){
-      per = 100;
+      per = 10;
     }
 #ifdef PM_DEBUG
     {
       ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork( (GAMEDATA*)efp->gdata );
       if( ewk->deb_npoke_enc_prob != 0 ){
-        per = ewk->deb_npoke_enc_prob*10;
+        per = ewk->deb_npoke_enc_prob;
       }
     }
 #endif  //PM_DEBUG
-    if( GFUser_GetPublicRand0(1000) >= per){
+    if( GFUser_GetPublicRand0(100) >= per){
       return ENC_N_POKE_NONE;
     }
   }
@@ -722,7 +722,7 @@ static BOOL eps_CheckGeneratePoke( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM
   if( ioEfp->location != ENC_LOCATION_GROUND_L ){
     return FALSE;
   }
-  if( GFUser_GetPublicRand0( 1000 ) > GENERATE_ENC_PROB ){
+  if( GFUser_GetPublicRand0( 100 ) > GENERATE_ENC_PROB ){
     return FALSE;
   }
   outTable[0].monsNo = gene->mons_no;
@@ -852,7 +852,7 @@ static u8 eps_LotFixTypeEncount(const ENCPOKE_FLD_PARAM* efp,const ENC_COMMON_DA
   if(num  == 0){
     return 0xFF;
   }
-  return idx_tbl[eps_GetPercentRand()%num];
+  return idx_tbl[GFUser_GetPublicRand(num)];
 }
 
 /*
@@ -907,6 +907,23 @@ static void eps_PokeLottery( const ENCPOKE_FLD_PARAM* efp, const ENC_COMMON_DATA
   if(idx == 0xFF){  //タイプ優先エンカウントに失敗したら指定の確率計算
     idx = (DATA_EncProbCalcFuncTable[efp->prob_calctype])(efp->tbl_num);
   }
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_iwasawa)||defined(DEBUG_ONLY_FOR_ito_hiroto)||defined(DEBUG_ONLY_FOR_masafumi_saito)
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    int i;
+    u16  tbl[20];
+    MI_CpuClear8(tbl,sizeof(u16)*20);
+    for(i = 0;i < 100;i++){
+      tbl[(DATA_EncProbCalcFuncTable[efp->prob_calctype])(efp->tbl_num)]++;
+    }
+    OS_Printf("\n//======================\n"); 
+    for(i = 0;i < efp->tbl_num;i++){
+      OS_Printf("%d->%d\n",i,tbl[i]); 
+    }
+  }
+#endif
+#endif  //PM_DEBUG
+
   //エンカウントモンスターパラメータセット
   eps_SetPokeParam(&enc_tbl[idx],outPoke);
 
@@ -1039,11 +1056,9 @@ static u32 eps_EncPokeCalcPersonalRand(
  * @retval  u32 確率
  */
 //--------------------------------------------------------------
-static u32 eps_GetPercentRand( void )
+static inline u32 eps_GetPercentRand( void )
 {
-  u32 per = (0xffff/100) + 1;
-  u32 val = GFUser_GetPublicRand(0xffff) / per;
-  return( val );
+  return GFUser_GetPublicRand(100);
 }
 
 //--------------------------------------------------------------
@@ -1056,11 +1071,11 @@ static u32 eps_GetPercentRand( void )
 static u32 eps_GetPercentRandCommonPokeTblNo( const u8* tbl, int tbl_len )
 {
   int i, key = 0;
-  u32 rnd = GFUser_GetPublicRand0( 10000 ); //100倍で計算
-  
+  u32 rnd = GFUser_GetPublicRand0( 100 ); 
+ 
   for( i = 0; i < tbl_len; i++ ){
     key += tbl[i];
-    if( rnd < (key*100) ){
+    if( rnd < key ){
       return i;
     }
   }
