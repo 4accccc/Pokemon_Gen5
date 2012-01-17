@@ -80,7 +80,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/dummy3ds_savedata.c \
         savedata/cygnus_savedata.c \
         savedata/questionnaire_index.c \
-        savedata/boast_message.c
+        savedata/boast_message.c \
+        savedata/cygnus_save_control.c
 
 
 #通信の常駐
@@ -2966,6 +2967,12 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_PGL_DEBUG = test/pgl/d_pgl.c \
                          test/pgl/debug_pgl_menu_setup.c
+
+# CYGNUSデバッグ
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_CYGNUS_DEBUG = test/cygnus/d_cygnus.c \
+                         test/cygnus/debug_cygnus_menu_setup.c
 
 # 任天堂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
