@@ -2380,9 +2380,13 @@ static void tp_scroll( TR_CARD_WORK *wk )
       // 一定量を変化させればよいらしい
       if(buf[1] == 1){			// 上
         wk->scrol_point += SCROLL_SPD_UP;
+        // 誘導マーク後処理(下マーク処理)
+        tc_chg_arrow( wk, 1 );
       }
       else if(buf[1] == 2){		// 下
         wk->scrol_point += SCROLL_SPD_DOWN;
+        // 誘導マーク後処理(上マーク処理)
+        tc_chg_arrow( wk, 0 );
       }
       // 誘導マークの領域からウインドウにずらした際の不具合対応
       GFL_UI_TP_GetPointCont( &x, &y );
@@ -2420,10 +2424,14 @@ static void tp_scroll( TR_CARD_WORK *wk )
       }
       // 上下どちらかをタッチ
       tc_chg_arrow( wk, flg );
+      // タッチ中は点滅を止める(初期化)
+      wk->PCount = 0x8000;
     }
     else{
       // タッチしても動かず
       tc_chg_arrow( wk, 3 );
+      // タッチ中は点滅を止める(初期化)
+      wk->PCount = 0x8000;
     }
     wk->old_scrol_point=wk->scrol_point;
   }
