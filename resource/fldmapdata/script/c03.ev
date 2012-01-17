@@ -83,10 +83,12 @@ EVENT_START		ev_pos_c03_swchampion_01
   _MSGWIN_CLOSE()
   
   //アニメ：アイリス退場
-  _OBJ_ANIME( C03_SWCHAMPION_01, anm_swchampion_bye_01 )
-  _OBJ_ANIME_WAIT()
-  
-  _OBJ_ANIME( C03_SWCHAMPION_01, anm_staystep_l )
+  IF $LCW_POSS > 11 THEN
+    _DEBUG_PRINT_WK( 300 )
+    _OBJ_ANIME( C03_SWCHAMPION_01, anm_swchampion_bye_01u )
+  ELSE
+    _OBJ_ANIME( C03_SWCHAMPION_01, anm_swchampion_bye_01l )
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //==================================//
@@ -110,7 +112,14 @@ EVENT_END
 //--------------------------------------------------------------------
 //	☆アイリス退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swchampion_bye_01
+_ANIME_LABEL	anm_swchampion_bye_01u
+	_ANIME_DATA	AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆アイリス退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swchampion_bye_01l
 	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
