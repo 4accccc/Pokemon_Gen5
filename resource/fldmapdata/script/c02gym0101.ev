@@ -45,6 +45,7 @@ _EVENT_DATA   ev_bg_c02gym0101_plate_06
 _EVENT_DATA   ev_bg_c02gym0101_plate_07
 _EVENT_DATA   ev_pos_c02gym0101_link_event
 _EVENT_DATA   ev_reserve_c02gym0101_link_event_ret
+_EVENT_DATA   ev_scene_c02gym0101_link_event
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -72,6 +73,11 @@ INIT_EVENT_START  ev_init_c02gym0101
     _OBJ_POS_CHANGE( C02GYM0101_AD_01, 13, 0, 11, DIR_UP )
 
   ENDIF
+  
+  //リンクイベント起動状態ならアロエの位置を変更
+  IF FLAG_OFF( FV_C02GYM0101_LEADER2_01 ) THEN
+    _OBJ_POS_CHANGE( C02GYM0101_LEADER2_01, 12, 3, 4, DIR_DOWN )
+  ENDIF
 
   //バージョンによって石の種類を変更
   _GET_ROM_VERSION( SCWK_ANSWER )
@@ -95,7 +101,7 @@ INIT_EVENT_START  ev_zone_c02gym0101
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
 
   //リンクイベント起動状態でアロエを表示
-  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_05 == 0 THEN
+  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_05 == 0 && FLAG_OFF( FE_C02GYM0101_LINKEV_ZONE ) THEN
     //========================================//
     //C02GYM0101アロエを表示
     _FLAG_RESET( FV_C02GYM0101_LEADER2_01 )
@@ -103,6 +109,21 @@ INIT_EVENT_START  ev_zone_c02gym0101
      $WK_SCENE_C02_LINK_EVENT = 1
     //========================================//
   ENDIF
+  
+  //リンクイベント起動状態でSCENE_CHANGE起動（図書館側から来た処理）
+  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_05 == 0 && FLAG_ON( FE_C02GYM0101_LINKEV_ZONE ) THEN
+    //========================================//
+    //C02GYM0101アロエを非表示
+    _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
+    //POS有効
+     $WK_SCENE_C02_LINK_EVENT = 2
+    //========================================//
+  ENDIF
+  
+  //========================================//
+  //C06GYM0201退室フラグを初期化
+  _FLAG_RESET( FE_C02GYM0101_LINKEV_ZONE )
+  //========================================//
 
   //バージョンによって石の種類を変更
   _GET_ROM_VERSION( SCWK_ANSWER )
@@ -163,6 +184,51 @@ EVENT_START   ev_pos_c02gym0101_link_event
 EVENT_END
 
 /**************************************************************/
+/*  SCENE_CHANGE： リンクイベント                              */
+/**************************************************************/
+EVENT_START   ev_scene_c02gym0101_link_event
+  
+  //========================================//
+  //C02GYM0101アロエを表示
+  _FLAG_RESET( FV_C02GYM0101_LEADER2_01 )
+  //========================================//
+  
+  //アニメ：主人公中央まで移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 12, 6, FORCE_TYPE_NOT, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //アロエ動作モデル生成
+  _OBJ_ADD( C02GYM0101_LEADER2_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //アロエワープ
+  _OBJ_POS_CHANGE(C02GYM0101_LEADER2_01,12,0,2,DIR_DOWN)
+  
+  _SE_WAIT()
+  
+  //アニメ：主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_stay_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：アロエ隣接
+  _OBJ_ANIME_AUTO( C02GYM0101_LEADER2_01, 12, 4, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_OBJMSG_POS(msg_c02gym0101_memory_01, C02GYM0101_LEADER2_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _MAP_FADE_BLACK_OUT_SLOW()
+  //過去イベント・シッポウ起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDC02GYM0202_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC02GYM0202, 6, 0, 3, DIR_DOWN )
+  
+EVENT_END
+
+/**************************************************************/
 /*  RESERVE： リンクイベント                              */
 /**************************************************************/
 EVENT_START   ev_reserve_c02gym0101_link_event_ret
@@ -191,7 +257,7 @@ EVENT_START   ev_reserve_c02gym0101_link_event_ret
 
   //========================================//
   //POS無効
-  $WK_SCENE_C02_LINK_EVENT = 2
+  $WK_SCENE_C02_LINK_EVENT = 3
   //リンクイベント起動終了
   $WK_SYS_LINK_EVENT_05 = 1
   //C02GYM0101のアロエを非表示
