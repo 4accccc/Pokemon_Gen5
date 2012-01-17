@@ -45,6 +45,7 @@ _EVENT_DATA	ev_c06_woman1_01
 _EVENT_DATA	ev_c06_workman_01wb
 _EVENT_DATA	ev_c06_backpackerw_01
 _EVENT_DATA	ev_c06_woman1a_01
+_EVENT_DATA	ev_scene_c06_link_event
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -67,12 +68,28 @@ INIT_EVENT_START   ev_zone_c06
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
 
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FE_C06_LINKEV_ZONE ) THEN
     //========================================//
     //C06フウロ表示
     _FLAG_RESET( FV_C06_SWLEADER6_01 )
     //========================================//
   ENDIF
+  
+  //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_ON( FE_C06_LINKEV_ZONE ) THEN
+    //========================================//
+    //C06 SCENE_CHANGE有効
+    $WK_SCENE_C06_LINK_EVENT = 1
+    //C06フウロ非表示
+    _FLAG_SET( FV_C06_SWLEADER6_01 )
+    //========================================//
+  ENDIF
+  
+  //========================================//
+  //C06GYM0101退室フラグを初期化
+  _FLAG_RESET( FE_C06_LINKEV_ZONE )
+  //========================================//
+  
 }
 INIT_EVENT_END
 
@@ -81,8 +98,8 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_c06
   //C06到着イベント終了でリンクイベント起動ならフウロを移動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
-    _OBJ_POS_CHANGE( C06_SWLEADER6_01, 77, 0, 269, DIR_DOWN)
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FV_C06_SWLEADER6_01 ) THEN
+    _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN)
   ENDIF
 INIT_EVENT_END
 
@@ -527,6 +544,52 @@ EVENT_START   ev_c06_swleader6_01
 EVENT_END
 
 /************************************************************/
+/*       SCENE_CHANGE：SWLEADER6                */
+/************************************************************/
+EVENT_START   ev_scene_c06_link_event
+
+  //========================================//
+  //フウロ表示
+  _FLAG_RESET( FV_C06_SWLEADER6_01 )
+  //========================================//
+  
+  //アニメ：主人公中央まで移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 78, 271, FORCE_TYPE_NOT, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //フウロ動作モデル生成
+  _OBJ_ADD( C06_SWLEADER6_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //フウロワープ
+  _OBJ_POS_CHANGE(C06_SWLEADER6_01,78,0,268,DIR_DOWN)
+  
+  _SE_WAIT()
+  
+  //アニメ：主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：フウロ隣接
+  _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 78, 269, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //フウロ：起動
+  _BALLOONWIN_OBJMSG_POS( msg_c06_memory_01 , C06_SWLEADER6_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  _MAP_FADE_BLACK_OUT_SLOW()
+  //過去イベント・サザナミ起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_OLDT04R0301_EVENT_01 )
+  _MAP_FADE_END_CHECK()
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_OLDT04R0301, 6, 0, 5, DIR_DOWN )
+  
+EVENT_END
+
+/************************************************************/
 /*       RESERVE：リンクイベント終了                */
 /************************************************************/
 EVENT_START   ev_reserve_c06_link_event_ret
@@ -555,7 +618,9 @@ EVENT_START   ev_reserve_c06_link_event_ret
   
   //========================================//
   //リンクイベント終了
-  $WK_SYS_LINK_EVENT_02 = 1
+  $WK_SYS_LINK_EVENT_02 = 2
+  //C06 SCENE_CHANGE無効
+  $WK_SCENE_C06_LINK_EVENT = 2
   //C06フウロ非表示
   _FLAG_SET( FV_C06_SWLEADER6_01 )
   //========================================//
@@ -615,10 +680,9 @@ EVENT_START	ev_c06_workman_01wb
 EVENT_END
 
 //--------------------------------------------------------------------
-//アララギ：ジム前にやってくる
+//フウロ：ジムへ戻る
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_swleader6_return
-  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA ACMD_END,0
 
