@@ -40,5 +40,6 @@
 #define BG_WC10_DUMMY_FES_02              1
 #define BG_WC10_DUMMY_FES_03              2
 #define BG_WC10_DUMMY_FES_04              3
+#define BG_WC10_BOARD_01                  4
 
 #endif //ZONE_WC10_EVB_H
