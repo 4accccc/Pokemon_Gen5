@@ -519,7 +519,7 @@ static void bv_chk_facepal( BADGEVIEW_WORK* wk );
 // カットイン関連
 //static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum );
 static void bv_chg_cutin(  BADGEVIEW_WORK* wk, const s32 num );
-static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
+static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg, const s32 num );
 //static void bv_make_cutin_scr( BADGEVIEW_WORK *wk );
 // モデル表示
 static void bv_rot_model( BADGEVIEW_WORK *wk );
@@ -532,9 +532,12 @@ static BOOL bv_is_chgpal( BADGEVIEW_WORK *wk );
 
 // カットイン
 static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s32 id );
+static void bv_init_obj_all_res_up( BADGEVIEW_WORK *wk, const s32 drawtype );
 static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk );
+static void bv_exit_obj_all_res_up( BADGEVIEW_WORK *wk );
 static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id );
 static void bv_set_obj_pos( BADGEVIEW_WORK *wk, const s32 id, const s32 px );
+static void bv_set_obj_all_pos( BADGEVIEW_WORK *wk, const s32 px );
 
 
 #ifdef PM_DEBUG
@@ -1191,7 +1194,7 @@ static void ClActInit(BADGEVIEW_WORK *wk)
   GFL_ARC_CloseDataHandle( c_handle );
   
   // カットイン用初期化
-  bv_init_obj_res_up( wk, OBJ_DRAW_UP, 0 );
+  bv_init_obj_all_res_up( wk, OBJ_DRAW_UP );
 }
 
 //-------------------------------------------
@@ -1238,7 +1241,14 @@ static const int clact_dat[][8]={
   {  (4*7+4)*8,  17*8,  10, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ7-２
   {  (4*7+3)*8,  19*8,   8, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ7-３
   // 追加
-  {  	   192,    96,   0, BV_RES_CUTIN_CHR,  BV_RES_CUTIN_PLTT,  BV_RES_CUTIN_CELL, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR,     BV_RES_CUTIN_PLTT,     BV_RES_CUTIN_CELL,    1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_01,  BV_RES_CUTIN_PLTT_01,  BV_RES_CUTIN_CELL_01, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_02,  BV_RES_CUTIN_PLTT_02,  BV_RES_CUTIN_CELL_02, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_03,  BV_RES_CUTIN_PLTT_03,  BV_RES_CUTIN_CELL_03, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_04,  BV_RES_CUTIN_PLTT_04,  BV_RES_CUTIN_CELL_04, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_05,  BV_RES_CUTIN_PLTT_05,  BV_RES_CUTIN_CELL_05, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_06,  BV_RES_CUTIN_PLTT_06,  BV_RES_CUTIN_CELL_06, 1, OBJ_DEFREND_UP, },// カットイン
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR_07,  BV_RES_CUTIN_PLTT_07,  BV_RES_CUTIN_CELL_07, 1, OBJ_DEFREND_UP, },// カットイン
 };
 
 //----------------------------------------------------------------------------------
@@ -1330,7 +1340,7 @@ static void ClActExit( BADGEVIEW_WORK *wk )
   GFL_CLGRP_CELLANIM_Release( wk->clres[BV_RES_CELL] );
   
   // カットイン用破棄
-  bv_exit_obj_res_up( wk );
+  bv_exit_obj_all_res_up( wk );
   
   // セルアクターユニット破棄
   GFL_CLACT_UNIT_Delete( wk->clUnit );
@@ -2520,9 +2530,10 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(flg == 1){
           // スクロールイン開始
           bv_init_bgscroll( wk, MODE_UPDOWN );
-          bv_set_cutin_visible( wk, TRUE );
-          bv_set_model_visible( wk, TRUE );
         }
+        bv_set_cutin_visible( wk, TRUE, trg-TOUCH_BADGE_0);
+        bv_set_model_visible( wk, TRUE );
+        
         bmpwin_visible( wk, TRUE );
         // ページ番号を保存
         wk->PageNum = trg-TOUCH_BADGE_0;
@@ -2572,7 +2583,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(wk->badgeflag[(trg-TOUCH_GYM_READER_0+pos)%BADGE_NUM]){
           // カットインキャラの切り替え
           bv_chg_cutin( wk, trg-TOUCH_GYM_READER_0 );
-          bv_set_cutin_visible( wk, TRUE );
+          bv_set_cutin_visible( wk, TRUE, trg-TOUCH_GYM_READER_0 );
           bv_set_model_visible( wk, TRUE );
           //
           // 初期化して開始
@@ -2584,7 +2595,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
             bv_set_chgpal( wk, TRUE );
           }
         }else{
-          bv_set_cutin_visible( wk, FALSE );
+          bv_set_cutin_visible( wk, FALSE, 0 );
           bv_set_model_visible( wk, FALSE );
           // 初期化して開始
           bv_init_chgpal( wk );
@@ -2839,7 +2850,7 @@ static void SetupPage( BADGEVIEW_WORK *wk, int page )
   bmpwin_visible( wk, FALSE );
   
   // カットイン非表示
-  bv_set_cutin_visible( wk, FALSE );
+  bv_set_cutin_visible( wk, FALSE, 0 );
   // モデル非表示
   bv_set_model_visible( wk, FALSE );
   
@@ -3454,7 +3465,7 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 	buf[2] = bv_scr_cutin_tbl[4*tmp+3];
 	bv_init_movework( wk, MWORK_CUTIN, buf[0], buf[1], buf[2] );
 	// 開始座標をセットし、すぐ反映
-	bv_set_obj_pos( wk, BV_OBJ_CUTIN, buf[0] );
+	bv_set_obj_all_pos( wk, buf[0] );
 //	wk->BgOffX = buf[0];
 //	GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
 	//
@@ -3517,7 +3528,7 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			// カットインも流用
 //			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
 			tmp = bv_main_movework( wk, MWORK_CUTIN );
-			bv_set_obj_pos( wk, BV_OBJ_CUTIN, tmp );
+			bv_set_obj_all_pos( wk, tmp );
 			// モデルも流用
 			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
@@ -3564,7 +3575,7 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			// カットインも流用
 //			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
 			tmp = bv_main_movework( wk, MWORK_CUTIN );
-			bv_set_obj_pos( wk, BV_OBJ_CUTIN, tmp );
+			bv_set_obj_all_pos( wk, tmp );
 			// モデルも流用
 			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
@@ -3579,7 +3590,7 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			bmpwin_visible( wk, FALSE );
 			//
 			// カットイン非表示
-			bv_set_cutin_visible( wk, FALSE );
+			bv_set_cutin_visible( wk, FALSE, 0 );
 			// モデル非表示
 			bv_set_model_visible( wk, FALSE );
 			//
@@ -3935,10 +3946,12 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 //-----------------------------------------------------------------------------
 static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
 {
+#if 0
 	// カットイン
 //	bv_init_cutin( wk, bv_cutin_tbl[num] );
 	// カットイン(obj)
 	bv_chg_obj_cutin( wk, bv_trainer_id_tbl[num] );
+#endif
 }
 
 //----------------------------------------------------------------------------------
@@ -3947,17 +3960,30 @@ static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
  *
  * @param	BADGEVIEW_WORK*	wk	ワーク
  * @param	const BOOL			(TRUE:表示、FALSE:非表示)
+ * @param	const s32			(カレントの番号(TRUEの時有効))
  *
  * @retval
  */
 //----------------------------------------------------------------------------------
-static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
+static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg, const s32 num )
 {
+#if 1
+	s32		i;
+	// カットインobjの表示/非表示
+	for(i=0;i<BADGE_NUM;i++){
+		bv_set_obj_visible( wk, BV_OBJ_CUTIN+i, FALSE );
+	}
+	// カレントのものだけ表示
+	if(bflg == TRUE){
+		bv_set_obj_visible( wk, BV_OBJ_CUTIN+num, TRUE );
+	}
+#else
 	// MAIN画面のCUTIN
 //	GFL_BG_SetVisible( BV_BGFRAME_U_CUTIN, bflg );
 	//
 	// カットインobjの表示/非表示
 	bv_set_obj_visible( wk, BV_OBJ_CUTIN, bflg );
+#endif
 }
 
 //----------------------------------------------------------------------------------
@@ -4174,6 +4200,31 @@ static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s3
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  OBJ初期化(カットインデータ)(8体まとめ)
+ *
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32 drawtype	表示タイプ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_init_obj_all_res_up( BADGEVIEW_WORK *wk, const s32 drawtype )
+{
+	s32			i;
+	s32			id;
+	ARCHANDLE*	p_handle = TR2DGRA_OpenHandle( HEAPID_TR_CARD );
+	//
+	for(i=0;i<BADGE_NUM;i++){
+		id = bv_trainer_id_tbl[i];
+		wk->clres[ BV_RES_CUTIN_PLTT+3*i ] = TR2DGRA_OBJ_PLTT_Register( p_handle, id, drawtype, 0x20*i, HEAPID_TR_CARD );
+		wk->clres[ BV_RES_CUTIN_CHR +3*i ] = TR2DGRA_OBJ_CGR_Register(  p_handle, id, drawtype, HEAPID_TR_CARD );
+		wk->clres[ BV_RES_CUTIN_CELL+3*i ] = TR2DGRA_OBJ_CELLANM_Register( id, APP_COMMON_MAPPING_32K, drawtype, HEAPID_TR_CARD );
+	}
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  OBJ破棄(カットインデータ)
  *
  *	@param	BADGEVIEW_WORK* wk	ワーク
@@ -4190,6 +4241,26 @@ static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  OBJ破棄(カットインデータ)
+ *
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_exit_obj_all_res_up( BADGEVIEW_WORK *wk )
+{
+	s32		i;
+	
+	for(i=0;i<BADGE_NUM;i++){
+		GFL_CLGRP_CGR_Release(      wk->clres[BV_RES_CUTIN_CHR +3*i] );
+		GFL_CLGRP_PLTT_Release(     wk->clres[BV_RES_CUTIN_PLTT+3*i] );
+		GFL_CLGRP_CELLANIM_Release( wk->clres[BV_RES_CUTIN_CELL+3*i] );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  トレーナーID切り替え(使うタイミング注意)
  *
  *	@param	BADGEVIEW_WORK* wk	ワーク
@@ -4200,6 +4271,7 @@ static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk )
 //-----------------------------------------------------------------------------
 static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id )
 {
+#if 0
 	OS_Printf("id :%d\n",id);
 	//
 	// clwkの破棄
@@ -4211,6 +4283,7 @@ static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id )
 	bv_init_obj_res_up( wk, OBJ_DRAW_UP, id );
 	// clwkの登録
 	ClActSetId( wk, BV_OBJ_CUTIN );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -4234,7 +4307,24 @@ static void bv_set_obj_pos( BADGEVIEW_WORK *wk, const s32 id, const s32 px )
 	GFL_CLACT_WK_SetPos( wk->clwk[id], &pos, OBJ_DEFREND_UP );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * obj座標セット(カットイン用8体まとめ)
+ *
+ * @param BADGEVIEW_WORK* wk	ワーク
+ * @param const s32	px			x座標
+ *
+ * @return
+ */
+//--------------------------------------------------------------------------------------------
+static void bv_set_obj_all_pos( BADGEVIEW_WORK *wk, const s32 px )
+{
+	s32		i;
+	
+	for(i=0;i<BADGE_NUM;i++){
+		bv_set_obj_pos( wk, BV_OBJ_CUTIN+i, px);
+	}
+}
 
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
