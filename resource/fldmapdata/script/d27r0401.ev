@@ -281,7 +281,7 @@ EVENT_START   ev_d27r0401_swboss_01
       _OBJ_ANIME_WAIT()
 
       //アクロマ戦 
-      _TRAINER_BTL_SET( TRID_SWBOSS_02, 0 )
+      _TRAINER_BTL_SET( TRID_SWBOSS_2_01, 0 )
 
       //結果チェック
       _TRAINER_LOSE_CHECK( SCWK_ANSWER )

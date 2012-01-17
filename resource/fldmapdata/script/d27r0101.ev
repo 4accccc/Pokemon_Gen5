@@ -898,7 +898,7 @@ _ANIME_LABEL	anm_ninja_bye_01
 /************************************************************/
 EVENT_START	ev_d27r0101_swplazmam_01
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam1_03 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam1_05 )
 
 EVENT_END
 
@@ -907,7 +907,7 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_d27r0101_swplazmam_02
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam2_03 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam2_05 )
 
 EVENT_END
 
@@ -1375,7 +1375,7 @@ EVENT_START	ev_d27r0101_swboss_01
       _MSGWIN_CLOSE()
 
       //アクロマ戦 
-      _TRAINER_BTL_SET( TRID_SWBOSS_02, 0 )
+      _TRAINER_BTL_SET( TRID_SWBOSS_2_01, 0 )
 
       //結果チェック
       _TRAINER_LOSE_CHECK( SCWK_ANSWER )
