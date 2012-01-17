@@ -481,27 +481,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
 あの作業員が　じゃまで
-うまくポケモンが　つかえない……▼</Text>
+うまくポケモンが　つかえない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T03:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T03:52:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
 あの作業員が　邪魔で
-うまくポケモンが　使えない……▼</Text>
+うまくポケモンが　使えない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-17T03:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:47" />
+				Time="2012-01-17T03:52:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -535,14 +535,14 @@
 彼が　いる　中で　Ｍ・Ｂと▽
 戦うのは　危険だっ！▼
 まず　彼を　逃がすことを
-優先するんだっ！▼</Text>
+優先するんだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:35:33" />
+				Time="2012-01-17T03:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:35:33" />
+				Time="2012-01-17T03:52:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

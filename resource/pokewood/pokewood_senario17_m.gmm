@@ -858,7 +858,7 @@
 		<language name="JPN" width="256">レディアン『さてと……▼
 （……あらゆる　じだいの
 ニンゲンどもを　とらえれば▽
-われわれ　むしポケモンは
+われわれ　むしポケモンは▽
 いま　いじょうに　さかえる……</language>
 		<language name="JPN_KANJI" width="256">レディアン『さてと…▼
 （あらゆる　時間軸の
@@ -898,11 +898,11 @@
 		<language name="JPN" width="256">レディアン『……ビンゴね
 これが　じかん　てんそうき▼
 ずいぶんと　ちいさい　カプセルに
-おさめた　ものだ</language>
+おさめた　ものだ……</language>
 		<language name="JPN_KANJI" width="256">レディアン『……ビンゴね
 これが　時間転送機▼
 ずいぶんと　小さい　カプセルに
-収納した　ものだ</language>
+収納した　ものだ……</language>
 	</row>
 	<row id="pw_event5_hero_8">
 		<language name="JPN" width="256">……かくして　わたしは

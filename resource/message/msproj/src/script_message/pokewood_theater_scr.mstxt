@@ -566,12 +566,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 さくひん　だけどさあ……▼
 よそうを　うらぎる　さくひんだって
 ちまたで　わだいに　なってんのよー▼
-こんな　さくひん　とっちゃったら
+こんな　アメイジングな　さくひん
+とっちゃったら　[Name:TrainerName ]ちゃん▽
 おきゃくさんにも　スタッフにも▽
 いちもく　おかれちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T04:06:08" />
+				Time="2012-01-17T11:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -583,12 +584,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 作品だけどさあ……▼
 予想を　裏切る　作品だって
 ちまたで　話題に　なってんのよー▼
-こんな作品　撮っちゃったら
+こんな　アメイジングな　作品
+撮っちゃったら　[Name:TrainerName ]ちゃん▽
 お客さんにも　スタッフにも▽
 一目　置かれちゃうよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T04:06:14" />
+				Time="2012-01-17T11:18:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -624,13 +626,12 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
 さくひん　だけど　さあ……▼
 これが　だいヒットなのよ　もうー▼
-さすが　[Name:TrainerName ]ちゃん　だよー▼
 こうやって　イイさくひんに　でてれば
 おきゃくさんにも　スタッフにも▽
 あいされていくと　おもうよー▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T04:06:26" />
+				Time="2012-01-17T11:17:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -641,13 +642,12 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 			<Text>今回の　[Name:TrainerName ]ちゃんの
 作品だけど　さあ……▼
 これが　大ヒットなのよ　もうー▼
-さすが　[Name:TrainerName ]ちゃん　だよー▼
 こうやって　イイ作品に　でてれば
 お客さんにも　スタッフにも▽
 愛されていくと　思うよー▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:30:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T11:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

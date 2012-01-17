@@ -6,11 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-チュートリアルイベント▼</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T11:01:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-チュートリアルイベント▼</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-10T12:25:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T11:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,14 +358,14 @@ x31,z54辺りに配置
 			<Text>あー　それ　ナイスねー！▼
 えいが！　それは　アメイジングよ！▼
 その　おどろき　そして　かんどうを
-ていきょうする　この　ポケウッドを▽
-[Name:TrainerName Idx="0" ]ちゃんに　みを　もって▽
-かんじちゃって　もらえるもん！▼
+ていきょうする　この　ポケウッドの
+みりょくを　[Name:TrainerName Idx="0" ]ちゃんに▽
+かんじちゃって　もらえるもんね！▼
 じゃあ　また　あとでね！
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T07:21:34" />
+				Time="2012-01-17T11:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -378,14 +376,14 @@ x31,z54辺りに配置
 			<Text>あー　それが　ナイスねー！▼
 映画！　それは　アメイジングよ！▼
 その驚き　そして感動　を
-提供する　このポケウッドを▽
-[Name:TrainerName Idx="0" ]ちゃんに　身を　もって▽
-感じちゃって　もらえるもん！▼
+提供する　この　ポケウッドの▽
+魅力を　[Name:TrainerName Idx="0" ]ちゃんに▽
+感じちゃって　もらえるもんね！▼
 じゃあ　また　後でね！
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T07:21:39" />
+				Time="2012-01-17T11:43:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

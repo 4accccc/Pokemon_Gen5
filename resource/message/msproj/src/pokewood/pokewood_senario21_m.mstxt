@@ -1977,35 +1977,35 @@
 			Language="JPN">
 			<Text>……きがつくと　ぼくは
 ゆうえんちの　ベンチに▽
-ひとり　すわっていた▼
+ひとり　すわっていた……▼
 あれは　ゆめだったのか？
 げんじつ　だったのか？▼
 ……ただ　ぼくは　きょうも　また
 ゆうえんちへ　かよいつづける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:15:06" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:15:06" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……気がつくと　ぼくは
 遊園地の　ベンチに▽
-ひとり　座っていた▼
+ひとり　座っていた……▼
 あれは　夢だったのか？
 現実　だったのか？▼
 ……ただ　ぼくは　今日も　また
 遊園地へ　通い続ける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:15:06" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:15:06" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2144,35 +2144,37 @@
 		Label="pw_event7_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>……きがつけば　ぼくは
-ゆうえんちのベンチに　すわっていた▼
-……あれは　ゆめだったのか？
+			<Text>……きがつくと　ぼくは
+ゆうえんちの　ベンチに▽
+ひとり　すわっていた……▼
+あれは　ゆめだったのか？
 げんじつ　だったのか？▼
-……ただ　わたしは　きょうも　また
+……ただ　ぼくは　きょうも　また
 ゆうえんちへ　かよいつづける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……気がつけば　ぼくは
-遊園地のベンチに　座っていた▼
-……あれは　夢だったのか？
+			<Text>……気がつくと　ぼくは
+遊園地の　ベンチに▽
+ひとり　座っていた……▼
+あれは　夢だったのか？
 現実　だったのか？▼
 ……ただ　ぼくは　今日も　また
 遊園地へ　通い続ける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2337,12 +2339,12 @@
 			<Text>……めざめると　いつも　どおり
 げんきな　マリアが　いた……▼
 しかし　ふたたび　ねむりに　おちると
-ゆうえんちに　ドーブルが　いて▽
+ゆうえんちに　ドーブルがいて▽
 また　ポケモンしょうぶが　はじまる▼
-そこで　また　ゆめから　さめると……
+そこで　また　ゆめから　さめると
 げんきな　マリアが　いて……▼
 いったい　どちらが
-げんじつ　なのだろうか？▼
+げんじつ　なのだろうか……？▼
 どちらも　ゆめ……？
 どちも　げんじつ……？▼
 ……まあ　どうでも　いいか……▼
@@ -2351,11 +2353,11 @@
 しんじつ　なのだから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2364,10 +2366,10 @@
 しかし　再び　眠りに　おちると
 遊園地に　ドーブルが　いて▽
 また　ポケモン勝負が　始まる▼
-そこで　また　夢から　覚めると……
+そこで　また　夢から　覚めると
 元気な　マリアが　いて……▼
 いったい　どちらが
-現実　なのだろうか？▼
+現実　なのだろうか……？▼
 どちらも　夢……？
 どちも　現実……？▼
 ……まあ　どうでも　いいか……▼
@@ -2376,11 +2378,11 @@
 真実　なのだから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-16T13:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-16T13:07:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

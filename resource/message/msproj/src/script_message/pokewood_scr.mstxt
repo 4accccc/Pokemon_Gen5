@@ -853,10 +853,10 @@
 その　タイトルは　ずばり
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
 ぜひ　チャレンジして　今度も
-大ヒットを　飛ばしてくれよな！</Text>
+大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:38:48" />
+				Time="2012-01-17T03:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1958,8 +1958,8 @@
 まずは　あらためて　じこしょうかい！
 ボクの　なまえはね　ウッドウ！▽
 ここ　ポケウッドの　オーナーなのよ！▼
-でね　[Name:TrainerName Idx="0" ]ちゃんに　
-わざわざ　ここに　きてもらったのはさ▽
+でね　[Name:TrainerName Idx="0" ]ちゃん……▼　
+わざわざ　ここに　きてもらったのはさ
 だいじな　おねがい　あるからなの！▼
 ……なんとなく　わかると　おもうけど
 キミにね　ポケウッドの　えいがに▽
@@ -1970,8 +1970,8 @@
 ボクも　さっき　キミを　みたとき
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:21:38" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T11:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1983,8 +1983,8 @@
 まずは　改めて　自己紹介！
 ボクの　名前はね　ウッドウ！▽
 ここ　ポケウッドの　オーナーなのよ！▼
-でね　[Name:TrainerName Idx="0" ]ちゃんに　
-わざわざ　ここに　来てもらったのはさ▽
+でね　[Name:TrainerName Idx="0" ]ちゃん……▼
+わざわざ　ここに　来てもらったのはさ
 大事な　お願い　あるからなの！▼
 ……何となく　わかると　思うけど
 キミにね　ポケウッドの　映画に▽
@@ -1995,8 +1995,8 @@
 ボクも　さっき　キミを　みたとき
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:21:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-17T11:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2202,12 +2202,12 @@
 			Language="JPN">
 			<Text>ハチクくんはね　わが　ポケウッドが
 ほこる　かんばんスター　なの！▼
-そんな　ベテランの　かれと
-ういういしい　キミに　ピッタリの▽
+そんな　だいベテランの　かれと
+ういういしい　キミに　ピッタリな▽
 だいほんも　よういして　あるのよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:56:17" />
+				Time="2012-01-17T11:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2217,12 +2217,12 @@
 			Language="JPN_KANJI">
 			<Text>ハチクくんはね　我がポケウッドが
 ほこる　看板スター　なの！▼
-そんな　ベテランの　彼と
-初々しい　キミに　ピッタリの▽
+そんな　大ベテランの　彼と
+初々しい　キミに　ピッタリな▽
 台本も　用意して　あるのよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:56:22" />
+				Time="2012-01-17T11:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2344,7 +2344,7 @@
 たいけんして　みちゃってよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T03:46:27" />
+				Time="2012-01-17T11:11:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2358,7 +2358,7 @@
 体験して　みちゃってよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T03:46:32" />
+				Time="2012-01-17T11:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2581,14 +2581,15 @@
 ボク　いかなくちゃ　いけないんだー！▼
 でも　[Name:TrainerName Idx="0" ]ちゃん　はさ
 デビューさく　チェックしてみてよね！▼
-きっと　アメイジングな　えいがに
-なってる　はずだもん！▼
+キミが　しゅつえん　したんだもん！
+きっと　アメイジングな　えいがに▽
+なってるに　ちがいないからさ！▼
 じゃあ　また　そのうちね！
 ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　まってるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T04:03:16" />
+				Time="2012-01-17T11:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2600,14 +2601,15 @@
 ボク　行かなくちゃ　いけないんだー！▼
 でも　[Name:TrainerName Idx="0" ]ちゃん　はさ
 デビュー作　チェックしてみてよね！▼
-きっと　アメイジングな　映画に
-なってる　はずだもん！▼
+キミが　出演　したんだもん！
+きっと　アメイジングな　映画に▽
+なってるに　違いないからさ！▼
 じゃあ　また　そのうちね！
 ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　待ってるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T04:03:23" />
+				Time="2012-01-17T11:14:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
