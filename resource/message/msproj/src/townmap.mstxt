@@ -7640,10 +7640,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がったいわざおしえ</Text>
+			<Text>わざおしえ</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:06" />
+				Time="2012-01-17T07:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7651,10 +7651,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>合体わざ教え</Text>
+			<Text>わざ教え</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:11" />
+				Time="2012-01-17T07:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7667,47 +7667,6 @@
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2012-01-17T02:50:47" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="TM_PLACE_D05_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>きゅうきょくわざおしえ</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:35" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>究極わざ教え</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:51:35" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>名所４
-※swanで新規追加</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-17T02:54:08" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
