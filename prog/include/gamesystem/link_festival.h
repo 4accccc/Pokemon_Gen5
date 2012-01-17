@@ -60,6 +60,7 @@ typedef struct _LINKFEST_MISSION_RESULT{
   u8    :5;
 
   u32   score;    //スコア
+  u16   life;     //クリア時残り時間(秒)
   u16   item;     //ご褒美アイテム
   u16   item_num; //ご褒美アイテムの数
   u16   bonus_num;  //ご褒美アイテムのボーナス数

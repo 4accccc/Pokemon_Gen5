@@ -71,7 +71,10 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   
   //最高参加者数を記録する
   FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
-  
+ 
+  //残り時間
+  pl->life = wk->mission.end_life;
+
   if( !pl->clear_f ){
     return; //ミッション失敗
   }
@@ -104,9 +107,9 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     switch( wk->m_beacon->pay_bonus ){
      case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
        {  //(残り秒/10)*MissionLevel*(MyScore/TotalScore)
-         fx32 life = FX_Div( FX32_CONST(wk->mission.end_life), FX32_CONST(10));
+         fx32 life = FX_Div( FX32_CONST(pl->life), FX32_CONST(10));
          fx32 per = FX_Div( FX32_CONST(my_score), FX32_CONST(pl->score) );  //マイスコアとトータルスコアの比率
-         per = FX_Mul( FX32_CONST( wk->m_beacon->m_level ), per ); //ミッションレベルを掛ける
+         per = FX_Mul( FX32_CONST( wk->m_beacon->m_level+1 ), per ); //ミッションレベルを掛ける レベルは0オリジンなので+1
          pl->bonus_num = FX_Whole( FX_Mul( life, per ) ); //最後に小数点切捨て
        }
       break;

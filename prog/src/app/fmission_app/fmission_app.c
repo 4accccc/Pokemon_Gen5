@@ -1424,9 +1424,8 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		// クリアタイム
 		if(wk->Flag & FLG_FMA_CLEAR_TIME){
 			// クリアタイム(右)
-			timer = LINK_FESTIVAL_GetMissionLife( wk->Param->fest_sys );
-			buf[0] = timer/60;		// 分
-			buf[1] = timer%60;		// 秒
+			buf[0] = wk->MissionResult.life/60;		// 分
+			buf[1] = wk->MissionResult.life%60;		// 秒
 			FmaCmn_disp_time( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_TIME_00, buf[0], buf[1] );
 		}
 		//
