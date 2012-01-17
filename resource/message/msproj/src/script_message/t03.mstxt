@@ -2100,14 +2100,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……くちを　とじろよ▼
+			<Text>[Name:TrainerName Idx="1" ]『……口を　閉じろよ▼
 ……オレは　奪われた
 ポケモンを　取り戻すだけだ▼
 [Name:TrainerName ]！　力　貸してくれッ！
 準備は　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T03:02:36" />
+				Time="2012-01-17T03:48:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2339,11 +2339,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『ヴィオさまと　ともに
+			<Text>プラズマだん『ヴィオさまと　ともに
 たたかったのに　なんだ　こいつら！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:21:31" />
+				Time="2012-01-17T03:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2351,11 +2351,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『ヴィオさまと　共に
+			<Text>プラズマ団『ヴィオさまと　共に
 戦ったのに　なんだ　こいつら！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T06:06:24" />
+				Time="2012-01-17T03:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
