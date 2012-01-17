@@ -430,3 +430,44 @@ BOOL FES_GIMMICK_IsExtraAnimalTrailMission( FES_GIMMICK* wk ,u8 trail_id )
   return FALSE;
 }
 
+//=======================================================================
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック ポジションチェック
+ */
+//----------------------------------------------------------------------
+int DEB_FES_GIMMICK_PosNumGet( FES_GIMMICK* wk )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return 0;
+  }
+  switch( wk->fmwk->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    return DEB_FES_GIMMICK_ITEM_PosNumGet( wk, wk->wk_buf );
+  case FMISSION_TYPE_NPC:
+    return DEB_FES_GIMMICK_NPC_PosNumGet( wk, wk->wk_buf );
+  }
+  return 0;
+}
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック ポジションチェック
+ */
+//----------------------------------------------------------------------
+BOOL DEB_FES_GIMMICK_PosGet( FES_GIMMICK* wk, int pos_idx, VecFx32* vec, int* param )
+{
+  if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+    return FALSE;
+  }
+  switch( wk->fmwk->arc.m_type ){
+  case FMISSION_TYPE_ITEM:
+    return DEB_FES_GIMMICK_ITEM_PosGet( wk, wk->wk_buf, pos_idx, vec, param );
+  case FMISSION_TYPE_NPC:
+    return DEB_FES_GIMMICK_NPC_PosGet( wk, wk->wk_buf, pos_idx, vec, param );
+  }
+  return FALSE;
+}
+#endif  //PM_DEBUG
+

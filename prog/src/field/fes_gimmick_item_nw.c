@@ -291,6 +291,7 @@ static void sub_FlagTableUpdate( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id )
   }
   MI_CpuClear8( &wk->flag_wk.tbl[ idx ], sizeof(FES_GIMMICK_ITEM_FLAG));
   wk->flag_wk.tbl[ idx ].zone_id = zone_id;
+  wk->flag_wk.tbl[ idx ].flag_num = wk->point_max;
 
 #if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
   {

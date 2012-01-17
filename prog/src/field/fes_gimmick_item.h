@@ -21,6 +21,7 @@
 //フェスミッションアイテムギミックフラグ
 typedef struct _FES_GIMMICK_ITEM_FLAG{
   u16 zone_id;
+  u16 flag_num;
   u8  flag[FES_GIMMICK_ITEM_POINT_MAX];
 }FES_GIMMICK_ITEM_FLAG;
 
@@ -55,4 +56,10 @@ extern BOOL FES_GIMMICK_ITEM_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK*
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32* cp_pos );
 extern GMEVENT* FES_GIMMICK_ITEM_CheckEventForRail( FES_GIMMICK* sys_wk,  const RAIL_LOCATION* cp_location );
 extern BOOL FES_GIMMICK_ITEM_CheckHitGridPos( FES_GIMMICK* sys_wk, u16 gx, u16 gz, fx32 height );
+
+//PM_DEBUG
+#ifdef PM_DEBUG
+extern int DEB_FES_GIMMICK_ITEM_PosNumGet( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk );
+extern BOOL DEB_FES_GIMMICK_ITEM_PosGet( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u8 pos_idx, VecFx32* vec, int* param );
+#endif  //PM_DEBUG
 

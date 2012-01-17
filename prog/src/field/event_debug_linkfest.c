@@ -68,6 +68,10 @@
 #include "event_debug_linkfest.h"
 #include "event_fmission.h"
 #include "script_def.h"
+#include "fes_gimmick.h"
+#include "fes_gimmick_item.h"
+#include "fes_gimmick_npc.h"
+#include "fes_gimmick_local.h"
 
 //======================================================================
 //
@@ -90,6 +94,8 @@ enum{
  MENU_MY_GPOWER,
  MENU_MISSION_END,
  MENU_MISSION_MEMBER_CHECK,
+ MENU_MISSION_EVPOS_CHECK,
+ MENU_MISSION_EVFLAG_CHECK,
  MENU_TUTORIAL_CLEAR,
  MENU_MISSION_OPEN_FLAG_SET,
  MENU_MISSION_ENTRY_FLAG_SET,
@@ -110,6 +116,7 @@ enum{
 #define FBMP_COL_WHITE  (15)
 #define FCOL_WIN_BASE (15)
 #define FCOL_WIN_W  ( PRINTSYS_MACRO_LSB(1,2,FCOL_WIN_BASE) ) ///<BG白抜き
+#define FCOL_WIN_BLUE  ( PRINTSYS_MACRO_LSB(5,6,FCOL_WIN_BASE) ) ///<BG青抜き
 
 #define BUFLEN_BEACON_MSG (8*2*2+EOM_SIZE)
 
@@ -124,6 +131,7 @@ enum{
 typedef enum{
  DATA_CHECK_MODE_MEMBER,
  DATA_CHECK_MODE_EVPOS,
+ DATA_CHECK_MODE_EVFLAG,
 }DATA_CHECK_MODE;
 
 /////////////////////////////////////////////
@@ -329,10 +337,12 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestMenuList[] =
   { dlf_menu_07, (void*)MENU_STACK_CLEAR, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_08, (void*)MENU_MISSION_MEMBER_NUM, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_09, (void*)MENU_MISSION_MEMBER_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlf_menu_10, (void*)MENU_MISSION_EVPOS_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlf_menu_11, (void*)MENU_MISSION_EVFLAG_CHECK, GFL_OVERLAY_BLANK_ID },
 
 //  { dlf_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
 //  { dlf_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
-  { dlf_menu_11, (void*)MENU_MISSION_SPOT_MODE, GFL_OVERLAY_BLANK_ID },
+  { dlf_menu_12, (void*)MENU_MISSION_SPOT_MODE, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -773,6 +783,18 @@ static GMEVENT_RESULT event_LinkFestMain( GMEVENT * event, int *seq, void * work
         break;
       case MENU_MISSION_MEMBER_CHECK:
         GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_MEMBER ) );
+        break;
+      case MENU_MISSION_EVPOS_CHECK:
+        if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ||
+            wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
+          GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_EVPOS ) );
+        }
+        break;
+      case MENU_MISSION_EVFLAG_CHECK:
+        if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ||
+            wk->fmwk->arc.m_type == FMISSION_TYPE_NPC ){
+          GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_EVFLAG ) );
+        }
         break;
       case MENU_MISSION_MY_SCORE:
       case MENU_MISSION_TIME_STOP:
@@ -1451,8 +1473,12 @@ static void scheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_STACK_CHECK* evwk, u8 pag
 //===================================================================================
 typedef struct _EVWK_DATA_CHECK{
   DMENU_LINK_FEST* dlf_wk;
+  FES_GIMMICK* fes_gmk;
+  const char *allZoneName;
   u8      mode;
+  u8      mode_param;
   u8      page;
+  u8      data_num;
   u8      line_max;
   u8      page_max;
   u8      line_oy; 
@@ -1460,8 +1486,13 @@ typedef struct _EVWK_DATA_CHECK{
 }EVWK_DATA_CHECK;
 
 static GMEVENT_RESULT event_DataCheckMain( GMEVENT * event, int *seq, void * work);
+static void dataCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page );
 static void memberCheck_ParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 idx, u8 line, LINKFEST_LOG* p_log );
 static void memberCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page );
+static void evposCheck_ItemParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line );
+static void evposCheck_NpcParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line );
+static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line );
+static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page );
 
 //--------------------------------------------------------------
 /**
@@ -1469,7 +1500,7 @@ static void memberCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8
  * @param wk  DEBUG_MENU_EVENT_WORK*
  */
 //--------------------------------------------------------------
-static GMEVENT* event_CreateEventDataCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk, DATA_CHECK_MODE )
+static GMEVENT* event_CreateEventDataCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk, DATA_CHECK_MODE mode )
 {
   EVWK_DATA_CHECK* evwk;
   GMEVENT* event;
@@ -1478,10 +1509,36 @@ static GMEVENT* event_CreateEventDataCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST*
 
   evwk = GMEVENT_GetEventWork( event );
   evwk->dlf_wk = wk; 
+  evwk->mode = mode;
+  evwk->fes_gmk = FIELDMAP_GetFesGimmickSys( wk->fieldmap );
+  evwk->data_num = DEB_FES_GIMMICK_PosNumGet( evwk->fes_gmk );
+  evwk->allZoneName = ZONEDATA_GetAllZoneName( wk->heapID );
 
-  evwk->line_max = MEMBER_CHECK_LINE_MAX;
-  evwk->line_oy = MEMBER_CHECK_LINE_OY;
-  evwk->page_max = MEMBER_CHECK_PAGE_MAX;
+  switch( mode ){
+  case DATA_CHECK_MODE_MEMBER:
+    evwk->line_max = MEMBER_CHECK_LINE_MAX;
+    evwk->line_oy = MEMBER_CHECK_LINE_OY;
+    evwk->page_max = MEMBER_CHECK_PAGE_MAX;
+    break;
+  case DATA_CHECK_MODE_EVPOS:
+    evwk->page_max = 1;
+    if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
+      evwk->mode_param = 0;
+      evwk->line_max = 8;
+      evwk->line_oy = 16;
+    }else{
+      evwk->mode_param = 1;
+      evwk->line_max = 4;
+      evwk->line_oy = 32;
+    }
+    break;
+  case DATA_CHECK_MODE_EVFLAG:
+    evwk->page_max = 1;
+    evwk->mode_param = 2;
+    evwk->line_max = 6;
+    evwk->line_oy = 16;
+    break;
+  }
 
   return event;
 }
@@ -1500,7 +1557,7 @@ static GMEVENT_RESULT event_DataCheckMain( GMEVENT * event, int *seq, void * wor
   {
   case 0:
     sub_BmpWinAdd( &evwk->win, 0, 0, 32, 24 );
-    memberCheck_PageDraw( wk, evwk, evwk->page );
+    dataCheck_PageDraw( wk, evwk, evwk->page );
     (*seq)++;
     break;
   case 1:
@@ -1510,21 +1567,40 @@ static GMEVENT_RESULT event_DataCheckMain( GMEVENT * event, int *seq, void * wor
         (*seq)++;
       }else if( trg & PAD_BUTTON_START ){
         evwk->page = 0;
-        memberCheck_PageDraw( wk, evwk, evwk->page );
+        dataCheck_PageDraw( wk, evwk, evwk->page );
       }else if( trg & PAD_KEY_LEFT ){
         evwk->page = (evwk->page+(evwk->page_max-1))%evwk->page_max;
-        memberCheck_PageDraw( wk, evwk, evwk->page );
+        dataCheck_PageDraw( wk, evwk, evwk->page );
       }else if( trg & PAD_KEY_RIGHT ){
         evwk->page = (evwk->page+1)%evwk->page_max;
-        memberCheck_PageDraw( wk, evwk, evwk->page );
+        dataCheck_PageDraw( wk, evwk, evwk->page );
       }
     }
     break;
   default:
+    GFL_HEAP_FreeMemory( (void*)evwk->allZoneName );
     sub_BmpWinDel( &evwk->win );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  情報書き出し
+ */
+//--------------------------------------------------------------
+static void dataCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page )
+{
+  switch( evwk->mode ){
+  case DATA_CHECK_MODE_MEMBER:
+    memberCheck_PageDraw( wk, evwk, page );
+    break;
+  case DATA_CHECK_MODE_EVPOS:
+  case DATA_CHECK_MODE_EVFLAG:
+    evposCheck_PageDraw( wk, evwk, page );
+    break;
+  }
 }
 
 //--------------------------------------------------------------
@@ -1579,6 +1655,184 @@ static void memberCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8
 	GFL_BMPWIN_TransVramCharacter( evwk->win.win );
 	GFL_BG_LoadScreenV_Req( evwk->win.frm );
 }
+
+//--------------------------------------------------------------
+/*
+ *  @brief  イベントポジション展開
+ */
+//--------------------------------------------------------------
+static void posCheck_PosWordset( DMENU_LINK_FEST* wk, VecFx32* vec, u8 buf_idx )
+{
+  WORDSET_RegisterNumber( wk->wset, buf_idx+0, SIZE_GRID_FX32(vec->x), 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wset, buf_idx+1, SIZE_GRID_FX32(vec->y), 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber( wk->wset, buf_idx+2, SIZE_GRID_FX32(vec->z), 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  アイテムミッション情報書き出し
+ */
+//--------------------------------------------------------------
+static void evposCheck_ItemParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line )
+{
+  WORDSET_RegisterNumber( wk->wset, 0, idx, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+  if( idx < evwk->data_num ){
+    VecFx32 vec = {0,0,0};
+    int param[2] = { 0, 0 };
+    BOOL flag = DEB_FES_GIMMICK_PosGet( evwk->fes_gmk, idx, &vec, param );
+
+    //idx
+    WORDSET_RegisterNumber( wk->wset, 1, param[1], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //ポジション
+    posCheck_PosWordset( wk, &vec, 2 );
+    //アイテム名
+    WORDSET_RegisterItemName( wk->wset,5, param[0] );
+
+    sub_GetMsgToBuf( wk, dlf_item_check_param01+flag );
+  }else{
+    sub_GetMsgToBuf( wk, dlf_check_param_none );
+  }
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+}
+
+
+//--------------------------------------------------------------
+/*
+ *  @brief  NPCミッション情報書き出し
+ */
+//--------------------------------------------------------------
+static void evposCheck_NpcParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line )
+{
+  PRINTSYS_LSB col = FCOL_WIN_W;
+
+  WORDSET_RegisterNumber( wk->wset, 0, idx, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+  if( idx < evwk->data_num ){
+    VecFx32 vec = {0,0,0};
+    int param[FES_GIMMICK_NPC_POINT_PARAM_MAX+1] = {0,0,0,0};
+    BOOL flag = DEB_FES_GIMMICK_PosGet( evwk->fes_gmk, idx, &vec, param );
+   
+    //フラグ
+    WORDSET_RegisterNumber( wk->wset, 1, flag, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //インデックス
+    WORDSET_RegisterNumber( wk->wset, 2, param[FES_GIMMICK_NPC_POINT_PARAM_MAX], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //ポジション
+    posCheck_PosWordset( wk, &vec, 3 );
+  
+    if( flag ){
+      col = FCOL_WIN_BLUE; 
+    }
+    //パラメータ
+    switch( wk->fmwk->beacon.base_param ){
+    case FMISSION_NPC_TYPE_PRESENT_ITEM:
+      WORDSET_RegisterItemName( wk->wset, 6, param[NITEM_PRESENT_PARAM_ITEM] );
+      break;
+    case FMISSION_NPC_TYPE_ITEM_TRADE:
+      WORDSET_RegisterNumber( wk->wset, 6, param[NITEM_TRADE_PARAM_MY_CATEGORY], 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      WORDSET_RegisterNumber( wk->wset, 7, param[NITEM_TRADE_PARAM_NPC_CATEGORY], 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      WORDSET_RegisterNumber( wk->wset, 8, param[NITEM_TRADE_PARAM_TBLNO], 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      break;
+    case FMISSION_NPC_TYPE_SHOPPING:
+      WORDSET_RegisterItemName( wk->wset, 6, param[NITEM_SHOPPING_PARAM_ITEM] );
+      WORDSET_RegisterNumber( wk->wset, 7, param[NITEM_SHOPPING_PARAM_PRICE], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      break;
+    case FMISSION_NPC_TYPE_TR_BATTLE:
+      WORDSET_RegisterTrainerName( wk->wset, 6, param[NPC_TRAINER_PARAM_TRID] );
+      break;
+    case FMISSION_NPC_TYPE_GET_A_PRESENT:
+      WORDSET_RegisterItemName( wk->wset, 6, param[NITEM_GPRESENT_PARAM_ITEM] );
+      break;
+    case FMISSION_NPC_TYPE_POKE_QUIZ:
+      WORDSET_RegisterPokeMonsNameNo( wk->wset, 6, param[NPC_POKE_QUIZ_PARAM_MONSNO] );
+      break;
+    }
+    sub_GetMsgToBuf( wk, dlf_npc_check_param01+wk->fmwk->beacon.base_param );
+  }else{
+    sub_GetMsgToBuf( wk, dlf_check_param_none );
+  }
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, col );
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  ミッションフラグ情報書き出し
+ */
+//--------------------------------------------------------------
+static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line )
+{
+  u16 zone_id, flag_num;
+  u8* flags;
+  int i, tbl_num, data_max,pos_num;
+
+  if( wk->fmwk->arc.m_type == FMISSION_TYPE_ITEM ){
+    FES_GIMMICK_ITEM_WORK* item_wk = evwk->fes_gmk->wk_buf;
+    data_max = FES_GIMMICK_ITEM_FLAG_WORK_NUM;
+    tbl_num = item_wk->flag_wk.tbl_num;
+    zone_id = item_wk->flag_wk.tbl[idx].zone_id;
+    flag_num = item_wk->flag_wk.tbl[idx].flag_num;
+    flags = item_wk->flag_wk.tbl[idx].flag;
+  }else{
+    FES_GIMMICK_NPC_WORK* npc_wk = evwk->fes_gmk->wk_buf;
+    data_max = FES_GIMMICK_NPC_FLAG_WORK_NUM;
+    tbl_num = npc_wk->flag_wk.tbl_num;
+    zone_id = npc_wk->flag_wk.tbl[idx].zone_id;
+    flag_num = npc_wk->flag_wk.tbl[idx].flag_num;
+    flags = npc_wk->flag_wk.tbl[idx].flag;
+  }
+  WORDSET_RegisterNumber( wk->wset, 0, idx, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+  if( idx < tbl_num ){
+    WORDSET_RegisterNumber( wk->wset, 1, zone_id, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    {
+      u16 pStrCode[64];
+      DEB_STR_CONV_SjisToStrcode( &evwk->allZoneName[ ZONEDATA_NAME_LENGTH * zone_id ], pStrCode, 64 );
+      GFL_STR_SetStringCode( wk->str_tmp, pStrCode );
+      sub_FreeWordset( wk->wset, 2, wk->str_tmp );
+    }
+    WORDSET_RegisterNumber( wk->wset, 3, flag_num, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    for(i = 0;i < data_max; i++ ){
+      WORDSET_RegisterNumber( wk->wset, 4+i, flags[i], 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    }
+    sub_GetMsgToBuf( wk, dlf_flag_check_param01+(wk->fmwk->arc.m_type!=FMISSION_TYPE_ITEM) );
+  }else{
+    sub_GetMsgToBuf( wk, dlf_check_param_none );
+  }
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  ミッション情報書き出し
+ */
+//--------------------------------------------------------------
+static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page )
+{
+  int i,idx,ofs;
+  GFL_BMP_Clear( evwk->win.bmp, FCOL_WIN_BASE );
+
+  ofs = page*evwk->line_max;
+
+  for(i = 0;i < evwk->line_max;i++){
+    idx = ofs+i;
+    switch( evwk->mode_param ){
+    case 0:
+      evposCheck_ItemParamDraw( wk, evwk, idx, i );
+      break;
+    case 1:
+      evposCheck_NpcParamDraw( wk, evwk, idx, i );
+      break;
+    case 2:
+      evposCheck_FlagParamDraw( wk, evwk, idx, i );
+      break;
+    }
+  }
+	GFL_BMPWIN_TransVramCharacter( evwk->win.win );
+	GFL_BG_LoadScreenV_Req( evwk->win.frm );
+}
+
+
 
 //===================================================================================
 //ミッションリクエストユーティリティイベント

@@ -340,7 +340,6 @@ static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 {
   int i;
   VecFx32 vec;
-  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
   FES_GIMMICK_NPC_FLAG* f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, wk->zone_id );
 
   for( i = 0;i < wk->point_max; i++)
@@ -428,4 +427,54 @@ static void sub_MMdlDelete( FES_GIMMICK_NPC_WORK* wk, int idx )
     wk->mmdl_tbl[idx] = NULL;
   }
 }
+
+
+//=====================================================================
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック 配置場所数チェック　
+ */
+//----------------------------------------------------------------------
+int DEB_FES_GIMMICK_NPC_PosNumGet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
+{
+  return wk->point_max;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック 配置場所チェック　
+ */
+//----------------------------------------------------------------------
+BOOL DEB_FES_GIMMICK_NPC_PosGet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int pos_idx, VecFx32* vec,int* param )
+{
+  FES_GIMMICK_NPC_FLAG* f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, wk->zone_id );
+
+  if( pos_idx < wk->point_max )
+  {
+    int i;
+    BG_TALK_DATA* pd = &wk->data[ wk->idx[pos_idx] ];
+
+    if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
+      EVENTDATA_GetBGTalkCenterPos( pd, vec);
+    }else{
+      RAIL_LOCATION loc;
+      EVENTDATA_GetBGTalkCenterRailLocation( pd, &loc );
+      FIELD_RAIL_MAN_GetLocationPosition( sys_wk->railman, &loc, vec );
+    }
+    for( i = 0;i < FES_GIMMICK_NPC_POINT_PARAM_MAX;i++ ){
+      param[i] = wk->param[pos_idx][i];
+    }
+    param[FES_GIMMICK_NPC_POINT_PARAM_MAX] = wk->idx[pos_idx];
+    if( f_tbl->flag[pos_idx] || wk->mmdl_tbl[pos_idx] == NULL ){
+      return TRUE;
+    }
+    return FALSE;
+  }
+  return TRUE;
+}
+
+#endif  //PM_DEBUG
 

@@ -50,10 +50,6 @@
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_local.h"
 
-/*
-#define FES_ITEM_PARAM_NUM (4) //1セット4アイテム
-#define LOT_ITEM_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
-*/
 static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u8 id );
 static BOOL sub_SetEffect( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk );
 static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, const VecFx32* ev_pos );
@@ -106,7 +102,6 @@ GMEVENT* FES_GIMMICK_ITEM_CheckEventForGrid( FES_GIMMICK* sys_wk, const VecFx32*
 {
   int i;
   FES_GIMMICK_ITEM_WORK* wk = (FES_GIMMICK_ITEM_WORK*)sys_wk->wk_buf;
-  FLDMAP_BASESYS_TYPE ftype = FIELDMAP_GetBaseSystemType( sys_wk->fieldWork );
 
   for( i = 0;i < wk->point_max; i++){
     BG_TALK_DATA* pd = &wk->data[ wk->idx[i] ];
@@ -344,4 +339,45 @@ static FES_GIMMICK_ITEM_FLAG* sub_FlagTableGet( FES_GIMMICK_ITEM_WORK* wk, u16 z
   GF_ASSERT(0); //見つからなかった
   return &wk->flag_wk.tbl[0];
 }
+
+
+//=====================================================================
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック　デバッグ用抽選ポイント数取得
+ */
+//----------------------------------------------------------------------
+int DEB_FES_GIMMICK_ITEM_PosNumGet( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk )
+{
+  return wk->point_max;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  アイテムミッションギミック　デバッグ用座標取得
+ */
+//----------------------------------------------------------------------
+BOOL DEB_FES_GIMMICK_ITEM_PosGet( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u8 pos_idx, VecFx32* vec, int* param )
+{
+  FES_GIMMICK_ITEM_FLAG* f_tbl = sub_FlagTableGet( wk, wk->zone_id );
+
+  if( pos_idx < wk->point_max ){
+    BG_TALK_DATA* pd = &wk->data[ wk->idx[pos_idx] ];
+    
+    if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
+      EVENTDATA_GetBGTalkCenterPos( pd, vec);
+    }else{
+      RAIL_LOCATION loc;
+      EVENTDATA_GetBGTalkCenterRailLocation( pd, &loc );
+      FIELD_RAIL_MAN_GetLocationPosition( sys_wk->railman, &loc, vec );
+    }
+    param[0] = wk->item[pos_idx];
+    param[1] = wk->idx[pos_idx];
+    return f_tbl->flag[pos_idx];
+  }
+  return TRUE;
+}
+#endif  //PM_DEBUG
 

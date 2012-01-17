@@ -58,7 +58,6 @@
  #include "debug/debug_flg.h"
 #endif
 
-#define LOT_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
 #define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
 #define NPC_MISSION_POINT_NUM_VALUE (8)  //ポイント数バリエーション
 
@@ -470,8 +469,8 @@ static void sub_LotParamTradeItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk,
     }
   }
   //5%の確率でレアテーブルに片方を差し替え
-  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
-  if( rnd >= (LOT_PROB_MAG*5) ){
+  rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100, NULL, 0 );
+  if( rnd >= 5 ){
     return;
   }
   wk->param[idx][FES_GIMMICK_SUB_RndGet( rnd_c, 2, NULL, 0 )] = range;
@@ -489,10 +488,10 @@ static void sub_LotParamShoppingItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fm
 
   {
     int i,key = 0;
-    u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
+    u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100, NULL, 0 );
 
     for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
-      key += DATA_NpcItemShoppingProb[i]*LOT_PROB_MAG;
+      key += DATA_NpcItemShoppingProb[i];
 
       if( rnd < key ){
         no = i;
@@ -533,10 +532,10 @@ static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION*
   int no = 0;
   int i,key = 0;
   const NITEM_GET_A_PRESENT_PARAM* tbl = DATA_NpcItemGetAPresent[fmwk->beacon.ex_param].list;
-  u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
+  u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100, NULL, 0 );
 
   for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
-    key += (tbl[i].prob*LOT_PROB_MAG);
+    key += (tbl[i].prob);
 
     if( rnd < key ){
       no = i;
@@ -625,6 +624,7 @@ static void sub_FlagTableUpdate( FES_GIMMICK_NPC_WORK* wk, u16 zone_id )
   }
   MI_CpuClear8( &wk->flag_wk.tbl[ idx ], sizeof(FES_GIMMICK_NPC_FLAG));
   wk->flag_wk.tbl[ idx ].zone_id = zone_id;
+  wk->flag_wk.tbl[ idx ].flag_num = wk->point_max;
 
 #if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
   {

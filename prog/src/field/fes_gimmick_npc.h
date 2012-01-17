@@ -49,6 +49,7 @@
 //フェスミッションNPCギミックフラグ
 typedef struct _FES_GIMMICK_NPC_FLAG{
   u16 zone_id;
+  u16 flag_num;
   u8  flag[FES_GIMMICK_NPC_POINT_MAX];
 }FES_GIMMICK_NPC_FLAG;
 
@@ -109,6 +110,12 @@ extern void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u1
 extern void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk,u16* q_num, u16* q_idx, u16* a_idx );
 extern u16 FES_GIMMICK_NPC_MemoryQuizParamGetQuestionPoke( FES_GIMMICK* sys_wk, u8 idx );
 extern u16 FES_GIMMICK_NPC_MemoryQuizParamGetAnswerPoke( FES_GIMMICK* sys_wk, u8 idx );
+
+//PM_DEBUG
+#ifdef PM_DEBUG
+extern int DEB_FES_GIMMICK_NPC_PosNumGet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
+extern BOOL DEB_FES_GIMMICK_NPC_PosGet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int pos_idx, VecFx32* vec, int* param );
+#endif  //PM_DEBUG
 
 #endif //__ASM_NO_DEF_
 

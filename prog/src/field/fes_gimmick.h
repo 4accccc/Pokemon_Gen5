@@ -161,3 +161,14 @@ extern void FES_GIMMICK_FesTrainerPartySetForNpcMission( FES_GIMMICK* wk, POKEPA
 //-----------------------------------------------------------------------------
 extern BOOL FES_GIMMICK_IsExtraAnimalTrailMission( FES_GIMMICK* wk ,u8 trail_id );
 
+
+//==============================================================================
+//以下デバッグルーチン
+#ifdef PM_DEBUG
+
+extern int DEB_FES_GIMMICK_PosNumGet( FES_GIMMICK* wk );
+extern BOOL DEB_FES_GIMMICK_PosGet( FES_GIMMICK* wk, int pos_idx, VecFx32* vec, int* param );
+
+#endif  //PM_DEBUG
+
+
