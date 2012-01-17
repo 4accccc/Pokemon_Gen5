@@ -1807,11 +1807,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ソウリュウシティの　シャガさんは
-ドラゴンポケモンの　つかいて　で▽
-とっても　つよい　ジムリーダーなの！▼</Text>
+ポケモンを　きたえるため　みずから▽
+レスリングを　しちゃうんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:21:36" />
+				Time="2012-01-17T03:10:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1820,11 +1820,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ソウリュウシティの　シャガさんは
-ドラゴンポケモンの　使い手　で▽
-とっても　強い　ジムリーダーなの！▼</Text>
+ポケモンを　鍛えるため　自ら▽
+レスリングを　しちゃうんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:21:38" />
+				Time="2012-01-17T03:10:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1867,11 +1867,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギはかせえ！
+			<Text>アララギはかせ！
 まってくださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T13:24:17" />
+				Time="2012-01-17T03:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1879,11 +1879,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ博士え！
+			<Text>アララギ博士！
 待ってくださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T13:24:20" />
+				Time="2012-01-17T03:10:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2085,14 +2085,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『うるさいッ！▼
-オレは　うばわれた
-ポケモンを　とりもどすだけだッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……くちを　とじろよ▼
+……オレは　うばわれた
+ポケモンを　とりもどすだけだ▼
 [Name:TrainerName ]！　ちから　かしてくれッ！
 じゅんびは　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:52:02" />
+				Time="2012-01-17T03:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2100,14 +2100,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『うるさいッ！▼
-オレは　奪われた
-ポケモンを　取り戻すだけだッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……くちを　とじろよ▼
+……オレは　奪われた
+ポケモンを　取り戻すだけだ▼
 [Name:TrainerName ]！　力　貸してくれッ！
 準備は　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:52:11" />
+				Time="2012-01-17T03:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2154,10 +2154,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いくぜッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておくが▼
+オレは　いまから　いかるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:21:28" />
+				Time="2012-01-17T03:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2165,10 +2166,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いくぜッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……いっておくが▼
+オレは　いまから　怒るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:21:30" />
+				Time="2012-01-17T03:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

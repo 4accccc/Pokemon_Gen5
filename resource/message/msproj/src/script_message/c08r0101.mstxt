@@ -377,7 +377,7 @@
 			Language="JPN">
 			<Text>じつは　このとき　もういっぴきの
 ドラゴンポケモン▽
-キュレムが　うまれたのでは？▽
+[System:Color name="2" ]キュレム[/System:Color]が　うまれたのでは？▽
 と　すいそく　している▼
 その　しょうこと　なるのが
 だいだい　わがやに　つたわる▽
@@ -388,7 +388,7 @@
 けいそく　できたらしい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T08:33:37" />
+				Time="2012-01-17T03:04:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -398,7 +398,7 @@
 			Language="JPN_KANJI">
 			<Text>じつは　このとき　もう一匹の
 ドラゴンポケモン▽
-キュレムが　うまれたのでは？▽
+[System:Color name="2" ]キュレム[/System:Color]が　うまれたのでは？▽
 と　推測している▼
 その証拠と　なるのが
 代々　我が一族に　伝わる▽
@@ -409,7 +409,7 @@
 計測できたらしい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T08:33:48" />
+				Time="2012-01-17T03:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
