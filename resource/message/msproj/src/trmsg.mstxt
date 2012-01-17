@@ -51821,26 +51821,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あんたの　ポケモンへの　あい
-なんとなく　わかったぜ！</Text>
+ビチッと　わかったぜ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あんたの　ポケモンへの　愛
-なんとなく　わかったぜ！</Text>
+ビチッと　わかったぜ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -52001,25 +52001,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これは　キーのみ▼</Text>
+			<Text>あなたにも
+キーのみ　あげたい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これは　キーのみ▼</Text>
+			<Text>あなたにも
+キーのみ　あげたい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T06:48:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
