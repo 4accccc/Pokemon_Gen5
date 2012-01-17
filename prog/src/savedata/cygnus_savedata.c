@@ -119,6 +119,7 @@ CYGSAVE_STATE CYGNUS_SAVEDATA_DEBUG_Write( CYGNUS_SAVEDATA * sv, u32 * rec_buf )
   }
   sv->overwrite_enable_flag = FALSE;
   sv->onetime_key = 0;
+  sv->flags = 0;
   return state;
 }
 

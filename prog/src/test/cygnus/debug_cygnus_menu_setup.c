@@ -59,6 +59,23 @@ static const GFL_BG_BGCNT_HEADER sc_BGCNT1_M =
 	FALSE,					          // モザイク設定
 };
 
+static const GFL_BG_BGCNT_HEADER sc_BGCNT1_S = 
+{
+	0, 0,				              // 初期表示位置
+	0x800,					          // スクリーンバッファサイズ
+	0,						            // スクリーンバッファオフセット
+	GFL_BG_SCRSIZ_256x256,	  // スクリーンサイズ
+	GX_BG_COLORMODE_16,		    // カラーモード
+	GX_BG_SCRBASE_0x0000,	    // スクリーンベースブロック
+	GX_BG_CHARBASE_0x04000,	  // キャラクタベースブロック
+	GFL_BG_CHRSIZ_256x256,	  // キャラクタエリアサイズ
+	GX_BG_EXTPLTT_01,		      // BG拡張パレットスロット選択
+	PRIORITY_MAIN_BG1,		    // 表示プライオリティー
+	0,						            // エリアオーバーフラグ
+	0,						            // DUMMY
+	FALSE,					          // モザイク設定
+};
+
 // パレットデータ
 static const u16 palette[] = 
 {
@@ -83,6 +100,8 @@ void DEBUG_CYGNUS_MENU_SETUP_Init( HEAPID heap_id )
 	GFL_BG_SetBGMode( &sc_BG_mode );	  // BGモード設定
 	GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &sc_BGCNT1_M, GFL_BG_MODE_TEXT );	// MAIN_BG1の設定 
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );						// MAIN_BG1を表示ON
+	GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &sc_BGCNT1_S, GFL_BG_MODE_TEXT );	// MAIN_BG1の設定 
+	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );						// MAIN_BG1を表示ON
 
   // パレット転送
   GFL_BG_LoadPalette( GFL_BG_FRAME1_M, (void*)palette, NELEMS(palette)*sizeof(u16), 0 );
