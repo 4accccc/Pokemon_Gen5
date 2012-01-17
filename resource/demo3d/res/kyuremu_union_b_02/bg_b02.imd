@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-16T19:11:25" source="kyuremu_union_b_02_bg.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-17T19:23:09" source="kyuremu_union_b_02_bg.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-16T19:11:25" source="kyuremu_union_b_02_bg.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-17T19:23:09" source="kyuremu_union_b_02_bg.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="13 13"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="13 13"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -720,7 +720,31 @@
 </tex_palette_array>
 
 <material_array size="13">
-	<material index="0" name="in51_futa_1"
+	<material index="0" name="d0yuka_001_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="in51_futa_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -744,7 +768,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="in51_futi_1"
+	<material index="2" name="in51_futi_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -768,7 +792,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="in51_gake1_1"
+	<material index="3" name="in51_gake1_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -792,7 +816,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="in51_gake1b_1"
+	<material index="4" name="in51_gake1b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -816,7 +840,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in51_gake1c_1"
+	<material index="5" name="in51_gake1c_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -840,7 +864,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in51_gake2_1"
+	<material index="6" name="in51_gake2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -864,7 +888,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in51_gake2b_1"
+	<material index="7" name="in51_gake2b_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -888,7 +912,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in51_gakeher_1"
+	<material index="8" name="in51_gakeher_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -912,7 +936,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in51_ike2_1"
+	<material index="9" name="in51_ike2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -936,7 +960,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in51_ike_1"
+	<material index="10" name="in51_ike_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -960,7 +984,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in51_rock_1"
+	<material index="11" name="in51_rock_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -984,7 +1008,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in51_yuka2_1"
+	<material index="12" name="in51_yuka2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1002,30 +1026,6 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="12" tex_palette_idx="12"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="12" name="yuka_001_1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1338,9 +1338,10 @@
 				</primitive>
 				<primitive index="14" type="quad_strip" vertex_size="6">
 					<tex st="-64.000000 16.000000"/>
-					<clr rgb="1 1 1"/>
+					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-1.875000 -0.023438 -0.238037"/>
 					<tex st="-16.000000 16.000000"/>
+					<clr rgb="1 1 1"/>
 					<pos_xz xz="-1.875000 -0.800537"/>
 					<tex st="-64.000000 9.000000"/>
 					<clr rgb="17 17 18"/>
@@ -1357,22 +1358,21 @@
 				</primitive>
 				<primitive index="15" type="quad_strip" vertex_size="6">
 					<tex st="12.750000 16.000000"/>
-					<clr rgb="8 8 8"/>
+					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-2.062500 -0.023438 0.175049"/>
 					<tex st="32.000000 16.000000"/>
-					<clr rgb="1 1 1"/>
 					<pos_xz xz="-2.062500 -0.050537"/>
 					<tex st="12.750000 9.000000"/>
 					<clr rgb="8 8 8"/>
 					<pos_xyz xyz="-2.132813 0.023438 0.175049"/>
 					<tex st="38.000000 9.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="-2.132813 -0.120850"/>
 					<tex st="12.750000 0.000000"/>
-					<clr rgb="8 8 8"/>
+					<clr rgb="17 17 18"/>
 					<pos_xyz xyz="-2.179688 0.140625 0.175049"/>
 					<tex st="42.000000 0.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="-2.179688 -0.167725"/>
 				</primitive>
 				<primitive index="16" type="quad_strip" vertex_size="6">
@@ -1380,7 +1380,7 @@
 					<clr rgb="1 1 1"/>
 					<pos_xyz xyz="-2.062500 -0.023438 0.886963"/>
 					<tex st="12.750000 16.000000"/>
-					<clr rgb="8 8 8"/>
+					<clr rgb="0 0 0"/>
 					<pos_xz xz="-2.062500 0.175049"/>
 					<tex st="-54.000000 9.000000"/>
 					<clr rgb="4 4 4"/>
@@ -1392,7 +1392,7 @@
 					<clr rgb="4 4 4"/>
 					<pos_xyz xyz="-2.179688 0.140625 1.004150"/>
 					<tex st="12.750000 0.000000"/>
-					<clr rgb="8 8 8"/>
+					<clr rgb="17 17 18"/>
 					<pos_xz xz="-2.179688 0.175049"/>
 				</primitive>
 				<primitive index="17" type="quad_strip" vertex_size="6">
@@ -1696,7 +1696,6 @@
 					<pos_yz yz="-0.023438 1.824463"/>
 				</primitive>
 				<primitive index="35" type="triangle_strip" vertex_size="4">
-					<clr rgb="1 1 1"/>
 					<pos_xz xz="-2.062500 -0.050537"/>
 					<tex st="-8.000000 16.000000"/>
 					<pos_xz xz="-1.921875 -0.097412"/>
@@ -1781,7 +1780,7 @@
 					<clr rgb="17 17 18"/>
 					<pos_xyz xyz="-2.062500 0.140625 -0.167725"/>
 					<tex st="6.000000 0.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_xy xy="-2.179688 0.140625"/>
 					<tex st="10.000000 9.000000"/>
 					<pos_diff xyz="0.046875 -0.117188 0.046875"/>
@@ -2156,10 +2155,10 @@
 					<clr rgb="17 17 18"/>
 					<pos_xyz xyz="-2.062500 0.023438 -0.120850"/>
 					<tex st="10.000000 9.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_xy xy="-2.132813 0.023438"/>
 					<tex st="16.000000 16.000000"/>
-					<clr rgb="1 1 1"/>
+					<clr rgb="0 0 0"/>
 					<pos_diff xyz="0.070313 -0.046875 0.070313"/>
 					<tex st="16.000000 9.000000"/>
 					<clr rgb="6 6 6"/>
@@ -2191,7 +2190,7 @@
 					<clr rgb="17 17 18"/>
 					<pos_xyz xyz="-1.945313 0.023438 -0.238037"/>
 					<tex st="-8.000000 16.000000"/>
-					<clr rgb="1 1 1"/>
+					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-1.921875 -0.023438 -0.097412"/>
 					<tex st="-2.000000 16.000000"/>
 					<pos_xz xz="-1.875000 -0.238037"/>
@@ -10130,15 +10129,16 @@
 				</primitive>
 				<primitive index="7" type="quad_strip" vertex_size="6">
 					<tex st="42.000000 8.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_xyz xyz="-2.179688 0.140625 -0.167725"/>
 					<tex st="48.000000 0.000000"/>
 					<clr rgb="2 3 3"/>
 					<pos_diff xyz="-0.070313 0.023438 -0.070313"/>
 					<tex st="12.750000 8.000000"/>
-					<clr rgb="8 8 8"/>
+					<clr rgb="17 17 18"/>
 					<pos_xyz xyz="-2.179688 0.140625 0.175049"/>
 					<tex st="12.750000 0.000000"/>
+					<clr rgb="8 8 8"/>
 					<pos_xy xy="-2.250000 0.164063"/>
 					<tex st="-58.000000 8.000000"/>
 					<clr rgb="4 4 4"/>
@@ -10415,7 +10415,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-2.250000 0.164063"/>
 					<tex st="6.000000 8.000000"/>
-					<clr rgb="14 14 14"/>
+					<clr rgb="7 7 7"/>
 					<pos_diff xyz="0.070313 -0.023438 0.070313"/>
 					<tex st="16.000000 8.000000"/>
 					<clr rgb="17 17 18"/>
@@ -12036,7 +12036,7 @@
 					<tex st="89.937500 10.250000"/>
 					<clr rgb="25 25 25"/>
 					<pos_xz xz="0.217041 -0.017578"/>
-					<tex st="85.562500 -1.000000"/>
+					<tex st="85.562500 0.062500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.237549 -0.239502"/>
 				</primitive>
@@ -12084,7 +12084,7 @@
 					<tex st="99.437500 0.062500"/>
 					<clr rgb="22 23 23"/>
 					<pos_xz xz="0.455322 -0.223145"/>
-					<tex st="85.562500 -1.000000"/>
+					<tex st="85.562500 0.062500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.237549 -0.239502"/>
 					<tex st="99.437500 15.937500"/>
@@ -12104,7 +12104,7 @@
 					<tex st="74.750000 0.062500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.077393 -0.297363"/>
-					<tex st="85.562500 -1.000000"/>
+					<tex st="85.562500 0.062500"/>
 					<pos_xz xz="0.237549 -0.239502"/>
 				</primitive>
 				<primitive index="18" type="triangle_strip" vertex_size="4">
@@ -12229,7 +12229,7 @@
 					<tex st="60.687500 0.062500"/>
 					<clr rgb="22 23 23"/>
 					<pos_xz xz="-0.494629 -0.235596"/>
-					<tex st="85.562500 -1.000000"/>
+					<tex st="85.562500 0.062500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.237549 -0.239502"/>
 					<tex st="76.812500 4.875000"/>
@@ -14783,19 +14783,19 @@
 		volume_max="4.025635 1.290527 4.999512"
 		volume_r="6.738281"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
-		<display index="1" material="1" polygon="5" priority="0"/>
-		<display index="2" material="2" polygon="0" priority="0"/>
-		<display index="3" material="3" polygon="3" priority="0"/>
-		<display index="4" material="4" polygon="10" priority="0"/>
-		<display index="5" material="5" polygon="9" priority="0"/>
-		<display index="6" material="6" polygon="4" priority="0"/>
-		<display index="7" material="7" polygon="8" priority="0"/>
-		<display index="8" material="8" polygon="11" priority="0"/>
-		<display index="9" material="9" polygon="12" priority="0"/>
-		<display index="10" material="10" polygon="2" priority="0"/>
-		<display index="11" material="11" polygon="6" priority="0"/>
-		<display index="12" material="12" polygon="7" priority="0"/>
+		<display index="0" material="0" polygon="7" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="2" material="2" polygon="5" priority="0"/>
+		<display index="3" material="3" polygon="0" priority="0"/>
+		<display index="4" material="4" polygon="3" priority="0"/>
+		<display index="5" material="5" polygon="10" priority="0"/>
+		<display index="6" material="6" polygon="9" priority="0"/>
+		<display index="7" material="7" polygon="4" priority="0"/>
+		<display index="8" material="8" polygon="8" priority="0"/>
+		<display index="9" material="9" polygon="11" priority="0"/>
+		<display index="10" material="10" polygon="12" priority="0"/>
+		<display index="11" material="11" polygon="2" priority="0"/>
+		<display index="12" material="12" polygon="6" priority="0"/>
 	</node>
 </node_array>
 
