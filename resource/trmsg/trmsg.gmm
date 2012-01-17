@@ -1343,14 +1343,14 @@
 		<language name="JPN" width="216">またしても　ワタクシの　もくろみが！
 せかいの　かんぜん　しはいがっ！！▼
 ありえるか！▼
-いいえ　ありえぬ！！▼
+いいや　ありえぬ！！▼
 ありえては　ならぬ！！▼
 どこの　ダレとも　わからぬ
 つまらぬ　トレーナーなんぞに！！</language>
 		<language name="JPN_KANJI" width="216">またしても　ワタクシの　目論見が！
 世界の　完全支配がっ！！▼
 ありえるか！▼
-いいえ　ありえぬ！！▼
+いいや　ありえぬ！！▼
 ありえては　ならぬ！！▼
 どこの　ダレとも　わからぬ
 つまらぬ　トレーナーなんぞに！！</language>
@@ -10941,9 +10941,9 @@
 
 	<row id="TRID_SWPLAZMAM_14_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">てきの　アジトに　のりこむとは
-オマエ　うぬぼれているな！</language>
+オマエ　うぬぼれているな！▼</language>
 		<language name="JPN_KANJI" width="216">敵の　アジトに　乗り込むとは
-オマエ　うぬぼれているな！</language>
+オマエ　うぬぼれているな！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_14_TRMSG_FIGHT_LOSE">
@@ -11322,9 +11322,9 @@
 
 	<row id="TRID_SWPLAZMAM_24_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">てきの　アジトに　のりこむとは
-オマエ　うぬぼれているな！</language>
+オマエ　うぬぼれているな！▼</language>
 		<language name="JPN_KANJI" width="216">敵の　アジトに　乗り込むとは
-オマエ　うぬぼれているな！</language>
+オマエ　うぬぼれているな！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_24_TRMSG_FIGHT_LOSE">
@@ -14557,24 +14557,24 @@
 
 	<row id="TRID_ELITEM_39_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">キミの　ポケモンは　まぶしい！
-まるで　たいようと　たいよう！</language>
+まぶしくて　なにも　みえない！</language>
 		<language name="JPN_KANJI" width="216">キミの　ポケモンは　まぶしい！
-まるで　太陽と　太陽！</language>
+まぶしくて　なにも　みえない！</language>
 	</row>
 
 	<row id="TRID_ELITEM_39_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">キミが　もっている　バッジ……▼
-いや　ポケモンたちの　ほうが
+いや　ポケモンの　ほうが
 まぶしく　かがやいているのか……！</language>
 		<language name="JPN_KANJI" width="216">キミが　持っている　バッジ……▼
-いや　ポケモンたちの　ほうが
+いや　ポケモンの　ほうが
 まぶしく　輝いているのか……！</language>
 	</row>
 
 	<row id="TRID_ELITEW_38_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">あなた　２ねんまえの
+		<language name="JPN" width="216">あなたの　ふんいき　２ねんまえの
 あの　トレーナー　みたい……▼</language>
-		<language name="JPN_KANJI" width="216">あなた　２年前の
+		<language name="JPN_KANJI" width="216">あなたの　雰囲気　２年前の
 あの　トレーナー　みたい……▼</language>
 	</row>
 
