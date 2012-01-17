@@ -27,6 +27,7 @@ _EVENT_DATA    ev_animal_trail_hide_item
 _EVENT_DATA    ev_init_d34r0101
 _EVENT_DATA    ev_animal_trail_back_zone
 _EVENT_DATA	   ev_reserve_d34r0101_event_01
+_EVENT_DATA    ev_recover_d34r0101
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -126,18 +127,36 @@ EVENT_END
 /**************************************************************/
 INIT_EVENT_START ev_init_d34r0101
 {
-  DEFINE_LOCAL  LWK_IS_SET
-    
   // OBJのセットアップ
   _ANIMAL_TRAIL_SETUP()
   
+  // アイテムデータ移動
+  _CALL move_hide_item 
+}
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_recover_d34r0101
+{
+  // アイテムデータ移動
+  _CALL move_hide_item  
+}
+  
+INIT_EVENT_END
+
+move_hide_item:
+{
+  DEFINE_LOCAL  LWK_IS_SET
+ 
   // アイテムデータ移動
   _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM, LWK_IS_SET )
   IF $LWK_IS_SET == TRUE THEN
     _SXY_MOVE_BG_EVENT(BGID_D32R0101_HIDE_ITEM,15,0,12)
   ENDIF
 }
-INIT_EVENT_END
+_RET
 
 //--------------------------------------------------------------
 //               前のゾーンに戻る
