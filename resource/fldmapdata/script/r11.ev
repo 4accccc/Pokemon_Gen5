@@ -167,7 +167,6 @@ ev_poke6_btl_start:
     {
       DEFINE_LOCAL flag
       $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
       _WILD_BTL_SET_EX( MONSNO_647, 45, flag ) // Lv.45 ビリジオン
     }
 
@@ -177,7 +176,6 @@ ev_poke6_btl_start:
     {
       DEFINE_LOCAL flag
       $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
       _WILD_BTL_SET_EX( MONSNO_647, 65, flag ) // Lv.65 ビリジオン
     }
 

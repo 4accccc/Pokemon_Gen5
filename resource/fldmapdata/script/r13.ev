@@ -158,7 +158,6 @@ EVENT_START   ev_r13_poke4_01
     {
       DEFINE_LOCAL flag
       $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
       _WILD_BTL_SET_EX( MONSNO_645, 45, flag ) // Lv.45 コバルオン
     }
 
@@ -168,7 +167,6 @@ EVENT_START   ev_r13_poke4_01
     {
       DEFINE_LOCAL flag
       $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
       _WILD_BTL_SET_EX( MONSNO_645, 65, flag ) // Lv.65 コバルオン
     }
 
