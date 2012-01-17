@@ -12,6 +12,8 @@
   .include  "msg_c13r0101.h"
   .include  "c13r0101.h"
 
+  //@author suginaka_katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -45,7 +47,7 @@ EVENT_START		ev_c13r0101_woman2_01
 _TALK_OBJ_START()
 	
 	//ポケウッドを解放していない場合
-	IF $WK_SCENE_C13 == 1 THEN 
+	IF $WK_SCENE_C13 == 2 THEN 
 		_BALLOONWIN_TALKOBJ_MSG( msg_c13r0101_woman2_01 )	
 	//ポケウッドを解放している場合
 	ELSE
