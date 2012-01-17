@@ -74,11 +74,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさきは　だいじポイント！
-つまり　みはりも　だいじワーク　さ</Text>
+			<Text>このさきは　だいじポイント！▼
+２１ばんすいどうに　むかう
+れんちゅうも　だいじだが　おれらも▽
+だいじな　やくめを　まかされてるのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2012-01-17T07:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -86,11 +88,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先は　大事ポイント！
-つまり　見張りも　大事ワークさ</Text>
+			<Text>この先は　大事ポイント！▼
+２１番水道に　向かう
+連中も　大事だが　おれらも▽
+大事な　役目を　任されてるのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2012-01-17T07:51:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

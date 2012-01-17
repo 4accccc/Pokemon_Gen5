@@ -9,10 +9,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 ぜったいに　とりもどすッ▼
 というわけで　オマエは
-まず　ジムバッジを　てにいれなッ！</Text>
+まず　ジムリーダーに　かてッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:18:56" />
+				Time="2012-01-17T07:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,10 +23,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 絶対に　取り戻すッ▼
 というわけで　オマエは
-まず　ジムバッジを　手に入れなッ！</Text>
+まず　ジムリーダーに　勝てッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:18:59" />
+				Time="2012-01-17T07:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,13 +134,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうしたら　てわけして
+			<Text>オマエが　ジムバッジを　てにいれたら
 プラズマだんを　さがすぜッ！▼
 ……イッシュを
 こおりづけに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T06:47:18" />
+				Time="2012-01-17T07:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -148,13 +148,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうしたら　手分けして
+			<Text>オマエが　ジムバッジを　手に入れたら
 プラズマ団を　探すぜッ！▼
 ……イッシュを
 氷漬けに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T06:47:23" />
+				Time="2012-01-17T07:13:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -393,10 +393,10 @@
 オマエ　すごい　ヤツだな！▼
 ほんとうなら　ポケモンリーグに
 ちょうせん……　だけど▽
-さきに　プラズマだん　だからなッ！▼</Text>
+プラズマだんが　さき　だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:01:38" />
+				Time="2012-01-17T07:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -408,10 +408,10 @@
 オマエ　すごい　ヤツだな！▼
 本当なら　ポケモンリーグに
 挑戦……　だけど▽
-先に　プラズマ団だからなッ！▼</Text>
+プラズマ団が　先だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:01:34" />
+				Time="2012-01-17T07:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
