@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
-おー！　きみは　ポケモンずかんを
-あつめて　いるんだね！▼
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
+ああ！　きみは　ポケモンずかんを
+あつめて　いるんだ！▼
 たくさん　あつまったら
-ぼくにも　みせて　ほしいな！</Text>
+ぼくにも　みせてください！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:27:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
-おー！　きみは　ポケモン図鑑を
-集めているんだね！▼
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
+ああ！　きみは　ポケモン図鑑を
+集めて　いるんだ！▼
 たくさん　集まったら
-ぼくにも　みせて　ほしいな！</Text>
+ぼくにも　みせてください！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:27:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41,10 +41,10 @@
 			<Comment>♂
 ・全国版フラグ・増田部長フラグ
 　どちらもまだで話しかけた
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:28:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -52,6 +52,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:40:57" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -73,16 +80,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
 おおー！　きみは
 イッシュの　ポケモンを▽
-ぜんぶ　つかまえたんだね！▼
-いやー　すごい！
+ぜんぶ　つかまえたんですね！▼
+ほんと　すごいですね！　では
 ひょうしょう　しましょう！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,16 +97,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
 おおー！　きみは
 イッシュの　ポケモンを▽
-全部　捕まえたんだね！▼
-いやー　すごい！
+全部　捕まえたんですね！▼
+ほんと　すごいですね！　では
 表彰しましょう！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:30:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -117,10 +124,11 @@
 　なにかボタンでフィールドへ
 　１度聞くと、部屋を出るまでは4になる
 ・同時に3の条件を満たしていても一度部屋を出ないと
-　director_03は表示されない</Comment>
+　director_03は表示されない
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:28:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -128,6 +136,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:40:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -149,11 +164,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ひょうしょうじょう　ですが
+			<Text>この　ひょうしょうじょう　は
 きみの　いえに　おくっておきますね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -161,11 +176,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　表彰状ですが
+			<Text>この　表彰状は
 きみの　家に　送っておきますね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:31:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -176,10 +191,11 @@
 			<Comment>♂
 ・02表示後1回のみ、このメッセージを表示
 ・あわせてc12r0101に
-　イッシュ図鑑の表彰状の動作モデル追加</Comment>
+　イッシュ図鑑の表彰状の動作モデル追加
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:28:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -187,6 +203,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:40:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -208,18 +231,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
-おおおー！　すごい！
-きみは　ついに　すべての▽
-ポケモンを　あつめて▽
-ずかんを　かんせい　させたんだね！▼
-こんなに　たくさんの　ポケモンを
-がんばって　あつめて　くれるなんて……▼
-ぜひ　ひょうしょう　させてください！▼</Text>
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
+えっ！？▼
+もしかして　きみ……▼
+ポケモンを　ぜんぶ　あつめて
+ずかんを　かんせい　させたの？▼
+いいですねえ▼
+いっしょうけんめい　これだけの
+ポケモンを　あつめてくれて▽
+とても　うれしいです▼
+ぜひ　ぜひぜひ
+ひょうしょう　させてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:34:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,18 +253,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！
-ぼくは　ゲーム　ディレクター▼
-おおおー！　すごい！
-きみは　ついに　すべての▽
-ポケモンを　集めて▽
-図鑑を　完成させたんだね！▼
-こんなに　たくさんの　ポケモンを
-がんばって　集めてくれるなんて……▼
-ぜひ　表彰させてください！！▼</Text>
+			<Text>どうも！　ぼくは
+ゲーム　ディレクター　です▼
+えっ！？▼
+もしかして　きみ……▼
+ポケモンを　全部　集めて
+図鑑を　完成させたの？▼
+いいですねえ▼
+一生懸命　これだけの
+ポケモンを　集めてくれて▽
+とても　うれしいです▼
+ぜひ　ぜひぜひ
+表彰させてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -254,10 +283,11 @@
 　メッセージ表示後
 　ファファーレを鳴らして表彰状を表示
 　なにかボタンでフィールドへ
-・１度聞くと、部屋を出るまでは4になる</Comment>
+・１度聞くと、部屋を出るまでは4になる
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:28:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -265,6 +295,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:40:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -286,18 +323,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは
-あつめた　ポケモンたちと▽
-どうやって　であったの？▼
-じぶんで　つかまえたり
-おともだちに　もらったり▽
+			<Text>その　ずかん
+どうやって　あつめたんですか？▼
+じぶんで　つかまえるのは
+あたりまえ　だとしても▽
+それだけでは　そろわないですよね▼
+やっぱり　ともだちや
 せかいじゅうの　ひとと▽
-こうかん　したり……▼
-おなじ　ポケモンずかんでも
-ひとり　ひとり　ちがうんだね！</Text>
+こうかん　して　そこまで……▼
+だとすると　その　ずかんは
+ポケモンの　ちしきの▽
+ほうこで　あるとともに　きみの▽
+まじわりの　しゅうたいせい　ですね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -305,17 +345,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは
-集めた　ポケモンたちと▽
-どうやって　出会ったの？▼
-自分で　捕まえたり
-お友達に　もらったり▽
-世界中の　人と　交換したり……▼
-おなじ　ポケモン図鑑でも
-ひとり　ひとり　違うんだね！</Text>
+			<Text>その　図鑑
+どうやって　集めたんですか？▼
+じぶんで　捕まえるのは
+当たり前だとしても▽
+それだけでは　そろわないですよね▼
+やっぱり　ともだちや
+世界中の　人と▽
+交換して　そこまで……▼
+だとすると　その　図鑑は
+ポケモンの　知識の▽
+宝庫で　あるとともに　きみの▽
+交友の　集大成　ですね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:55:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -324,10 +368,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・2か3の話を終えたら、部屋を出るまで</Comment>
+・2か3の話を終えたら、部屋を出るまで
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:28:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -335,6 +380,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:40:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -385,8 +437,8 @@
 ・あわせてc12r0101に
 　全国図鑑の表彰状の動作モデル追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:32:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -394,6 +446,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -459,6 +518,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:03" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -513,6 +579,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -574,6 +647,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -632,6 +712,13 @@
 				User="matsumiya:W00224"
 				Time="2011-09-13T06:34:28" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -683,6 +770,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-13T06:34:29" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -736,6 +830,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -792,6 +893,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -856,6 +964,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -918,6 +1033,13 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -990,6 +1112,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1042,6 +1171,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1055,13 +1191,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>くぅー！　いい　ポケモンだね！▼
-ともに　あるいた　ほすうが
+ほすうの　おおさが
 つよさに　つながっているような……▼
 また　あした
 しょうぶが　できると　いいなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:20:11" />
+				Time="2012-01-17T05:43:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1070,13 +1206,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>くぅー！　いい　ポケモンだね！▼
-共に　歩いた　歩数だけ
+歩数の　多さが
 強さに　つながっているような……▼
 また　明日
 勝負が　できると　いいなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:19:59" />
+				Time="2012-01-17T05:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1100,6 +1236,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1113,10 +1256,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ！？　そっかあ
-かわいい　ポケモン　なのに</Text>
+プリティーな　ポケモン　なのに</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:19:31" />
+				Time="2012-01-17T05:43:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1125,10 +1268,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいえ！？　そっかあ
-かわいい　ポケモン　なのに</Text>
+プリティーな　ポケモン　なのに</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:19:34" />
+				Time="2012-01-17T05:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1152,6 +1295,13 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1164,11 +1314,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サウンドデザイナー　ですけど
-みんな　どの　きょくが　すきなの？</Text>
+			<Text>ねおきの　サウンドデザイナー　だけど
+みんな　どんな　きょくが　すきかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:01:41" />
+				Time="2012-01-17T05:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1176,11 +1326,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サウンドデザイナー　ですけど
-みんな　どの曲が　好きなの？</Text>
+			<Text>寝起きの　サウンドデザイナー　だけど
+みんな　どんな　曲が　好きかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:01:53" />
+				Time="2012-01-17T05:43:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1200,6 +1350,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-25T05:23:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1244,6 +1401,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-20T09:03:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1291,6 +1455,13 @@
 				User="matsumiya:W00224"
 				Time="2011-09-20T09:06:59" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c03r0402_assistantm_01"
@@ -1334,6 +1505,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-20T09:04:52" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-17T05:41:06" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

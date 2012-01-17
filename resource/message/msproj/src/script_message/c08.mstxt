@@ -1367,11 +1367,11 @@
 			Language="JPN">
 			<Text>プラズマだん『ポケモンは　どうぐ！
 おれは　そう　おそわった！▼
-よけいな　おもいが　ないほうが
+よけいな　おもいなんか　ないほうが
 うまく　どうぐを　あつかえるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:31:55" />
+				Time="2012-01-17T05:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1381,11 +1381,11 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『ポケモンは　道具！
 おれは　そう　教わった！▼
-余計な　思いが　ないほうが
+余計な　思いなんか　ないほうが
 うまく　道具を　扱えるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:31:58" />
+				Time="2012-01-17T05:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2174,11 +2174,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『あの　おじいさま……
+			<Text>プラズマだん『……あの　おじいさま
 わかい　むすめにも　ようしゃ　なしね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:04:35" />
+				Time="2012-01-17T05:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2186,11 +2186,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『あの　おじいさま……
+			<Text>プラズマ団『……あの　おじいさま
 若い娘にも　容赦なし　ね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:49:03" />
+				Time="2012-01-17T05:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2865,18 +2865,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『ああ▼
-ですが　どんな　てを　つかってでも
+			<Text>ダークトリニティ『……そうだ▼
+どんな　てを　つかってでも
 こんかいは　もくてきを　たっせいする▼
-Ｎさまの　ように
+われわれに　Ｎさまの　ように
 たみの　こころを　うばう▽
 きゅうしんりょくが　ない▼
 かわりに　あっとうてきな　ちからで
 ひとびとを　くっぷく　させる……▽
-２ねんは　ぞんがい　ながかったぞ▼</Text>
+２ねんは　ぞんがい　ながかった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:06:46" />
+				Time="2012-01-17T06:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2884,18 +2884,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『ああ▼
+			<Text>ダークトリニティ『……そうだ▼
 ですが　どんな　手段ででも
 今回は　目的を　達成する▼
-Ｎさまの　ように
+我々に　Ｎさまの　ように
 民の　心を　奪う▽
 求心力が　ない▼
 代わりに　圧倒的な　力で
 人々を　屈服させる……▽
-２年は　存外　長かったぞ▼</Text>
+２年は　存外　長かった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:06:55" />
+				Time="2012-01-17T06:08:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

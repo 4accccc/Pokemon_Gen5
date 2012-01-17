@@ -9,11 +9,11 @@
 			<Text>[Name:TrainerName ]！
 いま　どこだッ？▼
 エッ　ソウリュウ！？▼
-そっちに　こおりの　かたまり
-とんでいったろ！？▼</Text>
+そっちに　へんな　ふねが
+とんでいったろッ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T14:12:02" />
+				Time="2012-01-17T06:12:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24,11 +24,11 @@
 			<Text>[Name:TrainerName ]！
 いま　どこだッ？▼
 エッ　ソウリュウ！？▼
-そっちに　氷の　塊
-飛んでいったろ！？▼</Text>
+そっちに　変な　船が
+飛んでいったろッ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T14:12:06" />
+				Time="2012-01-17T06:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -168,12 +168,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わからない……！▼
-だけど　もうすぐ
+			<Text>おそらく……！▼
+とにかく　もうすぐ
 とうちゃく　するから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:16:52" />
+				Time="2012-01-17T06:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -181,12 +181,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わからない……！▼
-だけど　もうすぐ
+			<Text>おそらく……！▼
+とにかく　もうすぐ
 到着するから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T08:16:55" />
+				Time="2012-01-17T06:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
