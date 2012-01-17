@@ -932,11 +932,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さ　いくぜ……！▼
+			<Text>さ　とおらせてもらうぜ……！▼
 って　また　きやがったか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:52:31" />
+				Time="2012-01-17T09:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -944,11 +944,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さ　行くぜ……！▼
+			<Text>さ　通らせてもらうぜ……！▼
 って　また　来やがったか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:52:36" />
+				Time="2012-01-17T09:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1104,13 +1104,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
+			<Text>[Name:TrainerName Idx="1" ]『わかったッ！▼
 アイツに　あえたなら
 アンタらの　つみほろぼし　だっけ？▽
 てつだってやるッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:50:07" />
+				Time="2012-01-17T09:31:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1118,13 +1118,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
+			<Text>[Name:TrainerName Idx="1" ]『わかったッ！▼
 アイツに　会えたなら
 アンタらの　罪滅ぼし　だっけ？▽
 手伝ってやるッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:50:10" />
+				Time="2012-01-17T09:31:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
