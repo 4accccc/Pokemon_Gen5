@@ -67,6 +67,10 @@ EVENT_START   ev_pos_d09r1401_swrival_01
   //ライバル：ポケモンリーグに　むかってるよな▽
   _BALLOONWIN_OBJMSG_POS( msg_d09r1401_swrival_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル芝居
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_anime )
+  _OBJ_ANIME_WAIT()
 
   //ライバル戦呼び出し　最初の３匹によって分岐
   IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
@@ -128,6 +132,13 @@ EVENT_START   ev_pos_d09r1401_swrival_01
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//ライバル：芝居
+//--------------------------------------------------------------------
+
+_ANIME_LABEL	anm_swrival_anime
+	_ANIME_DATA	AC_SWRIVAL_ACT0,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //☆共通処理：その場歩き
