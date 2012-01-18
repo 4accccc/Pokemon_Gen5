@@ -178,7 +178,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_GIZAPLAINWIN_CLOSE()
 	
 	//無音再生
-  _START_EVENT_BGM_SILENT( 12 )
+  //_START_EVENT_BGM_SILENT( 12 )
 	
   // こごえるせかいエフェクト(前半)
   // 全部で500フレーム
@@ -196,6 +196,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     // 背景を真っ暗なままメッセージを出したいので
     // 専用フェードアウトを使う
     _MAP_FADE_OUT_MSG_ENABLE( MSG_FADE_WHITE, 0 )
+    
+    //無音再生
+    _START_EVENT_BGM_SILENT( 1 )
 
     _TIME_WAIT(20)
 
