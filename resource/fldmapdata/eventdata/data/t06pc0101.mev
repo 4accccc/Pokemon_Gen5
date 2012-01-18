@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/24 22:22:59
+#save date:2012/01/18 18:18:48
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t06pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_POSTMAN
 #Event Script Name
-T06PC0101_DELIVERY
+SCRID_POSTMAN
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
