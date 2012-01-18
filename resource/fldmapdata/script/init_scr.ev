@@ -633,8 +633,6 @@ ev_first_gameclear:
   _FLAG_SET( FV_D27R0101_STOPPER_01 )
   //プラズマフリゲート・内部状態変更
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
-  //プラズマフリゲート・キュレム非表示
-  _FLAG_SET( FV_D27R1001_R1301_POKE10_01 )
   //ヒントPOSを全て無効に
   $WK_SCENE_D27_HINT_01 = 1
   $WK_SCENE_D27_HINT_02 = 1

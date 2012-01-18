@@ -315,6 +315,8 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _FLAG_SET( FV_D27R1001_SWSAGE7_01 )
   //D27R1101 甲板の人々を非表示
   _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
+  //プラズマフリゲート・キュレム非表示
+  _FLAG_SET( FV_D27R1001_R1301_POKE10_01 )
   //========================================//
 
 INIT_EVENT_END
