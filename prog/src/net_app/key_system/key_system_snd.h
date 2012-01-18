@@ -31,7 +31,6 @@
 
 #define KEYSYS_BGM_MAIN       SEQ_BGM_DATA_CONV   //ƒƒCƒ“‹È
 
-//TODO
 #define CYGNUS_SE_MOVIE_FALL   SEQ_SE_SYS_88  //Œõ‚Ì‹Ê‚ª~‚è‚Ä‚­‚é
 #define CYGNUS_SE_MOVIE_EMIT   SEQ_SE_SYS_89  //Œõ‚Ì‚½‚Ü‚ª”j—ô‚·‚é
 #define CYGNUS_SE_RECV_PRESENT SEQ_SE_SYS_50	//‘¡‚è•¨‚ðŽó‚¯Žæ‚Á‚½Š®—¹‰¹
