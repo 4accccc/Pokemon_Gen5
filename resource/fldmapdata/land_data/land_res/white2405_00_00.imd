@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-10-27T20:55:38" source="white2405_00_00.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2012-01-17T15:51:43" source="white2405_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-10-27T20:55:38" source="white2405_00_00.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2012-01-17T15:51:43" source="white2405_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -3244,10 +3244,8 @@
 					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-0.756348 0.933105 -3.381348"/>
 					<tex st="-177.750000 54.937500"/>
-					<clr rgb="21 18 17"/>
 					<pos_xyz xyz="-0.767334 1.258545 -3.488281"/>
 					<tex st="-230.500000 127.437500"/>
-					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-0.920166 0.852051 -3.611084"/>
 					<tex st="-212.062500 70.750000"/>
 					<pos_xyz xyz="-0.873779 1.206055 -3.637695"/>
@@ -3258,12 +3256,11 @@
 					<tex st="-212.062500 70.750000"/>
 					<pos_xyz xyz="-0.873779 1.206055 -3.637695"/>
 					<tex st="-177.750000 16.437500"/>
-					<clr rgb="7 7 7"/>
 					<pos_xyz xyz="-0.948730 1.623535 -3.458496"/>
 					<tex st="-177.750000 54.937500"/>
-					<clr rgb="21 18 17"/>
 					<pos_xyz xyz="-0.767334 1.258545 -3.488281"/>
 					<tex st="-99.250000 16.437500"/>
+					<clr rgb="21 18 17"/>
 					<pos_xyz xyz="-0.287109 1.672852 -3.140625"/>
 					<tex st="-99.250000 54.937500"/>
 					<clr rgb="7 7 7"/>
@@ -3297,10 +3294,8 @@
 					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-0.359619 2.002441 -3.014893"/>
 					<tex st="-177.750000 16.437500"/>
-					<clr rgb="7 7 7"/>
 					<pos_xyz xyz="-0.948730 1.623535 -3.458496"/>
 					<tex st="-174.812500 -29.625000"/>
-					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-0.841553 1.953857 -3.349121"/>
 					<tex st="-209.125000 25.187500"/>
 					<pos_xyz xyz="-1.046143 1.575195 -3.595215"/>
@@ -3315,10 +3310,8 @@
 					<tex st="195.625000 78.062500"/>
 					<pos_xyz xyz="-2.061035 1.371582 -3.955566"/>
 					<tex st="310.937500 78.062500"/>
-					<clr rgb="7 7 7"/>
 					<pos_xyz xyz="-0.935059 1.312744 -4.249756"/>
 					<tex st="203.500000 27.062500"/>
-					<clr rgb="0 0 0"/>
 					<pos_xyz xyz="-1.926514 1.789063 -3.797607"/>
 					<tex st="313.937500 29.125000"/>
 					<pos_xyz xyz="-0.928955 1.693604 -4.189697"/>

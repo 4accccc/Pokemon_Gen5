@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-10-27T18:42:33" source="white2402_00_00.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2012-01-17T19:06:17" source="white2402_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-10-27T18:42:33" source="white2402_00_00.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2012-01-17T19:06:17" source="white2402_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1051,13 +1051,13 @@
 					<clr rgb="27 27 27"/>
 					<pos_xz xz="2.321045 -1.218750"/>
 					<tex st="178.250000 -48.000000"/>
-					<clr rgb="12 12 12"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="2.785645 -1.750000"/>
 					<tex st="178.250000 -14.000000"/>
-					<clr rgb="26 26 26"/>
+					<clr rgb="18 18 18"/>
 					<pos_xz xz="2.785645 -1.218750"/>
 					<tex st="208.000000 -48.000000"/>
-					<clr rgb="12 12 12"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="3.250000 -1.750000"/>
 					<tex st="208.000000 -14.000000"/>
 					<pos_xz xz="3.250000 -1.218750"/>
@@ -1353,9 +1353,10 @@
 					<tex st="178.250000 30.000000"/>
 					<pos_xz xz="2.785645 -0.531250"/>
 					<tex st="208.000000 8.000000"/>
-					<clr rgb="12 12 12"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="3.250000 -0.875000"/>
 					<tex st="208.000000 30.000000"/>
+					<clr rgb="12 12 12"/>
 					<pos_xz xz="3.250000 -0.531250"/>
 				</primitive>
 				<primitive index="9" type="quad_strip" vertex_size="12">
@@ -1382,18 +1383,20 @@
 					<clr rgb="30 30 30"/>
 					<pos_xz xz="2.321045 -0.875000"/>
 					<tex st="178.250000 -14.000000"/>
-					<clr rgb="26 26 26"/>
+					<clr rgb="18 18 18"/>
 					<pos_xz xz="2.785645 -1.218750"/>
 					<tex st="178.250000 8.000000"/>
+					<clr rgb="26 26 26"/>
 					<pos_xz xz="2.785645 -0.875000"/>
 					<tex st="208.000000 -14.000000"/>
-					<clr rgb="12 12 12"/>
+					<clr rgb="7 7 7"/>
 					<pos_xz xz="3.250000 -1.218750"/>
 					<tex st="208.000000 8.000000"/>
 					<pos_xz xz="3.250000 -0.875000"/>
 				</primitive>
 				<primitive index="10" type="quad_strip" vertex_size="10">
 					<tex st="208.000000 112.000000"/>
+					<clr rgb="12 12 12"/>
 					<pos_xz xz="3.250000 0.750000"/>
 					<tex st="208.000000 64.000000"/>
 					<pos_xz xz="3.250000 0.000000"/>
@@ -5792,6 +5795,7 @@
 					<clr rgb="18 18 18"/>
 					<pos_s xyz="3.156250 0.218750 -1.656250"/>
 					<tex st="-10.000000 9.000000"/>
+					<clr rgb="24 24 24"/>
 					<pos_s xyz="3.093750 0.062500 -1.593750"/>
 				</primitive>
 				<primitive index="7" type="quad_strip" vertex_size="6">
@@ -5865,7 +5869,7 @@
 					<clr rgb="23 23 23"/>
 					<pos_yz yz="0.000000 -1.500000"/>
 					<tex st="-10.000000 9.000000"/>
-					<clr rgb="18 18 18"/>
+					<clr rgb="24 24 24"/>
 					<pos_s xyz="3.093750 0.062500 -1.593750"/>
 					<tex st="-16.000000 15.750000"/>
 					<pos_s xyz="3.000000 0.000000 -1.500000"/>
@@ -6000,13 +6004,13 @@
 				</primitive>
 				<primitive index="18" type="quad_strip" vertex_size="6">
 					<tex st="-368.000000 15.750000"/>
-					<clr rgb="18 18 18"/>
+					<clr rgb="24 24 24"/>
 					<pos_s xyz="3.000000 0.000000 -1.500000"/>
 					<tex st="-272.812500 15.750000"/>
 					<clr rgb="19 19 19"/>
 					<pos_xz xz="3.000000 -0.012695"/>
 					<tex st="-374.000000 9.000000"/>
-					<clr rgb="18 18 18"/>
+					<clr rgb="24 24 24"/>
 					<pos_s xyz="3.093750 0.062500 -1.593750"/>
 					<tex st="-272.812500 9.000000"/>
 					<clr rgb="21 21 21"/>
@@ -6725,7 +6729,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface30" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
