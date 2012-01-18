@@ -3261,11 +3261,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-あれ？　[Name:PokemonName Idx="1" ]　あててくれないの？</Text>
+			<Text>あれー？　おおきいキノコを　もってる
+[Name:PokemonName Idx="1" ]を　あててくれないの？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-16T07:24:27" />
+				User="matsumiya:W00224"
+				Time="2012-01-18T09:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -3273,11 +3273,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-あれ？　[Name:PokemonName Idx="1" ]　当ててくれないの？</Text>
+			<Text>あれー？　おおきいキノコを　持ってる
+[Name:PokemonName Idx="1" ]を　当ててくれないの？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-16T07:25:09" />
+				User="matsumiya:W00224"
+				Time="2012-01-18T09:51:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -3288,11 +3288,11 @@
 			<Comment>♀
 ・ショー中に帰ろうとした（POSを踏んだ）時のメッセージ
 ・はい/いいえ選択肢表示
-・はい→msg_c01gym0101_woman2_16
-・いいえ→msg_c01gym0101_woman2_09</Comment>
+　はい　→woman2_16
+　いいえ→woman2_09</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-16T11:57:26" />
+				User="matsumiya:W00224"
+				Time="2012-01-18T09:50:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3321,12 +3321,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-そっかー　また　きが　むいたら
-ショーを　みにきてね！▼</Text>
+			<Text>そっかー
+きが　むいたら　また　きてね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-16T11:57:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-18T09:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -3334,12 +3333,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-そっかー　また　きが　むいたら
-ショーを　みにきてね！▼</Text>
+			<Text>そっかー
+気が向いたら　また来てね！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-16T11:57:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-18T09:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

@@ -5970,11 +5970,10 @@ TVトランシーバー</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・gear_01
-※仮メッセージ</Comment>
+・gear_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:21:54" />
+				Time="2012-01-18T09:53:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7205,11 +7204,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:35:47" />
+				Time="2012-01-18T09:53:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

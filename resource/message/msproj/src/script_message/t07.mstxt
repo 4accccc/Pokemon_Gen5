@@ -941,11 +941,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きこうが　かわれば
+			<Text>きせつが　かわれば
+ひこうきからの　ながめも　かわる▼
+きこうが　かわれば
 たてものも　かわる　ってもんさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:15:38" />
+				Time="2012-01-18T10:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -953,11 +955,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>気候が　変われば
+			<Text>季節が　変われば
+飛行機からの　眺めも　変わる▼
+気候が　変われば
 建築様式も　変わる　ってもんさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:43:49" />
+				Time="2012-01-18T10:50:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

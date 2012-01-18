@@ -30,11 +30,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・仮メッセージ</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:13:35" />
+				Time="2012-01-18T09:55:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,11 +167,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手後
-※メッセージ要調整</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:46:22" />
+				Time="2012-01-18T09:55:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -233,11 +231,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・仮メッセージ
 ・ヒードランの伏線</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:24" />
+				Time="2012-01-18T09:55:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

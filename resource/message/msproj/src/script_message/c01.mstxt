@@ -1582,11 +1582,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクの　ラベル
-かりメッセージ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:12:24" />
+				Time="2012-01-18T09:53:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1594,11 +1593,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクの　ラベル
-仮メッセージ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:12:31" />
+				Time="2012-01-18T09:53:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
