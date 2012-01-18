@@ -34,6 +34,7 @@
 #include "key_system_flow.h"
 #include "key_system_snd.h"
 #include "data_convert_flow.h"
+#include "cygnus_flow.h"
 
 //セーブ
 #include "savedata/save_outside.h"
@@ -306,6 +307,8 @@ static GFL_PROC_RESULT Key_System_Proc_Main
   if( p_wk->p_graphic )
   {
     KEY_SYSTEM_GRAPHIC_2D_Draw( p_wk->p_graphic );
+    KEY_SYSTEM_GRAPHIC_3D_StartDraw( p_wk->p_graphic );
+    KEY_SYSTEM_GRAPHIC_3D_EndDraw( p_wk->p_graphic );
   }
 
   //画面作成・破棄メイン
@@ -442,7 +445,6 @@ void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	{	
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    PMSND_FadeOutBGM( 8 );
     (*p_seq)++;
 		break;
 
@@ -454,6 +456,46 @@ void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 		break;
 
 	case SEQ_EXIT:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+	default:
+		GF_ASSERT(0);
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードインホワイト
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+void KeySys_Seq_FadeInWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+	enum
+	{	
+		SEQ_FADEOUT_START,
+		SEQ_FADEOUT_WAIT,
+		SEQ_END,
+	};
+
+	switch( *p_seq )
+	{	
+	case SEQ_FADEOUT_START:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		(*p_seq)++;
+		break;
+
+	case SEQ_FADEOUT_WAIT:
+		if( !GFL_FADE_CheckFade() )
+		{	
+		  (*p_seq)++;
+		}
+		break;
+
+	case SEQ_END:
     KEYSYS_SEQ_Return( p_seqwk );
 		break;
 
@@ -483,7 +525,6 @@ void KeySys_Seq_FadeOutWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	{	
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
-    PMSND_FadeOutBGM( 8 );
     (*p_seq)++;
 		break;
 
@@ -701,6 +742,8 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->main_menu_plt, sizeof(u16) * 0x10 );
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->key_system_plt, sizeof(u16) * 0x10 );
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 2 * 0x20, p_wk->data_convert_plt, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->cygnus_plt, sizeof(u16) * 0x10 ); //TODO
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->cyg_demo_plt, sizeof(u16) * 0x10 ); //TODO
 
       //パレット破棄
       GFL_HEAP_FreeMemory( p_buff );
@@ -767,6 +810,22 @@ void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk )
     case KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV:
       p_start   = p_wk->main_menu_plt;
       p_end     = p_wk->data_convert_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_MAIN_TO_CYGNUS:
+      p_start   = p_wk->main_menu_plt;
+      p_end     = p_wk->cygnus_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_MAIN:
+      p_start   = p_wk->cygnus_plt;
+      p_end     = p_wk->main_menu_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_DEMO:
+      p_start   = p_wk->cygnus_plt;
+      p_end     = p_wk->cyg_demo_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_DEMO_TO_CYGNUS:
+      p_start   = p_wk->cyg_demo_plt;
+      p_end     = p_wk->cygnus_plt;
       break;
     }
 
@@ -1303,12 +1362,25 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   //それぞれの初期化
   KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
   KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
+  KEYSYS_CYGNUSFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
 
   //上画面タイトル作成
   p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
   KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
 
+  {
+    static const u32 sc_se_tbl[] =
+    {
+      KEYSYS_BGM_MAIN,
+      CYGNUS_SE_ICON,
+SEQ_SE_MSCL_02,
+SEQ_SE_MSCL_04,
+SEQ_SE_MSCL_07,
+
+    };
+    p_wk->p_snd_preset  = SOUNDMAN_PresetSoundTbl( sc_se_tbl, NELEMS(sc_se_tbl) );
+  }
 
   PMSND_PlayBGM( KEYSYS_BGM_MAIN );
 
@@ -1336,6 +1408,10 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
 #endif //PM_DEBUG
 
   PMSND_StopBGM();
+
+  SOUNDMAN_ReleasePresetData( p_wk->p_snd_preset );
+
+  KEYSYS_CYGNUSFLOW_Exit( p_wk );
   KEYSYS_KEYFLOW_Exit( p_wk );
 
   //念のためディスプレイ消去
@@ -1408,8 +1484,31 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void KEYSYS_TEXT_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
+  KEYSYS_TEXT_CreateEx( p_wk, KEYSYS_BG_FRAME_TEXT_M, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk )
+{
+  KEYSYS_TEXT_DeleteEx( p_wk, KEYSYS_BG_FRAME_TEXT_M );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_CreateEx( KEY_SYSTEM_WORK *p_wk, u16 frame, HEAPID heapID )
+{
   GF_ASSERT( p_wk->p_text == NULL );
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  p_wk->p_text = KEYSYS_TEXT_Init( frame, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_ClearCharacter( p_wk->p_text );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
@@ -1421,13 +1520,13 @@ void KEYSYS_TEXT_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
  *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
-void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk )
+void KEYSYS_TEXT_DeleteEx( KEY_SYSTEM_WORK *p_wk, u16 frm )
 {
   GF_ASSERT( p_wk->p_text );
   KEYSYS_TEXT_Exit( p_wk->p_text );
   p_wk->p_text = NULL;
 
-  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( frm );
 }
 
 //-------------------------------------
@@ -1463,6 +1562,51 @@ void KEYSYS_INFO_Delete( KEY_SYSTEM_WORK *p_wk )
   p_wk->p_info = NULL;
 
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
+}
+//-------------------------------------
+/// LIST
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  はい、いいえ作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_LIST_CreateYesNo( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
+{
+  KEYSYS_LIST_SETUP setup;
+  GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
+  setup.p_msg   = p_wk->p_msg;
+  setup.p_font  = p_wk->p_font;
+  setup.p_que   = p_wk->p_que;
+  setup.frm     = KEYSYS_BG_FRAME_TEXT_M;
+  setup.font_plt = KEYSYS_PLT_BG_FONT_M;
+  setup.frm_plt = KEYSYS_PLT_BG_FRAME_M;
+  setup.frm_chr = KEYSYS_CGR_TEXT_M;
+  setup.strID[0]  = KEYSYS_STR_58;
+  setup.strID[1]  = KEYSYS_STR_59;
+  setup.list_max  = 2;
+  setup.is_cancel = TRUE;
+  setup.cancel_idx = 1;
+  setup.default_idx = 0;
+
+  GF_ASSERT(p_wk->p_list == NULL);
+  p_wk->p_list = KEYSYS_LIST_Init( &setup, heapID );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_LIST_Delete( KEY_SYSTEM_WORK *p_wk )
+{
+  KEYSYS_LIST_Exit(p_wk->p_list);
+  p_wk->p_list = NULL;
 }
 
 //=============================================================================
@@ -1626,12 +1770,13 @@ static void KeySys_Seq_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     {
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
 
-      if( p_wk->ret == 2 )//もどるのときはFADE後まで画面を残すので消さない
+      if( p_wk->ret == 3 )//もどるのときはFADE後まで画面を残すので消さない
       {
         *p_seq = SEQ_END;
       }
       else
       {
+        //カーソル位置を登録
         KEYSYS_MAP_Insert( &p_wk->select, "MAN", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
         (*p_seq)++;
       }
@@ -1646,14 +1791,16 @@ static void KeySys_Seq_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     switch( p_wk->ret )
     {
     case 0://キーシステム
-      //カーソル位置を登録
       KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS, 30 );
       KEYSYS_SEQ_Call( p_seqwk, KEYSYS_KEYFLOW_SEQ_Main );
       break;
     case 1://データコンバート
-      //カーソル位置を登録
       KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 30 );
       KEYSYS_SEQ_Call( p_seqwk, KEYSYS_DATACONVFLOW_SEQ_Main );
+      break;
+    case 2://３DS連動
+      KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_CYGNUS, 30 );
+      KEYSYS_SEQ_Call( p_seqwk, KEYSYS_CYGNUSFLOW_SEQ_Main );
       break;
     default:
       GF_ASSERT(0);
@@ -1803,7 +1950,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
     menu_param.frm_plt  = KEYSYS_PLT_BG_MENU_NORMAL_M;
     menu_param.p_msg    = p_wk->p_msg;
     menu_param.p_font   = p_wk->p_font;
-    menu_param.max      = 3;
+    menu_param.max      = 4;
     if( KEYSYS_MAP_IsExist( &p_wk->select, "MAN" ) )
     {
       menu_param.cursor   = KEYSYS_MAP_GetValue( &p_wk->select, "MAN" );
@@ -1822,7 +1969,8 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_62;
     menu_param.wnd_data[1].strID = KEYSYS_STR_63;
-    menu_param.wnd_data[2].strID = KEYSYS_STR_64;
+    menu_param.wnd_data[2].strID = CYGNUS_00;
+    menu_param.wnd_data[3].strID = KEYSYS_STR_64;
 
     p_wk->p_menu = KEYSYS_MENU_Init( &menu_param, heapID );
 

@@ -571,7 +571,10 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 {
   enum
   {
+    SEQ_INIT,
+    SEQ_MSG_START,
     SEQ_YESNO_START,
+    SEQ_YESNO_DRAW,
     SEQ_YESNO_WAIT,
 
     SEQ_DISPLAY_CREATE,
@@ -599,10 +602,29 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   switch( *p_seq )
   {
-  case SEQ_YESNO_START:
+  case SEQ_INIT:
     KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrcYesno );
     (*p_seq)++;
+    break;
+
+  case SEQ_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_60, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_YESNO_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      KEYSYS_LIST_CreateYesNo( p_wk, HEAPID_KEY_SYSTEM );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_YESNO_DRAW:
+    if( KEYSYS_LIST_Draw( p_wk->p_list ) )
+    {
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      (*p_seq)++;
+    }
     break;
   case SEQ_YESNO_WAIT:
     {
@@ -610,6 +632,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       if( ret != KEYSYS_LIST_SELECT_NULL )
       {
         KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+        KEYSYS_LIST_Delete( p_wk );
         switch( ret )
         {
         case 0:
@@ -2670,26 +2693,7 @@ static void KeySys_Display_CreateIrcYesno( void *p_wk_adrs, HEAPID heapID )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   {
-    KEYSYS_LIST_SETUP setup;
-    GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
-    setup.p_msg   = p_wk->p_msg;
-    setup.p_font  = p_wk->p_font;
-    setup.p_que   = p_wk->p_que;
-    setup.frm     = KEYSYS_BG_FRAME_TEXT_M;
-    setup.font_plt = KEYSYS_PLT_BG_FONT_M;
-    setup.frm_plt = KEYSYS_PLT_BG_FRAME_M;
-    setup.frm_chr = KEYSYS_CGR_TEXT_M;
-    setup.strID[0]  = KEYSYS_STR_58;
-    setup.strID[1]  = KEYSYS_STR_59;
-    setup.list_max  = 2;
-    setup.is_cancel = TRUE;
-    setup.cancel_idx = 1;
-    setup.default_idx = 0;
-    p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
-  }
-
-  {
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_60, KEYSYS_TEXT_TYPE_QUE ); 
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_000, KEYSYS_TEXT_TYPE_QUE ); 
   }
 
   //下画面
@@ -2805,8 +2809,7 @@ static BOOL KeySys_Display_IsEndCreateIrcYesno( void *p_wk_adrs )
 
   BOOL is_textset = KEYSYS_TEXTSET_IsDrawEnd( p_wk->p_textset );
   BOOL is_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
-  BOOL is_list = KEYSYS_LIST_Draw( p_wk->p_list );
-  if( is_textset && is_text && is_list )
+  if( is_textset && is_text )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
@@ -2825,9 +2828,6 @@ static BOOL KeySys_Display_IsEndCreateIrcYesno( void *p_wk_adrs )
 static void KeySys_Display_DeleteIrcYesno( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
-
-  KEYSYS_LIST_Exit(p_wk->p_list);
-  p_wk->p_list = NULL;
 
   //テキストセット
   //KEYSYS_TEXTSET_Exit( p_wk->p_textset );

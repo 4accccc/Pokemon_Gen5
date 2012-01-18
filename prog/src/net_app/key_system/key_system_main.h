@@ -16,6 +16,7 @@
 #include "system/bmp_winframe.h"
 #include "print/wordset.h"
 #include "field/zonedata.h"
+#include "sound/sound_manager.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -66,6 +67,7 @@ enum
   KEYSYS_PLT_BG_MENU_NORMAL_M,
   KEYSYS_PLT_BG_MENU_SELECT_A_M,
   KEYSYS_PLT_BG_MENU_SELECT_B_M,
+
   KEYSYS_PLT_BG_FONT_M    = 0xE,
   KEYSYS_PLT_BG_FRAME_M   = 0xF,
 
@@ -79,6 +81,16 @@ enum
   KEYSYS_PLT_OBJ_BARICON_M,
   KEYSYS_PLT_OBJ_BARICON_A_M,
   KEYSYS_PLT_OBJ_FONT_M,
+  KEYSYS_PLT_OBJ_GIFT_M,
+
+  KEYSYS_PLT_OBJ_CYG_POKE_M =4,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_00,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_01,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_02,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_03,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_04,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_05,
+  KEYSYS_PLT_OBJ_CYG_ITEM_M_06,
 };
 
 //キャラ管理
@@ -104,6 +116,7 @@ typedef enum
   KEYSYS_RES_MAX,
 }KEYSYS_RES;
 
+
 //CLWKの種類
 typedef enum
 {
@@ -118,6 +131,7 @@ typedef enum
   KEYSYS_CLWK_KEY,
   KEYSYS_CLWK_WINDOW,
   KEYSYS_CLWK_KIRAKIRA,
+  KEYSYS_CLWK_CYGNUS_REWARD_00,
   KEYSYS_CLWK_LOCK_OPEN,
   KEYSYS_CLWK_INFO_MARK_00,
   KEYSYS_CLWK_INFO_MARK_01,
@@ -161,6 +175,10 @@ typedef enum
   KEYSYS_BG_PLTFADE_REQ_DATACONV_TO_MAIN,
   KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS,
   KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV,
+  KEYSYS_BG_PLTFADE_REQ_MAIN_TO_CYGNUS,
+  KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_MAIN,
+  KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_DEMO,
+  KEYSYS_BG_PLTFADE_REQ_DEMO_TO_CYGNUS,
 } KEYSYS_BG_PLTFADE_REQ;
 
 //=============================================================================
@@ -183,6 +201,8 @@ typedef struct
   u16 main_menu_plt[0x10];
   u16 key_system_plt[0x10];
   u16 data_convert_plt[0x10];
+  u16 cygnus_plt[0x10];
+  u16 cyg_demo_plt[0x10];
 } KEYSYS_BG_WORK;
 
 //-------------------------------------
@@ -275,6 +295,21 @@ typedef struct _KEYSYS_DEMO_WORK
 } KEYSYS_DEMO_WORK;
 
 //-------------------------------------
+///	シグナス用受け取りデモワーク
+//=====================================
+typedef struct _CYGNUS_DEMO_WORK CYGNUS_DEMO_WORK;
+
+//-------------------------------------
+///	シグナス用受け取りデモワーク
+//=====================================
+typedef struct _CYGNUS_SAVE_WORK CYGNUS_SAVE_WORK;
+
+//-------------------------------------
+///	シグナス用受け取り結果ワーク
+//=====================================
+typedef struct _CYGNUS_RESULT_WORK CYGNUS_RESULT_WORK;
+
+//-------------------------------------
 ///	メインワーク
 //=====================================
 typedef struct
@@ -333,6 +368,16 @@ typedef struct
 
   KEYSYS_DEMO_WORK        demo;
 
+  CYGNUS_DEMO_WORK        *p_cyg_demo;
+
+  KEYSYS_PTC_WORK         *p_ptc;
+
+  CYGNUS_SAVE_WORK        *p_cyg_sv;
+
+  CYGNUS_RESULT_WORK      *p_cyg_result;
+
+  SOUNDMAN_PRESET_HANDLE  *p_snd_preset;
+
   u32                     ret;  //選択項目一時保存場所
 
   u32                     cnt;
@@ -358,6 +403,7 @@ typedef struct
 //=====================================
 extern void KeySys_Seq_FadeInBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+extern void KeySys_Seq_FadeInWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_FadeOutWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_DisableWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -413,8 +459,19 @@ extern void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk );
 extern void KEYSYS_TEXT_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk );
 
+extern void KEYSYS_TEXT_CreateEx( KEY_SYSTEM_WORK *p_wk, u16 frame, HEAPID heapID );
+extern void KEYSYS_TEXT_DeleteEx( KEY_SYSTEM_WORK *p_wk, u16 frame );
+
 //-------------------------------------
 /// INFO
 //=====================================
 extern void KEYSYS_INFO_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_INFO_Delete( KEY_SYSTEM_WORK *p_wk );
+
+//-------------------------------------
+/// LIST
+//=====================================
+extern void KEYSYS_LIST_CreateYesNo( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_LIST_Delete( KEY_SYSTEM_WORK *p_wk );
+
+

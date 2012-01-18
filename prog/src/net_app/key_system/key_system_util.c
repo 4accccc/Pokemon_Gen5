@@ -201,6 +201,24 @@ void KEYSYS_TEXT_Draw( KEYSYS_TEXT_WORK* p_wk )
       }
     }
     break;
+
+  case KEYSYS_TEXT_TYPE_STREAM_WAIT:
+    if( p_wk->p_stream )
+    { 
+      BOOL is_end = FALSE;
+
+      if( p_wk->p_keycursor )
+      { 
+        APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+        is_end  = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->common, p_wk->p_stream );
+      }
+
+      if( is_end )
+      { 
+        p_wk->is_end_print  = TRUE;
+      }
+    }
+    break;
   }
 
   GFL_TCBL_Main( p_wk->p_tcbl );
@@ -357,6 +375,14 @@ static void KeySys_Text_PrintInner( KEYSYS_TEXT_WORK* p_wk, KEYSYS_TEXT_TYPE typ
         p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, PRINTSYS_LSB_GetB(p_wk->color) );
     p_wk->print_update  = KEYSYS_TEXT_TYPE_STREAM;
     break;
+  case KEYSYS_TEXT_TYPE_STREAM_WAIT:
+    GF_ASSERT_HEAVY( p_wk->p_keycursor == NULL );
+
+    APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
+    p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, pos.x, pos.y, p_wk->p_strbuf,
+        p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, PRINTSYS_LSB_GetB(p_wk->color) );
+    p_wk->print_update  = KEYSYS_TEXT_TYPE_STREAM_WAIT;
+    break;
   }
 
   p_wk->is_end_print  = FALSE;
@@ -461,6 +487,22 @@ void KEYSYS_TEXT_ChangePalette( KEYSYS_TEXT_WORK* p_wk, u8 plt )
   GFL_BG_ChangeScreenPalette( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin),
       x, y, w, h, plt );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  待機アイコンを出す
+ *
+ *	@param	KEYSYS_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_SetMsgCursor( KEYSYS_TEXT_WORK* p_wk )
+{
+  if( p_wk->p_keycursor == NULL )
+  {
+    p_wk->p_keycursor  = APP_KEYCURSOR_Create( PRINTSYS_LSB_GetB(p_wk->color), TRUE, FALSE, p_wk->heapID );
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  描画位置計算コア部分
@@ -2357,6 +2399,80 @@ static void Keysys_Scroll_Menu_Callback_Scroll( void *p_wk_adrs, s8 move )
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
+ *          パーティクル
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+struct _KEYSYS_PTC_WORK
+{
+  GFL_PTC_PTR   p_ptc;
+  GFL_EMIT_PTR  p_emitter;
+  void          *p_buffer;
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクルシステム作成
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+KEYSYS_PTC_WORK * KEYSYS_PTC_Init( HEAPID heapID )
+{
+  KEYSYS_PTC_WORK *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(KEYSYS_PTC_WORK) );
+  p_wk->p_buffer  = GFL_HEAP_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル破棄
+ *
+ *	@param	KEYSYS_PTC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_PTC_Exit( KEYSYS_PTC_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk->p_buffer );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル読み込み
+ *
+ *	@param	KEYSYS_PTC_WORK *p_wk ワーク
+ *	@param	arcID アーカイブID
+ *	@param	datID データID
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_PTC_LoadResource( KEYSYS_PTC_WORK *p_wk, ARCID arcID, ARCDATID datID, HEAPID heapID )
+{
+  if( p_wk->p_ptc )
+  {
+    GFL_PTC_Delete( p_wk->p_ptc );
+  }
+
+  p_wk->p_ptc     = GFL_PTC_Create( p_wk->p_buffer, PARTICLE_LIB_HEAP_SIZE, TRUE, heapID );
+  {
+    void *p_resource = GFL_PTC_LoadArcResource( arcID, datID, heapID );
+    GFL_PTC_SetResource( p_wk->p_ptc, p_resource, TRUE, NULL );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パーティクル開始
+ *
+ *	@param	KEYSYS_PTC_WORK *p_wk ワーク
+ *	@param	id アニメID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_PTC_Start( KEYSYS_PTC_WORK *p_wk, u32 id )
+{
+  GFL_PTC_CreateEmitterCallback( p_wk->p_ptc, id, NULL, p_wk );
+}
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
  *          ETC
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -2430,4 +2546,25 @@ void KEYSYS_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8
     GF_ASSERT(ret);
   }
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  単語登録された文字列を作成する
+ *
+ *	@param	WORDSET *p_word ワードセット
+ *	@param	*p_msg  メッセージデータ
+ *	@param	strID   文字ID
+ *	@param	heapID  ヒープID
+ *
+ *	@return 単語登録された文字列
+ */
+//-----------------------------------------------------------------------------
+STRBUF* WORDSET_TOOL_CreateExpandStr( WORDSET *p_word, GFL_MSGDATA *p_msg, u32 strID, HEAPID heapID )
+{
+  STRBUF * p_src  = GFL_MSG_CreateString( p_msg, strID );
+  STRBUF * p_dst  = GFL_STR_CreateBuffer( GFL_STR_GetBufferLength(p_src)*2, heapID );
+  WORDSET_ExpandStr( p_word, p_dst, p_src );
+  GFL_STR_DeleteBuffer( p_src );
+  return p_dst;
 }

@@ -317,6 +317,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
   enum
   {
     SEQ_INIT,
+    SEQ_YESNO_MSG_START,
     SEQ_YESNO_START,
     SEQ_YESNO_DRAW_WAIT,
     SEQ_YESNO_WAIT,
@@ -351,7 +352,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     if( DS_SYSTEM_IsAvailableWireless() )
     {
       //–³ü‹–‰Â‚È‚ç’ÊM‚µ‚Ä‚æ‚¢‚©•·‚¢‚ÄŠJŽn
-      (*p_seq)  = SEQ_YESNO_START;
+      (*p_seq)  = SEQ_YESNO_MSG_START;
     }
     else
     {
@@ -360,34 +361,21 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       (*p_seq)  = SEQ_END;
     }
     break;
-
+  case SEQ_YESNO_MSG_START:
+    KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_03, KEYSYS_TEXT_TYPE_STREAM );
+    (*p_seq)++;
+    break;
   case SEQ_YESNO_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
-      KEYSYS_LIST_SETUP setup;
-      GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
-      setup.p_msg   = p_wk->p_msg;
-      setup.p_font  = p_wk->p_font;
-      setup.p_que   = p_wk->p_que;
-      setup.frm     = KEYSYS_BG_FRAME_TEXT_M;
-      setup.font_plt = KEYSYS_PLT_BG_FONT_M;
-      setup.frm_plt = KEYSYS_PLT_BG_FRAME_M;
-      setup.frm_chr = KEYSYS_CGR_TEXT_M;
-      setup.strID[0]  = KEYSYS_STR_58;
-      setup.strID[1]  = KEYSYS_STR_59;
-      setup.list_max  = 2;
-      setup.is_cancel = TRUE;
-      setup.cancel_idx = 1;
-      setup.default_idx = 0;
-      p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
-      
-
-      KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_03, KEYSYS_TEXT_TYPE_QUE ); 
+      KEYSYS_LIST_CreateYesNo( p_wk, HEAPID_KEY_SYSTEM );
       (*p_seq)++;
     }
     break;
   case SEQ_YESNO_DRAW_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) && KEYSYS_LIST_Draw( p_wk->p_list ) )
+    if( KEYSYS_LIST_Draw( p_wk->p_list ) )
     {
       GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
       (*p_seq)++;
@@ -398,9 +386,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       u32 ret = KEYSYS_LIST_Main(p_wk->p_list );
       if( ret != KEYSYS_LIST_SELECT_NULL )
       {
-        KEYSYS_LIST_Exit(p_wk->p_list);
-        p_wk->p_list = NULL;
-
+        KEYSYS_LIST_Delete( p_wk );
         KEYSYS_TEXT_Delete( p_wk );
         switch( ret )
         {

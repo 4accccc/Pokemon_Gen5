@@ -81,7 +81,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/cygnus_savedata.c \
         savedata/questionnaire_index.c \
         savedata/boast_message.c \
-        savedata/cygnus_save_control.c
+        savedata/cygnus_save_control.c \
+        savedata/cygnus_data.c
 
 
 #通信の常駐
@@ -2942,7 +2943,8 @@ SRCS_OVERLAY_KEY_SYSTEM = net_app/key_system/key_system_main.c \
                           net_app/key_system/key_system_flow.c \
                           net_app/key_system/data_convert_flow.c \
 		                      multiboot/util/wb_save.c \
-		                      multiboot/util/wb_save_convert.c
+		                      multiboot/util/wb_save_convert.c \
+                          net_app/key_system/cygnus_flow.c
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI

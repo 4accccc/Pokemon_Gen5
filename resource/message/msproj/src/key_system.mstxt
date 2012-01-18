@@ -1997,8 +1997,8 @@
 ポケットモンスター　ホワイト２と▽
 つうしんして　キーを　おくりあえます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:18:20" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-17T03:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2010,8 +2010,8 @@
 ポケットモンスター　ホワイト２と▽
 通信して　キーを　送りあえます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:18:49" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-17T03:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2034,8 +2034,8 @@
 ポケットモンスター　ホワイトと▽
 つうしんして　レポートを　うけつぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:41:24" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-17T03:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2047,8 +2047,43 @@
 ポケットモンスター　ホワイトと▽
 通信して　レポートを　受け継ぎます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:41:28" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-17T03:08:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-29T07:18:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_107"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>3DSアプリの　データを
+うけとることが　できます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T02:49:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>3DSアプリの　データを
+うけとることが　できます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T02:49:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5593,6 +5628,518 @@ DSシステムフォントなので
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>3DSアプリれんどう</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T02:42:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>3DSアプリ連動</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T02:42:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ARポケモン　キャッチャーの　データを
+れんどう　しますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T07:46:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ARポケモン　キャッチャーの　データを
+れんどう　しますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T07:46:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりました！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:22:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりました！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:22:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ARポケモン　キャッチャーから
+レポートを　うけとっています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ARポケモン　キャッチャーから
+レポートを　うけとっています</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]が　やってきた！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]が　やってきた！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ARポケモン　キャッチャーから
+おとどけものを　うけとりました！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ARポケモン　キャッチャーから
+おとどけものを　うけとりました！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:23:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レポートが　かかれていないか
+まだ　ずかんを　うけとっていないため▽
+データを　うけとることが　できません▼
+さいしょから　はじめるを　えらび
+ずかんを　てにいれてから　▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レポートが　かかれていないか
+まだ　ずかんを　うけとっていないため▽
+データを　うけとることが　できません▼
+さいしょから　はじめるを　えらび
+ずかんを　てにいれてから　▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受け取れない状態：SWANのセーブがない</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:21:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ARポケモン　キャプチャーの
+ほうしゅうデータが　ありません▼
+ARポケモン　キャプチャーを
+プレイし　ほうしゅうデータが▽
+あるじょうたいで▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ARポケモン　キャプチャーの
+ほうしゅうデータが　ありません▼
+ARポケモン　キャプチャーを
+プレイし　ほうしゅうデータが▽
+あるじょうたいで▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受け取れない状態：報酬データがない。一度も受け取っていない</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:21:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ARポケモン　キャプチャーの
+ほうしゅうデータが　ありません▼
+ARポケモン　キャプチャーを
+プレイし　ほうしゅうデータが▽
+あるじょうたいで▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ARポケモン　キャプチャーの
+ほうしゅうデータが　ありません▼
+ARポケモン　キャプチャーを
+プレイし　ほうしゅうデータが▽
+あるじょうたいで▽
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:20:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>受け取れない状態：報酬データがない。受け取ったことはある</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:21:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボックスに　あきがないため
+ほうしゅうデータを　うけとることが　できません▼
+ボックスを　６かしょ　あけて
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T03:44:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボックスに　あきがないため
+ほうしゅうデータを　うけとることが　できません▼
+ボックスを　６かしょ　あけて
+もういちど　えらんでください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T03:44:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ボックスにあきがない</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-16T08:21:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

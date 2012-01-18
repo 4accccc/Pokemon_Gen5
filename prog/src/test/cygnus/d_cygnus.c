@@ -54,7 +54,7 @@
 #include "net/dreamworld_netdata.h"
 #include "savedata/zukan_savedata_local.h"
 #include "savedata/symbol_save.h"
-
+#include "savedata/cygnus_data.h"
 
 #include "savedata/cygnus_save_control.h"
 

@@ -64,7 +64,7 @@
 //=====================================
 #define GRAPHIC_BG_USE	//OFFにするとBG使用しません
 #define GRAPHIC_OBJ_USE	//OFFにするとOBJ使用しません
-//#define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
+#define GRAPHIC_G3D_USE	//OFFにすると3D使用しません
 //-------------------------------------
 ///	バンク設定
 //=====================================
@@ -287,13 +287,9 @@ static const GFL_REND_SURFACE_INIT sc_rend_surface_init[]  =
 //-------------------------------------
 ///	カメラ位置
 //=====================================
-//static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//位置
-//static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
-//static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
-
-static const VecFx32 sc_CAMERA_PER_POS	= { FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 6.7f ), FX_F32_TO_FX32( 17.3f ) };
-static const VecFx32 sc_CAMERA_PER_UP = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 2.6f ), FX_F32_TO_FX32( 0.0f ) };
-static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
+static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//位置
+static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
+static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
 
 //-------------------------------------
 ///	プロジェクション
@@ -303,20 +299,11 @@ static const VecFx32 sc_CAMERA_PER_TARGET		= { 0,						FX32_ONE,				0 };
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 1	//射影
-	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
-									defaultCameraAspect, 0,
-									defaultCameraNear, defaultCameraFar, 0,
-									cp_pos, cp_up, cp_target, heapID );
-#else	//正射影	クリップ面は適当です
 	return GFL_G3D_CAMERA_CreateOrtho( 
 		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
 			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
 									defaultCameraNear, defaultCameraFar, 0,
 									cp_pos, cp_up, cp_target, heapID );
-#endif
 }
 
 //-------------------------------------
@@ -325,7 +312,7 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 static void Graphic_3d_SetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
 	G2_SetBG0Priority(0);
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -407,6 +394,7 @@ typedef struct
 typedef struct 
 {
 	GFL_G3D_CAMERA		*p_camera;
+  BOOL is_init;
 } GRAPHIC_G3D_WORK;
 
 //-------------------------------------
@@ -418,6 +406,7 @@ struct _KEY_SYSTEM_GRAPHIC_WORK
 	GRAPHIC_OBJ_WORK	obj;
 	GRAPHIC_G3D_WORK		g3d;
 	GFL_TCB						*p_vblank_task;
+  HEAPID heapID;
 };
 
 //=============================================================================
@@ -478,6 +467,7 @@ KEY_SYSTEM_GRAPHIC_WORK * KEY_SYSTEM_GRAPHIC_Init( int display_select, HEAPID he
 	KEY_SYSTEM_GRAPHIC_WORK * p_wk;
 	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(KEY_SYSTEM_GRAPHIC_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_GRAPHIC_WORK) );
+  p_wk->heapID  = heapID;
 
 	//レジスタ初期化
 	G2_BlendNone();
@@ -509,9 +499,6 @@ KEY_SYSTEM_GRAPHIC_WORK * KEY_SYSTEM_GRAPHIC_Init( int display_select, HEAPID he
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 #endif //GRAPHIC_OBJ_USE
-#ifdef GRAPHIC_G3D_USE
-	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
-#endif //GRAPHIC_G3D_USE
 
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
@@ -531,9 +518,6 @@ void KEY_SYSTEM_GRAPHIC_Exit( KEY_SYSTEM_GRAPHIC_WORK *p_wk )
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
 	//モジュール破棄
-#ifdef GRAPHIC_G3D_USE
-	GRAPHIC_G3D_Exit( &p_wk->g3d );
-#endif //GRAPHIC_G3D_USE
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_Exit( &p_wk->obj );
 #endif //GRAPHIC_OBJ_USE
@@ -629,6 +613,38 @@ GFL_G3D_CAMERA * KEY_SYSTEM_GRAPHIC_GetCamera( const KEY_SYSTEM_GRAPHIC_WORK *cp
 #else
 	return NULL;
 #endif //GRAPHIC_G3D_USE
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モード
+ *
+ *	@param	KEY_SYSTEM_GRAPHIC_WORK *p_wk ワーク
+ *	@param	mode  切り替えるモード
+ */
+//-----------------------------------------------------------------------------
+void KEY_SYSTEM_GRAPHICS_ChangeMode( KEY_SYSTEM_GRAPHIC_WORK *p_wk, KEYSYS_GRAPHICS_MODE mode )
+{
+  switch( mode )
+  {
+  case KEYSYS_GRAPHICS_MODE_3D_TO_2D:
+
+    GRAPHIC_G3D_Exit( &p_wk->g3d );
+
+    GFL_BG_SetBGMode( &sc_bgsys_header );
+
+    break;
+
+  case KEYSYS_GRAPHICS_MODE_2D_TO_3D:
+    { 
+      GFL_BG_SYS_HEADER header  = sc_bgsys_header;
+      header.bg0_2Dor3D = GX_BG0_AS_3D;
+      GFL_BG_SetBGMode( &header );
+    }
+    GRAPHIC_G3D_Init( &p_wk->g3d, p_wk->heapID );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 //=============================================================================
 /**
@@ -850,10 +866,15 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 {
+  GFL_STD_MemClear( p_wk, sizeof( GRAPHIC_G3D_WORK ) );
+
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GRAPHIC_G3D_TEXSIZE,
 			GFL_G3D_VMANLNK, GRAPHIC_G3D_PLTSIZE, 0, heapID, Graphic_3d_SetUp );
 
 	p_wk->p_camera = GRAPHIC_G3D_CAMERA_Create( &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, heapID );
+
+  GFL_PTC_Init(heapID);
+  p_wk->is_init = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -865,8 +886,13 @@ static void GRAPHIC_G3D_Init( GRAPHIC_G3D_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 {
+  GF_ASSERT( p_wk->is_init );
+
+  GFL_PTC_Exit();
 	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 	GFL_G3D_Exit();
+
+  GFL_STD_MemClear( p_wk, sizeof( GRAPHIC_G3D_WORK ) );
 }
 
 //----------------------------------------------------------------------------
@@ -878,10 +904,14 @@ static void GRAPHIC_G3D_Exit( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
+  if( p_wk->is_init )
+  {
+    GFL_G3D_DRAW_Start();
+    GFL_G3D_CAMERA_Switching( p_wk->p_camera );
+    GFL_G3D_DRAW_SetLookAt();
 
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
-	GFL_G3D_DRAW_SetLookAt();
+    GFL_PTC_Main();
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -893,7 +923,10 @@ static void GRAPHIC_G3D_StartDraw( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 {	
-	GFL_G3D_DRAW_End();
+  if( p_wk->is_init )
+  {
+    GFL_G3D_DRAW_End();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -906,6 +939,10 @@ static void GRAPHIC_G3D_EndDraw( GRAPHIC_G3D_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk )
 {	
-	return cp_wk->p_camera;
+  if( cp_wk->is_init )
+  {
+    return cp_wk->p_camera;
+  }
+  return NULL;
 }
 #endif// GRAPHIC_G3D_USE

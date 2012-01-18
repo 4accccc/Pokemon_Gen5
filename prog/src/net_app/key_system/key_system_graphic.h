@@ -62,3 +62,13 @@ extern GFL_CLUNIT * KEY_SYSTEM_GRAPHIC_GetClunit( const KEY_SYSTEM_GRAPHIC_WORK 
 ///î•ñŽæ“¾ “à•”‚ÅÝ’è‚µ‚½ƒJƒƒ‰‚ð•Ô‚µ‚Ü‚·  3DŽg‚í‚È‚¢ê‡NULL
 //=====================================
 extern GFL_G3D_CAMERA * KEY_SYSTEM_GRAPHIC_GetCamera( const KEY_SYSTEM_GRAPHIC_WORK *cp_wk );
+
+//-------------------------------------
+///‚RD‚Æ‚QD‚ðØ‚è‘Ö‚¦
+//=====================================
+typedef enum
+{
+  KEYSYS_GRAPHICS_MODE_2D_TO_3D,
+  KEYSYS_GRAPHICS_MODE_3D_TO_2D,
+}KEYSYS_GRAPHICS_MODE;
+extern void KEY_SYSTEM_GRAPHICS_ChangeMode( KEY_SYSTEM_GRAPHIC_WORK *p_wk, KEYSYS_GRAPHICS_MODE mode );

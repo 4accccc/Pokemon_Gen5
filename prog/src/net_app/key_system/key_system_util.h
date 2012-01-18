@@ -33,7 +33,7 @@ typedef enum
   KEYSYS_TEXT_TYPE_STREAM,  //ストリームを使う(読み飛ばしあり、速さ設定依存)
   KEYSYS_TEXT_TYPE_WAIT,   //待機アイコンをつかう  終了はEndWait
   KEYSYS_TEXT_TYPE_STREAM_FIX,  //ストリームを使う（固定速さ）
-
+  KEYSYS_TEXT_TYPE_STREAM_WAIT,  //送りカーソルを後で出す処理
   KEYSYS_TEXT_TYPE_MAX,    //c内部にて使用
 } KEYSYS_TEXT_TYPE;
 
@@ -68,6 +68,8 @@ extern void KEYSYS_TEXT_WriteWindowFrame( KEYSYS_TEXT_WORK *p_wk, u16 frm_chr, u
 extern void KEYSYS_TEXT_ClearCharacter( KEYSYS_TEXT_WORK* p_wk );
 extern void KEYSYS_TEXT_ClearScreen( KEYSYS_TEXT_WORK* p_wk );
 extern void KEYSYS_TEXT_ChangePalette( KEYSYS_TEXT_WORK* p_wk, u8 plt );
+
+extern void KEYSYS_TEXT_SetMsgCursor( KEYSYS_TEXT_WORK* p_wk );
 
 #ifdef PM_DEBUG
 extern void KEYSYS_TEXT_PrintDebug( KEYSYS_TEXT_WORK* p_wk, const u16 *cp_str, u16 len, GFL_FONT *p_font );
@@ -369,8 +371,27 @@ extern BOOL KEYSYS_SCROLL_MENU_Draw( KEYSYS_SCROLL_MENU *p_wk );
 extern void KEYSYS_SCROLL_MENU_GetPos( KEYSYS_SCROLL_MENU *p_wk, u32 *p_cursor_pos, u32 *p_list_pos );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
+ *          パーティクル
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	スクロールリスト
+//=====================================
+typedef struct _KEYSYS_PTC_WORK KEYSYS_PTC_WORK;
+
+//-------------------------------------
+///	パブリック
+//=====================================
+extern KEYSYS_PTC_WORK * KEYSYS_PTC_Init( HEAPID heapID );
+extern void KEYSYS_PTC_Exit( KEYSYS_PTC_WORK *p_wk );
+extern void KEYSYS_PTC_LoadResource( KEYSYS_PTC_WORK *p_wk, ARCID arcID, ARCDATID datID, HEAPID heapID );
+extern void KEYSYS_PTC_Start( KEYSYS_PTC_WORK *p_wk, u32 id );
+extern BOOL KEYSYS_PTC_IsUse( const KEYSYS_PTC_WORK *cp_wk );
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
  *				  ETC
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 extern void KEYSYS_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 extern void KEYSYS_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, GXRgb start[], GXRgb end[] );
+extern STRBUF* WORDSET_TOOL_CreateExpandStr( WORDSET *p_word, GFL_MSGDATA *p_msg, u32 strID, HEAPID heapID );

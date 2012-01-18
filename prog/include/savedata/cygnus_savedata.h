@@ -26,60 +26,10 @@ typedef enum {
 
 //----------------------------------------------------------
 /**
- * @brief 特別な受け取りに使用するマジックナンバー
- *
- * トルネロスなど伝説系のポケモンは一度しか受け取れない。
- * 安易に書き換えられないようにマジックナンバーで指定する。
- */
-//----------------------------------------------------------
-enum {
-  MAGICNUMBER_SP_POKE01 = 0x80808080,
-  MAGICNUMBER_SP_POKE02,
-  MAGICNUMBER_SP_POKE03,
-  MAGICNUMBER_SP_POKE04,
-  MAGICNUMBER_SP_POKE05,
-  MAGICNUMBER_SP_POKE06,
-  MAGICNUMBER_SP_POKE07,
-  MAGICNUMBER_SP_POKE08,
-};
-
-//----------------------------------------------------------
-/**
  * @brief CYGNUS送信データ領域のインデックス
  */
 //----------------------------------------------------------
 enum {
-  CYGDATA_SP_POKE01 = 0,
-  CYGDATA_SP_POKE02,
-  CYGDATA_SP_POKE03,
-  CYGDATA_SP_POKE04,
-  CYGDATA_SP_POKE05,
-  CYGDATA_SP_POKE06,
-  CYGDATA_SP_POKE07,
-  CYGDATA_SP_POKE08,
-
-  CYGDATA_POKE01,         ///<汎用ポケモン指定領域
-  CYGDATA_POKE02,
-  CYGDATA_POKE03,
-  CYGDATA_POKE04,
-  CYGDATA_POKE05,
-  CYGDATA_POKE06,
-
-  CYGDATA_ITEMID01,        ///<汎用アイテムID指定領域
-  CYGDATA_ITEMID02,
-  CYGDATA_ITEMID03,
-  CYGDATA_ITEMID04,
-  CYGDATA_ITEMID05,
-  CYGDATA_ITEMID06,
-
-  CYGDATA_ITEMNUM01,        ///<汎用アイテム数指定領域
-  CYGDATA_ITEMNUM02,
-  CYGDATA_ITEMNUM03,
-  CYGDATA_ITEMNUM04,
-  CYGDATA_ITEMNUM05,
-  CYGDATA_ITEMNUM06,
-
-  CYGDATA_CRC = 31,
   CYGDATA_AREA_SIZE = 32    ///<領域最大長
 };
 

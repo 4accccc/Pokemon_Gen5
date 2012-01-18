@@ -30,3 +30,11 @@
 #define KEYSYS_SE_SAVE        SEQ_SE_SAVE   //セーブ音
 
 #define KEYSYS_BGM_MAIN       SEQ_BGM_DATA_CONV   //メイン曲
+
+//TODO
+#define CYGNUS_SE_MOVIE_FALL   SEQ_SE_SYS_88  //光の玉が降りてくる
+#define CYGNUS_SE_MOVIE_EMIT   SEQ_SE_SYS_89  //光のたまが破裂する
+#define CYGNUS_SE_RECV_PRESENT SEQ_SE_SYS_50	//贈り物を受け取った完了音
+
+#define CYGNUS_SE_ICON        SEQ_SE_MSCL_04  //アイコン着地
+#define CYGNUS_SE_FINISH      SEQ_SE_SW_CYGNUS_03 //終了
