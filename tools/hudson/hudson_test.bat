@@ -73,6 +73,8 @@ REM ================================
 :_ERROR_END
   REM エラーコードを丸々返す
   @echo hudson test is FAILED .
+  date /t
+  time /t
   pause
   exit %ERRORLEVEL%
 
@@ -82,6 +84,8 @@ REM ================================
 :_END
   @echo hudson test is SUCCESS .
   REM devcon disable *HID*
+  date /t
+  time /t
   pause
   exit 0
 
