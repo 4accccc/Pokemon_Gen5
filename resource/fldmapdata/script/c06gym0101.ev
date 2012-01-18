@@ -89,9 +89,17 @@ EVENT_START	c06gym0101_leader6_01
 
   ELSE
 
-    //ゲームクリア前なら
-    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    //ゲームクリア前・T07到達前なら
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) && $WK_SCENE_T07 == 0 THEN
 
+      //つぎの　ジムがある　セッカシティは
+      _BALLOONWIN_OBJMSG( msg_c06gym0101_leader_05 , C06GYM0101_LEADER6_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    
+    //ゲームクリア前なら
+    ELSIF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    
       //つぎの　ジムがある　セッカシティは
       _BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )
       _LAST_KEYWAIT()
