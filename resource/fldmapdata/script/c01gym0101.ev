@@ -115,13 +115,13 @@ INIT_EVENT_START ev_init_c01gym0101
     
   //おもいでリンク：コーン起動で復帰
   ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 2 THEN
-    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 0, 10, DIR_RIGHT )
-    _OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 13, 0, 10, DIR_LEFT )
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 14, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 16, 0, 14, DIR_LEFT )
   
   //おもいでリンク：デント起動で復帰
   ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 3 THEN
-    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 14, DIR_RIGHT )
-    _OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 16, 0, 14, DIR_LEFT )
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 0, 10, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 13, 0, 10, DIR_LEFT )
     
   ENDIF
   
@@ -603,7 +603,8 @@ ev_link_event:
   
   IF $LOCALWORK10 == 1 THEN
   
-    
+    //コーン・イベント起動（全員と話した）
+    IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
       
       //========================================//
       //起動人物をセット（ポッド）
@@ -625,10 +626,6 @@ ev_link_event:
       //会話済みフラグセット
       _FLAG_SET( FE_C01GYM0101_LINKEVENT_01 )
       //========================================//
-      
-      //ポッド・イベント起動（全員と話した）
-      IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
-      
     //ポッド・イベント起動話しかけ
     ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) THEN
       //ポッド：おもいでリンク起動前メッセージ
