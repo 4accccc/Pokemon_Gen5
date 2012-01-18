@@ -15,6 +15,7 @@ require "gender_hash_conv.rb"
 require "tokusei_hash_conv.rb"
 require "oshiewaza_hash_conv.rb"
 require "old_oshiewaza_hash_conv.rb"
+require "old_waza_hash_conv.rb"
 
 OutputMonsFullNameList( "../data/personal_sw.csv", "./hash/" )
 OutputFormNameHash( "../data/personal_sw.csv", "./hash/" )
@@ -34,4 +35,6 @@ OutputGenderHash( "../data/personal_sw.csv", "./hash/" )
 OutputTokuseiHash( "../data/personal_sw.csv", "./hash/" )
 OutputOshieWazaHash_from_PersonalDat( "../data/personal_sw.csv", "./hash/" )
 OutputOshieWazaHash_from_old_wazaoshiedata( "../data/personal_sw.csv","../data/old_waza_oshie.csv", "./hash/" )
-
+OutputOshieWazaHash_from_old_wazadata( "../data/personal_sw.csv","../data/fr_waza.csv", "./hash/" ,"fr_" )
+OutputOshieWazaHash_from_old_wazadata( "../data/personal_sw.csv","../data/gs_waza.csv", "./hash/" ,"gs_" )
+OutputOshieWazaHash_from_old_wazadata( "../data/personal_sw.csv","../data/pl_waza.csv", "./hash/" ,"pl_" )
