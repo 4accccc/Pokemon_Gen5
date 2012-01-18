@@ -256,6 +256,7 @@ typedef struct {
   u8            sub_seq;        // サブシーケンス
 
   u8            rank;           // 何位 
+  u8            idx;            // インデックス
   u8            netID;          // NetID
   u16           point;          // 点数
 
@@ -576,7 +577,7 @@ static const u8 PLATE_S_POS[4][2] =
 };
 
 
-static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID );
+static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID, const u8 idx );
 static GAME_PLATE_WORK* GAME_PLATE_CreatePlate_Blank( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID );
 static void GAME_PLATE_DeletePlate( GAME_PLATE_WORK *p_wk );
 static void GAME_PLATE_UpdatePlate( CTVT_GAME_WORK *p_wk );
@@ -2533,24 +2534,32 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   
   // プレート作成
   {
+    u8  idx = 0;
     // プレート用タスク作成
     // タスクシステムを作るのに必要なメモリサイズを計算
     gameWork->taskmem_plate = GFL_HEAP_AllocMemory( gameWork->heapId, GFL_TCB_CalcSystemWorkSize(PLATE_NUM) );
     // タスクシステムを作成
     gameWork->task_plate = GFL_TCB_Init( PLATE_NUM, gameWork->taskmem_plate );
 
-    for( i=0; i<connectNum; i++ )
+    for( i=0; i<CTVT_MEMBER_NUM; i++ )
     {
-      gameWork->p_plate[i] = GAME_PLATE_CreatePlate( work, gameWork, i );
+      if( GFL_NET_IsConnectMember( i ) == TRUE )
+      {
+        // 
+        gameWork->p_plate[i] = GAME_PLATE_CreatePlate( work, gameWork, i, idx );
+        idx++;  // 表示プレートIDXインクリメント
+        // タスクに登録
+        ICHI_Printf("プレート %d 作成\n", i);
+      }
+      // BTS463 
+      else
+      {
+        // 接続していないと空
+        gameWork->p_plate[i] = GAME_PLATE_CreatePlate_Blank( work, gameWork, i );
+        ICHI_Printf("プレート空 %d 作成\n", i);
+      }
       // タスクに登録
       gameWork->p_plate[i]->tcb = GFL_TCB_AddTask( gameWork->task_plate, TaskFuncPlate, gameWork->p_plate[i], 1 );
-      ICHI_Printf("プレート %d 作成\n", i);
-    }
-    for( ;i<CTVT_MEMBER_NUM; i++ )
-    {
-      gameWork->p_plate[i] = GAME_PLATE_CreatePlate_Blank( work, gameWork, i );
-      gameWork->p_plate[i]->tcb = GFL_TCB_AddTask( gameWork->task_plate, TaskFuncPlate, gameWork->p_plate[i], 1 );
-      ICHI_Printf("プレート空 %d 作成\n", i);
     }
 
     gameWork->plate_move = FALSE;
@@ -3016,15 +3025,31 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   gameWork->task = GFL_TCB_Init( CTVT_MEMBER_NUM+4, gameWork->taskMem );
 
   // 風船初期化
-  for( i=0; i<connectNum; i++ )
   {
-    gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, TRUE, gameWork->heapId );
-    gameWork->p_balloon2[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFunc2, gameWork->p_balloon2[i], 1 );
-  }
-  for( ; i<CTVT_MEMBER_NUM; i++ )
-  {
-    gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, FALSE, gameWork->heapId );
-    gameWork->p_balloon2[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFunc2, gameWork->p_balloon2[i], 1 );
+    u8 tmp_idx = 0;
+    for( i=0; i<CTVT_MEMBER_NUM; i++ )
+    {
+      if( selfId == i )
+      {
+        // 自分
+        gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, tmp_idx, TRUE, gameWork->heapId );
+      }
+      // BTS463 
+      else if( GFL_NET_IsConnectMember( i ) == FALSE )
+      {
+        // 接続していないと非表示
+        gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, tmp_idx, FALSE, gameWork->heapId );
+      }
+      else
+      {
+        gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, tmp_idx, TRUE, gameWork->heapId );
+        // 風船の場所を次にする
+        tmp_idx++;
+      }
+
+      // タスク追加
+      gameWork->p_balloon2[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFunc2, gameWork->p_balloon2[i], 1 );
+    }
   }
 
   // タイトルの文字描画
@@ -4244,8 +4269,9 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       {
         u8 rank = gameWork->p_plate[i]->rank;
         u8 netID= gameWork->p_plate[i]->netID;
+        u8 idx  = gameWork->p_plate[i]->idx;
         ICHI_Printf("balloon_s作成 %d\n", i);
-        gameWork->p_balloon_s_wk[i] = CTVT_BALLOON_S_Create( gameWork, netID, rank, tbl[rank-1], gameWork->heapId );
+        gameWork->p_balloon_s_wk[i] = CTVT_BALLOON_S_Create( gameWork, netID, idx, rank, tbl[rank-1], gameWork->heapId );
         gameWork->p_balloon_s_wk[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFuncScore, gameWork->p_balloon_s_wk[i], 2 );
       }
     }
@@ -6628,19 +6654,21 @@ static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32
  *
  *	@param	CTVT_GAME_WORK *p_wk  ワーク
  *	@param	u8 netID              NetID
+ *	@param	u8 idx                アクティブなプレートの番号
  *
  *	@return 作成したプレート
  */
 //-----------------------------------------------------------------------------
-static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID )
+static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID, const u8 idx )
 {
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  const u8 baseX = PLATE_POS[netID][0];
-  const u8 baseY = PLATE_POS[netID][1];
+  const u8 baseX = PLATE_POS[idx][0];
+  const u8 baseY = PLATE_POS[idx][1];
   GAME_PLATE_WORK *p_plate;
   p_plate = GFL_HEAP_AllocClearMemory( gameWork->heapId, sizeof(GAME_PLATE_WORK) );
   p_plate->heapID = gameWork->heapId;
-  p_plate->rank   = netID + 1;
+  p_plate->idx    = idx;
+  p_plate->rank   = idx + 1;
   p_plate->netID  = netID;
   p_plate->is_blank = FALSE;
   p_plate->is_mine = (netID==selfId) ? TRUE : FALSE;
@@ -6734,10 +6762,14 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate_Blank( COMM_TVT_WORK *work, CTVT_
   GAME_PLATE_WORK *p_plate;
   p_plate = GFL_HEAP_AllocClearMemory( gameWork->heapId, sizeof(GAME_PLATE_WORK) );
   p_plate->heapID = gameWork->heapId;
+
+  // 空のプレートなので参照されないが一応初期化しておく
   p_plate->rank   = 0;
+  p_plate->idx    = 0;
   p_plate->netID  = netID;
   p_plate->is_update_name = FALSE;
   p_plate->is_update_score = FALSE;
+  // 空プレート設定
   p_plate->is_blank = TRUE;
 
 #ifdef PM_DEBUG
@@ -6822,10 +6854,13 @@ static void GAME_PLATE_UpdatePlate( CTVT_GAME_WORK *p_wk )
     }
     if( move_in == plate_num )
     {
-      for( i=0; i<plate_num; i++ )
+      for( i=0; i<PLATE_NUM; i++ )
       {
-        p_wk->p_plate[i]->sub_seq = PLATE_SEQ_MOVE_IN;
-        p_wk->p_plate[i]->move_wait = (plate_num - p_wk->p_plate[i]->rank) * 40;   // フェードインの待ち時間
+        if( p_wk->p_plate[i]->is_blank == FALSE )
+        {
+          p_wk->p_plate[i]->sub_seq = PLATE_SEQ_MOVE_IN;
+          p_wk->p_plate[i]->move_wait = (plate_num - p_wk->p_plate[i]->rank) * 40;   // フェードインの待ち時間
+        }
       }
     }
   }
@@ -6857,7 +6892,7 @@ static void GAME_PLATE_ActivePlate(COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
       GFL_MSGDATA *msgHandle= p_wk->parent_msgHandle;
       PRINT_QUE *printQue   = p_wk->parent_printQue;
       u8        posx = 0;
-      u8        posy = 8 + ((p_wk->netID+1)*2);
+      u8        posy = 8 + ((p_wk->idx+1)*2);
 
       {
         CTVT_COMM_WORK        *commWork = COMM_TVT_GetCommWork( work );
@@ -6961,7 +6996,8 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
 {
   u8 i, j;
   
-  u8  rank[4] = {1,2,3,4};
+  u8  rank[4] = {1,2,3,4};  // 初期化必要ないが念のため
+  u8  tmp_rank = 1;
   u8  point[4] = {0,};
   u8  plate_num = 0;
 
@@ -6972,12 +7008,21 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
     {
       point[i] = gameWork->p_plate[i]->point;
       plate_num++;
+
+      // 基準順位設定
+      rank[i] = tmp_rank++;
     }
   }
   // 新しいランクを設定
-  for( i=0; i<plate_num-1; i++ )
+  for( i=0; i<PLATE_NUM-1; i++ )
   {
-    for( j=i; j<plate_num; j++ )
+    if( gameWork->p_plate[i]->is_blank == TRUE )
+    {
+      // プレートなしならスキップ
+      continue;
+    }
+
+    for( j=i; j<PLATE_NUM; j++ )
     {
       u8 tmp_rank;
       u8 tmp_point;
@@ -6996,7 +7041,7 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
   }
 
   // 移動するときの設定
-  for( i=0; i<plate_num; i++ )
+  for( i=0; i<PLATE_NUM; i++ )
   {
     GAME_PLATE_WORK *p_wk = gameWork->p_plate[i];
     
@@ -7005,7 +7050,7 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
       // 最初の移動時はランク順になっていないので、下から移動
       if( gameWork->timeLimit == 40 )
       {
-        p_wk->move_wait = (plate_num-1 - i) * 40;  // Xフレームごとに移動
+        p_wk->move_wait = p_wk->idx * 40;  // Xフレームごとに移動
       }
       else
       {
@@ -7279,8 +7324,8 @@ static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
 
   if( p_wk->is_blank == FALSE )
   {
-    const u8 baseX = PLATE_S_POS[p_wk->netID][0];
-    const u8 baseY = PLATE_S_POS[p_wk->netID][1];
+    const u8 baseX = PLATE_S_POS[p_wk->idx][0];
+    const u8 baseY = PLATE_S_POS[p_wk->idx][1];
 
     // 上画面から下画面表示に変更
     GRAPHIC_OBJ_Remove( p_wk->clwkPlate );
@@ -7360,7 +7405,7 @@ static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
     GFL_BMPWIN_Delete( p_wk->bmpwin_name );
     GFL_BG_SetVisible( CTVT_GAME_FRAME_S_PLATE, VISIBLE_OFF ); 
     p_wk->bmpwin_name = GFL_BMPWIN_Create( CTVT_GAME_FRAME_M_PLATE,
-        8*p_wk->netID, 20, 2*PERSON_NAME_SIZE, 4, CTVT_GAME_PAL_BG_M_FONT, GFL_BMP_CHRAREA_GET_B );
+        8*p_wk->idx, 20, 2*PERSON_NAME_SIZE, 4, CTVT_GAME_PAL_BG_M_FONT, GFL_BMP_CHRAREA_GET_B );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmpwin_name), 0x0 );
 
     PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp(p_wk->bmpwin_name),

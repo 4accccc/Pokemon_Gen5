@@ -317,13 +317,14 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
  *
  *	@param	CTVT_GAME_WORK *gameWork
  *	@param	unit_idx    NetID
+ *	@param  idx       作成する風船のIDX
  *	@param  visible   表示・非表示
  *	@param	heapID      ヒープID
  *
  *	@return 作成したワーク
  */
 //-----------------------------------------------------------------------------
-BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOOL visible, HEAPID heapID )
+BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 idx, BOOL visible, HEAPID heapID )
 {
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   const u8 connectNum = GFL_NET_GetConnectNum();
@@ -377,15 +378,6 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
   // それ以外は接続人数によって変わる
   else
   {
-    u8      idx = unit_idx;   // 場所IDX
-
-    // 引数のNetIDが
-    // 自分のNetIDより上なら添え字を合わせる為にインクリメント
-    if( idx > selfId )
-    {
-      idx--;
-    }
-
     // 3人接続の場合は真ん中がいない
     // のでSkip
     if( connectNum == 3 )
@@ -396,6 +388,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
     //VEC_Set( &p_wk->status.scale, SCALE_OTHER, SCALE_OTHER, SCALE_OTHER );
     MTX_Identity33( &p_wk->status.rotate );
     VEC_COPY( &p_wk->status.trans, &c_pos[ idx ] );
+    ICHI_Printf("風船2の場所IDX %d\n", idx );
 
     p_wk->is_self = FALSE;
 
@@ -837,7 +830,7 @@ extern BOOL CTVT_BALLOON2_IsEffect( BALLOON2_WORK *p_wk )
  *	@return 作成した風船ワーク
  */
 //-----------------------------------------------------------------------------
-BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 rank, fx32 max_y, HEAPID heapID )
+BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 idx, u8 rank, fx32 max_y, HEAPID heapID )
 {
   BALLOON_S_WORK *p_wk;
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BALLOON_S_WORK) );
@@ -864,9 +857,9 @@ BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u
     MTX_Identity33( &p_wk->status.rotate );
 
     // 4分割して、0～4番目の位置
-    x = FX32_CONST(-90) + FX32_CONST( 60*unit_idx );
-    ICHI_Printf("%d x =%x \n", unit_idx, x);
-    //NNS_G3dScrPosToWorldLine( 32 +(64*unit_idx), 192, &pos, NULL );
+    x = FX32_CONST(-90) + FX32_CONST( 60*idx );
+    ICHI_Printf("%d x =%x \n", idx, x);
+    //NNS_G3dScrPosToWorldLine( 32 +(64*idx), 192, &pos, NULL );
     //ICHI_Printf("pos %x:%x:%x \n", pos.x, pos.y, pos.z );
     VEC_Set( &p_wk->status.trans, x, FX32_CONST(-100), 0 );
   }

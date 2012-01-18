@@ -213,13 +213,14 @@ extern void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk );
  *
  *	@param	gameWork  ゲームワーク
  *	@param  unit_idx  NetIDのこと
+ *	@param  idx       作成する風船のIDX
  *	@param  visible   表示・非表示
  *	@param  heapID    ヒープID
  *
  *	@return 作成したワーク
  */
 //-----------------------------------------------------------------------------
-extern BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOOL visible, HEAPID heapID );
+extern BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 idx, BOOL visible, HEAPID heapID );
 
 //----------------------------------------------------------------------------
 /**
@@ -299,7 +300,7 @@ extern BOOL CTVT_BALLOON2_IsEffect( BALLOON2_WORK *p_wk );
  *	@return 作成した風船ワーク
  */
 //-----------------------------------------------------------------------------
-extern BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 rank, fx32 max_y, HEAPID heapID );
+extern BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u8 idx, u8 rank, fx32 max_y, HEAPID heapID );
 
 //----------------------------------------------------------------------------
 /**

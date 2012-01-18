@@ -1539,15 +1539,23 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
   {
     u8  i;
     u8  mem_cnt = 0;
-    const u8 connectNum = GFL_NET_GetConnectNum();
     const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-    for( i=0; i<connectNum; i++ )
+    for( i=0; i<CTVT_MEMBER_NUM; i++ )
     {
       u8  netID = i;
 
       if( selfId == netID )
       {
         // 自分だとスキップ
+        continue;
+      }
+      // BTS463 
+      if( GFL_NET_IsConnectMember( netID ) == FALSE )
+      {
+        // メンバーは進める
+        mem_cnt++;
+
+        // 接続していないとスキップ
         continue;
       }
 
@@ -1638,11 +1646,10 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       u8    i;
       u8    mem_cnt = 0;
       u8    ret_bit = 0;
-      const u8 connectNum = GFL_NET_GetConnectNum();
       const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
       // 送信してくる人数分のみまわす
-      for( i=0; i<connectNum; i++ )
+      for( i=0; i<CTVT_MEMBER_NUM; i++ )
       {
         // 送信してくるNetIDのみチェック
         if( p_wk->cap_buf_bit & (1<<i) )
