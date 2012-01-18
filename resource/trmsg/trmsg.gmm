@@ -8253,9 +8253,9 @@
 
 	<row id="TRID_FISHING_18_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">おれは　すべてを　あいする
-すばらしい　つりびと！</language>
+すばらしい　つりびと！▼</language>
 		<language name="JPN_KANJI" width="216">おれは　すべてを　愛する
-すばらしい　つりびと！</language>
+すばらしい　つりびと！▼</language>
 	</row>
 
 	<row id="TRID_FISHING_18_TRMSG_FIGHT_LOSE">
@@ -8513,7 +8513,7 @@
 		<language name="JPN" width="216">デコボコみちで　おのれを　みがく！
 こんじょうを　きたえるのだ！▼</language>
 		<language name="JPN_KANJI" width="216">デコボコ道で　己を　磨く！
-根性を　鍛えるのだ！▼</language>
+根性を　鍛錬するのだ！▼</language>
 	</row>
 
 	<row id="TRID_KARATE_14_TRMSG_FIGHT_LOSE">
@@ -8525,12 +8525,12 @@
 
 	<row id="TRID_KARATE_14_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ポケモンが　いてくれるから
-おたがい　かこくな　トレーニングに
+おたがい　かこくな　トレーニングに▽
 たえて　たえて　たえられる！▼
 こんじょうが　つなげる
 つよい　むすびつきが　あるのだ！</language>
 		<language name="JPN_KANJI" width="216">ポケモンが　いてくれるから
-お互い　過酷な　トレーニングに
+お互い　過酷な　トレーニングに▽
 堪えて　堪えて　堪えられる！▼
 根性が　つなげる
 強い　結びつきが　あるのだ！</language>
@@ -8988,17 +8988,17 @@
 
 	<row id="TRID_SWIMMERM_09_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">けっかは　だせなかったが
-ジムで　まなんで　つよくなましたよ</language>
+ジムで　まなんで　つよくなりましたよ</language>
 		<language name="JPN_KANJI" width="216">結果は　だせなかったが
-ジムで　学んで　強くなましたよ</language>
+ジムで　学んで　強くなりましたよ</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">いいんだよ！　じぶんのは
+		<language name="JPN" width="216">いいんだよ！　じぶんが　するのは
 たのしむための　ポケモンしょうぶ▼
 かちまくりたい　ひとは
 なっとく　するまで　がんばりなさいよ</language>
-		<language name="JPN_KANJI" width="216">いいんですよ！　自分のは
+		<language name="JPN_KANJI" width="216">いいんですよ！　自分が　するのは
 楽しむための　ポケモン勝負▼
 勝ちまくりたい　人は
 納得するまで　がんばりなさいよ</language>
@@ -9044,9 +9044,11 @@
 	</row>
 
 	<row id="TRID_SWIMMERW_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あたしの　バカンスに　おわりはないの
+		<language name="JPN" width="216">あたしの　バカンスは
+えいえんに　おわりが　こないの▼
 ……いいのかしら　これで？</language>
-		<language name="JPN_KANJI" width="216">あたしの　バカンスに　終わるはないの
+		<language name="JPN_KANJI" width="216">あたしの　バカンスは
+永遠に　終わりが　来ないの▼
 ……いいのかしら　これで？</language>
 	</row>
 
@@ -9066,7 +9068,7 @@
 
 	<row id="TRID_SWIMMERW_09_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ときどき　クラゲの　ポケモンが
-ぷかぷか　うかんでいるのよ！</language>
+ぷかぷか　うかんでいるのよね！</language>
 		<language name="JPN_KANJI" width="216">ときどき　クラゲの　ポケモンが
 ぷかぷか　浮かんでいるのよね！</language>
 	</row>
@@ -9074,7 +9076,7 @@
 	<row id="TRID_ELITEW_25_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">いとしの　ポケモンたちに
 うみを　みせているの……▼</language>
-		<language name="JPN_KANJI" width="216">愛しいの　ポケモンたちに
+		<language name="JPN_KANJI" width="216">愛しの　ポケモンたちに
 海を　みせているの……▼</language>
 	</row>
 
