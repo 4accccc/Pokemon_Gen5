@@ -794,6 +794,7 @@ $levelwaza_learninglevel_hash = {
 		17,
 		22,
 		25,
+		28,
 		32,
 		37,
 		44,
@@ -2358,6 +2359,7 @@ $levelwaza_learninglevel_hash = {
 		71,
 		78,
 		85,
+		92,
 	],
 	"サンダー" => [
 		1,
@@ -2374,6 +2376,7 @@ $levelwaza_learninglevel_hash = {
 		71,
 		78,
 		85,
+		92,
 	],
 	"ファイヤー" => [
 		1,
@@ -2390,6 +2393,7 @@ $levelwaza_learninglevel_hash = {
 		71,
 		78,
 		85,
+		92,
 	],
 	"ミニリュウ" => [
 		1,
@@ -7083,6 +7087,7 @@ $levelwaza_learninglevel_hash = {
 		1,
 		1,
 		1,
+		1,
 		4,
 		7,
 		11,
@@ -11015,6 +11020,7 @@ $levelwaza_learninglevel_hash = {
 		1,
 		1,
 		1,
+		1,
 		5,
 		9,
 		13,
@@ -11876,7 +11882,7 @@ $levelwaza_learninglevel_hash = {
 		73,
 		77,
 	],
-	"たまご" => [
+	"タマゴ" => [
 		1,
 		5,
 		15,
@@ -11891,7 +11897,7 @@ $levelwaza_learninglevel_hash = {
 		80,
 		90,
 	],
-	"だめたまご" => [
+	"ダメタマゴ" => [
 		1,
 		5,
 		15,
