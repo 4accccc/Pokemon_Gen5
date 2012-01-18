@@ -62,9 +62,6 @@ static void updatePokewoodSaveParams(
   // 看板を設定
   PKWDSYS_SetKanban( gamedata, pkwdsys, rec_pos );
 
-  // 興行収入のレコード登録
-  PKWDSYS_RecordSet( gamedata, pkwdsys );
-
   // メダル取得計算
   PKWDSYS_CheckPokewoodMedal( gamedata );
 
