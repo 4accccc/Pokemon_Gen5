@@ -532,6 +532,10 @@ EVENT_START	ev_reserve_w21_swplazma_end_01
   _PERSON_STATE_SET_CHELEN( CHELEN_STATE_W21 )
   //ローカルライブキャスター・ライバル通話状態を変更（D10R0301イベント終了まで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R22 )
+  //ローカルライブキャスター通話状態を変更
+  _PERSON_STATE_SET_BELL( BELL_STATE_R13 )
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_R13 )
+  _PERSON_STATE_SET_MOTHER( MOTHER_STATE_HOME )
   //========================================//
   
 EVENT_END
