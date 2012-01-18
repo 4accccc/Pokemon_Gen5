@@ -834,7 +834,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエか
+			<Text>おまえ　か
 よかったな▼
 ゲーチスさまは
 もう　なにも　なされない……▼
@@ -842,11 +842,11 @@
 もう　なにも　できない……　か▼
 それは　いい
 おわった　はなし▼
-ただ　オマエは　ゆるさない
-オレたちと　たたかえ！▼</Text>
+ただ　おまえは　ゆるさない
+わたしたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T07:57:20" />
+				Time="2012-01-18T03:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -854,7 +854,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエか
+			<Text>おまえ　か
 よかったな▼
 ゲーチスさまは
 もう　なにも　なされない……▼
@@ -862,11 +862,11 @@
 もう　なにも　できない……　か▼
 それは　いい
 終わった　話▼
-ただ　オマエは　許さない
-オレたちと　戦え！▼</Text>
+ただ　おまえは　許さない
+わたしたちと　戦え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T07:57:28" />
+				Time="2012-01-18T03:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -913,10 +913,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレたちと　たたかえ！▼</Text>
+			<Text>わたしたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-06T08:58:07" />
+				Time="2012-01-18T03:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -924,10 +924,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレたちと　戦え！▼</Text>
+			<Text>わたしたちと　戦え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:18:58" />
+				Time="2012-01-18T03:21:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -975,12 +975,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエに　かつ！　それこそが
-あのかたの　なくなった　こころを▽
+			<Text>おまえに　かつ！　それこそが
+あのかたの　うしなわれた　こころを▽
 とりもどす　たったひとつの　すべ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T08:39:13" />
+				Time="2012-01-18T03:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -988,12 +988,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエに　勝つ！　それこそが
-あの方の　なくなった　心を▽
+			<Text>おまえに　勝つ！　それこそが
+あの方の　失われた　心を▽
 取り戻す　たった一つの　術！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T08:39:19" />
+				Time="2012-01-18T03:22:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1163,10 +1163,10 @@
 			Language="JPN">
 			<Text>たたかうこと！▼
 それだけが　いま
-オレが　いきている　あかし▼</Text>
+わたしが　いきている　あかし▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:20:43" />
+				Time="2012-01-18T03:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1176,10 +1176,10 @@
 			Language="JPN_KANJI">
 			<Text>戦うこと！▼
 それだけが　今
-オレが　生きている　証▼</Text>
+わたしが　生きている　証▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:19:50" />
+				Time="2012-01-18T03:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1277,14 +1277,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つづいて　オレが……▼
+			<Text>つづいて　わたしが……▼
 とおもったが　ローテーションで
 たたかえるほど　ポケモンが　いないな▼
 また　きせつが　かわったとき
 あいて　してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:26:45" />
+				Time="2012-01-18T03:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1292,14 +1292,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>続いて　オレが……▼
+			<Text>続いて　わたしが……▼
 と思ったが　ローテーションで
 戦えるほど　ポケモンが　いないな▼
 また　季節が　変われば
 相手してやる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:21:40" />
+				Time="2012-01-18T03:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
