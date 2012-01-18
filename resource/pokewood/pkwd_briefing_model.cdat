@@ -86,10 +86,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl13[] = {
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03c_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03c_NSBCA, GFL_G3D_UTIL_RESARC },
 };
-//遊園地Ｂ
+//遊園地Ａー２
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl14[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02f_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02f_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02b_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02b_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 //遊園地Ａー１
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl15[] = {
@@ -235,7 +235,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl13[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
 };
-// 「遊園地Ｂ」 アニメ定義
+// 「遊園地Ａー２」 アニメ定義
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl14[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
@@ -454,7 +454,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl13[] = {
     NELEMS(g3Dutil_anmTbl13), //アニメデータ数
   },
 };
-// 遊園地Ｂ
+// 遊園地Ａー２
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl14[] = {
   {
     G3DRES_BCTA_BMD,         //モデルID
@@ -723,7 +723,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl13,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl13),   //オブジェクト数
   },
-  { // シナリオ20 ( 遊園地Ｂ )
+  { // シナリオ20 ( 遊園地Ａー２ )
     g3Dutil_resTbl14,           //データテーブル
     NELEMS(g3Dutil_resTbl14),   //データ数
     g3Dutil_objTbl14,           //オブジェクト設定テーブル

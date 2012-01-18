@@ -730,10 +730,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃーね！　[Name:TrainerName ]ちゃん！！
-また　つぎも　よろしく　たのみますよっ！</Text>
+また　つぎも　よろしく　たのみますよっ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:07:04" />
+				Time="2012-01-18T05:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
