@@ -623,7 +623,7 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
     waza_no = wbtsys->wbtdl_data.wbtdl_rule.veto_waza_no;
     break;
   }
-  REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no );
+  REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no, FALSE );
 #ifdef PM_DEBUG
   WBTSYS_DEBUG_PrintRegulationEx( &wbtsys->wbtreg.ex_reg );
 #endif

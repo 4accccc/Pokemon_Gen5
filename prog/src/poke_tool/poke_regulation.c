@@ -23,6 +23,7 @@
 #include "pm_define.h"
 #include "msg/msg_regulation.h"
 #include "message.naix"
+#include "waza_tool/wazano_def.h"
 
 #define _POKENO_NONE  (0)          // ポケモン番号でない番号
 
@@ -114,6 +115,15 @@ const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
 }
 
 //------------------------------------------------------------------
+/// ポケウッド専用の禁止わざリスト
+//------------------------------------------------------------------
+static const u16 PokewoodDisableWazaList[] = {
+  WAZANO_YUBIWOHURU,
+  WAZANO_ITYAMON,
+  WAZANO_HENSIN,
+};
+
+//------------------------------------------------------------------
 /**
  * @brief   ポケモンのレギュレーション適合チェック（拡張版）
  * @param   pReg      レギュレーション構造体ポインタ
@@ -132,14 +142,25 @@ const int PokeRegulationCheckPokeParaEx(
   //拡張レギュレーションが存在したらチェック
   if ( pRegEx != NULL )
   {
-    int i;
-    if ( pRegEx->waza_no != 0 )
+    int i, j;
+    if ( pRegEx->waza_no != 0 || pRegEx->isPkwd )
     {
       for ( i = 0; i < PTL_WAZA_MAX; i ++ )
       {
-        if (PP_Get( pp, ID_PARA_waza1 + i, NULL ) == pRegEx->waza_no )
+        u16 wazano = PP_Get( pp, ID_PARA_waza1 + i, NULL );
+        if ( wazano == 0 ) continue;
+        if ( wazano == pRegEx->waza_no )
         {
           return POKEFAILEDBIT_VETO_WAZA;
+        }
+        if ( pRegEx->isPkwd == FALSE ) continue;
+        //ポケウッド専用禁止わざのチェック
+        for ( j = 0; j < NELEMS(PokewoodDisableWazaList); j ++ )
+        {
+          if ( wazano == PokewoodDisableWazaList[j] )
+          {
+            return POKEFAILEDBIT_VETO_WAZA;
+          }
         }
       }
     }

@@ -15,6 +15,7 @@
 //------------------------------------------------------------------
 typedef struct {
   u8 poketype;      ///<ポケモンタイプの制限
+  u8 isPkwd;    ///<ポケウッド専用わざチェックのON/OFF
   u16 waza_no;      ///<使用禁止技ナンバー
 }REGULATIONEX;
 
@@ -26,10 +27,11 @@ typedef struct {
  * REGULATIONEXオブジェクトを直接操作することは禁止する
  */
 //------------------------------------------------------------------
-static inline REGULATIONEX * REGULATIONEX_Create( HEAPID heapID, u8 poketype, u16 waza_no )
+static inline REGULATIONEX * REGULATIONEX_Create( HEAPID heapID, u8 poketype, u16 waza_no, BOOL isPkwd )
 {
   REGULATIONEX * rex = GFL_HEAP_AllocClearMemory( heapID, sizeof(REGULATIONEX) );
   rex->poketype = poketype;
+  rex->isPkwd = isPkwd;
   rex->waza_no = waza_no;
   return rex;
 }
@@ -41,9 +43,10 @@ static inline REGULATIONEX * REGULATIONEX_Create( HEAPID heapID, u8 poketype, u1
  * REGULATIONEXオブジェクトを直接操作することは禁止する
  */
 //------------------------------------------------------------------
-static inline void REGULATIONEX_Init( REGULATIONEX * rex, u8 poketype, u16 waza_no )
+static inline void REGULATIONEX_Init( REGULATIONEX * rex, u8 poketype, u16 waza_no, BOOL isPkwd )
 {
   rex->poketype = poketype;
+  rex->isPkwd = isPkwd;
   rex->waza_no = waza_no;
 }
 //------------------------------------------------------------------

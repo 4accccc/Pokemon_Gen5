@@ -136,7 +136,7 @@ void PKWDSYS_SetupPokeListData( PKWDSYS * pkwdsys, GAMEDATA * gamedata, PLIST_DA
   
   // Šg’£ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“İ’è
   // ‹Zu‚Ö‚ñ‚µ‚ñv‚Íƒ{ƒXƒ|ƒP‚É‚È‚ê‚é‚Ì‚Å‹Ö~
-  REGULATIONEX_Init( &pkwdsys->reg_ex, POKETYPE_NULL, WAZANO_HENSIN );
+  REGULATIONEX_Init( &pkwdsys->reg_ex, POKETYPE_NULL, WAZANO_HENSIN, TRUE );
 
   // ƒpƒ‰ƒ[ƒ^‚Éˆø“n‚µ
   plist_data->reg   = (void *)&pkwdsys->reg;
