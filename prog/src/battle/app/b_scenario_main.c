@@ -2245,9 +2245,12 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 			tmp  = 2;
 			pcol = PRINTSYS_LSB_Make(4,3,0);
 		}
-		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[tmp] );
-		BsCmn_DispString( wk, BS_CVS_INFO_NAME, 62, 0, str, 0, pcol, 0, 1 );
-		GFL_STR_DeleteBuffer( str );
+		// «•Ê‚È‚µ‚Ìê‡‚Í•\Ž¦‚µ‚È‚¢
+		if(buf[0] != PTL_SEX_UNKNOWN){
+			str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[tmp] );
+			BsCmn_DispString( wk, BS_CVS_INFO_NAME, 62, 0, str, 0, pcol, 0, 1 );
+			GFL_STR_DeleteBuffer( str );
+		}
 		//
 		// ƒŒƒxƒ‹
 		buf[0] = wk->PokeWork[wk->PokePageNum].level;

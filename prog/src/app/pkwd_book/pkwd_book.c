@@ -57,6 +57,10 @@
 #include "msg/msg_pokewood_name.h"
 #include "msg/msg_pokewood_senario01_m.h"	// やくめい
 
+// debug
+#include "poke_tool/pokewood_party.h"
+#include "pokewood_party.naix"
+
 #include "pkwd_book_snd_def.h"
 
 // メッセージ
@@ -393,6 +397,24 @@ typedef struct{
 	u32					skill[4];		// 技
 	u32					skill_type[4];	// 技対応
 } PKWD_BOOK_POKE_WORK;
+
+//--------------------------------------
+// ポケモンの情報(1シナリオ分)(debug用)
+//--------------------------------------
+typedef struct{
+	s16					num[2];			// 個数(自分、相手)
+	s16					my_id[6];		// id(自分側)
+	s16					my_sex[6];		// 性別
+	//
+	s16					ene_id[6];		// id(相手側)
+	s16					ene_sex[6];		// 性別
+//	u32					level;			// レベル
+//	u32					item;			// もちもの
+//	u32					stat;			// 特性
+//	u32					poke_type[2];	// タイプ
+//	u32					skill[4];		// 技
+//	u32					skill_type[4];	// 技対応
+} PKWD_BOOK_POKE_DEBUG_WORK;
 
 //-------------------------------------
 /// シナリオ開放状況
@@ -1319,6 +1341,8 @@ static u8 pwb_get_title_no( PKWD_BOOK_MAIN_WORK* wk, const s32 id );
 
 // debug
 static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk );
+//
+static void pwb_party_debug( PKWD_BOOK_MAIN_WORK *wk );
 
 
 //=============================================================================
@@ -1640,6 +1664,9 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------------
 	// パーティ情報セット
 	//---------------------
+	// partydebug情報
+	pwb_party_debug( wk );
+	//
 	pwb_chk_flag( wk );
 	// シナリオ番号セット
 	tmp = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
@@ -2813,7 +2840,8 @@ static void pwb_disp_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 wnum, const STRB
 		return;
 	}
 	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
-	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->sfont, PRINTSYS_LSB_Make(15,2,0) );
+//	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->sfont, PRINTSYS_LSB_Make(15,2,0) );
+	PRINTSYS_PrintColor( wk->BmpData[wnum], 0, 0, strbuf, wk->sfont, PRINTSYS_LSB_Make(15,2,0) );
 	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
 	//
 	// 座標も再セットしておく
@@ -3203,6 +3231,8 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 	//
 	// bg初期化(1回目だけは転送しない)
 	if(wk->Flag & FLG_SET_INIT){
+		// ちらつき防止
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, FALSE );
 		// canvas初期化
 		pwb_init_string( wk, STR_SUB, TMODE_BOOK );
 		// fix文字列
@@ -3253,9 +3283,13 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
 					wk->Flag |= FLG_FRAME_STAT;
 					wk->SubMode = STEP_LV1;
+					// ちらつき防止
+					GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, TRUE );
 				}
 			}else{
 				wk->SubMode = STEP_LV1;
+				// ちらつき防止
+				GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, TRUE );
 			}
 			break;
 		//
@@ -4097,9 +4131,12 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		tmp  = 2;
 		pcol = PRINTSYS_LSB_Make(4,3,0);
 	}
-	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[tmp] );
-	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_NAME, 62, 0, str, 0, pcol, 1 );
-	GFL_STR_DeleteBuffer( str );
+	// 性別なしの場合は表示しない
+	if(buf[0] != PTL_SEX_UNKNOWN){
+		str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[tmp] );
+		pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_NAME, 62, 0, str, 0, pcol, 1 );
+		GFL_STR_DeleteBuffer( str );
+	}
 	//
 	// レベル
 	buf[0] = wk->PokeWork[wk->PokePageNum].level;
@@ -5543,5 +5580,179 @@ static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 		wk->DebugFlag &= ~(FLG_DBG_ON|FLG_DBG_LEFT);
 	}
 #endif
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	debug(パーティチェック用)
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_party_debug( PKWD_BOOK_MAIN_WORK *wk )
+{
+#ifdef PM_DEBUG
+// 中津井さんが対象
+#if defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_tanaka_ryota)
+	s32		i;
+	s32		j;
+	s32		pmax;
+	s32		off;
+	s16		*adr;
+	POKEMON_PARAM	*pp;
+	POKEWOOD_PARTIES_DATA *ppd;
+	PKWD_BOOK_POKE_DEBUG_WORK	*before_work;	// 前
+	PKWD_BOOK_POKE_DEBUG_WORK	*after_work;	// 後
+	
+	// Lボタンを押しながらで実行
+	if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L) ){
+		// debug用(シナリオ分)
+		before_work = GFL_HEAP_AllocMemory( wk->heapID, sizeof(PKWD_BOOK_POKE_DEBUG_WORK)*PKWD_BOOK_SCENARIO_MAX );
+		after_work  = GFL_HEAP_AllocMemory( wk->heapID, sizeof(PKWD_BOOK_POKE_DEBUG_WORK)*PKWD_BOOK_SCENARIO_MAX );
+		// 初期化
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			before_work[i].num[0] = 0;
+			before_work[i].num[1] = 0;
+			after_work[i].num[0]  = 0;
+			after_work[i].num[1]  = 0;
+		}
+		
+		//---------------------------
+		// 前情報
+		//---------------------------
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			// 読み込み
+			adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, NARC_pokewood_party_pkwd_party01_bin+i, wk->heapID );
+			ppd = (POKEWOOD_PARTIES_DATA*)adr;
+			//-------------
+			// 前情報(自分)
+			//-------------
+			off  = 0;
+			pmax = ppd->party_num[0];
+			// 情報をセット
+			before_work[i].num[0] = pmax;
+			for(j=0;j<pmax;j++){
+				POKEWOOD_POKE_DATA *poke = &(ppd->data[off+j]);
+				//
+				before_work[i].my_id[j]  = poke->rec_monsno;
+				before_work[i].my_sex[j] = poke->sex;
+			}
+			//-------------
+			// 前情報(相手)
+			//-------------
+			off  = ppd->party_num[0];
+			pmax = ppd->party_num[1];
+			// 情報をセット
+			before_work[i].num[1] = pmax;
+			for(j=0;j<pmax;j++){
+				POKEWOOD_POKE_DATA *poke = &(ppd->data[off+j]);
+				//
+				before_work[i].ene_id[j]  = poke->rec_monsno;
+				before_work[i].ene_sex[j] = poke->sex;
+			}
+			// 破棄
+			GFL_HEAP_FreeMemory( adr );
+		}
+		
+		//-------------------------
+		// 後情報(自分側)
+		//-------------------------
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			// データを破棄(念のため)
+			pwb_delete_party( wk );
+			//
+			// ポケウッドのpartyの作成
+			// newされたデータがwk->Partyに格納されるはず
+			wk->Party = PokeParty_AllocPartyWork( wk->heapID );
+			POKEWOOD_EVENT_setupPokemon( wk->Param->mystatus, wk->Party, wk->heapID, i, 0 );
+			// 最大数をセット
+			pmax = PokeParty_GetPokeCount( wk->Party );
+			after_work[i].num[0] = pmax;
+			for(j=0;j<pmax;j++){
+				pp = PokeParty_GetMemberPointer( wk->Party, j );
+				// 情報をセット
+				after_work[i].my_id[j]  = PP_Get( pp, ID_PARA_monsno, 0 );	// id
+				after_work[i].my_sex[j] = PP_GetSex( pp );					// sex
+			}
+		}
+		//-------------------------
+		// 後情報(相手側)
+		//-------------------------
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			// データを破棄(念のため)
+			pwb_delete_party( wk );
+			//
+			// ポケウッドのpartyの作成
+			// newされたデータがwk->Partyに格納されるはず
+			wk->Party = PokeParty_AllocPartyWork( wk->heapID );
+			POKEWOOD_EVENT_setupPokemon( wk->Param->mystatus, wk->Party, wk->heapID, i, 1 );
+			// 最大数をセット
+			pmax = PokeParty_GetPokeCount( wk->Party );
+			after_work[i].num[1] = pmax;
+			for(j=0;j<pmax;j++){
+				pp = PokeParty_GetMemberPointer( wk->Party, j );
+				// 情報をセット
+				after_work[i].ene_id[j]  = PP_Get( pp, ID_PARA_monsno, 0 );	// id
+				after_work[i].ene_sex[j] = PP_GetSex( pp );					// sex
+			}
+		}
+		//-------------------------
+		// 情報の表示(自分,相手)
+		//-------------------------
+		OS_Printf("------------------------------\n");
+#if 0
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			OS_Printf("scenario( %d )\n",i+1);
+			OS_Printf("b :");
+			for(j=0;j<before_work[i].num[0];j++){
+				OS_Printf("(%d,%d) ",before_work[i].my_id[j], before_work[i].my_sex[j]);
+			}
+			OS_Printf("\n");
+			OS_Printf("a :");
+			for(j=0;j<after_work[i].num[0];j++){
+				OS_Printf("(%d,%d) ",after_work[i].my_id[j], after_work[i].my_sex[j]);
+			}
+			OS_Printf("\n");
+			//
+			OS_Printf("b :");
+			for(j=0;j<before_work[i].num[1];j++){
+				OS_Printf("(%d,%d) ",before_work[i].ene_id[j], before_work[i].ene_sex[j]);
+			}
+			OS_Printf("\n");
+			OS_Printf("a :");
+			for(j=0;j<after_work[i].num[1];j++){
+				OS_Printf("(%d,%d) ",after_work[i].ene_id[j], after_work[i].ene_sex[j]);
+			}
+			OS_Printf("\n");
+		}
+#endif
+		OS_Printf("------------------------------\n");
+		//
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			// 違うものを探す
+			for(j=0;j<before_work[i].num[0];j++){
+				if(before_work[i].my_sex[j] != after_work[i].my_sex[j]){
+					OS_Printf("scenario(%2d),  mypoke(%d) : (%d -> %d)\n",i+1,j,before_work[i].my_sex[j], after_work[i].my_sex[j]);
+				}
+			}
+			for(j=0;j<before_work[i].num[1];j++){
+				if(before_work[i].ene_sex[j] != after_work[i].ene_sex[j]){
+					OS_Printf("scenario(%2d), enepoke(%d) : (%d -> %d)\n",i+1,j,before_work[i].ene_sex[j], after_work[i].ene_sex[j]);
+				}
+			}
+		}
+		OS_Printf("------------------------------\n");
+		
+		// 破棄
+		GFL_HEAP_FreeMemory( before_work );
+		GFL_HEAP_FreeMemory( after_work );
+		before_work = 0;
+		after_work  = 0;
+	}
+#endif
+//
+#endif	// PM_DEBUG
 }
 
