@@ -923,26 +923,37 @@ EVENT_END
 /*            コンバートのもとの持ち主のことをいう人        */
 /************************************************************/
 EVENT_START    ev_c04r0201_conv_girl_01
-
+{
 	DEFINE_LOCAL LWK_IS_EXIST
 	DEFINE_LOCAL LWK_OVER_SCORE
+	DEFINE_LOCAL LWK_MUSICAL_JOIN
 
   _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
   _DATACONV_IS_OVER_SCORE( LWK_OVER_SCORE )
+  _GET_MUSICAL_VALUE_JOIN_NUM( LWK_MUSICAL_JOIN )
 
   _TALK_OBJ_START()
-
+  
+  //おもいでリンク引継ぎなし
   IF $LWK_IS_EXIST == FALSE THEN
     _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_01 )
+  
+  //おもいでリンク引継ぎあり
   ELSE
     _DATACONV_SET_NAME( DATACONV_ID_MUSICAL, 0 )
-    IF $LWK_OVER_SCORE == TRUE THEN
+    
+    //参加回数が0　もしくは　スコアで勝っていない
+    IF $LWK_OVER_SCORE == FALSE || $LWK_MUSICAL_JOIN == 0 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_02 )
+    
+    //参加回数が1回以上　なおかつ　スコアで勝っている
     ELSE
       _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_convert_03 )
+      
     ENDIF
   ENDIF
 
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+}
 EVENT_END
