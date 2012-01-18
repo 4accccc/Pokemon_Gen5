@@ -742,10 +742,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じゃーね！　[Name:TrainerName ]ちゃん！！
-また　次も　よろしく　頼みますよっ！</Text>
+また　次も　よろしく　頼みますよっ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:07:16" />
+				Time="2012-01-18T09:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
