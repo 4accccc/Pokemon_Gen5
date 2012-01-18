@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/10 16:59:00
+#save date:2012/01/18 14:17:23
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0901.wms
 #SECTION START:OBJ_EVENT
@@ -183,7 +183,7 @@ SCRID_TRID_ESPM_14
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-7
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number

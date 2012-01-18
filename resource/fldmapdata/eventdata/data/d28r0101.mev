@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/25 12:35:23
+#save date:2012/01/18 12:18:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d28r0101.wms
 #SECTION START:OBJ_EVENT
@@ -80,19 +80,19 @@ TR_SCIENTISTM_17
 #OBJ CODE Number
 ASSISTANTM
 #MOVE CODE Number
-MV_RND
+MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TRAINER_SPIN_STOP_L
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_SCIENTISTM_17
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
-4
+2
 #Parameter 1 Number
-3
+4
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -102,7 +102,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 -552
+296 0 -552
 #event number: 3
 #type
 1
@@ -152,7 +152,7 @@ SCRID_TRID_SCIENTISTW_13
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-6
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
