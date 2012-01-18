@@ -610,15 +610,17 @@
 			<Text>アクロマ『りかい　できません
 ゆうき　ではなく　おろか　です！▼
 ポケモンが　いれば　トレーナーは
-どんなことでも　できるというのか？▼
-トレーナーと　ポケモンは
+どんなことでも　できるのですか？▼
+……いえいえ
+ありえませんよ▼
+すべての　トレーナーと　ポケモンは
 モンスターボールで　むすばれている▼
-これは　たんなる　じじつ　でしかなく
-のうりょくを　はっき　させるには▽
-プラス　しんらいが　いるのですか？▼</Text>
+ということは　トレーナーが
+パートナーの　ポケモンを　しんじれば▽
+ふかのう　など　なくなりますっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:27:14" />
+				Time="2012-01-18T08:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -629,15 +631,17 @@
 			<Text>アクロマ『理解できません
 勇気ではなく　愚行です！▼
 ポケモンが　いれば　トレーナーは
-どんなことでも　できるというのか？▼
-トレーナーと　ポケモンは
+どんなことでも　できるのですか？▼
+……いえいえ
+ありえませんよ▼
+すべての　トレーナーと　ポケモンは
 モンスターボールで　結ばれている▼
-これは　単なる　事実でしかなく
-能力を　発揮させるには▽
-プラス　信頼が　いるのですか？▼</Text>
+ということは　トレーナーが
+パートナーの　ポケモンを　信じれば▽
+不可能など　なくなりますっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:27:19" />
+				Time="2012-01-18T08:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -698,10 +702,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アクロマ『信じる……　ね
-不確定要素すぎますよ</Text>
+不確定要素　すぎますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:56:53" />
+				Time="2012-01-18T07:39:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2359,6 +2363,57 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05_sign1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンワールドトーナメント
+あるいは　PWT▽
+このみで　つかいわけて　ください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:40:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンワールドトーナメント
+あるいは　PWT▽
+好みで　使い分けて　ください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:40:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>橋看板</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:40:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-18T08:40:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
