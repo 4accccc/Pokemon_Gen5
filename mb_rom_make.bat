@@ -12,8 +12,3 @@ cd prog/spec/
 copy version ../version
 cd ../../
 
-
-:ERROR
-echo ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½
-
-:END
