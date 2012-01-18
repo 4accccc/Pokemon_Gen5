@@ -403,6 +403,12 @@ extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM 
 extern BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk, s64 now );
 extern u32 RESORT_RECV_DATA_GetRnd( const RESORT_RECV_DATA *cp_wk, RESORT_RND_ID id, u32 range );
 
+#ifdef PM_DEBUG
+extern void DEBUG_RESORT_RECV_DATA_CopyBasic1( const RESORT_RECV_DATA *cp_wk, void *p_data_adrs );
+extern void DEBUG_RESORT_RECV_DATA_CopyBasic2( const RESORT_RECV_DATA *cp_wk, void *p_data_adrs );
+extern void DEBUG_RESORT_RECV_DATA_CopyExtend( const RESORT_RECV_DATA *cp_wk, RESORT_EXTEND_TYPE extend, void *p_data_adrs );
+#endif
+
 //-------------------------------------
 ///	２…リゾート用ビーコンパックデータの外部公開
 //=====================================

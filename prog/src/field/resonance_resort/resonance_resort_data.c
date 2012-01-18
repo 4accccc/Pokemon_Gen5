@@ -388,6 +388,14 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     p_wk->play_hour      = PLAYTIME_GetHour( sv_playtime );
     p_wk->play_min       = PLAYTIME_GetMinute( sv_playtime );
   }
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
+  {
+    RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data ); 
+    DEBUG_RESORT_RECV_DATA_CopyBasic1( p_owner, p_wk );
+  }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -643,6 +651,15 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
   p_wk->special_deliverly = 0; //製品版でここが０以外はありえない
 #endif
   }
+
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
+  {
+    RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data ); 
+    DEBUG_RESORT_RECV_DATA_CopyBasic2( p_owner, p_wk );
+  }
+#endif
 }
 
 
@@ -811,6 +828,14 @@ static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAME
       }
     }
   }
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
+  {
+    RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data ); 
+    DEBUG_RESORT_RECV_DATA_CopyExtend(p_owner, RESORT_EXTEND_TYPE_01, p_wk );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -871,6 +896,15 @@ static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAME
   p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_NICKNAME );
   p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST );
   p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY );
+
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
+  {
+    RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data ); 
+    DEBUG_RESORT_RECV_DATA_CopyExtend(p_owner, RESORT_EXTEND_TYPE_02, p_wk );
+  }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -906,6 +940,14 @@ static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAME
   p_wk->rank_data[1]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_NET_BATTLE );
   p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_GET_POKE );
   p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_HATCH_EGG );
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
+  {
+    RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( sp_people_all_data ); 
+    DEBUG_RESORT_RECV_DATA_CopyExtend(p_owner, RESORT_EXTEND_TYPE_03, p_wk );
+  }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -2254,6 +2296,43 @@ u32 RESORT_RECV_DATA_GetRnd( const RESORT_RECV_DATA *cp_wk, RESORT_RND_ID id, u3
   u32 seed = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_RND_SEED, NULL );
   return RESORT_DATA_GetRnd( seed, id, range );
 }
+#ifdef PM_DEBUG
+void DEBUG_RESORT_RECV_DATA_CopyBasic1( const RESORT_RECV_DATA *cp_wk, void *p_data_adrs )
+{
+  GFL_STD_MemCopy( &cp_wk->basic1, p_data_adrs, sizeof(RESORT_BASIC1_DATA) );
+}
+void DEBUG_RESORT_RECV_DATA_CopyBasic2( const RESORT_RECV_DATA *cp_wk, void *p_data_adrs )
+{
+  GFL_STD_MemCopy( &cp_wk->basic2, p_data_adrs, sizeof(RESORT_BASIC2_DATA) );
+}
+void DEBUG_RESORT_RECV_DATA_CopyExtend( const RESORT_RECV_DATA *cp_wk, RESORT_EXTEND_TYPE extend, void *p_data_adrs )
+{
+  switch( extend )
+  {
+  case RESORT_EXTEND_TYPE_01:  //メダル、リゾート、プレイ情報
+    GFL_STD_MemCopy( &cp_wk->extend1, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_02:  //ランク１
+    GFL_STD_MemCopy( &cp_wk->extend2, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_03:  //ランク２
+    GFL_STD_MemCopy( &cp_wk->extend3, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_04:  //噂
+    GFL_STD_MemCopy( &cp_wk->extend4, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_05:  //出来事
+    GFL_STD_MemCopy( &cp_wk->extend5, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_06:  //口癖
+    GFL_STD_MemCopy( &cp_wk->extend6, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  case RESORT_EXTEND_TYPE_07:  //感謝  
+    GFL_STD_MemCopy( &cp_wk->extend7, p_data_adrs, RESORT_EXTEND_DATA_SIZE );
+    break;
+  }
+}
+#endif
 //=============================================================================
 /**
  *    RESORT_BEACON_DATAの関数

@@ -331,6 +331,7 @@ typedef enum {
   EDITBOX_ID_FLAG_07,
   EDITBOX_ID_FLAG_08,
   EDITBOX_ID_FLAG_09,
+  EDITBOX_ID_FLAG_10,
   EDITBOX_ID_WORK_00,
   EDITBOX_ID_WORK_01,
   EDITBOX_ID_WORK_02,
@@ -391,6 +392,8 @@ typedef enum {
   EDITBOX_ID_COMBO_PER_05,
   EDITBOX_ID_COMBO_PER_06,
   EDITBOX_ID_COMBO_PER_07,
+
+  EDITBOX_ID_OWNER_LOAD,
 
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
@@ -575,6 +578,7 @@ typedef void (*ButtonAction_Callback)( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 
+static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 
 
 static BOOL IsPageOpen_ZoneID_JA( DEBUG_INPUT_WORK *p_wk );
@@ -965,35 +969,35 @@ static const STR_PARAM StrParamsResidentExtend123[] =
   //
   {STR_TYPE_NUM, RESORT_DATA_136,  STR_POS_X, STR_LINE2_POS_Y,
     24,STR_LINE2_POS_Y,24,TOUCH_H,
-    0,8,EDITBOX_ID_EXT1_JA_LOT },
+    8,0,EDITBOX_ID_EXT1_JA_LOT },
   //
   {STR_TYPE_NUM, RESORT_DATA_137,  48+STR_POS_X, STR_LINE2_POS_Y,
     48+24,STR_LINE2_POS_Y,24,TOUCH_H,
-    0,8,EDITBOX_ID_EXT1_JA_PARLOR },
+    8,0,EDITBOX_ID_EXT1_JA_PARLOR },
   //
   {STR_TYPE_NUM, RESORT_DATA_138,  96+STR_POS_X, STR_LINE2_POS_Y,
     96+24,STR_LINE2_POS_Y,24,TOUCH_H,
-    0,8,EDITBOX_ID_EXT1_JA_MARKET },
+    8,0,EDITBOX_ID_EXT1_JA_MARKET },
   //
   {STR_TYPE_NUM, RESORT_DATA_139,  144+STR_POS_X, STR_LINE2_POS_Y,
     144+24,STR_LINE2_POS_Y,24,TOUCH_H,
-    0,8,EDITBOX_ID_EXT1_JA_FLORIST },
+    8,0,EDITBOX_ID_EXT1_JA_FLORIST },
   //
   {STR_TYPE_NUM, RESORT_DATA_140,  STR_POS_X, STR_LINE3_POS_Y,
     24,STR_LINE3_POS_Y,24,TOUCH_H,
-    0,8,RESORT_DATA_PARAM_EXT1_SHOP_EXERCICE },
+    8,0,RESORT_DATA_PARAM_EXT1_SHOP_EXERCICE },
   //
   {STR_TYPE_NUM, RESORT_DATA_141,  48+STR_POS_X, STR_LINE3_POS_Y,
     48+24,STR_LINE3_POS_Y,24,TOUCH_H,
-    0,8,RESORT_DATA_PARAM_EXT1_SHOP_NURSERY },
+    8,0,RESORT_DATA_PARAM_EXT1_SHOP_NURSERY },
   //
   {STR_TYPE_NUM, RESORT_DATA_142,  96+STR_POS_X, STR_LINE3_POS_Y,
     96+24,STR_LINE3_POS_Y,24,TOUCH_H,
-    0,8,RESORT_DATA_PARAM_EXT1_SHOP_ANTIQUE },
+    8,0,RESORT_DATA_PARAM_EXT1_SHOP_ANTIQUE },
   //
   {STR_TYPE_NUM, RESORT_DATA_143,  144+STR_POS_X, STR_LINE3_POS_Y,
     144+24,STR_LINE3_POS_Y,24,TOUCH_H,
-    0,8,RESORT_DATA_PARAM_EXT1_SHOP_CAFE },
+    8,0,RESORT_DATA_PARAM_EXT1_SHOP_CAFE },
 
   //開始
   {STR_TYPE_CAPTION, RESORT_DATA_144,  STR_POS_X, STR_LINE4_POS_Y,
@@ -1035,7 +1039,7 @@ static const STR_PARAM StrParamsResidentExtend123[] =
   //先頭ポケ
   {STR_TYPE_NUM, RESORT_DATA_147,  70+STR_POS_X, STR_LINE6_POS_Y,
     70+24,STR_LINE6_POS_Y,4*8,TOUCH_H,
-    31,0,EDITBOX_ID_EXT1_POKE },
+    MONSNO_END,0,EDITBOX_ID_EXT1_POKE },
 
   //イチオシ
   {STR_TYPE_CAPTION, RESORT_DATA_50,  STR_POS_X, STR_LINE7_POS_Y,
@@ -1389,6 +1393,19 @@ static const STR_PARAM StrParamsResidentExtend89[] =
   {STR_TYPE_NUM, RESORT_DATA_11_01,  20*8+STR_POS_X, STR_LINE4_POS_Y,
     20*8+3*8,STR_LINE4_POS_Y,2*8,TOUCH_H,
     31,0,EDITBOX_ID_EXT8_RECORD_DAY_03 },
+};
+
+//住民基本データ
+static const STR_PARAM StrParamsOwnerData[] = 
+{
+  //住民基礎情報
+  {STR_TYPE_CAPTION, RESORT_DATA_00,  STR_POS_X, STR_LINE0_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //読込
+  {STR_TYPE_BUTTON, CAPTION_NONE,  STR_POS_X, STR_LINE2_POS_Y,
+    8,STR_LINE2_POS_Y,9*8,TOUCH_H,
+    RESORT_DATA_163,(u32)ButtonAction_OwnerReLoad,EDITBOX_ID_OWNER_LOAD },
 };
 
 //お店配置ページ
@@ -1847,7 +1864,10 @@ static const STR_PARAM StrParamsDebugFlag[] =
     100+60,STR_LINE4_POS_Y, 2*8,TOUCH_H,
     YESNO_00,2,EDITBOX_ID_FLAG_06 },
 
-
+  //自分ダミー送信
+  {STR_TYPE_SWITCH, RESORT_DATA_162, 100, STR_LINE6_POS_Y,
+    100+60,STR_LINE6_POS_Y, 2*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_10 },
 
   //強制抽選アイテム固定
   {STR_TYPE_SWITCH, RESORT_DATA_156, 100, STR_LINE12_POS_Y,
@@ -1944,6 +1964,38 @@ static const STR_PARAM_DISPLAY sc_city_display_tbl[]  =
 };
 static const STR_PARAM_DISPLAY sc_resident_display_tbl[]  =
 {
+  //住民基礎情報
+  {
+    StrParamsResidentBasic, NELEMS(StrParamsResidentBasic)
+  },
+  //住民準基礎情報
+  {
+    StrParamsResidentBasicSub, NELEMS(StrParamsResidentBasicSub)
+  },
+  //住民拡張データ１２３
+  {
+    StrParamsResidentExtend123, NELEMS(StrParamsResidentExtend123)
+  },
+  //住民拡張データ４
+  {
+    StrParamsResidentExtend4, NELEMS(StrParamsResidentExtend4)
+  },
+  //住民拡張データ５６７
+/*  {
+    StrParamsResidentExtend567, NELEMS(StrParamsResidentExtend567)
+  },
+*/  //住民拡張データ８９
+  {
+    StrParamsResidentExtend89, NELEMS(StrParamsResidentExtend89)
+  },
+};
+
+static const STR_PARAM_DISPLAY sc_owner_display_tbl[]  =
+{
+  //自分データ
+  {
+    StrParamsOwnerData, NELEMS(StrParamsOwnerData)
+  },
   //住民基礎情報
   {
     StrParamsResidentBasic, NELEMS(StrParamsResidentBasic)
@@ -2076,8 +2128,8 @@ static const STR_PARAM_PAGE sc_proxy_page =
 
 static const STR_PARAM_PAGE sc_owner_page =
 {
-  sc_resident_display_tbl,
-  NELEMS(sc_resident_display_tbl),
+  sc_owner_display_tbl,
+  NELEMS(sc_owner_display_tbl),
   IsPageOpen_True,
   Owner_StoreData,
   Owner_ReStoreData,
@@ -3412,6 +3464,21 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
   }
 }
 
+static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
+{
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( wk->p_resort_sv );
+  RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+
+  {
+    BOOL is_debug = RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY );
+    RESORT_DEBUG_FLAG_Set( RESORT_DEBUG_FLAG_SEND_DUMMY, FALSE );
+    RESORT_RECV_DATA_SetMyData( p_owner, wk->p_gamedata );
+    RESORT_DEBUG_FLAG_Set( RESORT_DEBUG_FLAG_SEND_DUMMY, is_debug );
+  }
+
+  Owner_StoreData( wk, wk->p_resort_sv );
+}
+
 //普通に受け取るだけのテーブル
 static const struct
 {
@@ -4240,6 +4307,7 @@ static const struct
   { EDITBOX_ID_FLAG_07, RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON },
   { EDITBOX_ID_FLAG_08, RESORT_DEBUG_FLAG_FORCE_RND_WORK_ON },
   { EDITBOX_ID_FLAG_09, RESORT_DEBUG_FLAG_FORCE_ITEM_WORK_ON },
+  { EDITBOX_ID_FLAG_10, RESORT_DEBUG_FLAG_SEND_DUMMY, }
 };
 static const struct
 {
