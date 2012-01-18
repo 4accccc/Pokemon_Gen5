@@ -3167,8 +3167,6 @@ sub_common_wifi_upload_score:
   
   //フィールド通信切断
   _CALL sub_common_exit_field_comm
-  //フェスミッション強制終了
-  _FMISSION_END_FORCE()
   
   IF $SCWK_ANSWER == FALSE THEN //切断失敗
     /*
@@ -3180,6 +3178,8 @@ sub_common_wifi_upload_score:
     $SCWK_ANSWER = FALSE
     _RET
   ENDIF
+  //フェスミッション強制終了
+  _FMISSION_END_FORCE()
   
   //アップロード
   _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )

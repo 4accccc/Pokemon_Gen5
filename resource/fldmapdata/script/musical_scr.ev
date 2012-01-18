@@ -135,6 +135,9 @@ EVENT_START ev_musical_recept_fitting
     IF $SCWK_ANSWER == TRUE THEN //  選ばなかった
       _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_02, SCWK_TARGET_OBJID, POS_DOWN )
       _BALLOONWIN_CLOSE()
+      
+      //フェスミッション強制終了
+      _FMISSION_END_FORCE()
 
       //入場アニメ
       _CALL recept_move_obj_fitting
