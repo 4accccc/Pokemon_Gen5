@@ -28,9 +28,12 @@ cp ../constant.rb ./script/trainer/constant.rb
 cd ../exceltool
 exceltabconv.exe ../waza_check/data/kowaza_table.xls
 exceltabconv.exe ../waza_check/data/wb_item.xls
+ruby ./xls2xml/tab_out_direct_sheet.rb -s ../waza_check/data/old_waza_oshie.xls > ../waza_check/data/old_waza_oshie.csv
 
 cd ../waza_check/script
+
 ruby -Ks -I ./hash;./hash_conv;./personal;./trainer update_hash.rb
+cd ..
 @echo off
 
 :end
