@@ -25,6 +25,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_memo.h"
+#include "item/itemsym.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -2062,7 +2063,7 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
       u16 mons_no = CYGNUS_DATA_GET_POKE_NO( cp_row_data[i] );
       u8  form_no = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
       u8  sex = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
-      if( 0 < mons_no && mons_no <= MONSNO_MAX )
+      if( 0 < mons_no && mons_no <= MONSNO_END )
       {
         p_wk->reward_data[p_wk->reward_num].type = CYGNUS_REWARD_TYPE_POKEMON;
         p_wk->reward_data[p_wk->reward_num].no   = mons_no;
@@ -2084,9 +2085,10 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
     }
     else
     {
-      u16 item  = cp_row_data[i];
-      u16 num   = cp_row_data[CYGDATA_ITEMNUM01+i-CYGDATA_ITEMID01];
-      if( item != 0 && num > 0 )
+      u16 item  = CYGNUS_DATA_GET_ITEM_NO( cp_row_data[i] );
+      u16 num   = CYGNUS_DATA_GET_ITEM_NUM( cp_row_data[i] );
+      if( ( 0 < item && item < ITEM_DATA_MAX )
+          && num > 0 )
       {
         p_wk->reward_data[p_wk->reward_num].type = CYGNUS_REWARD_TYPE_ITEM;
         p_wk->reward_data[p_wk->reward_num].no   = item;

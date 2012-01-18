@@ -1374,10 +1374,6 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
     {
       KEYSYS_BGM_MAIN,
       CYGNUS_SE_ICON,
-SEQ_SE_MSCL_02,
-SEQ_SE_MSCL_04,
-SEQ_SE_MSCL_07,
-
     };
     p_wk->p_snd_preset  = SOUNDMAN_PresetSoundTbl( sc_se_tbl, NELEMS(sc_se_tbl) );
   }

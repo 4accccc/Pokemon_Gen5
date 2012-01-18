@@ -60,36 +60,36 @@ static const struct
   {
     MAGICNUMBER_SP_POKE04,
     CYGFLAG_SP_POKE04,
-    MONSNO_TORUNEROSU,  //TODO
-    1,
+    MONSNO_DHIARUGA,  //TODO
+    0,
     PM_MALE,
   },
   {
     MAGICNUMBER_SP_POKE05,
     CYGFLAG_SP_POKE05,
-    MONSNO_TORUNEROSU,  //TODO
-    1,
+    MONSNO_PARUKIA,  //TODO
+    0,
     PM_MALE,
   },
   {
     MAGICNUMBER_SP_POKE06,
     CYGFLAG_SP_POKE06,
-    MONSNO_TORUNEROSU,  //TODO
-    1,
+    MONSNO_GIRATHINA,  //TODO
+    0,
     PM_MALE,
   },
   {
     MAGICNUMBER_SP_POKE07,
     CYGFLAG_SP_POKE07,
-    MONSNO_TORUNEROSU,  //TODO
-    1,
+    MONSNO_HOUOU,  //TODO
+    0,
     PM_MALE,
   },
   {
     MAGICNUMBER_SP_POKE08,
     CYGFLAG_SP_POKE08,
-    MONSNO_TORUNEROSU,  //TODO
-    1,
+    MONSNO_RUGIA,  //TODO
+    0,
     PM_MALE,
   },
 };

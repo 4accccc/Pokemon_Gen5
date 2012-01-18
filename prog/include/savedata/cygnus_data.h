@@ -19,19 +19,34 @@
 //=============================================================================
 //----------------------------------------------------------
 /**
- * @brief CYGDATA_POKE01～CYGDATA_POKE06は以下になっているため、
+ * @brief CYGDATA_POKE01～CYGDATA_POKE06の４バイトは以下になっているため、
  * 取り出すためのマクロを定義する
  *
  * struct{
- *  u16 mons_no:16;
- *  u8  form_no:8:
- *  u8  sex:8;
+ *  u32 mons_no:16;
+ *  u32 form_no:8:
+ *  u32 sex:8;
  * }
  */
 //----------------------------------------------------------
 #define CYGNUS_DATA_GET_POKE_NO(v)  ((v>>16)&0xFFFF)
 #define CYGNUS_DATA_GET_FORM_NO(v)  ((v>>8)&0xFF)
 #define CYGNUS_DATA_GET_SEX(v)      (v&0xFF)
+
+
+//----------------------------------------------------------
+/**
+ * @brief CYGDATA_ITEMID01～CYGDATA_ITEMID06の４バイトは以下になっているため、
+ * 取り出すためのマクロを定義する
+ *
+ * struct{
+ *  u32 item_no:16;
+ *  u32 item_num:16:
+ * }
+ */
+//----------------------------------------------------------
+#define CYGNUS_DATA_GET_ITEM_NO(v)  ((v>>16)&0xFFFF)
+#define CYGNUS_DATA_GET_ITEM_NUM(v)  (v&0xFFFF)
 
 //----------------------------------------------------------
 /**
@@ -58,7 +73,7 @@ typedef enum {
  */
 //----------------------------------------------------------
 enum {
-  CYGDATA_SP_POKE01 = 0,
+  CYGDATA_SP_POKE01 = 0,  ///<特別なポケモンCYGNUSDATA_MAGICNUMBERが入ります。
   CYGDATA_SP_POKE02,
   CYGDATA_SP_POKE03,
   CYGDATA_SP_POKE04,
@@ -67,26 +82,19 @@ enum {
   CYGDATA_SP_POKE07,
   CYGDATA_SP_POKE08,
 
-  CYGDATA_POKE01,         ///<汎用ポケモン指定領域
+  CYGDATA_POKE01,         ///<汎用ポケモン指定領域 CYGNUS_DATA_GET_POKE_～を使います
   CYGDATA_POKE02,
   CYGDATA_POKE03,
   CYGDATA_POKE04,
   CYGDATA_POKE05,
   CYGDATA_POKE06,
 
-  CYGDATA_ITEMID01,        ///<汎用アイテムID指定領域
+  CYGDATA_ITEMID01,        ///<汎用アイテムID指定領域 CYGNUS_DATA_GET_ITEM_～を使います
   CYGDATA_ITEMID02,
   CYGDATA_ITEMID03,
   CYGDATA_ITEMID04,
   CYGDATA_ITEMID05,
   CYGDATA_ITEMID06,
-
-  CYGDATA_ITEMNUM01,        ///<汎用アイテム数指定領域
-  CYGDATA_ITEMNUM02,
-  CYGDATA_ITEMNUM03,
-  CYGDATA_ITEMNUM04,
-  CYGDATA_ITEMNUM05,
-  CYGDATA_ITEMNUM06,
 
   CYGDATA_MAX
 };
