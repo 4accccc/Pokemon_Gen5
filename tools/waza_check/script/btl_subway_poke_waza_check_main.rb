@@ -17,6 +17,7 @@ require "waza_oshie_hash.rb"
 require "fr_old_owaza_hash.rb"
 require "gs_old_owaza_hash.rb"
 require "pl_old_owaza_hash.rb"
+require "old_oshiewaza_hash.rb"
 require "csv"
 
 class ErrorData
@@ -35,6 +36,16 @@ def is_oshiewaza( waza_name )
   if $oshie_waza_hash_blue.values.include?( waza_name ) then return true end
   if $oshie_waza_hash_yellow.values.include?( waza_name ) then return true end
   if $oshie_waza_hash_green.values.include?( waza_name ) then return true end
+
+  return false
+end
+
+# ã≥Ç¶ãZÇ©í≤Ç◊ÇÈ
+def is_old_oshiewaza( mons_name,waza_name )
+  # âﬂãéã≥Ç¶ãZ
+  if check_old_waza_hash($old_oshiewaza_hash,mons_name,waza_name,waza_name ) then
+    return true
+  end
   return false
 end
 
@@ -90,7 +101,8 @@ subway_poke_file_names.each{|file_name|
       # ÉåÉxÉãêßå¿ÇÕÇ©ÇØÇ»Ç¢
       unless personal_accessor.check_waza_learning( data.full_name, 100, waza ) ||
         (is_oshiewaza( waza ) == true && oshiewaza_list.include?( waza ) == true) ||
-        (is_old_waza( data.full_name ,waza ) == true )then
+        (is_old_waza( data.full_name ,waza ) == true ) ||
+        (is_old_oshiewaza( data.full_name,waza) == true) then
         error_list << ErrorData.new( file_name,data.index ,data.mons_name ,waza )
       end
     }
