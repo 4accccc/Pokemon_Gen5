@@ -49,5 +49,6 @@
 #define BG_D05_DUMMY_FES_08               9
 #define BG_D05_DUMMY_FES_09              10
 #define BG_D05_DUMMY_FES_10              11
+#define BG_D05_SIGN_01                   12
 
 #endif //ZONE_D05_EVB_H
