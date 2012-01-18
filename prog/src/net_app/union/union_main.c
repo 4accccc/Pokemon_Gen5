@@ -59,8 +59,6 @@ void UNION_CommBoot(GAMESYS_WORK *gsys)
     upw->gsys = gsys;
     GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
 	}
-
-  GAMEBEACON_Set_UnionIn();
 }
 
 //==================================================================
