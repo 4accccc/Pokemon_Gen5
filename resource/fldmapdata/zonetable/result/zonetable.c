@@ -8414,7 +8414,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		FALSE,
 		TRUE,
-    FALSE,
+    TRUE,
     TRUE,
 		MATRIX_ID_DUN1003, // camera_area
 		19,   // padding > placeicon
@@ -9043,7 +9043,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_h01r0101_bin,
 		NARC_script_seq_sp_h01r0101_bin,	//NARC_script_seq_sp_h01r0101_bin,
 		NARC_script_message_h01r0101_dat,
-		SEQ_BGM_GATE,
+		SEQ_BGM_R_B_SP,
 		SEQ_BGM_GATE,
 		SEQ_BGM_GATE,
 		SEQ_BGM_GATE,
@@ -16675,10 +16675,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_w21_bin,
 		NARC_script_seq_sp_w21_bin,	//NARC_script_seq_sp_w21_bin,
 		NARC_script_message_w21_dat,
-		SEQ_BGM_R_D_SP,
-		SEQ_BGM_R_D_SU,
-		SEQ_BGM_R_D_AU,
-		SEQ_BGM_R_D_WI,
+		SEQ_BGM_SW_R_22_SP,
+		SEQ_BGM_SW_R_22_SU,
+		SEQ_BGM_SW_R_22_AU,
+		SEQ_BGM_SW_R_22_WI,
 		NARC_encount_data_w_w21_bin,
 		FMISSION_MAP_ATTR_SP_LOW,
 		NARC_eventdata_w21_bin,
@@ -19892,7 +19892,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -20252,7 +20252,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -21679,10 +21679,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_d26pc0101_bin,
 		NARC_script_seq_sp_d26pc0101_bin,	//NARC_script_seq_sp_d26pc0101_bin,
 		NARC_script_message_d26pc0101_dat,
-		SEQ_BGM_POKECEN,
-		SEQ_BGM_POKECEN,
-		SEQ_BGM_POKECEN,
-		SEQ_BGM_POKECEN,
+		SEQ_BGM_D_CHAMPROAD,
+		SEQ_BGM_D_CHAMPROAD,
+		SEQ_BGM_D_CHAMPROAD,
+		SEQ_BGM_D_CHAMPROAD,
 		enc_dummy,
 		FMISSION_MAP_ATTR_TOWN,
 		NARC_eventdata_d26pc0101_bin,
