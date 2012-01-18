@@ -2422,35 +2422,35 @@
 			Language="JPN">
 			<Text>ボックスを　せいりするときに
 あおいろのボタンを　タッチすると
-べんりモードに　きりかわります。
+いれかえモードに　きりかわります。
 
-べんりモードでは　こうもくウインドウが
+いれかえモードでは　こうもくウインドウが
 ひょうじされなくなり　ポケモンの
-いどうだけを　おこなうことが　できます。</Text>
+いれかえだけを　おこなうことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-18T10:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-18T10:47:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボックスを　整理するときに
 青色のボタンを　タッチすると
-便利モードに　切り替わります。
+入れ替えモードに　切り替わります。
 
 便利モードでは　項目ウインドウが
 表示されなくなり　ポケモンの
-移動だけを　行うことが　できます。</Text>
+入れ替えだけを　行うことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-18T10:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-18T10:47:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3682,17 +3682,15 @@
 ハイルツリーから　うけとった
 デルパワーを　つかうことが　できます。
 デルパワーを　うけとるには
-つうしんあいての　ハイルツリーで　うけた
-ミッションを　せいこうさせた　あと
-じぶんの　ハイルツリーを
+ハイリンクにある　ハイルツリーを
 かくにん　してください。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3701,17 +3699,15 @@
 ハイルツリーから　受け取った
 デルパワーを　使うことが　できます。
 デルパワーを　受け取るには
-通信相手の　ハイルツリーで　受けた
-ミッションを　成功させた　あと
-自分の　ハイルツリーを
+ハイリンクにある　ハイルツリーを
 確認してください。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4008,36 +4004,36 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアの　「ＩＲ (アイアール）」と
-かかれた　あかい　わくを　タッチすると
+かかれた　まるい　わくを　タッチすると
 ちかくのひとに　つうしんこうかんや
 たいせんを　もうしこむことが　できます。
 ともだちコードを　こうかんしたり
 つうしんあいてとの　あいしょうを
 チェックすることも　できます。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｃ－ＧＥＡＲの　「ＩＲ」と　書かれた
-赤い　枠を　タッチすると
+丸い　枠を　タッチすると
 近くの人に　通信交換や
 対戦を　申し込むことが　できます。
 ともだちコードを　交換したり
 通信相手との　相性を
 チェックすることも　できます。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4080,7 +4076,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアの　「Ｗｉ－Ｆｉ（ワイファイ）」と
-かかれた　あおい　わくを　タッチすると
+かかれた　まるい　わくを　タッチすると
 ゲームシンクが　できます。
 
 ゲームシンクとは
@@ -4088,18 +4084,18 @@
 せかいじゅうの　トレーナーの　レポートを
 おくる　しくみのこと　です。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｃ－ＧＥＡＲの
 「Ｗｉ－Ｆｉ」と　書かれた
-青い　枠を　タッチすると
+丸い　枠を　タッチすると
 ゲームシンクが　できます。
 
 ゲームシンクとは
@@ -4108,12 +4104,12 @@
 送る　仕組みのこと　です。
 </Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4121,7 +4117,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアの　「Ｗｉ－Ｆｉ」と　かかれた
-わくのなかは　むせんつうしんの
+まるい　わくは　むせんつうしんの
 じょうきょうによって　いろが　かわります。
 
 つかっているＤＳとの
@@ -4130,18 +4126,18 @@
 ちかくに　ある　ばあいは
 みどりいろに　ひかります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｃ－ＧＥＡＲの
 「Ｗｉ－Ｆｉ」と　書かれた
-枠の中は　無線通信の
+丸い　枠は　無線通信の
 状況によって　色が　変化します。
 使っている　ＤＳとの
 Ｗｉ－Ｆｉ設定が　すませてある
@@ -4149,12 +4145,12 @@
 近くにある　場合は
 緑色に　光ります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4165,14 +4161,15 @@
 みんなが　Ｗｉ－Ｆｉつうしんを　つかえる
 むせんアクセスポイントが
 ちかくに　ある　ばあいは
+「Ｗｉ－Ｆｉ」の　丸い　枠は
 あおいろに　ひかります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4180,14 +4177,15 @@
 みんなが　Ｗｉ－Ｆｉ通信を　使える
 無線アクセスポイントが
 近くにある　場合は
+「Ｗｉ－Ｆｉ」の　丸い　枠は
 青色に　光ります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4197,30 +4195,30 @@
 			<Text>Ｗｉ－Ｆｉせっていが　すんでいない
 むせんアクセスポイントが
 ちかくに　ある　ばあいは
-「Ｗｉ－Ｆｉ」の　わくのなかは
+「Ｗｉ－Ｆｉ」の　まるい　わくは
 あかいろに　ひかります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉ設定が　すんでいない
 無線アクセスポイントが
 近くにある　場合は
-「Ｗｉ－Ｆｉ」の　枠の中は
+「Ｗｉ－Ｆｉ」の　丸い　枠は
 赤色に　光ります。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4309,7 +4307,7 @@
 			Language="JPN">
 			<Text>Ｃギアの
 「ＷＩＲＥＬＥＳＳ（ワイヤレス）」と
-かかれた　きいろい　わくを　タッチすると
+かかれた　まるい　わくを　タッチすると
 イッシュちほうの　まんなかに　ある
 ハイリンクと　よばれる　ばしょに
 いどうする　ことが　できます。
@@ -4317,18 +4315,18 @@
 ハイリンクの　まんなかには
 ハイルツリーと　よばれる　きがあります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｃ－ＧＥＡＲの
 「ＷＩＲＥＬＥＳＳ」と　書かれた
-黄色い　枠を　タッチすると
+丸い　枠を　タッチすると
 イッシュ地方の　真ん中に　ある
 ハイリンクと　呼ばれる場所に
 移動することが　できます。
@@ -4336,12 +4334,12 @@
 ハイリンクの　真ん中には
 ハイルツリーと　呼ばれる　木があります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4351,102 +4349,114 @@
 			<Text>ハイルツリーにむかって　Ａボタンをおすと
 フェスミッションを　うけることが　できます。
 
-ミッションには　はなしをしたり
-ポケモンしょうぶをしたり
-いろいろな　しゅるいが　あります。
-また　せいげんじかんも　あります。</Text>
+ミッションには　さまざまな
+もくひょうが　あります。
+せいげんじかんの　なかで
+どうぐを　さがしたり
+ポケモンしょうぶを　します。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイルツリーに向かって　Ａボタンを押すと
-ミッションを　受けることが　できます。
+フェスミッションを　受けることが　できます。
 
-ミッションには
-話をしたり　ポケモン勝負をしたり
-いろいろ　種類が　あります。
-また　制限時間も　あります。</Text>
+ミッションには　さまざまな
+目標が　あります。
+制限時間の　中で
+どうぐを　探したり
+ポケモン勝負を　します。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_009_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>フェスミッションは　すれちがいログを
-とおして　しゅういの　プレイヤーに
-さんかを　つのることが　できます。
+			<Text>ミッションを　クリアするには
+スコアを　ためるひつようが　あります。
+ミッションの　しじに　そった
+こうどうを　とることで
+スコアが　たまります。
 
-これにより　ふくすうの　プレイヤーで
-きょうりょくして　ミッションに
-ちょうせんすることが　できます。</Text>
+スコアが　おおいほど
+ミッションを　クリアしたときの
+ほうしゅうが　おおくなります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フェスミッションは　すれ違いログを
-通して　周囲の　プレイヤーに
-参加を　募ることが　できます。
+			<Text>ミッションを　クリアするには
+スコアを　ためる必要が　あります。
+ミッションの　指示に　そった
+行動を　とることで
+スコアが　たまります。
 
-これにより　複数の　プレイヤーで
-協力して　ミッションに
-挑戦することが　できます。</Text>
+スコアが　多いほど
+ミッションを　クリアしたときの
+報酬が　多くなります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_009_004">
 		<LanguageCell
 			Language="JPN">
-			<Text>フェスミッションに　さんかすることで
-ミッションの　クリアスコアにより
-デルダマを　さんかしゃぜんいんが
-てにいれることが　できます。</Text>
+			<Text>フェスミッションは
+すれちがった　ひとと　いっしょに
+あそぶことが　できます。
+
+すれちがいログから　だれかが
+かいさいした　フェスミッションに
+さんかすることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フェスミッションに　参加することで
-ミッションの　クリアスコアにより
-デルダマを　参加者全員が
-手に入れることが　できます。</Text>
+			<Text>フェスミッションは
+すれ違った　人と　一緒に
+遊ぶことが　できます。
+
+すれ違いログから　誰かが
+開催した　フェスミッションに
+参加することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4460,14 +4470,15 @@
 デルパワーは　つかうことで
 けいけんちを　おおくもらえたり
 ポケモンを　つかまえやすくしたり
-さまざまな　こうかを　はっきします。</Text>
+さまざまな　こうかを　はっきします。
+どうじに　３つまで　うけとれます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4478,14 +4489,15 @@
 デルパワーは　使うことで
 経験値を　多くもらえたり
 ポケモンを　捕まえやすくしたり
-さまざまな　効果を　発揮します。</Text>
+さまざまな　効果を　発揮します。
+同時に　３つまで　受け取れます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4493,67 +4505,78 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーを　つかうには
-Ｃギアの「すれちがいログ」を　タッチして
+ハイリンクから　でたあと
+Ｃギアの　ちゅうおうに　ある
+「すれちがいログ」を　タッチして
 さんかくマークを　タッチして　ください。
 
 また　デルパワーを　つかうには
 きめられた　かずの
 デルダマが　ひつようです。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルパワーを　使うには
-Ｃ－ＧＥＡＲの「すれ違いログ」を
-タッチして　三角マークを
-タッチしてください。
+ハイリンクから　出た後
+Ｃ－ＧＥＡＲの　中央にある
+「すれ違いログ」を　タッチして
+三角マークを　タッチしてください。
 
 また　デルパワーを　使うには
 決められた　数の　デルダマが　必要です。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_011_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーは　フェスミッションを
-クリアすることで　ハイルツリーが
-せいちょうし　あらたな　デルパワーを
-しゅうとくすることが　できます。</Text>
+			<Text>ハイルツリーが　せいちょうし
+レベルが　あがることで
+あたらしい　デルパワーを
+うけとれる　ように　なります。
+
+レベルを　あげるには
+フェスミッションを　うけて
+スコアを　たくさん　ためます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーは　フェスミッションを
-クリアすることで　ハイルツリーが
-成長し　新たな　デルパワーを
-習得することが　できます。</Text>
+			<Text>ハイルツリーが　成長し
+レベルが　上がることで
+新しい　デルパワーを
+受け取れる　ように　なります。
+
+レベルを　上げるには
+フェスミッションを　受けて
+スコアを　沢山　ためます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5039,39 +5062,41 @@
 		Label="man_txt_page_no_005_002_004">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーカードの　メダルの　マークを
-タッチすることで　メダルラリーの
-じょうほうを　かくにんできます。
+			<Text>ぼうけんを　すすめていくと
+トレーナーカードに　メダルマークが
+ついか　されます。
 
+メダルマークを　タッチすることで
 せっていされている　イチオシメダルや
 いま　もっている　メダルの　かずを
 かくにんすることが　できます。
 </Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーカードの　メダルの　マークを
-タッチすることで　メダルラリーの
-情報を　確認できます。
+			<Text>冒険を　進めて行くと
+トレーナーカードに　メダルマークが
+追加　されます。
 
+メダルマークを　タッチすることで
 設定されている　イチオシメダルや
 今　持っている　メダルの　数を
 確認することが　できます。
 </Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5151,39 +5176,39 @@
 			<Text>ぼうけんを　すすめていくと
 ポケモンずかんに　「せいそくちリスト」が
 ついか　されます。
-
-せいそくちリストは　フィールドごとに
-プレイヤーが　みたことがある　ポケモンが
-どこにいるか　おしえたり
+せいそくちリストは　どうろや どうくつに
+ひそむ　ポケモンを　しらべられます。
+プレイヤーが　みたことがある
+ポケモンのみ　ひょうじ　されるので
 みたことがない　ポケモンが
-いるかどうかを　ひょうじしてくれます。
+いるかどうか　しることが　できます
 </Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>冒険を　進めていくと
 ポケモン図鑑に　「生息地リスト」が
 追加　されます。
-
-生息地リストは　フィールドごとに
-プレイヤーが　見たことがある　ポケモンが
-どこにいるか　教えたり
+生息地リストは　道路や　洞窟に
+潜む　ポケモンを　調べられます。
+プレイヤーが　見たことがある
+ポケモンのみ　表示　されるので
 見たことがない　ポケモンが
-いるかどうかを　表示してくれます。</Text>
+いるかどうかを　知ることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6559,39 +6584,37 @@
 			Language="JPN">
 			<Text>ポケットモンスターの
 『ダイヤモンド・パール・プラチナ
-　ハートゴールド・ソウルシルバー
-  ブラック・ホワイト』の
+　ハートゴールド・ソウルシルバー』の
 いずれかを　もう１だいの　ＤＳほんたいに
 セットして　でんげんを　いれたあと
 ＤＳメニューがめん　の
 「ＤＳダウンロードプレイ」を　えらび
 「ポケシフター」を　えらんでください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケットモンスターの
 『ダイヤモンド・パール・プラチナ
-　ハートゴールド・ソウルシルバー
-  ブラック・ホワイト』の
+　ハートゴールド・ソウルシルバー』の
 いずれかを　もう１台の　ＤＳ本体に
 セットして　電源を　いれたあと
 ＤＳメニュー画面　の
 「ＤＳダウンロードプレイ」を　選び
 「ポケシフター」を　選んでください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-17T11:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
