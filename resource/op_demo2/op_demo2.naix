@@ -184,7 +184,8 @@ enum {
 	NARC_op_demo2_op_demo_00170_LZ_bin = 170,
 	NARC_op_demo2_op_demo_00171_LZ_bin = 171,
 	NARC_op_demo2_op_demo_00172_LZ_bin = 172,
-	NARC_op_demo2_op_demo_00173_LZ_bin = 173
+	NARC_op_demo2_op_demo_00173_LZ_bin = 173,
+	NARC_op_demo2_op_demo_end_bin = 174
 };
 
 /* NARC_OP_DEMO2_NAIX_ */
