@@ -323,6 +323,7 @@ VMCMD_RESULT EvCmdUseSprayContinue( VMHANDLE* core, void* wk )
 
     // アイテムを減らす
     MYITEM_SubItem( myitem, item_no, 1, heapID );
+    GAMEBEACON_Set_UseItem(item_no);
 
     // スプレー使用音
     PMSND_PlaySE( SEQ_SE_SYS_92 );
