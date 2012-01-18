@@ -749,11 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうぐの　こうかに　ちゅうもく！
+			<Text>まもりを　かためろ！
 セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:11:08" />
+				Time="2012-01-18T11:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,11 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうぐの　効果に　注目！
+			<Text>守りを　固めろ！
 セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:11:23" />
+				Time="2012-01-18T11:58:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -793,10 +793,10 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>まもりを　かためろ！</Text>
+			<Text>あいてタイプの　じゃくてんを　つけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T13:33:37" />
+				Time="2012-01-18T12:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -804,10 +804,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>守りを　固めろ！</Text>
+			<Text>相手タイプの　弱点を　つけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T13:33:39" />
+				Time="2012-01-18T12:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

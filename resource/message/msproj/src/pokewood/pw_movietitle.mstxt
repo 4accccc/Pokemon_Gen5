@@ -3280,10 +3280,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないに　ぜんめつしろ！</Text>
+			<Text>５カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:16:31" />
+				Time="2012-01-18T11:42:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3291,10 +3292,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　全滅しろ！</Text>
+			<Text>５カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:16:45" />
+				Time="2012-01-18T11:42:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3317,10 +3319,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>８カットいないに　ぜんめつしろ！</Text>
+			<Text>８カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:01" />
+				Time="2012-01-18T11:42:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3328,10 +3331,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８カット以内に　全滅しろ！</Text>
+			<Text>８カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:04" />
+				Time="2012-01-18T11:42:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3354,10 +3358,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　ぜんめつしろ！</Text>
+			<Text>１０カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:13" />
+				Time="2012-01-18T11:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3365,10 +3370,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に　全滅しろ！</Text>
+			<Text>１０カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:16" />
+				Time="2012-01-18T11:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3391,10 +3397,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０カットいないに　ぜんめつしろ！</Text>
+			<Text>２０カットいないに　じぶんの
+ポケモンを　ぜんめつさせろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:26" />
+				Time="2012-01-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3402,10 +3409,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０カット以内に　全滅しろ！</Text>
+			<Text>２０カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T07:17:31" />
+				Time="2012-01-18T11:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3468,10 +3476,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>でんじほう　で　セットを　たおせ
-それいがいの　わざは　ＮＧ</Text>
+それいがいの　わざで　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:04" />
+				Time="2012-01-18T11:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3480,10 +3488,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>でんじほう　で　セットを　倒せ
-それ以外の　わざは　ＮＧ</Text>
+それ以外の　わざで　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:06" />
+				Time="2012-01-18T11:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3813,11 +3821,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かみなり　で　セットＴ１をたおせ
-それいがいの　わざは　ＮＧ</Text>
+			<Text>かみなり　で　セットＴ１を　たおせ
+それいがいの　わざで　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:41:12" />
+				Time="2012-01-18T11:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3826,10 +3834,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>かみなり　で　セットＴ１を　倒せ
-それ以外の　わざは　ＮＧ</Text>
+それ以外の　わざで　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:41:02" />
+				Time="2012-01-18T11:53:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3890,10 +3898,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カットいないに　ぜんめつしろ</Text>
+			<Text>４カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:45:51" />
+				Time="2012-01-18T11:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3901,10 +3910,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カット以内に　全滅しろ</Text>
+			<Text>４カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:45:54" />
+				Time="2012-01-18T11:45:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4004,10 +4014,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おどろかす　で　セットＷ２をたおせ
-それいがいの　わざは　ＮＧ</Text>
+それいがいの　わざで　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:44:10" />
+				Time="2012-01-18T11:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4016,10 +4026,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おどろかす　で　セットＷ２を倒せ
-それ以外の　技は　ＮＧ</Text>
+それ以外の　わざで　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:44:22" />
+				Time="2012-01-18T11:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4081,10 +4091,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>８カットいないに　ぜんめつしろ</Text>
+			<Text>８カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:52:32" />
+				Time="2012-01-18T11:44:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4092,10 +4103,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８カット以内に　全滅しろ</Text>
+			<Text>８カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:52:34" />
+				Time="2012-01-18T11:46:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4118,10 +4130,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　ぜんめつしろ</Text>
+			<Text>１０カットいないに　じぶんの
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:54:51" />
+				Time="2012-01-18T11:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4129,10 +4142,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に　全滅しろ</Text>
+			<Text>１０カット以内に　自分の
+ポケモンを　全滅　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:54:55" />
+				Time="2012-01-18T11:46:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4428,11 +4442,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふぶき　で　セットＲ２をたおせ
-それいがいの　わざは　ＮＧ</Text>
+			<Text>ふぶき　で　セットＲ２を　たおせ
+それいがいの　わざで　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:49:50" />
+				Time="2012-01-18T11:55:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4440,11 +4454,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふぶき　で　セットＲ２を倒せ
-それ以外の　わざは　ＮＧ</Text>
+			<Text>ふぶき　で　セットＲ２を　倒せ
+それ以外の　わざで　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:49:41" />
+				Time="2012-01-18T11:54:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
