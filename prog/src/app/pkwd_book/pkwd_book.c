@@ -3367,6 +3367,10 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 			// 他の入力を考慮にいれてblinkのみにしておく
 			BLINKPALANM_Main( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work) );
 			if( BLINKPALANM_CheckDecideAnime( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work )) == TRUE ){
+				// 最終的に黒くして終了
+				BLINKPALANM_SetAnimeCount(FRAMELIST_GetBlinkPalAnm( wk->frame_list_work), 0 );
+				BLINKPALANM_Main( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work) );
+				//
 				pwb_init_meswin( wk );
 				pwb_init_selectwin( wk );
 				wk->SubMode = STEP_LV4;
