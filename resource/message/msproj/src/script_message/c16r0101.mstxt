@@ -2842,14 +2842,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>すばらしい！！▼
-[Name:ResortTown Idx="2" ]は、もう
+[Name:ResortTown Idx="2" ]は　もう
 [Name:ResortMayor Idx="1" ]　のまちだ！▽
 あとのことは　たのんだよ▼
 もっと　もっと　ひとを
 たのしませる　まちに　しておくれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:14:13" />
+				Time="2012-01-18T10:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2858,14 +2858,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すばらしい！！▼
-[Name:ResortTown Idx="2" ]は、もう
+[Name:ResortTown Idx="2" ]は　もう
 [Name:ResortMayor Idx="1" ]　の街だ！▽
 後のことは　頼んだよ▼
 もっと　もっと　人を
 楽しませる　街に　しておくれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T10:57:55" />
+				Time="2012-01-18T10:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
