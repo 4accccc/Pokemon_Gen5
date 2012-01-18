@@ -854,9 +854,6 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
-  //フェスミッション強制終了
-  _FMISSION_END_FORCE()
-  
   IF $irc == TRUE THEN //IRC通信
     //irc接続
     _BSUBWAY_TOOL( BSWSUB_COMM_IRC_ENTRY, BSW_NULL, BSW_NULL, BSW_NULL )
