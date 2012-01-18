@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-23T23:06:04" source="door_c6_ctower.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-01-18T12:50:48" source="door_c6_ctower.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-03-23T23:06:04" source="door_c6_ctower.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2012-01-18T12:50:48" source="door_c6_ctower.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="2"
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_mado.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/common_tex/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -49,25 +49,25 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="t_door_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c6_ctower_01/tex/t_door.tga"
+		path="C:/home/swan_data3d/build_model/outdoor/door_c6tower/tex/t_door.tga"
 	>
 		<bitmap size="128">
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			2223 0000 0000 3220 2223 0000 0000 3220
-			2223 0000 0000 3220 1112 0000 0000 2110
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 0000 0000 2110 2222 2222 2222 3222
-			2222 2222 2222 3222 2222 2222 2222 3222
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 0000 0000 2110 1112 0000 0000 2110
-			1112 1111 1111 2111 1112 1111 1111 2111
-			1112 1111 1111 2111 2222 2222 2222 2222
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			5556 0000 0000 6550 5556 0000 0000 6550
+			5556 0000 0000 6550 4445 0000 0000 5440
+			4445 0000 0000 5440 4445 0000 0000 5440
+			4445 0000 0000 5440 4445 0000 4000 5454
+			4445 0000 2000 5421 4445 0000 2000 5421
+			4445 0000 3000 5432 4445 0000 3000 5432
+			4445 0000 3000 5432 4445 0000 5000 5455
+			4445 0000 0000 5440 4445 0000 0000 5440
+			4445 0000 0000 5440 4445 0000 0000 5440
+			4445 0000 0000 5440 4445 0000 0000 5440
+			4445 4444 4444 5444 4445 4444 4444 5444
+			4445 4444 4444 5444 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -77,7 +77,7 @@
 		7339 7b9c 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="t_door_pl" color_size="8">
-		6f14 35ad 294a 1ce7 7fff 7fff 7fff 7fff
+		6f14 5ef7 5294 4a52 35ad 294a 1ce7 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -141,9 +141,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="0.207520 -4.053711 -0.521729"
-		volume_max="2.742188 3.795410 -0.521729"
-		volume_r="4.921631"
+		volume_min="0.207520 -4.103516 -0.521729"
+		volume_max="2.917236 3.795410 -0.521729"
+		volume_r="5.061768"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -154,11 +154,11 @@
 					<mtx idx="0"/>
 					<tex st="16.000000 16.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xyz xyz="0.207520 -4.053711 -0.521729"/>
+					<pos_xyz xyz="0.207520 -4.103516 -0.521729"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_xy xy="2.742188 -4.053711"/>
+					<pos_xy xy="2.917236 -4.103516"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="2.742188 3.795410"/>
+					<pos_xy xy="2.917236 3.795410"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xy xy="0.207520 3.795410"/>
 				</primitive>
@@ -200,9 +200,9 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-2.759766 -4.047119 -0.526123"
+		volume_min="-2.934814 -4.097168 -0.526123"
 		volume_max="-0.225098 3.802002 -0.526123"
-		volume_r="4.926758"
+		volume_r="5.067139"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -213,13 +213,13 @@
 					<mtx idx="0"/>
 					<tex st="16.000000 0.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xyz xyz="-0.225098 -4.047119 -0.526123"/>
+					<pos_xyz xyz="-0.225098 -4.097168 -0.526123"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="-0.225098 3.802002"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_xy xy="-2.759766 3.802002"/>
+					<pos_xy xy="-2.934814 3.802002"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.759766 -4.047119"/>
+					<pos_xy xy="-2.934814 -4.097168"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
