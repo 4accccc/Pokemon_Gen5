@@ -48,7 +48,7 @@ EVENT_START ev_bg_t01_board_02
   IF $LOCALWORK15 >= 1 THEN
 
     //ñºëOë„ì¸
-    _DATACONV_SET_NAME( 0 ,DATACONV_ID_DENDOU ) 
+    _DATACONV_SET_NAME( DATACONV_ID_DENDOU , 0 ) 
     //ÅuÅ`Å`ÅvÇÃâ∆
     _EASY_BGWIN_MSG( msg_t01_sign2_01, TYPE_POST )
 
