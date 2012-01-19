@@ -11,16 +11,15 @@
 #define ZONE_D10R0201_EVC_H
 
 #define FLD_ITEM_179                       0
-#define FLD_ITEM_180                       1
-#define FLD_ITEM_181                       2
-#define FLD_ITEM_182                       3
-#define FLD_ITEM_183                       4
-#define FLD_ITEM_184                       5
-#define FLD_ITEM_185                       6
-#define FLD_ITEM_186                       7
-#define D10R0201_SAGE6_01                  8
-#define D10R0201_PLAZMAM_01                9
-#define D10R0201_PLAZMAM_02               10
+#define FLD_ITEM_181                       1
+#define FLD_ITEM_182                       2
+#define FLD_ITEM_183                       3
+#define FLD_ITEM_184                       4
+#define FLD_ITEM_185                       5
+#define FLD_ITEM_186                       6
+#define D10R0201_SAGE6_01                  7
+#define D10R0201_PLAZMAM_01                8
+#define D10R0201_PLAZMAM_02                9
 
 #endif //ZONE_D10R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

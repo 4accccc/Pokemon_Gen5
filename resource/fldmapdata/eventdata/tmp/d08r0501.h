@@ -11,6 +11,7 @@
 #define ZONE_D08R0501_EVC_H
 
 #define FLD_ITEM_233                       0
+#define FLD_ITEM_235                       1
 
 #endif //ZONE_D08R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
