@@ -15,6 +15,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "net/dreamworld_netdata.h"
+#include "sound/pm_sndsys.h"
 
 //	アーカイブ
 #include "arc_def.h"
@@ -336,6 +337,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_MSG_ENTRY;
     }
     break;
@@ -549,6 +551,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_MSG_ENTRY;
     }
     break;
@@ -748,6 +751,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_MSG_CUPEND;
     }
     break;
@@ -840,6 +844,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_MSG_RETIRE;
     }
     break;
@@ -932,6 +937,7 @@ static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_MSG_RETIRE;
     }
     break;

@@ -4288,6 +4288,7 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_RND_WORK *p_wk, BOOL i
   case SEQ_CHECK_CANCEL:
     if( is_cancel && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL) )
     {
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       p_wk->cancel_seq++;
     }
     else
