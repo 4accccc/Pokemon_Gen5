@@ -4,6 +4,14 @@
 
   Copyright NetAgent Co. Ltd., All rights reserved.
 
+  Revision 2.05 2011/10/26
+  一部の非公式カーネルに対応
+  
+  Revision 2.04 2011/08/24
+  検出できないマジコンを検出できるように修正
+  暗号化方式の改善
+  内部処理を変更
+  
   Revision 2.03 2010/01/25
   検出できないマジコンを検出できるように修正
   暗号化方式の改善
@@ -90,7 +98,7 @@
 #include <nitro/os.h>
 #include <nitro/card.h>
 
-#define AM_VERSION (203)
+#define AM_VERSION (205)
 
 
 /* 引数に使用する関数ポインタの定義 */
@@ -129,14 +137,14 @@ extern void* IMPORT_AM_API(ProtectB4)(void* param1, void* param2);
 #define CHECK_AND_INVOKE(func,p1,p2)											\
 	u32* addr = (u32*)(func);													\
 	u32 checksum, i;															\
-	i = 28;																		\
+	i = 37;																		\
 	checksum = 0;																\
 	do																			\
 	{																			\
 		checksum ^= ( ((*addr)>>i) | ((*addr)<<(32-i)) );						\
 		++addr;																	\
 	}while( --i );																\
-	if( checksum == 0x0786385F )												\
+	if( checksum == 0x9F75A8D6 )												\
 	{																			\
 		return (func)((p1),(p2));												\
 	}																			\
