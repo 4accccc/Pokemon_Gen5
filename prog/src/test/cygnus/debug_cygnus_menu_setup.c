@@ -105,6 +105,7 @@ void DEBUG_CYGNUS_MENU_SETUP_Init( HEAPID heap_id )
 
   // パレット転送
   GFL_BG_LoadPalette( GFL_BG_FRAME1_M, (void*)palette, NELEMS(palette)*sizeof(u16), 0 );
+  GFL_BG_LoadPalette( GFL_BG_FRAME1_S, (void*)palette, NELEMS(palette)*sizeof(u16), 0 );
 
   // ビットマップ管理システムの初期化
   GFL_BMPWIN_Init( heap_id );
