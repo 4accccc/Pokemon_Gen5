@@ -249,12 +249,12 @@
 			Language="JPN">
 			<Text>というわけで　[Name:TrainerName ]！
 これからも　たすけてくれよッ！▼
-あと　ポケモンずかんも　がんばれよ！▼
+あと　ポケモンずかんも　がんばれ！▼
 せいしきに　かんせいを
 たのまれたのは　オマエ　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T03:08:46" />
+				Time="2012-01-19T01:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -264,12 +264,12 @@
 			Language="JPN_KANJI">
 			<Text>というわけで　[Name:TrainerName ]！
 これからも　助けてくれよッ！▼
-あと　ポケモン図鑑も　がんばれよ！▼
+あと　ポケモン図鑑も　がんばれ！▼
 正式に　完成を
 頼まれたのは　オマエ　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T03:08:50" />
+				Time="2012-01-19T01:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,11 +633,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！▼
-オマエと　であえて
+オマエが　いてくれて
 ほんと　よかったぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:02:35" />
+				Time="2012-01-19T01:52:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -646,11 +646,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！▼
-オマエと　出会えて
+オマエが　いてくれて
 ほんと　よかったぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:02:32" />
+				Time="2012-01-19T01:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
