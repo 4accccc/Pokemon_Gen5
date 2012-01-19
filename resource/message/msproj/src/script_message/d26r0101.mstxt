@@ -189,14 +189,10 @@
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンしょうぶ　とは！▼
 かちまけを　きめる……
 それいじょう　に！▼
-じぶんと！　じぶんの　ポケモンと！
-あいての　ポケモンと！　あいて！▽
-すべてを　みとめあうための　もの！▼
-きずついて　たたかう　ポケモン！
-その　いたみを　うけとめる　ヒト！▼
-ヒトと　ポケモン
-おたがいを　しんじなければ！▽
-たかみに　すすめない▼
+じぶんの　ポケモンと！　じぶん！
+あいてと！　あいての　ポケモン！▼
+それぞれが　ことなる　すばらしさを
+もっていることを　たしかめあうもの！▼
 そう！　ことなる　かんがえ
 ことなる　そんざいを　うけいれ▽
 せかいは　かがくはんおうを　おこす！▼
@@ -204,7 +200,7 @@
 ちいさくて　おおきな　いっぽ　なんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:19:27" />
+				Time="2012-01-19T11:05:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -214,15 +210,11 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモン勝負とは！▼
 勝敗を　決する……
-それ以上に！▼
-自分と！　自分の　ポケモンと！
-相手の　ポケモンと！　相手！▽
-すべてを　認めあうための　もの！▼
-傷ついて　戦う　ポケモン！
-その　痛みを　受け止める　ヒト！▼
-ヒトと　ポケモン
-お互いを　信じなければ！▽
-高みに　進めない▼
+それ以上　に！▼
+自分ポケモンと！　自分！
+相手と！　相手の　ポケモン！▼
+それぞれが　異なる　すばらしさを
+持っていることを　確かめあうもの！▼
 そう！　異なる　考え
 異なる　存在を　受け入れ▽
 世界は　科学反応を　起こす！▼
@@ -230,7 +222,7 @@
 小さくて　大きな　一歩なんだ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:19:31" />
+				Time="2012-01-19T11:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -274,14 +266,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
-ゼクロムが　おしえてくれた▼
+ゼクロムが　おしえてくれた……▼
 そして　せかいを　たびして　えた
 ボクの　すうしき！▼
 この　いみを
 キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:19:35" />
+				Time="2012-01-19T11:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -290,14 +282,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
-ゼクロムが　教えてくれた▼
+ゼクロムが　教えてくれた……▼
 そして　世界を　旅して　得た
 ボクの　数式！▼
 この　意味を
 キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:35:52" />
+				Time="2012-01-19T11:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -340,14 +332,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
-レシラムが　おしえてくれた▼
+レシラムが　おしえてくれた……▼
 そして　せかいを　たびして　えた
 ボクの　すうしき！▼
 この　いみを
 キミじしんで　かんがえてほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:19:44" />
+				Time="2012-01-19T11:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -356,14 +348,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]これが　ボクの　トモダチ
-レシラムが　教えてくれた▼
+レシラムが　教えてくれた……▼
 そして　世界を　旅して　得た
 ボクの　数式！▼
 この　意味を
 キミ自身で　考えてほしい[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:35:58" />
+				Time="2012-01-19T11:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -538,12 +530,12 @@
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミの　ポケモンと　キミなら！▼
 ポケモンリーグを　かちぬき
-キミたちだけの　りそうを　みる！▼
+キミたちだけの　りそうを　しる！▼
 ボクに　みえるのは
 そんな　みらい　だ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:49:02" />
+				Time="2012-01-19T11:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -554,12 +546,12 @@
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミの　ポケモンと　キミなら！▼
 ポケモンリーグを　勝ち抜き
-キミたちだけの　理想を　みる！▼
+キミたちだけの　理想を　知る！▼
 ボクに　みえるのは
 そんな　未来だ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:49:13" />
+				Time="2012-01-19T11:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -605,12 +597,12 @@
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミの　ポケモンと　キミなら！▼
 ポケモンリーグを　かちぬき
-キミたちだけの　しんじつを　みる！▼
+キミたちだけの　しんじつを　しる！▼
 ボクに　みえるのは
 そんな　みらい　だ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:49:07" />
+				Time="2012-01-19T11:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -621,12 +613,12 @@
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]うん！
 キミの　ポケモンと　キミなら！▼
 ポケモンリーグを　勝ち抜き
-キミたちだけの　真実を　みる！▼
+キミたちだけの　真実を　知る！▼
 ボクに　みえるのは
 そんな　未来だ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T10:49:10" />
+				Time="2012-01-19T11:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
