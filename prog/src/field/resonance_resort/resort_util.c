@@ -47,6 +47,7 @@
 #if defined(DEBUG_RESORT_PRINT_ON)
 #define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
 #define RESORT_LOG_Printf(...)  OS_TFPrintf(2,__VA_ARGS__)
+#define RESORT_SPOT_Printf(...)  OS_TFPrintf(3,__VA_ARGS__)
 #else
 #define RESORT_Printf(...)  /* */
 #define RESORT_LOG_Printf(...)  /* */
@@ -807,18 +808,21 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
   u32 shop = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
   BOOL is_ok = FALSE;
-  u32 ret_grade = 0;
+  s32 ret_grade = -1;
   u32 ret_index = 0;
 
   GF_ASSERT( want_spot < RESORT_SPOT_ID_MAX );
 
+  RESORT_SPOT_Printf( "▼おすすめスポット=%d\n", want_spot );
   for( i = 0; i < RESORT_BINARY_SPOT_ANSWER_MAX; i++ )
   {
     u16 type = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_TYPE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
     u16 data = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_DATA + i*RESORT_BINARY_SPOT_ANSWER_NUM );
-    u16 grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
+    s32 grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
 	
     BOOL is_good = FALSE;
+
+
 	  //条件にあうかチェック
 	  switch( type )
 	  {
@@ -883,7 +887,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 	        if( type == 8 )
 	        {
 	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
-	          if( num > data )
+	          if( num >= data )
 	          {
 	            is_good = TRUE;
 	          }
@@ -891,7 +895,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
           else if( type < 8 )
 	        {
 	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT2_RANK_00 + type, NULL );
-	          if( num > data )
+	          if( num >= data )
 	          {
 	            is_good = TRUE;
 	          }
@@ -907,6 +911,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 	    break;
 	  }
 
+    RESORT_SPOT_Printf( "[%d]type=%d good=%d grade=%d\n", i, type, is_good, grade );
     if( is_good )
     {
       //一回でもOKならば当選
@@ -930,6 +935,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
   {
     *p_index = ret_index;
   }
+  RESORT_SPOT_Printf( "結果[%d] grade=%d\n", ret_index, ret_grade );
 
   return is_ok;
 }
