@@ -183,7 +183,7 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	_OBJ_ANIME_WAIT()	
 	
 	//ヤーコン：アーティ！
-	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader5_06 , OLDC02GYM0202_OLD_LEADER5_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader5_06 , OLDC02GYM0202_OLD_LEADER5_01, POS_UP )
 	_MSGWIN_CLOSE()
 	
 	//ヤーコン　退場
