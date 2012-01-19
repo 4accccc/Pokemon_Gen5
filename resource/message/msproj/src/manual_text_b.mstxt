@@ -4663,19 +4663,18 @@
 スタートボタンを　おすと　ならびかたが
 ひょうじされ　ポケットの　どうぐの
 ならびかたを　へんこうできます。
-
 セレクトボタンを　おすと
 ポケットの　どうぐを　じゆうに
 いれかえることが　できます。
 Ｌ／Ｒボタンを　おすと
 ページを　きりかえることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T09:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T09:35:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4683,19 +4682,18 @@
 スタートボタンを　押すと　並び方が
 表示され　ポケットの　どうぐの
 並び方を　変更できます。
-
 セレクトボタンを　押すと
 ポケットの　道具を
 自由に　入れ替えることが　できます。
 Ｌ／Ｒボタンを　押すと　ページを
 切り替えることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T09:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T09:35:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
