@@ -11022,8 +11022,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_17_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">つよい　トレーナーって　なんだ！？</language>
-		<language name="JPN_KANJI" width="216">強い　トレーナーって　なんだ！？</language>
+		<language name="JPN" width="216">つよい　トレーナーって　なんだ！？
+ポケモンを　こきつかえることか！？</language>
+		<language name="JPN_KANJI" width="216">強い　トレーナーって　なんだ！？
+ポケモンを　酷使できることか！？</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_17_TRMSG_FIGHT_AFTER">
@@ -11104,10 +11106,12 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_20_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">おれはな　せかいが　にくい！▼
+		<language name="JPN" width="216">おれはな　せかいが　にくい！
+おれを　みとめない　せかいは　いらん▼
 だから　プラズマだんの　メンバーとして
 みんなを　めちゃくちゃに　する！</language>
-		<language name="JPN_KANJI" width="216">おれはな　世界が　憎い！▼
+		<language name="JPN_KANJI" width="216">おれはな　世界が　憎い！
+おれを　認めない　世界は　いらん▼
 だから　プラズマ団の　メンバーとして
 みんなを　めちゃくちゃに　する！</language>
 	</row>
@@ -11401,8 +11405,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_27_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">つよい　トレーナーって　なんだ！？</language>
-		<language name="JPN_KANJI" width="216">強い　トレーナーって　なんだ！？</language>
+		<language name="JPN" width="216">つよい　トレーナーって　なんだ！？
+ポケモンを　こきつかえることか！？</language>
+		<language name="JPN_KANJI" width="216">強い　トレーナーって　なんだ！？
+ポケモンを　酷使できることか！？</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_27_TRMSG_FIGHT_AFTER">
@@ -11483,10 +11489,12 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_30_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">おれはな　せかいが　にくい！▼
+		<language name="JPN" width="216">おれはな　せかいが　にくい！
+おれを　みとめない　せかいは　いらん▼
 だから　プラズマだんの　メンバーとして
 みんなを　めちゃくちゃに　する！</language>
-		<language name="JPN_KANJI" width="216">おれはな　世界が　憎い！▼
+		<language name="JPN_KANJI" width="216">おれはな　世界が　憎い！
+おれを　認めない　世界は　いらん▼
 だから　プラズマ団の　メンバーとして
 みんなを　めちゃくちゃに　する！</language>
 	</row>
@@ -16913,10 +16921,10 @@
 	</row>
 
 	<row id="TRID_TENNIS_14_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ああ！　まるで　きょうれつな
-サーブを　おみまい　されたみたい……</language>
-		<language name="JPN_KANJI" width="216">ああ！　まるで　強烈な
-サーブを　お見舞い　されたみたい……</language>
+		<language name="JPN" width="216">あさから　ばんまで　なんかいせんでも
+オーケーなほど　タフなのに……</language>
+		<language name="JPN_KANJI" width="216">朝から　晩まで　何回戦でも
+オーケーなほど　タフなのに……</language>
 	</row>
 
 	<row id="TRID_TENNIS_14_TRMSG_FIGHT_AFTER">
