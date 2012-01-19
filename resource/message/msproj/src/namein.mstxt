@@ -338,10 +338,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　まちの　なまえは？
-（せかいの　みんなには　ヒミツです）</Text>
+（トレーナーカードに　のります）</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T14:05:30" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T10:13:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -350,10 +350,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この街の　名前は？
-（世界の　みんなには　ヒミツです）</Text>
+（トレーナーカードに　記載されます）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T07:12:11" />
+				Time="2012-01-19T10:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
