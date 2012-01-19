@@ -910,11 +910,15 @@
 			<Text>うん　そうだね！▼
 ヒードランの　いそうな　ばしょ
 もうちょっと　しらべておきたいし▼
+……だって　ヒードランは
+めずらしい　ポケモン　だから▼
+しらべて　くわしいことが　わかれば
+アララギはかせも　よろこぶでしょ！▼
 いっしょに　いてくれて　ありがとう！
 きをつけて　たびを　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T10:20:48" />
+				Time="2012-01-19T09:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -925,11 +929,15 @@
 			<Text>うん　そうだね！▼
 ヒードランに　関することを
 もうちょっと　調査しておきたいし▼
+……だって　ヒードランは
+珍しい　ポケモン　だから▼
+調べて　詳しいことが　わかれば
+アララギ博士も　喜ぶでしょ！▼
 一緒に　いてくれて　ありがとう！
-気をつけて　旅を　続けてねえ！</Text>
+気をつけて　旅を　つづけてねえ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T14:06:07" />
+				Time="2012-01-19T09:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1296,10 +1304,10 @@
 			<Comment>♂：せいそくちリスト
 ・埋まっている
 ・アイテム入手処理
-　No010「タイマーボール」×5</Comment>
+　No381「わざマシン５４」（みねうち）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T05:14:44" />
+				Time="2012-01-19T09:14:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1328,12 +1336,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいそくちリストの　きのうを
-つくった　ひとって　よっぽど▽
-ポケモンと　であってほしいんだね</Text>
+			<Text>みねうちは　ポケモンの　たいりょくが
+かならず　１　のこるように▽
+かげんして　こうげきする　わざ▼
+ポケモンを　つかまえて
+せいそくちリストを　うめていくのに▽
+やくだつ　わざマシン　でしょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T05:14:44" />
+				Time="2012-01-19T09:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1341,12 +1352,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>生息地リストの　機能を
-追加した　人って　よっぽど▽
-ポケモンと　出会ってほしいんだね</Text>
+			<Text>みねうちは　ポケモンの　体力が
+必ず　１　残るように▽
+加減して　攻撃する　技▼
+ポケモンを　つかまえて
+せいそくちリストを　埋めていくのに▽
+役立つ　わざマシン　でしょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T05:14:44" />
+				Time="2012-01-19T09:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

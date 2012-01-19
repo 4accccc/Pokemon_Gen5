@@ -566,8 +566,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワープパネルでの
-いどうが　おぼえられなくて▽
+			<Text>プラズマだんに　はいったばかりで
 まだ　ポケモン　もらえない……▼
 そんな　オレだが
 すごいことを　しっている▼
@@ -575,7 +574,7 @@
 プラズマカードが　いるんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:34:52" />
+				Time="2012-01-19T07:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -583,8 +582,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワープパネルでの
-移動が　覚えられなくて▽
+			<Text>プラズマ団に　入団したばかりで
 まだ　ポケモン　もらえない……▼
 そんな　オレだが
 すごいことを　知っている▼
@@ -592,7 +590,7 @@
 プラズマカードが　いるんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:35:43" />
+				Time="2012-01-19T07:54:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

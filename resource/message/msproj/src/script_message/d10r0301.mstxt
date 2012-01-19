@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『こっち！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『こっち　こいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:40:45" />
+				Time="2012-01-19T08:15:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『こっち！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『こっち　来いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:40:47" />
+				Time="2012-01-19T08:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67,10 +67,10 @@
 			Language="JPN">
 			<Text>チョット　まってな▼
 むかしの　なかまを　きずつけないよう
-せっとく　するんだってさ▼</Text>
+せっとく　するんだとよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T12:33:26" />
+				Time="2012-01-19T08:14:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,10 +80,10 @@
 			Language="JPN_KANJI">
 			<Text>チョット　待ってな▼
 昔の　仲間を　傷つけないよう
-説得するんだってさ▼</Text>
+説得するんだとよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T12:33:29" />
+				Time="2012-01-19T08:15:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -202,12 +202,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『はいはい▼
-うらぎりものの　ことば　なんか
+			<Text>プラズマだん『はいはい
+じーさん　いいこと　いったね▼
+だけど　うらぎりものの　ことばなんか
 きくわけ　ないだろが！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:27:38" />
+				Time="2012-01-19T08:20:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -215,12 +216,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『はいはい▼
-裏切り者の　言葉なんか
+			<Text>プラズマ団『はいはい
+じーさん　いいこと　いったね▼
+だけど　裏切り者の　言葉なんか
 きくわけ　ないだろが！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:25:56" />
+				Time="2012-01-19T08:20:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

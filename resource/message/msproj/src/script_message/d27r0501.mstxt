@@ -477,11 +477,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『らくしょうッ▼
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマだんに
+まけて　たまるかッ！▼
 で　ここは　なんだッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:22:08" />
+				Time="2012-01-19T08:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -489,11 +490,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『楽勝ッ▼
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマ団に
+負けて　たまるかッ！▼
 で　ここは　なんだッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:22:13" />
+				Time="2012-01-19T08:06:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
