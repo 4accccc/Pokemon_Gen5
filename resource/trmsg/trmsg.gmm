@@ -10932,12 +10932,12 @@
 		<language name="JPN" width="216">プラズマだんに　はいれば
 つよい　ポケモンを　もらえて▽
 すきかって　できるってな！▼
-オレの　うばった　ポケモン……
+オレが　もらった　ポケモン……
 コイツは　ダメだな！</language>
 		<language name="JPN_KANJI" width="216">プラズマ団に　入れば
 強い　ポケモンを　もらえて▽
 好き勝手　できるってな！▼
-オレの　奪った　ポケモン……
+オレが　もらった　ポケモン……
 コイツは　ダメだな！</language>
 	</row>
 
@@ -10959,11 +10959,11 @@
 		<language name="JPN" width="216">ポケモンを　すくいたいと
 ゆめみていた　やつらは　いない▼
 ここに　のこっているのは　ほんきで
-せかいを　かえたい　れんちゅうだ！</language>
+せかいを　うばいたい　れんちゅう！</language>
 		<language name="JPN_KANJI" width="216">ポケモンを　救いたいと
 夢見ていた　やつらは　いない▼
 ここに　残っているのは　本気で
-世界を　変えたい　連中だ！</language>
+世界を　奪いたい　連中！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_15_TRMSG_FIGHT_START">
@@ -11055,12 +11055,12 @@
 
 	<row id="TRID_SWPLAZMAM_18_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">われわれ　プラズマだんは
-むりやり　ポケモンの　ちからを▽
+ポケモンの　ちからを　むりやり▽
 さいだいげんに　はっきさせる！▼
 ポケモンかいほう？
 そんな　めんどうなこと　するか！</language>
 		<language name="JPN_KANJI" width="216">我々　プラズマ団は
-むりやり　ポケモンの　力を▽
+ポケモンの　力を　むりやり▽
 最大限に　発揮させる！▼
 ポケモン解放？
 そんな　面倒なこと　するか！</language>
@@ -11122,9 +11122,9 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……よわい　ポケモン
+		<language name="JPN" width="216">……よわい　ポケモンね
 べつの　ポケモンを　うばわなきゃ！</language>
-		<language name="JPN_KANJI" width="216">……弱い　ポケモン
+		<language name="JPN_KANJI" width="216">……弱い　ポケモンね
 別の　ポケモンを　奪わなきゃ！</language>
 	</row>
 
@@ -11139,9 +11139,11 @@
 
 	<row id="TRID_SWPLAZMAW_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">アタイ　このなかで
-かーなーり　つよい　プラズマだん！▼</language>
+かーなーり　つよい　プラズマだん！▽
+ひとよんで　おんなキリキザン！▼</language>
 		<language name="JPN_KANJI" width="216">アタイ　このなかで
-かーなーり　強い　プラズマ団！▼</language>
+かーなーり　強い　プラズマ団！▽
+人呼んで　女キリキザン！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_02_TRMSG_FIGHT_LOSE">
@@ -11165,20 +11167,43 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">えいゆう　なんか　いなくても
+あたしたちは　まけないのよ！▼</language>
+		<language name="JPN_KANJI" width="216">英雄なんか　いなくても
+あたしたちは　負けないのよ！▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">プラーズマー！
+プラズマだんに　えいこうあれ！</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+プラズマ団に　栄光あれ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あたしたち　プラズマだんが
+イッシュちほうを　しはいすれば▽
+おうさまが　もどってくるかも……</language>
+		<language name="JPN_KANJI" width="216">あたしたち　プラズマ団が
+イッシュ地方を　支配すれば▽
+王様が　戻ってくるかも……</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼</language>
 		<language name="JPN_KANJI" width="216">あたしたちと　違う
 考えの　持ち主は　許さない！▼</language>
 	</row>
 
-	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_LOSE">
+	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">くう……
 あんたのこと　ゆるさない！</language>
 		<language name="JPN_KANJI" width="216">くう……
 あんたのこと　許さない！</language>
 	</row>
 
-	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
 あたしたち　プラズマだんが
@@ -11189,31 +11214,6 @@
 あたしたち　プラズマ団が
 世界を　支配すれば　みんな▽
 おんなじ　考えに　なるの！</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">えいゆうが　いなくても！
-でんせつの　ポケモンが　いなくても▽
-あたしたちは　まけないのよ！▼</language>
-		<language name="JPN_KANJI" width="216">英雄が　いなくても！
-伝説の　ポケモンが　いなくても▽
-あたしたちは　負けないのよ！▼</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">プラーズマー！
-プラズマだんに　えいこうあれ！</language>
-		<language name="JPN_KANJI" width="216">プラーズマー！
-プラズマ団に　栄光あれ！</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あたしたち　プラズマだんが
-イッシュちほうを　しはいすれば▽
-おうさまが　もどってくるかも……</language>
-		<language name="JPN_KANJI" width="216">あたしたち　プラズマ団が
-イッシュ地方を　支配すれば▽
-王様が　戻ってくるかも……</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_05_TRMSG_FIGHT_START">
@@ -11228,10 +11228,8 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">どうして……
-どうしてなのよ！</language>
-		<language name="JPN_KANJI" width="216">どうして……
-どうしてなのよ！</language>
+		<language name="JPN" width="216">どーしてーーーーーっ！！</language>
+		<language name="JPN_KANJI" width="216">どーしてーーーーーっ！！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_05_TRMSG_FIGHT_AFTER">
@@ -11313,12 +11311,12 @@
 		<language name="JPN" width="216">プラズマだんに　はいれば
 つよい　ポケモンを　もらえて▽
 すきかって　できるってな！▼
-オレの　うばった　ポケモン……
+オレが　もらった　ポケモン……
 コイツは　ダメだな！</language>
 		<language name="JPN_KANJI" width="216">プラズマ団に　入れば
 強い　ポケモンを　もらえて▽
 好き勝手　できるってな！▼
-オレの　奪った　ポケモン……
+オレが　もらった　ポケモン……
 コイツは　ダメだな！</language>
 	</row>
 
@@ -11340,11 +11338,11 @@
 		<language name="JPN" width="216">ポケモンを　すくいたいと
 ゆめみていた　やつらは　いない▼
 ここに　のこっているのは　ほんきで
-せかいを　かえたい　れんちゅうだ！</language>
+せかいを　うばいたい　れんちゅう！</language>
 		<language name="JPN_KANJI" width="216">ポケモンを　救いたいと
 夢見ていた　やつらは　いない▼
 ここに　残っているのは　本気で
-世界を　変えたい　連中だ！</language>
+世界を　奪いたい　連中！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_25_TRMSG_FIGHT_START">
@@ -11373,7 +11371,7 @@
 ２ねんかん　ずっと　きたえていた▼
 もう　だれにも　まけない！▼</language>
 		<language name="JPN_KANJI" width="216">……プラズマ団の　正義のため
-２年間　ずっと　鍛えていた
+２年間　ずっと　鍛えていた▼
 もう　だれにも　負けない！▼</language>
 	</row>
 
@@ -11436,12 +11434,12 @@
 
 	<row id="TRID_SWPLAZMAM_28_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">われわれ　プラズマだんは
-むりやり　ポケモンの　ちからを▽
+ポケモンの　ちからを　むりやり▽
 さいだいげんに　はっきさせる！▼
 ポケモンかいほう？
 そんな　めんどうなこと　するか！</language>
 		<language name="JPN_KANJI" width="216">我々　プラズマ団は
-むりやり　ポケモンの　力を▽
+ポケモンの　力を　むりやり▽
 最大限に　発揮させる！▼
 ポケモン解放？
 そんな　面倒なこと　するか！</language>
@@ -11503,9 +11501,9 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……よわい　ポケモン
+		<language name="JPN" width="216">……よわい　ポケモンね
 べつの　ポケモンを　うばわなきゃ！</language>
-		<language name="JPN_KANJI" width="216">……弱い　ポケモン
+		<language name="JPN_KANJI" width="216">……弱い　ポケモンね
 別の　ポケモンを　奪わなきゃ！</language>
 	</row>
 
@@ -11520,9 +11518,11 @@
 
 	<row id="TRID_SWPLAZMAW_07_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">アタイ　このなかで
-かーなーり　つよい　プラズマだん！▼</language>
+かーなーり　つよい　プラズマだん！▽
+ひとよんで　おんなキリキザン！▼</language>
 		<language name="JPN_KANJI" width="216">アタイ　このなかで
-かーなーり　強い　プラズマ団！▼</language>
+かーなーり　強い　プラズマ団！▽
+人呼んで　女キリキザン！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_07_TRMSG_FIGHT_LOSE">
@@ -11546,20 +11546,43 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">えいゆう　なんか　いなくても
+あたしたちは　まけないのよ！▼</language>
+		<language name="JPN_KANJI" width="216">英雄なんか　いなくても
+あたしたちは　負けないのよ！▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">プラーズマー！
+プラズマだんに　えいこうあれ！</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+プラズマ団に　栄光あれ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あたしたち　プラズマだんが
+イッシュちほうを　しはいすれば▽
+おうさまが　もどってくるかも……</language>
+		<language name="JPN_KANJI" width="216">あたしたち　プラズマ団が
+イッシュ地方を　支配すれば▽
+王様が　戻ってくるかも……</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼</language>
 		<language name="JPN_KANJI" width="216">あたしたちと　違う
 考えの　持ち主は　許さない！▼</language>
 	</row>
 
-	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_LOSE">
+	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">くう……
 あんたのこと　ゆるさない！</language>
 		<language name="JPN_KANJI" width="216">くう……
 あんたのこと　許さない！</language>
 	</row>
 
-	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
 あたしたち　プラズマだんが
@@ -11570,31 +11593,6 @@
 あたしたち　プラズマ団が
 世界を　支配すれば　みんな▽
 おんなじ　考えに　なるの！</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">えいゆうが　いなくても！
-でんせつの　ポケモンが　いなくても▽
-あたしたちは　まけないのよ！▼</language>
-		<language name="JPN_KANJI" width="216">英雄が　いなくても！
-伝説の　ポケモンが　いなくても▽
-あたしたちは　負けないのよ！▼</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">プラーズマー！
-プラズマだんに　えいこうあれ！</language>
-		<language name="JPN_KANJI" width="216">プラーズマー！
-プラズマ団に　栄光あれ！</language>
-	</row>
-
-	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あたしたち　プラズマだんが
-イッシュちほうを　しはいすれば▽
-おうさまが　もどってくるかも……</language>
-		<language name="JPN_KANJI" width="216">あたしたち　プラズマ団が
-イッシュ地方を　支配すれば▽
-王様が　戻ってくるかも……</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_10_TRMSG_FIGHT_START">
@@ -11609,10 +11607,8 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_10_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">どうして……
-どうしてなのよ！</language>
-		<language name="JPN_KANJI" width="216">どうして……
-どうしてなのよ！</language>
+		<language name="JPN" width="216">どーしてーーーーーっ！！</language>
+		<language name="JPN_KANJI" width="216">どーしてーーーーーっ！！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_10_TRMSG_FIGHT_AFTER">
@@ -18596,7 +18592,7 @@
 うばった　ポケモンも　へったからな</language>
 		<language name="JPN_KANJI" width="216">侵入を　許したことで
 ポケモンを　取りあげられるだろう……▼
-２年前の　作戦で　同士も
+２年前の　作戦で　同志も
 奪った　ポケモンも　減ったからな</language>
 	</row>
 
