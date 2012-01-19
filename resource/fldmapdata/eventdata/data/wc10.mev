@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/16 21:09:34
+#save date:2012/01/19 14:05:09
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\wc10.wms
 #SECTION START:OBJ_EVENT
@@ -676,7 +676,7 @@ DOOR_ID_WC10PCR0101_WC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_SP29
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -693,7 +693,7 @@ DOOR_ID_WC10R0101_WC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_DOOR
+EXIT_TYPE_SP29
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -710,7 +710,7 @@ DOOR_ID_D31R0101_WC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_WALL
+EXIT_TYPE_SP29
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
