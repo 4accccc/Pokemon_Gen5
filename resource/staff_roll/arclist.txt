@@ -6,6 +6,14 @@
 "end.nscr"
 "end_e.nscr"
 
+"n_anim01.nclr"
+"n_anim01.ncgr"
+"n_anim01.ncer"
+"n_anim01.nanr"
+"n_cut01.nclr"
+"n_cut01.ncgr"
+"n_cut01.nscr"
+
 "staffroll_font.nclr"
 
 "2d_cut/cut11/cut11_b_boy.nclr"

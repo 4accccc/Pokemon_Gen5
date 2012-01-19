@@ -72,15 +72,17 @@ SUBDIRS_ARC = $(SUBDIRS_TOP) $(SUBDIRS_CUT_11) $(SUBDIRS_CUT_00) $(SUBDIRS_CUT_0
 lsources:=$(wildcard $(addsuffix /*.ncl,$(SUBDIRS_ARC)))
 gsources:=$(wildcard $(addsuffix /*.ncg,$(SUBDIRS_ARC)))
 csources:=$(wildcard $(addsuffix /*.nsc,$(SUBDIRS_ARC)))
+esources:=$(wildcard $(addsuffix /*.nce,$(SUBDIRS_ARC)))
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(csources))
+eobjects = $(subst .nce,.NCER,$(esources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .xls 
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .xls 
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -89,6 +91,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $< -bg
 
 .nsc.NSCR:
+	g2dcvtr $<
+
+.nce.NCER:
 	g2dcvtr $<
 
 endif
@@ -117,7 +122,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjects)
+$(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjects) $(eobjects)
 	ruby $(CSVCVTR) WBStaffList.xls -s -n 1 > staff_list_jp.csv
 	ruby $(CSVCVTR) WBStaffList.xls -s -n 2 > staff_list_eng.csv
 	perl staff_roll_gmm.pl staff_list_jp.csv ../message/template.gmm
@@ -152,6 +157,9 @@ ifeq ($(gobjects),)
 endif
 ifeq ($(lobjects),)
 	rm -f $(lobjects)
+endif
+ifeq ($(eobjects),)
+	rm -f $(eobjects)
 endif
 
 	rm -f *.nclr

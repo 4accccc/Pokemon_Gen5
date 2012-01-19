@@ -28,6 +28,13 @@ enum {
 	SRMAIN_FONT_MAX							// フォント最大数
 };
 
+enum{
+  OBJ_RES_PAL,
+  OBJ_RES_CHR,
+  OBJ_RES_CEL,
+  OBJ_RES_MAX,
+};
+
 // リストデータ
 typedef struct {
 	u32	msgIdx;
@@ -63,7 +70,19 @@ typedef struct {
   int     alpha_fade_sync;  // アルファ
   int     wait;       // 表示待ち
 
+  BOOL    is_n_anime; // Nのアニメか
+
 } CUT_WORK;
+
+//-------------------------------------
+///	OBJ構造体
+//=====================================
+typedef struct {
+  GFL_CLUNIT*     clunit;
+  GFL_CLWK*       clwk;     // Nの髪なびく
+  u32             clres[ OBJ_RES_MAX ];
+} OBJ_WORK;
+
 
 typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
@@ -106,6 +125,9 @@ typedef struct {
 
   // 2Dカットのワーク
   CUT_WORK    cut;
+
+  // OBJ構造体
+  OBJ_WORK    obj;
 
 #ifdef	PM_DEBUG
 	BOOL	debugStopFlg;

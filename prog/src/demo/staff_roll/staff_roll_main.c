@@ -71,6 +71,7 @@ enum{
   SEQ_CUT_FADE_IN,    // フェードしながら表示
   SEQ_CUT_VIEW_WAIT,  // 表示中
   SEQ_CUT_FADE_OUT,   // フェードしながら非表示
+  SEQ_CUT_LOAD_N,     // リソース読み込み(Nのアニメ)
   SEQ_CUT_EXIT,       // 終了処理
 };
 
@@ -148,6 +149,8 @@ enum {
   // swan追加
   // カットイン表示
 	ITEMLIST_LABEL_CUT,
+  // Nのアニメ
+	ITEMLIST_LABEL_N_ANIME,
 
 	ITEMLIST_LABEL_MAX,
 };
@@ -184,6 +187,8 @@ static void InitVram(void);
 static void InitBg(void);
 static void ExitBg(void);
 static void LoadBgGraphic(void);
+static void InitObj( OBJ_WORK * wk );
+static void ExitObj( OBJ_WORK * wk );
 static void InitVBlank( SRMAIN_WORK * wk );
 static void ExitVBlank( SRMAIN_WORK * wk );
 static void InitMsg( SRMAIN_WORK * wk );
@@ -231,6 +236,8 @@ static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 // swan追加
 // カット表示
 static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+// Nアニメ表示
+static BOOL Comm_LabelNAnime( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
@@ -262,17 +269,17 @@ static const GFL_DISP_VRAM VramTbl = {
 	GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
 	GX_VRAM_SUB_BGEXTPLTT_0123_H,	// サブ2DエンジンのBG拡張パレット
 
-	GX_VRAM_OBJ_NONE,							// メイン2DエンジンのOBJ
+	GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 
-	GX_VRAM_SUB_OBJ_NONE,					// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJ_128_D,				// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
 	GX_VRAM_TEX_NONE,						  // テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE,				  // テクスチャパレットスロット
 
-	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,	  // メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K		// サブOBJマッピングモード
 };
 
 // フォントカラーテーブル
@@ -300,7 +307,8 @@ static const pCOMM_FUNC CommFunc[] = {
   // swan 追加
   // カットイン表示
   Comm_LabelCut,          // ラベル：カットイン表示
-
+  // Nのアニメ表示j
+  Comm_LabelNAnime,       // ラベル：Nのアニメ表示
 };
 
 //============================================================================================
@@ -364,6 +372,7 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVram();
 	InitBg();
+  InitObj( &wk->obj );
 	LoadBgGraphic();
 	InitMsg( wk );
 	InitBmp( wk );
@@ -412,6 +421,7 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 	ExitBmp( wk );
 	ExitMsg( wk );
+  ExitObj( &wk->obj );
 	ExitBg();
 
 #if	PM_VERSION == LOCAL_VERSION
@@ -578,6 +588,8 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
   // カットのメイン処理
   CutMain( wk, &wk->cut );
 
+  GFL_CLACT_SYS_Main();
+
 	return MAINSEQ_MAIN;
 }
 
@@ -648,7 +660,7 @@ static void InitBg(void)
 			0, 0, 0x1000, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
 			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -666,7 +678,7 @@ static void InitBg(void)
 			0, 0, 0x1000, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
 			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
-			GX_BG_EXTPLTT_23, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+			GX_BG_EXTPLTT_23, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
 	}
@@ -758,6 +770,79 @@ static void LoadBgGraphic(void)
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_S, BG_COLOR );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ初期化
+ *
+ *  @param		wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void InitObj( OBJ_WORK * wk )
+{
+  HEAPID heapID = HEAPID_STAFF_ROLL_L;
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
+
+  GFL_CLACT_SYS_Create(&GFL_CLSYSINIT_DEF_DIVSCREEN, &VramTbl, HEAPID_STAFF_ROLL);
+
+  wk->clunit = GFL_CLACT_UNIT_Create(1, 0, heapID);
+  GFL_CLACT_UNIT_SetDefaultRend(wk->clunit);
+
+  // ---Nの髪がなびくアニメ---
+  wk->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
+      NARC_staff_roll_n_anim01_ncgr, FALSE, 
+      CLSYS_DRAW_SUB, heapID );
+  wk->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
+      NARC_staff_roll_n_anim01_nclr, 
+      CLSYS_DRAW_SUB, 0, heapID );
+  wk->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
+      NARC_staff_roll_n_anim01_ncer, 
+      NARC_staff_roll_n_anim01_nanr, 
+      heapID );
+
+  {
+    GFL_CLWK_DATA add;
+    add.pos_x   = 128;
+    add.pos_y   = 96;
+    add.anmseq  = 0;
+    add.bgpri   = 1;
+    add.softpri = 0;
+
+    wk->clwk    = GFL_CLACT_WK_Create( wk->clunit,
+        wk->clres[OBJ_RES_CHR],
+        wk->clres[OBJ_RES_PAL],
+        wk->clres[OBJ_RES_CEL],
+        &add, CLSYS_DEFREND_SUB, heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk, TRUE );
+    // 表示フラグOFF
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk, FALSE );
+    // 半透明OBJ
+    //GFL_CLACT_WK_SetObjMode( wk->clwk, GX_OAM_MODE_XLU );
+  }
+
+  //OBJ表示ON
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+
+  GFL_ARC_CloseDataHandle( handle );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ破棄
+ *
+ *  @param		wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ExitObj( OBJ_WORK * wk )
+{
+  GFL_CLGRP_CGR_Release(      wk->clres[OBJ_RES_CHR] );
+  GFL_CLGRP_PLTT_Release(     wk->clres[OBJ_RES_PAL] );
+  GFL_CLGRP_CELLANIM_Release( wk->clres[OBJ_RES_CEL] );
+
+  GFL_CLACT_UNIT_Delete(wk->clunit);
+  GFL_CLACT_SYS_Delete();
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		タイトルロゴのパレット読み込み
@@ -791,6 +876,7 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 
 	TransBmpWinChar( wk );
   GFL_BG_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
@@ -1623,6 +1709,51 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
     }
     break;
 
+  case SEQ_CUT_LOAD_N:     // リソース読み込み(Nのアニメ)
+    {
+      // 2Dカットの読み込み
+      {
+        ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
+        u32   arc_pal;    // パレット
+        u32   arc_cgx;    // キャラクタ
+        u32   arc_scr;    // スクリーン
+
+        arc_pal = NARC_staff_roll_n_cut01_nclr;
+        arc_cgx = NARC_staff_roll_n_cut01_ncgr;
+        arc_scr = NARC_staff_roll_n_cut01_nscr;
+
+        GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
+            PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_STAFF_ROLL );
+        GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
+            GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+        GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
+            GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+        GFL_BG_LoadScreenReq(GFL_BG_FRAME0_S);
+        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+        GFL_ARC_CloseDataHandle( ah );
+      }
+
+      // OBJの表示
+      GFL_CLACT_WK_SetDrawEnable( p_parent_wk->obj.clwk, TRUE );
+      GFL_CLACT_WK_ResetAnm( p_parent_wk->obj.clwk );
+
+      // 輝度の設定
+      // OBJとBGを同時にアルファは出来ないので輝度で代用する
+      if( GET_VERSION() == VERSION_B2 )
+      {
+        // 黒
+        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, -16 );
+      }
+      else
+      {
+        // 白
+        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 16 );
+      }
+
+      p_wk->seq = SEQ_CUT_FADE_IN;
+    }
+    break;
+
   case SEQ_CUT_FADE_IN:    // フェードしながら表示
     {
       // 2Dカットのフェード
@@ -1657,17 +1788,26 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
       {
         ICHI_Printf("2Dカット：フェードアウト\n");
         p_wk->seq = SEQ_CUT_EXIT;
+
+        // Nアニメを非表示
+        if( p_wk->is_n_anime == TRUE )
+        {
+          GFL_CLACT_WK_SetAutoAnmFlag( p_parent_wk->obj.clwk, FALSE );
+          GFL_CLACT_WK_StopAnm( p_parent_wk->obj.clwk );
+          GFL_CLACT_WK_SetDrawEnable( p_parent_wk->obj.clwk, FALSE );
+        }
       }
     }
     break;
   case SEQ_CUT_EXIT:       // 終了処理
     {
+      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+
       // ブレンド初期化
       G2_BlendNone();
       G2S_BlendNone();
 
-      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
       p_wk->seq = SEQ_CUT_NONE;
     }
     break;
@@ -1800,13 +1940,26 @@ static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag )
 
 
   // アルファ設定
-  if( p_wk->disp_type & CUT_DISP_MAIN ) 
+  if( p_wk->is_n_anime == TRUE )
   {
-    G2_ChangeBlendAlpha( alpha1, alpha2 );
+    // Nのアニメの場合は
+    // アルファの代わりに輝度を使用している
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      alpha2 *= -1;   // マイナスにする
+    }
+    G2S_ChangeBlendBrightness( alpha2 );
   }
-  if( p_wk->disp_type & CUT_DISP_SUB ) 
+  else
   {
-    G2S_ChangeBlendAlpha( alpha1, alpha2 );
+    if( p_wk->disp_type & CUT_DISP_MAIN ) 
+    {
+      G2_ChangeBlendAlpha( alpha1, alpha2 );
+    }
+    if( p_wk->disp_type & CUT_DISP_SUB ) 
+    {
+      G2S_ChangeBlendAlpha( alpha1, alpha2 );
+    }
   }
 
   // フェード終了
@@ -2034,6 +2187,7 @@ static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   wk->cut.alpha_fade_sync = item->px;
   wk->cut.disp_type = 0;
   wk->cut.wait = item->wait;
+  wk->cut.is_n_anime = FALSE;
 
   if( item->putMode == STR_PUT_MODE_UP )
   {
@@ -2050,6 +2204,48 @@ static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コマンド：Nのアニメ表示
+ *
+ * @param		wk		ワーク
+ * @param		item	リスト項目データ
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//-----------------------------------------------------------------------------
+static BOOL Comm_LabelNAnime( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+  ICHI_Printf("***********************************\n");
+  ICHI_Printf("Nアニメ\n");
+  ICHI_Printf("***********************************\n");
+
+  ICHI_Printf("item->msgIdx %d\n", item->msgIdx );
+  ICHI_Printf("item->wait %d\n", item->wait );
+  ICHI_Printf("item->label %d\n", item->label );
+  ICHI_Printf("item->labelType %d\n", item->labelType );
+  ICHI_Printf("item->color %d\n", item->color );
+  ICHI_Printf("item->font %d\n", item->font );
+  ICHI_Printf("item->putMode %d\n", item->putMode );
+  ICHI_Printf("item->px %d\n", item->px );
+  ICHI_Printf("item->offs_x %d\n", item->offs_x );
+
+  // 初期化
+  wk->cut.cut_no = 0;
+  wk->cut.alpha_cnt = 0;
+  wk->cut.alpha_fade_sync = item->px;
+  wk->cut.disp_type = 0;
+  wk->cut.wait = item->wait;
+  wk->cut.is_n_anime = TRUE;
+
+  wk->cut.disp_type = CUT_DISP_SUB;
+
+  // 読み込み
+  wk->cut.seq = SEQ_CUT_LOAD_N;
+
+  return FALSE;
+}
 
 
 

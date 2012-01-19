@@ -26,8 +26,9 @@ $CNV_FILE = 0;				# 作成ファイル
 	"ロゴ",
 	"バージョン別",
 	"カット",
+	"Nアニメ",
 );
-$LABEL_NAME_MAX = 8;
+$LABEL_NAME_MAX = 9;
 
 # ラベル変換値
 @LabelConv = (
@@ -39,6 +40,7 @@ $LABEL_NAME_MAX = 8;
 	6,		# ITEMLIST_LABEL_LOGO_PUT
 	7,		# ITEMLIST_LABEL_VERSION
 	8,		# ITEMLIST_LABEL_CUT
+	9,		# ITEMLIST_LABEL_N_ANIME
 );
 
 # 表示モードテーブル
