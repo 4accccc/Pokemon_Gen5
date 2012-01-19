@@ -61,6 +61,7 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "resort_const.h"
 #include "gamesystem/game_beacon.h"
+#include "app/app_keycursor.h"
 
 // BMPWIN定義テーブル
 
@@ -177,6 +178,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   PRINT_QUE         *printQue;        // 
   GFL_TCBLSYS       *pMsgTcblSys;     // メッセージ表示用タスクSYS
   PRINT_STREAM      *printStream;     // 
+  APP_KEYCURSOR_WORK* p_keycursor;    //送りカーソル
   
   GFL_CLUNIT        *ClactUnit;                // セルアクターユニット
   GFL_CLWK*         ClactWork[SHOP_OBJ_MAX];   // OBJワークポインタ
@@ -292,6 +294,7 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y );
 static void line_callback_rest(BMPMENULIST_WORK * wk, u32 param, u8 y );
 static void ShopPrintMsgItem( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno );
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId );
+static void StartPrintMsg( SHOP_BUY_APP_WORK *wk, int strId );
 static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, const RESORT_SHOP_ITEM  *cp_select );
 static void submenu_screen_clear( int type );
 static void item_shop_main( SHOP_BUY_APP_WORK *wk );
@@ -1075,6 +1078,11 @@ static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
 {
   PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( wk->printStream );
 
+  if( wk->p_keycursor )
+  {
+    APP_KEYCURSOR_Main( wk->p_keycursor, wk->printStream, wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
+  }
+
   if( state == PRINTSTREAM_STATE_DONE )
   {
     PRINTSYS_PrintStreamDelete( wk->printStream );
@@ -1087,7 +1095,24 @@ static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
     }
   }else if( state == PRINTSTREAM_STATE_PAUSE )
   {
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+    BOOL is_push  = FALSE;
+    if( wk->p_keycursor )
+    {
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL)
+      {
+        is_push = TRUE;
+      }
+    }
+    else
+    {
+      if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL
+          || GFL_UI_KEY_GetTrg()&PAD_PLUS_KEY_MASK)
+      {
+        is_push = TRUE;
+      }
+    }
+
+    if(is_push){
       PRINTSYS_PrintStreamReleasePause( wk->printStream );
       PMSND_PlaySE( SEQ_SE_MESSAGE );
     }
@@ -1525,7 +1550,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
     }
 #endif
 
-    ShopPrintMsg( wk, wk->msg_start ); 
+    StartPrintMsg( wk, wk->msg_start ); 
     wk->seq  = SHOPSORT_SEQ_MSG_WAIT;
     wk->next = SHOPSORT_SEQ_BACK;
     break;
@@ -2028,6 +2053,12 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
   GFL_TCBL_Exit( wk->pMsgTcblSys );
 
   WORDSET_Delete(wk->wordSet);
+
+  if(wk->p_keycursor)
+  { 
+    APP_KEYCURSOR_Delete( wk->p_keycursor );
+    wk->p_keycursor = NULL;
+  }
   
   GFL_STR_DeleteBuffer( wk->expandBuf );
   GFL_STR_DeleteBuffer( wk->HaveStr );
@@ -2776,6 +2807,34 @@ static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId )
     MSGSPEED_GetWait(), wk->pMsgTcblSys,
     0, wk->heapId, 0xffff, printBuyMsgCallBack );
 
+
+  if(wk->p_keycursor)
+  { 
+    APP_KEYCURSOR_Delete( wk->p_keycursor );
+    wk->p_keycursor = NULL;
+  }
+  wk->p_keycursor  = APP_KEYCURSOR_Create( 15, TRUE, FALSE, wk->heapId );
+
+  GFL_BMPWIN_MakeTransWindow(wk->win[SHOP_BUY_BMPWIN_TALKMSG]);
+}
+
+static void StartPrintMsg( SHOP_BUY_APP_WORK *wk, int strId )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
+  BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
+                     MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
+
+  {
+    STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, strId );
+    WORDSET_ExpandStr( wk->wordSet, wk->expandBuf, str );
+    GFL_STR_DeleteBuffer( str );
+  }
+  
+  wk->printStream = PRINTSYS_PrintStreamCallBack(
+    wk->win[SHOP_BUY_BMPWIN_TALKMSG], 0, 0, wk->expandBuf, wk->font,
+    MSGSPEED_GetWait(), wk->pMsgTcblSys,
+    0, wk->heapId, 0xffff, printBuyMsgCallBack );
+
   GFL_BMPWIN_MakeTransWindow(wk->win[SHOP_BUY_BMPWIN_TALKMSG]);
 }
 
@@ -2811,6 +2870,14 @@ static void _expand_and_print_msg( SHOP_BUY_APP_WORK *wk, int strId )
     wk->win[SHOP_BUY_BMPWIN_TALKMSG], 0, 0, wk->expandBuf, wk->font,
     MSGSPEED_GetWait(), wk->pMsgTcblSys,
     0, wk->heapId, 0xffff, NULL );
+
+
+  if(wk->p_keycursor)
+  { 
+    APP_KEYCURSOR_Delete( wk->p_keycursor );
+    wk->p_keycursor = NULL;
+  }
+  wk->p_keycursor  = APP_KEYCURSOR_Create( 15, TRUE, FALSE, wk->heapId );
 
   GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
 
