@@ -34,6 +34,7 @@
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
 #include "sound\pm_wb_voice.h"
+#include "sound\snd_strm.h"
 #ifdef PM_DEBUG
 #include "debug/debug_sd_print.h"
 #include "test/performance.h"
@@ -263,6 +264,9 @@ static BOOL isARM9preference(void)
     return FALSE;
   }
   if(GFL_NET_IsWifiConnect()){  //WIFI接続
+    return FALSE;
+  }
+  if(SND_STRM_IsActive()){  // ストリーミング
     return FALSE;
   }
   return TRUE;

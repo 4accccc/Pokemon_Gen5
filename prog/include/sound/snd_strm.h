@@ -37,6 +37,9 @@ extern void SND_STRM_Init( HEAPID heapID );
 extern void SND_STRM_Exit( void );
 extern void SND_STRM_Main( void );
 
+// 動作チェック
+extern BOOL SND_STRM_IsActive( void );
+
 // 事前読み込み
 //  事前読み込みをしなくてもPlayすることができますが、
 //  読み込みが発生するため、数フレーム遅れます。
