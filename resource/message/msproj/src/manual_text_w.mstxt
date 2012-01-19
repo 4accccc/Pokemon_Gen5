@@ -4447,16 +4447,16 @@
 すれ違った　人と　一緒に
 遊ぶことが　できます。
 
-すれ違いログから　誰かが
+すれ違いログから　だれかが
 開催した　フェスミッションに
 参加することが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-19T04:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-19T04:51:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4983,18 +4983,17 @@
 かたがきや　せいかくは　がめんを
 タッチすると　きりかわりますので
 すきなものを　えらんでください。
-
 したの　しろいわくを　タッチすると
 メッセージが　へんしゅう　できます。
 あいている　ところに　すきな　たんごを
 えらんで　かんせいさせて　ください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T04:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T04:51:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5003,18 +5002,17 @@
 肩書きや　性格は　画面を
 タッチすると　切り替わりますので
 好きなものを　選んでください。
-
 下の　白い枠を　タッチすると
 メッセージが　編集できます。
 空スペースに　好きな　単語を
 選んで　完成させてください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T04:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-19T04:51:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5196,7 +5194,7 @@
 			<Text>冒険を　進めていくと
 ポケモン図鑑に　「生息地リスト」が
 追加　されます。
-生息地リストは　道路や　洞窟に
+生息地リストは　道路や　洞くつに
 潜む　ポケモンを　調べられます。
 プレイヤーが　見たことがある
 ポケモンのみ　表示　されるので
@@ -5204,11 +5202,11 @@
 いるかどうかを　知ることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-19T04:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-19T04:51:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
