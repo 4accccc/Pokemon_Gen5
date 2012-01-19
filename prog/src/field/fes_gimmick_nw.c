@@ -71,8 +71,10 @@ u16 FES_GIMMICK_SUB_GetRndInitZone( const u16 zone_id )
     { ZONE_ID_BC10,	    ZONE_ID_WC10 },
   };
 
-  for( i = 0; NELEMS(tbl);i++){
-    if( zone_id == tbl[i][0] ) return tbl[i][1];
+  for( i = 0; i < NELEMS(tbl);i++){
+    if( zone_id == tbl[i][0] ){
+      return tbl[i][1];
+    }
   }
   return zone_id;
 }
@@ -90,8 +92,7 @@ void FES_GIMMICK_SUB_RndInit( const u32 key, const u16 zone_id, GFL_STD_RandCont
 
   GFL_STD_RandInit( rnd_c, ((u64)key << 32) | (u64)key );
 
-  count = (zone_id>>8)^(zone_id & 0xFF);
-
+  count = zone_id%256;
   for( i = 0;i < count;i++){
     GFL_STD_Rand( rnd_c, GFL_STD_RAND_MAX );
   }
