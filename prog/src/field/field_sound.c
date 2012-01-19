@@ -1362,6 +1362,10 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
   int i;
   EVENTWORK* eventWork;
 
+  static const u16 fes_bgm_ng[] = { //フェスBGMを鳴らさないゾーン
+    ZONE_ID_C13GYM0101, //毒ジム
+    ZONE_ID_C13GYM0102, //毒ジム
+  };
   eventWork = GAMEDATA_GetEventWork( gameData );
 
   // 検索
@@ -1372,6 +1376,12 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
         (EVENTWORK_CheckEventFlag(eventWork, specialBGMTable[i].flagNo) == TRUE) )
     {
       return specialBGMTable[i].soundIdx;
+    }
+  }
+  //フェスBGMにしないゾーンチェック
+  for( i = 0;i < NELEMS(fes_bgm_ng);i++){
+    if( zoneID == fes_bgm_ng[i]){
+      return SPECIAL_BGM_NONE;
     }
   }
   //スペシャルBGMに引っかからなければ、フェスミッション参加フラグをチェック
