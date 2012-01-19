@@ -123,11 +123,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きんようびに　なるたびにね
+			<Text>げつようびに　なるたびにね
 どこからか　ポケモンが　くるの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:25:33" />
+				Time="2012-01-19T05:24:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,11 +135,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>金曜日に　なるたびにね
+			<Text>月曜日に　なるたびにね
 どこからか　ポケモンが　来るの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:25:39" />
+				Time="2012-01-19T05:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -148,10 +148,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：White2ver
-・ワシボンのヒント</Comment>
+・ウォーグルのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:20:20" />
+				Time="2012-01-19T05:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -66,11 +66,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　きんようびに　なると
+			<Text>あのね　もくようびに　なると
 とんでくる　ポケモンが　いるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T08:45:39" />
+				Time="2012-01-19T05:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,11 +78,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　金曜日に　なると
+			<Text>あのね　木曜日に　なると
 飛んでくる　ポケモンが　いるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:29:04" />
+				Time="2012-01-19T05:22:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -91,10 +91,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：Black2ver
-・バルチャイのヒント</Comment>
+・バルジーナのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:17:16" />
+				Time="2012-01-19T05:24:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
