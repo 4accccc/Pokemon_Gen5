@@ -1003,7 +1003,7 @@ static BOOL RESORT_EXTEND4_DATA_IsValid( const RESORT_EXTEND4_DATA *cp_wk )
 {
   static const u8 sc_gossip_max[16]  =
   {
-    4,2,5,2,5,8,3,2,2,2,9,5,2,2,2,2,
+    4,2,5,2,4,8,2,2,3,2,9,5,2,2,2,2,
   };
 
   int i;
