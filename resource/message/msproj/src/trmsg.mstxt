@@ -21294,26 +21294,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わるいがな　オレさま
-とにかく　しつこいんだよ！</Text>
+とにかく　しつこいんでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T12:39:18" />
+				Time="2012-01-19T11:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T12:39:18" />
+				Time="2012-01-19T11:39:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わるいがな　オレさま
-とにかく　しつこいんだよ！</Text>
+とにかく　しつこいんでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T12:39:18" />
+				Time="2012-01-19T11:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T12:39:18" />
+				Time="2012-01-19T11:39:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -21363,27 +21363,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタが　どう　せめてくるのかって
+			<Text>アナタが　どう　せめてくるのか
 すごく　ドキドキしちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アナタが　どう　攻めてくるのかって
+			<Text>アナタが　どう　攻めてくるのか
 すごく　ドキドキしちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -75918,27 +75918,27 @@
 		Label="TRID_SWLEADER5_02_TRMSG_FIGHT_POKE_LAST">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレさまが　あきらめたら
-ポケモンに　もうしわけねえだろ！</Text>
+			<Text>わるいがな　オレさま
+とにかく　しつこいんでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-01-19T11:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-01-19T11:39:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレさまが　あきらめたら
-ポケモンに　申し訳ねえだろ！</Text>
+			<Text>わるいがな　オレさま
+とにかく　しつこいんでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-01-19T11:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-01-19T11:39:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -75972,27 +75972,27 @@
 		Label="TRID_SWLEADER6_02_TRMSG_FIGHT_FIRST_DAMAGE">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタが　どう　せめてくるのかって
+			<Text>アナタが　どう　せめてくるのか
 すごく　ドキドキしちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アナタが　どう　攻めてくるのかって
+			<Text>アナタが　どう　攻めてくるのか
 すごく　ドキドキしちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T02:09:33" />
+				Time="2012-01-19T12:35:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
