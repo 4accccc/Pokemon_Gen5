@@ -915,6 +915,27 @@ void BOX2MAIN_InitBgButtonAnm( BOX2_SYS_WORK * syswk, u32 wfrmID )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   初期タッチバーアイコンの表示設定
+ *
+ * @param   syswk   ボックス画面システムワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2MAIN_InitTouchBar( BOX2_SYS_WORK * syswk )
+{
+	syswk->tb_exit_btn    = BOX2OBJ_TB_ICON_ON;
+	syswk->tb_ret_btn     = BOX2OBJ_TB_ICON_ON;
+	syswk->tb_status_btn  = BOX2OBJ_TB_ICON_OFF;
+	if( syswk->dat->callMode == BOX_MODE_SEIRI || syswk->dat->callMode == BOX_MODE_BATTLE ){
+		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_ON;
+	}else{
+		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_OFF;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   タッチバーをリセット
  *
  * @param   syswk   ボックス画面システムワーク
@@ -4663,6 +4684,8 @@ int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
   NAMEIN_FreeParam( wk->prm );
   GFL_STR_DeleteBuffer( wk->name );
   GFL_HEAP_FreeMemory( syswk->subProcWork );
+
+	BOX2MAIN_InitTouchBar( syswk );		// タッチバーの表示を画面初期化時に戻す
 
   return 0;
 }

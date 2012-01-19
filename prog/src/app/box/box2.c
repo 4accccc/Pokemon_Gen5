@@ -85,14 +85,7 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	}
 
 	// 初期タッチバーアイコンの設定
-	syswk->tb_exit_btn    = BOX2OBJ_TB_ICON_ON;
-	syswk->tb_ret_btn     = BOX2OBJ_TB_ICON_ON;
-	syswk->tb_status_btn  = BOX2OBJ_TB_ICON_OFF;
-	if( syswk->dat->callMode == BOX_MODE_SEIRI || syswk->dat->callMode == BOX_MODE_BATTLE ){
-		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_ON;
-	}else{
-		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_OFF;
-	}
+	BOX2MAIN_InitTouchBar( syswk );
 
 	// ローカルＰＲＯＣ作成
 	syswk->localProc = GFL_PROC_LOCAL_boot( HEAPID_BOX_SYS );
