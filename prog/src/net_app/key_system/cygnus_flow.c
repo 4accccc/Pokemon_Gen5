@@ -2031,6 +2031,7 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
   }
 
   //デモポケを先頭にする
+  if( p_wk->reward_num > 0 )
   {
     int j;
     //ソート

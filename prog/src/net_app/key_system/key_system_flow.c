@@ -299,6 +299,8 @@ void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   {
     PMSND_PushBGM();
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS, 1 );
+
+    GFL_NET_ReloadIconTopOrBottom( TRUE, heapID );
   }
 }
 //----------------------------------------------------------------------------
