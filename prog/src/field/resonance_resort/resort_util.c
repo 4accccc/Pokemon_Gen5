@@ -1960,6 +1960,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
   int i, j;
   int cnt = 0;
   int rank = 0;
+  int rank_tmp = 0;
 
   RESORT_WORK *p_reso_wk = GAMEDATA_GetReosrtWork( p_gamedata );
   MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
@@ -2100,13 +2101,21 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
 
 
       //順位チェック（同率順位チェック）
-      rank++;
-      if( i+1 < cnt )
       {
-        //同じだったらカウントしない
-        if( rnkdata[i].value == rnkdata[i+1].value )
+        BOOL is_cnt = TRUE;
+        if( i+1 < cnt )
         {
-          rank--;
+          //同じだったらカウントしない
+          if( rnkdata[i].value == rnkdata[i+1].value )
+          {
+            is_cnt = FALSE;
+          }
+        }
+        rank_tmp++;
+        if( is_cnt )
+        {
+
+          rank  = rank_tmp;
         }
       }
     }
@@ -2263,6 +2272,7 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
   int i, j;
   int cnt = 0;
   int rank = 0;
+  int rank_tmp = 0;
 
   GF_ASSERT( param <= 8 );
 
@@ -2337,12 +2347,20 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
       }
     }
 
-    rank++;
-    if( i+1 < cnt )
     {
-      if( rnkdata[i].value == rnkdata[i+1].value )
+      BOOL is_cnt = TRUE;
+      if( i+1 < cnt )
       {
-        rank--;
+        if( rnkdata[i].value == rnkdata[i+1].value )
+        {
+          is_cnt = FALSE;
+        }
+      }
+
+      rank_tmp++;
+      if( is_cnt )
+      {
+        rank  = rank_tmp;
       }
     }
   }
