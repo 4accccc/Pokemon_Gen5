@@ -585,8 +585,11 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 
 	ListScroll( wk );
 
-  // カットのメイン処理
-  CutMain( wk, &wk->cut );
+  // カットは2回目以降はでない
+	if( wk->dat->fastMode != STAFFROLL_MODE_FAST ){
+    // カットのメイン処理
+    CutMain( wk, &wk->cut );
+  }
 
   GFL_CLACT_SYS_Main();
 
