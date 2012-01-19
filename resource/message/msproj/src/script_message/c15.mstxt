@@ -946,7 +946,7 @@ msg_c15_oldman1_01_04
 かみひとえ　だよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:32:07" />
+				Time="2012-01-19T13:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1035,7 +1035,7 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>ぼくは　しんまい　ＡＤ▼
 えいがは　だいすきだけど
-つくりてと　しては　まだまださ▼
+つくりて　としては　まだまだです▼
 いつも　きびしい カントクに
 おこられて　ばかりだし……▼
 ……だけどね▼
@@ -1043,7 +1043,7 @@ msg_c15_oldman1_01_04
 すごく　べんきょうに　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:32:39" />
+				Time="2012-01-19T13:02:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1053,7 +1053,7 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>ぼくは　新米　ＡＤ▼
 映画は　大好きだけど
-作り手としては　まだまださ▼
+作り手　としては　まだまだです▼
 いつも　きびしい 監督に
 怒られて　ばかりだし……▼
 ……だけどね▼
@@ -1061,7 +1061,7 @@ msg_c15_oldman1_01_04
 すごく　勉強に　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:32:35" />
+				Time="2012-01-19T13:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1089,14 +1089,14 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　ポケウッドの　やくしゃだね！▼
+			<Text>きみは　ポケウッドの　やくしゃだな！▼
 やくしゃの　セリフ　ひとつで
 えいがが　かわることも　ある！▼
 ポケウッドの　さつえいには
-かのうせいが　いっぱいさ！</Text>
+かのうせいが　いっぱいだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:52:34" />
+				Time="2012-01-19T13:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1104,14 +1104,14 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　ポケウッドの　役者だね！▼
+			<Text>きみは　ポケウッドの　役者だな！▼
 役者の　セリフ　ひとつで
 映画が　変わることも　ある！▼
 ポケウッドの　撮影には
-可能性が　いっぱいさ！</Text>
+可能性が　いっぱいだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:52:04" />
+				Time="2012-01-19T13:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1190,10 +1190,10 @@ msg_c15_oldman1_01_04
 			<Text>この　トレーラーの　なかで
 いしょうや　メイクを　できるんや！▼
 ワシも　いま　きがえた　とこ！
-よっしゃ！　きょうも　はりきるでっ！</Text>
+よっしゃ！　きょうも　きばるでっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:52:43" />
+				Time="2012-01-19T10:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1203,11 +1203,11 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>この　トレーラーの　中で
 着替えや　メイクを　できるんや！▼
-ワシも　今　きがえた　とこ！
-よっしゃ！　今日も　張り切るでっ！</Text>
+ワシも　今　着替えた　とこ！
+よっしゃ！　今日も　きばるでっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:53:12" />
+				Time="2012-01-19T10:29:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1436,7 +1436,7 @@ msg_c15_oldman1_01_04
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:27:19" />
+				Time="2012-01-19T13:01:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1610,15 +1610,15 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>やあやあ　ポケウッド　めいぶつ
 スター　ブロマイドは　いかが？▼
-いまの　にんきは　ですね……▼
-やっぱり　ダントツで
+さいきんの　にんきは　ですね……▼
+やっぱり　いまは　ダントツで
 [Name:TrainerName ]さん　だね！▼
 うーん　あなた　ちょっと　ふんいきが
-[Name:TrainerName ]さんに　にてるねえ！▽
-スターに　にてるなんて　うらやましい！</Text>
+[Name:TrainerName ]さんに　にてるじゃない！▽
+スターに　にてるなんて　にくいねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:37:18" />
+				Time="2012-01-19T12:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1628,15 +1628,15 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>やあやあ　ポケウッド　名物
 スター　ブロマイドは　いかが？▼
-今の　人気は　ですね……▼
-やっぱり　ダントツで
+最近の　人気は　ですね……▼
+やっぱり　今は　ダントツで
 [Name:TrainerName ]さん　だね！▼
 うーん　あなた　ちょっと　雰囲気が
-[Name:TrainerName ]さんに　似てるねえ！▽
-スターに　似てるなんて　うらやましい！</Text>
+[Name:TrainerName ]さんに　似てるじゃない！▽
+スターに　似てるなんて　にくいねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:37:24" />
+				Time="2012-01-19T13:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1671,12 +1671,12 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>ポケウッドは　さまざまな　くに　から
 ゆうしゅうな　ひとを　あつめて▽
-えいがを　つくってるらしいわ！▼
+えいがを　つくってるんですって！▼
 だから　いろんな　くにの　ことばで
-えいがの　なまえが　あるのね</Text>
+えいがの　なまえが　あるのねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:58:05" />
+				Time="2012-01-19T12:45:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1686,12 +1686,12 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>ポケウッドは　様々な　国から
 優秀な　人を　あつめて▽
-映画を　つくってるらしいわ！▼
+映画を　つくってるんですって！▼
 だから　色んな　国の　言葉の
-映画の　名前が　あるのね</Text>
+映画の　名前が　あるのねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:57:57" />
+				Time="2012-01-19T12:45:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1771,13 +1771,13 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！　まえ　みた　えいがに　でてた
-[Name:TrainerName ]だ！▼
+スター　[Name:TrainerName ]だ！▼
 [Name:TrainerName ]は　スターだから
 マンションに　すんでるんでしょ？▽
 マンション！　マンション！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T08:59:14" />
+				Time="2012-01-19T13:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1786,13 +1786,13 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！　まえ　みた　えいがに　でてた
-[Name:TrainerName ]だ！▼
+スター　[Name:TrainerName ]だ！▼
 [Name:TrainerName ]は　スターだから
 マンションに　すんでるんでしょ？▽
 マンション！　マンション！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:15:53" />
+				Time="2012-01-19T13:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2060,12 +2060,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　さつえいは　だれでも
-さんかできる　わけじゃないの▽
-スカウトマンが　みとめた▽
-トレーナー　だけなのよ</Text>
+さんかできる　わけじゃないの▼
+ここのオーナーに　みとめられた▽
+特別な　トレーナー　だけなのよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:39:58" />
+				Time="2012-01-19T12:56:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2074,12 +2074,12 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドの　撮影は　だれでも
-参加できる　わけじゃないの▽
-ウッドウさんが　認めた▽
-トレーナー　だけなのよ</Text>
+参加できる　わけじゃないの▼
+ここのオーナーに　認められた▽
+特別な　トレーナー　だけなのよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T09:00:15" />
+				Time="2012-01-19T12:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2109,11 +2109,13 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>せっしゃ　ナツメさまという　スターの
 しんえいたい　たいちょうで　ござる！▼
+じょゆう　として　でんげきデビューを
+かざったと　ききつけ　はせさんじた！▼
 しかし　さいきん　[Name:TrainerName ]って
 やくしゃが　きに　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T13:31:03" />
+				Time="2012-01-19T12:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2123,11 +2125,13 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>拙者　ナツメ様という　スターの
 親衛隊　隊長で　ござる！▼
+女優　として　電撃デビューを
+飾ったと　聞きつけ　はせ参じた！▼
 しかし　最近　[Name:TrainerName ]って
 役者が　気に　なるで　ござる！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T13:31:27" />
+				Time="2012-01-19T12:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2745,10 +2749,12 @@ Bis  bald.</Text>
 			Language="JPN">
 			<Text>あなたとの　きょうえん……▼
 おもしろかったし　なかなか
-いい　けいけんに　なったわ</Text>
+いい　けいけんに　なったわ▼
+わたしも　はるばる　ここまで
+来た　かいが　あったよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				Time="2012-01-19T12:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2758,10 +2764,12 @@ Bis  bald.</Text>
 			Language="JPN_KANJI">
 			<Text>あなたとの　共演……▼
 おもしろかったし　なかなか
-いい　経験に　なったわ</Text>
+いい　経験に　なったわ▼
+わたしも　はるばる　ここまで
+来た　かいが　あったよ　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:01:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-19T12:49:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2828,14 +2836,14 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おお！　[Name:TrainerName ]！
-おぬしの　はつしゅつえんの　さくひんを▽
-とったのは　わし　なんじゃよ▼
-つまり　そだてのおや　どうぜん！
+			<Text>めでたいのう！　[Name:TrainerName ]！
+よいか！　おぬしの　デビューさくを▽
+かんとくしたのは　この　わし！▼
+つまり　そだてのおや　どうぜん　じゃ！
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:51:32" />
+				Time="2012-01-19T12:51:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2843,14 +2851,14 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお！　[Name:TrainerName ]！
-おぬしの　初出演の　作品を▽
-監督したのは　わし　なんじゃよ▼
-つまり　育ての親　同然！
+			<Text>めでたいのう！　[Name:TrainerName ]！
+よいか！　おぬしの　デビュー作を
+監督したのは　この　わし！▼
+つまり　育ての親　同然じゃ！
 感謝を　忘れては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T09:06:51" />
+				Time="2012-01-19T12:52:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

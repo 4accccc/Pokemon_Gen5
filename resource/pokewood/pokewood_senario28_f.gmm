@@ -556,12 +556,12 @@
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">モニカ『そのわりには　[1:00:トレーナー名:1]
 べつに　なにも　してないじゃん！！▼
-くちさき　だけ　だったら▽
-なんとでも　いえるもん！</language>
+アンタねえ　くちさき　だけなら
+なんとでも　いえるんだよ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『その割には　[1:00:トレーナー名:1]
-別に　何にも　してないじゃん！！▽
-口先　だけ　だったら▼
-何とでも　言えるもん！！</language>
+別に　何にも　してないじゃん！！▼
+アンタねえ　口先　だけなら
+何とでも　言えるんだよ！！</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……</language>

@@ -10,10 +10,12 @@
 たんせいな　おかおだち……▼
 [Name:TrainerName ]さまの　めもとは
 どんな　アイシャドウよりも▽
-シャイニー　ございますわ</Text>
+シャイニー　ございますわ▼
+そう……
+まるで　わかいころのボスの　よう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T01:57:03" />
+				Time="2012-01-19T13:13:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -25,10 +27,12 @@
 端正な　お顔だち……▼
 [Name:TrainerName ]様の　目元は
 どんな　アイシャドウよりも▽
-シャイニーで　ございますわ</Text>
+シャイニーで　ございますわ▼
+そう……
+まるで　若いころのボスの　よう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T01:57:06" />
+				Time="2012-01-19T13:17:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -58,10 +62,12 @@
 たんせいな　おかおだち……▼
 [Name:TrainerName ]さまの　くちびるは
 どんな　ルージュよりも▽
-グロッシー　ございますわ</Text>
+グロッシー　ございますわ▼
+そう……
+まるで　あのころのボスの　よう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T01:45:45" />
+				Time="2012-01-19T13:18:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -73,10 +79,12 @@
 端正な　お顔立ち……▼
 [Name:TrainerName ]様の　唇は
 どんな　ルージュよりも▽
-グロッシー　ございますわ</Text>
+グロッシー　ございますわ▼
+そう……
+まるで　あのころのボスの　よう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T01:46:02" />
+				Time="2012-01-19T13:19:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -102,11 +110,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレハ　　ボディガード……
-ユー　ノ　ケイビハ　バッチリ　ダゼ……</Text>
+			<Text>オレハ　ココノ　ボディガード……
+ユー　ガ　クルノヲ　マッテタゼ▼
+ワカイ　コロノ　ボス……▼
+ミスター　ハチク……▼
+コノ　ヘヤ　ヲ　ツカウ　スター　ハ
+ユー　デ　サンバンメ　ダナ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T09:15:23" />
+				Time="2012-01-19T13:10:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -114,11 +126,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレハ　　ボディガード……
-ユー　ノ　警備ハ　バッチリ　ダゼ……</Text>
+			<Text>オレハ　ココノ　ボディガード……
+ユー　ガ　来ルノヲ　待ッテタゼ▼
+若イ　コロノ　ボス……▼
+ミスター　ハチク……▼
+コノ　部屋ヲ　使ウ　スター　ハ
+ユーデ　三番目　ダナ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T09:15:27" />
+				Time="2012-01-19T13:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -144,16 +160,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]さまは　ごじぶんの
-ポケモンちゃんを　えいがに▽
+			<Text>ねえ　[Name:TrainerName ]さまは
+ごじぶんの　ポケモンを　えいがに▽
 しゅつえんさせて　いらっしゃいます？▼
 ポケモンだって　やくしゃ……▼
 よい　さくひんに　しゅつえん　なされば
-きっと　スターの　かがやきを▽
-てに　いれますわよ！</Text>
+きっと　スターの　ごとき▽
+かがやきを　てに　いれますわよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T13:41:40" />
+				Time="2012-01-19T13:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -161,16 +177,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]さまは　ご自分の
-ポケモンを　映画に▽
+			<Text>ねえ　[Name:TrainerName ]さまは
+ご自分の　ポケモンを　映画に▽
 出演させて　いらっしゃいます？▼
 ポケモンだって　役者……▼
 よい　作品に　出演なされば
-きっと　スターの　輝きを▽
-手に　いれますわよ！</Text>
+きっと　スターの　ごとき
+輝きを　手に　いれますわよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T13:41:34" />
+				Time="2012-01-19T13:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -257,7 +273,7 @@
 			<Text>たくさんの　ファンレターだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T09:49:22" />
+				Time="2012-01-19T10:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

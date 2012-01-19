@@ -9,11 +9,11 @@
 			<Text>ヘヘヘ………▼
 ここはな　なんとか　って　ちほうで
 スカウトされた　スゲー　びじんさんが▽
-つかってる　がくや　なんだ▼
+つかってる　がくや　なんだぞ▼
 ……きに　なるよなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:52:22" />
+				Time="2012-01-19T13:06:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -24,11 +24,11 @@
 			<Text>ヘヘヘ………▼
 ここはな　何とか　って　地方で
 スカウトされた　スゲー　美人さんが▽
-使ってる　楽屋なんだ▼
+使ってる　楽屋なんだぞ▼
 ……気に　なるよなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:52:41" />
+				Time="2012-01-19T13:06:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1413,11 +1413,22 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		Label="msg_c15r0201_pwmoji_01_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンに　ついて２の
-せつめいテキスト</Text>
+			<Text>ポケウッドは　どんなポケモンでも
+さつえいに　さんか　できるんだ！▼
+ただし　おぼえさせている　わざには▽
+ちょっと　ちゅういが　ひつようだよ！▼
+へんしん▼
+いちゃもん▼
+ゆびをふる▼
+いま　いった　わざを　おぼえていると
+ポケウッドに　でられなくなるよ！▼
+あいての　えんぎを　じゃま　しちゃうから
+ポケウッドでは　きんし　されてるんだ▼
+じぶんのポケモンで　さつえいするときは
+おぼえてる　わざに　ちゅういしてね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-18T11:21:50" />
+				Time="2012-01-19T06:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1425,11 +1436,22 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンに　ついて２の
-せつめいテキスト</Text>
+			<Text>ポケウッドは　どんなポケモンでも
+撮影に　参加できるんだ！▼
+ただし　覚えている　わざには▽
+ちょっと　注意が　必要だよ！▼
+へんしん▼
+いちゃもん▼
+ゆびをふる▼
+いま　いった　わざを　覚えていると
+ポケウッドには　でられなくなるよ！▼
+相手の　演技を　邪魔　しちゃうから
+ポケウッドでは　禁止　されてるんだ▼
+自分の　ポケモンで　撮影するときは
+覚えている　わざに　注意してね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-18T11:22:18" />
+				Time="2012-01-19T06:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

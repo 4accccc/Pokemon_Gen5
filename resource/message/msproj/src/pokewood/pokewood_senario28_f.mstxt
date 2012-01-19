@@ -840,29 +840,29 @@
 			Language="JPN">
 			<Text>モニカ『そのわりには　[Name:TrainerName Idx="1" ]
 べつに　なにも　してないじゃん！！▼
-くちさき　だけ　だったら▽
-なんとでも　いえるもん！</Text>
+アンタねえ　くちさき　だけなら
+なんとでも　いえるんだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-01-18T13:29:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-01-18T13:29:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『その割には　[Name:TrainerName Idx="1" ]
-別に　何にも　してないじゃん！！▽
-口先　だけ　だったら▼
-何とでも　言えるもん！！</Text>
+別に　何にも　してないじゃん！！▼
+アンタねえ　口先　だけなら
+何とでも　言えるんだよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-01-18T13:29:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-01-18T13:29:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

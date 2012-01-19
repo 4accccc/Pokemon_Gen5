@@ -554,11 +554,11 @@
 	<row id="pw_event3_react_enemy_2">
 		<language name="JPN" width="256">モニカ『そのわりには　[1:00:トレーナー名:1]
 べつに　なにも　してないじゃん！！▼
-くちさき　だけ　だったら▽
+くちさき　だけ　だったら
 なんとでも　いえるもん！</language>
 		<language name="JPN_KANJI" width="256">モニカ『その割には　[1:00:トレーナー名:1]
-別に　何にも　してないじゃん！！▽
-口先　だけ　だったら▼
+別に　何にも　してないじゃん！！▼
+口先　だけ　だったら
 何とでも　言えるもん！！</language>
 	</row>
 	<row id="pw_event4_hero_0">
