@@ -451,7 +451,7 @@ extern void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk );
 /// ETC
 //=====================================
 extern void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
-extern void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk );
+extern void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk, BOOL continue_bgm );
 
 //-------------------------------------
 /// TEXT

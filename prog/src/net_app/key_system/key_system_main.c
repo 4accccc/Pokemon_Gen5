@@ -217,7 +217,7 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
   }
 
   //一時モジュールの破棄
-  KEYSYS_ExitTemporaryModules( p_wk );
+  KEYSYS_ExitTemporaryModules( p_wk, FALSE );
 
   //シーケンス破棄
   KEYSYS_SEQ_Exit( p_wk->p_seq );
@@ -1369,6 +1369,7 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
   KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
 
+  if( p_wk->p_snd_preset == NULL )
   {
     static const u32 sc_se_tbl[] =
     {
@@ -1376,9 +1377,9 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
       CYGNUS_SE_ICON,
     };
     p_wk->p_snd_preset  = SOUNDMAN_PresetSoundTbl( sc_se_tbl, NELEMS(sc_se_tbl) );
+    PMSND_PlayBGM( KEYSYS_BGM_MAIN );
   }
 
-  PMSND_PlayBGM( KEYSYS_BGM_MAIN );
 
 #ifdef PM_DEBUG
   //デバッグウィンドウ
@@ -1394,7 +1395,7 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
  *	@param	KEY_SYSTEM_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
+void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk, BOOL continue_bgm )
 {
 #ifdef PM_DEBUG
   //デバッグウィンドウ
@@ -1403,9 +1404,12 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
   DEBUGWIN_ExitProc();
 #endif //PM_DEBUG
 
-  PMSND_StopBGM();
-
-  SOUNDMAN_ReleasePresetData( p_wk->p_snd_preset );
+  if( !continue_bgm )
+  {
+    PMSND_StopBGM();
+    SOUNDMAN_ReleasePresetData( p_wk->p_snd_preset );
+    p_wk->p_snd_preset  = NULL;
+  }
 
   KEYSYS_CYGNUSFLOW_Exit( p_wk );
   KEYSYS_KEYFLOW_Exit( p_wk );

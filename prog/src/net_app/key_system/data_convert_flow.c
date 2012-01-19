@@ -1684,9 +1684,8 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
   switch( *p_seq )
   {
   case SEQ_NEXT_PROC:
-    KEYSYS_ExitTemporaryModules( p_wk );
+    KEYSYS_ExitTemporaryModules( p_wk, FALSE );
     {
-
       WIFILOGIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGIN_PARAM) );
       p_param->gamedata     = p_wk->p_param->p_gamedata;
       p_param->bg           = WIFILOGIN_BG_NORMAL;
@@ -1769,7 +1768,7 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
   switch( *p_seq )
   {
   case SEQ_NEXT_PROC:
-    KEYSYS_ExitTemporaryModules( p_wk );
+    KEYSYS_ExitTemporaryModules( p_wk, FALSE );
     {
       WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGOUT_PARAM) );
       p_param->gamedata = p_wk->p_param->p_gamedata;
@@ -1828,7 +1827,7 @@ static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, v
   switch( *p_seq )
   {
   case SEQ_NEXT_PROC:
-    KEYSYS_ExitTemporaryModules( p_wk );
+    KEYSYS_ExitTemporaryModules( p_wk, TRUE );
     {
       NAMEIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(NAMEIN_PARAM) );
       p_param->mode = NAMEIN_GAMESYNC_ID_CODE;
