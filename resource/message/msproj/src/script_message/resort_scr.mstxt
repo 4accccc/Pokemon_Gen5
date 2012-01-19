@@ -85781,11 +85781,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-まあまあな　ひとが　いる
+まあまあな　ひとが　いる▽
 まあまあな　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:38:26" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85796,11 +85796,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-まあまあな　人が　いる
+まあまあな　人が　いる▽
 まあまあな　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:38:30" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -85847,11 +85847,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-まあまあな　ひとが　いる
+まあまあな　ひとが　いる▽
 まあまあな　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:38:19" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85862,11 +85862,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-まあまあな　人が　いる
+まあまあな　人が　いる▽
 まあまあな　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:38:16" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -85913,11 +85913,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-そこそこの　ひとが　いる
+そこそこの　ひとが　いる▽
 そこそこの　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:52" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85928,11 +85928,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-そこそこの　人が　いる
+そこそこの　人が　いる▽
 そこそこの　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:59" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:12:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -85979,11 +85979,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-そこそこの　ひとが　いる
+そこそこの　ひとが　いる▽
 そこそこの　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:28" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85994,11 +85994,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『……！！
 [Name:ResortShop Idx="1" ]……！▼
 [Name:TrainerName Idx="2" ]って
-そこそこの　人が　いる
+そこそこの　人が　いる▽
 そこそこの　ところ　だね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:39" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -86043,12 +86043,12 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『……！！
-[Name:ResortShop Idx="1" ]……！▽
+[Name:ResortShop Idx="1" ]……！▼
 まさに　ここです！
 いきたかった　ところは！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:13" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86057,12 +86057,12 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『……！！
-[Name:ResortShop Idx="1" ]……！▽
+[Name:ResortShop Idx="1" ]……！▼
 まさに　ここです！
 行きたかった　ところは！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:20" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -86106,12 +86106,12 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『……！！
-[Name:ResortShop Idx="1" ]……！▽
+[Name:ResortShop Idx="1" ]……！▼
 まさに　ここです！
 いきたかった　ところは！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:36:53" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86120,12 +86120,12 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『……！！
-[Name:ResortShop Idx="1" ]……！▽
+[Name:ResortShop Idx="1" ]……！▼
 まさに　ここです！
 行きたかった　ところは！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:37:03" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T14:13:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
