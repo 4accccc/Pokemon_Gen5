@@ -110,7 +110,7 @@ EVENT_START   ev_t02r0101_girl1_01
         _MSGWIN_CLOSE()
 
         //トレーナー戦呼び出し
-        _TRAINER_BTL_SET( TRID_MINI_24, 0 )
+        _TRADE_AFTER_TRAINER_BTL_SET( TRID_MINI_24, SCR_TRPOKE_AFTER_SAVE_T02R0101_1 )
 
         //結果チェック
         _TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -175,7 +175,7 @@ EVENT_START   ev_t02r0101_girl1_01
         _MSGWIN_CLOSE()
 
         //トレーナー戦呼び出し
-        _TRAINER_BTL_SET( TRID_MINI_25, 0 )
+        _TRADE_AFTER_TRAINER_BTL_SET( TRID_MINI_25, SCR_TRPOKE_AFTER_SAVE_T02R0101_1 )
 
         //結果チェック
         _TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -248,6 +248,8 @@ ev_poketrade_01:
         _BALLOONWIN_TALKOBJ_MSG( msg_t02r0101_girl1_02 )
         _MSGWIN_CLOSE()
 
+        //ポケモンのニックネーム等を格納、あとで対戦する際に参照する
+        _TRADEPOKE_AFTER_SAVE( LWK_CHOICE, SCR_TRPOKE_AFTER_SAVE_T02R0101_1 )
         //交換処理
         _FIELD_POKE_TRADE ( FLD_TRADE_POKE_30_ETEBOOSU, LWK_CHOICE )
 
@@ -323,6 +325,8 @@ ev_poketrade_02:
         _BALLOONWIN_TALKOBJ_MSG( msg_t02r0101_girl1_10 )
         _MSGWIN_CLOSE()
 
+        //ポケモンのニックネーム等を格納、あとで対戦する際に参照する
+        _TRADEPOKE_AFTER_SAVE( LWK_CHOICE, SCR_TRPOKE_AFTER_SAVE_T02R0101_2 )
         //交換処理
         _FIELD_POKE_TRADE ( FLD_TRADE_POKE_31_HUUDHIN, LWK_CHOICE )
 
