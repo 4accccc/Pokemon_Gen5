@@ -81,19 +81,24 @@ typedef enum
 // メニュー項目インデックス
 typedef enum
 {
+  MENU_ITEM_CGEAR,
   MENU_ITEM_SAVE,
   MENU_ITEM_EXSAVE,
-  MENU_ITEM_CGEAR,
-  MENU_ITEM_DAMMY,
+  MENU_ITEM_SAVETABLE,
+  MENU_ITEM_SAVECRC,
+  MENU_ITEM_RETURN,
+
   MENU_ITEM_NUM
 } MENU_ITEM;
 
 // メニュー項目文字列
 static const STRCODE* str_menu[] =
 {
+  L"Cギアデータセット",
   L"セーブアドレス",
   L"セーブアドレスEX",
-  L"Cギアデータセット",
+  L"セーブブロックテーブル",
+  L"セーブCRCアドレス",
   L"戻る",
 };
 
@@ -132,6 +137,8 @@ static void SetNextFunc( PROC_WORK *p_wk );
 static void NextFunc_CGearDummyData( PROC_WORK *p_wk );
 static void NextFunc_SaveAdrs( PROC_WORK *p_wk );
 static void NextFunc_ExSaveAdrs( PROC_WORK * p_wk );
+static void NextFunc_SaveAdrsTable( PROC_WORK * p_wk );
+static void NextFunc_SaveAdrsCRC( PROC_WORK * p_wk );
 
 //============================================================================================
 /**
@@ -361,6 +368,10 @@ static void SetNextFunc( PROC_WORK *p_wk )
 {
   // カーソルの位置で決定
   switch( p_wk->curPos ){
+  case MENU_ITEM_CGEAR:
+    NextFunc_CGearDummyData(p_wk);
+    OS_Printf("CGEAR\n");
+    break;
   case MENU_ITEM_SAVE:
     NextFunc_SaveAdrs(p_wk);
     OS_Printf("SAVE\n");
@@ -369,9 +380,11 @@ static void SetNextFunc( PROC_WORK *p_wk )
     NextFunc_ExSaveAdrs(p_wk);
     OS_Printf("SAVE\n");
     break;
-  case MENU_ITEM_CGEAR:
-    NextFunc_CGearDummyData(p_wk);
-    OS_Printf("CGEAR\n");
+  case MENU_ITEM_SAVETABLE:
+    NextFunc_SaveAdrsTable(p_wk);
+    break;
+  case MENU_ITEM_SAVECRC:
+    NextFunc_SaveAdrsCRC(p_wk);
     break;
   }
 }
@@ -427,7 +440,7 @@ static void NextFunc_CGearDummyData( PROC_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  セーブのアドレス表示
+ *	@brief  セーブデータアドレス出力：PGLでのセーブデータ解析の資料用
  *	大野さんのソースのコピー
  *	test/ohno/debug_saveaddr.c
  */
@@ -808,7 +821,7 @@ enum {
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static void printInnerSaveAdrsList( SAVE_CONTROL_WORK * svctrl, u32 adrs_ofs, u32 id_ofs )
+static void printInnerSaveAdrsList( BOOL is_table, SAVE_CONTROL_WORK * svctrl, u32 adrs_ofs, u32 id_ofs )
 {
   int i;
   u32 size, adrs;
@@ -821,45 +834,57 @@ static void printInnerSaveAdrsList( SAVE_CONTROL_WORK * svctrl, u32 adrs_ofs, u3
   {
     adrs = (u32)SaveControl_DataPtrGet( svctrl, i ) - top_adrs + adrs_ofs;
     size = SaveParam_Normal.table[i].get_size();
-    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-    if ( id_ofs == 0 ) {
-      OS_TPrintf(" |   内部BLOCK%d\n", i );
+    if ( is_table )
+    {
+      OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+      if ( id_ofs == 0 ) {
+        OS_TPrintf(" |   内部BLOCK%d\n", i );
+      } else {
+        OS_TPrintf(" |   内部BLOCK%d ミラー\n", i );
+      }
     } else {
-      OS_TPrintf(" |   内部BLOCK%d ミラー\n", i );
+      OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
     }
-    //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
   }
   //CRC Table
   size = crc_total_size;
   adrs = adrs_ofs + total_size - LAST_DATA_SIZE - crc_total_size;
-  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-  if ( id_ofs == 0 ) {
-    OS_TPrintf(" |   内部 CRC テーブル\n" );
+  if ( is_table )
+  {
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    if ( id_ofs == 0 ) {
+      OS_TPrintf(" |   内部 CRC テーブル\n" );
+    } else {
+      OS_TPrintf(" |   内部 CRC テーブル ミラー\n" );
+    }
   } else {
-    OS_TPrintf(" |   内部 CRC テーブル ミラー\n" );
-  }
-  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+   // OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+  } 
 
   // Footer
   i ++;
   size = LAST_DATA_SIZE;
   adrs = adrs_ofs + total_size - LAST_DATA_SIZE;
-  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-  OS_TPrintf(" |   内部 フッター\n" );
-  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+  if ( is_table )
+  {
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    OS_TPrintf(" |   内部 フッター\n" );
+  } else {
+    OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+  }
 }
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static void printInnerSaves( SAVE_CONTROL_WORK * svctrl )
+static void printInnerSaves( BOOL is_table, SAVE_CONTROL_WORK * svctrl )
 {
   //OS_TPrintf("INNER SAVE AREA ADRS\n");
-  printInnerSaveAdrsList( svctrl, SaveParam_Normal.savearea_top_address, 0 );
-  printInnerSaveAdrsList( svctrl, SaveParam_Normal.savearea_mirror_address, GMDATA_ID_MAX + 2 );
+  printInnerSaveAdrsList( is_table, svctrl, SaveParam_Normal.savearea_top_address, 0 );
+  printInnerSaveAdrsList( is_table, svctrl, SaveParam_Normal.savearea_mirror_address, GMDATA_ID_MAX + 2 );
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static void printOuterSave( const GFL_SVLD_PARAM * params, u32 id_ofs, u32 adrs_ofs )
+static void printOuterSave( BOOL is_table, const GFL_SVLD_PARAM * params, u32 id_ofs, u32 adrs_ofs )
 {
   int i;
   u32 size, adrs;
@@ -873,43 +898,75 @@ static void printOuterSave( const GFL_SVLD_PARAM * params, u32 id_ofs, u32 adrs_
   {
     size = params->table[i].get_size();
     adrs = adrs_ofs + top_adrs + total_size;
-    //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+    if ( !is_table )
+    {
+      OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
+    }
     total_size += MATH_ROUNDUP( size + BLOCK_FOOTER_SIZE, 256 );
   }
-  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-  OS_TPrintf(" |   外部 BLOCK%d\n", id_ofs );
+  if ( is_table )
+  {
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    OS_TPrintf(" |   外部 BLOCK%d\n", id_ofs );
+  }
   //CRC Table
   size = crc_total_size;
   adrs = adrs_ofs + top_adrs + total_size;// - LAST_DATA_SIZE - crc_total_size;
   i = 100;
-  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-  OS_TPrintf(" |   外部 BLOCK%d CRC テーブル\n", id_ofs );
-  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, 0 );
+  if ( is_table )
+  {
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    OS_TPrintf(" |   外部 BLOCK%d CRC テーブル\n", id_ofs );
+  } else {
+    OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, 0 );
+  }
   // Footer
   i = 101;
   size = LAST_DATA_SIZE;
   adrs = adrs_ofs + top_adrs + total_size + crc_total_size;
-  OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
-  OS_TPrintf(" |   外部 BLOCK%d フッター\n", id_ofs );
-  //OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i, adrs, size, size, adrs + size - 2 );
+  if ( is_table )
+  {
+    OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
+    OS_TPrintf(" |   外部 BLOCK%d フッター\n", id_ofs );
+  } else {
+    OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i, adrs, size, size, adrs + size - 2 );
+  }
 }
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static void printOuterSaves( void )
+static void printOuterSaves( BOOL is_table )
 {
   int i;
   OS_TPrintf("OUTER SAVE AREA ADRS\n");
   for ( i = 0; i < SAVE_EXTRA_ID_MAX; i ++ )
   {
     const GFL_SVLD_PARAM * params = &SaveParam_ExtraTbl[i];
-    printOuterSave( params, i, 0 );
+    printOuterSave( is_table, params, i, 0 );
     if (params->savearea_top_address != params->savearea_mirror_address )
     {
-      printOuterSave( params, 0, params->savearea_mirror_address - params->savearea_top_address );
+      printOuterSave( is_table,
+          params, 0, params->savearea_mirror_address - params->savearea_top_address );
     }
   }
 }
 
+//---------------------------------------------------------------------------
+/// ロットチェック資料：「1.3バックアップデータの信頼性について」の項目生成用
+/// このままでは使用できないのでExcel上で加工している
+//---------------------------------------------------------------------------
+static void NextFunc_SaveAdrsCRC( PROC_WORK * p_wk )
+{
+  printInnerSaves( FALSE, p_wk->pSaveData );
+  printOuterSaves( FALSE );
+}
+//---------------------------------------------------------------------------
+/// ロットチェック資料：「1.5メモリーイメージ」の項目生成用
+//---------------------------------------------------------------------------
+static void NextFunc_SaveAdrsTable( PROC_WORK * p_wk )
+{
+  printInnerSaves( TRUE, p_wk->pSaveData );
+  printOuterSaves( TRUE );
+}
 //---------------------------------------------------------------------------
 /**
  * @brief
@@ -945,8 +1002,8 @@ static void NextFunc_ExSaveAdrs( PROC_WORK * p_wk )
 
   OS_TPrintf("DEBUG_FIGHT_SAVE          %08x(%08x)\n", DEBUG_FIGHT_SAVE, 0 );
   
-  printInnerSaves( p_wk->pSaveData );
-  printOuterSaves();
+  //printInnerSaves( p_wk->pSaveData );
+  //printOuterSaves();
 }
 
 #endif // PM_DEBUG
