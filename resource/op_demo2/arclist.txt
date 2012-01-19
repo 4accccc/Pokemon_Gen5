@@ -615,5 +615,4 @@
 "op_demo_b_614_LZ.bin" 
 "op_demo_b_615_LZ.bin" 
 "op_demo_b_616_LZ.bin" 
-"op_demo_b_617_LZ.bin" 
 "op_demo_end.bin" 
