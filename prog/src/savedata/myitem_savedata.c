@@ -61,6 +61,7 @@ static void SortRepository(MYITEM_PTR myitem, ITEM_ST *item, u32 max );
 static void ChengeItem( ITEM_ST * p1, ITEM_ST * p2 );
 static u8 GetPocketIDFromTable( u16 item_id );
 static void DelClearItemST( ITEM_ST *st );
+static ITEM_ST* ItemAdd( MYITEM_PTR myitem, u16 item_no, u16 num );
 
 
 //==============================================================================
@@ -399,6 +400,30 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 	return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ちにアイテムを加える
+ *
+ *	@param	myitem    手持ちアイテム構造体へのポインタ
+ *	@param	item_no   指定するアイテムのナンバー
+ *	@param	num       アイテムの個数
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static ITEM_ST* ItemAdd( MYITEM_PTR myitem, u16 item_no, u16 num )
+{
+  ITEM_ST * add = AddItemPosGet( myitem, item_no, num );
+
+  if( add == NULL ){ return NULL; }
+  add->id = item_no;
+  add->no += num;
+
+  ONOUE_Printf("ID:%u=%u個\n",add->id,add->no);
+
+  return add;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	手持ちにアイテムを加える
@@ -412,43 +437,44 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 //------------------------------------------------------------------
 BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-	ITEM_ST * add = AddItemPosGet( myitem, item_no, num );
-
+  // 手持ちにアイテムを追加
+  ITEM_ST * add = ItemAdd( myitem, item_no, num );
 	if( add == NULL ){ return FALSE; }
-	add->id = item_no;
-	add->no += num;
-
-  ONOUE_Printf("ID:%u=%u個\n",add->id,add->no);
-
-
-//	{
-//		u32	pocket;
-//		u32	max;
-//		pocket = MyItemDataGet( myitem, item_no, &add, &max );
-//		// 木の実
-//		if( pocket == BAG_POKE_NUTS ){
-//			MYITEM_SortNumber( add, max );
-//		// 技マシン
-//		}else if( pocket == BAG_POKE_WAZA ){
-//			MYITEM_SortWazaMachine( add, max );
-//		}
-/*
-		// 木の実
-		if( pocket == BAG_POKE_NUTS || pocket == BAG_POKE_WAZA ){
-			MYITEM_SortNumber( add, max );
-		}
-*/
- 
-    /* スワンから、アイテムをリストの一番上に持っていく処理は廃止します */
-//    else if(before == 0){  //加えたアイテムが一個目だった場合、リストの最初にもっていく
-//      ITEM_ST * item;
-//      u32	num;
-//      MyPocketDataGet(myitem, pocket, &item, &num);
-//      num = MYITEM_GetItemThisPocketNumber(item, num);
-//      bottomInsert( item,  num );
-//    }
-//	}
 	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	手持ちにアイテムを加えて、一番上に移動する
+ * @param	myitem		手持ちアイテム構造体へのポインタ
+ * @param	item_no		指定するアイテムのナンバー
+ * @param	num			アイテムの個数
+ * @param	heap		ヒープID(現在未使用)
+ * @retval	TRUE	成功
+ * @retval	FALSE	失敗
+ */
+//------------------------------------------------------------------
+BOOL MYITEM_AddItemTop( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
+{
+  ITEM_ST* item;
+  ITEM_ST* add;
+  u32	max;
+  u32	pocket_item_num;
+
+  // 手持ちにアイテムを追加
+  add = ItemAdd( myitem, item_no, num );
+  if( add == NULL ){ return FALSE; }
+
+  // アイテム配列を取得
+  MyItemDataGet( myitem, item_no, &item, &max );
+
+  // アイテムを一番下に移動
+  MYITEM_MoveBottom( myitem ,add->id );
+
+  // 一番下のアイテムを一番上に移動
+  pocket_item_num = MYITEM_GetItemThisPocketNumber(item, max);
+  bottomInsert( item,  pocket_item_num );
+  return TRUE;
 }
 
 //------------------------------------------------------------------

@@ -89,6 +89,7 @@ extern void MYITEM_ITEM_STFullCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocke
 extern void MYITEM_Init(MYITEM_PTR item);
 extern BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
 extern BOOL MYITEM_AddItem(MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap);
+extern BOOL MYITEM_AddItemTop( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
 extern BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
 extern BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, HEAPID heap );
 extern BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );

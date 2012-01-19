@@ -246,7 +246,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
       SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
 
       //ドリームボールをバッグに加える
-      MYITEM_AddItem( GAMEDATA_GetMyItem(gamedata), ITEM_DORIIMUBOORU, 1, esb->heap_id );
+      MYITEM_AddItemTop( GAMEDATA_GetMyItem(gamedata), ITEM_DORIIMUBOORU, 1, esb->heap_id );
       
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
       esb->pdc_setup = PDC_MakeSetUpParam( gamedata, esb->pp, &esb->bfs, 
