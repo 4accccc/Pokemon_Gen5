@@ -113,7 +113,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
       }
       //タマゴではないポケモンを見つけられなかった
       if (i == num){
-        WORDSET_RegisterPokeMonsNameNo( wordset, 3, MONSNO_MINEZUMI );
+        WORDSET_RegisterPokeMonsNameNo( wordset, 3, MONSNO_TIRATIINO );
       }
     }
 
