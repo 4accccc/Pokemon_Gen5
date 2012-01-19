@@ -48,27 +48,27 @@
 //  定数定義
 //==============================================================================
 /// タイトル画面の長さ
-#define TOTAL_WAIT      (60*114)
+#define TOTAL_WAIT      (60*113)
 
 /// 上下画面を入れ替えるフレーム
-#define TITLE_FLIP_WAIT   ( 678-12 )
+#define TITLE_FLIP_WAIT   ( 1740 )
 
 /// 伝説ポケモンが鳴くフレーム
-#define POKE_VOICE_FRAME    ( 5001 )
+#define POKE_VOICE_FRAME    ( 7001 )
 
 /// ループパートに入った時のフレーム
-#define POKE_LOOP_PART_FRAME  ( 5301 )
+#define POKE_LOOP_PART_FRAME  ( 7300 )
 
 // 黒・白で違う定義
 #if PM_VERSION==VERSION_B2
 
-#define POKE_LOOP_END_FRAME   ( 5619 )      /// 黒：ポリゴンデモのループ終了フレームの指定
+#define POKE_LOOP_END_FRAME   ( 7780 )      /// 黒：ポリゴンデモのループ終了フレームの指定
 #define PLAY_MONSNO     ( MONSNO_KYUREMU )  /// 黒：タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONS_FORM  ( 2 )               /// B2では黒キュレム
 
 #else
 
-#define POKE_LOOP_END_FRAME   ( 5779 )      /// 白：ポリゴンデモのループ終了フレームの指定
+#define POKE_LOOP_END_FRAME   ( 7780 )      /// 白：ポリゴンデモのループ終了フレームの指定
 #define PLAY_MONSNO     ( MONSNO_KYUREMU )  /// 白：タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONS_FORM  ( 1 )               /// W2では白キュレム
 
@@ -1055,15 +1055,12 @@ static const GFL_G3D_OBJSTATUS drawStatus = {
 // リソースの並び順
 enum{
   G3DRES_01_BMD = 0,
-  G3DRES_01_BTP,
   G3DRES_01_BCA,
   G3DRES_02_BMD,
   G3DRES_02_BCA,
   G3DRES_03_BMD,
-  G3DRES_03_BTP,
   G3DRES_03_BTA,
   G3DRES_03_BCA,
-  G3DRES_03_BVA,
 };
 
 // OBJインデックス
@@ -1080,15 +1077,12 @@ enum{
 // 黒：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbva, GFL_G3D_UTIL_RESARC },
 };
 // 黒：カメラデータ
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_b_camera_bin
@@ -1098,15 +1092,12 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 // 白：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbva, GFL_G3D_UTIL_RESARC },
 };
 
 // 白：カメラデータ
@@ -1117,7 +1108,6 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
   { G3DRES_01_BCA, 0  },
-  { G3DRES_01_BTP, 0  },
 };
 #define ANM_01_NUM  ( NELEMS(g3Dutil_anm1Tbl) )
 
@@ -1127,10 +1117,8 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
 #define ANM_02_NUM  ( NELEMS(g3Dutil_anm2Tbl) )
 
 static const GFL_G3D_UTIL_ANM g3Dutil_anm3Tbl[] = {
-  { G3DRES_03_BTP, 0  },
   { G3DRES_03_BTA, 0  },
   { G3DRES_03_BCA, 0  },
-  { G3DRES_03_BVA, 0  },
 };
 #define ANM_03_NUM  ( NELEMS(g3Dutil_anm3Tbl) )
 
@@ -1351,11 +1339,16 @@ static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame )
 
   ICA_ANIME_SetAnimeFrame( CG3d->icaAnime, anmFrm );
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
-  for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
+  for(i=0;i<G3DUTIL_OBJCOUNT; i++){
+    int anm_num = anm_num_tbl[ i ];
+    int anm_idx;
+
     g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
-    GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, 0, &anmFrm );
-    if(i==0){
-      GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, 1, &anmFrm );
+
+    // アニメの数分
+    for( anm_idx=0; anm_idx<anm_num; anm_idx++ )
+    {
+      GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, anm_idx, &anmFrm );
     }
   }
   
