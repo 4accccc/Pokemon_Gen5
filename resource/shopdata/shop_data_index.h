@@ -23,7 +23,7 @@
 #define T03_FS    ( 11 )  // カゴメタウン
 #define T04_FS    ( 12 )  // サザナミタウン
 #define C10_FS    ( 13 )  // ブラックシティ／ホワイトフォレスト
-#define SHOP_UP    ( 14 )  // シッポウシティ個人商店
+#define SHOP_UP    ( 14 )  // シッポウシティ個人商店・ショッピングモール３Ｆ右
 #define SHOP_KANPO    ( 15 )  // ホドモエシティ市場１
 #define SHOP_OKOU    ( 16 )  // ホドモエシティ市場２
 #define SHOP_MALL1    ( 17 )  // ショッピングモール１Ｆ
