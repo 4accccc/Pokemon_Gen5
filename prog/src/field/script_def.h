@@ -547,6 +547,8 @@
 //--------------------------------------------------------------
 #define SCR_TRPOKE_AFTER_SAVE_R04R0301 (0)    // R04ブラック
 #define SCR_TRPOKE_AFTER_SAVE_R04R0801 (1)    // R04ホワイト
+#define SCR_TRPOKE_AFTER_SAVE_T02R0101_1  (2) // T02R0101その１
+#define SCR_TRPOKE_AFTER_SAVE_T02R0101_2  (3) // T02R0101その２
 
 
 
