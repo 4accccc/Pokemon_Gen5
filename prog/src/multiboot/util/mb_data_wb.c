@@ -219,10 +219,12 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
       WB_MYSTATUS *myStatus = &player->mystatus;
 
       MB_DATA_TPrintf("RegionCode[%d]\n",myStatus->region_code);
+      /*  ŠCŠO”Å‚à“Ç‚ß‚é
       if( myStatus->region_code != PM_LANG )
       {
         dataWork->errorState = DES_ANOTHER_COUNTRY;
       }
+      */
     }
     dataWork->subSeq++;
     break;
