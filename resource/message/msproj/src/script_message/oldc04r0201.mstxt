@@ -494,13 +494,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きめました！　１ねんかんは　この
-グッズケースを　あずかりましょう！▼
-それまでに　[Name:TrainerName ]さんが
+			<Text>なやむことは　ありませんね！▼
+[Name:TrainerName ]さんが
 もどってくれば　かえすし……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T07:05:05" />
+				Time="2012-01-19T05:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -508,13 +507,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決めました！　１年間は　この
-グッズケースを　預りましょう！▼
-それまでに　[Name:TrainerName ]さんが
+			<Text>悩むことは　ありませんね！▼
+[Name:TrainerName ]さんが
 戻ってくれば　返すし……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T07:09:43" />
+				Time="2012-01-19T05:29:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -558,13 +556,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もどって　こなければ▼
-これを　もつに　ふさわしい
+[Name:TrainerName ]さんと　おなじぐらい
 センスの　ある　トレーナーに▼
-[Name:TrainerName ]さんの　グッズケースを
-たくすことに　いたしましょう！▼</Text>
+[Name:TrainerName ]さんが　もっていたのと
+おなじ　グッズを　ケースにいれて▽
+わたすことに　いたしましょう！▼
+そう！　みらいへ　うけつがれる
+バトンを　ようい　するのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T07:05:54" />
+				Time="2012-01-19T05:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -573,13 +574,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>戻って　こなければ▼
-これを　持つに　ふさわしい
+[Name:TrainerName ]さんと　同じぐらい
 センスの　ある　トレーナーに▼
-[Name:TrainerName ]さんの　グッズケースを
-託すことに　いたしましょう！▼</Text>
+[Name:TrainerName ]さんが　持っていたのと
+同じ　グッズを　ケースにいれて▽
+渡すことに　いたしましょう！▼
+そう！　未来へ　受け継がれる
+バトンを　用意するのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T07:09:54" />
+				Time="2012-01-19T05:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
