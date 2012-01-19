@@ -2088,9 +2088,12 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
         {
           WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
           w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
-          FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 15*8-w, (3+i*2)*8, p_dst_str );
+          FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 7*8, (3+i*2)*8, p_dst_str );
         }
       }
+      //ÅF
+      GFL_MSG_GetString( p_msg, resort_rnkwnd_name_01, p_dst_str );
+      FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 16*8, (3+i*2)*8, p_dst_str );
 
       //êî
       GFL_MSG_GetString( p_msg, resort_rnkwnd_cnt_00, p_src_str );
