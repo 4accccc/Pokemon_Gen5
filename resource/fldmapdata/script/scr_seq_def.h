@@ -5441,7 +5441,7 @@
  * @def _SET_SP_LOCATION_DIRECT
  * @brief 特殊接続先の設定：直接指定
  * @param zone_id マップID指定
- * @param dir 方向指定
+ * @param dir 方向指定  EXIT_DIR_UP等 ※DIR_UP系は使用不可
  * @param gx  X位置指定（グリッド単位）
  * @param gy  Y位置指定（グリッド単位）
  * @param gz  Z位置指定（グリッド単位）

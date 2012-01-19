@@ -1016,3 +1016,15 @@
 
 //第二引数
 #define SCR_SOFTRESET_RNDMATCH (0) ///<ランダムマッチ用
+
+
+//--------------------------------------------------------------
+//  特殊接続先設定用
+//
+//  include/field/eventdata_type.hの定義と同値
+//--------------------------------------------------------------
+#define SCR_EXIT_DIR_UP     (1)   // 上
+#define SCR_EXIT_DIR_DOWN   (2)   // 下
+#define SCR_EXIT_DIR_LEFT   (3)   // 左
+#define SCR_EXIT_DIR_RIGHT  (4)   // 右
+
