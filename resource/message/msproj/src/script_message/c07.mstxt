@@ -840,13 +840,11 @@
 もう　なにも　なされない……▼
 いや　ただしくは
 もう　なにも　できない……　か▼
-それは　いい
-おわった　はなし▼
-ただ　おまえは　ゆるさない
+だから　おまえを　ゆるさない
 わたしたちと　たたかえ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:21:40" />
+				Time="2012-01-19T11:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -860,13 +858,11 @@
 もう　なにも　なされない……▼
 いや　正しくは
 もう　なにも　できない……　か▼
-それは　いい
-終わった　話▼
-ただ　おまえは　許さない
+だから　おまえを　許さない
 わたしたちと　戦え！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:21:32" />
+				Time="2012-01-19T11:40:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1161,12 +1157,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかうこと！▼
+			<Text>ゲーチスさまのために　たたかうこと！▼
 それだけが　いま
 わたしが　いきている　あかし▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:22:06" />
+				Time="2012-01-19T11:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1174,12 +1170,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦うこと！▼
+			<Text>ゲーチスさまのために　戦うこと！▼
 それだけが　今
 わたしが　生きている　証▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:22:10" />
+				Time="2012-01-19T11:38:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1406,10 +1402,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……！▼</Text>
+			<Text>われら　ダークトリニティは
+いままでも　いまも　これからも▽
+ゲーチスさまの　ちゅうじつな　ぶか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:41" />
+				Time="2012-01-19T11:37:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1417,10 +1415,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……！▼</Text>
+			<Text>われら　ダークトリニティは
+今までも　今も　これからも▽
+ゲーチスさまの　忠実な　部下！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:28:46" />
+				Time="2012-01-19T11:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
