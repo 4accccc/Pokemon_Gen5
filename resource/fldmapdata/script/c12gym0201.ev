@@ -200,12 +200,16 @@ _ANIME_LABEL	anm_danpei_return
 //--------------------------------------------------------------------
 //チェレン：左右を見る                     
 //--------------------------------------------------------------------
-	_ANIME_LABEL r19_rival_look_children
+_ANIME_LABEL r19_rival_look_children
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_swleader1_anime
+	_ANIME_DATA	AC_SWLEADER1_TIPTOE,1
+	_ANIME_DATA	ACMD_END,0
 
 //-----------------------------------------------------------
 //	BOY２：持ち場につく
@@ -222,7 +226,7 @@ _ANIME_LABEL	anm_boy2_walk
 /********************************************************************/
 EVENT_START ev_c12gym0201_swleader1_01
 {
-	_TALK_OBJ_START()
+	
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 
@@ -235,7 +239,8 @@ EVENT_START ev_c12gym0201_swleader1_01
   	
   	//トレーナーとまだ戦っていない
     ELSE
-      _BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_05 , C12GYM0201_SWLEADER1_01 )
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_05 , C12GYM0201_SWLEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
     ENDIF
@@ -246,13 +251,14 @@ EVENT_START ev_c12gym0201_swleader1_01
 		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 		
 			//キミは　たびに　でてから　どれだけの
+			_TALK_OBJ_START()
 			_BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_11 , C12GYM0201_SWLEADER1_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
 		//ゲームクリア後なら
 		ELSE
-		
+			_TALK_OBJ_START()
 			//やあ　さいきんは　ポケモンを　そだて
 			_BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_12 , C12GYM0201_SWLEADER1_01 )
 			_LAST_KEYWAIT()
@@ -266,6 +272,25 @@ EVENT_END
 
 //ジムリーダー戦
 ev_leader1_btl:
+
+	_TALK_START_TURN_NOT()
+	
+	_OBJ_ANIME( C12GYM0201_SWLEADER1_01, anm_swleader1_anime )
+	_OBJ_ANIME_WAIT()
+  
+	_TIME_WAIT( 35 )
+
+	_PLAYER_DIR_GET(SCWK_ANSWER)
+	SWITCH $SCWK_ANSWER
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( C12GYM0201_SWLEADER1_01, anm_staystep_u )
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( C12GYM0201_SWLEADER1_01, anm_staystep_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( C12GYM0201_SWLEADER1_01, anm_staystep_l )
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
 
 	//メッセージ：きみとってはじめての
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_06 )
