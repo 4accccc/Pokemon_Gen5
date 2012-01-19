@@ -107,3 +107,5 @@ extern void MUSICAL_SAVE_SetLookDemo( MUSICAL_SAVE *musSave , const BOOL flg );
 
 extern const BOOL MUSICAL_SAVE_IsConvertItem( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetConvertItem( MUSICAL_SAVE *musSave , const BOOL flg );
+
+extern const u8* MUSICAL_SAVE_GetItemBitAdrs( const MUSICAL_SAVE *musSave );

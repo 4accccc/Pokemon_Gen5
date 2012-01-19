@@ -221,7 +221,7 @@ VMCMD_RESULT EvCmdDataConv_ConvertMusical( VMHANDLE *p_core, void *p_wk_adrs )
   //アイテムコンバート
   for( i = 0; i < MUSICAL_ITEM_MAX_REAL; i++ )
   {
-    if( cp_item_bit[i/8] & (i%8) )
+    if( cp_item_bit[i/8] & (1<<(i%8)) )
     {
       if( MUSICAL_SAVE_ChackHaveItem( p_musical, i ) == FALSE )
       {

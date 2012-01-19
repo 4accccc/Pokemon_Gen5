@@ -345,3 +345,7 @@ void MUSICAL_SAVE_SetConvertItem( MUSICAL_SAVE *musSave , const BOOL flg )
 {
   musSave->isConvertItem = flg;
 }
+const u8* MUSICAL_SAVE_GetItemBitAdrs( const MUSICAL_SAVE *musSave )
+{
+  return musSave->itemBit;
+}

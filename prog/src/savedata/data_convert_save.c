@@ -207,7 +207,8 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
     const MUSICAL_SAVE* cp_musical = MUSICAL_SAVE_GetMusicalSave( (SAVE_CONTROL_WORK *)cp_sv );
     if( MUSICAL_SAVE_IsConvertItem( cp_musical ) == FALSE )
     {
-      if( GFL_STD_MemComp( cp_src_data->musical_item, p_dst_data->musical_item, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0 )
+      const u8* cp_have_item_bit = MUSICAL_SAVE_GetItemBitAdrs( cp_musical );
+      if( GFL_STD_MemComp( cp_src_data->musical_item, cp_have_item_bit, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0 )
       {
         is_convert[DATA_CONVERT_OWNER_MUSICAL] = TRUE;
         if( data_in )
