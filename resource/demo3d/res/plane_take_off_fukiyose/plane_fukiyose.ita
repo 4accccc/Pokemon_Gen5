@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-20T10:53:53" source="plane_take_off_fukiyose_26.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-01-18T21:56:18" source="plane_take_off_fukiyose.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -185,28 +185,28 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="4">
-	<tex_srt_anm index="0" material_name="plane_li02">
+	<tex_srt_anm index="0" material_name="pl_li02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="500" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="test">
+	<tex_srt_anm index="1" material_name="pl_li01">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="500" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="pl_wing_a">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="500" data_head="500"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="plane_li01">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="500" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="shadow2">
+	<tex_srt_anm index="3" material_name="pl_kage">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>

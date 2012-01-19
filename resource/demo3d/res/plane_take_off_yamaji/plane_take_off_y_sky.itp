@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-19T19:32:51" source="plane_take_off_yamaji08.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-01-19T10:06:32" source="plane_take_off_yamaji.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -40,7 +40,7 @@
 
 <tex_pattern_data>
 	<frame_idx size="9">
-		0 2 3 0 2 3 0 2 3
+		0 1 2 0 1 2 0 1 2
 	</frame_idx>
 	<image_idx size="9">
 		0 1 2 6 7 8 3 4 5
@@ -51,9 +51,9 @@
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="3">
-	<tex_pattern_anm index="0" material_name="hai01_a_1" data_size="3" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="hai01_a_2" data_size="3" data_head="0"/>
 	<tex_pattern_anm index="1" material_name="hai01_c_1" data_size="3" data_head="3"/>
-	<tex_pattern_anm index="2" material_name="hai01_b_1" data_size="3" data_head="6"/>
+	<tex_pattern_anm index="2" material_name="hai01_b_3" data_size="3" data_head="6"/>
 </tex_pattern_anm_array>
 
 </body>

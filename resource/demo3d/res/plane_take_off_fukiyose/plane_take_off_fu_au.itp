@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-20T11:25:33" source="plane_take_off_fukiyose_26.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-01-18T21:58:24" source="plane_take_off_fukiyose.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -35,19 +35,19 @@
 		0 0 0 0 0
 	</frame_idx>
 	<image_idx size="5">
-		2 1 4 3 0
+		4 1 2 3 0
 	</image_idx>
 	<palette_idx size="5">
-		2 1 4 3 0
+		4 1 2 3 0
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="5">
-	<tex_pattern_anm index="0" material_name="lambert93" data_size="1" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="lambert87" data_size="1" data_head="1"/>
-	<tex_pattern_anm index="2" material_name="lambert89" data_size="1" data_head="2"/>
-	<tex_pattern_anm index="3" material_name="lambert92" data_size="1" data_head="3"/>
-	<tex_pattern_anm index="4" material_name="grass01ax" data_size="1" data_head="4"/>
+	<tex_pattern_anm index="0" material_name="pl_tree01_1" data_size="1" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="pl_mou_01_1" data_size="1" data_head="1"/>
+	<tex_pattern_anm index="2" material_name="pl_mou_02_1" data_size="1" data_head="2"/>
+	<tex_pattern_anm index="3" material_name="pl_mou_03_1" data_size="1" data_head="3"/>
+	<tex_pattern_anm index="4" material_name="grass01_1" data_size="1" data_head="4"/>
 </tex_pattern_anm_array>
 
 </body>
