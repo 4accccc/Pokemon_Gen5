@@ -263,11 +263,11 @@
 			<Text>ポッド『だーかーら！▼
 そういうこと　いってるから
 いつまで　たっても▽
-さんにん　そろって　いちにんまえ！▽
+３にん　そろって　いちにんまえ！▽
 そんな　あつかいを　されるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:12:29" />
+				Time="2012-01-19T13:03:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -628,13 +628,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……きまぐれ▼
+			<Text>ダーク『……きまぐれ▼
 ……うさばらし▼
 ……ひまつぶし▼
 なんでも　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:33:49" />
+				Time="2012-01-19T13:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -642,13 +642,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……気まぐれ▼
+			<Text>ダーク『……気まぐれ▼
 ……憂さ晴らし▼
 ……暇つぶし▼
 なんでも　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:57:52" />
+				Time="2012-01-19T13:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -753,10 +753,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……たあいも　ない▼</Text>
+			<Text>ダーク『……たあいも　ない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:34:09" />
+				Time="2012-01-19T13:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -764,10 +764,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……他愛も　ない▼</Text>
+			<Text>ダーク『……他愛も　ない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:00:21" />
+				Time="2012-01-19T13:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -811,12 +811,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……こいつら　いがいの
+			<Text>ダーク『……こいつら　いがいの
 ジムリーダーには　きをつけよう▽
 つぎは　ジャマを　されないように……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:18:46" />
+				Time="2012-01-19T13:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -824,12 +824,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……こいつら以外の
+			<Text>ダーク『……こいつら以外の
 ジムリーダーには　気をつけよう▽
 次は　ジャマを　されないように……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:00:33" />
+				Time="2012-01-19T13:03:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -871,13 +871,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……さて
+			<Text>ダーク『……さて
 ゲーチスさまが　まっている▼
 あの　ポケモンを
 かくほ　せねば　ならない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T06:07:54" />
+				Time="2012-01-19T13:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -885,13 +885,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……さて
+			<Text>ダーク『……さて
 ゲーチスさまが　待っている▼
 あの　ポケモンを
 確保せねば　ならない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-04T07:00:41" />
+				Time="2012-01-19T13:03:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
