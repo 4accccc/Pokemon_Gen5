@@ -4197,10 +4197,10 @@
 			Language="JPN">
 			<Text>どんな　りゆうが　あろうが
 ひとの　ものを　とったら▽
-ドロボウ　だからなッ！▼</Text>
+どろぼう　だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T09:55:38" />
+				Time="2012-01-19T02:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4210,10 +4210,10 @@
 			Language="JPN_KANJI">
 			<Text>どんな　理由が　あろうが
 人の　ものを　とったら▽
-ドロボウ　だからなッ！▼</Text>
+どろぼう　だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T09:55:46" />
+				Time="2012-01-19T02:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -10373,10 +10373,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ははっ</Text>
+			<Text>アハハ</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-26T07:16:32" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T02:51:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10384,10 +10384,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ははっ</Text>
+			<Text>アハハ</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:40:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T02:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14457,7 +14457,7 @@
 なんだか　[Name:TrainerName ]ちゃんと
 はなしを　して　いるのに▽
 やきもちを　やいてる　みたいなんだ▼
-ははっ▼
+アハハ▼
 いつもは　なまいき　だけど
 かわいい　ところも　あるんだな▼
 あっ　こらっ　またっ！▼
@@ -14467,8 +14467,8 @@
 いもうとと　おとうとの▽
 あいてを　することに　するよ……▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T09:11:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T02:52:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14485,7 +14485,7 @@
 なんだか　[Name:TrainerName ]ちゃんと
 話しを　しているのに▽
 やきもちを　やいてる　みたいなんだ▼
-ははっ▼
+アハハ▼
 いつもは　ナマイキだけど
 かわいい　ところも　あるんだな▼
 あっ　こらっ　またっ！▼
@@ -14496,7 +14496,7 @@
 相手を　することに　するよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:22:06" />
+				Time="2012-01-19T02:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14548,10 +14548,10 @@
 でも……
 [Name:TrainerName ]ちゃんの　かおが　みれたから▽
 すぐ　げんきに　なれると　おもうな▼
-ははっ……▼</Text>
+アハハ！▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T06:27:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T02:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14634,7 +14634,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このまえ　じどうはんばいきで
+			<Text>この前　自動販売機で
 サイコソーダを　買ったら▼
 なんと！▼
 当たりで　もう１本　でてきたんだ▼
@@ -14646,7 +14646,7 @@
 そろそろ　仕事に　もどるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:23:42" />
+				Time="2012-01-19T02:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -14767,7 +14767,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このあいだは　ゴメン！▼
-仕事ばの　人が
+仕事場の　人が
 まちがえて　ライブキャスターに▽
 でてしまったみたいで…▼
 せっかく　連絡を　くれたのに
@@ -14782,7 +14782,7 @@
 そろそろ　仕事に　もどらないと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:25:23" />
+				Time="2012-01-19T02:53:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18931,14 +18931,14 @@
 でも　ほんとうに　[Name:TrainerName ]くんと
 おはなし　しているのが　たのしいの▼
 この　じかんが　いつまでも
-つづいて　ほしい……　よ▼
+つづいて　ほしい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！▼
 そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:32:51" />
+				Time="2012-01-19T03:07:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18959,14 +18959,14 @@
 でも　本当に　[Name:TrainerName ]くんと
 お話ししているのが　たのしいの▼
 この　時間が　いつまでも
-つづいて　ほしい……　よ▼
+つづいて　ほしい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！▼
 そろそろ　仕事に　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:32:55" />
+				Time="2012-01-19T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19088,14 +19088,14 @@
 えっ？▼
 あはは……▼
 なにを　おねがい　したかは
-ないしょ……　だよ▼
+ないしょ……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！▼
 そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:34:16" />
+				Time="2012-01-19T03:07:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19113,14 +19113,14 @@
 えっ？▼
 あはは……▼
 なにを　お願い　したかは
-ないしょ……　だよ▼
+ないしょ……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！▼
 そろそろ　仕事に　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:34:24" />
+				Time="2012-01-19T03:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19536,14 +19536,14 @@
 きせつ　ごとに　ふんいきが▽
 ガラッと　かわる　はずだよ▼
 よかったら　こんど
-ふたりで　あるいて　みたい……▼
+ふたりで　あるいて　みたい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！
 そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:40:29" />
+				Time="2012-01-19T03:08:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19557,14 +19557,14 @@
 きせつ　ごとに　雰囲気が▽
 ガラッと　変わる　はずだよ▼
 よかったら　こんど
-二人で　歩いて　みたい……▼
+二人で　歩いて　みたい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！
 そろそろ　仕事に　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:40:31" />
+				Time="2012-01-19T03:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19609,14 +19609,14 @@
 いままでに　たべたことの　ないような
 ふしぎな　あじ　だったなぁ…▼
 よかったら　こんど
-ふたりで　たべに　いきたい……▼
+ふたりで　たべに　いきたい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！
 そろそろ　しごとに　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:41:00" />
+				Time="2012-01-19T03:08:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19629,14 +19629,14 @@
 いままでに　食べたことの　ないような
 不思議な　味　だったなぁ…▼
 よかったら　こんど
-二人で　食べに　いきたい……▼
+二人で　食べに　いきたい……　かな▼
 ……　……　……
 ……　……　……▼
 あっ！
 そろそろ　仕事に　もどらなきゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:41:00" />
+				Time="2012-01-19T03:08:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20376,14 +20376,14 @@
 ……　……　……
 ……　……　……▼
 うん！
-なんとか　だいじょうぶ　だよ▼
+なんとか　だいじょうぶ……　かな▼
 じゃあ　ライモンシティの
 かんらんしゃの　まえで　いいよね？▼
 [Name:TrainerName ]くんと　あえるの
 とても　たのしみ……　だから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:48:44" />
+				Time="2012-01-19T03:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20399,14 +20399,14 @@
 ……　……　……
 ……　……　……▼
 うん！
-なんとか　大丈夫だよ▼
+なんとか　大丈夫……　かな▼
 じゃあ　ライモンシティの
 観覧車の　前で　いいよね？▼
 [Name:TrainerName ]くんと　会えるの
 とても　楽しみ……　だから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:48:46" />
+				Time="2012-01-19T03:09:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
