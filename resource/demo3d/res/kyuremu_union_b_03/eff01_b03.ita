@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-08T16:02:44" source="kyuremu_union_b_03.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-18T19:49:58" source="kyuremu_union_b_03.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="1010"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="8 8"
+	compress_material="on" material_size="11 11"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"

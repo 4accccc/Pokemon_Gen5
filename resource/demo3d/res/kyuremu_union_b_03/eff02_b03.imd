@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-21T21:02:01" source="kyuremu_union_b_03_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-18T19:52:30" source="kyuremu_union_b_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-21T21:02:01" source="kyuremu_union_b_03_002.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-18T19:52:30" source="kyuremu_union_b_03.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="13 7"
-	compress_material="on" material_size="6 6"
+	compress_material="on" material_size="5 5"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -649,7 +649,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="6">
+<material_array size="5">
 	<material index="0" name="fx_fball1_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -746,31 +746,7 @@
 		tex_translate="0.000000 0.500000"
 		tex_gen_mode="tex"
 	/>
-	<material index="4" name="fx_l_bolt3"
-		light0="off" light1="off" light2="off" light3="off"
-		face="both"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="5" name="fx_s_bub2_2"
+	<material index="4" name="fx_s_bub2_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2408,7 +2384,7 @@
 		volume_r="1.704102"
 	>
 		<display index="0" material="0" polygon="5" priority="0"/>
-		<display index="1" material="5" polygon="6" priority="0"/>
+		<display index="1" material="4" polygon="6" priority="0"/>
 	</node>
 	<node index="1" name="balllbone" kind="null"
 		parent="0"
@@ -2496,7 +2472,7 @@
 		volume_max="5.260742 5.478760 -0.307861"
 		volume_r="5.572021"
 	>
-		<display index="0" material="4" polygon="2" priority="0"/>
+		<display index="0" material="3" polygon="2" priority="0"/>
 	</node>
 	<node index="6" name="glow" kind="mesh"
 		parent="0"
@@ -2517,7 +2493,7 @@
 		volume_r="1.668213"
 	>
 		<display index="0" material="1" polygon="4" priority="0"/>
-		<display index="1" material="5" polygon="3" priority="0"/>
+		<display index="1" material="4" polygon="3" priority="0"/>
 	</node>
 </node_array>
 
