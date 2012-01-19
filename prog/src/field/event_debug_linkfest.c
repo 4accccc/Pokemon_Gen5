@@ -1668,6 +1668,17 @@ static void posCheck_PosWordset( DMENU_LINK_FEST* wk, VecFx32* vec, u8 buf_idx )
   WORDSET_RegisterNumber( wk->wset, buf_idx+2, SIZE_GRID_FX32(vec->z), 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 }
 
+//ゾーンID文字列展開
+static void posCheck_ZoneIDWordset( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 buf_idx, u16 zone_id )
+{
+  u16 pStrCode[64];
+  WORDSET_RegisterNumber( wk->wset, buf_idx+0, zone_id, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    
+  DEB_STR_CONV_SjisToStrcode( &evwk->allZoneName[ ZONEDATA_NAME_LENGTH * zone_id ], pStrCode, 64 );
+  GFL_STR_SetStringCode( wk->str_tmp, pStrCode );
+  sub_FreeWordset( wk->wset, buf_idx+1, wk->str_tmp );
+}
+
 //--------------------------------------------------------------
 /*
  *  @brief  アイテムミッション情報書き出し
@@ -1693,7 +1704,7 @@ static void evposCheck_ItemParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
   }else{
     sub_GetMsgToBuf( wk, dlf_check_param_none );
   }
-	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy+24, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
 }
 
 
@@ -1751,7 +1762,7 @@ static void evposCheck_NpcParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk,
   }else{
     sub_GetMsgToBuf( wk, dlf_check_param_none );
   }
-	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, col );
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy+24, wk->str_expand, wk->fontHandle, col );
 }
 
 //--------------------------------------------------------------
@@ -1783,13 +1794,7 @@ static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
   WORDSET_RegisterNumber( wk->wset, 0, idx, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
   if( idx < tbl_num ){
-    WORDSET_RegisterNumber( wk->wset, 1, zone_id, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-    {
-      u16 pStrCode[64];
-      DEB_STR_CONV_SjisToStrcode( &evwk->allZoneName[ ZONEDATA_NAME_LENGTH * zone_id ], pStrCode, 64 );
-      GFL_STR_SetStringCode( wk->str_tmp, pStrCode );
-      sub_FreeWordset( wk->wset, 2, wk->str_tmp );
-    }
+    posCheck_ZoneIDWordset( wk, evwk, 1, zone_id );
     WORDSET_RegisterNumber( wk->wset, 3, flag_num, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
     for(i = 0;i < data_max; i++ ){
@@ -1799,7 +1804,7 @@ static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
   }else{
     sub_GetMsgToBuf( wk, dlf_check_param_none );
   }
-	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy+24, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
 }
 
 //--------------------------------------------------------------
@@ -1810,9 +1815,17 @@ static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
 static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page )
 {
   int i,idx,ofs;
+  u16 zone_id;
   GFL_BMP_Clear( evwk->win.bmp, FCOL_WIN_BASE );
 
   ofs = page*evwk->line_max;
+
+  //マジックキー描画
+  zone_id = FIELDMAP_GetZoneID( wk->fieldmap );
+  posCheck_ZoneIDWordset( wk, evwk, 0, zone_id );
+  WORDSET_RegisterNumber( wk->wset, 2, wk->fmwk->key, 10, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_GetMsgToBuf( wk, dlf_check_param_magick_key );
+  PRINTSYS_PrintColor( evwk->win.bmp, 0, 0, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
 
   for(i = 0;i < evwk->line_max;i++){
     idx = ofs+i;

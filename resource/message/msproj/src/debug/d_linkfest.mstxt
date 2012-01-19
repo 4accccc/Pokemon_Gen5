@@ -1198,6 +1198,31 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_check_param_magick_key">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=[Digit:10digits Idx="2" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-19T06:25:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-19T06:24:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=[Digit:10digits Idx="2" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-19T06:25:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-19T06:25:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_stack_check_param01"
 		Style="Large">
 		<LanguageCell
