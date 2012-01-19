@@ -38,6 +38,7 @@ def GetTrainer( trdata_items )
   trainer = Trainer.new
   trainer.set_name( trdata_items[ PARA::TR_NAME ] )
   trainer.set_type( trdata_items[ PARA::TR_TYPE ] )
+  trainer.set_trid( trdata_items[ PARA::TR_ID ] )
   return trainer
 end
 

@@ -60,7 +60,11 @@ class Trainer
     @pokemon_list = Array.new
   end
 
-  attr_reader :name, :type, :pokemon_list
+  attr_reader :id, :name, :type, :pokemon_list
+
+  def set_trid( tr_id )
+    @id = tr_id
+  end
 
   def set_name( name )
     @name = name
