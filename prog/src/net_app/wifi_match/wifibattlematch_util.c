@@ -967,7 +967,7 @@ void WBM_UpdatePowerOffCheck( GAMEDATA *p_gamedata, BtlResult result )
     BATTLEMATCH_SetProgTime( p_sv );
   }
 
-  if( result != BTL_RESULT_RUN )
+  if( result != BTL_RESULT_RUN && result != BTL_RESULT_COMM_ERROR )
   {
     GAMEDATA_AddRndMaptchBp( p_gamedata );
   }

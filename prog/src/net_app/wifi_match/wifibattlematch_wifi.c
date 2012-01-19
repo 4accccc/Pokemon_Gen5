@@ -3819,7 +3819,10 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_SAVE:
     { 
-      WBM_UpdatePowerOffCheck( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+      if( p_param->mode != WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
+      {
+        WBM_UpdatePowerOffCheck( p_param->p_param->p_game_data, p_param->cp_btl_score->result );
+      }
       Util_SaveScore( p_wk, p_wk->p_param->p_wifi_sake_data );
     }
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
