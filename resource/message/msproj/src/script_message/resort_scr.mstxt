@@ -21157,10 +21157,10 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>ほんじつの　くじは　
-しゅうりょうです▼</Text>
+しゅうりょうです</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-08T11:21:27" />
+				Time="2012-01-19T05:37:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -21169,10 +21169,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>本日の　くじは　
-終了です▼</Text>
+終了です</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-08T11:21:27" />
+				Time="2012-01-19T05:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
