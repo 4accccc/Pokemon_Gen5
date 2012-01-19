@@ -5182,9 +5182,9 @@
 
 	<row id="TRID_SWLEADER5_01_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">わるいがな　オレさま
-とにかく　しつこいんだよ！</language>
+とにかく　しつこいんでな！</language>
 		<language name="JPN_KANJI" width="216">わるいがな　オレさま
-とにかく　しつこいんだよ！</language>
+とにかく　しつこいんでな！</language>
 	</row>
 
 	<row id="TRID_SWLEADER5_01_TRMSG_FIGHT_LOSE">
@@ -5195,9 +5195,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER6_01_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">アナタが　どう　せめてくるのかって
+		<language name="JPN" width="216">アナタが　どう　せめてくるのか
 すごく　ドキドキしちゃうよね！</language>
-		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのかって
+		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのか
 すごく　ドキドキしちゃうよね！</language>
 	</row>
 
@@ -17303,10 +17303,10 @@
 	</row>
 
 	<row id="TRID_SWLEADER5_02_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">オレさまが　あきらめたら
-ポケモンに　もうしわけねえだろ！</language>
-		<language name="JPN_KANJI" width="216">オレさまが　あきらめたら
-ポケモンに　申し訳ねえだろ！</language>
+		<language name="JPN" width="216">わるいがな　オレさま
+とにかく　しつこいんでな！</language>
+		<language name="JPN_KANJI" width="216">わるいがな　オレさま
+とにかく　しつこいんでな！</language>
 	</row>
 
 	<row id="TRID_SWLEADER5_02_TRMSG_FIGHT_LOSE">
@@ -17317,9 +17317,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER6_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">アナタが　どう　せめてくるのかって
+		<language name="JPN" width="216">アナタが　どう　せめてくるのか
 すごく　ドキドキしちゃうよね！</language>
-		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのかって
+		<language name="JPN_KANJI" width="216">アナタが　どう　攻めてくるのか
 すごく　ドキドキしちゃうよね！</language>
 	</row>
 
