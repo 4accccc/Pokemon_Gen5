@@ -2012,7 +2012,12 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         u32 failed_bit  = 0;
         REGULATION        *p_reg  = RegulationData_GetRegulation( p_wk->p_reg );
 
-        if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, (POKEPARTY*)p_my_data->pokeparty, &failed_bit) )
+        POKE_REG_RETURN_ENUM reg = PokeRegulationMatchLookAtPokeParty(p_reg, (POKEPARTY*)p_my_data->pokeparty, &failed_bit);
+        BOOL is_egg = PokeRegulation_CheckEggInParty( p_reg, (POKEPARTY*)p_my_data->pokeparty );
+
+        BOOL is_total = PokeRegulation_CheckTotalLvParty( p_reg, (POKEPARTY*)p_my_data->pokeparty );
+
+        if( POKE_REG_OK == reg && !is_egg && !is_total )
         { 
           DEBUG_WIFICUP_Printf( "バトルボックスのポケモンレギュレーションOK\n" );
           *p_seq  = SEQ_WAIT_MOVEOUT_BTLBOX;

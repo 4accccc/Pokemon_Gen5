@@ -1084,6 +1084,18 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       else
       { 
         POKE_REG_RETURN_ENUM reg = PokeRegulationMatchLookAtPokeParty(p_reg, p_wk->p_party, &p_wk->failed_bit);
+        if( PokeRegulation_CheckEggInParty( p_reg, p_wk->p_party ) )
+        {
+          p_wk->failed_bit |= POKEFAILEDBIT_EGG;
+          reg = POKE_REG_ILLEGAL_POKE;
+        }
+
+        if( PokeRegulation_CheckTotalLvParty( p_reg, p_wk->p_party ) )
+        {
+          p_wk->failed_bit |= POKEFAILEDBIT_SUM_LEVEL;
+          reg = POKE_REG_TOTAL_LV_FAILED;
+        }
+
         p_wk->failed_cnt = 0;
         if( POKE_REG_OK == reg )
         {
