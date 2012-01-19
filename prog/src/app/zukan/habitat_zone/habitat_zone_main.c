@@ -2202,7 +2202,7 @@ static void DrawLandMsg( HABITAT_ZONE_WK *p_wk )
   u16 place_id = ZONEDATA_GetPlaceNameID(p_list_data->zone_group);
  
   // 地形メッセージIDを取得
-  if( p_wk->list_size > 0 )
+  if( p_wk->is_no_habitat == FALSE )
   {
     msg_id = GetLandTypeMsgID( p_wk->land_type,p_list_data->info_ground_type);
   }
@@ -2541,22 +2541,14 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
     }
   }
 
-  // 未発見のものカーソルをOFF表示
-  for( i = 0; i < nonexistent_cnt; i++ )
+  // 生息しているかどうかを保存しておく
+  if( nonexistent_cnt <= 0 )
   {
-    // カーソルをOFF状態にする
-    HABITAT_ZONE_GRA_SetCursorStatus( &p_wk->gra_sys ,
-                          index ,GRA_POKEICON_CURSOR_OFF );
-
-    // ポケモンアイコンを非表示にする
-    HABITAT_ZONE_GRA_SetSetDrawEnableIcon( &p_wk->gra_sys ,index ,FALSE );
-
-    // 小アイコンを非表示にする
-    HABITAT_ZONE_GRA_SetSmallIconStatus(&p_wk->gra_sys,index,GRA_SMALLICON_NONE);
-    index++;
-
-    // 空枠を１つにする場合はここでbreakする
-    break;
+    p_wk->is_no_habitat = TRUE;
+  }
+  else
+  {
+    p_wk->is_no_habitat = FALSE;
   }
 
   // アイコンを非表示にする

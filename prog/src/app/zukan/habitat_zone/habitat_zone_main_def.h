@@ -136,5 +136,8 @@ struct _HABITAT_ZONE_WK{
   // はんこ演出
   u32 stump_se_frame;
 
+  // 生息していないデータかどうか
+  BOOL is_no_habitat;
+
 };
 
