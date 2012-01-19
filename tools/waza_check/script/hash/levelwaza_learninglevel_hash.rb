@@ -5561,6 +5561,7 @@ $levelwaza_learninglevel_hash = {
 		35,
 		39,
 		44,
+		45,
 		49,
 		55,
 	],
@@ -9173,6 +9174,7 @@ $levelwaza_learninglevel_hash = {
 		39,
 		43,
 		46,
+		50,
 	],
 	"ハトーボー" => [
 		1,
@@ -9192,6 +9194,7 @@ $levelwaza_learninglevel_hash = {
 		45,
 		50,
 		54,
+		59,
 	],
 	"ケンホロウ" => [
 		1,
