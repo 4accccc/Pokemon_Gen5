@@ -1504,7 +1504,7 @@ EVENT_START ev_fld_item_154
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r11 X=468 Y=170 ITEM=キトサン FLAG=155
+// MAP=r11 X=465 Y=168 ITEM=キトサン FLAG=155
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_155
   _FLD_ITEM_EVENT ITEM_KITOSAN,1
@@ -1679,10 +1679,10 @@ EVENT_START ev_fld_item_179
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d10r0201 X=50 Y=54 ITEM=するどいツメ FLAG=180
+// MAP=d08r0601 X=23 Y=7 ITEM=こんごうだま FLAG=180
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_180
-  _FLD_ITEM_EVENT ITEM_SURUDOITUME,1
+  _FLD_ITEM_EVENT ITEM_KONGOUDAMA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1714,10 +1714,10 @@ EVENT_START ev_fld_item_184
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d10r0201 X=19 Y=71 ITEM=ハイパーボール FLAG=185
+// MAP=d10r0201 X=19 Y=71 ITEM=するどいツメ FLAG=185
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_185
-  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
+  _FLD_ITEM_EVENT ITEM_SURUDOITUME,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1763,10 +1763,10 @@ EVENT_START ev_fld_item_191
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d27r1001 X=26 Y=48 ITEM=パワーリスト FLAG=192
+// MAP=d27r1001 X=26 Y=48 ITEM=パワーバンド FLAG=192
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_192
-  _FLD_ITEM_EVENT ITEM_PAWAARISUTO,1
+  _FLD_ITEM_EVENT ITEM_PAWAABANDO,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1931,14 +1931,14 @@ EVENT_START ev_fld_item_215
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=n01r0401 X=47 Y=20 ITEM=タウリン FLAG=216
+// MAP=n01r0401 X=6 Y=19 ITEM=タウリン FLAG=216
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_216
   _FLD_ITEM_EVENT ITEM_TAURIN,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=n01r0502 X=13 Y=38 ITEM=わざマシン５０ FLAG=217
+// MAP=n01r0401 X=48 Y=20 ITEM=わざマシン５０ FLAG=217
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_217
   _FLD_ITEM_EVENT ITEM_WAZAMASIN50,1
@@ -2064,7 +2064,7 @@ EVENT_START ev_fld_item_234
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d08r0601 X=23 Y=7 ITEM=ひかりのいし FLAG=235
+// MAP=d08r0501 X=16 Y=18 ITEM=ひかりのいし FLAG=235
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_235
   _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
@@ -3065,31 +3065,31 @@ EVENT_START ev_fld_item_377
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=378
+// MAP=r01 X=18 Y=7 ITEM=げんきのかけら FLAG=378
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_378
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=379
+// MAP=r01 X=22 Y=61 ITEM=わざマシン６７ FLAG=379
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_379
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN67,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=380
+// MAP=d08r0601 X=23 Y=8 ITEM=はっきんだま FLAG=380
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_380
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_HAKKINDAMA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=381
+// MAP=d08r0601 X=23 Y=9 ITEM=しらたま FLAG=381
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_381
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_SIRATAMA,1
 EVENT_END
 
 //--------------------------------------------------------------

@@ -1295,7 +1295,7 @@ EVENT_START ev_hide_item_211
 EVENT_END
 
 EVENT_START ev_hide_item_212
-//ñ¢égóp ( 1, 1 )
+//ÇQÇOî‘ìπòH ( 127, 655 )
 	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_212 )// ÉLÉYÇÆÇ∑ÇË
 EVENT_END
 
