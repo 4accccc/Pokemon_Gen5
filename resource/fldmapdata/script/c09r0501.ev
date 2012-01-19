@@ -101,6 +101,9 @@ EVENT_END
 EVENT_START ev_c09r0501_swchampion_01
 
   _TALK_OBJ_START()
+  
+  //フェス強制終了
+  _FMISSION_END_FORCE()
 
   //カメラ操作 //
   _CAMERA_START()//カメラ操作開始
