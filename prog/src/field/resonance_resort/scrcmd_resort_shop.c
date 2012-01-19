@@ -1300,8 +1300,16 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
       }
 
       WORDSET_RegisterWord( wk->wordSet, 2, wk->cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
-      ShopPrintMsgItem( wk, mes_shop_09_21_m + wk->sex, item );
-      MYITEM_AddItem( wk->myitem, item, 1, wk->heapId);
+
+      if( MYITEM_AddCheck( wk->myitem, item, 1, wk->heapId ) )
+      {
+        ShopPrintMsgItem( wk, mes_shop_09_21_m + wk->sex, item );
+        MYITEM_AddItem( wk->myitem, item, 1, wk->heapId);
+      }
+      else
+      {
+        ShopPrintMsgItem( wk, mes_shop_09_22_m + wk->sex, item );
+      }
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_BACK;
     }

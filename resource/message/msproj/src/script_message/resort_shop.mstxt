@@ -3559,13 +3559,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Item Idx="2" ]の　なかみは
-[Name:Item ]でした！
+[Name:Item ]でした！▼
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T09:11:04" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:17:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3574,13 +3574,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Item Idx="2" ]の　中身は
-[Name:Item ]でした！
+[Name:Item ]でした！▼
 毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T09:11:11" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:17:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3618,13 +3618,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:Item Idx="2" ]の　なかみは
-[Name:Item ]でした
+[Name:Item ]でした！▼
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T09:11:41" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3633,13 +3633,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Item Idx="2" ]の　なかみは
-[Name:Item ]でした
+[Name:Item ]でした！▼
 毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T09:11:50" />
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:20:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3655,6 +3655,116 @@
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2012-01-10T12:32:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:55:46" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="mes_shop_09_22_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした！▼
+……　おや？▼
+それ　いじょう
+もちきれないですよ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:20:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした！▼
+……　おや？▼
+それ以上
+持ちきれないですよ！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:20:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具を買うときに、指定した数がバッグに入らないとき♂</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:18:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:55:46" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="mes_shop_09_22_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした！▼
+……　おや？▼
+それ　いじょう
+もちきれないですね！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:21:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした！▼
+……　おや？▼
+それ以上
+持ちきれないですね！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:21:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>古道具を買うときに、指定した数がバッグに入らないとき♀</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-19T09:18:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
