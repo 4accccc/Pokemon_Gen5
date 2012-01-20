@@ -30,6 +30,7 @@ _EVENT_DATA   ev_pos_d01r0101_rati2_03
 _EVENT_DATA   ev_pos_d01r0101_rati2_04
 _EVENT_DATA   ev_pos_d01r0101_rati2_05
 _EVENT_DATA   ev_pos_d01r0101_rati2_06
+_EVENT_DATA   ev_d01r0101_sizuku_01
 _EVENT_DATA_END
 
 //バージョン取得
@@ -580,6 +581,15 @@ EVENT_START   ev_pos_d01r0101_rati2_06
     //イベント進行
     $WK_SCENE_D01R0101_RATI2 = 6
     //========================================//
+    
+    //ゆめのしずくを手に入れていない
+    IF FLAG_OFF( FE_D01R0101_SIZUKU_GET ) THEN
+      //========================================//
+      //ゆめのしずく表示
+      _FLAG_RESET( FV_D01R0101_ITEMBALL_01 )
+      //========================================//
+      _OBJ_ADD( D01R0101_SIZUKU_01 )
+    ENDIF
 
     //ラティオス（ラティアス）退場
     _OBJ_DEL( D01R0101_RATI2_01 )
@@ -613,6 +623,27 @@ EVENT_START   ev_pos_d01r0101_rati2_06
 
 INIT_EVENT_END
 
+/************************************************************/
+/*					話しかけ：しずく						*/
+/************************************************************/
+EVENT_START ev_d01r0101_sizuku_01
+
+  _TALK_START_SE_PLAY()
+
+  //モンスターボール非表示
+  _OBJ_DEL( D01R0101_SIZUKU_01 )
+
+  //アイテム（こころのしずく）入手
+  _ITEM_EVENT_FIELD( ITEM_KOKORONOSIZUKU, 1 )
+
+  //========================================//
+  //モンスターボール非表示
+  _FLAG_SET( FV_D01R0101_ITEMBALL_01 )
+  //いでんしのくさび入手済み
+  _FLAG_SET( FE_D01R0101_SIZUKU_GET )
+  //========================================//
+  
+EVENT_END
 
 //--------------------------------------------------------------------
 //☆共通処理：ギョエ

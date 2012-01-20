@@ -343,7 +343,8 @@ EVENT_START	ev_d24r0901_assistantm_01
 			_BALLOONWIN_TALKOBJ_MSG(msg_d24r0901_list_03)
 			_MSGWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT( ITEM_TAIMAABOORU, 5 )
+			//わざマシン５４：みねうち
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN54, 1 )
 			
 			//========================================//
 			//イベント終了フラグセット

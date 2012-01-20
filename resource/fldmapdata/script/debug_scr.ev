@@ -679,6 +679,8 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
       _FLAG_SET(FV_D27R0101_SWSAGE7_01)
       _FLAG_SET(FV_D27R0101_NINJA_01)
+      //プラズマフリゲート曲をサイレントに
+      _FLAG_SET( SYS_FLAG_BGM_D27R0101_SILENT )
       
       //ワーク初期化
       $WK_SCENE_D27R0101_FIRST_01 = 1
@@ -699,6 +701,8 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D27R0101_SWPLAZMA_02)
       _FLAG_SET(FV_D27R0101_SWSAGE7_01)
       _FLAG_SET(FV_D27R0101_NINJA_01)
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
       
       //ワーク初期化
       $WK_SCENE_D27R0101_FIRST_01 = 4
@@ -760,6 +764,8 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D27R1201_SWRIVAL_01)
       //D27R0101 プラズマ団員表示
       _FLAG_RESET(FV_D27R1101_SWPLAZMA_03)
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
       
       //ワーク初期化
       $WK_SCENE_D27R0101_FIRST_01 = 4
@@ -838,6 +844,9 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_D27R1101, 11, 31, DIR_RIGHT )
       
     ELSIF $SCWK_TEMP2 == 11 THEN
+    
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
       
       _FLAG_SET(FV_D27R0501_NINJA_01)
       $WK_SCENE_D27R0501_SWSAGE7_01 = 1
@@ -855,6 +864,9 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_D27R0201, 9, 3, DIR_RIGHT )
     
     ELSIF $SCWK_TEMP2 == 12 THEN
+    
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
       
       $WK_SCENE_D27R0401_SWBOSS_01 = 1
       
@@ -968,8 +980,10 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
       _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
       _FLAG_RESET(FV_D22R0101_BREEDER_01)
-      $WK_SCENE_D22R0101 = 2
+      $WK_SCENE_D22R0101 = 4
+      _MAP_CHANGE( ZONE_ID_D22R0101, 51, 25, DIR_DOWN )
       */
+      
       //D24初期化
       //_FLAG_RESET( FE_D24_SWBELL_FIRSTTALK )
       
@@ -987,6 +1001,12 @@ EVENT_START   ev_debug_mizuguchi
         //マップ遷移
         _MAP_CHANGE( ZONE_ID_D27R0701, 16, 44, DIR_UP )
       ENDIF
+      */
+      
+      /*
+      //C08誘導イベント起動
+      $WK_SCENE_C08_LEADER7 = 2
+      _FLAG_RESET( FV_C08_SWLEADER7_01 )
       */
       
       /*
@@ -1027,6 +1047,10 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_N01R0502, 16, 44, DIR_UP )
       */
       
+      _FLAG_SET( FE_D10R0401_POKE10_MEET )
+      _FLAG_SET( FE_C04WHEEL_N_MEET )
+      _FLAG_SET( FE_D08R0901_BOSS_TALK )
+      
       /*
       //C08：オノノクスイベント再生
       //========================================//
@@ -1049,6 +1073,13 @@ EVENT_START   ev_debug_mizuguchi
       ELSE
        _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
       ENDIF
+      */
+      
+      /*
+      //R20 長草イベント
+      $WK_SCENE_R20 = 2
+      _FLAG_RESET( FV_R20_SWLEADER1_01 )
+      _FLAG_RESET( FV_R20_SWRIVAL_01 )
       */
       
       /*

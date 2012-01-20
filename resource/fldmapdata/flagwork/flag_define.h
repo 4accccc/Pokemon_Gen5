@@ -510,6 +510,7 @@
 #define FE_C08_LINKEV_ZONE                 494 /* 0x01ee ソウリュウシティ：シャガ宅から出てきた判定フラグ */
 #define FE_C02GYM0101_LINKEV_ZONE          495 /* 0x01ef シッポウシティ：図書館から出てきた判定フラグ */
 #define FE_C06_LINKEV_ZONE                 496 /* 0x01f0 フキヨセシティ：ジムから出てきた判定フラグ */
+#define FE_D01R0101_SIZUKU_GET             497 /* 0x01f1 夢の跡地：ゆめのしずく入手フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -955,6 +956,20 @@
 #define FV_C08_PLAYER_01                  1034 /* 0x040a ソウリュウシティ：透明になった主人公代理 */
 #define FV_N01R0502_PLAYER_01             1035 /* 0x040b N城：透明になった主人公代理 */
 #define FV_D27R0701_SWRIVAL_01            1036 /* 0x040c プラズマフリゲート：客室ライバル */
+#define FV_D01R0101_ITEMBALL_01           1037 /* 0x040d 夢の跡地：ラティアス戦後モンスターボール */
+#define FV_OMUSUTAA_01                    1038 /* 0x040e 仮フラグ */
+#define FV_OMUSUTAA_02                    1039 /* 0x040f 仮フラグ */
+#define FV_OMUSUTAA_03                    1040 /* 0x0410 仮フラグ */
+#define FV_OMUSUTAA_04                    1041 /* 0x0411 仮フラグ */
+#define FV_OMUSUTAA_05                    1042 /* 0x0412 仮フラグ */
+#define FV_OMUSUTAA_06                    1043 /* 0x0413 仮フラグ */
+#define FV_OMUSUTAA_07                    1044 /* 0x0414 仮フラグ */
+#define FV_OMUSUTAA_08                    1045 /* 0x0415 仮フラグ */
+#define FV_OMUSUTAA_09                    1046 /* 0x0416 仮フラグ */
+#define FV_OMUSUTAA_10                    1047 /* 0x0417 仮フラグ */
+#define FV_OMUSUTAA_11                    1048 /* 0x0418 仮フラグ */
+#define FV_OMUSUTAA_12                    1049 /* 0x0419 仮フラグ */
+#define FV_OMUSUTAA_13                    1050 /* 0x041a 仮フラグ */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
@@ -2359,6 +2374,7 @@
 #define SYS_FLAG_FES_KINOMI_M             2557 /* 0x09fd フェスミッションのオープンフラグその24 */
 #define SYS_FLAG_BGM_R20_PLAZMA           2558 /* 0x09fe BGM変更フラグ：20番道路プラズマ団のテーマ */
 #define SYS_FLAG_BGM_C07R0301_R10         2559 /* 0x09ff BGM変更フラグ：10番道路 */
+#define SYS_FLAG_BGM_D27R0101_SILENT      2560 /* 0x0a00 BGM変更フラグ：プラズマフリゲート甲板 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 

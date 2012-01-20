@@ -23,6 +23,7 @@
 #define TR_SCHOOLB_16                      8
 #define TR_SCHOOLG_14                      9
 #define TR_TANPAN_10                      10
+#define D01R0101_SIZUKU_01                11
 
 #endif //ZONE_D01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
