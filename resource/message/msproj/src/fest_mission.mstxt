@@ -911,10 +911,10 @@
 		Label="msg_fm_title_item_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>まぼろしの　きのみを　さがせ！</Text>
+			<Text>きのみ　フェスティバル！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:43:08" />
+				Time="2012-01-20T03:05:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -922,10 +922,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幻の　きのみを　探せ！</Text>
+			<Text>きのみ　フェスティバル！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:43:08" />
+				Time="2012-01-20T03:05:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1946,10 +1946,10 @@
 		Label="msg_fm_title_npc_17">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン　ずかんクイズ！</Text>
+			<Text>めざせ！　ポケモンクイズおう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T12:07:34" />
+				Time="2012-01-20T03:06:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1957,10 +1957,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　図鑑クイズ！</Text>
+			<Text>目指せ！　ポケモンクイズ王！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T12:07:34" />
+				Time="2012-01-20T03:07:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1996,10 +1996,10 @@
 		Label="msg_fm_title_npc_18">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンセンターの　おねえさん</Text>
+			<Text>おねえさんからの　プレゼント</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:45:50" />
+				Time="2012-01-20T03:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2007,10 +2007,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンセンターの　お姉さん</Text>
+			<Text>お姉さんからの　プレゼント</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:45:50" />
+				Time="2012-01-20T03:07:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2702,10 +2702,10 @@
 		Label="msg_fm_title_evt_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホウエンの　ポケモンを　さがせ！</Text>
+			<Text>ホウエンの　ポケモンを　さがせ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T11:50:54" />
+				Time="2012-01-13T06:18:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2713,10 +2713,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホウエンの　ポケモンを　探せ！</Text>
+			<Text>ホウエンの　ポケモンを　探せ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T10:53:29" />
+				Time="2012-01-20T02:48:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2748,10 +2748,10 @@
 		Label="msg_fm_title_evt_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン　しょうぶを　しよう！</Text>
+			<Text>ポケモンしょうぶを　しよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T11:02:20" />
+				Time="2012-01-13T06:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2759,10 +2759,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　勝負を　しよう！</Text>
+			<Text>ポケモン勝負を　しよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T11:03:04" />
+				Time="2012-01-13T06:14:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3526,13 +3526,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まぼろしの　きのみが　みつかった！
+			<Text>めずらしい　きのみが　みつかった！
 もりや　ほらあなの　キラキラひかる
 ばしょを　さがして
 きのみを　あつめよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:19:31" />
+				Time="2012-01-20T02:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3540,13 +3540,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幻の　きのみが　みつかった！
+			<Text>珍しい　きのみが　みつかった！
 森や　洞穴の　キラキラ光る
 場所を　探して
 きのみを　集めよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:41" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-20T02:51:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3683,13 +3683,13 @@
 		Label="msg_fm_explain_item_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>まぼろしの　きのみが　みつかった！
+			<Text>めずらしい　きのみが　みつかった！
 もりや　ほらあなの　キラキラひかる
 ばしょを　さがして
 きのみを　あつめよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:43:52" />
+				Time="2012-01-20T03:04:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3697,13 +3697,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幻の　きのみが　みつかった！
+			<Text>珍しい　きのみが　みつかった！
 森や　洞穴の　キラキラ光る
 場所を　探して
 きのみを　集めよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:43:52" />
+				Time="2012-01-20T03:04:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5920,13 +5920,13 @@
 		Label="msg_fm_explain_evt_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホウエンちほうの　ポケモンの
-はっけん　ほうこくが　あった！
+			<Text>ホウエンちほうの　ポケモンが
+かくしあなで　みつかった　らしい！
 かくちの　かくしあなを　めぐって
-ホウエンの　ポケモンを　さがせ！</Text>
+ポケモンを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:48:59" />
+				Time="2012-01-20T03:01:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5934,13 +5934,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホウエン地方の　ポケモンの
-発見　報告が　あった！
+			<Text>ホウエン地方の　ポケモンが
+隠し穴で　みつかった　らしい！
 各地の　隠し穴を　巡って
-ホウエンの　ポケモンを　探せ！</Text>
+ポケモンを　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:50:59" />
+				Time="2012-01-20T03:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5974,13 +5974,13 @@
 		Label="msg_fm_explain_evt_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションで　ポケモンを　つかまえて
-そだてよう！
-ポケモンしょうぶで　つかいやすい
-ポケモンに　しんかするぞ！</Text>
+			<Text>かくちの　かくしあなを　めぐって
+めずらしい　ポケモンを　さがせ！
+つかまえて　そだてれば
+ポケモンしょうぶで　かつやく　するぞ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:52:10" />
+				Time="2012-01-20T03:03:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5988,13 +5988,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションで　ポケモンを
-捕まえて　育てよう！
-ポケモン勝負で　使いやすい
-ポケモンに　進化するぞ！</Text>
+			<Text>各地の　隠し穴を　巡って
+珍しい　ポケモンを　探せ！
+捕まえて　育てれば
+ポケモン勝負で　活躍するぞ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:52:52" />
+				Time="2012-01-20T03:03:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
