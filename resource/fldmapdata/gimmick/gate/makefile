@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro fuchino_hiroki tamada ohtani_mayo ichiraku_katsuhiko
+USERS	= obata_toshihiro fuchino_hiroki tamada ohtani_mayo ichiraku_katsuhiko onoue_masayuki
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
@@ -40,6 +40,9 @@ BIN_ZONE_DATA       = $(SETTING_BIN)/zone_data
 BIN_SPNEWS_DATA     = $(SETTING_BIN)/spnews_data
 ELBOARD_ZONE_DATA   = $(BIN_ZONE_DATA)/*.bin 
 ELBOARD_SPNEWS_DATA = $(BIN_SPNEWS_DATA)/*.bin
+
+ZONE_ID_H 					= ./../../zonetable/zone_id.h
+GATE_MESSAGE 				= ./../../../message/msproj/src/gate.mstxt
 
 CONVERTDATA_GATE   = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							       $(GRAPHIC_BIN)/gelboard01.nsbtx \
@@ -159,13 +162,13 @@ $(targetname_gate).narc: $(CONVERTDATA_GATE)
 	nnsarc -r -l -n -i $(targetname_gate) $^
 	$(NAIXCUT) $(targetname_gate).naix
 
-$(targetname_zone).narc: $(SETTING_SOURCE)/elboard_zone_data.txt
+$(targetname_zone).narc: $(SETTING_SOURCE)/elboard_zone_data.txt $(ZONE_ID_H) $(GATE_MESSAGE)
 	rm -f $(CONVERTDATA_ZONE)
 	ruby $(SETTING_SOURCE)/elboard_zone_data_conv.rb $< $(BIN_ZONE_DATA) 
 	nnsarc -r -l -n -i $(targetname_zone) $(CONVERTDATA_ZONE)
 	$(NAIXCUT) $(targetname_zone).naix
 
-$(targetname_spnews).narc: $(SETTING_SOURCE)/elboard_spnews_data.txt
+$(targetname_spnews).narc: $(SETTING_SOURCE)/elboard_spnews_data.txt $(ZONE_ID_H) $(GATE_MESSAGE)
 	rm -f $(CONVERTDATA_SPNEWS)
 	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $< $(BIN_SPNEWS_DATA)
 	nnsarc -r -l -n $(targetname_spnews) $(CONVERTDATA_SPNEWS)
