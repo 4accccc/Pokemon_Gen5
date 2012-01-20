@@ -7386,9 +7386,7 @@ static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
 
 
   // –¼‘O
-#ifdef PM_DEBUG
-  if( p_wk->debug_blank == FALSE )
-#endif
+  if( p_wk->is_blank == FALSE )
   {
     GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
     GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
