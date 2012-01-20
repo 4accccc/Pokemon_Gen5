@@ -8930,7 +8930,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
       else
       {
         if( fGaugeExist ){
-          BTLV_EFFECT_CalcGaugeEXP( vpos, addExp );
+          BTLV_EFFECT_CalcGaugeEXP( vpos, addExp, bpp );
           (*seq) = SEQ_GAUGE_NORMAL_WAIT;
         }
         else {

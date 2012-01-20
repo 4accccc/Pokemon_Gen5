@@ -1235,13 +1235,33 @@ void  BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp,
 
   bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
 
-  bgw->bgcl[ pos ].next_exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
-                                                       BPP_GetValue( bpp, BPP_FORM ),
-                                                       BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
-                                   POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
-                                                       BPP_GetValue( bpp, BPP_FORM ),
-                                                       BPP_GetValue( bpp, BPP_LEVEL ) );
-
+  if(bgw->bgcl[ pos ].level<100){
+    bgw->bgcl[ pos ].next_exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                         BPP_GetValue( bpp, BPP_FORM ),
+                                                         BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
+                                     POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                         BPP_GetValue( bpp, BPP_FORM ),
+                                                         BPP_GetValue( bpp, BPP_LEVEL ) );
+  }else{
+    bgw->bgcl[ pos ].next_exp_max = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                         BPP_GetValue( bpp, BPP_FORM ),
+                                                         BPP_GetValue( bpp, BPP_LEVEL ) ) -
+                                     POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                         BPP_GetValue( bpp, BPP_FORM ),
+                                                         BPP_GetValue( bpp, BPP_LEVEL )-1 );
+  }
+  {
+    int next_exp, now_exp;
+    next_exp = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                   BPP_GetValue( bpp, BPP_FORM ),
+                                   BPP_GetValue( bpp, BPP_LEVEL )  );
+    now_exp  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                   BPP_GetValue( bpp, BPP_FORM ),
+                                   BPP_GetValue( bpp, BPP_LEVEL ) -1);
+    
+    OS_Printf("level=%d, next_exp_max=%d, next_exp=%d, now_exp=%d\n", 
+                bgw->bgcl[ pos ].level,bgw->bgcl[ pos ].next_exp_max, next_exp,now_exp);
+  }
   bgw->bgcl[ pos ].seq_no = 0;
   bgw->bgcl[ pos ].level_up_req = 1;
   bgw->bgcl[ pos ].se_wait = 0;
@@ -1464,9 +1484,9 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, int pos )
 //--------------------------------------------------------------
 static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp )
 {
-  //レベル100ならなにもしない
-  if( bgcl->level == 100 ) return;
-
+  // レベル100でも計算するようにswanで変更
+  // ただその結果ゲージには何も書かないわけですが。
+  
   bgcl->exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
 
   if( bgcl->exp + add_exp < 0 )
@@ -1706,6 +1726,12 @@ static u8 PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_
       }
     }
   }
+  OS_Printf("map=%d, now=%d, be=%d, g[]=%d%d%d%d%d%d%d%d%d%d\n",
+    MaxHP, NowHP, beHP, 
+    gauge_chr[0],gauge_chr[1],gauge_chr[2],gauge_chr[3],gauge_chr[4],
+    gauge_chr[5],gauge_chr[6],gauge_chr[7],gauge_chr[8],gauge_chr[9]
+    );
+
   return dot_ret;
 }
 
@@ -1966,14 +1992,6 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, int pos, BTLV_GAUGE_REQ req )
     {
       GFL_CLACT_WK_GetImgProxy( bgcl->exp_clwk, &image );
       PutGaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, gauge_chr, BTLV_GAUGE_EXP_CHARMAX );
-      level = bgcl->level;
-      if( level == 100 )
-      {
-        for( i = 0; i < BTLV_GAUGE_EXP_CHARMAX ; i++ )
-        {
-          gauge_chr[ i ] = 0;
-        }
-      }
 
       for(i = 0; i < BTLV_GAUGE_EXP_CHARMAX; i++){
         MI_CpuCopy16( &bgw->parts_address[ GP_EXPBAR + ( gauge_chr[ i ] << 5 ) ],

@@ -1269,9 +1269,12 @@ void  BTLV_EFFECT_CalcGaugeHPAtOnce( int position, int value )
  * @param[in] value     計算量
  */
 //============================================================================================
-void  BTLV_EFFECT_CalcGaugeEXP( int position, int value )
+void  BTLV_EFFECT_CalcGaugeEXP( int position, int value, const BTL_POKEPARAM* bpp )
 {
-  BTLV_GAUGE_CalcEXP( bew->bgw, position, value );
+  // 経験値表示処理をレベル100のときは行わない
+  if(BPP_GetValue( bpp, BPP_LEVEL )<100){
+    BTLV_GAUGE_CalcEXP( bew->bgw, position, value );
+  }
 }
 
 //=============================================================================================
