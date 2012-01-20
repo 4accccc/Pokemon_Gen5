@@ -133,6 +133,7 @@ SUBDIRS	=	wmi \
 			palace \
             op_demo \
             op_demo2 \
+            op_demo2_w \
             gf_logo \
 			battle_recorder \
 			monolith \
