@@ -339,7 +339,7 @@ _ANIME_LABEL  anm_poke50_bye_z580
 EVENT_START  ev_r04w_workman_01
 
   //アクロマイベント終了後
-  IF $WK_SCENE_R04_SWBOSS == 2 THEN
+  IF $WK_SCENE_R04_SWBOSS == 3 THEN
      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04w_stop_02 )
   //それ以外
   ELSE

@@ -291,7 +291,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START  ev_r04_workman_01
   //アクロマイベント終了後
-	IF $WK_SCENE_R04_SWBOSS == 2 THEN
+	IF $WK_SCENE_R04_SWBOSS == 3 THEN
 	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_02 )
 	//それ以外
   ELSE
