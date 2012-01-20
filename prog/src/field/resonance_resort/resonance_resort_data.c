@@ -121,6 +121,9 @@ extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RE
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 
+
+static u32 Resort_Data_UpdateSeedRand( u32 before );
+
 //-------------------------------------
 ///	リゾートデータグローバル参照
 //=====================================
@@ -4452,7 +4455,11 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
       RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
-      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, GFUser_GetPublicRand(GFL_STD_RAND_MAX) );
+      {
+        u32 rnd_seed = RESORT_RESIDENT_DATA_GetData(p_resident,RESORT_DATA_PARAM_RND_SEED, NULL );
+        rnd_seed = Resort_Data_UpdateSeedRand( rnd_seed );
+        RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, rnd_seed );
+      }
 
       RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, 0 );
     }
@@ -5118,7 +5125,7 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
   p_wk->trainerID_max = 0;
 
   //乱数再抽選
-  p_wk->rnd_seed      = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+  p_wk->rnd_seed      = Resort_Data_UpdateSeedRand( p_wk->rnd_seed );
 
   //ファンを再度出現させる
   p_wk->fun_day_flag  = FALSE;
@@ -5264,8 +5271,26 @@ u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
     }
 #endif
 
+    //OS_TFPrintf( 3, "rnd %x\n", rnd );
     return rnd;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  乱数の種更新
+ *
+ *	@param	u64 before 
+ *
+ *	@return 乱数の種
+ */
+//-----------------------------------------------------------------------------
+static u32 Resort_Data_UpdateSeedRand( u32 before )
+{
+  static const u64 RAND_MUL = ( (1566063981LL << 32) + 1812433273LL );
+  static const u64 RAND_ADD = ( 2533011 );
+
+  return (u32)( (RAND_MUL * (u64)before + RAND_ADD) >> 32 );
 }
 
 //----------------------------------------------------------------------------
