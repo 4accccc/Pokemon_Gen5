@@ -63,12 +63,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
-[Name:PokemonName Idx="1" ]は　だいじに　してあげて！▼
+[Name:PokemonName Idx="1" ]は　たいせつに　してあげて！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーだけ　なんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T06:32:40" />
+				Time="2012-01-20T00:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,12 +77,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
-[Name:PokemonName Idx="1" ]は　だいじに　してあげて！▼
+[Name:PokemonName Idx="1" ]は　たいせつに　してあげて！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーだけ　なんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T06:32:43" />
+				Time="2012-01-20T00:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -325,11 +325,11 @@ GIRL2</Text>
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん！▼
 ほら　レパルダス！▼
-あたしのこと
-おもいだしてくれたの！</Text>
+あたしが　あたまを　なでると
+うれしそうに　してくれるの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T06:22:11" />
+				Time="2012-01-20T00:41:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -339,11 +339,11 @@ GIRL2</Text>
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん！▼
 ほら　レパルダス！▼
-あたしのこと
-おもいだしてくれたの！</Text>
+あたしが　あたまを　なでると
+うれしそうに　してくれるの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T06:22:12" />
+				Time="2012-01-20T00:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

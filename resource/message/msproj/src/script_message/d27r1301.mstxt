@@ -597,12 +597,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>といっても　あきらめきれぬか？
-なら　いんどうを　わたすのが▽
+			<Text>といっても　あきらめきれぬか？▼
+なら　いんどうを　わたすのが
 ワタシなりの　やさしさ　なのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-16T02:55:34" />
+				Time="2012-01-20T02:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -610,12 +610,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>といっても　あきらめきれぬか？
-なら　引導を　渡すのが▽
+			<Text>といっても　あきらめきれぬか？▼
+なら　引導を　渡すのが
 ワタシなりの　優しさ　なのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-16T02:55:43" />
+				Time="2012-01-20T02:29:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -965,11 +965,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュレム……　むりやり
+			<Text>キュレム……▼
+ゲーチスの　そうちで　むりやり
 こきつかわれて　かなしかっただろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:02:49" />
+				Time="2012-01-20T02:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -977,11 +978,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュレム……　むりやり
+			<Text>キュレム……▼
+ゲーチスの　装置で　むりやり
 こきつかわれて　悲しかっただろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T13:13:27" />
+				Time="2012-01-20T02:30:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

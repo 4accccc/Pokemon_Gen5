@@ -269,7 +269,7 @@ x31,z54辺りに配置
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハロー！　ハロー！　
-ボクは　ウッドウ！　ヨロシクね！▽
+ボクは　ウッドウ！　ヨロシクね！▼
 そうか　キミが　[Name:TrainerName Idx="0" ]ちゃんか！
 ちょうど　キミのはなしを　してたのよ！▼
 で　早速　ポケウッドに　ついて
@@ -278,8 +278,8 @@ x31,z54辺りに配置
 申し訳ないけどさ　もう少しだけ
 待ってて　もらえるかなー？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:51:09" />
+				User="matsumiya:W00224"
+				Time="2012-01-19T14:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

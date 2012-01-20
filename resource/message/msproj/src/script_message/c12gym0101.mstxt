@@ -206,13 +206,13 @@
 			Language="JPN">
 			<Text>しんかキャンセル　という
 テクニックが　あるの！▽
-じゃ　ほんを　よむわね▼
+じゃ　きょうかしょを　よむわね▼
 「ポケモンが　しんかする　しゅんかん
 　Ｂボタンを　おすことで▽
 　ポケモンは　おどろき　しんかをやめる」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T08:11:18" />
+				Time="2012-01-20T00:24:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -222,13 +222,13 @@
 			Language="JPN_KANJI">
 			<Text>進化キャンセル　という
 テクニックが　あるの！▽
-じゃ　本を　読むわね▼
+じゃ　教科書を　読むわね▼
 「ポケモンが　進化する　瞬間
 　Ｂボタンを　押すことで▽
-　ポケモンは　おどろき　進化をやめる」</Text>
+　ポケモンは　驚き　進化をやめる」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T08:33:48" />
+				Time="2012-01-20T00:24:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -340,13 +340,15 @@
 			Language="JPN">
 			<Text>ノーマルタイプの　ポケモンは
 かくとうタイプに　よわい！▼
-だけど　このあたりには　いないから
-ほのお　みず　くさタイプの▽
+だけど　このあたりだと
+サンギぼくじょうの▽
+リオル　ぐらいしか　いないからね……▼
+ほのお　みず　くさタイプの
 ポケモンで　たたかうなら▽
 じゅんすいな　つよさくらべに　なるね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T11:10:29" />
+				Time="2012-01-20T00:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,13 +358,15 @@
 			Language="JPN_KANJI">
 			<Text>ノーマルタイプの　ポケモンは
 かくとうタイプに　弱い！▼
-だけど　この辺りには　いないから
-ほのお　みず　くさタイプの▽
+だけど　この辺りだと
+サンギ牧場の▽
+リオル　ぐらいしか　いないからね……▼
+ほのお　みず　くさタイプの
 ポケモンで　戦うなら▽
 純粋な　強さ比べに　なるね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T11:10:21" />
+				Time="2012-01-20T00:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

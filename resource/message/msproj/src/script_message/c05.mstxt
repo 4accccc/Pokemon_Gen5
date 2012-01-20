@@ -2161,12 +2161,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンリーグに　いる
-してんおうは　かーなーり　つよくて▼
+してんおうは　きわめて　つよくて▼
 ジムバッジを　８こ　もってないと
 たたかえないんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T07:27:54" />
+				Time="2012-01-20T01:56:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2175,12 +2175,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンリーグに　いる
-してんおうは　かーなーり　つよくて▼
+してんおうは　きわめて　つよくて▼
 ジムバッジを　８こ　もってないと
 たたかえないんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T07:27:57" />
+				Time="2012-01-20T01:56:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2253,6 +2253,13 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-22T02:35:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-20T01:55:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

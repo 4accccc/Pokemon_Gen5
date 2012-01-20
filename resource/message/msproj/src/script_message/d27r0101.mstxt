@@ -186,10 +186,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『どうでも　いいだろ
-おまえら　コテンパンに　されるんだし▼</Text>
+コテンパンに　される　おまえらには！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:26:19" />
+				Time="2012-01-20T02:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -198,10 +198,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『どうでも　いいだろ
-おまえら　コテンパンに　されるんだし▼</Text>
+コテンパンに　される　おまえらには！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:26:23" />
+				Time="2012-01-20T02:24:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2672,11 +2672,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-※未使用</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:59:46" />
+				Time="2012-01-20T02:24:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

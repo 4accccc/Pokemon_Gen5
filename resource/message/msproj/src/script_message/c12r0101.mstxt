@@ -263,10 +263,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ええー！！
-おどろき……！▼</Text>
+ちょっと　おどろき……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:43:10" />
+				Time="2012-01-20T00:14:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -275,10 +275,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ええー！！
-おどろき……！▼</Text>
+ちょっと　驚き……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:43:11" />
+				Time="2012-01-20T00:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -322,12 +322,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よし！　だい１ステップ　クリア！▼
+			<Text>よし！
+だい１ステップ　クリア！▼
 じゃあ
 ポケモンずかんって　しってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:45:43" />
+				Time="2012-01-20T00:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -335,12 +336,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よし！　第１ステップ　クリア！▼
+			<Text>よし！
+第１ステップ　クリア！▼
 じゃあ
 ポケモン図鑑って　知ってる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:45:40" />
+				Time="2012-01-20T00:15:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -548,10 +550,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よし！　だい２ステップ　クリア！▼</Text>
+			<Text>よし！！
+だい２ステップ　クリア！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:54:01" />
+				Time="2012-01-20T00:15:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -559,10 +562,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よし！　第２ステップ　クリア！▼</Text>
+			<Text>よし！！
+第２ステップ　クリア！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T04:02:38" />
+				Time="2012-01-20T00:15:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -599,7 +603,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママが　ききたいのは
+			<Text>わがままだけど　ママが　ききたいのは
 まえむきな　いけん　だな▼
 ポケモンずかんを　もつことは
 せかいを　たびするって　こと！▽
@@ -609,7 +613,7 @@
 ポケモンずかんも　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:06:34" />
+				Time="2012-01-20T00:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -617,7 +621,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママが　ききたいのは
+			<Text>わがままだけど　ママが　ききたいのは
 前向きな　意見だな▼
 ポケモン図鑑を　持つことは
 世界を　旅するって　こと！▽
@@ -627,7 +631,7 @@
 ポケモン図鑑も　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:06:36" />
+				Time="2012-01-20T00:16:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

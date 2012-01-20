@@ -975,11 +975,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデクさんに　おしえてもらったこと
+			<Text>アデクさんから　おそわったこと
 きみも　しりたい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T04:55:27" />
+				Time="2012-01-20T01:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -987,11 +987,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデクさんに　教えてもらったこと
+			<Text>アデクさんから　教わったこと
 きみも　知りたい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:05:22" />
+				Time="2012-01-20T01:04:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1859,10 +1859,10 @@
 くさむらが　ゆれることが　あるの！▽
 ゆれた　くさむらの　なかには……▼
 あとは　じっさいの
-おたのしみ　だよね！▼</Text>
+おたのしみ　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:29:45" />
+				Time="2012-01-20T01:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1875,10 +1875,10 @@
 草むらが　揺れることが　あるの！▽
 揺れた　草むらの　中には……▼
 あとは　実際の
-お楽しみ　だよね！▼</Text>
+お楽しみ　だよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:30:15" />
+				Time="2012-01-20T01:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

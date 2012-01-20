@@ -1522,14 +1522,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・続けてwhite_04
-・0＝主人公名前
-・1＝ライバル名</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-20T00:46:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2143,10 +2139,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>三匹選択3Dデモ専用メッセージ</Comment>
+			<Comment>三匹選択3Dデモ専用メッセージ
+・0＝ポケモンNo554</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-30T02:48:34" />
+				Time="2012-01-20T00:47:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2200,10 +2197,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>三匹選択3Dデモ専用メッセージ</Comment>
+			<Comment>三匹選択3Dデモ専用メッセージ
+・0＝ポケモンNo551</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-20T00:47:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2257,10 +2255,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>三匹選択3Dデモ専用メッセージ</Comment>
+			<Comment>三匹選択3Dデモ専用メッセージ
+・0＝ポケモンNo557</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-20T00:47:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3158,10 +3157,10 @@ GIRL2</Text>
 いもうとも　いってたけど　ポケモンは
 ぜったい　たいせつに　しろよな！▼
 で　オマエ
-もってる　ソレ　なんだ？▼</Text>
+もってる　ソレ　なんだよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:44:35" />
+				Time="2012-01-20T00:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3175,10 +3174,10 @@ GIRL2</Text>
 妹も　いってたけど　ポケモンは
 絶対　大切に　しろよな！▼
 で　オマエ
-持ってる　ソレ　なんだ？▼</Text>
+持ってる　ソレ　なんだよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-13T06:44:38" />
+				Time="2012-01-20T00:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4131,7 +4130,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『おっ！　にあってるじゃない！
+			<Text>ママ『よし　ぴったり！
 じゃ　せつめいしょを　よむわね▼
 「ランニングシューズは
 　Ｂボタンを　おすことで　いままでより▽
@@ -4142,7 +4141,7 @@ GIRL2</Text>
 どこまでも　かけぬけられるわね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:55:42" />
+				Time="2012-01-20T00:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4150,7 +4149,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『おっ！　にあってるじゃない！
+			<Text>ママ『よし　ぴったり！
 じゃ　取扱説明書を　読むわね▼
 「ランニングシューズは
 　Ｂボタンを　押すことで　今までより▽
@@ -4161,7 +4160,7 @@ GIRL2</Text>
 どこまでも　駆けぬけられるわね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:55:40" />
+				Time="2012-01-20T00:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6530,10 +6529,10 @@ TVトランシーバー</Text>
 [Name:TrainerName ]さん▼
 あたしの　チョロネコ……▼
 しんか　しちゃってたけど
-とりもどしてくれて　ありがとう！▼</Text>
+みつけてくれて　ありがとう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:38:48" />
+				Time="2012-01-20T00:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6545,10 +6544,10 @@ TVトランシーバー</Text>
 [Name:TrainerName ]さん▼
 あたしの　チョロネコ……▼
 しんか　しちゃってたけど
-とりもどしてくれて　ありがとう！▼</Text>
+みつけてくれて　ありがとう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:56:57" />
+				Time="2012-01-20T00:50:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7288,12 +7287,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>やせいの　ポケモンは
-ひとを　おそうことも　ある！▼
-だけど　そばに　いれば
+ひとを　おそうことも　あるの！▼
+でもね　そばに　いれば
 なかよくなれるのも　ポケモンよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:19:57" />
+				Time="2012-01-20T00:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7302,12 +7301,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>野生の　ポケモンは
-人を　襲うことも　ある！▼
-だけど　そばに　いれば
+人を　襲うことも　あるの！▼
+でもね　そばに　いれば
 仲良くなれるのも　ポケモンよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:19:54" />
+				Time="2012-01-20T00:53:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

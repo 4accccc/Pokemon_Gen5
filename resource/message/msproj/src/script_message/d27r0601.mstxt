@@ -50,7 +50,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゃつは　かがくしゃ　として
+			<Text>あやつは　かがくしゃ　として
 むだに　じゅんすい　すぎる！▼
 プラズマだんの
 ボスに　してやったのに！▼
@@ -60,7 +60,7 @@
 ゆうせん　させるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:23:21" />
+				Time="2012-01-19T23:54:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,7 +68,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゃつは　科学者として
+			<Text>あやつは　科学者として
 無駄に　純粋すぎる！▼
 プラズマ団の
 ボスに　してやったのに！▼
@@ -78,7 +78,7 @@
 優先させるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T10:31:41" />
+				Time="2012-01-19T23:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -733,7 +733,7 @@
 ひとの　ポケモン　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:37:59" />
+				Time="2012-01-20T00:00:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -937,10 +937,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……まだ　いるぞ</Text>
+			<Text>ダークトリニティ『……まだ　いる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:58:03" />
+				Time="2012-01-20T00:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -948,10 +948,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……まだ　いるぞ</Text>
+			<Text>ダークトリニティ『……まだ　いる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:58:06" />
+				Time="2012-01-20T00:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1532,12 +1532,10 @@
 あいつら　プラズマだんの
 おもいどおりに　させたら……▼
 チョロネコや　キュレムみたいに
-かわいそうな　ポケモンが　ふえるよな▼
-たのむッ……！　プラズマだんを……
-ゲーチスって　ヤツを　とめてくれッ！！</Text>
+かなしい　ポケモン　ふえるよな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T11:30:44" />
+				Time="2012-01-20T00:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1552,12 +1550,10 @@
 あいつら　プラズマ団の
 思い通りに　させたら……▼
 チョロネコや　キュレムみたいに
-可哀想な　ポケモンが　増えるよな▼
-頼むッ……！　プラズマ団を……
-ゲーチスって　ヤツを　とめてくれッ！！</Text>
+哀しい　ポケモンが　増えるよな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T11:30:39" />
+				Time="2012-01-20T00:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

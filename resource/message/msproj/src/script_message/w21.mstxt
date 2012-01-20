@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
-オマエ　さすがだなッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……みつけたか！
+さすがだな　オマエッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:52:30" />
+				Time="2012-01-20T01:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
-オマエ　さすがだなッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……みつけたか！
+さすがだな　オマエッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:52:30" />
+				Time="2012-01-20T01:02:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

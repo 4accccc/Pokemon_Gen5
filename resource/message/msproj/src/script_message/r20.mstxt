@@ -69,10 +69,10 @@
 ひとつも　もっていない　こどもが▽
 このさきに　すすむのか！？▼
 あたりの　トレーナーや　ポケモンと
-たたかいまくって　きたえろ！</Text>
+たたかって　たたかいまくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:20:49" />
+				Time="2012-01-20T01:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,10 +84,10 @@
 ひとつも　持っていない　こどもが▽
 この先に　進むのか！？▼
 辺りの　トレーナーや　ポケモンと
-戦いまくって　鍛えろ！</Text>
+戦って　戦いまくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:20:53" />
+				Time="2012-01-20T01:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -214,11 +214,12 @@ ID：mount_14</Text>
 			Language="JPN">
 			<Text>おお！　まぶしく　かがやく
 そいつは　ベーシックバッジ！▼
-だがな　せけんは　きびしい！
-おれさまが　それを　おしえてやろう！▼</Text>
+だがな　うぬぼれるなよ！
+せけんは　きびしい！　おれさまが▽
+それを　おしえてやろう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T11:18:33" />
+				Time="2012-01-20T01:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -228,11 +229,12 @@ ID：mount_14</Text>
 			Language="JPN_KANJI">
 			<Text>おお！　まぶしく　かがやく
 そいつは　ベーシックバッジ！▼
-だがな　世間は　厳しい！
-おれさまが　それを　教えてやろう！▼</Text>
+だがな　うぬぼれるなよ！
+世間は　厳しい！　おれさまが▽
+それを　教えてやろう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T11:21:15" />
+				Time="2012-01-20T01:14:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

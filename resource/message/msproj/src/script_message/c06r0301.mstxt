@@ -542,14 +542,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どう？　わざマシンは　あつまってる？▼
-しんせつな　ひとが　わざマシンを
+			<Text>しんせつな　ひとが　わざマシンを
 ゆずって　くれたりするから▼
 はずかしがらずに　いろんな　ひとと
 はなしてみると　いいんじゃない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:17:40" />
+				Time="2012-01-20T02:08:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,14 +556,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どう？　わざマシンは　集まってる？▼
-親切な　人が　わざマシンを
+			<Text>親切な　人が　わざマシンを
 譲って　くれたりするから▼
 恥ずかしがらずに　いろんな　人と
 話してみると　いいんじゃない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:17:33" />
+				Time="2012-01-20T02:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

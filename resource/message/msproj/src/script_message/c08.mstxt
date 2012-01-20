@@ -507,11 +507,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにごとだ？
-とんできている　あれは……？▼</Text>
+			<Text>なにごとだ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T05:20:13" />
+				Time="2012-01-20T02:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -519,11 +518,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにごとだ？
-飛んできている　あれは……？▼</Text>
+			<Text>なにごとだ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T05:20:17" />
+				Time="2012-01-20T02:13:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2865,9 +2863,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……そうだ▼
+			<Text>ダークトリニティ『……ええ▼
 どんな　てを　つかってでも
-こんかいは　もくてきを　たっせいする▼
+もくてきを　たっせい　します▼
 わたしたちには　Ｎさまの　ように
 たみの　こころを　うばう▽
 きゅうしんりょくが　ない▼
@@ -2876,7 +2874,7 @@
 ２ねんは　ぞんがい　ながかった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:23:40" />
+				Time="2012-01-20T02:16:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2884,9 +2882,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……そうだ▼
+			<Text>ダークトリニティ『……ええ▼
 ですが　どんな　手段ででも
-今回は　目的を　達成する▼
+目的を　達成します▼
 わたしたちには　Ｎさまの　ように
 民の　心を　奪う▽
 求心力が　ない▼
@@ -2895,7 +2893,7 @@
 ２年は　存外　長かった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T03:23:46" />
+				Time="2012-01-20T02:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3120,11 +3118,11 @@
 いでんしのくさびを　もっているのは
 ほかの　なかま▼
 そう……
-じかんかせぎは　できた▽
+じかんかせぎは　できました▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:08:40" />
+				Time="2012-01-20T02:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3136,11 +3134,11 @@
 いでんしのくさびを　持っているのは
 他の　仲間▼
 そう……
-時間稼ぎは　できた▽
+時間稼ぎは　できました▽
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:08:45" />
+				Time="2012-01-20T02:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3207,7 +3205,7 @@
 この　私だ……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T05:27:28" />
+				Time="2012-01-20T02:17:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

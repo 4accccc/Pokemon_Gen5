@@ -777,10 +777,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>にんむに　しっぱいして
-ポケモンを　とりあげられたのさ</Text>
+ポケモンを　とりあげられたのさ▼
+うばった　ポケモンも
+すっかり　へっちまったからな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T10:10:13" />
+				Time="2012-01-20T02:31:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -789,10 +791,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>任務に　失敗して
-ポケモンを　とりあげられたのさ</Text>
+ポケモンを　とりあげられたのさ▼
+奪った　ポケモンも
+すっかり　減っちまったからな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:30:46" />
+				Time="2012-01-20T02:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

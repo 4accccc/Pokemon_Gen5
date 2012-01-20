@@ -212,19 +212,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！　それでは
-せつめいを　はじめまーす！▼
+せつめいを　はじめるねえ！▼
 ポケモンずかんの　ページはね
 ポケモンと　であうことで▽
 じどうてきに　うまっていくの！▼
-そして　ポケモンを　つかまえたら
+で　ポケモンを　つかまえたら
 さらに　くわしい　じょうほうが▽
 ついか　されまーす！▼
 ということで　おてほん！▼
 わたしが　じっさいに
-ポケモンを　つかまえて　みせるねえ！▼</Text>
+ポケモンを　つかまえて　みせるよお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:22:00" />
+				Time="2012-01-20T00:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -233,19 +233,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！　それでは
-説明を　はじめまーす！▼
+説明を　はじめるねえ！▼
 ポケモン図鑑の　ページはね
 ポケモンと　出会うことで▽
 自動的に　埋まっていくの！▼
-そして　ポケモンを　捕まえたら
+で　ポケモンを　捕まえたら
 さらに　詳しい　情報が▽
 追加されまーす！▼
 ということで　お手本！▼
 わたしが　実際に
-ポケモンを　捕まえて　みせるねえ！▼</Text>
+ポケモンを　捕まえて　みせるよお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:22:06" />
+				Time="2012-01-20T00:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -781,12 +781,12 @@
 			<Text>おまえさんの　[Name:PokemonName Idx="1" ]
 なかなか　いい　ポケモンだな！▼
 だが　トレーナーである
-おまえさんは　まだ　みじゅく……▼
+おまえさんは　ちょいと　みじゅく……▼
 よし！　ちょいと　きたえてやろう
 わしに　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T03:31:21" />
+				Time="2012-01-20T00:57:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -797,12 +797,12 @@
 			<Text>おまえさんの　[Name:PokemonName Idx="1" ]
 なかなか　いい　ポケモンだな！▼
 だが　トレーナーである
-おまえさんは　まだ　未熟……▼
+おまえさんは　ちょいと　未熟……▼
 よし！　ちょいと　鍛えてやろう
 わしに　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T03:31:24" />
+				Time="2012-01-20T00:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -989,10 +989,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そうなんだ……
-じゃあ　ぼくが　みほんをみせるよ！▼</Text>
+じゃあ　ぼくに　ちゅうもく！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2012-01-20T01:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1001,10 +1001,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうなんだ……
-じゃあ　ぼくが　見本をみせるよ！▼</Text>
+じゃあ　ぼくに　注目！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2012-01-20T01:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1119,12 +1119,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねっ！　みてくれた！？▼
-だんさを　とびおりたら
+			<Text>ねっ！　だんさを　とびおりたら
 ちかみち　できて　いいでしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T03:32:01" />
+				Time="2012-01-20T01:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1132,12 +1131,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねっ！　みてくれた！？▼
-段差を　飛び降りたら
+			<Text>ねっ！　段差を　飛び降りたら
 近道できて　いいでしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T03:32:05" />
+				Time="2012-01-20T01:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1209,12 +1207,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公＝♂
-・r19のposを踏むと画面下からベル登場</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:26:29" />
+				Time="2012-01-20T00:59:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1266,12 +1262,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公＝♂
-・r19のposを踏むと画面下からベル登場</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:26:31" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1333,12 +1327,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・正面を向いて、動作モデルのアニメ再生後
-・続けてwhite_13</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T05:40:12" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1392,12 +1384,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムメッセージ
-・ME再生
-・続けてwhite_14</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T07:14:19" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1455,12 +1445,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・せいそくちリスト機能解放
-・続けてwhite_15</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T07:09:52" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1528,13 +1516,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・はい/いいえの選択肢表示
-　はい　→swbell_06
-　いいえ→swbell_07</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:08:02" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1594,13 +1579,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ヒオウギシティ側に退場
-　画面外に消えると操作可能
-・以降、主人公の家に出現</Comment>
+			<Comment>未使用（t06に移植）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T08:04:46" />
+				Time="2012-01-20T00:59:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1750,10 +1732,10 @@
 			Language="JPN">
 			<Text>すまぬ！　だいじなことを
 つたえるのを　わすれておった！▼
-まずは　これを　うけとるのだ▼</Text>
+まずは　これを　うけとれい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T09:19:31" />
+				Time="2012-01-20T01:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1763,10 +1745,10 @@
 			Language="JPN_KANJI">
 			<Text>すまぬ！　大事なことを
 伝えるのを　忘れておった！▼
-まずは　これを　受け取るのだ▼</Text>
+まずは　これを　受け取れい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T09:25:23" />
+				Time="2012-01-20T01:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

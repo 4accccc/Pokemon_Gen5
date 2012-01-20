@@ -339,11 +339,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今の　勝負は　どちらも
-なかなか　あっぱれ　だったぞ！▼
+なかなか　天晴れ　だったぞ！▼
 さて　お次は……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T11:51:48" />
+				Time="2012-01-20T01:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -602,11 +602,11 @@
 			Language="JPN_KANJI">
 			<Text>アデク『いやあ　じつに
 心躍る　戦い　だったな！▼
-どの　ポケモンからも　うれしそうな
+どの　ポケモンからも　喜々とした
 気持ちが　伝わってきたぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-15T01:53:08" />
+				Time="2012-01-20T01:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1021,10 +1021,10 @@
 てにいれるとは　たいしたものだ▼
 だが　それでも
 みちは　なかば……▼
-つよい　とは　なんだろうな？</Text>
+つよい　とは　なんであろうな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T09:17:17" />
+				Time="2012-01-20T01:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1036,10 +1036,10 @@
 手に入れるとは　たいしたものだ▼
 だが　それでも
 道は　半ば……▼
-強い　とは　なんだろうな？</Text>
+強い　とは　なんであろうな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T09:17:35" />
+				Time="2012-01-20T01:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2847,10 +2847,12 @@
 			<Text>なんだ　おまえ！▼
 てもちが　いっぱい　なのか？▼
 わかった▼
+わかった▼
+わかった！▼
 ここで　まってるぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:27:34" />
+				Time="2012-01-20T01:12:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2861,10 +2863,12 @@
 			<Text>なんだ　おまえ！▼
 手持ちが　一杯なのか？▼
 わかった▼
+わかった▼
+わかった！▼
 ここで　待ってるぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:27:55" />
+				Time="2012-01-20T01:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

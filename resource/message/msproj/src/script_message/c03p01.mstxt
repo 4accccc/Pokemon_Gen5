@@ -274,11 +274,11 @@
 あなたの　[Name:PokemonName Idx="0" ]は
 おなじ　しゅるいの　ポケモンよりも▽
 じしんに　あふれていますね！▼
-だが　あなたじしんは　まだ
+だが　あなたは　まだ
 バッジが　３コの　トレーナー……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T03:37:07" />
+				Time="2012-01-20T01:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -345,13 +345,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グレートだ！▼
+			<Text>グレートですっ！▼
 りゆうは　ふめい　ですが
 あなたは　パートナーである▽
 ポケモンの　ちからを　ひきだしている▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T11:38:00" />
+				Time="2012-01-20T01:24:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -359,13 +359,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グレートだ！▼
+			<Text>グレートですっ！▼
 理由は　不明ですが
 あなたは　パートナーである▽
 ポケモンの　力を　ひきだしている▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T11:38:02" />
+				Time="2012-01-20T01:24:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
