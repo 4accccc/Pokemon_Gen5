@@ -51,6 +51,7 @@
 #else
 #define RESORT_Printf(...)  /* */
 #define RESORT_LOG_Printf(...)  /* */
+#define RESORT_SPOT_Printf(...) /* */
 #endif
 
 //=============================================================================
