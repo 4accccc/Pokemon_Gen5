@@ -507,7 +507,7 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
   return CARDSYS_END;
 }
 
-#define WBT_COUNT_MAX ( 99999 )
+#define WBT_COUNT_MAX ( 9999 )
 //----------------------------------------------------------------------------------
 /**
  * @brief	【SWAN専用】送信トレーナーカード用情報取得
