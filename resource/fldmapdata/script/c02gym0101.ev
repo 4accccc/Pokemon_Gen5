@@ -101,7 +101,7 @@ INIT_EVENT_START  ev_zone_c02gym0101
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
 
   //リンクイベント起動状態でアロエを表示
-  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_05 == 0 && FLAG_OFF( FE_C02GYM0101_LINKEV_ZONE ) THEN
+  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_02 == 0 && FLAG_OFF( FE_C02GYM0101_LINKEV_ZONE ) THEN
     //========================================//
     //C02GYM0101アロエを表示
     _FLAG_RESET( FV_C02GYM0101_LEADER2_01 )
@@ -111,7 +111,7 @@ INIT_EVENT_START  ev_zone_c02gym0101
   ENDIF
   
   //リンクイベント起動状態でSCENE_CHANGE起動（図書館側から来た処理）
-  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_05 == 0 && FLAG_ON( FE_C02GYM0101_LINKEV_ZONE ) THEN
+  IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_02 == 0 && FLAG_ON( FE_C02GYM0101_LINKEV_ZONE ) THEN
     //========================================//
     //C02GYM0101アロエを非表示
     _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
@@ -259,7 +259,7 @@ EVENT_START   ev_reserve_c02gym0101_link_event_ret
   //POS無効
   $WK_SCENE_C02_LINK_EVENT = 3
   //リンクイベント起動終了
-  $WK_SYS_LINK_EVENT_05 = 1
+  $WK_SYS_LINK_EVENT_02 = 1
   //C02GYM0101のアロエを非表示
   _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
   //========================================//

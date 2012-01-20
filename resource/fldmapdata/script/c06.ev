@@ -68,7 +68,7 @@ INIT_EVENT_START   ev_zone_c06
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
 
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FE_C06_LINKEV_ZONE ) THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FE_C06_LINKEV_ZONE ) THEN
     //========================================//
     //C06フウロ表示
     _FLAG_RESET( FV_C06_SWLEADER6_01 )
@@ -76,7 +76,7 @@ INIT_EVENT_START   ev_zone_c06
   ENDIF
   
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_ON( FE_C06_LINKEV_ZONE ) THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_ON( FE_C06_LINKEV_ZONE ) THEN
     //========================================//
     //C06 SCENE_CHANGE有効
     $WK_SCENE_C06_LINK_EVENT = 1
@@ -98,7 +98,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_c06
   //C06到着イベント終了でリンクイベント起動ならフウロを移動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FV_C06_SWLEADER6_01 ) THEN
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FV_C06_SWLEADER6_01 ) THEN
     _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN)
   ENDIF
 INIT_EVENT_END
@@ -618,7 +618,7 @@ EVENT_START   ev_reserve_c06_link_event_ret
   
   //========================================//
   //リンクイベント終了
-  $WK_SYS_LINK_EVENT_02 = 2
+  $WK_SYS_LINK_EVENT_05 = 1
   //C06 SCENE_CHANGE無効
   $WK_SCENE_C06_LINK_EVENT = 2
   //C06フウロ非表示
