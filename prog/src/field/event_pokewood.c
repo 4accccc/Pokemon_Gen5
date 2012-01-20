@@ -314,7 +314,7 @@ static void dataMakeMyTrainer( int senario_no, BSP_TRAINER_DATA *data, const MYS
 }
 
 // スターランクで入る観客数[基本数,乱数範囲]   [5,5]は 5+rand()%5 の意味
-static const audience_tbl[][2]={ {5,5}, {7,6}, {10,9}, {16,7}, {22,1} };
+static const audience_tbl[][2]={ {5,5}, {7,6}, {10,9}, {16,6}, {22,1} };
 
 //-----------------------------------------------------------------------------
 /**
