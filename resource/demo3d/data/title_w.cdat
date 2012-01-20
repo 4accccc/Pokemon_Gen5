@@ -64,12 +64,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_title_w_end_data[] = {
 
 static const u16 res_title_w_file_title_w_01[] = {
  NARC_data_demo3d_title_w_01_nsbmd,
- NARC_data_demo3d_title_w_01_nsbtp,
  NARC_data_demo3d_title_w_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_title_w_file_unit_title_w_01[] = {
- { res_title_w_file_title_w_01, 3 },
+ { res_title_w_file_title_w_01, 2 },
 };
 
 ///==================================
@@ -89,14 +88,12 @@ static const DEMO3D_FILE_UNIT res_title_w_file_unit_title_w_02[] = {
 
 static const u16 res_title_w_file_title_w_03[] = {
  NARC_data_demo3d_title_w_03_nsbmd,
- NARC_data_demo3d_title_w_03_nsbtp,
  NARC_data_demo3d_title_w_03_nsbta,
  NARC_data_demo3d_title_w_03_nsbca,
- NARC_data_demo3d_title_w_03_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_title_w_file_unit_title_w_03[] = {
- { res_title_w_file_title_w_03, 5 },
+ { res_title_w_file_title_w_03, 3 },
 };
 
 ///========================================================
