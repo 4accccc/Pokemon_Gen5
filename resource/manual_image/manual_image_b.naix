@@ -72,7 +72,7 @@ enum {
 	NARC_manual_image_b_021_02_sort_lz77_nbfs = 58,
 	NARC_manual_image_b_045_01_seisoku_lz77_nbfs = 59,
 	NARC_manual_image_b_005_01_battle_black_lz77_nbfs = 60,
-	NARC_manual_image_b_022_01_aishou_lz77_nbfs = 61,
+	NARC_manual_image_b_022_01_aishou_black_lz77_nbfs = 61,
 	NARC_manual_image_b_000_01_wazabunrui_lz77_nbfs = 62,
 	NARC_manual_image_b_024_01_oya_lz77_nbfs = 63,
 	NARC_manual_image_b_024_02_are_lz77_nbfs = 64,

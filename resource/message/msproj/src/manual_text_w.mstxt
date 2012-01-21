@@ -2441,16 +2441,16 @@
 青色のボタンを　タッチすると
 入れ替えモードに　切り替わります。
 
-便利モードでは　項目ウインドウが
+入れ替えモードでは　項目ウインドウが
 表示されなくなり　ポケモンの
 入れ替えだけを　行うことが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-18T10:47:34" />
+				Time="2012-01-21T04:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-18T10:47:34" />
+				Time="2012-01-21T04:30:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4662,7 +4662,7 @@
 			<Text>したがめんの　みどりいろの　マークか
 スタートボタンを　おすと　ならびかたが
 ひょうじされ　ポケットの　どうぐの
-ならびかたを　へんこうできます。
+ならびを　へんこうできます。
 セレクトボタンを　おすと
 ポケットの　どうぐを　じゆうに
 いれかえることが　できます。
@@ -4670,18 +4670,18 @@
 ページを　きりかえることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T09:35:31" />
+				Time="2012-01-21T04:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T09:35:31" />
+				Time="2012-01-21T04:30:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>下画面の　緑色の　マークか
 スタートボタンを　押すと　並び方が
 表示され　ポケットの　どうぐの
-並び方を　変更できます。
+並びを　変更できます。
 セレクトボタンを　押すと
 ポケットの　道具を
 自由に　入れ替えることが　できます。
@@ -4689,11 +4689,11 @@
 切り替えることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T09:35:31" />
+				Time="2012-01-21T04:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T09:35:31" />
+				Time="2012-01-21T04:30:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

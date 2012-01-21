@@ -59,7 +59,7 @@ ntexconv 021_01_zukan.bmp -no -bg -bgb -bgf direct
 ntexconv 021_02_sort.bmp -no -bg -bgb -bgf direct
 ntexconv 045_01_seisoku.bmp -no -bg -bgb -bgf direct
 ntexconv 005_01_battle_white.bmp -no -bg -bgb -bgf direct
-ntexconv 022_01_aishou.bmp -no -bg -bgb -bgf direct
+ntexconv 022_01_aishou_white.bmp -no -bg -bgb -bgf direct
 ntexconv 000_01_wazabunrui.bmp -no -bg -bgb -bgf direct
 ntexconv 024_01_oya.bmp -no -bg -bgb -bgf direct
 ntexconv 024_02_are.bmp -no -bg -bgb -bgf direct

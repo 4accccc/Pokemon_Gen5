@@ -59,7 +59,7 @@ ntrcomp -l -o 021_01_zukan_lz77.nbfs 021_01_zukan.nbfs
 ntrcomp -l -o 021_02_sort_lz77.nbfs 021_02_sort.nbfs
 ntrcomp -l -o 045_01_seisoku_lz77.nbfs 045_01_seisoku.nbfs
 ntrcomp -l -o 005_01_battle_white_lz77.nbfs 005_01_battle_white.nbfs
-ntrcomp -l -o 022_01_aishou_lz77.nbfs 022_01_aishou.nbfs
+ntrcomp -l -o 022_01_aishou_white_lz77.nbfs 022_01_aishou_white.nbfs
 ntrcomp -l -o 000_01_wazabunrui_lz77.nbfs 000_01_wazabunrui.nbfs
 ntrcomp -l -o 024_01_oya_lz77.nbfs 024_01_oya.nbfs
 ntrcomp -l -o 024_02_are_lz77.nbfs 024_02_are.nbfs
