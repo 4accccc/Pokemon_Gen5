@@ -983,7 +983,7 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 
   // タイムアウト処理 by mori SWANで追加 2012.01.21
   if(wk->objCount==wk->objCountOld){
-    OS_Printf("report TimeoutCount=%d\n", wk->TimeoutCount);
+//    OS_Printf("report TimeoutCount=%d\n", wk->TimeoutCount); // タイムアウトまでのカウント表示
     wk->TimeoutCount++;
   }else{
     wk->objCountOld = wk->objCount;
