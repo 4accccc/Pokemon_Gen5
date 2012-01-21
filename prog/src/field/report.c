@@ -32,6 +32,9 @@
 #include "msg/msg_report.h"
 
 
+#ifdef PM_DEBUG
+//#define DEBUG_TIMEOUT_TEST    /// 定義を有効にするとセーブのメーターが８から進まなくなります。(タイムアウトテスト用)
+#endif
 //============================================================================================
 //	定数定義
 //============================================================================================
@@ -147,6 +150,12 @@ enum {
 	OBJID_MAX,
 };
 
+#define TIMEOUT_WAIT_MAX  ( 60*20 ) /// 10個のOBJのうち1箇所にとどまっていた際のタイムアウトの最大ウェイト
+                                    /// 20秒の根拠は初回セーブだと最大1箇所で5秒待つところまで確認していたため
+                                    /// その4倍ウェイトを確保した.
+                                    
+#define METER_OBJMAX  ( 10 )        /// セーブ中メーターOBJの最大数
+
 #define FCOL_P02BN		( PRINTSYS_LSB_Make(15,14,0) )	// フォントカラー：０２黒抜
 #define FCOL_P02WN		( PRINTSYS_LSB_Make(13,12,0) )	// フォントカラー：０２白抜
 
@@ -191,6 +200,8 @@ struct _REPORT_WORK {
 	u32	timeSize;					// カウンタサイズ
 	u16	objCount;					// OBJ変更カウンタ
 	u16	objWait;					// OBJ変更ウェイト
+  int objCountOld;      // objCount比較用
+  int TimeoutCount;     // タイムアウト監視用
 
 	int	seq;
 
@@ -403,7 +414,7 @@ void REPORT_SetSaveSize( REPORT_WORK * wk )
 {
 	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
 	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
-	wk->timeSize  = ((wk->actualSize * 2)<<8) / 10;
+	wk->timeSize  = ((wk->actualSize * 2)<<8) / METER_OBJMAX;
 	wk->overSize  = wk->timeSize;
 	wk->objCount  = 0;
 	wk->objWait   = 0;
@@ -461,7 +472,7 @@ void REPORT_StartSave( REPORT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 BOOL REPORT_EndSave( REPORT_WORK * wk )
 {
-	if( wk->objCount == 10 ){
+	if( wk->objCount == METER_OBJMAX ){
 		wk->save_active = FALSE;
 		return TRUE;
 	}
@@ -897,6 +908,36 @@ static void ExitObj( REPORT_WORK * wk )
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );		// SUB DISP OBJ ON
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	セーブ進行を伝えるメーターOBJのカラーON
+ *
+ * @param   wk		REPORT_WORK
+ * @param   no		点灯させるOBJのナンバー
+ */
+//----------------------------------------------------------------------------------
+static void _lighton_save_meter_obj( REPORT_WORK *wk, int no )
+{
+  GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+no], 0 );
+  GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+no], 1 );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+no], TRUE );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	タイムアウト時にメーターOBJを全点灯させる
+ *
+ * @param   wk		REPORT_WORK
+ */
+//----------------------------------------------------------------------------------
+static void _lighton_full_save_meter_obj( REPORT_WORK *wk )
+{
+  int i;
+  for(i=0;i<METER_OBJMAX;i++){
+    _lighton_save_meter_obj( wk, i );
+  }
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		VBLANK処理
@@ -922,19 +963,37 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 		wk->objWait++;
 	}
 
-	if( now_size >= wk->overSize ){
-		if( wk->objWait == TIMEMARK_WAIT ){
-			if( wk->objCount < 10 ){
-				wk->overSize += wk->timeSize;
-				wk->objWait = 0;
-				GFL_CLACT_WK_SetAnmFrame( wk->clwk[OBJID_TIME01+wk->objCount], 0 );
-				GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
-				GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
-				wk->objCount++;
-				OS_Printf( "objCount = %d\n", wk->objCount );
-			}
-		}
-	}
+#ifdef DEBUG_TIMEOUT_TEST
+  if(wk->objCount>7){   //嘘ハマリ。８個から進まなくなる
+    wk->objWait=0;
+  }
+#endif
+
+  if( now_size >= wk->overSize ){
+    if( wk->objWait == TIMEMARK_WAIT ){
+      if( wk->objCount < METER_OBJMAX ){
+        wk->overSize += wk->timeSize;
+        wk->objWait = 0;
+        _lighton_save_meter_obj( wk, wk->objCount );
+        wk->objCount++;
+        OS_Printf( "objCount = %d\n", wk->objCount );
+      }
+    }
+  }
+
+  // タイムアウト処理 by mori SWANで追加 2012.01.21
+  if(wk->objCount==wk->objCountOld){
+    OS_Printf("report TimeoutCount=%d\n", wk->TimeoutCount);
+    wk->TimeoutCount++;
+  }else{
+    wk->objCountOld = wk->objCount;
+    wk->TimeoutCount=0;
+  }
+  // 20秒以上同じobjCountにとどまっていた場合はタイムアウト
+  if(wk->TimeoutCount>=TIMEOUT_WAIT_MAX){    
+    _lighton_full_save_meter_obj( wk );
+    wk->objCount=METER_OBJMAX;
+  }
 
 	GFL_CLACT_SYS_Main();
 	GFL_CLACT_SYS_VBlankFunc();
