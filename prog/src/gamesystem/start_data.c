@@ -35,10 +35,10 @@
 #include "arc/message.naix"       // メッセージデータ参照用
 #include "msg/msg_trname.h"       // 文字列名support_01
 #include "msg/msg_pmss_peculiar.h"
+
+#include "savedata/dummy3ds_savedata.h"
 //============================================================================================
 //============================================================================================
-//=====================================================================
-//=====================================================================
 //----------------------------------------------------------------------------------
 /**
  * @brief   ゲーム開始用に手持ちどうぐを加える
@@ -64,92 +64,39 @@ static void makeMyBag(GAMEDATA * gamedata, HEAPID heapID)
   MYITEM_AddItem( myitem, ITEM_TOMODATITETYOU, 1, heapID );
 }
 
-
-#if 0
-//2011.09.28  tamada
-//swanではメールは最初からは入れておかない
-//=====================================================================
-//=====================================================================
-static const PMS_DATA mail_pmsdata[]={
-  // 「しょうぶ」してくれて　ありがとう！
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_10,
-    { mail01, PMS_WORD_NULL},
-  },
-  // 「ドキドキ」で　とってもよかったです！
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_11,
-    { mail02, PMS_WORD_NULL},
-  },
-  // また「しょうぶ」しようね！　「バイバイ」
-  {
-    PMS_TYPE_PECULIAR,  pmss_peculiar_21,
-    { mail01, PMS_WORD_ONLY_DECO_BIT_WORD|PMS_DECOID_BYEBYE },
-  },
-};
-
 //----------------------------------------------------------------------------------
-/**
- * @brief メールボックスにベルからのメールを最初から入れておく
- *
- * @param   gamedata    
- */
+//  CYGNUS対応用のswan側内部データを初期化
 //----------------------------------------------------------------------------------
-static void MailBox_SetFirstMail( GAMEDATA* gamedata, HEAPID heapID )
+static void makeCygnusInnerData(GAMEDATA * gamedata, HEAPID heapID )
 {
-  MAIL_DATA   *mail;
-  GFL_MSGDATA *TrainerMsgData;
-  STRBUF  *strbuf;
-  STRCODE strdata[BUFLEN_PERSON_NAME];
-
-  // トレーナー名メッセージデータオープン
-  TrainerMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                                                NARC_message_trname_dat, heapID );
-  strbuf = GFL_MSG_CreateString( TrainerMsgData, support_01 );
-
-  // サポート名の生文字列を取得
-  GFL_STR_GetStringCode( strbuf, strdata, BUFLEN_PERSON_NAME );
-
-  // メールデータ作成
-  mail = MailData_CreateWork( heapID );
-
-  // サポート名セット
-  MailData_SetWriterName( mail, strdata );
-  // 性別
-  MailData_SetWriterSex( mail, PM_FEMALE );
-  // メールデザインNo
-  MailData_SetDesignNo( mail, 3 );
-  // 国コードセット
-  MailData_SetCountryCode( mail, PM_LANG );
-  // カセットバージョン
-  MailData_SetCasetteVersion( mail, PM_VERSION );
-  // 簡易会話セット
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[0], 0 );
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
-  MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
-  // 簡易ワード「トレーナー」セット
-  MailData_SetPmsWord( mail, mail04 );
-
-  // メールボックスにメールをセット
-  {
-    MAIL_BLOCK *mail_block = GAMEDATA_GetMailBlock( gamedata );
-    MAIL_AddMailFormWork( mail_block, MAILBLOCK_PASOCOM, 0, mail);
-  }
-
-  // ワーク解放
-  GFL_HEAP_FreeMemory( mail );
-  GFL_STR_DeleteBuffer( strbuf );
-  GFL_MSG_Delete( TrainerMsgData );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+  DUMMY3DS_SAVEDATA * d3ds = SaveData_GetDummy3ds( sv );
+  u32 onetime_key = GFUser_GetPublicRand( GFL_STD_RAND_MAX );
+  DUMMY3DS_SAVEDATA_SetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_ONETIME_KEY, onetime_key );
+  DUMMY3DS_SAVEDATA_SetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_IS_PLAYED, FALSE );
+  DUMMY3DS_SAVEDATA_SetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_FLAG, 0 );
 }
-#endif
 
 
+//============================================================================================
+//============================================================================================
 //----------------------------------------------------------------------------------
+//  「さいしょから」ではじめたときのデータ初期化処理
 //----------------------------------------------------------------------------------
-void GAMEINIT_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
+void GAMEINIT_SetNormalStartData( GAMEDATA * gamedata, HEAPID heapID )
 {
   makeMyBag( gamedata, heapID );
-  //MailBox_SetFirstMail( gamedata, heapID );
 }
+
+//============================================================================================
+//============================================================================================
+//----------------------------------------------------------------------------------
+//  「さいしょから」「デバッグ開始」共通のデータ初期化処理
+//----------------------------------------------------------------------------------
+void GAMEINIT_SetCommonStartData( GAMEDATA * gamedata, HEAPID heapID )
+{
+  makeCygnusInnerData( gamedata, heapID );
+}
+
 
 

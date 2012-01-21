@@ -456,11 +456,16 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
   fmw->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
   LOCATION_SetGameStart(&fmw->loc_req);
 
+  //デバッグモード、通常スタート、共通の初期化処理
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( start_data ) );
+  GAMEINIT_SetCommonStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( start_data ) );
+
   //手持ちどうぐ、メール等の初期化処理
   if ( gameInitWork->mode == GAMEINIT_MODE_FIRST )
   {
     GFL_OVERLAY_Load( FS_OVERLAY_ID( start_data ) );
-    GAMEINIT_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+    GAMEINIT_SetNormalStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( start_data ) );
   }
 

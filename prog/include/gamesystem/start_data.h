@@ -11,5 +11,6 @@
 
 FS_EXTERN_OVERLAY( start_data );
 
-extern void GAMEINIT_SetStartData( GAMEDATA * gamedata, HEAPID heapID );
+extern void GAMEINIT_SetCommonStartData( GAMEDATA * gamedata, HEAPID heapID );
+extern void GAMEINIT_SetNormalStartData( GAMEDATA * gamedata, HEAPID heapID );
 
