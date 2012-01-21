@@ -44,6 +44,7 @@ SDK_COMPILER_ASSERT( DATA_CONVERT_SAVE_WORK_SIZE == sizeof(DATA_CONVERT_SAVE) );
 */
 //=============================================================================
 static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv, BOOL data_in );
+static u32 Data_Convert_Save_GetListOpenBit( const DATA_CONVERT_SAVE *cp_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -76,12 +77,34 @@ void DATA_CONVERT_SAVE_Init( DATA_CONVERT_SAVE *p_wk )
  *	@param	void *cp_data_adrs      コンバート元データ
  *	@param  cp_sv                   セーブコントロールワーク
  *
- *	@retval TRUE一箇所でもコンバートした  FALSEコンバートしてない
+ *  @retval TRUE 思い出リンクリストを一箇所でもオープンした FALSEしていない
+ *	// old  @retval TRUE一箇所でもコンバートした  FALSEコンバートしてない
  */
 //-----------------------------------------------------------------------------
 BOOL DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv )
 {
-  return Data_Convert_Save_ConvertCore( p_wk, cp_all_data, cp_sv, TRUE ) != 0;
+  u32 old;
+  u32 new;
+  old = Data_Convert_Save_GetListOpenBit( p_wk );
+  Data_Convert_Save_ConvertCore( p_wk, cp_all_data, cp_sv, TRUE );
+  new = Data_Convert_Save_GetListOpenBit( p_wk );
+
+
+  //old = 1100
+  //new = 1010
+  //old ^= new = 0110
+  //0110 & new = 0010
+
+  //newとold両方にたっている１を消す
+  old ^= new;
+  if( ( new & old ) != 0 )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -562,4 +585,28 @@ u32 DATA_CONVERT_SAVE_GetEventWork( u32 index )
   GF_ASSERT( index < NELEMS(sc_work) );
 
   return sc_work[ index ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  おもいでリストの表示  どれかがTRUE
+ *
+ *	@param	const KEY_SYSTEM_WORK *cp_wk  ワーク
+ *
+ *	@return TRUE表示してよい  ＦＡＬＳＥだめ
+ */
+//-----------------------------------------------------------------------------
+static u32 Data_Convert_Save_GetListOpenBit( const DATA_CONVERT_SAVE *cp_wk )
+{
+  int i;
+  u32 ret = 0;
+  for( i = 0; i < 8; i++ )
+  {
+    if( DATA_CONVERT_SAVE_IsEventOpen( cp_wk, i ) )
+    {
+      ret |= (1<<i);
+    }
+  }
+
+  return ret;
 }
