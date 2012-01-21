@@ -4712,11 +4712,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　[Name:ResortTown ]は
-サービス期間中　です！▼
+サービス期間中　です！▽
 残り　[Digit:2digits Idx="1" ]日　です▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:39:30" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4831,16 +4831,16 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-げんざい　[Digit:2digits Idx="2" ]　です▼
-にんきが　あと　[Digit:3digits Idx="0" ]　あつまると
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+げんざい　[Digit:3digits Idx="2" ]　です▼
+にんきが　あと　[Digit:4digits ]　あつまると
 つぎの　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:18:34" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4848,16 +4848,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-現在　[Digit:2digits Idx="2" ]　です▼
-人気が　あと　[Digit:3digits Idx="0" ]　集まると
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+現在　[Digit:3digits Idx="2" ]　です▼
+人気が　あと　[Digit:4digits ]　集まると
 次の　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T06:34:11" />
+				Time="2012-01-21T07:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4867,12 +4867,12 @@ BW♀
 			Language="JPN">
 			<Comment>0：必要な人気
 1：店舗名
-2：人気
+2：ランク
 3：市長名
 4：かんげき</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-10T14:18:19" />
+				Time="2012-01-21T07:37:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4909,13 +4909,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-げんざい　[Digit:2digits Idx="2" ]　です▼
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+げんざい　[Digit:3digits Idx="2" ]　です▼
 ありがとうございます！
 さいこう　ランクです▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T08:14:55" />
+				Time="2012-01-21T08:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4923,13 +4923,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-現在　[Digit:2digits Idx="2" ]　です▼
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+現在　[Digit:3digits Idx="2" ]　です▼
 ありがとうございます！
 最高ランク　です▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:40:27" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5170,16 +5170,16 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-げんざい　[Digit:2digits Idx="2" ]　です▼
-にんきが　あと　[Digit:3digits Idx="0" ]　あつまると
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+げんざい　[Digit:3digits Idx="2" ]　です▼
+にんきが　あと　[Digit:4digits ]　あつまると
 つぎの　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:18:41" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:36:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5187,16 +5187,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-現在　[Digit:2digits Idx="2" ]　です▼
-人気が　あと　[Digit:3digits Idx="0" ]　集まると
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+現在　[Digit:3digits Idx="2" ]　です▼
+人気が　あと　[Digit:4digits ]　集まると
 次の　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T06:34:27" />
+				Time="2012-01-21T07:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5206,12 +5206,12 @@ BW♀
 			Language="JPN">
 			<Comment>0：必要な人気
 1：店舗名
-2：人気
+2：ランク
 3：市長名
 4：かんげき</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-10T14:19:55" />
+				Time="2012-01-21T07:35:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5248,13 +5248,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-げんざい　[Digit:2digits Idx="2" ]　です▼
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+げんざい　[Digit:3digits Idx="2" ]　です▼
 ありがとうございます！
 さいこう　ランクです▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T08:15:23" />
+				Time="2012-01-21T08:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5262,13 +5262,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
-現在　[Digit:2digits Idx="2" ]　です▼
+			<Text>[Name:ResortShop Idx="1" ]の　ランクは
+現在　[Digit:3digits Idx="2" ]　です▼
 ありがとうございます！
 最高ランク　です▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:40:31" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:43:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -7817,12 +7817,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『……そうだ。▼
+			<Text>[Name:TrainerName ]『……そうだ▼
 [Name:TrainerName Idx="1" ]さんが　やっている
-[Name:ResortShop Idx="2" ]も　おもしろいよ▼</Text>
+[Name:ResortShop Idx="2" ]も▽
+おもしろいよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-05T06:19:03" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -7830,12 +7831,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『……そうだ。▼
+			<Text>[Name:TrainerName ]『……そうだ▼
 [Name:TrainerName Idx="1" ]さんが　やっている
-[Name:ResortShop Idx="2" ]も　おもしろいよ▼</Text>
+[Name:ResortShop Idx="2" ]も▽
+おもしろいよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-20T09:21:23" />
+				Time="2012-01-21T07:24:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -8989,12 +8991,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼
+[Name:ResortTitle Idx="2" ]　です▼
 つぎの　ランクまで
 にんきは　あと　[Digit:4digits Idx="1" ]　ひつようです▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:11" />
+				Time="2012-01-21T07:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9003,12 +9005,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼
+[Name:ResortTitle Idx="2" ]　です▼
 次の　ランクまで
 人気は　あと　[Digit:4digits Idx="1" ]　必要です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:14" />
+				Time="2012-01-21T07:27:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9526,10 +9528,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼</Text>
+[Name:ResortTitle Idx="2" ]　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:24" />
+				Time="2012-01-21T07:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9538,10 +9540,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼</Text>
+[Name:ResortTitle Idx="2" ]　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:25" />
+				Time="2012-01-21T07:27:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9873,12 +9875,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼
+[Name:ResortTitle Idx="2" ]　です▼
 つぎの　ランクまで
 にんきは　あと　[Digit:4digits Idx="1" ]　ひつようです▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T04:00:02" />
+				Time="2012-01-21T07:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9887,12 +9889,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼
+[Name:ResortTitle Idx="2" ]　です▼
 次の　ランクまで
 人気は　あと　[Digit:4digits Idx="1" ]　必要です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T04:00:04" />
+				Time="2012-01-21T07:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -10064,7 +10066,7 @@ BW♀
 なにが　したいですか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T07:05:17" />
+				Time="2012-01-21T08:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10078,7 +10080,7 @@ BW♀
 何が　したいですか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T08:31:28" />
+				Time="2012-01-21T08:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10403,10 +10405,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼</Text>
+[Name:ResortTitle Idx="2" ]　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:37" />
+				Time="2012-01-21T07:28:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -10415,10 +10417,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>現在　ランク　[Digit:2digits Idx="0" ]
-『[Name:ResortTitle Idx="2" ]』　です▼</Text>
+[Name:ResortTitle Idx="2" ]　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:59:39" />
+				Time="2012-01-21T07:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -15071,11 +15073,11 @@ BW♀
 			Language="JPN">
 			<Text>しせつが　いっぱいで
 これ　いじょう　たてられません▼
-たてかえる
-しせつを　えらんでください▼</Text>
+たてかえる　しせつを
+えらんでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:07" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15085,11 +15087,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>施設が　一杯で
 これ以上　建てられません▼
-建てかえる
-施設を　選んでください▼</Text>
+建てかえる　施設を
+選んでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:13" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15124,11 +15126,11 @@ BW♀
 			Language="JPN">
 			<Text>しせつが　いっぱいで
 これ　いじょう　たてられません▼
-たてかえる
-しせつを　えらんでください▼</Text>
+たてかえる　しせつを
+えらんでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:15" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15138,11 +15140,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>施設が　一杯で
 これ以上　建てられません▼
-建てかえる
-施設を　選んでください▼</Text>
+建てかえる　施設を
+選んでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:15" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:34:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15176,11 +15178,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ひしょが　いっぱいです！▼
-こうたい　する
-ひしょを　えらんでください▼</Text>
+こうたい　する　ひしょを
+えらんでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:30" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:34:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -15189,11 +15191,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>秘書が　一杯です！▼
-交代する
-秘書を　選んでください▼</Text>
+交代する　秘書を
+選んでください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:53:35" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T04:34:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16020,11 +16022,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortTitle Idx="2" ]』　として
-うわさが　ひろまった！！▼</Text>
+			<Text>『[Name:ResortTitle Idx="2" ]』
+として　うわさが　ひろまった！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:55:50" />
+				Time="2012-01-21T07:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16032,11 +16034,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortTitle Idx="2" ]』　として
-うわさが　広まった！！▼</Text>
+			<Text>『[Name:ResortTitle Idx="2" ]』
+として　うわさが　広まった！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T14:55:57" />
+				Time="2012-01-21T07:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16146,11 +16148,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="1" ]』　から
-『[Name:ResortShop Idx="0" ]』　に　なった！</Text>
+			<Text>[Name:ResortShop Idx="1" ]　から
+[Name:ResortShop Idx="0" ]　に　なった！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T12:14:38" />
+				Time="2012-01-21T07:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16158,11 +16160,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="1" ]』　から
-『[Name:ResortShop Idx="0" ]』　に　なった！</Text>
+			<Text>[Name:ResortShop Idx="1" ]　から
+[Name:ResortShop Idx="0" ]　に　なった！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T12:14:42" />
+				Time="2012-01-21T07:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16171,11 +16173,10 @@ BW♀
 		<CommentCell
 			Language="JPN">
 			<Comment>0：新店舗名
-1：旧店舗名
-</Comment>
+1：旧店舗名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T07:45:51" />
+				Time="2012-01-21T07:32:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -19122,10 +19123,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>１とうは　なんと　マスターボール！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T11:14:50" />
+				Time="2012-01-21T07:19:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19134,10 +19135,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>1等は　なんと　マスターボール！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T11:15:07" />
+				Time="2012-01-21T07:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19186,10 +19187,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたのポケモンを　よりうつくしく！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19198,10 +19199,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたのポケモンを　より美しく！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:57:30" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19250,10 +19251,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ほしいものが　なんでも　そろう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19262,10 +19263,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほしいものが　なんでも　そろう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19314,10 +19315,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>しぜんの　めぐみの　きのみはんばい
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19326,10 +19327,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自然の　恵みの　きのみ販売
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:57:45" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19378,10 +19379,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンと　どこまでも　がんばります
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:52:00" />
+				Time="2012-01-21T07:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19390,10 +19391,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンと　どこまでも　がんばります
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:52:06" />
+				Time="2012-01-21T07:19:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19442,10 +19443,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>あいじょう　いっぱい　タマゴあずかり
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19454,10 +19455,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>愛情　いっぱい　タマゴ預かり
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:57:54" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19506,10 +19507,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ひと　それぞれの　ほりだしもの
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:52:29" />
+				Time="2012-01-21T07:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19518,10 +19519,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人それぞれの　掘り出し物
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:58:12" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19570,10 +19571,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>みつぼしの　あじを　ていきょう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:58:28" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19582,10 +19583,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>三ツ星の　味を　提供
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:58:24" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19634,10 +19635,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>１とうは　なんと　マスターボール！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-25T14:02:13" />
+				Time="2012-01-21T07:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19646,10 +19647,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>1等は　なんと　マスターボール！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-25T14:02:13" />
+				Time="2012-01-21T07:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19691,10 +19692,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたのポケモンを　よりうつくしく！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:18" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19703,10 +19704,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたのポケモンを　より美しく！
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:58:36" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19748,10 +19749,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ほしいものが　なんでも　そろう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:21" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19760,10 +19761,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほしいものが　なんでも　そろう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:21" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:20:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -19805,26 +19806,26 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>しぜんの　めぐみの　きのみはんばい
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:25" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自然の　恵みの　きのみ販売
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-26T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:25" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -19862,26 +19863,26 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンと　どこまでも　がんばります
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-23T12:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:28" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンと　どこまでも　がんばります
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-23T12:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:28" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -19919,26 +19920,26 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>あいじょう　いっぱい　タマゴあずかり
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-01T04:43:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:31" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>愛情　いっぱい　タマゴ預かり
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-26T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:31" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -19976,26 +19977,26 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ひと　それぞれの　ほりだしもの
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-09-23T12:52:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:35" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人それぞれの　掘り出し物
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-26T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:35" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -20033,26 +20034,26 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>みつぼしの　あじを　ていきょう
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-26T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:39" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>三ツ星の　味を　提供
-『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
+[Name:ResortShop Idx="0" ]へ　ようこそ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-26T06:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:43:39" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T07:21:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25196,11 +25197,10 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　けなみや　はだを
-おていれして
-ちょっぴり　なついてもらいます。</Text>
+おていれして　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:39:49" />
+				Time="2012-01-21T06:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25209,11 +25209,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　毛並みや　はだを
-お手入れして
-ちょっぴり　なついてもらいます。</Text>
+お手入れして　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:39:54" />
+				Time="2012-01-21T06:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25256,10 +25255,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　けなみや　はだを
 あらって　きれいに　することで
-ちょっぴり　なついてもらいます。</Text>
+かなり　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:40:01" />
+				Time="2012-01-21T06:36:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25269,10 +25268,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ポケモンの　毛並みや　はだを
 洗って　きれいに　することで
-ちょっぴり　なついてもらいます。</Text>
+かなり　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:40:08" />
+				Time="2012-01-21T06:36:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25315,10 +25314,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　けなみや　はだを
 きれいに　ととのえる　ことで
-なついてもらいます。</Text>
+すごく　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T12:37:07" />
+				Time="2012-01-21T06:45:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25328,10 +25327,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ポケモンの　毛並みや　はだを
 きれいに　ととのえる　ことで
-なついてもらいます。</Text>
+すごく　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T12:43:17" />
+				Time="2012-01-21T06:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25374,10 +25373,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　けなみや　はだを
 うつくしく　ととのえることで
-すごく　なついてもらいます。</Text>
+ものすごく　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T13:33:14" />
+				Time="2012-01-21T06:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25387,10 +25386,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ポケモンの　毛並みや　はだを
 美しく　ととのえることで
-すごく　なついてもらいます。</Text>
+ものすごく　なついてもらいます。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T13:33:07" />
+				Time="2012-01-21T06:46:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25492,27 +25491,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 ＨＰの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T04:58:31" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 ＨＰの　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T04:58:34" />
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25550,27 +25549,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 こうげきの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:00" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 攻撃の　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:54:48" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25608,27 +25607,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 ぼうぎょの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:00" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 防御の　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:54:52" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25666,27 +25665,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 とうこうの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:00" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 特攻の　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:54:57" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25724,27 +25723,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 とくぼうの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:00" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 特防の　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:55:03" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25782,27 +25781,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 すばやさの　きそポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:00" />
+				Time="2012-01-21T08:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:16:20" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 素早さの　基礎ポイントが
-さがります。</Text>
+ものすごく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T04:58:45" />
+				Time="2012-01-21T08:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T06:41:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25840,27 +25839,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 ＨＰの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2012-01-14T04:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:09" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 ＨＰの　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2012-01-14T04:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25898,27 +25897,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 こうげきの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:10" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 攻撃の　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T02:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25956,27 +25955,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 ぼうぎょの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:10" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 防御の　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T02:55:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26014,27 +26013,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 とうこうの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:10" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 特攻の　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T02:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26072,27 +26071,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 とくぼうの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:10" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 特防の　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T02:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -26130,27 +26129,27 @@ ME
 			Language="JPN">
 			<Text>メイクで　なついてもらいます。
 すばやさの　きそポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:21:10" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
 素早さの　基礎ポイントが
-かなり　さがります。</Text>
+とてつもなく　さがります。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2012-01-14T04:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:59:06" />
+				Time="2012-01-21T08:24:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -48517,10 +48516,10 @@ ME
 			Language="JPN">
 			<Text>おいしい　ごはんに　のみものが
 ついた　おとくな　セット。
-ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　１つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T19:05:36" />
+				Time="2012-01-21T04:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48530,10 +48529,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>おいしい　ごはんに　飲み物が
 ついた　お得な　セット。
-ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　１つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T09:48:33" />
+				Time="2012-01-21T04:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -48581,10 +48580,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>とっても　おいしい　のみもの。
-のんだ　ポケモンが　なつく。</Text>
+のんだ　ポケモンが
+ちょっぴり　なつく。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T09:47:47" />
+				Time="2012-01-21T06:25:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48593,10 +48593,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>とっても　おいしい　飲み物。
-飲んだ　ポケモンが　なつく。</Text>
+飲んだ　ポケモンが
+ちょっぴり　なつく。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T09:48:18" />
+				Time="2012-01-21T06:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -48645,10 +48646,10 @@ ME
 			Language="JPN">
 			<Text>おいしい　ごはんに　のみものが
 ついた　おとくな　ランチ。
-たべた　ポケモンが　かなり　なつく。</Text>
+たべた　ポケモンが　なつく。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T09:58:21" />
+				Time="2012-01-21T06:26:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48658,10 +48659,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>おいしい　ごはんに　飲み物が
 ついた　お得な　ランチ。
-飲んだ　ポケモンが　かなり　なつく。</Text>
+飲んだ　ポケモンが　なつく。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T09:58:32" />
+				Time="2012-01-21T06:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48775,10 +48776,10 @@ ME
 			Language="JPN">
 			<Text>ちょっぴり　ごうかな　ごはんに
 デザートが　ついた　メニュー。
-たべた　ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　１つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:45:46" />
+				Time="2012-01-21T05:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48788,10 +48789,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ちょっぴり　豪華な　ごはんに
 デザートが　ついた　メニュー。
-食べた　ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　１つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:45:50" />
+				Time="2012-01-21T05:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -48840,10 +48841,10 @@ ME
 			Language="JPN">
 			<Text>たべたら　きっと　しあわせに　なれる　
 ごうかな　スペシャル　フルコース。
-ポケモンの　レベルが　かなり　あがる。</Text>
+ポケモンの　レベルが　８つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:46:49" />
+				Time="2012-01-21T05:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48853,10 +48854,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>食べたら　きっと　幸せに　なれる　
 豪華な　スペシャル　フルコース。
-ポケモンの　レベルが　かなり　あがる。</Text>
+ポケモンの　レベルが　８つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:47:29" />
+				Time="2012-01-21T05:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -48905,10 +48906,10 @@ ME
 			Language="JPN">
 			<Text>プルプル　シコシコ　した　はざわりの
 ふしぎな　デザート。
-ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　３つ　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:48:20" />
+				Time="2012-01-21T05:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48918,10 +48919,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>プルプル　シコシコ　した　歯ざわりの
 不思議な　デザート。
-ポケモンの　レベルが　あがる。</Text>
+ポケモンの　レベルが　３つ　あがる。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T03:03:59" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -48969,10 +48970,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-たいりょくの　きそポイントが　あがる。</Text>
+たいりょくの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T10:50:06" />
+				Time="2012-01-21T06:28:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -48981,10 +48983,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-ＨＰの　基礎ポイントが　あがる。</Text>
+ＨＰの　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T05:44:56" />
+				Time="2012-01-21T06:29:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49032,10 +49035,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-こうげきくの　きそポイントが　あがる。</Text>
+こうげきくの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:50" />
+				Time="2012-01-21T06:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49044,10 +49048,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-攻撃の　基礎ポイントが　あがる。</Text>
+攻撃の　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T03:04:10" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49095,10 +49100,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-ぼうぎょの　きそポイントが　あがる。</Text>
+ぼうぎょの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:50" />
+				Time="2012-01-21T06:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49107,10 +49113,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-防御の　基礎ポイントが　あがる。</Text>
+防御の　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T03:04:14" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49158,10 +49165,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-とうこうの　きそポイントが　あがる。</Text>
+とうこうの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:50" />
+				Time="2012-01-21T06:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49170,10 +49178,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-特攻の　基礎ポイントが　あがる。</Text>
+特攻の　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T03:04:19" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:29:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49221,10 +49230,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-とくぼうの　きそポイントが　あがる。</Text>
+とくぼうの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:50" />
+				Time="2012-01-21T06:29:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49233,10 +49243,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-特防の　基礎ポイントが　あがる。</Text>
+特防の　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T03:04:25" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49284,10 +49295,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの
-すばやさの　きそポイントが　あがる。</Text>
+すばやさの　きそポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:50" />
+				Time="2012-01-21T06:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49296,10 +49308,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-素早さの　基礎ポイントが　あがる。</Text>
+素早さの　基礎ポイントが
+かなり　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T05:47:05" />
+				Time="2012-01-21T06:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49412,10 +49425,10 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　ＨＰの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T05:48:04" />
+				Time="2012-01-21T06:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49424,10 +49437,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　ＨＰの
-基礎ポイントが　か　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T05:47:56" />
+				Time="2012-01-21T06:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -49475,26 +49488,26 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　こうげきの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T18:12:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:21" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　攻撃の
-基礎ポイントが　かなり　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T03:04:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T04:00:06" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -49538,26 +49551,26 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　ぼうぎょの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T18:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:21" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　防御の
-基礎ポイントが　かなり　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T03:04:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T04:00:06" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -49601,26 +49614,26 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　とうこうの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T18:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:21" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　特攻の
-基礎ポイントが　かなり　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T03:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T04:00:06" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -49664,26 +49677,26 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　とくぼうの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T18:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:22" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　特防の
-基礎ポイントが　かなり　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-21T03:04:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T04:00:06" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -49727,26 +49740,26 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>たべた　ポケモンの　すばやさの
-きそポイントが　かなり　あがる。</Text>
+きそポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T18:13:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:06:22" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの　素早さの
-基礎ポイントが　かなり　あがる。</Text>
+基礎ポイントが　ものすごく　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2012-01-14T05:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T04:00:06" />
+				Time="2012-01-21T06:32:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -59793,13 +59806,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+パクパク　ゴックン
+パクパク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　たべた！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:01" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:31:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -59809,13 +59824,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+パクパク　ゴックン
+パクパク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　食べた！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:34" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -59871,13 +59888,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+パクパク　ゴックン
+パクパク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　たべた！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:06" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -59887,13 +59906,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+パクパク　ゴックン
+パクパク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　食べた！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:37" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -59949,13 +59970,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+ゴクゴク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　のんだ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:10" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -59965,13 +59988,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+ゴクゴク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　飲んだ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:41" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -60027,13 +60052,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+ゴクゴク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　のんだ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:10" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60043,13 +60070,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+ゴクゴク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　飲んだ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:45:41" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T05:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -60105,13 +60134,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+パクパク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　たべて　のんだ！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T02:54:55" />
+				Time="2012-01-21T05:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60121,13 +60152,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+パクパク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　食べて　飲んだ！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T02:55:15" />
+				Time="2012-01-21T05:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -60183,13 +60216,15 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　めしあがれ▼
+パクパク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　たべて　のんだ！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T02:55:25" />
+				Time="2012-01-21T05:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60199,13 +60234,15 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　召しあがれ▼
+パクパク　ゴックン
+ゴクゴク　ゴックン▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 おいしく　食べて　飲んだ！！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T02:55:25" />
+				Time="2012-01-21T05:34:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73774,11 +73811,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　きゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 ７０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-13T13:39:16" />
+				Time="2012-01-21T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73842,11 +73879,11 @@ ME
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
-『まちに　きゃくが　きた　かず』が
+『まちで　おきゃくに　であった　かず』が
 ７０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-13T13:39:22" />
+				Time="2012-01-21T05:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82850,11 +82887,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男の　人が　行くと
+			<Text>男の人が　行くと
 わくわく　しそうな　場所ない？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:04" />
+				Time="2012-01-21T04:12:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -82915,11 +82952,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男の　人が　行くと
+			<Text>男の人が　行くと
 わくわく　しそうな　場所ない？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T07:29:22" />
+				Time="2012-01-21T04:13:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -82980,11 +83017,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>女の　人が　行くと
+			<Text>女の人が　行くと
 わくわく　しそうな　場所ない？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:16" />
+				Time="2012-01-21T04:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -83045,11 +83082,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>女の　人が　行くと
+			<Text>女の人が　行くと
 わくわく　しそうな　場所ない？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T07:30:24" />
+				Time="2012-01-21T04:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -123908,10 +123945,12 @@ PWT
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トウヤ</Comment>
+			<Comment>トウヤ
+
+※未使用</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T03:44:21" />
+				Time="2012-01-21T06:10:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -123957,10 +123996,12 @@ PWT
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トウコ</Comment>
+			<Comment>トウコ
+
+※未使用</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T03:44:21" />
+				Time="2012-01-21T06:10:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -124151,11 +124192,11 @@ PWT
 		<LanguageCell
 			Language="JPN">
 			<Text>カミツレ『……！
-おもわず　いきをのむほどの
+おもわず　いきをのむほどの▽
 すごい　ショップなのね！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T11:06:15" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -124164,11 +124205,11 @@ PWT
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミツレ『……！
-思わず　息をのむほどの
+思わず　息をのむほどの▽
 すごい　ショップなのね！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T11:12:23" />
+				User="shimoyamada:W00184"
+				Time="2012-01-21T06:11:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128971,10 +129012,10 @@ PWT
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんたいんを　した　かいすう</Text>
+			<Text>つうしんたいせんを　した　かいすう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T09:44:50" />
+				Time="2012-01-21T06:13:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
