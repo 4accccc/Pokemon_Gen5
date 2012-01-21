@@ -2866,9 +2866,26 @@ BOOL RESORT_PROXY_DATA_MergeProxy( RESORT_PROXY_DATA *p_wk, const RESORT_PROXY_D
 {
   GF_ASSERT( !RESORT_PROXY_DATA_IsEmpty(p_wk) );
 
-  p_wk->basic1  = cp_proxy->basic1;
-  p_wk->extend6  = cp_proxy->extend6;
-  p_wk->extend7  = cp_proxy->extend7;
+  if( p_wk->type == RESORT_PROXY_TYPE_FUN )
+  {
+    //ファンはフリーワードはマージしない
+    STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN];
+    GFL_STD_MemCopy( &p_wk->basic1.introduction, introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
+    p_wk->basic1  = cp_proxy->basic1;
+    GFL_STD_MemCopy( introduction, &p_wk->basic1.introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
+  }
+  else
+  {
+    p_wk->basic1  = cp_proxy->basic1;
+    p_wk->extend6  = cp_proxy->extend6;
+    p_wk->extend7  = cp_proxy->extend7;
+
+    //同じタイプだけ
+    if( p_wk->comm_type == cp_proxy->comm_type )
+    {
+      p_wk->pokemon = cp_proxy->pokemon;
+    }
+  }
 
   return TRUE;
 }
