@@ -2460,7 +2460,13 @@ static void RESORT_CROWD_LINE_SetWait( RESORT_CROWD_LINE *p_wk, s16 wait )
  */
 //=============================================================================
 
-#define RESORT_CROWD_NOISE_MAX  (8)
+#define RESORT_CROWD_NOISE_MAX  (16)
+
+typedef enum
+{
+  RESORT_CROWD_NOISE_MODE_NORMAL,
+  RESORT_CROWD_NOISE_MODE_PARADE,
+}RESORT_CROWD_NOISE_MODE;
 
 //-------------------------------------
 ///	騒音ワーク
@@ -2496,17 +2502,12 @@ typedef enum
   RESORT_CROWD_NOISE_MSG_NORMAL_NUM = RESORT_CROWD_NOISE_MSG_NORMAL_END-RESORT_CROWD_NOISE_MSG_NORMAL_START,
   RESORT_CROWD_NOISE_MSG_PARADE_NUM = RESORT_CROWD_NOISE_MSG_PARADE_END-RESORT_CROWD_NOISE_MSG_PARADE_START,
 }RESORT_CROWD_NOISE_MSG;
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg );
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg, RESORT_CROWD_NOISE_MODE mode );
 static void RESORT_CROWD_NOISE_WK_Off( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg );
 static void RESORT_CROWD_NOISE_WK_Clear( RESORT_CROWD_NOISE_WK *p_wk );
 static BOOL RESORT_CROWD_NOISE_WK_IsEnd( const RESORT_CROWD_NOISE_WK *cp_wk );
-static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst );
+static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst, RESORT_CROWD_NOISE_MODE mode );
 
-typedef enum
-{
-  RESORT_CROWD_NOISE_MODE_NORMAL,
-  RESORT_CROWD_NOISE_MODE_PARADE,
-}RESORT_CROWD_NOISE_MODE;
 
 //-------------------------------------
 ///	騒音管理
@@ -2675,6 +2676,7 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
         if( p_data )
         {
           u16 index;
+          u32 cnt = 0;
 
 
           switch( p_wk->wnd_idx )
@@ -2688,16 +2690,28 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
             do
             {
               index = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+              if( cnt++ >= 30 )
+              {
+                p_wk->wnd_num--;
+                p_wk->seq = SEQ_END;
+                return;
+              }
             }
-            while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0]) );
+            while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0],p_wk->mode) );
             break;
           case 2:
             do
             {
               index = GFL_STD_MtRand(RESORT_CROWD_NOISE_MAX);
+              if( cnt++ >= 30 )
+              {
+                p_wk->wnd_num--;
+                p_wk->seq = SEQ_END;
+                return;
+              }
             }
-            while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0])
-                || Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[1]) );
+            while( Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[0],p_wk->mode)
+                || Resort_Crowd_Noise_Wk_IsOverlap(index, p_wk->add_idx[1],p_wk->mode) );
             break;
           }
 
@@ -2709,7 +2723,7 @@ static void RESORT_CROWD_NOISE_Main( RESORT_CROWD_NOISE *p_wk, const FIELDMAP_WO
             p_wk->msg       = RESORT_CROWD_NOISE_MSG_PARADE_START+GFL_STD_MtRand( RESORT_CROWD_NOISE_MSG_PARADE_NUM );
           } 
 
-          RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ index ], p_wk->p_msgbg, p_data, p_wk->p_city, p_wk->p_people_all, p_wk->p_msg, p_wk->msg );
+          RESORT_CROWD_NOISE_WK_Start( &p_wk->wk[ index ], p_wk->p_msgbg, p_data, p_wk->p_city, p_wk->p_people_all, p_wk->p_msg, p_wk->msg, p_wk->mode );
           if( p_wk->wnd_idx++ >= p_wk->wnd_num )
           {
             p_wk->seq = SEQ_END;
@@ -3238,30 +3252,49 @@ static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p
   }
 }
 
-static const u8 sc_NOISE_X[] = 
+static const u8 sc_NOISE_X[RESORT_CROWD_NOISE_MAX] = 
 {
   1,
-  19,
-  2,
-  17,
-  4,
-  19,
-  3,
-  16,
-  1,
-  16,
-  2,
-  19,
-  3,
   18,
+  2,
+  16,
   4,
+  18,
+  3,
+  15,
+  1,
+  15,
+  2,
+  18,
+  3,
   17,
+  4,
+  16,
 };
-static const u8 sc_NOISE_Y[] = 
+static const u8 sc_NOISE_X_PARADE[RESORT_CROWD_NOISE_MAX] = 
+{
+  1,
+  16,
+  2,
+  15,
+  4,
+  16,
+  3,
+  13,
+  1,
+  13,
+  2,
+  16,
+  3,
+  15,
+  4,
+  14,
+};
+static const u8 sc_NOISE_Y[RESORT_CROWD_NOISE_MAX] = 
 {
   6,
   2,
-  17,
+  19,
   14,
   17,
   10,
@@ -3274,7 +3307,7 @@ static const u8 sc_NOISE_Y[] =
   2,
   6,
   14,
-  6,
+  19,
 };
 
 //----------------------------------------------------------------------------
@@ -3287,25 +3320,31 @@ static const u8 sc_NOISE_Y[] =
  *	@return TRUEかぶってる  FALSEかぶってない
  */
 //-----------------------------------------------------------------------------
-static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst )
+static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst, RESORT_CROWD_NOISE_MODE mode )
 {
-  enum
-  {
-    NOISE_WND_WIDTH   = 12/2,
-    NOISE_WND_HEIGHT  = 4/2,
-  };
+  int NOISE_WND_WIDTH   = 14; //8文字*12ドット＋2枠
+  int NOISE_WND_HEIGHT  = 4;
+
+  const u8 *cp_x = sc_NOISE_X;
+
 
 	s16 left1, right1, top1, bottom1;
 	s16 left2, right2, top2, bottom2;
 
-	left1	  = sc_NOISE_X[src] - NOISE_WND_WIDTH;
-	right1	= sc_NOISE_X[src] + NOISE_WND_WIDTH;
-	top1	  = sc_NOISE_Y[src] - NOISE_WND_HEIGHT;
+  if( mode == RESORT_CROWD_NOISE_MODE_PARADE )
+  {
+    NOISE_WND_WIDTH += 2;
+    cp_x = sc_NOISE_X_PARADE;
+  }
+
+	left1	  = cp_x[src];
+	right1	= cp_x[src] + NOISE_WND_WIDTH;
+	top1	  = sc_NOISE_Y[src];
 	bottom1	= sc_NOISE_Y[src] + NOISE_WND_HEIGHT;
 
-	left2	  = sc_NOISE_X[dst] - NOISE_WND_WIDTH;
-	right2	= sc_NOISE_X[dst] + NOISE_WND_WIDTH;
-	top2	  = sc_NOISE_Y[dst] - NOISE_WND_HEIGHT;
+	left2	  = cp_x[dst];
+	right2	= cp_x[dst] + NOISE_WND_WIDTH;
+	top2	  = sc_NOISE_Y[dst];
 	bottom2	= sc_NOISE_Y[dst] + NOISE_WND_HEIGHT;
 	
 	return left1   <= right2
@@ -3325,7 +3364,7 @@ static BOOL Resort_Crowd_Noise_Wk_IsOverlap( u16 src, u16 dst )
  *	@param	noise_msg_num 
  */
 //-----------------------------------------------------------------------------
-static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg )
+static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p_msgbg, const RESORT_ABSTRUCT_DATA *cp_data, RESORT_CITY_DATA *p_city, RESORT_PEOPLE_ALL_DATA *p_people_all, GFL_MSGDATA *p_msg, RESORT_CROWD_NOISE_MSG msg, RESORT_CROWD_NOISE_MODE mode )
 {
   TALKMSGWIN_TYPE type;
 
@@ -3408,9 +3447,16 @@ static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* 
   {
     u8 cx;
     u8 cy;
+    const u8 *cp_x = sc_NOISE_X;
     FLDSPWIN_GetNeedWindowCharaSize( p_msgbg, p_wk->p_str, &cx, &cy );
+
+    if( mode == RESORT_CROWD_NOISE_MODE_PARADE )
+    {
+      cp_x = sc_NOISE_X_PARADE;
+    }
+
     FLDSUBMSGWIN_AddStrBufEx( p_msgbg,
-        p_wk->p_str, p_wk->id, sc_NOISE_X[p_wk->id], sc_NOISE_Y[p_wk->id], cx, 2, type );
+        p_wk->p_str, p_wk->id, cp_x[p_wk->id], sc_NOISE_Y[p_wk->id], cx, 2, type );
   }
 }
 //----------------------------------------------------------------------------
