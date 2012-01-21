@@ -1565,7 +1565,7 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
   CYGNUS_SAVE_WORK *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(CYGNUS_SAVE_WORK) );
   p_wk->p_gamedata  = p_gamedata;
   p_wk->p_cyg_sv_ctrl = CYGNUSSAVE_CONTROL_Create( heapID );
-  CYGNUSSAVE_CONTROL_Load( p_wk->p_cyg_sv_ctrl, 0 );
+  CYGNUSSAVE_CONTROL_Load( p_wk->p_cyg_sv_ctrl );
   p_wk->p_out_sv = CYGNUSSAVE_CONTROL_GetPtr( p_wk->p_cyg_sv_ctrl );
   p_wk->p_in_sv = SaveData_GetDummy3ds( GAMEDATA_GetSaveControlWork(p_gamedata) );
   p_wk->flag  = DUMMY3DS_SAVEDATA_GetData( p_wk->p_in_sv, DUMMY3DS_SAVEDATA_PARAM_FLAG );

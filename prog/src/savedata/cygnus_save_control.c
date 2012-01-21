@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file  cygnus_save_control.c
- * @brief   3DS連動：内部確保領域
+ * @brief   3DS連動：CYGNUS-SWAN共有領域へのアクセス制御
  * @date    2012.01.16
  * @author  tamada
  */
@@ -26,6 +26,11 @@ struct _CYGNUS_SAVE_CONTROL{
   CYGNUS_SAVEDATA savedata;
 };
 
+//WriteFlashで1度に書き込める最小単位256バイト以内に収めておく
+SDK_COMPILER_ASSERT( sizeof(CYGNUS_SAVEDATA) < 256 );
+
+static CYGNUS_SAVEDATA sCygnusSavedata = {0};
+
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
@@ -46,11 +51,11 @@ void CYGNUSSAVE_CONTROL_Delete( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
 
 //----------------------------------------------------------
 //----------------------------------------------------------
-void CYGNUSSAVE_CONTROL_Load( CYGNUS_SAVE_CONTROL * cygsave_ctrl, u32 onetime_key )
+void CYGNUSSAVE_CONTROL_Load( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
 {
   BOOL result;
   result = GFL_BACKUP_DirectFlashLoad(
-      CYGSAVE_FLASH_ADRS, &cygsave_ctrl->savedata, sizeof(CYGNUS_SAVEDATA) );
+      CYGSAVE_FLASH_ADRS, &sCygnusSavedata, sizeof(CYGNUS_SAVEDATA) );
 }
 
 //----------------------------------------------------------
@@ -75,7 +80,7 @@ BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
   {
   case 0:
     cygsave_ctrl->lock_id = GFL_BACKUP_DirectFlashSaveAsyncInit(
-        CYGSAVE_FLASH_ADRS, &cygsave_ctrl->savedata, sizeof(CYGNUS_SAVEDATA) );
+        CYGSAVE_FLASH_ADRS, &sCygnusSavedata, sizeof(CYGNUS_SAVEDATA) );
     cygsave_ctrl->save_seq ++;
     break;
   case 1:
@@ -92,6 +97,27 @@ BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
   return FALSE; //セーブ継続中
 }
 
+//----------------------------------------------------------
+/**
+ * @brief CYGNUSセーブデータの書き込み
+ */
+//----------------------------------------------------------
+void CYGNUSSAVE_CONTROL_Save( void )
+{
+  GFL_BACKUP_DirectFlashSave( CYGSAVE_FLASH_ADRS, &sCygnusSavedata, sizeof(CYGNUS_SAVEDATA) );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief CYGNUSセーブデータの削除
+ */
+//----------------------------------------------------------
+void CYGNUSSAVE_CONTROL_Erase( HEAPID heapID )
+{
+  CYGNUS_SAVEDATA * empty_data = GFL_HEAP_AllocClearMemory( heapID, sizeof(CYGNUS_SAVEDATA) );
+  GFL_BACKUP_DirectFlashSave( CYGSAVE_FLASH_ADRS, empty_data, sizeof(CYGNUS_SAVEDATA) );
+  GFL_HEAP_FreeMemory( empty_data );
+}
 
 //============================================================================================
 //============================================================================================
@@ -99,6 +125,54 @@ BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
 //----------------------------------------------------------
 CYGNUS_SAVEDATA * CYGNUSSAVE_CONTROL_GetPtr( CYGNUS_SAVE_CONTROL * cygsave_ctrl )
 {
-  return &cygsave_ctrl->savedata;
+  return &sCygnusSavedata;
 }
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+static BOOL CYGNUSSAVE_CONTROL_CheckSaveData( const CYGNUS_SAVE_CONTROL * cygsave_ctrl )
+{
+  CYGSAVE_STATE state = CYGNUS_SAVEDATA_GetStatus( &sCygnusSavedata );
+  return (state != CYGSAVE_STATE_NON );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief
+ */
+//----------------------------------------------------------
+BOOL CYGNUSSAVE_CONTROL_CheckSaveDataDirect( HEAPID heapID )
+{
+  CYGNUS_SAVE_CONTROL * ctrl;
+  BOOL result;
+  ctrl = CYGNUSSAVE_CONTROL_Create( heapID );
+  CYGNUSSAVE_CONTROL_Load( ctrl );
+  result = CYGNUSSAVE_CONTROL_CheckSaveData( ctrl );
+  CYGNUSSAVE_CONTROL_Delete( ctrl );
+  return result;
+}
+
+//----------------------------------------------------------
+/// CYGNUS_SAVEDATAをDUMMY3DSと同期した状態にする
+//----------------------------------------------------------
+static void CYGNUSSAVE_CONTROL_Sync( SAVE_CONTROL_WORK * sv_ctrl )
+{
+  CYGNUS_SAVEDATA * cygsave = &sCygnusSavedata;
+  DUMMY3DS_SAVEDATA * d3ds = SaveData_GetDummy3ds( sv_ctrl );
+  u32 swan_flag   = DUMMY3DS_SAVEDATA_GetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_FLAG);
+  u32 onetime_key = DUMMY3DS_SAVEDATA_GetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_ONETIME_KEY);
+  //BOOL played_flag = DUMMY3DS_SAVEDATA_GetData( d3ds, DUMMY3DS_SAVEDATA_PARAM_IS_PLAYED );
+  CYGNUS_SAVEDATA_SetSend( cygsave, onetime_key, swan_flag );
+}
+
+//----------------------------------------------------------
+/// 内部データを反映したCYGNUS_SAVEDATAをバックアップ領域に書き込む
+//----------------------------------------------------------
+void CYGNUSSAVE_CONTROL_SyncBackup( SAVE_CONTROL_WORK * sv_ctrl )
+{
+  CYGNUSSAVE_CONTROL_Sync( sv_ctrl );
+  CYGNUSSAVE_CONTROL_Save();
+}
+
+
 

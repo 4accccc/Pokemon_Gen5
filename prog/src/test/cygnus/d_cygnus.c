@@ -2,7 +2,7 @@
 /**
  *
  *	@file		src\test\cygnus\d_cygnus.c
- *	@brief
+ *	@brief  CYGNUS用デバッグ機能
  *	@author	tamada
  *	@date		2012.01.17
  *
@@ -91,6 +91,7 @@ static const STRCODE* str_menu[] =
   L"デバッグ表示",
   L"戻る",
 };
+SDK_COMPILER_ASSERT( MENU_ITEM_NUM == NELEMS(str_menu) );
 
 typedef enum {
   STAT_NONE,
@@ -121,10 +122,6 @@ static const STRCODE * const str_state[] =
 
 SDK_COMPILER_ASSERT( STAT_NUM == NELEMS(str_state) );
 
-enum {
-  ONETIME_KEY = 0x12345678,
-  DEFAULT_FLAGS = 0,
-};
 
 static const struct {
   u32 flag_id;
@@ -188,7 +185,7 @@ typedef struct {
 
   u32 cygBuf[ CYGDATA_AREA_SIZE ];
   u32 swan_flags;
-  u32 onetime_key;
+  u32 swan_key;
 
   int subSeq;
   int subCurPos;
@@ -379,7 +376,7 @@ static void Init( PROC_WORK *p_wk )
   p_wk->subSeq = 0;
   p_wk->swan_flags = 
     DUMMY3DS_SAVEDATA_GetData( p_wk->inner_save, DUMMY3DS_SAVEDATA_PARAM_FLAG);
-  p_wk->onetime_key =
+  p_wk->swan_key =
     DUMMY3DS_SAVEDATA_GetData( p_wk->inner_save, DUMMY3DS_SAVEDATA_PARAM_ONETIME_KEY);
 
   clearGifts( p_wk );
@@ -664,7 +661,7 @@ static BOOL CallSubSeq( u32 id, PROC_WORK *p_wk )
 static void CygnusLoad( PROC_WORK * p_wk )
 {
   p_wk->cygsave_ctrl = CYGNUSSAVE_CONTROL_Create( HEAPID_PGL_DEBUG );
-  CYGNUSSAVE_CONTROL_Load( p_wk->cygsave_ctrl, p_wk->onetime_key );
+  CYGNUSSAVE_CONTROL_Load( p_wk->cygsave_ctrl );
   p_wk->cygsave = CYGNUSSAVE_CONTROL_GetPtr( p_wk->cygsave_ctrl );
 }
 
@@ -737,7 +734,7 @@ static LAST_STATUS CygnusBufSet( PROC_WORK * p_wk )
 //-----------------------------------------------------------------------------
 static BOOL SubSeqCygStatusPrint( PROC_WORK * p_wk )
 {
-  u32 onetime_key = p_wk->onetime_key;
+  u32 onetime_key = p_wk->swan_key;
   CYGSAVE_STATE state;
   CygnusLoad( p_wk );
   OS_Printf("overwrite_enable_flag: %d\n", p_wk->cygsave->overwrite_enable_flag );
@@ -805,7 +802,7 @@ static BOOL SubSeqCygSaveInit( PROC_WORK * p_wk )
       p_wk->last_status = STAT_SWAN_WRITE_FAILURE;
       return TRUE;
     }
-    CYGNUS_SAVEDATA_SetSend( p_wk->cygsave, p_wk->onetime_key, p_wk->swan_flags  );
+    CYGNUS_SAVEDATA_SetSend( p_wk->cygsave, p_wk->swan_key, p_wk->swan_flags  );
     CYGNUSSAVE_CONTROL_SaveAsyncInit( p_wk->cygsave_ctrl );
     p_wk->subSeq ++;
     break;
@@ -972,7 +969,6 @@ static void UpdateSpPokeList( PROC_WORK *p_wk )
   {
     int i;
     GFL_BMP_DATA* bmp;
-    PRINTSYS_LSB lsb;
 
     // バッファ作成
     bmp = GFL_BMPWIN_GetBmp( p_wk->subBmpWin );
@@ -982,14 +978,7 @@ static void UpdateSpPokeList( PROC_WORK *p_wk )
     for( i=0; i<NELEMS(SPPOKE_TABLE); i++ )
     {
       // 文字色決定
-      if( i == p_wk->subCurPos )
-      {
-        lsb = STRONG_LSB;
-      }
-      else
-      {
-        lsb = NORMAL_LSB;
-      }
+      PRINTSYS_LSB lsb = ( i == p_wk->subCurPos )?  STRONG_LSB : NORMAL_LSB;
 
       { // 文字列作成
         u16 monsno;
@@ -1343,7 +1332,7 @@ static void UpdateOnetimeKeyInfo( PROC_WORK * p_wk )
   {
     u32 shift = (i * 4);
     u32 mask1 =  0xf << shift;
-    s32 value = (p_wk->onetime_key & mask1) >> shift;
+    s32 value = (p_wk->swan_key & mask1) >> shift;
     PRINTSYS_LSB lsb = NORMAL_LSB;
     if ( i == p_wk->subCurPos ) lsb = STRONG_LSB;
     STRTOOL_SetHexNumber( p_wk->tmpBuf, value, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -1359,6 +1348,7 @@ static void UpdateOnetimeKeyInfo( PROC_WORK * p_wk )
   // BGスクリーンデータを反映させる
   GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
 }
+
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 static BOOL SubSeqControlOneTimeKey( PROC_WORK * p_wk )
@@ -1383,12 +1373,12 @@ static BOOL SubSeqControlOneTimeKey( PROC_WORK * p_wk )
     {
       u32 shift = (p_wk->subCurPos * 4);
       u32 mask1 =  0xf << shift;
-      s32 value = (p_wk->onetime_key & mask1) >> shift;
+      s32 value = (p_wk->swan_key & mask1) >> shift;
       value += updown;
       if ( value < 0 ) value = 0xf;
       if ( value > 0xf ) value = 0;
-      p_wk->onetime_key &= ~mask1;
-      p_wk->onetime_key |= ( value << shift );
+      p_wk->swan_key &= ~mask1;
+      p_wk->swan_key |= ( value << shift );
     }
     else if ( move_dir )
     {

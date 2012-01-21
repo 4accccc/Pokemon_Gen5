@@ -14,6 +14,7 @@
 #include "savedata/player_data.h"
 #include "savedata/musical_save.h"
 #include "savedata/save_outside.h"
+#include "savedata/cygnus_save_control.h"
 
 
 //==============================================================================
@@ -31,11 +32,15 @@ struct _SAVE_CONTROL_WORK{
 	u8 data_exists;			///<データが存在するかどうか
 	u8 total_save_flag;		///<TRUE:全体セーブ
 	u8 backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
+
 	u8 outside_data_exists;   ///<TRUE:管理外セーブが存在する
 	u8 outside_data_break;    ///<TRUE:管理外セーブ破損
   u8 outside_permanent_exists;  ///<TRUE：管理外永続データが存在する
   u8 outside_permanent_break;   ///<TRUE：管理外永続データが破損
-	u8 padding[1];
+
+  u8 cygnus_need_create;    ///<TRUE:CYGNUSセーブを生成する必要がある
+	u8 padding[3];
+
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
 	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
@@ -193,6 +198,18 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
       ctrl->first_status |= FST_OUTSIDE_PERMANENT_BREAK_BIT;
     }
   }
+  //---------------- CYGNUS共有セーブ ----------------
+  {
+    //セーブデータの存在チェック
+    BOOL cygnus_save_exists = CYGNUSSAVE_CONTROL_CheckSaveDataDirect( GFL_HEAP_LOWID(HEAPID_SAVE_TEMP) );
+    if (cygnus_save_exists == FALSE || ctrl->new_data_flag == TRUE || ctrl->data_exists == FALSE )
+    { //CYGNUSデータが存在しない or 新規データ or ゲーム進行データが存在しない
+      //  →CYGNUSデータを生成する必要がある
+      ctrl->cygnus_need_create = TRUE;
+    } else {
+      ctrl->cygnus_need_create = FALSE;
+    }
+  }
 
 	return ctrl;
 }
@@ -335,6 +352,12 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
     if(SaveData_GetNowSaveModeSetup(ctrl) == FALSE){
+      //初回セットアップ状態でない→ちゃんとセーブデータが書き込まれている状態
+      if(ctrl->cygnus_need_create){
+        //CYGNUS領域が新規or存在しないので、CYGNUS領域を生成する
+        CYGNUSSAVE_CONTROL_SyncBackup( ctrl );
+        ctrl->cygnus_need_create = FALSE;
+      }
   		ctrl->new_data_flag = FALSE;
 	  	ctrl->data_exists = TRUE;
 	  }

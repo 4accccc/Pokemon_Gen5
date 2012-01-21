@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "savedata/cygnus_savedata.h"
+#include "savedata/dummy3ds_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -28,7 +29,7 @@ extern void CYGNUSSAVE_CONTROL_Delete( CYGNUS_SAVE_CONTROL * cygsave_ctrl );
 
 //----------------------------------------------------------
 //----------------------------------------------------------
-extern void CYGNUSSAVE_CONTROL_Load( CYGNUS_SAVE_CONTROL * cygsave_ctrl, u32 onetime_key );
+extern void CYGNUSSAVE_CONTROL_Load( CYGNUS_SAVE_CONTROL * cygsave_ctrl );
 
 //----------------------------------------------------------
 //----------------------------------------------------------
@@ -40,5 +41,21 @@ extern BOOL CYGNUSSAVE_CONTROL_SaveAsyncMain( CYGNUS_SAVE_CONTROL * cygsave_ctrl
 
 //----------------------------------------------------------
 //----------------------------------------------------------
+extern void CYGNUSSAVE_CONTROL_Save( void );
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+extern void CYGNUSSAVE_CONTROL_Erase( HEAPID heapID );
+
+//----------------------------------------------------------
+//----------------------------------------------------------
 extern CYGNUS_SAVEDATA * CYGNUSSAVE_CONTROL_GetPtr( CYGNUS_SAVE_CONTROL * cygsave_ctrl );
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+extern BOOL CYGNUSSAVE_CONTROL_CheckSaveDataDirect( HEAPID heapID );
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+extern void CYGNUSSAVE_CONTROL_SyncBackup( SAVE_CONTROL_WORK * sv_ctrl );
 
