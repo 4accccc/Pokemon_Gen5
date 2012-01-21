@@ -12,13 +12,6 @@
 
 
 #define DOWSING_NO_BLINK  // これが定義されているとき、液晶画面のような明滅演出をしない。
-#define DOWSING_SEARCH_DIV  // これが定義されているとき、1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
-#define DOWSING_SEARCH_LOST_PREV  // これが定義されているとき、前見付けていたものがなくなったら、1フレーム何も発見できないようにしておく。
-
-#ifdef DOWSING_SEARCH_DIV
-  #define DOWSING_SEARCH_DIV_FIRST_FULL  // これが定義されているとき、初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
-#endif
-
 
 // インクルード
 #include <gflib.h>
@@ -39,8 +32,6 @@
 #include "fieldmap/zone_id.h"
 #include "../script_hideitem.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"  // FLAG_HIDEITEM_AREA_START参照のため
-#include "field/intrude_secret_item.h"
-#include "savedata/intrude_save_field.h"
 
 #include "../field_subscreen.h" 
 #include "dowsing.h"             // field_subscreen.hをインクルードしてから、このファイルをインクルードして下さい。
@@ -90,7 +81,6 @@ typedef enum
 {
   ITEM_TYPE_NONE,      // アイテムを見付けていないときのアイテムの種類の値
   ITEM_TYPE_HIDE,      // 最初から隠してあるアイテム          // HIDE_ITEM_DATA               // src/field/script_hideitem.c
-  ITEM_TYPE_INTRUDE,   // 他のユーザが侵入して隠したアイテム  // INTRUDE_SECRET_ITEM_POSDATA  // include/field/intrude_secret_item.h
 }
 ITEM_TYPE;
 
@@ -102,16 +92,8 @@ HIDE_INFO;
 
 typedef struct
 {
-  const INTRUDE_SECRET_ITEM_POSDATA*  item_posdata;  // ソースに埋め込まれた配列テーブルへのポインタを保持しているだけ
-}
-INTRUDE_INFO;
-
-typedef struct
-{
   // type == ITEM_TYPE_HIDE のとき有効
   HIDE_INFO     hide;
-  // type == ITEM_TYPE_INTRUDE のとき有効
-  INTRUDE_INFO  intrude;
 }
 INFO;
 
@@ -130,23 +112,18 @@ ITEM_INFO;
 typedef struct
 {
   EVENTWORK*          event_wk;
-  u16                       hide_search_no;     // 次は[hide_search_no]からサーチする      // hideを全て探した後にintrudeを探す
+  u16                       hide_search_no;     // 次は[hide_search_no]からサーチする
 
-  const INTRUDE_SAVE_WORK*  intrude_wk;
-  u16                       intrude_search_no;  // 次は[intrude_search_no]からサーチする
 }
 ITEM_SEARCH_WORK;
 
 // 初期化処理
-static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, EVENTWORK* event_wk, const INTRUDE_SAVE_WORK* intrude_wk )
+static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, EVENTWORK* event_wk )
 {
   ITEM_SEARCH_WORK* work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ITEM_SEARCH_WORK) );
 
   work->event_wk         = event_wk;
   work->hide_search_no   = 0;
-
-  work->intrude_wk          = intrude_wk;
-  work->intrude_search_no   = 0;
 
   return work;
 }
@@ -186,14 +163,6 @@ static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, const ITEM_INFO* item_info 
       return (is_set);
     }
   }
-  else if( item_info->type == ITEM_TYPE_INTRUDE )
-  {
-    return ( ISC_SAVE_CheckItem( (INTRUDE_SAVE_WORK*)(work->intrude_wk),
-                 item_info->info.intrude.item_posdata->zone_id,
-                 item_info->info.intrude.item_posdata->grid_x,
-                 item_info->info.intrude.item_posdata->grid_y,
-                 item_info->info.intrude.item_posdata->grid_z ) != ISC_SAVE_SEARCH_NONE );
-  }
   else
   {
     return FALSE;
@@ -204,7 +173,6 @@ static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, const ITEM_INFO* item_info 
 static void ItemSearchRestart( ITEM_SEARCH_WORK* work )
 {
   work->hide_search_no = 0;
-  work->intrude_search_no = 0;
 }
 
 // TRUEのとき有効なアイテムの情報をitem_infoにいれている
@@ -219,13 +187,9 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TY
   const ITEM_DATA*   hide_item_data;
   u16                hide_item_data_num;
 
-  const INTRUDE_SECRET_ITEM_POSDATA* intrude_item_posdata;
-  int                                intrude_work_no;
 
   hide_item_data  = HIDEITEM_GetTable( &hide_item_data_num );
 
-  intrude_item_posdata   = NULL;
-  intrude_work_no        = work->intrude_search_no;
 
   if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_HIDE )
   {
@@ -260,27 +224,6 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TY
       }
       item_info->type = ITEM_TYPE_NONE;
       return FALSE;
-    }
-  }
-
-  if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_INTRUDE )
-  {
-    intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
-    work->intrude_search_no = intrude_work_no;
-    while( intrude_item_posdata )
-    {
-      l_item_info.type                      = ITEM_TYPE_INTRUDE;
-      l_item_info.info.intrude.item_posdata = intrude_item_posdata;
-      if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
-      {
-        item_info->type                      = l_item_info.type;
-        item_info->info.intrude.item_posdata = l_item_info.info.intrude.item_posdata;
-        find = TRUE;
-      }
-      if( find ) return TRUE;
-  
-      intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
-      work->intrude_search_no = intrude_work_no;
     }
   }
 
@@ -454,10 +397,8 @@ typedef enum
 }
 PF_STATE;
 
-#ifdef DOWSING_SEARCH_DIV
   // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
   #define  ITEM_SEARCH_NUM_PER_FRAME  (10)  // 1フレームで何個のアイテムをサーチするか
-#endif
 
 
 //=============================================================================
@@ -589,14 +530,10 @@ struct _DOWSING_WORK
   PF_REQ                      pf_req;
   PF_STATE                    pf_state;
 
-#ifdef DOWSING_SEARCH_DIV
   // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
   BOOL                        b_item_search_restart;  // TRUEのとき最初からサーチし直す
-  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
     // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
     BOOL                      b_item_search_first;  // TRUEのとき初回やアイテム発見後
-  #endif
-#endif
 
   // アイテムサーチ
   ITEM_SEARCH_WORK*           item_search_wk;
@@ -720,14 +657,10 @@ DOWSING_WORK*    DOWSING_Init(
   // 初期状態で描画を更新しておく
   DOWSING_Draw( work, TRUE );
 
-#ifdef DOWSING_SEARCH_DIV
   // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
   work->b_item_search_restart = TRUE;
-  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
     // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
     work->b_item_search_first = TRUE;
-  #endif
-#endif
 
   // アイテムサーチ
   {
@@ -735,15 +668,13 @@ DOWSING_WORK*    DOWSING_Init(
     GAMEDATA*            gamedata;
     EVENTWORK*           event_wk;
     SAVE_CONTROL_WORK*   sv_wk;
-    INTRUDE_SAVE_WORK*   intrude_wk;
     
     gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
     gamedata    = GAMESYSTEM_GetGameData( gs_wk );
     event_wk    = GAMEDATA_GetEventWork( gamedata );
     sv_wk       = GAMEDATA_GetSaveControlWork( gamedata );
-    intrude_wk  = SaveData_GetIntrude( sv_wk );
 
-    work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk, intrude_wk );
+    work->item_search_wk   = ItemSearchInit( work->heap_id, event_wk );
   }
 
 /*
@@ -874,10 +805,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       work->item_info_prev.info.hide.item_data = work->item_info_curr.info.hide.item_data;
     }
-    else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
-    {
-      work->item_info_prev.info.intrude.item_posdata = work->item_info_curr.info.intrude.item_posdata;
-    }
   }
 
   // 今回
@@ -901,42 +828,9 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       zone_id = MAP_MATRIX_GetVectorPosZoneID( map_mat, player_pos->x, player_pos->z );
       zone_id_field = ZONEDATA_IsFieldMatrixID( (u16)zone_id );
-      //if( ZONEDATA_IsPalaceField( (u16)zone_id ) )item_search_type = ITEM_TYPE_INTRUDE;  // 裏フィールド
-      //else                                        item_search_type = ITEM_TYPE_HIDE;     // 表フィールド
-      // アイテムは表フィールドでしか探せない。ダウジングは表フィールドでしか使えない。
-      // つまり、裏フィールドにいるときにダウジングで何かするということはない。どのアイテムも表フィールドで探す。
-      // よって、上記の探すアイテム表裏タイプ分けは必要ないので、コメントアウト。
     }
   }
   
-  search = FALSE;
-
-  if( work->state == STATE_NEED_SEARCH )
-  {
-    work->state = STATE_SEARCH_IF_CHANGE;
-    search = TRUE;
-  }
-  else
-  {
-#if 0
-    if(    player_grid_pos_x != work->player_grid_pos_x_prev
-        || player_grid_pos_y != work->player_grid_pos_y_prev
-        || player_grid_pos_z != work->player_grid_pos_z_prev )  // プレイヤーが移動したら
-    {
-      search = TRUE;
-    }
-    else if( !ItemSearchExist( work->item_search_wk, &work->item_info_prev ) )  // 前回見つけていたアイテムがなくなっていたら
-    {
-      work->item_info_prev.type = ITEM_TYPE_NONE;
-      search = TRUE;
-    }
-#else
-    search = TRUE;  // 他のユーザがアイテムを隠す可能性があるので、毎フレーム探すことにする
-#endif
-  }
-
-  // アイテムサーチ
-  if( search ) 
   {
     u16  item_search_count  = 0;
     u16  item_search_num;
@@ -946,7 +840,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     s32 rect_z_min = player_grid_pos_z - AREA_ORIGIN_Y;  // rect_z_min<= <rect_z_max
     s32 rect_z_max = player_grid_pos_z + AREA_HEIGHT - AREA_ORIGIN_Y;
 
-    ITEM_INFO item_info;
+    ITEM_INFO item_info = { ITEM_TYPE_NONE, 0 };
     s32       x;
     s32       z;
 
@@ -955,11 +849,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     ITEM_INFO distance_min_item_info;  // 最小を見付けたときtypeがITEM_TYPE_NONEでなくなる
     distance_min_item_info.type = ITEM_TYPE_NONE;
   
-#ifndef DOWSING_SEARCH_DIV
-    ItemSearchRestart( work->item_search_wk );
-    
-    while( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ,zone_id) )
-#else
     // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
     if( work->b_item_search_restart )
     {
@@ -967,9 +856,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
       work->b_item_search_restart = FALSE;
     }
 
-  #ifndef DOWSING_SEARCH_DIV_FIRST_FULL
-    item_search_num = ITEM_SEARCH_NUM_PER_FRAME +1;
-  #else
     // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
     if( work->b_item_search_first )
     {
@@ -980,36 +866,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       item_search_num = ITEM_SEARCH_NUM_PER_FRAME +1;
     }
-  #endif
 
     for( item_search_count=0; item_search_count<item_search_num; item_search_count++ )
-#endif
     {
       u16 table_idx;  // item_rod_tableのインデックス
 
-#ifndef DOWSING_SEARCH_DIV
-  #ifdef DOWSING_SEARCH_LOST_PREV
-      // 前見付けていたものがなくなったら、1フレーム何も発見できないようにしておく。
-      if( item_search_count == 0 )
-      {
-        item_search_count++;
-        // 前回一番近くに見付けていたアイテムがまだあるか確認する
-        if( work->item_info_prev.type != ITEM_TYPE_NONE )
-        {
-          if( ItemSearchExist( work->item_search_wk, &(work->item_info_prev) ) )
-          {
-            // 前回一番近くに見付けていたアイテムがまだあるので、ここでは何もしない
-          }
-          else
-          {
-            // 前回一番近くに見付けていたアイテムがもうないので、1フレーム探索を止める
-            break;
-          }
-        }
-      }
-  #endif
-#endif
-#ifdef DOWSING_SEARCH_DIV
       // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
       if( item_search_count == 0 )
       {
@@ -1024,22 +885,14 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
             {
               item_info.info.hide.item_data = work->item_info_prev.info.hide.item_data;
             }
-            else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
-            {
-              item_info.info.intrude.item_posdata = work->item_info_prev.info.intrude.item_posdata;
-            }
           }
-  #ifdef DOWSING_SEARCH_LOST_PREV
           else
           {
             // 前回一番近くに見付けていたアイテムがもうないので、1フレーム探索を止める
             work->b_item_search_restart = TRUE;
-  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
             work->b_item_search_first = TRUE;
-  #endif
             break;
           }
-  #endif
         }
       }
       else
@@ -1047,7 +900,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
         work->b_item_search_restart = !( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ,zone_id ) );
         if( work->b_item_search_restart ) break;
       }
-#endif
 
       // 自分のいるゾーンIDとアイテムのゾーンIDが同じか
       if( zone_id == MAP_MATRIX_ZONE_ID_NON )
@@ -1085,21 +937,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
           x = item_data->x;
           z = item_data->z;
         }
-        else if( item_info.type == ITEM_TYPE_INTRUDE )
-        {
-          const INTRUDE_SECRET_ITEM_POSDATA* item_posdata = item_info.info.intrude.item_posdata;
-          if(    ZONEDATA_IsFieldMatrixID( item_posdata->zone_id )
-              && zone_id_field )
-          {
-            // ゾーンIDは違うが、フィールドマップなので同じ座標系
-          }
-          else
-          {
-            continue;
-          }
-          x = item_posdata->grid_x;
-          z = item_posdata->grid_z;
-        }
       }
 
       // 自分を囲むサーチ範囲の矩形の中にあるか
@@ -1132,10 +969,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
           {
             distance_min_item_info.info.hide.item_data = item_info.info.hide.item_data;
           }
-          else if( item_info.type == ITEM_TYPE_INTRUDE )
-          {
-            distance_min_item_info.info.intrude.item_posdata = item_info.info.intrude.item_posdata;
-          }
         }
       }
     }
@@ -1148,10 +981,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
       if( distance_min_item_info.type == ITEM_TYPE_HIDE )
       {
         work->item_info_curr.info.hide.item_data = distance_min_item_info.info.hide.item_data;
-      }
-      else if( distance_min_item_info.type == ITEM_TYPE_INTRUDE )
-      {
-        work->item_info_curr.info.intrude.item_posdata = distance_min_item_info.info.intrude.item_posdata;
       }
     }
     else
@@ -1237,11 +1066,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
               prev_x = work->item_info_prev.info.hide.item_data->x;
               prev_z = work->item_info_prev.info.hide.item_data->z;
             }
-            else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
-            {
-              prev_x = work->item_info_prev.info.intrude.item_posdata->grid_x;
-              prev_z = work->item_info_prev.info.intrude.item_posdata->grid_z;
-            }
             else
             {
               // 今回初めて見付けたとき
@@ -1252,11 +1076,6 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
             {
               curr_x = work->item_info_curr.info.hide.item_data->x;
               curr_z = work->item_info_curr.info.hide.item_data->z;
-            }
-            else if( work->item_info_curr.type == ITEM_TYPE_INTRUDE )
-            {
-              curr_x = work->item_info_curr.info.intrude.item_posdata->grid_x;
-              curr_z = work->item_info_curr.info.intrude.item_posdata->grid_z;
             }
             if( prev_x != curr_x || prev_z != curr_z )
             {
