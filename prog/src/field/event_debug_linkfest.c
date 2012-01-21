@@ -55,6 +55,7 @@
 
 #include "gamesystem/link_festival.h"
 #include "gamesystem/link_festival_log.h"
+#include "gamesystem/fest_mission_local.h"
 #include "gamesystem/fest_mission_data.h"
 #include "gamesystem/fmission_log_local.h"
 #include "gamesystem/fmission_log.h"
@@ -99,9 +100,20 @@ enum{
  MENU_TUTORIAL_CLEAR,
  MENU_MISSION_OPEN_FLAG_SET,
  MENU_MISSION_ENTRY_FLAG_SET,
+ MENU_MISSION_ENTRY_STACK_CHECK,
  //フィールド
  MENU_MISSION_BEACON_WAIT,
  MENU_MISSION_LEVEL_OPEN,
+ MENU_MISSION_OPEN_NUM_SET,
+ MENU_MISSION_JOIN_NUM_SET,
+ MENU_MISSION_JOIN_NUM_MAX_SET,
+ MENU_MISSION_CLEAR_NUM_SET,
+ MENU_MISSION_TOP_SCORE_NUM_SET,
+ MENU_MISSION_HIGH_SCORE_TOTAL_ALL_SET,
+ MENU_MISSION_HIGH_SCORE_MINE_ALL_SET,
+ MENU_MISSION_NEW_FLAG_ALL_SET,
+ MENU_MISSION_EXP_WHITE_SET,
+ MENU_MISSION_EXP_BLACK_SET,
  //ログ
  MENU_MISSION_MY_SCORE,
  MENU_MISSION_TIME_STOP,
@@ -212,6 +224,16 @@ typedef enum{
  //フィールドメニュ
  NINPUT_MISSION_BEACON_WAIT,
  NINPUT_MISSION_LEVEL_OPEN,
+ NINPUT_MISSION_OPEN_NUM_SET,
+ NINPUT_MISSION_JOIN_NUM_SET,
+ NINPUT_MISSION_JOIN_NUM_MAX_SET,
+ NINPUT_MISSION_CLEAR_NUM_SET,
+ NINPUT_MISSION_TOP_SCORE_NUM_SET,
+ NINPUT_MISSION_HIGH_SCORE_TOTAL_ALL_SET,
+ NINPUT_MISSION_HIGH_SCORE_MINE_ALL_SET,
+ NINPUT_MISSION_NEW_FLAG_ALL_SET,
+ NINPUT_MISSION_EXP_WHITE_SET,
+ NINPUT_MISSION_EXP_BLACK_SET,
  //ログメニュー
  NINPUT_MISSION_MY_SCORE,
  NINPUT_MISSION_TIME_STOP,
@@ -351,8 +373,19 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestFromFieldMenuList[] =
   { dlf_fldmenu_01, (void*)MENU_TUTORIAL_CLEAR, GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_02, (void*)MENU_MISSION_OPEN_FLAG_SET,   GFL_OVERLAY_BLANK_ID },
   { dlf_fldmenu_03, (void*)MENU_MISSION_ENTRY_FLAG_SET,   GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_04, (void*)MENU_MISSION_LEVEL_OPEN, GFL_OVERLAY_BLANK_ID },
-  { dlf_fldmenu_05, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_04, (void*)MENU_MISSION_ENTRY_STACK_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_05, (void*)MENU_MISSION_LEVEL_OPEN, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_06, (void*)MENU_MISSION_OPEN_NUM_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_07, (void*)MENU_MISSION_JOIN_NUM_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_08, (void*)MENU_MISSION_JOIN_NUM_MAX_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_09, (void*)MENU_MISSION_CLEAR_NUM_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_10, (void*)MENU_MISSION_TOP_SCORE_NUM_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_11, (void*)MENU_MISSION_HIGH_SCORE_TOTAL_ALL_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_12, (void*)MENU_MISSION_HIGH_SCORE_MINE_ALL_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_13, (void*)MENU_MISSION_NEW_FLAG_ALL_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_14, (void*)MENU_MISSION_EXP_WHITE_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_15, (void*)MENU_MISSION_EXP_BLACK_SET, GFL_OVERLAY_BLANK_ID },
+  { dlf_fldmenu_16, (void*)MENU_MISSION_BEACON_WAIT, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -361,7 +394,7 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestMenuData = {
   NELEMS(DATA_DebugLinkFestMenuList),
   DATA_DebugLinkFestMenuList,
   &DATA_DebugMenuList_Default, //流用
-  1, 1, 24, 17,
+  1, 1, 30, 17,
   NULL,
   NULL
 };
@@ -370,7 +403,7 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestFromFieldMenuData = {
   NELEMS(DATA_DebugLinkFestFromFieldMenuList),
   DATA_DebugLinkFestFromFieldMenuList,
   &DATA_DebugMenuList_Default, //流用
-  1, 1, 24, 17,
+  1, 1, 30, 17,
   NULL,
   NULL
 };
@@ -521,6 +554,16 @@ static const NINPUT_MINMAX DATA_NInputMinMax[] = {
 static const NINPUT_MINMAX DATA_NInputFieldMinMax[] = {
  { 3, 60 },  //MENU_MISSION_BEACON_WAIT:
  { 0, 4 },  //MENU_MISSION_LEVEL_OPEN:
+ { 0, 9999 }, // MENU_MISSION_OPEN_NUM_SET:
+ { 0, 9999 }, // MENU_MISSION_JOIN_NUM_SET:
+ { 0, LINKFEST_JOIN_MAX }, // MENU_MISSION_JOIN_NUM_MAX_SET:
+ { 0, 9999 }, // MENU_MISSION_CLEAR_NUM_SET:
+ { 0, 9999 }, // MENU_MISSION_TOP_SCORE_NUM_SET:
+ { 0, FMISSION_SCORE_MAX }, // MENU_MISSION_HIGH_SCORE_TOTAL_ALL_SET:
+ { 0, FMISSION_SCORE_MAX }, // MENU_MISSION_HIGH_SCORE_MINE_ALL_SET:
+ { 0, 1 }, // MENU_MISSION_NEW_FLAG_ALL_SET:
+ { 0, FMISSION_SV_HILINK_LEVEL_EXP_STEP-1 }, // MENU_MISSION_EXP_WHITE_SET:
+ { 0, FMISSION_SV_HILINK_LEVEL_EXP_STEP-1 }, // MENU_MISSION_EXP_BLACK_SET:
 };
 
 //======================================================================
@@ -876,6 +919,16 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         break;
       case MENU_MISSION_BEACON_WAIT:
       case MENU_MISSION_LEVEL_OPEN:
+      case MENU_MISSION_OPEN_NUM_SET:
+      case MENU_MISSION_JOIN_NUM_SET:
+      case MENU_MISSION_JOIN_NUM_MAX_SET:
+      case MENU_MISSION_CLEAR_NUM_SET:
+      case MENU_MISSION_TOP_SCORE_NUM_SET:
+      case MENU_MISSION_HIGH_SCORE_TOTAL_ALL_SET:
+      case MENU_MISSION_HIGH_SCORE_MINE_ALL_SET:
+      case MENU_MISSION_NEW_FLAG_ALL_SET:
+      case MENU_MISSION_EXP_WHITE_SET:
+      case MENU_MISSION_EXP_BLACK_SET:
         {
           int idx = ret-MENU_MISSION_BEACON_WAIT;
           GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_MISSION_BEACON_WAIT+idx,
@@ -2153,6 +2206,25 @@ static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
     break;
   case NINPUT_MISSION_BEACON_WAIT:
     return DEB_LINKFEST_GetBeaconWait( wk->fest_sys )/60;
+  case NINPUT_MISSION_OPEN_NUM_SET:
+    return FMISSION_SAVE_GetMissionOpenNum( wk->fmission_sv );
+  case NINPUT_MISSION_JOIN_NUM_SET:
+    return FMISSION_SAVE_GetMissionEntryNum( wk->fmission_sv );
+  case NINPUT_MISSION_JOIN_NUM_MAX_SET:
+    return FMISSION_SAVE_GetMissionMaxJoinNum( wk->fmission_sv );
+  case NINPUT_MISSION_CLEAR_NUM_SET:
+    return FMISSION_SAVE_GetMissionClearNum( wk->fmission_sv );
+  case NINPUT_MISSION_TOP_SCORE_NUM_SET:
+    return FMISSION_SAVE_GetMissionTopScoreNum( wk->fmission_sv );
+  case NINPUT_MISSION_HIGH_SCORE_TOTAL_ALL_SET:
+    return FMISSION_SAVE_GetMissionStatusHighScore( wk->fmission_sv, 1 );
+  case NINPUT_MISSION_HIGH_SCORE_MINE_ALL_SET:
+    return FMISSION_SAVE_GetMissionStatusHighScoreMine( wk->fmission_sv, 1 );
+  case NINPUT_MISSION_NEW_FLAG_ALL_SET:
+    return FMISSION_SAVE_CheckMissionStatusNewFlag( wk->fmission_sv, 1 );
+  case NINPUT_MISSION_EXP_WHITE_SET:
+  case NINPUT_MISSION_EXP_BLACK_SET:
+    return FMISSION_SAVE_GetHilinkLevelExp( wk->fmission_sv, param-NINPUT_MISSION_EXP_WHITE_SET );
   }
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
     return 0;
@@ -2195,6 +2267,49 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
     break;
   case NINPUT_MISSION_LEVEL_OPEN:
     DEBUG_FMISSION_SV_SetMissionStatusClearLevelAll( wk->fmission_sv,  value );
+    break;
+  case NINPUT_MISSION_OPEN_NUM_SET:
+    FMISSION_SAVE_SetMissionOpenNum( wk->fmission_sv, value );
+    break;
+  case NINPUT_MISSION_JOIN_NUM_SET:
+    FMISSION_SAVE_SetMissionEntryNum( wk->fmission_sv, value );
+    break;
+  case NINPUT_MISSION_JOIN_NUM_MAX_SET:
+    FMISSION_SAVE_SetMissionMaxJoinNum( wk->fmission_sv, value );
+    break;
+  case NINPUT_MISSION_CLEAR_NUM_SET:
+    FMISSION_SAVE_SetMissionClearNum( wk->fmission_sv, value );
+    break;
+  case NINPUT_MISSION_TOP_SCORE_NUM_SET:
+    FMISSION_SAVE_SetMissionTopScoreNum( wk->fmission_sv, value );
+    break;
+  case NINPUT_MISSION_HIGH_SCORE_TOTAL_ALL_SET:
+  case NINPUT_MISSION_HIGH_SCORE_MINE_ALL_SET:
+  case NINPUT_MISSION_NEW_FLAG_ALL_SET:
+    {
+      int i;
+      for( i = 0; i < FMISSION_ID_MAX;i++ ){
+        switch( param ){
+        case NINPUT_MISSION_HIGH_SCORE_TOTAL_ALL_SET:
+          FMISSION_SAVE_SetMissionStatusHighScore( wk->fmission_sv, i, value );
+          break;
+        case NINPUT_MISSION_HIGH_SCORE_MINE_ALL_SET:
+          FMISSION_SAVE_SetMissionStatusHighScoreMine( wk->fmission_sv, i, value );
+          break;
+        case NINPUT_MISSION_NEW_FLAG_ALL_SET:
+          if( value ){
+            FMISSION_SAVE_SetMissionStatusNewFlag( wk->fmission_sv, i );
+          }else{
+            FMISSION_SAVE_ResetMissionStatusNewFlag( wk->fmission_sv, i );
+          }
+          break;
+        }
+      }
+    }
+    break;
+  case NINPUT_MISSION_EXP_WHITE_SET:
+  case NINPUT_MISSION_EXP_BLACK_SET:
+    FMISSION_SAVE_SetHilinkLevelExp( wk->fmission_sv, param-NINPUT_MISSION_EXP_WHITE_SET, value );
     break;
   }
   if( !LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){

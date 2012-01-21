@@ -760,10 +760,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションレベルかいほう</Text>
+			<Text>エントリーデータスタックチェック</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:45:43" />
+				Time="2012-01-21T02:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -771,10 +771,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションレベル開放</Text>
+			<Text>エントリーデータスタックチェック</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:45:43" />
+				Time="2012-01-21T02:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -806,10 +806,10 @@
 		Label="dlf_fldmenu_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションビーコンかんかく</Text>
+			<Text>ミッションレベルかいほう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:45:43" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -817,10 +817,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションビーコン間隔</Text>
+			<Text>ミッションレベル開放</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:45:43" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -845,10 +845,10 @@
 		Label="dlf_fldmenu_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>やめる</Text>
+			<Text>ミッション開催した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:33" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -856,10 +856,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やめる</Text>
+			<Text>ミッション開催した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:33" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -884,10 +884,10 @@
 		Label="dlf_fldmenu_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>やめる</Text>
+			<Text>ミッション　子として参加した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:33" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -895,10 +895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やめる</Text>
+			<Text>ミッション　子として参加した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:33" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -923,10 +923,10 @@
 		Label="dlf_fldmenu_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>やめる</Text>
+			<Text>ミッション　最大参加人数記録</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:32" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -934,14 +934,302 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やめる</Text>
+			<Text>ミッション　最大参加人数記録</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-16T07:29:32" />
+				Time="2012-01-21T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-10-26T11:30:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションクリア数</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションクリア数</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッション　トップスコアを取った回数</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッション　トップスコアを取った回数</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッション　トータルハイスコアALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッション　トータルハイスコアALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッション　自分のハイスコアALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッション　自分のハイスコアALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッション NEWフラグALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッション NEWフラグALLセット</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクけいけんちホワイト</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンク経験値ホワイト</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:26" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクけいけんちブラック</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:25:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンク経験値ブラック</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:24:26" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションビーコンかんかく</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T03:22:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:22:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションビーコンかんかく</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T03:22:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:30:36" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_fldmenu_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションビーコンかんかく</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:23:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションビーコンかんかく</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-21T02:30:38" />
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
