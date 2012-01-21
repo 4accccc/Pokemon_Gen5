@@ -52,14 +52,14 @@ typedef enum {
 // メニュー項目インデックス
 typedef enum
 {
-  MENU_ITEM_NONE,
-  MENU_ITEM_INIT,
+  MENU_ITEM_STATE_FIRST,
+  MENU_ITEM_STATE_CYGNUS_READY,
+  MENU_ITEM_STATE_CYGNUS_PUT,
   MENU_ITEM_CLEAR_GIFT,
   MENU_ITEM_SPPOKE_CTRL,
   MENU_ITEM_ADD_POKE,
-  MENU_ITEM_ADD_ITEM,
-  MENU_ITEM_SET_CYGNUS_GIFT,
 
+  MENU_ITEM_ADD_ITEM,
   MENU_ITEM_ONETIMEKEY,
   MENU_ITEM_SWANFLAGS,
   MENU_ITEM_PRINT,
@@ -78,13 +78,13 @@ enum {
 // メニュー項目文字列
 static const STRCODE* str_menu[] =
 {
-  L"出荷状態にする",
-  L"CYGNUS書き込み許可にする",
+  L"A.未初期化状態にする",
+  L"B.CYGNUS書き込み可能にする（受取る）",
+  L"C.SWAN受け取り可能にする（渡す）",
   L"渡すものを　クリア",
   L"渡す伝説ポケ　操作",
   L"渡すポケモン　追加",
   L"渡すどうぐ　追加",
-  L"SWANにわたす",
 
   L"SWAN側ワンタイムキー操作",
   L"SWAN側フラグ操作",
@@ -234,10 +234,10 @@ static void CygnusUnload( PROC_WORK * p_wk );
 // メニューの数と同じ
 
 static BOOL SubSeqCygStatusPrint( PROC_WORK * p_wk );
-static BOOL SubSeqCygSaveErase( PROC_WORK * p_wk );
-static BOOL SubSeqCygSaveInit( PROC_WORK * p_wk );
+static BOOL SubSeqStateFirst( PROC_WORK * p_wk );
+static BOOL SubSeqStateCygnusReady( PROC_WORK * p_wk );
+static BOOL SubSeqStateCygnusPut( PROC_WORK * p_wk );
 static BOOL SubSeqClearGifts( PROC_WORK * p_wk );
-static BOOL SubSeqSetCygnusGift( PROC_WORK * p_wk );
 static BOOL SubSeqSpPokeControl( PROC_WORK *p_wk );
 static BOOL ControlSwanFlagValue( PROC_WORK * p_wk );
 static BOOL SubSeqAddItem( PROC_WORK *p_wk );
@@ -584,6 +584,13 @@ static void UpdateCygnusInfo( PROC_WORK * p_wk )
     L"マジックナンバー",
     L"情報フラグ",
   };
+  static const STRCODE * const state_str[] = {
+    L"A.未初期化状態",
+    L"B.CYGNUS書込みOK",
+    L"C.SWAN受取りOK",
+  };
+  SDK_COMPILER_ASSERT( NELEMS(state_str) == CYGSAVE_STATE_NUM );
+
   int i;
   PRINTSYS_LSB lsb = NORMAL_LSB;
   GFL_BMP_DATA* bmp = GFL_BMPWIN_GetBmp( p_wk->subBmpWin );
@@ -597,8 +604,8 @@ static void UpdateCygnusInfo( PROC_WORK * p_wk )
 
   {
     CygnusLoad( p_wk );
-    createU32Hex( p_wk->tmpBuf, CYGNUS_SAVEDATA_GetStatus( p_wk->cygsave ) );
-    PRINTSYS_PrintColor( bmp, 18 * 10, 0 * 16, p_wk->tmpBuf, p_wk->font, lsb );
+    createString( p_wk->tmpBuf, state_str[ CYGNUS_SAVEDATA_GetStatus( p_wk->cygsave ) ] );
+    PRINTSYS_PrintColor( bmp, 18 * 7, 0 * 16, p_wk->tmpBuf, p_wk->font, lsb );
     createU32Hex( p_wk->tmpBuf, p_wk->cygsave->overwrite_enable_flag );
     PRINTSYS_PrintColor( bmp, 18 * 10, 1 * 16, p_wk->tmpBuf, p_wk->font, lsb );
     createU32Hex( p_wk->tmpBuf, p_wk->cygsave->onetime_key );
@@ -632,10 +639,10 @@ static void UpdateCygnusInfo( PROC_WORK * p_wk )
 static BOOL CallSubSeq( u32 id, PROC_WORK *p_wk )
 {
   switch( id ){
-  case MENU_ITEM_NONE:
-    return SubSeqCygSaveErase( p_wk );
-  case MENU_ITEM_INIT:
-    return SubSeqCygSaveInit( p_wk );
+  case MENU_ITEM_STATE_FIRST:
+    return SubSeqStateFirst( p_wk );
+  case MENU_ITEM_STATE_CYGNUS_READY:
+    return SubSeqStateCygnusReady( p_wk );
   case MENU_ITEM_PRINT:
     return SubSeqCygStatusPrint( p_wk );
   case MENU_ITEM_SPPOKE_CTRL:
@@ -646,8 +653,8 @@ static BOOL CallSubSeq( u32 id, PROC_WORK *p_wk )
     return SubSeqAddPokemon( p_wk );
   case MENU_ITEM_ADD_ITEM:
     return SubSeqAddItem( p_wk );
-  case MENU_ITEM_SET_CYGNUS_GIFT:
-    return SubSeqSetCygnusGift( p_wk );
+  case MENU_ITEM_STATE_CYGNUS_PUT:
+    return SubSeqStateCygnusPut( p_wk );
   case MENU_ITEM_ONETIMEKEY:
     return SubSeqControlOneTimeKey( p_wk );
   case MENU_ITEM_SWANFLAGS:
@@ -759,7 +766,7 @@ static BOOL SubSeqCygStatusPrint( PROC_WORK * p_wk )
 //-----------------------------------------------------------------------------
 /// サブシーケンス：工場出荷状態にする
 //-----------------------------------------------------------------------------
-static BOOL SubSeqCygSaveErase( PROC_WORK * p_wk )
+static BOOL SubSeqStateFirst( PROC_WORK * p_wk )
 {
   switch ( p_wk->subSeq )
   {
@@ -787,7 +794,7 @@ static BOOL SubSeqCygSaveErase( PROC_WORK * p_wk )
 //-----------------------------------------------------------------------------
 /// サブシーケンス：Cygnusが書き込める状態にする
 //-----------------------------------------------------------------------------
-static BOOL SubSeqCygSaveInit( PROC_WORK * p_wk )
+static BOOL SubSeqStateCygnusReady( PROC_WORK * p_wk )
 {
   switch ( p_wk->subSeq )
   {
@@ -833,7 +840,7 @@ static BOOL SubSeqClearGifts( PROC_WORK * p_wk )
  * @brief サブシーケンス：CYGNUSから送るデータの生成、書き込み
  */
 //-----------------------------------------------------------------------------
-static BOOL SubSeqSetCygnusGift( PROC_WORK * p_wk )
+static BOOL SubSeqStateCygnusPut( PROC_WORK * p_wk )
 {
   LAST_STATUS get_status;
 
