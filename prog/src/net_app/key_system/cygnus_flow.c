@@ -2011,7 +2011,7 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
     if( CUGNUS_DATA_IsValidMagicNumber(cp_row_data[i]) )
     {
       CYGNUSDATA_FLAG flag = CYGNUS_DATA_GetFlagByMagicNum( cp_row_data[i] );
-      if( p_wk->flag & flag == 0 )
+      if( (p_wk->flag & flag) == 0 )
       {
         u16 mons_no;
         u8  form_no;
@@ -2025,7 +2025,7 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
         p_wk->reward_data[p_wk->reward_num].is_demo = Cygnus_Save_IsDemoPoke( mons_no );
         p_wk->reward_num++;
 
-        p_wk->flag &= flag;
+        p_wk->flag |= flag;
       }
     }
   }
