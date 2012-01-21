@@ -22,6 +22,8 @@ typedef enum {
   CYGSAVE_STATE_NON = 0,  ///<データがない
   CYGSAVE_STATE_SEND,     ///<CYGNUSから書き込み可能
   CYGSAVE_STATE_RECEIVE,  ///<SWANで受け取り可能
+
+  CYGSAVE_STATE_NUM,
 }CYGSAVE_STATE;
 
 //----------------------------------------------------------
