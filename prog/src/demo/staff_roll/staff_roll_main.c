@@ -68,6 +68,12 @@ enum {
 enum{
   SEQ_CUT_NONE,       // なし
   SEQ_CUT_LOAD,       // リソース読み込み
+
+  // 処理落ち軽減のために分割読み込みにした
+  SEQ_CUT_CGX_LOAD,   // キャラ読み込み
+  SEQ_CUT_SCR_LOAD,   // スクリーン読み込み
+  SEQ_CUT_TRANS,      // 転送(キャラ・スクリーン・パレット)
+
   SEQ_CUT_FADE_IN,    // フェードしながら表示
   SEQ_CUT_VIEW_WAIT,  // 表示中
   SEQ_CUT_FADE_OUT,   // フェードしながら非表示
@@ -132,6 +138,12 @@ typedef enum {
 } CUT_FADE;
 #define CUT_FADE_SKIP_SPEED    ( 4 )      // スキップ時のフェード速度
 
+// カット読み込み
+typedef enum {
+  CUT_DATID_PAL,
+  CUT_DATID_CGX,
+  CUT_DATID_SCR,
+} CUT_DATID_TYPE;
 
 // コマンドラベル
 enum {
@@ -173,6 +185,8 @@ typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 
 #define	SKIP_MODE_BGM_FADE			( 64 )			// スキップ時のBGMフェードフレーム数
 
+// BG分割読み込み
+#define BG_LOAD_DIV_FRAME       ( 8 )       // 何分割読み込み
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -186,9 +200,11 @@ static int MainSeq_Main( SRMAIN_WORK * wk );
 static void InitVram(void);
 static void InitBg(void);
 static void ExitBg(void);
-static void LoadBgGraphic(void);
-static void InitObj( OBJ_WORK * wk );
+static void LoadBgGraphic( ARCHANDLE *handle );
+static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk );
 static void ExitObj( OBJ_WORK * wk );
+static void InitCut( CUT_WORK * wk );
+static void ExitCut( CUT_WORK * wk );
 static void InitVBlank( SRMAIN_WORK * wk );
 static void ExitVBlank( SRMAIN_WORK * wk );
 static void InitMsg( SRMAIN_WORK * wk );
@@ -222,8 +238,8 @@ static BOOL PutLogo( SRMAIN_WORK * wk );
 // swan追加
 // カット関係の処理
 static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk );            // メイン
-static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex );    // BG読み込み
 static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag );    // フェード
+static u32  CutGetDatID( CUT_WORK *p_wk, CUT_DATID_TYPE datid_type, u32 sex );
 
 static BOOL Comm_LabelNone( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
@@ -370,10 +386,15 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	wk->testStartEndWait = DEBUG_LIST_START_END_WAIT;
 #endif	// PM_DEBUG
 
+	//アーカイブハンドル作成
+	wk->handle = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL );
+	GF_ASSERT( wk->handle );
+
 	InitVram();
 	InitBg();
-  InitObj( &wk->obj );
-	LoadBgGraphic();
+  InitObj( wk->handle, &wk->obj );
+  InitCut( &wk->cut );
+	LoadBgGraphic( wk->handle );
 	InitMsg( wk );
 	InitBmp( wk );
 
@@ -419,8 +440,15 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 	DeleteListData( wk );
 
+  if( wk->handle != NULL )
+  {
+    GFL_ARC_CloseDataHandle( wk->handle );
+    wk->handle = NULL;
+  }
+  
 	ExitBmp( wk );
 	ExitMsg( wk );
+  ExitCut( &wk->cut );
   ExitObj( &wk->obj );
 	ExitBg();
 
@@ -744,7 +772,7 @@ static void ExitBg(void)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void LoadBgGraphic(void)
+static void LoadBgGraphic( ARCHANDLE *handle )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 
@@ -755,18 +783,15 @@ static void LoadBgGraphic(void)
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STAFF_ROLL );
 
-
 	GFL_ARC_CloseDataHandle( ah );
 
 	// フォントパレット
-	ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_staff_roll_staffroll_font_nclr,
+		handle, NARC_staff_roll_staffroll_font_nclr,
 		PALTYPE_MAIN_BG, MBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_staff_roll_staffroll_font_nclr,
+		handle, NARC_staff_roll_staffroll_font_nclr,
 		PALTYPE_SUB_BG, SBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
-	GFL_ARC_CloseDataHandle( ah );
 
 	// バックグラウンドカラー
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
@@ -780,10 +805,9 @@ static void LoadBgGraphic(void)
  *  @param		wk		ワーク
  */
 //-----------------------------------------------------------------------------
-static void InitObj( OBJ_WORK * wk )
+static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk )
 {
   HEAPID heapID = HEAPID_STAFF_ROLL_L;
-  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
 
   GFL_CLACT_SYS_Create(&GFL_CLSYSINIT_DEF_DIVSCREEN, &VramTbl, HEAPID_STAFF_ROLL);
 
@@ -824,9 +848,6 @@ static void InitObj( OBJ_WORK * wk )
 
   //OBJ表示ON
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-
-
-  GFL_ARC_CloseDataHandle( handle );
 }
 
 //----------------------------------------------------------------------------
@@ -844,6 +865,23 @@ static void ExitObj( OBJ_WORK * wk )
 
   GFL_CLACT_UNIT_Delete(wk->clunit);
   GFL_CLACT_SYS_Delete();
+}
+
+static void InitCut( CUT_WORK * wk )
+{
+  u32 chr_size = GFL_ARC_GetDataSize( ARCID_STAFF_ROLL, NARC_staff_roll_2d_cut_cut11_cut11_b_boy_ncgr );
+  u32 scr_size = GFL_ARC_GetDataSize( ARCID_STAFF_ROLL, NARC_staff_roll_2d_cut_cut11_cut11_b_boy_nscr );
+
+  wk->chr_buf = GFL_HEAP_AllocMemory( HEAPID_STAFF_ROLL, chr_size );
+  wk->scr_buf = GFL_HEAP_AllocMemory( HEAPID_STAFF_ROLL, scr_size );
+  ICHI_Printf("chr_size = %x %x \n", chr_size, wk->chr_buf );
+  ICHI_Printf("scr_size = %x %x \n", scr_size, wk->scr_buf );
+}
+
+static void ExitCut( CUT_WORK * wk )
+{
+	GFL_HEAP_FreeMemory( wk->chr_buf );
+	GFL_HEAP_FreeMemory( wk->scr_buf );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1672,6 +1710,20 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
 {
+  u32 sex;  //性別
+  ARCHANDLE *handle = p_parent_wk->handle;
+
+#ifdef	PM_DEBUG
+  if( p_parent_wk->dat->fastMode == STAFFROLL_MODE_DEBUG ){
+    sex = 0; // デバッグだとマイステータスがないので0
+  }
+  else
+  {
+    sex = MyStatus_GetMySex( p_parent_wk->dat->mystatus );
+  }
+#else
+  sex = MyStatus_GetMySex( p_parent_wk->dat->mystatus );
+#endif
 
   // シーケンス別処理
   switch( p_wk->seq ){
@@ -1682,18 +1734,6 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
   case SEQ_CUT_LOAD:       // リソース読み込み
     {
       // 2Dカットの読み込み
-#ifdef	PM_DEBUG
-      if( p_parent_wk->dat->fastMode == STAFFROLL_MODE_DEBUG ){
-        CutSeqFunc_Load( p_wk, 0 );
-      }
-      else
-      {
-        CutSeqFunc_Load( p_wk, MyStatus_GetMySex( p_parent_wk->dat->mystatus ) );
-      }
-#else
-      CutSeqFunc_Load( p_wk, MyStatus_GetMySex( p_parent_wk->dat->mystatus ) );
-#endif
-
       // アルファの設定
       // 上画面
       if( p_wk->disp_type & CUT_DISP_MAIN ) 
@@ -1708,38 +1748,12 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
       }
 
       ICHI_Printf("2Dカット：読み込み\n");
-      p_wk->seq = SEQ_CUT_FADE_IN;
+      p_wk->seq = SEQ_CUT_CGX_LOAD;
     }
     break;
 
   case SEQ_CUT_LOAD_N:     // リソース読み込み(Nのアニメ)
     {
-      // 2Dカットの読み込み
-      {
-        ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
-        u32   arc_pal;    // パレット
-        u32   arc_cgx;    // キャラクタ
-        u32   arc_scr;    // スクリーン
-
-        arc_pal = NARC_staff_roll_n_cut01_nclr;
-        arc_cgx = NARC_staff_roll_n_cut01_ncgr;
-        arc_scr = NARC_staff_roll_n_cut01_nscr;
-
-        GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
-            PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_STAFF_ROLL );
-        GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
-            GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-        GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
-            GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-        GFL_BG_LoadScreenReq(GFL_BG_FRAME0_S);
-        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-        GFL_ARC_CloseDataHandle( ah );
-      }
-
-      // OBJの表示
-      GFL_CLACT_WK_SetDrawEnable( p_parent_wk->obj.clwk, TRUE );
-      GFL_CLACT_WK_ResetAnm( p_parent_wk->obj.clwk );
-
       // 輝度の設定
       // OBJとBGを同時にアルファは出来ないので輝度で代用する
       if( GET_VERSION() == VERSION_B2 )
@@ -1753,6 +1767,100 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 16 );
       }
 
+      // OBJの表示
+      GFL_CLACT_WK_SetDrawEnable( p_parent_wk->obj.clwk, TRUE );
+      GFL_CLACT_WK_ResetAnm( p_parent_wk->obj.clwk );
+
+      ICHI_Printf("2Dカット：Nアニメ読み込み\n");
+      p_wk->seq = SEQ_CUT_CGX_LOAD;
+    }
+    break;
+
+  case SEQ_CUT_CGX_LOAD:   // キャラ読み込み
+    {
+      u32 arc_cgx = CutGetDatID( p_wk, CUT_DATID_CGX, sex );
+
+#if 0
+      // 一括読み込み
+      GFL_ARC_LoadDataByHandle( handle, arc_cgx, p_wk->chr_buf );
+
+      if( NNS_G2dGetUnpackedBGCharacterData(p_wk->chr_buf,&p_wk->chr) == FALSE ){
+        GF_ASSERT( 0 );
+      }
+      p_wk->seq = SEQ_CUT_SCR_LOAD;
+#else
+      // 分割読み込み
+      u32 size;       // 読み込みサイズ
+      u32 offs;       // 読み込みオフセット
+      void *buffer;    // 読み込み先バッファ
+
+      // ファイルサイズ取得
+      size = GFL_ARC_GetDataSize( ARCID_STAFF_ROLL, arc_cgx );
+      size /= BG_LOAD_DIV_FRAME;
+
+      // オフセット = サイズ×経過フレーム
+      offs = size * p_wk->div_cnt;
+
+      // 読込先バッファ
+      buffer = (void*)((u32)p_wk->chr_buf + offs);
+
+      ICHI_Printf("ファイルサイズ %x オフセット %x 先バッファ %x \n", size, offs, buffer );
+
+      // 分割読み込み
+      GFL_ARC_LoadDataOfsByHandle( p_parent_wk->handle, arc_cgx, offs, size, buffer );
+
+      // 分割カウント増加
+      p_wk->div_cnt++;
+      if( p_wk->div_cnt >= BG_LOAD_DIV_FRAME )
+      {
+        // キャラデータ
+        if( NNS_G2dGetUnpackedBGCharacterData(p_wk->chr_buf,&p_wk->chr) == FALSE ){
+          GF_ASSERT( 0 );
+        }
+        p_wk->seq = SEQ_CUT_SCR_LOAD;
+      }
+#endif
+    }
+    break;
+
+  case SEQ_CUT_SCR_LOAD:   // スクリーン読み込み
+    {
+      u32 arc_scr = CutGetDatID( p_wk, CUT_DATID_SCR, sex );
+
+      GFL_ARC_LoadDataByHandle( handle, arc_scr, p_wk->scr_buf );
+      GF_ASSERT( p_wk->scr_buf != NULL );
+      if( NNS_G2dGetUnpackedScreenData(p_wk->scr_buf,&p_wk->scr) == FALSE ){
+        GF_ASSERT( 0 );
+      }
+      ICHI_Printf("スクリーン読み込み\n");
+      p_wk->seq = SEQ_CUT_TRANS;
+    }
+    break;
+
+  case SEQ_CUT_TRANS:  // 転送
+    {
+      u32 arc_pal = CutGetDatID( p_wk, CUT_DATID_PAL, sex );
+      if( p_wk->disp_type & CUT_DISP_MAIN )
+      {
+        GFL_BG_LoadScreen( GFL_BG_FRAME0_M, p_wk->scr->rawData, p_wk->scr->szByte, 0 );
+        GFL_BG_LoadCharacter( GFL_BG_FRAME0_M, p_wk->chr->pRawData, p_wk->chr->szByte, 0 );
+        GFL_ARCHDL_UTIL_TransVramPalette( handle, arc_pal,
+            PALTYPE_MAIN_BG_EX, 0x0000, 0, HEAPID_STAFF_ROLL );
+
+        // 表示(アルファがかかっているので見えはしない)
+        GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+      }
+      if( p_wk->disp_type & CUT_DISP_SUB )
+      {
+        GFL_BG_LoadScreen( GFL_BG_FRAME0_S, p_wk->scr->rawData, p_wk->scr->szByte, 0 );
+        GFL_BG_LoadCharacter( GFL_BG_FRAME0_S, p_wk->chr->pRawData, p_wk->chr->szByte, 0 );
+        GFL_ARCHDL_UTIL_TransVramPalette( handle, arc_pal,
+            PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_STAFF_ROLL );
+
+        // 表示(アルファがかかっているので見えはしない)
+        GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+      }
+      ICHI_Printf("転送\n");
       p_wk->seq = SEQ_CUT_FADE_IN;
     }
     break;
@@ -1818,85 +1926,6 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
   default: GF_ASSERT(0);
   }
 
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  2Dカットの読み込み
- *
- *	@param	CUT_WORK *p_wk  2Dカットのワーク
- */
-//-----------------------------------------------------------------------------
-static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex )
-{
-  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
-
-  u32   arc_pal;    // パレット
-  u32   arc_cgx;    // キャラクタ
-  u32   arc_scr;    // スクリーン
-
-  // リソース
-  {
-    int diff = 0;   // 基準からのarc_id の差
-
-    // 基準となるarc_id  要は一番上
-    arc_pal = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_nclr;
-    arc_cgx = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_ncgr;
-    arc_scr = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_nscr;
-
-    diff = p_wk->cut_no * 12;    // 12 リソース種類×男女×バージョン
-
-    // バージョンチェック
-    if( GET_VERSION() == VERSION_W2 )
-    {
-      diff += 6;   // ホワイト基準に。
-    }
-
-    // 男女チェック
-    if( sex == PM_FEMALE )
-    {
-      diff += 3;
-    }
-
-    arc_pal += diff;
-    arc_cgx += diff;
-    arc_scr += diff;
-  }
-
-  // 上画面
-  if( p_wk->disp_type & CUT_DISP_MAIN ) 
-  {
-    // 拡張パレットのメモリマップ
-    // スロット0:0x0000
-    // スロット1:0x2000
-    // スロット2:0x4000
-    // スロット3:0x6000
-    GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
-        PALTYPE_MAIN_BG_EX, 0x0000, 0, HEAPID_STAFF_ROLL );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
-        GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-    GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
-        GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-
-    GFL_BG_LoadScreenReq(GFL_BG_FRAME0_M);
-    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-  }
-
-  // 下画面
-  if( p_wk->disp_type & CUT_DISP_SUB ) 
-  {
-    GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
-        PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_STAFF_ROLL );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
-        GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-    GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
-        GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
-
-    GFL_BG_LoadScreenReq(GFL_BG_FRAME0_S);
-    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-  }
-
-  GFL_ARC_CloseDataHandle( ah );
 }
 
 //----------------------------------------------------------------------------
@@ -1973,6 +2002,65 @@ static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag )
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カットのデータインデックスを取得
+ *
+ *	@param	CUT_WORK *p_wk
+ *	@param	datid_type
+ *	@param	sex 
+ *
+ *	@return 対応したカード
+ */
+//-----------------------------------------------------------------------------
+static u32  CutGetDatID( CUT_WORK *p_wk, CUT_DATID_TYPE datid_type, u32 sex )
+{
+  int diff = 0;   // 基準からのarc_id の差
+
+  // 基準となるarc_id  要は一番上
+  u32 arc_pal = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_nclr;
+  u32 arc_cgx = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_ncgr;
+  u32 arc_scr = NARC_staff_roll_2d_cut_cut11_cut11_b_boy_nscr;
+
+  diff = p_wk->cut_no * 12;    // 12 リソース種類×男女×バージョン
+
+  // バージョンチェック
+  if( GET_VERSION() == VERSION_W2 )
+  {
+    diff += 6;   // ホワイト基準に。
+  }
+
+  // 男女チェック
+  if( sex == PM_FEMALE )
+  {
+    diff += 3;
+  }
+
+  arc_pal += diff;
+  arc_cgx += diff;
+  arc_scr += diff;
+
+  // 例外処理
+  // Nのアニメなら指定
+  if( p_wk->is_n_anime == TRUE )
+  {
+    arc_pal = NARC_staff_roll_n_cut01_nclr;
+    arc_cgx = NARC_staff_roll_n_cut01_ncgr;
+    arc_scr = NARC_staff_roll_n_cut01_nscr;
+  }
+  
+  ICHI_Printf("pal %d cgx %d scr %d \n", arc_pal, arc_cgx, arc_scr );
+
+  switch( datid_type ){
+  case CUT_DATID_PAL: return arc_pal;
+  case CUT_DATID_CGX: return arc_cgx;
+  case CUT_DATID_SCR: return arc_scr;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 
 //============================================================================================
@@ -2185,10 +2273,14 @@ static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   ICHI_Printf("item->offs_x %d\n", item->offs_x );
 
   // 初期化
-  wk->cut.cut_no = item->labelType;
+  //GFL_STD_MemClear( &wk->cut, sizeof(CUT_WORK) );
+  //メモリをクリアするとアドレスが消される
+  //
+  wk->cut.cut_no  = item->labelType;
+  wk->cut.div_cnt = 0;
+  wk->cut.disp_type = 0;
   wk->cut.alpha_cnt = 0;
   wk->cut.alpha_fade_sync = item->px;
-  wk->cut.disp_type = 0;
   wk->cut.wait = item->wait;
   wk->cut.is_n_anime = FALSE;
 
@@ -2235,7 +2327,12 @@ static BOOL Comm_LabelNAnime( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   ICHI_Printf("item->offs_x %d\n", item->offs_x );
 
   // 初期化
-  wk->cut.cut_no = 0;
+  //GFL_STD_MemClear( &wk->cut, sizeof(CUT_WORK) );
+  //メモリをクリアするとアドレスが消される
+  //
+  wk->cut.cut_no  = 0;
+  wk->cut.div_cnt = 0;
+  wk->cut.disp_type = 0;
   wk->cut.alpha_cnt = 0;
   wk->cut.alpha_fade_sync = item->px;
   wk->cut.disp_type = 0;

@@ -63,6 +63,7 @@ typedef struct {
 
   u8      seq;        // シーケンス
   u8      disp_type;  // 画面選択
+  u8      div_cnt;    // 分割ロード用
 
   u8      cut_no;     // 何枚目のカットか
 
@@ -71,6 +72,12 @@ typedef struct {
   int     wait;       // 表示待ち
 
   BOOL    is_n_anime; // Nのアニメか
+
+  NNSG2dCharacterData *chr;
+  NNSG2dScreenData    *scr;
+  NNSG2dPaletteData   *pal;
+  void                *chr_buf;    
+  void                *scr_buf;    
 
 } CUT_WORK;
 
@@ -86,6 +93,8 @@ typedef struct {
 
 typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
+
+  ARCHANDLE       *handle;
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
