@@ -469,7 +469,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
       switch( result ){
       case BTL_RESULT_WIN:
-        wk->setupParam->getMoney = (wk->regularMoney + wk->bonusMoney);
+        wk->setupParam->getMoney = (wk->regularMoney + BTL_MAIN_GetBonusMoney(wk));
         break;
       case BTL_RESULT_LOSE:
       case BTL_RESULT_DRAW:
@@ -4147,6 +4147,7 @@ u32 BTL_MAIN_FixRegularMoney( BTL_MAIN_MODULE* wk )
     wk->regularMoney = GPOWER_Calc_Money( wk->regularMoney );
     wk->fGetMoneyFixed = TRUE;
   }
+  OS_Printf("");
 
   return wk->regularMoney;
 }
