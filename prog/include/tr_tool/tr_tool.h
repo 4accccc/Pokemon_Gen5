@@ -102,23 +102,23 @@
 #define TRTYPE_GRP_IDX_BIGFOUR3		(10)// 四天王
 #define TRTYPE_GRP_IDX_BIGFOUR4		(11)// 四天王
 #define TRTYPE_GRP_IDX_DPCHAMP		(12)// DPチャンピオン(シロナ)
-// 13 BCHAMP
-// 14 BCHAMP2
 //swan
-#define TRTYPE_GRP_IDX_SWRIVAL	  (15)// ライバル
-#define TRTYPE_GRP_IDX_TRAINER_SWBOSS (16)  // ポケモントレーナーのアクロマ
-#define TRTYPE_GRP_IDX_PLASMA_SWBOSS  (17)  // プラズマ団アクロマ
-#define TRTYPE_GRP_IDX_BOSS 	    (18)// ポケモントレーナーのN
-#define TRTYPE_GRP_IDX_SWPLAZMAM 	(19)// ネオプラズマ団
-#define TRTYPE_GRP_IDX_SWPLAZMAW 	(20)// ネオプラズマ団
-#define TRTYPE_GRP_IDX_SWSAGE3 	  (21)// 七賢人(ヴィオ)
-#define TRTYPE_GRP_IDX_NINJA			(22)// ダークトリニティ
-#define TRTYPE_GRP_IDX_SWCHAMPION	(23)// チャンピオン(アイリス)
-#define TRTYPE_GRP_IDX_SWSAGE1	  (24)// ゲーチス
-#define TRTYPE_GRP_IDX_MUGENBOSS	(25)// 無限ダンジョンボス
-#define TRTYPE_GRP_IDX_CLEAR_SWBOSS (26)  // クリア後のアクロマ
-#define TRTYPE_GRP_IDX_SWLEADER1_1  (27)  // チェレン
-#define TRTYPE_GRP_IDX_SUPPORT    (28)  // サポート
+#define TRTYPE_GRP_IDX_SWRIVAL	  (13)// ライバル
+#define TRTYPE_GRP_IDX_TRAINER_SWBOSS (14)  // ポケモントレーナーのアクロマ
+#define TRTYPE_GRP_IDX_PLASMA_SWBOSS  (15)  // プラズマ団アクロマ
+#define TRTYPE_GRP_IDX_BOSS 	    (16)// ポケモントレーナーのN
+#define TRTYPE_GRP_IDX_SWPLAZMAM 	(17)// ネオプラズマ団
+#define TRTYPE_GRP_IDX_SWPLAZMAW 	(18)// ネオプラズマ団
+#define TRTYPE_GRP_IDX_SWSAGE3 	  (19)// 七賢人(ヴィオ)
+#define TRTYPE_GRP_IDX_NINJA			(20)// ダークトリニティ
+#define TRTYPE_GRP_IDX_SWCHAMPION	(21)// チャンピオン(アイリス)
+#define TRTYPE_GRP_IDX_SWSAGE1	  (22)// ゲーチス
+#define TRTYPE_GRP_IDX_MUGENBOSS	(23)// 無限ダンジョンボス
+#define TRTYPE_GRP_IDX_CLEAR_SWBOSS (24)  // クリア後のアクロマ
+#define TRTYPE_GRP_IDX_SWLEADER1_1  (25)  // チェレン
+#define TRTYPE_GRP_IDX_SUPPORT    (26)  // サポート
+// 27 BCHAMP
+// 28 BCHAMP2
 
 #define TRTYPE_GRP_IDX_MAX        (29)
 

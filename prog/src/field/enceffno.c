@@ -262,13 +262,20 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		ENCEFFID_SAGE,        ///<TRTYPE_GRP_IDX_SWSAGE1           
 		ENCEFFID_MUGEN_BOSS,  ///<TRTYPE_GRP_IDX_MUGENBOSS             
 		ENCEFFID_SWBOSS2,     ///<TRTYPE_GRP_IDX_CLEAR_SWBOSS  
-    
+		ENCEFFID_TR_NORMAL,   ///<TRTYPE_GRP_IDX_SWLEADER1_1  
+		ENCEFFID_TR_NORMAL,   ///<TRTYPE_GRP_IDX_SUPPORT  
+    // «‚ÍŽQÆ‚³‚ê‚È‚¢‚ªˆê‰ž“ü‚ê‚Ä‚¨‚­
+		ENCEFFID_SUBWAY,      ///<TRTYPE_BCHAMP  
+		ENCEFFID_SUBWAY,      ///<TRTYPE_BCHAMP2
   };
 
   // BCHAMP‚ÍŒÂ•Ê‚ÅÝ’è‚µ‚Ä‚¢‚é‚½‚ß
   if( type_grp < TRTYPE_GRP_BCHAMP ){
+    GF_ASSERT( type_grp < TRTYPE_GRP_MAX );
+    GF_ASSERT( grp_idx  < TRTYPE_GRP_IDX_MAX );
     *outBgmNo = DATA_VsBgmTbl[type_grp];
     *outEffNo = DATA_EncEffTbl[grp_idx];
+    ICHI_Printf("trtype_grp %d grp_idx %d \n", type_grp, grp_idx );
     OS_Printf("ENCFFID %d\n", *outEffNo);
     return;
   }
