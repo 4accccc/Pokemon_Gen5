@@ -45,16 +45,26 @@ enum {
 //RES
 static const GFL_G3D_UTIL_RES res_unit_select[] = {
 #if PM_VERSION==VERSION_B2
+  // ブラック
   { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbmd, GFL_G3D_UTIL_RESARC },
+  // 男女選択アニメ
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_b_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_b_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_b_nsbtp, GFL_G3D_UTIL_RESARC },
+  // 男女選択開始アニメ
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg1_b_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg1_b_nsbma, GFL_G3D_UTIL_RESARC },
 #else
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbmd, GFL_G3D_UTIL_RESARC },
+  // ホワイト
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg_w_nsbmd, GFL_G3D_UTIL_RESARC },
+  // 男女選択アニメ
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_w_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_w_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg2_w_nsbtp, GFL_G3D_UTIL_RESARC },
+  // 男女選択開始アニメ
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg1_w_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_INTRO_GRA, NARC_intro_intro_bg1_w_nsbma, GFL_G3D_UTIL_RESARC },
 #endif
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbma, GFL_G3D_UTIL_RESARC },
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_nsbtp, GFL_G3D_UTIL_RESARC },
-
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_INTRO_GRA, NARC_intro_intro_bg_b_nsbma, GFL_G3D_UTIL_RESARC },
 };
 //ANM
 static const GFL_G3D_UTIL_ANM anm_unit_select[] = {

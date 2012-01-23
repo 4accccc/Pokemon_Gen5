@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="yoshida" host="W00210" date="2012-01-21T16:11:16" source="intro_swan_bg_w.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="121"
+	tool_start_frame="0"
+	tool_end_frame="120"
+	compress_material="on" material_size="6 6"
+/>
+
+<tex_pattern_list_data image_size="12" palette_size="12">
+	<image_name index="0" name="int_bgw1f.1"/>
+	<image_name index="1" name="int_bgw1f.2"/>
+	<image_name index="2" name="int_bgw1m.1"/>
+	<image_name index="3" name="int_bgw1m.2"/>
+	<image_name index="4" name="int_bgw2f.1"/>
+	<image_name index="5" name="int_bgw2f.2"/>
+	<image_name index="6" name="int_bgw2m.1"/>
+	<image_name index="7" name="int_bgw2m.2"/>
+	<image_name index="8" name="int_swan_f.1"/>
+	<image_name index="9" name="int_swan_f.2"/>
+	<image_name index="10" name="int_swan_m.1"/>
+	<image_name index="11" name="int_swan_m.2"/>
+	<palette_name index="0" name="int_bgw1f.1_pl"/>
+	<palette_name index="1" name="int_bgw1f.2_pl"/>
+	<palette_name index="2" name="int_bgw1m.1_pl"/>
+	<palette_name index="3" name="int_bgw1m.2_pl"/>
+	<palette_name index="4" name="int_bgw2f.1_pl"/>
+	<palette_name index="5" name="int_bgw2f.2_pl"/>
+	<palette_name index="6" name="int_bgw2m.1_pl"/>
+	<palette_name index="7" name="int_bgw2m.2_pl"/>
+	<palette_name index="8" name="int_swan_f.1_pl"/>
+	<palette_name index="9" name="int_swan_f.2_pl"/>
+	<palette_name index="10" name="int_swan_m.1_pl"/>
+	<palette_name index="11" name="int_swan_m.2_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="12">
+		0 65 0 65 0 56 0 56 0 66
+		0 55
+	</frame_idx>
+	<image_idx size="12">
+		2 3 6 7 1 0 5 4 11 10
+		8 9
+	</image_idx>
+	<palette_idx size="12">
+		2 3 6 7 1 0 5 4 11 10
+		8 9
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="6">
+	<tex_pattern_anm index="0" material_name="int_bgw1m_1" data_size="2" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="int_bgw2m_1" data_size="2" data_head="2"/>
+	<tex_pattern_anm index="2" material_name="int_bgw1f_1" data_size="2" data_head="4"/>
+	<tex_pattern_anm index="3" material_name="int_bgw2f_1" data_size="2" data_head="6"/>
+	<tex_pattern_anm index="4" material_name="int_swan_m_1" data_size="2" data_head="8"/>
+	<tex_pattern_anm index="5" material_name="int_swan_f_1" data_size="2" data_head="10"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
