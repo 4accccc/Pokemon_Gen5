@@ -1471,9 +1471,9 @@ static const ZONEDATA ZoneData[] = {
 		NARC_camera_scroll_original_C03P17_bin, // camera_area
 		19,   // padding > placeicon
     2,
+		19,
 		0,
-		0,
-		0,
+		17,
 	},
 	{//ZONE_ID_C03PC0101 = 41
 		RSC_GRID_NOSCROLL,
