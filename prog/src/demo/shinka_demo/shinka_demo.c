@@ -936,6 +936,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           }
         }
       }
+      // すれ違い用データをセット
+      { 
+        GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), work->poke_nick_name_strbuf );
+        // (古い)ニックネームは(新しい)種族名に進化した
+      }
 
       ShinkaDemo_SoundPlayCongratulate( param, work );
 
@@ -987,20 +992,12 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         {
           if( ShinkaDemo_TextWaitInput( work ) )
           {
+            // 進化させたポケモンの数
+            // 1日にポケモン進化させた回数
             {
-              // すれ違い用データをセット
-              { 
-                GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), work->poke_nick_name_strbuf );
-                // (古い)ニックネームは(新しい)種族名に進化した
-              }
-
-              // 進化させたポケモンの数
-              // 1日にポケモン進化させた回数
-              {
-                RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
-                RECORD_Inc(rec, RECID_POKE_EVOLUTION);    // 進化させたポケモンの数
-                RECORD_Inc(rec, RECID_DAYCNT_EVOLUTION);  // 1日にポケモン進化させた回数
-              }
+              RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
+              RECORD_Inc(rec, RECID_POKE_EVOLUTION);    // 進化させたポケモンの数
+              RECORD_Inc(rec, RECID_DAYCNT_EVOLUTION);  // 1日にポケモン進化させた回数
             }
 
             //// 次へ
