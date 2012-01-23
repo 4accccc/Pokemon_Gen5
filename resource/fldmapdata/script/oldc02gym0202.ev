@@ -29,7 +29,7 @@ _EVENT_DATA_END
 
 
 /**************************************************************/
-/*			過去イベント	アロエ・アーティ・ヤーコン		  */
+/*			過去イベント	アロエ・アーティ・ヤーコン	  */
 /**************************************************************/
 EVENT_START		ev_reserve_oldc02gym0202_event_01
 
@@ -122,8 +122,8 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	
 	//ヤーコン　アーティのほうをむく
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_stay_r )
-	_OBJ_ANIME_WAIT()	
-
+	_OBJ_ANIME_WAIT()
+	
 	//ヤーコン：ん？
 	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader5_03 , OLDC02GYM0202_OLD_LEADER5_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
@@ -134,6 +134,8 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	
 	//ヤーコン　上を向いて
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_stay_u )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_stay_u )
 	_OBJ_ANIME_WAIT()	
 	
 	//ヤーコン：おお！　これだ　これ！
@@ -145,6 +147,8 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_stay_l )
+	//アーティ　左を向く
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_stay_l )
 	_OBJ_ANIME_WAIT()	
 	
 	_TIME_WAIT( 60 )
@@ -153,9 +157,6 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader2_06 , OLDC02GYM0202_OLD_LEADER2_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	//アーティ　左を向く
-	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_dir_l )
-	_OBJ_ANIME_WAIT()	
 	//アーティ　？マークをだす
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_hatena )
 	_OBJ_ANIME_WAIT()	
@@ -168,7 +169,7 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader2_07 , OLDC02GYM0202_OLD_LEADER2_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_walk_16d )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_stay_d_16f )
 	_OBJ_ANIME_WAIT()
 	
 	//ヤーコン：そうか！
@@ -178,17 +179,26 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	//ヤーコン　下へ歩く・途中で止まり振り向く
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_leader5_leave1 )
 	_TIME_WAIT( 10 )
-	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER2_01, anm_dir_d )
-	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_dir_d )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER2_01, anm_stay_d )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_stay_d )
 	_OBJ_ANIME_WAIT()	
-	
+
+	//カメラ操作　ヤーコンを中心に
+	_CAMERA_MOVE( 9688,0,970752,360448,0,622592,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//ヤーコン：アーティ！
-	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader5_06 , OLDC02GYM0202_OLD_LEADER5_01, POS_UP )
+	_BALLOONWIN_OBJMSG_POS( msg_oldc02gym0202_old_leader5_06 , OLDC02GYM0202_OLD_LEADER5_01, POS_DOWN )
 	_MSGWIN_CLOSE()
-	
+
+	//カメラ操作　デフォ位置に移動
+	_CAMERA_RECV_MOVE( 30 ) //一番最後の引数は移動にかかるフレーム数
 	//ヤーコン　退場
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER5_01, anm_leave )
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT( 30 )
 	
 	//アロエ・アーティ　向かい合う
 	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER2_01, anm_stay_r )
@@ -208,15 +218,17 @@ EVENT_START		ev_reserve_oldc02gym0202_event_01
 	_MSGWIN_CLOSE()
 	
 	//アーティ　下に移動
-	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_leave )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER3_01, anm_leave2 )
 	
 	//暗転
-	_CAMERA_MOVE( 9698,0,970582,360448,348175,360448,30 )
-	
+	_CAMERA_MOVE( 9698,0,970582,360448,348175,360448,60 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( OLDC02GYM0202_OLD_LEADER2_01, anm_stay_d )
+
 	_OBJ_ANIME_WAIT()
 	
 	//画面暗転処理
-  _MAP_FADE_BLACK_OUT()
+	_MAP_FADE_BLACK_OUT()
 	_MAP_FADE_END_CHECK()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -289,6 +301,10 @@ _ANIME_LABEL	anm_stay_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_d_16f
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_l
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -331,6 +347,10 @@ _ANIME_LABEL	anm_leave
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_leave2
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	☆リーダー：移動
 //--------------------------------------------------------------------
@@ -341,10 +361,10 @@ _ANIME_LABEL	anm_leader2_move
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader5_leave1
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_D_16F,1
 	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
-
