@@ -27,6 +27,9 @@
 #include "include/gamesystem/pm_season.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
+#include "field/field_gimmick.h"
+#include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
+#include "field/gym_insect.h"
 
 //======================================================================
 //  define
@@ -3590,10 +3593,16 @@ static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir )
   //全ドアチェック BTS528対策 以前はMAT(足元)タイプのドアチェックがなかった
   MMDL_GetVectorPos( mmdl, &pos );
   idx = EVENTDATA_SearchEnableConnectIDByPos( evdata, &pos, dir );
-  if( idx == EXIT_ID_NONE ){
-    return( FALSE );
+  if( idx != EXIT_ID_NONE ){
+    return( TRUE );
+  }
+  if( FLDGMK_GimmickCodeCheck(gjiki->fieldWork,FLD_GIMMICK_GYM_INSECT) )
+  { //虫ジムギミックチェック GFBTS176対策
+    if( GYM_INSECT_CheckGateInEvent( gsys, dir ) ){
+      return TRUE;
+    }
   }
 #endif
-  return( TRUE );
+  return( FALSE );
 }
 

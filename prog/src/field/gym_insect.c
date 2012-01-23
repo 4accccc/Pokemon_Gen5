@@ -45,6 +45,7 @@
 #include "event_fldmmdl_control.h"  //for EVENT_ObjAnime
 
 #define GYM_INSECT_TMP_ASSIGN_ID  (1)
+#define GATE_ID_NONE  (GATE_PARAM_NUM)
 
 enum{
   OBJ_COCCON_1C,
@@ -97,6 +98,7 @@ typedef struct GYM_INSECT_TMP_tag
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;
   FIELD_PLAYER *f_player;
+  MMDLSYS* mmdlsys;
   MMDL* p_mmdl;
   FIELD_CAMERA *camera;
   EVENTWORK *ev_work;
@@ -176,6 +178,7 @@ void GYM_INSECT_Setup(FIELDMAP_WORK *fieldWork)
   wk->heapLowID = GFL_HEAP_LOWID(HEAPID_FIELDMAP);
   wk->exp_obj = FIELDMAP_GetExpObjCntPtr( fieldWork );
   wk->f_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  wk->mmdlsys = GAMEDATA_GetMMdlSys( wk->gdata );
   wk->p_mmdl = FIELD_PLAYER_GetMMdl( wk->f_player );
   wk->camera = FIELDMAP_GetFieldCamera( fieldWork );
   wk->ev_work = GAMEDATA_GetEventWork( wk->gdata );
@@ -247,61 +250,88 @@ void GYM_INSECT_Move(FIELDMAP_WORK *fieldWork)
 
 //--------------------------------------------------------------
 /**
+ * 繭ゲートPushイベント起動チェック 
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+static u8 check_GateInEvent(GYM_INSECT_TMP* wk, GAMESYS_WORK *gsys, u8 dir )
+{
+  int id;
+  MMDL_GRIDPOS pos,f_pos;
+
+  MMDL_GetGridPos( wk->p_mmdl, &f_pos );
+  MMDL_TOOL_AddDirGrid( dir, &f_pos.gx, &f_pos.gz, 1);  //1歩前
+  pos = f_pos;
+  MMDL_TOOL_AddDirGrid( dir, &pos.gx, &pos.gz, 1);  //2歩前
+
+  for(id = 0;id < GATE_PARAM_NUM;id++){
+    const GATE_PARAM* gp = &DATA_GateParam[id];
+    
+    if( wk->map_id != gp->map_id ){
+      continue;
+    }
+    if( id == GATE_ID_1C_4B && !EVENTWORK_CheckEventFlag( wk->ev_work, FE_C03GYM0101_COCCON_01 )){
+      continue;
+    }
+    if( gp->map_id == MAP_NORMAL ){
+      if( gp->in_dir != dir ||
+          gp->ip.x != pos.gx ||
+          gp->ip.y != pos.gy ||
+          gp->ip.z != pos.gz){
+        continue;
+      }
+      break;
+    }else{  //MAP_LEADER
+     if(  gp->ip.x != f_pos.gx ||
+          gp->ip.y != f_pos.gy ||
+          gp->ip.z != f_pos.gz){
+        continue;
+      }
+      break;
+    }
+  }
+  if( id < GATE_PARAM_NUM ){
+    //イベントIDを返す
+    return id;
+  }
+  return GATE_ID_NONE;  //ゲートが見つからない
+}
+
+//--------------------------------------------------------------
+/**
  * 繭ゲートPushイベント作成 
  * @param	      fieldWork     フィールドワークポインタ
  * @return      none
  */
 //--------------------------------------------------------------
-GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
+GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys, u8 dir )
 {
-  GMEVENT * event;
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork(fieldWork, GYM_INSECT_TMP_ASSIGN_ID);
+  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork( GAMESYSTEM_GetFieldMapWork(gsys), GYM_INSECT_TMP_ASSIGN_ID);
+  u8 id = check_GateInEvent( wk, gsys, dir );
 
-  {
-    int id;
-    u8 dir;
-    MMDL_GRIDPOS pos,f_pos;
-
-    dir = MMDL_GetDirDisp( wk->p_mmdl );
-    
-    MMDL_GetGridPos( wk->p_mmdl, &f_pos );
-    MMDL_TOOL_AddDirGrid( dir, &f_pos.gx, &f_pos.gz, 1);  //1歩前
-    pos = f_pos;
-    MMDL_TOOL_AddDirGrid( dir, &pos.gx, &pos.gz, 1);  //2歩前
-
-    for(id = 0;id < GATE_PARAM_NUM;id++){
-      const GATE_PARAM* gp = &DATA_GateParam[id];
-    
-      if( wk->map_id != gp->map_id ){
-        continue;
-      }
-      if( id == GATE_ID_1C_4B && !EVENTWORK_CheckEventFlag( wk->ev_work, FE_C03GYM0101_COCCON_01 )){
-        continue;
-      }
-      if( gp->map_id == MAP_NORMAL ){
-        if( gp->in_dir != dir ||
-            gp->ip.x != pos.gx ||
-            gp->ip.y != pos.gy ||
-            gp->ip.z != pos.gz){
-          continue;
-        }
-        break;
-      }else{  //MAP_LEADER
-       if(  gp->ip.x != f_pos.gx ||
-            gp->ip.y != f_pos.gy ||
-            gp->ip.z != f_pos.gz){
-          continue;
-        }
-        break;
-      }
-    }
-    if( id < GATE_PARAM_NUM ){
-      //イベントコール
-      return event_GateInCreate( wk, id );
-    }
+  if( id < GATE_PARAM_NUM ){
+    //イベントコール
+    return event_GateInCreate( wk, id );
   }
   return NULL;  //ゲートが見つからない
+}
+//--------------------------------------------------------------
+/**
+ * 繭ゲートPushイベント存在チェック 
+ * @param	      fieldWork     フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+BOOL GYM_INSECT_CheckGateInEvent(GAMESYS_WORK *gsys, u8 dir )
+{
+  GYM_INSECT_TMP *wk = GMK_TMP_WK_GetWork( GAMESYSTEM_GetFieldMapWork(gsys), GYM_INSECT_TMP_ASSIGN_ID);
+  u8 id = check_GateInEvent( wk, gsys, dir );
+  if( id < GATE_PARAM_NUM ){
+    //イベント有り
+    return TRUE;
+  }
+  return FALSE;  //ゲートが見つからない
 }
 
 //===============================================================
@@ -371,6 +401,12 @@ static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *w
 
   switch(*seq){
   case 0:
+    if( MMDL_CheckPossibleAcmd( wk->p_mmdl ) == FALSE ){
+      //自機動作待ち
+      break;
+    }
+    MMDLSYS_PauseMoveProc( wk->mmdlsys );
+
     //自機繭に入る
     SCRIPT_CallScript( event, SCRID_PROG_C03GYM0101_GATE_IN, NULL, NULL, wk->heapLowID );
     (*seq)++;
@@ -382,12 +418,9 @@ static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *w
     (*seq)++;
     break;
   case 2:
-#if 1
-//    if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == (evwk->ica_anm_frm_max-GATE_IN_FADE_FRM_KEY) ){
     if( evwk->gate_prm->scr_ofs && evwk->ica_anm_frm_idx == GATE_IN_FADE_FRM_KEY ){
       FIELDMAP_CreateMapFadeReqTask( wk->gsys, wk->fwork, FMAP_FADE_OUT_SLOW, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
     }
-#endif
     if( gatemv_IcaAnmWait( wk, evwk ) == FALSE){
       break;
     }
@@ -421,6 +454,7 @@ static GMEVENT_RESULT event_GateInNormalMain( GMEVENT * event, int *seq, void *w
     (*seq)++;
     break;
   default:
+    MMDLSYS_ClearPauseMoveProc( wk->mmdlsys );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -436,6 +470,12 @@ static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *w
 
   switch(*seq){
   case 0:
+    if( MMDL_CheckPossibleAcmd( wk->p_mmdl ) == FALSE ){
+      //自機動作待ち
+      break;
+    }
+    MMDLSYS_PauseMoveProc( wk->mmdlsys );
+
     //自機　ゲートに入る～マップチェンジまで
     SCRIPT_CallScript( event, SCRID_PROG_C03GYM0201_GATE_IN_4A+evwk->gate_prm->scr_ofs, NULL, NULL, wk->heapLowID );
     (*seq)++;
@@ -444,8 +484,6 @@ static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *w
     //自機移動開始
     MMDL_SetStatusBitVanish( wk->p_mmdl, TRUE );
     gatemv_IcaAnmSet( wk, evwk );
-//  FIELD_CAMERA_LOCAL_ControlParameter( wk->camera, 0 );
-//  FIELD_CAMERA_BindTarget( wk->camera, MMDL_GetVectorPosAddress(wk->p_mmdl));
     FIELD_CAMERA_StopTraceNow( wk->camera );
     FIELD_CAMERA_Main( wk->camera, 0 );
     FIELD_CAMERA_RestartTrace( wk->camera );
@@ -470,6 +508,7 @@ static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *w
     (*seq)++;
     break;
   default:
+    MMDLSYS_ClearPauseMoveProc( wk->mmdlsys );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

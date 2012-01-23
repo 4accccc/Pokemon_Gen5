@@ -2655,7 +2655,7 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
     {
       if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_INSECT) )
       { //’ƒWƒ€
-        return GYM_INSECT_CreateGateInEvent(gsys);
+        return GYM_INSECT_CreateGateInEvent(gsys, req->player_dir );
       }
       if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_WATER) )
       { //…ƒWƒ€

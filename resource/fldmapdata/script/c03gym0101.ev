@@ -55,7 +55,7 @@ INIT_EVENT_END
 */
 /***************************************************************/
 //
-EVENT_START ev_prog_c03gym0101_gate_in
+ev_prog_c03gym0101_gate_in:
 {
   DEFINE_LOCAL  i_player_dir
 
@@ -81,9 +81,9 @@ EVENT_START ev_prog_c03gym0101_gate_in
 //  _CAMERA_START()		//カメラ操作開始
 //	_CAMERA_PURGE()		//カメラのバインドを解く
 }
-EVENT_END
+_END
 
-EVENT_START ev_prog_c03gym0101_gate_out
+ev_prog_c03gym0101_gate_out:
 {
   DEFINE_LOCAL  i_gate_id
   DEFINE_LOCAL  i_player_dir
@@ -112,9 +112,9 @@ EVENT_START ev_prog_c03gym0101_gate_out
 //  _CAMERA_END()		//カメラ操作開始
 
 }
-EVENT_END
+_END
 
-EVENT_START ev_prog_c03gym0101_gate_out_4x
+ev_prog_c03gym0101_gate_out_4x:
 {
   DEFINE_LOCAL  i_gate_id
   DEFINE_LOCAL  i_player_dir
@@ -135,9 +135,9 @@ EVENT_START ev_prog_c03gym0101_gate_out_4x
   _SE_PLAY( SEQ_SE_GYM_M03 ) //飛び出す音
   _OBJ_ANIME_WAIT()
 }
-EVENT_END
+_END
 
-EVENT_START ev_prog_c03gym0101_gate_out_1c
+ev_prog_c03gym0101_gate_out_1c:
 {
   //自機表示
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_off )
@@ -153,15 +153,15 @@ EVENT_START ev_prog_c03gym0101_gate_out_1c
   _SE_PLAY( SEQ_SE_GYM_M03 ) //飛び出す音
   _OBJ_ANIME_WAIT()
 }
-EVENT_END
+_END
 
-EVENT_START ev_prog_c03gym0101_gate_out_3d
+ev_prog_c03gym0101_gate_out_3d:
 {
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change_3d )
   _SE_PLAY( SEQ_SE_GYM_M03 ) //飛び出す音
   _OBJ_ANIME_WAIT()
 }
-EVENT_END
+_END
 
 sub_coccon_open_se:
 {
