@@ -731,7 +731,8 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       //Bキャンセル
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-      { 
+      {
+        PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
         *p_seq  = SEQ_START_CANCEL;
       }
 
@@ -1723,6 +1724,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //キャンセル処理
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     { 
+      PMSND_PlaySE( SEQ_SE_MESSAGE ) ;
       *p_seq  = SEQ_START_CANCEL_MATCHING;
     }
     break;
