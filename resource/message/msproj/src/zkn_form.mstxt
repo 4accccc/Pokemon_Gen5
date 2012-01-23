@@ -16802,25 +16802,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル</Text>
+			<Text>キュレムのすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T09:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T09:45:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ノーマル</Text>
+			<Text>キュレムのすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T09:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T09:45:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16828,25 +16828,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマル</Text>
+			<Text>いつものすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ノーマル</Text>
+			<Text>いつものすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -18856,25 +18856,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュラム</Text>
+			<Text>ホワイトキュレム</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュラム</Text>
+			<Text>ホワイトキュレム</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -18889,25 +18889,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュロム</Text>
+			<Text>ブラックキュレム</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュロム</Text>
+			<Text>ブラックキュレム</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -18922,25 +18922,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんフォルム</Text>
+			<Text>かくごのすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しんフォルム</Text>
+			<Text>かくごのすがた</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-23T08:41:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">

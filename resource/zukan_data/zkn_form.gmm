@@ -3576,13 +3576,13 @@
 	</row>
 
 	<row id="ZKN_FORM_646_000">
-		<language name="JPN">ノーマル</language>
-		<language name="JPN_KANJI">ノーマル</language>
+		<language name="JPN">キュレムのすがた</language>
+		<language name="JPN_KANJI">キュレムのすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_647_000">
-		<language name="JPN">ノーマル</language>
-		<language name="JPN_KANJI">ノーマル</language>
+		<language name="JPN">いつものすがた</language>
+		<language name="JPN_KANJI">いつものすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_648_000">
@@ -3971,18 +3971,18 @@
 	</row>
 
 	<row id="ZKN_FORM_646_001">
-		<language name="JPN">キュラム</language>
-		<language name="JPN_KANJI">キュラム</language>
+		<language name="JPN">ホワイトキュレム</language>
+		<language name="JPN_KANJI">ホワイトキュレム</language>
 	</row>
 
 	<row id="ZKN_FORM_646_002">
-		<language name="JPN">キュロム</language>
-		<language name="JPN_KANJI">キュロム</language>
+		<language name="JPN">ブラックキュレム</language>
+		<language name="JPN_KANJI">ブラックキュレム</language>
 	</row>
 
 	<row id="ZKN_FORM_647_001">
-		<language name="JPN">しんフォルム</language>
-		<language name="JPN_KANJI">しんフォルム</language>
+		<language name="JPN">かくごのすがた</language>
+		<language name="JPN_KANJI">かくごのすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_648_001">
