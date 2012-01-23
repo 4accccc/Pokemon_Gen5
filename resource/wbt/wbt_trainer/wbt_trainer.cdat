@@ -19,7 +19,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		507, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //001 ホミカ
 		POKETYPE_DOKU, //どく
@@ -41,7 +41,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		545, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //002 アーティ
 		POKETYPE_MUSHI, //むし
@@ -63,7 +63,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		542, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //003 カミツレ
 		POKETYPE_DENKI, //でんき
@@ -85,7 +85,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		523, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //004 ヤーコン
 		POKETYPE_JIMEN, //じめん
@@ -107,7 +107,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		530, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //005 フウロ
 		POKETYPE_HIKOU, //ひこう
@@ -129,7 +129,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		581, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //006 シャガ
 		POKETYPE_DRAGON, //ドラゴン
@@ -151,7 +151,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		612, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //007 シズイ
 		POKETYPE_MIZU, //みず
@@ -173,7 +173,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		593, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //008 ベル
 		POKETYPE_MAX, //オールマイティ
@@ -195,7 +195,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RIVAL                        , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		518, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //009 ポッド
 		POKETYPE_HONOO, //ほのお
@@ -217,7 +217,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		514, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //010 コーン
 		POKETYPE_MIZU, //みず
@@ -239,7 +239,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		516, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //011 デント
 		POKETYPE_KUSA, //くさ
@@ -261,7 +261,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		512, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //012 アロエ
 		POKETYPE_NORMAL, //ノーマル
@@ -283,7 +283,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		505, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //013 ハチク
 		POKETYPE_KOORI, //こおり
@@ -305,7 +305,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		615, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //014 グリーン
 		POKETYPE_MAX, //オールマイティ
@@ -327,7 +327,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		59, //切り札ポケモン
+		0, //切り札ポケモン
 	},
 	{ //015 ワタル
 		POKETYPE_MAX, //オールマイティ
@@ -349,7 +349,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		149, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //016 ダイゴ
 		POKETYPE_MAX, //オールマイティ
@@ -371,7 +371,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		376, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //017 ミクリ
 		POKETYPE_MAX, //オールマイティ
@@ -393,7 +393,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		350, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //018 シロナ
 		POKETYPE_MAX, //オールマイティ
@@ -415,7 +415,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		445, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //019 アデク
 		POKETYPE_MAX, //オールマイティ
@@ -437,7 +437,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_CHAMP                        , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		637, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //020 タケシ
 		POKETYPE_IWA, //いわ
@@ -459,7 +459,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		76, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //021 カスミ
 		POKETYPE_MIZU, //みず
@@ -481,7 +481,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		121, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //022 マチス
 		POKETYPE_DENKI, //でんき
@@ -503,7 +503,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		26, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //023 エリカ
 		POKETYPE_KUSA, //くさ
@@ -525,7 +525,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		465, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //024 ナツメ
 		POKETYPE_ESPER, //エスパー
@@ -547,7 +547,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		65, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //025 カツラ
 		POKETYPE_HONOO, //ほのお
@@ -569,7 +569,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		78, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //026 サカキ
 		POKETYPE_JIMEN, //じめん
@@ -591,7 +591,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		34, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //027 ハヤト
 		POKETYPE_HIKOU, //ひこう
@@ -613,7 +613,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		18, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //028 ツクシ
 		POKETYPE_MUSHI, //むし
@@ -635,7 +635,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		212, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //029 アカネ
 		POKETYPE_NORMAL, //ノーマル
@@ -657,7 +657,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		241, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //030 マツバ
 		POKETYPE_GHOST, //ゴースト
@@ -679,7 +679,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		94, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //031 シジマ
 		POKETYPE_KAKUTOU, //かくとう
@@ -701,7 +701,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		62, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //032 ミカン
 		POKETYPE_HAGANE, //はがね
@@ -723,7 +723,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		208, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //033 ヤナギ
 		POKETYPE_KOORI, //こおり
@@ -745,7 +745,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		87, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //034 イブキ
 		POKETYPE_DRAGON, //ドラゴン
@@ -767,7 +767,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		230, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //035 アンズ
 		POKETYPE_DOKU, //どく
@@ -789,7 +789,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		168, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //036 ツツジ
 		POKETYPE_IWA, //いわ
@@ -811,7 +811,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		476, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //037 トウキ
 		POKETYPE_KAKUTOU, //かくとう
@@ -833,7 +833,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		297, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //038 テッセン
 		POKETYPE_DENKI, //でんき
@@ -855,7 +855,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		310, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //039 アスナ
 		POKETYPE_HONOO, //ほのお
@@ -877,7 +877,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		219, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //040 センリ
 		POKETYPE_NORMAL, //ノーマル
@@ -899,7 +899,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		289, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //041 ナギ
 		POKETYPE_HIKOU, //ひこう
@@ -921,7 +921,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		334, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //042 フウ
 		POKETYPE_ESPER, //エスパー
@@ -943,7 +943,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		337, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //043 ラン
 		POKETYPE_ESPER, //エスパー
@@ -965,7 +965,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		338, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //044 アダン
 		POKETYPE_MIZU, //みず
@@ -987,7 +987,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		342, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //045 ヒョウタ
 		POKETYPE_IWA, //いわ
@@ -1009,7 +1009,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		409, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //046 ナタネ
 		POKETYPE_KUSA, //くさ
@@ -1031,7 +1031,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		407, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //047 メリッサ
 		POKETYPE_GHOST, //ゴースト
@@ -1053,7 +1053,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		429, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //048 スモモ
 		POKETYPE_KAKUTOU, //かくとう
@@ -1075,7 +1075,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		448, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //049 マキシ
 		POKETYPE_MIZU, //みず
@@ -1097,7 +1097,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		419, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //050 トウガン
 		POKETYPE_HAGANE, //はがね
@@ -1119,7 +1119,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		411, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //051 スズナ
 		POKETYPE_KOORI, //こおり
@@ -1141,7 +1141,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		478, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //052 デンジ
 		POKETYPE_DENKI, //でんき
@@ -1163,7 +1163,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		466, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //053 レッド
 		POKETYPE_MAX, //オールマイティ
@@ -1251,7 +1251,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //057 アクロマ
 		POKETYPE_MAX, //オールマイティ
@@ -1273,7 +1273,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //058 ボツリ
 		POKETYPE_DOKU, //どく
@@ -1295,7 +1295,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //059 イエジ
 		POKETYPE_JIMEN, //じめん
@@ -1317,7 +1317,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //060 カルト
 		POKETYPE_ESPER, //エスパー
@@ -1339,7 +1339,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //061 ウォルター
 		POKETYPE_MUSHI, //むし
@@ -1361,7 +1361,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //062 レンスケ
 		POKETYPE_GHOST, //ゴースト
@@ -1383,7 +1383,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //063 リュウイチ
 		POKETYPE_DRAGON, //ドラゴン
@@ -1405,7 +1405,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //064 サッチャー
 		POKETYPE_HAGANE, //はがね
@@ -1427,7 +1427,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //065 ヴィトー
 		POKETYPE_AKU, //あく
@@ -1449,7 +1449,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //066 イルサーネ
 		POKETYPE_AKU, //あく
@@ -1471,7 +1471,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //067 ボニー
 		POKETYPE_AKU, //あく
@@ -1493,7 +1493,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //068 エクス
 		POKETYPE_MAX, //オールマイティ
@@ -1515,7 +1515,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //069 マキナ
 		POKETYPE_MAX, //オールマイティ
@@ -1537,7 +1537,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //070 カストロ
 		POKETYPE_MAX, //オールマイティ
@@ -1559,7 +1559,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //071 ツグミ
 		POKETYPE_MAX, //オールマイティ
@@ -1581,7 +1581,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //072 アラシヤマ
 		POKETYPE_MAX, //オールマイティ
@@ -1603,7 +1603,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //073 ジェーン
 		POKETYPE_MAX, //オールマイティ
@@ -1625,7 +1625,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //074 シュウイチ
 		POKETYPE_MAX, //オールマイティ
@@ -1647,7 +1647,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //075 エクレア
 		POKETYPE_MAX, //オールマイティ
@@ -1669,7 +1669,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //076 ルリオ
 		POKETYPE_MAX, //オールマイティ
@@ -1691,7 +1691,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //077 ソプラノ
 		POKETYPE_MAX, //オールマイティ
@@ -1713,7 +1713,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_SUBWAY_TRAINER               , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		1, //切り札ポケモン
 	},
 	{ //078 ソウイチ
 		POKETYPE_MAX, //オールマイティ
