@@ -561,6 +561,34 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 	return EXIT_ID_NONE;
 }
 
+//有効なドアイベントを探す
+int EVENTDATA_SearchEnableConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos, u8 dir )
+{
+	int i;
+  VecFx32 f_pos = *pos;
+  const CONNECT_DATA * cnct = evdata->connect_data;
+
+  //目の前座標取得
+  MMDL_TOOL_AddDirVector( dir, &f_pos, GRID_FX32 );
+	
+	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
+    if( cnct->exit_type == EXIT_TYPE_MAT ){
+      //マットタイプ判定
+      if( CONNECTDATA_IsClosedExit(cnct) == FALSE &&
+          ConnectData_GPOS_IsHit( cnct, pos ) == TRUE ){
+        return i;
+      }
+    }else{
+      //マット以外のドアタイプ
+      if( CONNECTDATA_IsEnableDir( cnct, dir ) == TRUE &&
+          ConnectData_GPOS_IsHit( cnct, &f_pos ) == TRUE ){
+        return TRUE;
+      }
+    }
+	}
+	return EXIT_ID_NONE;
+}
+
 int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, const RAIL_LOCATION* rail_location)
 {
 	int i;

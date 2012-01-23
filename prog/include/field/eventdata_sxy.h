@@ -34,6 +34,17 @@ extern int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const
 
 //------------------------------------------------------------------
 /**
+ * @brief	有効な出入口情報を探す
+ * @param	evdata	イベントデータへのポインタ
+ * @param	pos		探す位置
+ * @param	dir		進行方向
+ * @return	int	出入口データのインデックスEXIT_ID_NONEのとき、出入口は存在しない
+ */
+//------------------------------------------------------------------
+extern int EVENTDATA_SearchEnableConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos, u8 dir );
+
+//------------------------------------------------------------------
+/**
  * @brief	出入口情報を探す
  * @param	evdata	イベントデータへのポインタ
  * @param	rail_location		探すレールロケーション

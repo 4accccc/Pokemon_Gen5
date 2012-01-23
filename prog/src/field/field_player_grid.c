@@ -3571,7 +3571,8 @@ static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir )
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
-  
+ 
+#if 0
   MMDL_GetVectorPos( mmdl, &pos );
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
 	idx = EVENTDATA_SearchConnectIDByPos( evdata, &pos );
@@ -3585,7 +3586,14 @@ static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir )
       return ( FALSE );
     }
   }
-  
+#else
+  //全ドアチェック BTS528対策 以前はMAT(足元)タイプのドアチェックがなかった
+  MMDL_GetVectorPos( mmdl, &pos );
+  idx = EVENTDATA_SearchEnableConnectIDByPos( evdata, &pos, dir );
+  if( idx == EXIT_ID_NONE ){
+    return( FALSE );
+  }
+#endif
   return( TRUE );
 }
 
