@@ -310,10 +310,10 @@
 #define BUGFIX_AF_BTS7960_20100806
 
 //【Wi-Fi接続の選択肢表示前に決定が入力出来てしまう事があります】
-//#define BUGFIX_AF_BTS7810_20100806
+#define BUGFIX_AF_BTS7810_20100806
 
 //【ライブ大会デジタル選手証取得時の赤外線通信画面からエラー画面へ移行することがあった】
-//#define BUGFIX_AF_BTS7976_20100806
+#define BUGFIX_AF_BTS7976_20100806
 
 //【ニックネームの入力画面でポケモンアイコンをタッチするとアイコンが右にずれる】
 #define BUGFIX_AF_BTS7858_20100806
@@ -367,7 +367,7 @@
 //#define BUGFIX_AF_BTS7973_100913
 
 //【2種類のテキストが重なることがあった】
-//#define BUGFIX_AF_BTS7924_100914
+#define BUGFIX_AF_BTS7924_100914
 
 //【ポケモン情報画面を消した後、ボックスがオートでスクロールしてしまう】
 #define BUGFIX_AF_BTS7735_20100914
@@ -395,7 +395,7 @@
 //#define BUGFIX_AF_BTS8038_20100914
 
 //【ライブ大会、ポケモン選択画面の「決定」ボタンが高速で点滅します】
-//#define BUGFIX_AF_BTS7843_100914
+#define BUGFIX_AF_BTS7843_100914
 
 //【ポケモンの配信を受け取っている時、ウインドウの下部にポケモンのグラフィックが一瞬表示される】
 #define BUGFIX_AF_BTS7881_20100914
