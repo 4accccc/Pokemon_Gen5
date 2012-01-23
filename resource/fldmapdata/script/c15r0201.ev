@@ -16,6 +16,7 @@
 
   //@author fujimura_souichirou（ポケウッド説明ＮＰＣ）
   //@author Mizuguchi_Mai（一言メッセージ）
+  //@author suginaka_katsunori 追加仕様対処
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -63,10 +64,11 @@ _TALK_OBJ_START()
 
     _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_08, 0 ) //だいほんに　ついて
     _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_09, 1 ) //ポケモンに　ついて
-    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_10, 2 ) //えんぎに　ついて
-    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_11, 3 ) //セリフに　ついて
-    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_12, 4 ) //にんきに　ついて
-    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_13, 5 ) //いいえ
+    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_14, 2 ) //ポケモンに　ついて２
+    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_10, 3 ) //えんぎに　ついて
+    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_11, 4 ) //セリフに　ついて
+    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_12, 5 ) //にんきに　ついて
+    _BMPMENU_MAKE_LIST( msg_c15r0201_pwmoji_01_13, 6 ) //いいえ
 
     //メニュー表示
     _BMPMENU_START()
@@ -82,18 +84,22 @@ _TALK_OBJ_START()
       _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_03, C15R0201_PWMOJI_01, POS_DL )
 
     CASE 2 THEN
+      //アクター：ポケウッドは　どんなポケモンでも
+      _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_15, C15R0201_PWMOJI_01, POS_DL )
+
+    CASE 3 THEN
       //アクター：ポケウッドの　えんぎの　きほんは
       _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_04, C15R0201_PWMOJI_01, POS_DL )
 
-    CASE 3 THEN
+    CASE 4 THEN
       //アクター：さつえいを　すすめていると
       _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_05, C15R0201_PWMOJI_01, POS_DL )
 
-    CASE 4 THEN
+    CASE 5 THEN
       //アクター：たくさん　えいがを　さつえいして
       _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_06, C15R0201_PWMOJI_01, POS_DL )
 
-    CASE 5 THEN
+    CASE 6 THEN
       //アクター：じゃあ　がんばってね！
       _BALLOONWIN_OBJMSG_POS( msg_c15r0201_pwmoji_01_07, C15R0201_PWMOJI_01, POS_DL )
       _LAST_KEYWAIT()
