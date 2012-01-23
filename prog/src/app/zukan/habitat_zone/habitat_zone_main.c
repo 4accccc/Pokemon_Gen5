@@ -2542,7 +2542,7 @@ static void MakePokeIconList( HABITAT_ZONE_WK *p_wk )
   }
 
   // ¶‘§‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ•Û‘¶‚µ‚Ä‚¨‚­
-  if( nonexistent_cnt <= 0 )
+  if( (nonexistent_cnt <= 0) && (index <= 0) )
   {
     p_wk->is_no_habitat = TRUE;
   }
