@@ -663,10 +663,10 @@ msg_c15r0301_middleman2_01</Comment>
 さいきん　ちょいちょい
 なまえ　きくように　なってきたぜ！▽
 オマエさん　メインの　だいほんも▽
-できてる　らしいじゃねーか？</Text>
+つくられてる　らしいじゃねーか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:34:04" />
+				Time="2012-01-23T05:45:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -678,10 +678,10 @@ msg_c15r0301_middleman2_01</Comment>
 さいきん　ちょいちょい
 名前　聞くように　なってきたぜ！▽
 オマエさん　メインの　台本も▽
-出来てる　らしいじゃねーか？</Text>
+つくられてる　らしいじゃねーか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:34:10" />
+				Time="2012-01-23T05:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1415,20 +1415,20 @@ msg_c15r0201_pwmoji_01_01</Comment>
 			Language="JPN">
 			<Text>ポケウッドは　どんなポケモンでも
 さつえいに　さんか　できるんだ！▼
-ただし　おぼえさせている　わざには▽
+ただし　おぼえさせている　わざには
 ちょっと　ちゅういが　ひつようだよ！▼
 へんしん▼
 いちゃもん▼
 ゆびをふる▼
 いま　いった　わざを　おぼえていると
-ポケウッドに　でられなくなるよ！▼
-あいての　えんぎを　じゃま　しちゃうから
+ポケウッドに　でられなくなるよ▼
+あいての　えんぎを　じゃま　するから
 ポケウッドでは　きんし　されてるんだ▼
-じぶんのポケモンで　さつえいするときは
-おぼえてる　わざに　ちゅういしてね！</Text>
+じぶんの　ポケモンで
+さつえいするときは　ちゅういしてね！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T06:34:53" />
+				Time="2012-01-23T10:07:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1438,20 +1438,20 @@ msg_c15r0201_pwmoji_01_01</Comment>
 			Language="JPN_KANJI">
 			<Text>ポケウッドは　どんなポケモンでも
 撮影に　参加できるんだ！▼
-ただし　覚えている　わざには▽
+ただし　覚えている　わざには
 ちょっと　注意が　必要だよ！▼
 へんしん▼
 いちゃもん▼
 ゆびをふる▼
-いま　いった　わざを　覚えていると
-ポケウッドには　でられなくなるよ！▼
-相手の　演技を　邪魔　しちゃうから
+今　いった　わざは　覚えていると
+ポケウッドには　でられなくなるよ▼
+相手の　演技を　邪魔　するから
 ポケウッドでは　禁止　されてるんだ▼
-自分の　ポケモンで　撮影するときは
-覚えている　わざに　注意してね！</Text>
+自分の　ポケモンで
+撮影するときは　注意してね！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T06:34:17" />
+				Time="2012-01-23T10:08:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

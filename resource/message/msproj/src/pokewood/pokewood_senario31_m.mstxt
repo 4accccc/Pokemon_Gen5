@@ -119,25 +119,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ブフォア……</Text>
+			<Text>きりのなかの　かいぶつ『ブフォア……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブフォア……</Text>
+			<Text>霧の中の　かいぶつ『ブフォア……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -152,29 +152,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あかいきりの
-こい　かたまり……▽
+			<Text>[Name:TrainerName Idx="1" ]『あかい　きりが
+よどんで　たまっている……▽
 あれが　あるかぎり……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『赤い霧の
-濃い　塊……▽
+よどんで　たまっている……▽
 あれが　ある限り……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -183,6 +183,31 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:19" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>あかいきり『ドプンッ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>赤い霧『ドプンッ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
+		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_turn_hero_3"
@@ -224,29 +249,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『タチムカウ……
+			<Text>きりのなかの　かいぶつ『ブフォ……
+ワレニ　タチムカウ……▽
 ユウキ？　リカイフノウ▽
 オロカ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『立チ向カウ……
+			<Text>霧の中の　かいぶつ『ブフォ……
+ワレニ　立チ向カウ……▽
 勇気？　理解不能▽
 愚カ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -262,30 +289,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『はやく……
-はやく　かいぶつを　たおさないと▼
-また　きりが　ひろがって
+はやく　かいぶつを　たおさないと▽
+また　きりが　ひろがって▽
 てに　おえなく　なる……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『早く……
-早く　怪物を　倒さないと▼
-また　霧が　広がって
+早く　怪物を　倒さないと▽
+また　霧が　広がって▽
 手に　負えなく　なる……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -300,25 +327,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『オワリ　チカイ……</Text>
+			<Text>きりのなかの　かいぶつ『ブフッ……
+オワリ　チカイ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『終末　近イ……</Text>
+			<Text>霧の中の　かいぶつ『ブフッ……
+終末　近イ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -368,30 +397,30 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ジカン……
+			<Text>きりのなかの　かいぶつ『ジカン……
 ムイミ……▽
 ワレ　エイエン……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『時間……▼
+			<Text>霧の中の　かいぶつ『時間……▼
 第４ノ　ポテンシャル
 無意味……▽
 我　永遠……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -441,28 +470,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『イノチ……　オワル
+			<Text>きりのなかの　かいぶつ『イノチ……
+スベテ　オワル……▽
 スベテ……　ム……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『生命……　終ワル▼
-スベテ……
+			<Text>霧の中の　かいぶつ『生命……
+終ワル……　スベテ……▽
 地平面ノ　彼方……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1621,28 +1651,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『きりが……　はれた……▼
-いったい　あれは
+いったい　あの　かいぶつは
 なんだったんだろう……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『霧が……　晴れた……▼
-いったい　あれは
+いったい　あの　かいぶつは
 何だったんだろう……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1657,37 +1687,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちやにして　ひとびとを
+			<Text>……ひとばん　にして　ひとびとを
 きょうふの　どんぞこに▽
 おとしいれた　あかいきりは▽
 かいぶつの　だんまつまと　ともに▽
 よあけの　ひかりのなかに　きえた▼
-すべては　ゆめか　まぼろしか
-しるものは　いない……</Text>
+すべては　ゆめか　まぼろしか……
+しんじつを　しるものは　いない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一夜にして　人々を
-恐怖の　どんぞこに▽
+			<Text>……一夜　にして　人々を
+恐怖の　どん底に▽
 おとしいれた　赤い霧は▽
 怪物の　断末魔と　ともに▽
 夜明けの　光の中に　消えた▼
-すべては　夢か　幻か
-知るものは　いない……</Text>
+すべては　夢か　幻か……
+真実を　知る者は　いない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1702,15 +1732,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ホロビノ
-ハジマリダ……</Text>
+			<Text>かいぶつ『ホロビノ　ハジマリ……
+ニチジョウ　オワリ　ダ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2144,33 +2174,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あかいきりの　かいぶつの
+			<Text>……あかいきりの　かいぶつの
 しょうたいも　わからぬまま▽
 あらたな　ナゾを　うんだものの▽
 まよなかの　かいきげんしょうは▽
 おわりを　むかえた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>赤い霧の　怪物の
+			<Text>……赤い霧の　怪物の
 正体も　分からぬまま▽
 新たな　ナゾを　生んだものの▽
 真夜中の　怪奇現象は▽
 終わりを　迎えた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-20T13:21:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

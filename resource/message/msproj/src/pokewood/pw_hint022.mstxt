@@ -749,10 +749,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　こうげきさせろ！</Text>
+			<Text>あいてを　こうげき　しろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:49:34" />
+				Time="2012-01-20T10:46:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +760,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　攻撃させろ！</Text>
+			<Text>相手を　攻撃しろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:49:50" />
+				Time="2012-01-20T10:46:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,10 +791,10 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　こうげきさせろ！</Text>
+			<Text>あいての　ようすを　みろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:50:05" />
+				Time="2012-01-20T10:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -802,10 +802,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　攻撃させろ！</Text>
+			<Text>相手の　様子を　みろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:50:08" />
+				Time="2012-01-20T10:46:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -826,11 +826,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　こうげきさせろ！
+			<Text>あいてを　こうげき　しろ！
 セリフのせんたくが　じゅよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:09:06" />
+				Time="2012-01-20T10:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -838,11 +838,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　攻撃させろ！
+			<Text>相手を　攻撃しろ！
 セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:09:09" />
+				Time="2012-01-20T10:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -863,10 +863,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　こうげきさせろ！</Text>
+			<Text>あいてを　こうげき　しろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:50:05" />
+				Time="2012-01-20T10:47:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -874,10 +874,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　攻撃させろ！</Text>
+			<Text>相手を　攻撃しろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T11:50:08" />
+				Time="2012-01-20T10:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

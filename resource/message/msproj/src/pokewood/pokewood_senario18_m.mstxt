@@ -1917,7 +1917,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]はかせ『レディアン……
-きみが　いったとおり　わたしの
+きみが　いったとおり　わたしの▽
 こうどうは　かって　すぎた……▼
 いち　かがくしゃとしての
 きょうみで　この　じだいを▽
@@ -1926,16 +1926,16 @@
 だから　これを　きみに　かえすよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『レディアン……
-きみが　いったとおり　わたしの
+きみが　いったとおり　わたしの▽
 行動は　勝手すぎた……▼
 いち　科学者としての
 興味で　この時代を▽
@@ -1944,11 +1944,11 @@
 だから　これを　きみに　返すよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2109,14 +2109,14 @@
 もちかえった　ちょうしんかのいしの▽
 えいきょうで　むしポケモンの▽
 ちのうが　いじょうに　はったつし▽
-はんらんが　ひきおこされていた</Text>
+はんらんが　ひきおこされていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2127,14 +2127,14 @@
 持ち帰った　超進化の石の▽
 影響で　むしポケモンの▽
 知能が　異常に　発達し▽
-反乱が　引き起こされていた</Text>
+反乱が　引き起こされていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				Time="2012-01-21T06:20:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

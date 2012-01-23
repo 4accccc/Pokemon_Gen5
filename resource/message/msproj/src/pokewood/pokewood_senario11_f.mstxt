@@ -1337,30 +1337,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>E『りそうを　かたるのは　いい……▼
-だが　おまえたちの　ような▽
+だが　おまえたちの　ような
 おろかで　かとうな　せいぶつに▽
 りそうが　じつげんできるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2012-01-21T04:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2012-01-21T04:50:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『理想を　語るのは　いい……
-だが　お前たちの　ような▽
+			<Text>E『理想を　語るのは　いい……▼
+だが　お前たちの　ような
 おろかで　下等な　生物に▽
 理想が　実現できるのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:57" />
+				Time="2012-01-21T04:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:57" />
+				Time="2012-01-21T04:50:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

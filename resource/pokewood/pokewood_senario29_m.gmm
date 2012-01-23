@@ -366,32 +366,32 @@
 動きは　単調だ……</language>
 	</row>
 	<row id="pw_turn_enemy_2">
-		<language name="JPN" width="256">ひとがた『グルグラグロロ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グルグラグロロ！</language>
+		<language name="JPN" width="256">あかいきり『ゴポォ……　ゴポポッツ！</language>
+		<language name="JPN_KANJI" width="256">赤い霧『ゴポォ……　ゴポポッツ！</language>
 	</row>
 	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハァ　ハァ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハァ　ハァ……</language>
 	</row>
 	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">ひとがた『ギルルル！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギルルル！</language>
+		<language name="JPN" width="256">あかいきり『ゴポッ！　ゴプポッツ！</language>
+		<language name="JPN_KANJI" width="256">赤い霧『ゴポッ！　ゴプポッツ！</language>
 	</row>
 	<row id="pw_turn_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（まけない……！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（負けない……！</language>
 	</row>
 	<row id="pw_turn_enemy_6">
-		<language name="JPN" width="256">ひとがた『キシャア！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『キシャア！</language>
+		<language name="JPN" width="256">あかいきり『………ゴポポポッ</language>
+		<language name="JPN_KANJI" width="256">赤い霧『………ゴポポポッ</language>
 	</row>
 	<row id="pw_turn_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……</language>
 	</row>
 	<row id="pw_turn_enemy_8">
-		<language name="JPN" width="256">ひとがた『ギキキキ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギキキキ！</language>
+		<language name="JPN" width="256">あかいきり『………ゴポッ</language>
+		<language name="JPN_KANJI" width="256">赤い霧『………ゴポッ</language>
 	</row>
 	<row id="pw_turn_hero_10">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あ……う……</language>
@@ -422,13 +422,13 @@
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『クソッ……▼
 （にんげん……？
-いや　ちがう▽
+いや　ちがう……▽
 しかも　ぶきみな　あかい　きり……▼
 いったい　なにが
 おきているんだ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クソッ……▼
 （人間……？
-いや　違う▽
+いや　違う……▽
 しかも　不気味な　赤い　霧……▼
 一体　何が　起きているんだ？</language>
 	</row>
@@ -474,10 +474,10 @@
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（やみくもに　たたかっても
-ポケモンが　つかれるだけだ▼
+ポケモンが　つかれるだけだ……▼
 さあ……　どうする！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（やみくもに　戦っても
-ポケモンが　疲れるだけだ▼
+ポケモンが　疲れるだけだ……▼
 さあ……　どうする！？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
@@ -582,21 +582,15 @@
 		<language name="JPN" width="256">なんとか　バケモノを　おいはらい
 やどやを　あとにした　[1:00:トレーナー名:1]▼
 あかいきりを　きっかけに
-おかしく　なってしまった▽
-この　せかい　を▽
-もとの　へいわな　すがたに▽
-もどすことが　できるのか……？▼
+おかしくなっていく　せかい……▼
 いまだ　きりは　ふかく
-よあけには　まだ　はやい……</language>
+よあけには　まだ　とおい……</language>
 		<language name="JPN_KANJI" width="256">なんとか　バケモノを　追い払い
 宿屋を　後にした　[1:00:トレーナー名:1]▼
 赤い霧を　きっかけに
-おかしく　なってしまった▽
-この　世界　を▽
-もとの　平和な　姿に▽
-もどすことが　できるのか……？▼
+おかしくなっていく　世界……▼
 いまだ　霧は　深く
-夜明けには　まだ　早い……</language>
+夜明けには　まだ　遠い……</language>
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……
