@@ -151,7 +151,7 @@ BOOL GPOWER_IsEnableID_BW( GPOWER_ID gpower_id )
   if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     return FALSE;
   }
-  return ( gpower_id >= GPOWER_ID_DUMMY_START );
+  return ( gpower_id < GPOWER_ID_DUMMY_START );
 }
 
 //==================================================================

@@ -454,6 +454,7 @@ static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_NULL;
       send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
+      send->info.g_power_id = GPOWER_ID_NULL; //発動中のデルパワーIDをNULL指定に戻す
       return TRUE;
     }
   }
@@ -1251,6 +1252,7 @@ static void sub_SendBeaconSetCommonCore(GAMEBEACON_SEND_MANAGER *send, u32 versi
   
   send->info.version_bit = version_bit;
   send->info.ex_param = 0;  //まずは0初期化。有効なパラメータを入れたい場合は各ビーコンのリクエスト側で設定すること
+  send->info.g_power_id = GPOWER_ID_NULL; //発動中のデルパワーID領域をNULL指定に戻す
 
   send->info.send_counter++;
   send->life = 0;
