@@ -83,8 +83,9 @@ INIT_EVENT_START  ev_zone_t03
 
   ENDIF
 
-  IF $WK_SCENE_T03 <= 3 THEN
-  
+  //カゴメタウンのイベントが終わっていない場合はおばあさんは非表示
+  IF $WK_SCENE_T03 != 4 THEN
+  	_DEBUG_PRINT_WK(2323)
     //おばあさん非表示
     _FLAG_SET( FV_T03_OLDWOMAN1_01 )
   
