@@ -135,7 +135,6 @@ EVENT_START   ev_pos_r07r0105_sppoke2_01
 
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //==================================//
@@ -145,21 +144,11 @@ EVENT_START   ev_pos_r07r0105_sppoke2_01
     $WK_SCENE_R07R0105_SPPOKE2_01 = 2
     //==================================//
 
-    //プレイヤーの向きを取得
-    _PLAYER_DIR_GET( LWK_DIR ) 
-
-    //主人公が上を向いていない場合は上を向かせる
-    IF $LWK_DIR != DIR_UP THEN
-      //アニメ：主人公振り向き
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
-      _OBJ_ANIME_WAIT()
-    ENDIF
-
     _TIME_WAIT ( 30 )  //間
 
     //エムリット：きょううん！
     _VOICE_PLAY( MONSNO_481, 0 ) 
-    _PLAINWIN_MSG_UP( msg_r07r0105_sppoke2_02 )
+    _PLAINWIN_MSG_DOWN( msg_r07r0105_sppoke2_02 )
     _VOICE_WAIT()
     _AB_KEYWAIT_MARK()
     _PLAINWIN_CLOSE()
@@ -174,21 +163,28 @@ EVENT_START   ev_pos_r07r0105_sppoke2_01
     _OBJ_POS_CHANGE( R07R0105_SPPOKE2_01, 24, 9, 26, DIR_LEFT )
 
     //エムリット停止座標まで移動
-    $LCW_POSZ -= 2
-    _OBJ_TRANS( R07R0105_SPPOKE2_01, LCW_POSX, 7, LCW_POSZ, 8*6 )
+    $LCW_POSZ += 2
+    _OBJ_TRANS( R07R0105_SPPOKE2_01, LCW_POSX, 5, LCW_POSZ, 8*6 )
 
     //エムリット再配置（↑のコマンドだと接地しないので）
-    _OBJ_POS_CHANGE( R07R0105_SPPOKE2_01, LCW_POSX, 7, LCW_POSZ, DIR_LEFT )
+    _OBJ_POS_CHANGE( R07R0105_SPPOKE2_01, LCW_POSX, 5, LCW_POSZ, DIR_LEFT )
 
     //アニメ：エムリット振り向き
-    _OBJ_ANIME( R07R0105_SPPOKE2_01, anm_common_turn_d )
+    _OBJ_ANIME( R07R0105_SPPOKE2_01, anm_common_turn_u )
+    _TIME_WAIT( 8 )
+    //プレイヤーの向きを取得
+    _PLAYER_DIR_GET( LWK_DIR ) 
+    //主人公が上を向いていない場合は上を向かせる
+    IF $LWK_DIR != DIR_DOWN THEN
+      //アニメ：主人公振り向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+    ENDIF
     _OBJ_ANIME_WAIT()
 
     _TIME_WAIT( 16 )
 
   ELSE    //いいえ
-
-    _AB_KEYWAIT_MARK()
+  
     _MSGWIN_CLOSE()
 
   ENDIF
