@@ -58,7 +58,8 @@ static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATU
       *nojump = FALSE;
     }
     NET_PRINT("Status %d Pokemon %d Select %d\n", MyStatus_GetID(pMystatus), id, select);
-    if(MyStatus_GetID(pMystatus) != id){
+    //if(MyStatus_GetID(pMystatus) != id){
+    if( PP_IsMatchOya(pp,pMystatus) == FALSE ){
       *msg = FALSE;
     }
     else{
