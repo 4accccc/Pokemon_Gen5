@@ -139,38 +139,8 @@ void * WB_SAVE_GetBlockAddress( void *p_data_adrs, const u16 id )
 //-----------------------------------------------------------------------------
 BOOL WB_SAVE_CheckIllegal( const void *cp_data_adrs )
 {
-  //各ブロックのチェック
-#if 0
-  {
-    int i;
-    const u16 *cp_crc_table = WB_SAVE_GetBlockAddress( (void *)cp_data_adrs, WB_GMDATA_ID_CRC );
-
-#ifdef PM_DEBUG
-    for( i = 0; i < WB_GMDATA_ID_MAX; i++ )
-    {
-      WB_SAVE_BLOCK_FOOTER *p_block_footer = Wb_Save_GetBlockFooter( (void*)cp_data_adrs, i );
-      OS_TPrintf( "GMID[%d] footer_crc[%d]  table_crc[%d]\n", i, p_block_footer->crc, cp_crc_table[i] );
-    }
-#endif
-
-    //ブロックごとのチェック
-    for( i = 0; i < WB_GMDATA_ID_MAX; i++ )
-    {
-      WB_SAVE_BLOCK_FOOTER *p_block_footer = Wb_Save_GetBlockFooter( (void*)cp_data_adrs, i );
-
-      //各ブロックのCRCがCRCがテーブルと一致しているか
-      if( p_block_footer->crc != cp_crc_table[i] )
-      {
-        OS_TPrintf( "GMID[%d] footer_crc[%d] != table_crc[%d]\n", i, p_block_footer->crc, cp_crc_table[i] );
-        return FALSE;
-      }
-    }
-  }
-#endif
-
   //ラストフッタのチェック
   {
-	  //ラストフッタのチェック
 	  const WB_SAVE_FOOTER *cp_footer     = WB_SAVE_GetBlockAddress( (void *)cp_data_adrs, WB_GMDATA_ID_FOOTER );
 
 	  if( cp_footer->size != WB_SAVE_SIZE )
@@ -200,6 +170,43 @@ BOOL WB_SAVE_CheckIllegal( const void *cp_data_adrs )
 	  }
   }
 
+  //各ブロックのチェック
+  {
+    int i;
+    const u16 *cp_crc_table = WB_SAVE_GetBlockAddress( (void *)cp_data_adrs, WB_GMDATA_ID_CRC );
+    OS_TFPrintf(2,"[crc_table] 0x%x\n", cp_crc_table);
+
+#ifdef PM_DEBUG
+    for( i = 0; i < WB_GMDATA_ID_MAX; i++ )
+    {
+      WB_SAVE_BLOCK_FOOTER *p_block_footer = Wb_Save_GetBlockFooter( (void*)cp_data_adrs, i );
+      OS_TPrintf( "GMID[%d] footer_crc[%d]  table_crc[%d]\n", i, p_block_footer->crc, cp_crc_table[i] );
+      OS_TFPrintf( 2, "[%d] A[0x%x]=%d crc=%d\n", i, p_block_footer, p_block_footer->crc, cp_crc_table[i]);
+    }
+#endif
+
+    //ブロックごとのチェック
+    for( i = 0; i < WB_GMDATA_ID_MAX; i++ )
+    {
+      WB_SAVE_BLOCK_FOOTER *p_block_footer = Wb_Save_GetBlockFooter( (void*)cp_data_adrs, i );
+
+      //各ブロックのCRCがCRCがテーブルと一致しているか
+      if( p_block_footer->crc != cp_crc_table[i] )
+      {
+        OS_TPrintf( "same crc error! GMID[%d] footer_crc[%d] != table_crc[%d]\n", i, p_block_footer->crc, cp_crc_table[i] );
+        return FALSE;
+      }
+
+      //データのCRCと一致するか
+      if( p_block_footer->crc
+						!= MATH_CalcCRC16CCITT(&s_crc_table, WB_SAVE_GetBlockAddress( (void*)cp_data_adrs, i ), WB_SAVE_GetSaveSize( i )-4))
+      {
+        OS_TPrintf( "data crc error! GMID[%d] footer_crc[%d] != math_crc[%d]\n", i, p_block_footer->crc, MATH_CalcCRC16CCITT(&s_crc_table, WB_SAVE_GetBlockAddress((void*)cp_data_adrs, i ), WB_SAVE_GetSaveSize( i )-4) );
+        return FALSE;
+      }
+    }
+  }
+
   return TRUE;
 }
 
@@ -219,7 +226,7 @@ static WB_SAVE_BLOCK_FOOTER * Wb_Save_GetBlockFooter( void *p_data_adrs, const u
   u32 save_size = WB_SAVE_GetSaveSize( id );
 
   GF_ASSERT( id < WB_GMDATA_ID_MAX );
-  return (void*)((u32)p_block+save_size);
+  return (void*)((u32)p_block+save_size-4);
 }
 #ifdef PM_DEBUG
 //----------------------------------------------------------------------------
