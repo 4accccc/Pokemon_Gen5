@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/13 15:02:54
+#save date:2012/01/23 21:24:04
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -297,7 +297,7 @@ C14_MIDDLEMAN2_01
 #OBJ CODE Number
 MIDDLEMAN2
 #MOVE CODE Number
-MV_RND
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -313,9 +313,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
-3
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -328,7 +328,7 @@ C14_SWIMMERW_01
 #OBJ CODE Number
 SWIMMERW
 #MOVE CODE Number
-MV_RT2
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -344,9 +344,9 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
-3
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
