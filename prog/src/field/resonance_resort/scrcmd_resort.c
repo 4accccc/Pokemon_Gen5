@@ -1403,6 +1403,12 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
           percent = 100;
         }
 #endif 
+#ifdef PM_DEBUG
+        if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_COMBO_NONE) )
+        {
+          percent = 0;
+        }
+#endif 
         OS_TPrintf( "合計　初回確率%d% 抽選%d%\n", percent, rnd );
 
       }
@@ -1415,6 +1421,12 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
         if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_COMBO_MAX) )
         {
           percent = 100;
+        }
+#endif 
+#ifdef PM_DEBUG
+        if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_COMBO_NONE) )
+        {
+          percent = 0;
         }
 #endif 
 
