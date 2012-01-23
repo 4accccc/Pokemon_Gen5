@@ -54,6 +54,7 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 #include "gamesystem/link_festival.h"
+#include "gamesystem/link_festival_local.h"
 #include "gamesystem/link_festival_log.h"
 #include "gamesystem/fest_mission_local.h"
 #include "gamesystem/fest_mission_data.h"
@@ -145,6 +146,7 @@ typedef enum{
  DATA_CHECK_MODE_MEMBER,
  DATA_CHECK_MODE_EVPOS,
  DATA_CHECK_MODE_EVFLAG,
+ DATA_CHECK_MODE_ENTRY_STACK,
 }DATA_CHECK_MODE;
 
 /////////////////////////////////////////////
@@ -302,6 +304,7 @@ typedef struct _DMENU_LINK_FEST{
 
   LINK_FESTIVAL* fest_sys;
   FEST_MISSION* fmwk;
+  FMISSION_DATA_MAN*  fm_data_man;
 
   BEACON_VIEW*    view_wk;
   BEACON_STATUS* b_status;
@@ -688,6 +691,7 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_DEBUG_MESSAGE, NARC_debug_message_d_linkfest_dat, wk->heapID );
   
+  wk->fm_data_man = FMISSION_DATA_Init( wk->heapID );
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
 
@@ -765,6 +769,7 @@ static void dmenu_WorkRelease( DMENU_LINK_FEST* wk )
 
   GFL_STR_DeleteBuffer( wk->str_expand );
   GFL_STR_DeleteBuffer( wk->str_tmp );
+  FMISSION_DATA_Release( wk->fm_data_man );
 
   GFL_MSG_Delete( wk->msgman );
   WORDSET_Delete( wk->wset );
@@ -903,6 +908,9 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         break;
       case MENU_RECV_BUF_CLEAR:
         DEBUG_RecvBeaconBufferClear();
+        break;
+      case MENU_MISSION_ENTRY_STACK_CHECK:
+        GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_ENTRY_STACK ) );
         break;
       case MENU_MY_GPOWER:
         GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_GPOWER, 0, GPOWER_ID_CAPTURE_S+1,
@@ -1381,7 +1389,8 @@ typedef struct _EVWK_DATA_CHECK{
   u8      data_num;
   u8      line_max;
   u8      page_max;
-  u8      line_oy; 
+  u8      line_oy;
+  u8      timer;
   BMP_WIN win;
 }EVWK_DATA_CHECK;
 
@@ -1395,6 +1404,8 @@ static void evposCheck_ItemParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
 static void evposCheck_NpcParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line );
 static void evposCheck_FlagParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, s8 idx, u8 line );
 static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page );
+static void entryStackCheck_ParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 line, FMISSION_ENTRY* p_entry );
+static void entryStackCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page );
 
 //--------------------------------------------------------------
 /**
@@ -1446,6 +1457,12 @@ static GMEVENT* event_CreateEventDataCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST*
     evwk->line_max = 6;
     evwk->line_oy = 16;
     break;
+  case DATA_CHECK_MODE_ENTRY_STACK:
+    evwk->page_max = 1;
+    evwk->mode_param = 0;
+    evwk->line_max = 3;
+    evwk->line_oy = 16*3;
+    break;
   }
 
   return event;
@@ -1483,6 +1500,12 @@ static GMEVENT_RESULT event_DataCheckMain( GMEVENT * event, int *seq, void * wor
         evwk->page = (evwk->page+1)%evwk->page_max;
         dataCheck_PageDraw( wk, evwk, evwk->page );
       }
+      if( evwk->mode == DATA_CHECK_MODE_ENTRY_STACK ){
+        if( evwk->timer++ >= 30 ){
+          dataCheck_PageDraw( wk, evwk, evwk->page );
+          evwk->timer = 0;
+        }
+      }
     }
     break;
   default:
@@ -1510,6 +1533,9 @@ static void dataCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 p
   case DATA_CHECK_MODE_EVPOS:
   case DATA_CHECK_MODE_EVFLAG:
     evposCheck_PageDraw( wk, evwk, page );
+    break;
+  case DATA_CHECK_MODE_ENTRY_STACK:
+    entryStackCheck_PageDraw( wk, evwk, page );
     break;
   }
 }
@@ -1810,7 +1836,7 @@ static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 
   //マジックキー描画
   zone_id = FIELDMAP_GetZoneID( wk->fieldmap );
   posCheck_ZoneIDWordset( wk, evwk, 0, zone_id );
-  WORDSET_RegisterNumber( wk->wset, 2, wk->fmwk->key, 10, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterHexNumber( wk->wset, 2, wk->fmwk->key, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   sub_GetMsgToBuf( wk, dlf_check_param_magick_key );
   PRINTSYS_PrintColor( evwk->win.bmp, 0, 0, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
 
@@ -1832,6 +1858,70 @@ static void evposCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 
 	GFL_BG_LoadScreenV_Req( evwk->win.frm );
 }
 
+//--------------------------------------------------------------
+/*
+ *  @brief  エントリースタック情報書き出し
+ */
+//--------------------------------------------------------------
+static void entryStackCheck_ParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 line, FMISSION_ENTRY* p_entry )
+{
+  FEST_BEACON* beacon = &p_entry->mission.beacon;
+
+  WORDSET_RegisterNumber( wk->wset, 0, line, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+  if( p_entry != NULL ){
+    //ミッションID
+    WORDSET_RegisterNumber( wk->wset, 1, beacon->m_id, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //ミッションキー
+    WORDSET_RegisterHexNumber( wk->wset, 2, p_entry->mission.key, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //レベル
+    WORDSET_RegisterHexNumber( wk->wset, 3, beacon->m_level, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //タイム
+    WORDSET_RegisterNumber( wk->wset, 4, FEST_MISSION_GetLife( &p_entry->mission ), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    //送信者名
+    GFL_STR_SetStringCodeOrderLength( wk->str_tmp, p_entry->name, PERSON_NAME_SIZE+EOM_SIZE );
+    sub_FreeWordset( wk->wset, 5, wk->str_tmp );
+    //ベース
+    WORDSET_RegisterNumber( wk->wset, 6, beacon->base_param, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //EX param
+    WORDSET_RegisterNumber( wk->wset, 7, beacon->ex_param, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //配信
+    WORDSET_RegisterNumber( wk->wset, 8, beacon->distribution_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    //ミッションタイトル
+    FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_tmp, &p_entry->mission, GFL_HEAP_LOWID(wk->heapID) );
+    sub_FreeWordset( wk->wset, 9, wk->str_tmp );
+
+    sub_GetMsgToBuf( wk, dlf_entry_stack_check_param01+beacon->version_idx );
+  }else{
+    sub_GetMsgToBuf( wk, dlf_check_param_none );
+  }
+	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*evwk->line_oy, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  エントリースタック情報書き出し
+ */
+//--------------------------------------------------------------
+static void entryStackCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk, u8 page )
+{
+  int i;
+  FMISSION_ENTRY_TBL* tbl = &wk->fest_sys->mlog_entry_tbl;
+
+  GFL_BMP_Clear( evwk->win.bmp, FCOL_WIN_BASE );
+
+  for(i = 0;i < evwk->line_max;i++){
+    if( i < tbl->entry_num ){
+      entryStackCheck_ParamDraw( wk, evwk, i, &tbl->entry[i] );
+    }else{
+      entryStackCheck_ParamDraw( wk, evwk, i, NULL );
+    }
+  }
+	GFL_BMPWIN_TransVramCharacter( evwk->win.win );
+	GFL_BG_LoadScreenV_Req( evwk->win.frm );
+}
 
 
 //===================================================================================

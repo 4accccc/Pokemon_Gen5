@@ -2246,6 +2246,78 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_entry_stack_check_param01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="0" ][Digit:1digit ]：id=[Digit:2digits Idx="1" ] key=0x[Digit:8digits Idx="2" ] lv=[/System:Color][Digit:1digit Idx="3" ] ver=W life=[Digit:4digits Idx="4" ]
+[System:Color name="2" ] [Name:TrainerName Idx="5" ] base=[Digit:4digits Idx="6" ] ex=[Digit:4digits Idx="7" ] 配信=[Digit:1digit Idx="8" ]
+ [Name:FesMissionName Idx="9" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:17:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:11:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="0" ][Digit:1digit ]：id=[Digit:2digits Idx="1" ] key=0x[Digit:8digits Idx="2" ] lv=[/System:Color][Digit:1digit Idx="3" ] ver=W life=[Digit:4digits Idx="4" ]
+[System:Color name="2" ] [Name:TrainerName Idx="5" ] base=[Digit:4digits Idx="6" ] ex=[Digit:4digits Idx="7" ] 配信=[Digit:1digit Idx="8" ]
+ [Name:FesMissionName Idx="9" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:17:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:15:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_entry_stack_check_param02">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="0" ][Digit:1digit ]：id=[Digit:2digits Idx="1" ] key=0x[Digit:8digits Idx="2" ] lv=[/System:Color][Digit:1digit Idx="3" ] ver=B life=[Digit:4digits Idx="4" ]
+[System:Color name="2" ] [Name:TrainerName Idx="5" ] base=[Digit:4digits Idx="6" ] ex=[Digit:4digits Idx="7" ] 配信=[Digit:1digit Idx="8" ]
+ [Name:FesMissionName Idx="9" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:17:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:15:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="0" ][Digit:1digit ]：id=[Digit:2digits Idx="1" ] key=0x[Digit:8digits Idx="2" ] lv=[/System:Color][Digit:1digit Idx="3" ] ver=B life=[Digit:4digits Idx="4" ]
+[System:Color name="2" ] [Name:TrainerName Idx="5" ] base=[Digit:4digits Idx="6" ] ex=[Digit:4digits Idx="7" ] 配信=[Digit:1digit Idx="8" ]
+ [Name:FesMissionName Idx="9" ][/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:17:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-23T13:15:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_log_req_type01"
 		Style="Large">
 		<LanguageCell
