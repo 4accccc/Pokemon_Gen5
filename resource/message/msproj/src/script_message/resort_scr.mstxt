@@ -97605,11 +97605,11 @@ PWT
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんは
-いま　もっとも　あついものは▽
-かくしあな　だって！▼</Text>
+いま　もっとも　熱いものは▽
+ライブキャスター　だって！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T16:24:49" />
+				Time="2012-01-23T10:17:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -97618,11 +97618,11 @@ PWT
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんは
-いま　もっとも　熱いものは▽
-隠し穴　だって！▼</Text>
+いま　もっとも　あついものは▽
+ライブキャスター　だって！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T16:24:45" />
+				Time="2012-01-23T10:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -97633,12 +97633,12 @@ PWT
 			<Comment>回答10-8
 
 今熱いものは
-けものみち
+ライブキャスター
 
 0：住民名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T08:09:38" />
+				Time="2012-01-23T10:17:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97677,10 +97677,10 @@ PWT
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんは
 いま　もっとも　あついものは▽
-ライブキャスター　だって！▼</Text>
+かくしあな　だって！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T16:24:58" />
+				Time="2012-01-23T10:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -97690,10 +97690,10 @@ PWT
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんは
 いま　もっとも　熱いものは▽
-ライブキャスター　だって！▼</Text>
+隠し穴　だって！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T16:25:05" />
+				Time="2012-01-23T10:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -97704,12 +97704,12 @@ PWT
 			<Comment>回答10-9
 
 今熱いものは
-ライブキャスター
+かくしあな
 
 0：住民名</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T08:09:45" />
+				Time="2012-01-23T10:17:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
