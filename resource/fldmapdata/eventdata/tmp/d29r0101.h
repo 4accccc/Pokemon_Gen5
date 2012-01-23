@@ -29,6 +29,9 @@
 #define D29R0101_WORKMAN2_01              16
 #define D29R0101_WORKMAN2_02              17
 #define D29R0101_WORKMAN2_03              18
+#define D29R0101_SPROCK_08                19
+#define D29R0101_SPROCK_09                20
+#define D29R0101_SPROCK_10                21
 
 #endif //ZONE_D29R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

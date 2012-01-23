@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_d29r0201.h"
   .include  "d29r0201.h"
+  .include  "d29r0101_def.h"
 
 //@author suginaka_katsunori
 
@@ -22,6 +23,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d29r0201_d29r0101_workman2_01
+_EVENT_DATA		ev_reserve_d29r0201_recover
 _EVENT_DATA_END
 
 
@@ -50,9 +52,11 @@ _YES_NO_WIN( SCWK_ANSWER )
 		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0201_workman2_02 )
 		_MSGWIN_CLOSE()
 		
-		//暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		//暗転処理
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_OBJ_ANIME( D29R0201_WORKMAN2_01, anm_stay_r )
+		_MAP_FADE_END_CHECK()
+		_OBJ_ANIME_WAIT()
 		
 		//ガタゴトSE再生
 		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
@@ -65,10 +69,13 @@ _YES_NO_WIN( SCWK_ANSWER )
 		_FLAG_RESET(FV_D29R0101_WORKMAN2_01)
 		
 		//========================================/
-		
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D29R0101_RECOVER )
+
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0101, 27, 38, DIR_LEFT )
-	
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D29R0101, 27, 0, 38, DIR_LEFT )
+
 	//いいえの場合
 	ELSE
 	
@@ -79,3 +86,33 @@ _YES_NO_WIN( SCWK_ANSWER )
 	ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*		RESERVE									  */
+/**************************************************************/
+EVENT_START		ev_reserve_d29r0201_recover
+
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	

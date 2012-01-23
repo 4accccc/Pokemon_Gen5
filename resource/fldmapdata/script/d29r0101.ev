@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d29r0101.h"
   .include  "d29r0101.h"
+  .include  "d29r0201_def.h"
+  .include  "d29r0301_def.h"
 
 //@author	suginaka_katsunori
 
@@ -27,6 +29,7 @@ _EVENT_DATA		ev_d29r0101_stop3_01
 _EVENT_DATA		ev_d29r0101_d29r0201_workman2_01
 _EVENT_DATA		ev_d29r0101_d29r0301_workman2_01
 _EVENT_DATA		ev_d29r0101_d29r0301_workman2_02
+_EVENT_DATA		ev_reserve_d29r0101_recover
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -41,9 +44,6 @@ _EVENT_DATA_END
 EVENT_START		ev_d29r0101_stop1_01
 
 DEFINE_LOCAL	LWK_CHKWAZA
-
-//ゲームクリア済みの場合
-IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 
 	_TALK_OBJ_START()
 	
@@ -86,7 +86,10 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_OBJ_DEL( D29R0101_SPROCK_05 )
 		_OBJ_DEL( D29R0101_SPROCK_06 )
 		_OBJ_DEL( D29R0101_SPROCK_07 )
-		
+		_OBJ_DEL( D29R0101_SPROCK_08 )
+		_OBJ_DEL( D29R0101_SPROCK_09 )
+		_OBJ_DEL( D29R0101_SPROCK_10 )
+
 		_TIME_WAIT( 60 )
 	
 		//暗転復帰
@@ -139,13 +142,6 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		
 
 	ENDIF
-
-//ゲームクリア前の場合
-ELSE
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_01 )
-
-ENDIF
 
 EVENT_END
 
@@ -225,9 +221,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_d29r0101_d29r0201_workman2_01
 
-//ゲームクリア済みの場合
-IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-
 	_TALK_OBJ_START()
 	
 	//この　トロッコに　のるかい
@@ -242,9 +235,11 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
 		_MSGWIN_CLOSE()
 		
-		//暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		//暗転処理
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_OBJ_ANIME( D29R0101_WORKMAN2_01, anm_stay_r )
+		_MAP_FADE_END_CHECK()
+		_OBJ_ANIME_WAIT()
 		
 		//ガタゴトSE再生
 		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
@@ -257,9 +252,12 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_FLAG_RESET(FV_D29R0201_WORKMAN2_01)
 		
 		//========================================/
-		
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D29R0201_RECOVER )
+
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0201, 27, 14, DIR_LEFT )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D29R0201, 27, 0, 14, DIR_LEFT )
 	
 	//いいえの場合
 	ELSE
@@ -270,23 +268,12 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
 	ENDIF
 
-//クリア前の場合
-ELSE
-
-	//おう！トレーナー！
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
-
-ENDIF
-
 EVENT_END
 
 /**************************************************************/
 /*		トロッコ乗り場のおっさん２号						  */
 /**************************************************************/
 EVENT_START		ev_d29r0101_d29r0301_workman2_01
-
-//ゲームクリア済みの場合
-IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 
 	_TALK_OBJ_START()
 	
@@ -302,9 +289,11 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
 		_MSGWIN_CLOSE()
 		
-		//暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		//暗転処理
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_OBJ_ANIME( D29R0101_WORKMAN2_03, anm_stay_u )
+		_MAP_FADE_END_CHECK()
+		_OBJ_ANIME_WAIT()
 		
 		//ガタゴトSE再生
 		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
@@ -317,9 +306,12 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_FLAG_RESET(FV_D29R0301_WORKMAN2_03)
 		
 		//========================================/
-		
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D29R0301_RECOVER )
+
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0301, 19, 35, DIR_DOWN )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D29R0301, 19, 0, 35, DIR_DOWN )
 	
 	//いいえの場合
 	ELSE
@@ -330,23 +322,12 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
 	ENDIF
 
-//クリア前の場合
-ELSE
-
-	//おう！トレーナー！
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
-
-ENDIF
-
 EVENT_END
 
 /**************************************************************/
 /*		トロッコ乗り場のおっさん３号						  */
 /**************************************************************/
 EVENT_START		ev_d29r0101_d29r0301_workman2_02
-
-//ゲームクリア済みの場合
-IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 
 	_TALK_OBJ_START()
 	
@@ -362,9 +343,11 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_02 )
 		_MSGWIN_CLOSE()
 		
-		//暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		//暗転処理
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_OBJ_ANIME( D29R0101_WORKMAN2_02, anm_stay_r )
+		_MAP_FADE_END_CHECK()
+		_OBJ_ANIME_WAIT()
 		
 		//ガタゴトSE再生
 		_SE_PLAY(SEQ_SE_SW_YACONROAD_01)
@@ -377,9 +360,12 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_FLAG_RESET(FV_D29R0301_WORKMAN2_04)
 		
 		//========================================/
-		
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D29R0301_RECOVER )
+
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D29R0301, 56, 84, DIR_DOWN )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D29R0301, 56, 0, 84, DIR_DOWN )
 	
 	//いいえの場合
 	ELSE
@@ -390,13 +376,34 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
 	ENDIF
 
-//クリア前の場合
-ELSE
-
-	//おう！トレーナー！
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_workman2_00 )
-
-ENDIF
-
 EVENT_END
 
+/**************************************************************/
+/*		RESERVE									  */
+/**************************************************************/
+EVENT_START		ev_reserve_d29r0101_recover
+
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	

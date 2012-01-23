@@ -20,6 +20,15 @@
 #define FLD_ITEM_319                       6
 #define D29R0201_WORKMAN2_01               7
 #define FLD_ITEM_75                        8
+#define D29R0201_SPROCK_01                 9
+#define D29R0201_SPROCK_02                10
+#define D29R0201_SPROCK_03                11
+#define D29R0201_SPROCK_04                12
+#define D29R0201_SPROCK_05                13
+#define D29R0201_SPROCK_07                14
+#define D29R0201_SPROCK_08                15
+#define D29R0201_SPROCK_11                16
+#define D29R0201_SPROCK_13                17
 
 #endif //ZONE_D29R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
