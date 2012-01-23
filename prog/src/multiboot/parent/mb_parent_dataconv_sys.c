@@ -442,6 +442,8 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
     }
     break;
   case SEQ_SEND_INITDATA:
+    p_wk->init_data.msgSpeed  = MSGSPEED_GetWait();
+    p_wk->init_data.strMode   = GFL_MSGSYS_GetLangID();
     if( MB_COMM_Send_InitData( p_wk->p_comm, &p_wk->init_data ) )
     {
       (*p_seq)++;
