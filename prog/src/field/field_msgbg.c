@@ -87,11 +87,11 @@
 //--------------------------------------------------------------
 enum
 {
-  CHARNO_CLEAR = 0, ///<クリアキャラ 0
-  CHARNO_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
-  CHARNO_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-35 (chara 24
-  CHARNO_SYSWIN = 36, ///<システムウィンドウ 36-54 (chara 18
-  CHARNO_OTHERSWIN = 55, ///<その他ウィンドウ 55- (使用時に初期化
+  CHARNO_CLEAR = FLD_MSGBG_CHARNO_CLEAR, ///<クリアキャラ 0
+  CHARNO_WINFRAME = FLD_MSGBG_CHARNO_WINFRAME, ///<ウィンドウフレーム 1-10 (chara 9
+  CHARNO_BALLOONWIN = FLD_MSGBG_CHARNO_BALLOONWIN, ///<吹き出しウィンドウ 11-35 (chara 24
+  CHARNO_SYSWIN = FLD_MSGBG_CHARNO_SYSWIN, ///<システムウィンドウ 36-54 (chara 18
+  CHARNO_OTHERSWIN = FLD_MSGBG_CHARNO_OTHERSWIN, ///<その他ウィンドウ 55- (使用時に初期化
 };
 
 //--------------------------------------------------------------
@@ -99,13 +99,13 @@ enum
 //--------------------------------------------------------------
 enum
 {
-  PANO_BGWIN = 9, //BGウィンドウ
-  PANO_SPWIN = 9, //特殊ウィンドウ
-  PANO_MENU_W = 10, //メニューパレットNo 背景白 不透明メニュー用
-  PANO_FONT_TALKMSGWIN = 11, ///<吹き出しフォントパレットNo
-  PANO_TALKMSGWIN = 12, ///<吹き出しウィンドウパレットNo
-  PANO_MENU_B = 13, ///<メニューパレットNo 背景黒 半透明用
-  PANO_FONT = 14, ///<フォントパレットNo 半透明用
+  PANO_BGWIN = FLD_MSGBG_PALNO_BGWIN, //BGウィンドウ
+  PANO_SPWIN = FLD_MSGBG_PALNO_SPWIN, //特殊ウィンドウ
+  PANO_MENU_W = FLD_MSGBG_PALNO_MENU_W, //メニューパレットNo 背景白 不透明メニュー用
+  PANO_FONT_TALKMSGWIN = FLD_MSGBG_PALNO_FONT_TALKMSGWIN, ///<吹き出しフォントパレットNo
+  PANO_TALKMSGWIN = FLD_MSGBG_PALNO_TALKMSGWIN, ///<吹き出しウィンドウパレットNo
+  PANO_MENU_B = FLD_MSGBG_PALNO_MENU_B, ///<メニューパレットNo 背景黒 半透明用
+  PANO_FONT = FLD_MSGBG_PALNO_FONT, ///<フォントパレットNo 半透明用
 };
 
 //======================================================================

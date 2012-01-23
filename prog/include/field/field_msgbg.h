@@ -121,6 +121,33 @@ typedef enum
   PLAINMSGWIN_WRITE_START_Y = 0,
 }FLDMSGBG_WRITE_MSG_START_POS;
 
+//--------------------------------------------------------------
+//  メッセージウィンドウ、キャラオフセット
+//--------------------------------------------------------------
+enum
+{
+  FLD_MSGBG_CHARNO_CLEAR = 0, ///<クリアキャラ 0
+  FLD_MSGBG_CHARNO_WINFRAME = 1, ///<ウィンドウフレーム 1-10 (chara 9
+  FLD_MSGBG_CHARNO_BALLOONWIN = 11, ///<吹き出しウィンドウ 11-35 (chara 24
+  FLD_MSGBG_CHARNO_SYSWIN = 36, ///<システムウィンドウ 36-54 (chara 18
+  FLD_MSGBG_CHARNO_OTHERSWIN = 55, ///<その他ウィンドウ 55- (使用時に初期化
+};
+
+//--------------------------------------------------------------
+//  メッセージウィンドウ　使用パレット
+//--------------------------------------------------------------
+enum
+{
+  FLD_MSGBG_PALNO_BGWIN = 9, //BGウィンドウ
+  FLD_MSGBG_PALNO_SPWIN = 9, //特殊ウィンドウ
+  FLD_MSGBG_PALNO_MENU_W = 10, //メニューパレットNo 背景白 不透明メニュー用
+  FLD_MSGBG_PALNO_FONT_TALKMSGWIN = 11, ///<吹き出しフォントパレットNo
+  FLD_MSGBG_PALNO_TALKMSGWIN = 12, ///<吹き出しウィンドウパレットNo
+  FLD_MSGBG_PALNO_MENU_B = 13, ///<メニューパレットNo 背景黒 半透明用
+  FLD_MSGBG_PALNO_FONT = 14, ///<フォントパレットNo 半透明用
+};
+
+
 //======================================================================
 //  struct
 //======================================================================

@@ -34,8 +34,8 @@
 #define	POKEWIN_PY		( 3 )
 #define	POKEWIN_SX		( 12 )
 #define	POKEWIN_SY		( 12 )
-#define	POKEWIN_PAL		( 13 )
-#define	POKEWIN_CGX		( 1 )
+#define	POKEWIN_PAL		( FLD_MSGBG_PALNO_MENU_W )
+#define	POKEWIN_CGX		( FLD_MSGBG_CHARNO_WINFRAME )
 
 typedef struct POKE_WIN_WORK_tag{
 /**  
