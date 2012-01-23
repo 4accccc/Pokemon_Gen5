@@ -1374,6 +1374,15 @@ sub_resident_merge:
 }
 _RET
 
+//==============================================================
+//サブルーチン：くじびき用カメラ
+//==============================================================
+sub_lot_camera:
+{
+  _CALL sub_crowdpeople_visible_off
+  _CALL sub_forward_camera
+}
+_RET
 
 //==============================================================
 //サブルーチン：お店が建った時用カメラ
@@ -1381,7 +1390,18 @@ _RET
 sub_shopbuild_camera:
 {
   _CALL sub_crowdpeople_visible_off
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_visible_off )
+	_OBJ_ANIME_WAIT()
+  _CALL sub_forward_camera
+}
+_RET
 
+//==============================================================
+//サブルーチン：歩行者全表示OFF
+//  sub_resident_merge
+//==============================================================
+sub_forward_camera:
+{
   SWITCH $LWK_CAMERA_INDEX
   CASE 0 THEN
 	  _CAMERA_MOVE( RESORT_BCAM_SHOP1_PITCH,RESORT_BCAM_SHOP1_YAW,RESORT_BCAM_SHOP1_DIST,RESORT_BCAM_SHOP1_X,RESORT_BCAM_SHOP1_Y,RESORT_BCAM_SHOP1_Z,1 )
@@ -1404,16 +1424,13 @@ sub_shopbuild_camera:
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 }
 _RET
-
 //==============================================================
 //サブルーチン：歩行者全表示OFF
 //  sub_resident_merge
 //==============================================================
 sub_crowdpeople_visible_off:
 {
-  _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE )
-  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_visible_off )
-	//_OBJ_ANIME_WAIT()
+  _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE )
 }
 _RET
 
@@ -1462,7 +1479,7 @@ sub_resident_lot:
 		_CAMERA_PURGE()		//カメラのバインドを解く
 
     _RESORT_GET_DATA( RESORT_GET_PARAM_INDEX, LWK_CAMERA_INDEX )
-    _CALL sub_shopbuild_camera
+    _CALL sub_lot_camera
     _BLACK_IN()
     _DISP_FADE_END_CHECK()
 
