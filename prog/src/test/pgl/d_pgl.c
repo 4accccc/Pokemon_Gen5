@@ -86,6 +86,7 @@ typedef enum
   MENU_ITEM_EXSAVE,
   MENU_ITEM_SAVETABLE,
   MENU_ITEM_SAVECRC,
+  MENU_ITEM_DLSAVE_INFO,
   MENU_ITEM_RETURN,
 
   MENU_ITEM_NUM
@@ -99,6 +100,7 @@ static const STRCODE* str_menu[] =
   L"セーブアドレスEX",
   L"セーブブロックテーブル",
   L"セーブCRCアドレス",
+  L"DLセーブ解析用データ出力",
   L"戻る",
 };
 
@@ -139,6 +141,7 @@ static void NextFunc_SaveAdrs( PROC_WORK *p_wk );
 static void NextFunc_ExSaveAdrs( PROC_WORK * p_wk );
 static void NextFunc_SaveAdrsTable( PROC_WORK * p_wk );
 static void NextFunc_SaveAdrsCRC( PROC_WORK * p_wk );
+static void NextFunc_DLSaveInfo( PROC_WORK * p_wk );
 
 //============================================================================================
 /**
@@ -385,6 +388,9 @@ static void SetNextFunc( PROC_WORK *p_wk )
     break;
   case MENU_ITEM_SAVECRC:
     NextFunc_SaveAdrsCRC(p_wk);
+    break;
+  case MENU_ITEM_DLSAVE_INFO:
+    NextFunc_DLSaveInfo(p_wk);
     break;
   }
 }
@@ -834,6 +840,7 @@ static void printInnerSaveAdrsList( BOOL is_table, SAVE_CONTROL_WORK * svctrl, u
   {
     adrs = (u32)SaveControl_DataPtrGet( svctrl, i ) - top_adrs + adrs_ofs;
     size = SaveParam_Normal.table[i].get_size();
+    size = MATH_ROUNDUP( size ,4 );
     if ( is_table )
     {
       OS_TPrintf(" +----------------------------------------------- %05x\n", adrs );
@@ -872,6 +879,104 @@ static void printInnerSaveAdrsList( BOOL is_table, SAVE_CONTROL_WORK * svctrl, u
   } else {
     OS_TPrintf("%3d: %05x: %05x(%5d) 0x%05x\n", i + id_ofs, adrs, size, size, adrs + size + 2 );
   }
+
+
+}
+
+//---------------------------------------------------------------------------------------------------
+// ダウンロードしてきたセーブデータを解析を焼けるデータに変換するツールに必要なデータ出力
+// (gsync_save_conv.rb用)
+//---------------------------------------------------------------------------------------------------
+static void printGsyncSaveAdrsList( const SAVE_CONTROL_WORK * svctrl,const GFL_SVLD_PARAM * params )
+{
+  int i;
+  u32 size;
+  u32 total_size;
+  u32 sv_total_sizes = 0;
+  u64 footer_crc_addr;
+  u32 block_crc_total_num;
+  u32 block_crc_total_size;
+  u64 footer_addr;
+  u32 mirror_adrs;
+
+  // セーブデータの実サイズを取得
+  GFL_SAVEDATA *sv_normal = DEBUG_SaveData_PtrGet();
+  GFL_SAVEDATA_GetSaveWorkAdrs( sv_normal ,&sv_total_sizes);
+  
+  OS_TPrintf("# =============================================\n" );
+  
+  // sizeof(SAVE_FOOTER)と同じサイズにする必要がある
+  OS_TPrintf("# SAVE_FOOTERのサイズ\n" );
+  OS_TPrintf("FOTTER_SIZE = %d\n\n",LAST_DATA_SIZE );
+
+  // ブロック数
+  OS_TPrintf("# セーブデータのブロック数\n" );
+  OS_TPrintf("BLOCK_NUM = %d\n\n",params->table_max );
+
+  ///<ブロックのCRC管理テーブルバッファの合計数
+  //block_crc_total_numを偶数個にすることで、4バイトアライメントを維持
+  block_crc_total_num = params->table_max;		
+  if( params->table_max%2 != 0 ){
+    block_crc_total_num += 1;	
+  }
+
+  // CRCは1つにつき2バイト
+  block_crc_total_size = block_crc_total_num*2;
+  OS_TPrintf("# フッターの全CRCテーブルの長さ\n" );
+  OS_TPrintf("# 4バイトアライメントを守るために偶数個になっている（CRCは2バイト）\n" );
+  OS_TPrintf("BLOCK_NUM_CRC = %d\n\n",block_crc_total_num );
+
+  // セーブブロックのCRC管理ワークのCRC開始アドレス
+  // ※ フッターのCRCが格納されているアドレス
+  footer_crc_addr = sv_total_sizes - LAST_DATA_SIZE - block_crc_total_size;
+  OS_TPrintf("# CRCテーブルの開始アドレス\n" );
+  OS_TPrintf("TOTAL_CRC_ADDRESS = 0x%x\n\n",footer_crc_addr );
+
+  // フッターの格納アドレス
+  // ※ フッターのCRCが格納されているアドレス
+  footer_addr = sv_total_sizes - LAST_DATA_SIZE;
+  OS_TPrintf("# セーブ管理フッターの開始アドレス\n" );
+  OS_TPrintf("FOTTER_ADDRESS = 0x%x\n\n",footer_addr );
+  
+  // ミラーセーブのアドレス
+  mirror_adrs = (u32)params->savearea_mirror_address;
+  OS_TPrintf("# ミラーセーブの開始アドレス\n" );
+  OS_TPrintf("MIRROR_ADDRESS = 0x%x\n\n",mirror_adrs );
+
+  // 実サイズ(4バイトアライメント)
+  OS_TPrintf("SAVE_REAL_SIZE = [ \n" );
+  for (i = 0; i < params->table_max; i ++ )
+  {
+    size = params->table[i].get_size() + BLOCK_FOOTER_SIZE;
+    size = MATH_ROUNDUP( size ,4);
+    OS_Printf("%d,\n",size);
+  }
+  OS_Printf("]\n\n");
+
+  // ブロックごとのサイズ
+  OS_TPrintf("SAVE_PAD_SIZE = [ \n" );
+  for (i = 0; i < params->table_max; i ++ )
+  {
+    size = params->table[i].get_size();
+    size = MATH_ROUNDUP( size ,4);
+    size = MATH_ROUNDUP( size + BLOCK_FOOTER_SIZE, 256 );
+    OS_Printf("%d,\n",size);
+  }
+  OS_Printf("]\n\n");
+
+  // セーブ開始アドレス
+  total_size = 0;
+  OS_TPrintf("SAVE_TOP_ADDRESS = [ \n" );
+  for (i = 0; i < params->table_max; i ++ )
+  {
+    OS_Printf("%d,\n",total_size);
+    size = params->table[i].get_size();
+    size = MATH_ROUNDUP( size ,4);
+    total_size += MATH_ROUNDUP( size + BLOCK_FOOTER_SIZE, 256 );
+  }
+  OS_Printf("]\n\n");
+   
+  OS_TPrintf("# =============================================\n" );
 }
 
 //---------------------------------------------------------------------------
@@ -967,6 +1072,14 @@ static void NextFunc_SaveAdrsTable( PROC_WORK * p_wk )
   printInnerSaves( TRUE, p_wk->pSaveData );
   printOuterSaves( TRUE );
 }
+//---------------------------------------------------------------------------
+/// DLセーブ解析用データ出力
+//---------------------------------------------------------------------------
+static void NextFunc_DLSaveInfo( PROC_WORK * p_wk )
+{
+  printGsyncSaveAdrsList( p_wk->pSaveData, &SaveParam_Normal );
+}
+
 //---------------------------------------------------------------------------
 /**
  * @brief
