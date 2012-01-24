@@ -5349,14 +5349,14 @@ SWANで名称とデザイン変更した</Comment>
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]ゆうかん[/System:Color]
 [/System:Color]攻撃が　成長しやすい。
-すばやさが　成長しにくい。</Text>
+素早さが　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-14T03:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5632,14 +5632,14 @@ SWANで名称とデザイン変更した</Comment>
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]のんき[/System:Color]
 [/System:Color]防御が　成長しやすい。
-すばやさが　成長しにくい。</Text>
+素早さが　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-14T03:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5802,7 +5802,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]おくびょう[/System:Color]
-[/System:Color]すばやさが　成長しやすい。
+[/System:Color]素早さが　成長しやすい。
 攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
@@ -5810,7 +5810,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5859,7 +5859,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]せっかち[/System:Color]
-[/System:Color]すばやさが　成長しやすい。
+[/System:Color]素早さが　成長しやすい。
 防御が　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
@@ -5867,7 +5867,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -5971,7 +5971,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="2" ]ようき
-[/System:Color]すばやさが　成長しやすい。
+[/System:Color]素早さが　成長しやすい。
 特攻が　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
@@ -5979,7 +5979,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6028,7 +6028,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]むじゃき[/System:Color]
-[/System:Color]すばやさが　成長しやすい。
+[/System:Color]素早さが　成長しやすい。
 特防が　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
@@ -6036,7 +6036,7 @@ SWANで名称とデザイン変更した</Comment>
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6200,14 +6200,14 @@ SWANで名称とデザイン変更した</Comment>
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]れいせい[/System:Color]
 [/System:Color]特攻が　成長しやすい。
-すばやさが　成長しにくい。</Text>
+素早さが　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-14T03:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6483,14 +6483,14 @@ SWANで名称とデザイン変更した</Comment>
 
 せいかく：　[System:Color name="1" ][System:Color name="2" ]なまいき[/System:Color]
 [/System:Color]特防が　成長しやすい。
-すばやさが　成長しにくい。</Text>
+素早さが　成長しにくい。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-10-14T02:54:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-06-25T09:28:28" />
+				Time="2012-01-24T10:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
