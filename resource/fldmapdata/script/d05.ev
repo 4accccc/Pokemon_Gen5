@@ -419,6 +419,11 @@ EVENT_START		ev_scene_d05_swplazma_01
   _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
   _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
   $WK_SCENE_D27R0101_FIRST_01 = 1
+  
+  //ローカルライブキャスター・ライバル通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_D05_2 )
+  //ローカルライブキャスター・チェレン通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_D05 )
   //========================================//
 EVENT_END
 
