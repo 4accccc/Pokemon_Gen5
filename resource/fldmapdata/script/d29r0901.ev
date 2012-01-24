@@ -136,8 +136,8 @@ EVENT_START   ev_d29r0901_rezisteel
   // ñ¬Ç´ê∫
   _VOICE_PLAY( MONSNO_379, 0 )
   _GIZAPLAINWIN_MSG_POS( msg_d29r0901_poke57_02, POS_DOWN )
-  _AB_KEYWAIT_MARK()
   _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
 
   // êÌì¨

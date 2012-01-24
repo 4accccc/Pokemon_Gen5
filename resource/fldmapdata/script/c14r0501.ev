@@ -411,30 +411,35 @@ EVENT_START ev_c14r0501_poke45_01
     //歩数がレベル0
     IF $LOCALWORK14 <= 99 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_08 , POS_DOWN )
+      _VOICE_WAIT()
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
     
     //歩数がレベル1
     ELSIF $LOCALWORK14 <= 199 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_07 , POS_DOWN )
+      _VOICE_WAIT()
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
     //歩数がレベル2
     ELSIF $LOCALWORK14 <= 299 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_06 , POS_DOWN )
+      _VOICE_WAIT()
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
     //歩数がレベル3
     ELSIF $LOCALWORK14 <= 364 THEN
       _SYSWIN_MSG( msg_c14r0501_poke46_05 , POS_DOWN )
+      _VOICE_WAIT()
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       
     //歩数がレベル5
     ELSE
       _SYSWIN_MSG( msg_c14r0501_poke46_04 , POS_DOWN )
+      _VOICE_WAIT()
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
       

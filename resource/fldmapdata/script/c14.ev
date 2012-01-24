@@ -535,6 +535,7 @@ EVENT_START   ev_pos_c14_kaodasi_01
       _VOICE_PLAY( MONSNO_607, 0 ) 
       _BALLOONWIN_OBJMSG_POS( msg_c14_sign4_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
       _VOICE_WAIT()
+      _AB_KEYWAIT_MARK()
     ENDIF
     _MSGWIN_CLOSE()
 
