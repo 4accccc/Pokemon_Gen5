@@ -1302,6 +1302,7 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
   int i;
   u8 area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
   const INF_DUNGEON_SEED *p_seed = &p_dungeon_data->seed;
+  HEAPID heapID = HEAPID_FIELDMAP;
   
   // チュートリアルMAPをセットする
   BOOL is_tutorial = SetTutorialMap( p_save ,p_dungeon_data );
@@ -1317,7 +1318,7 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
     // ダンジョンデータを生成(エリアに対応したサイズで生成する)
     INF_DCREATOR_SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,fs_x ,fs_y,top_floor);
     // トレーナーデータをセット
-    INF_DCREATOR_SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed ,top_floor);
+    INF_DCREATOR_SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed ,top_floor ,heapID);
   }
   else
   {

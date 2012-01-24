@@ -883,7 +883,7 @@ static BOOL CheckDigEnd( const ROOM_DATA *p_room_data ,int fs_x ,int fs_y)
  *  トレーナーデーター生成ルーチン
  */
 //-----------------------------------------------------------------------------
-static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
+static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context,HEAPID heapID);
 static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,int *room_id_array ,u32 *member_num );
 static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,u16* tr_id_array ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index  );
 static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32 floor_no ,s32* id_pos_array, s32* room_id_array );
@@ -901,25 +901,28 @@ static void GetRecoverTrainerIDArray( const INF_DUNGEON_DATA *p_dungeon_data ,u3
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed,u8 top_floor )
+void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed,u8 top_floor ,HEAPID heapID)
 {
   int i,n;
   int tr_cnt = 0;
-  u32 trid_array[INF_DUNGEON_TR_DATA_MAX];
+  u32 *trid_array;
   GFL_STD_RandContext rand_context;
   
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, seed );
- 
-  // メモリをクリーン
-  GFL_STD_MemFill( trid_array ,INFTRID_DUMMY , sizeof(u32)*INF_DUNGEON_TR_DATA_MAX);
- 
-  // トレーナーIDテーブル取得
-  tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array, &rand_context  );
+  
+  // トレーナーID配列を作成
+  trid_array = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof( u32 )*INF_DUNGEON_TR_DATA_MAX );
 
   // トレーナーIDのランダムデータを生成
   for( n = 0; n<top_floor; n++)
   {
+    // メモリをクリーン
+    GFL_STD_MemFill( trid_array ,INFTRID_DUMMY , sizeof(u32)*INF_DUNGEON_TR_DATA_MAX);
+
+    // トレーナーIDテーブル取得
+    tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array, &rand_context ,heapID );
+
     // データ初期化
     GFL_STD_MemFill(p_dungeon_data->tr_data[n].tr_id, INFTRID_DUMMY, sizeof(u16)*INFINITY_DUNGEON_TRID_MAX );
     
@@ -992,29 +995,32 @@ void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no 
     GF_ASSERT_MSG(recover_index==top_floor,"回復トレーナーが正しく設置できていません\n");
   }
 
+  // 確保メモリを開放
+  GFL_HEAP_FreeMemory( trid_array );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ブラック用トレーナーIDテーブルを取得
+ *	@brief  バージョン別トレーナーIDテーブルを取得
  *
  *	@param	*p_trid_array 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context)
+static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context,HEAPID heapID)
 {
   int i;
   u16 tr_id = 0;
   int cnt = 0;
   u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
-  u32 trid_array[INF_DUNGEON_TR_DATA_MAX];
-  u32 tmp_trid_array[INF_DUNGEON_TR_DATA_MAX];
+  u32 *trid_array;
+  u32 *tmp_trid_array;
   u32 add_data_num = 0;
-
-  // メモリをクリーン
-  GFL_STD_MemFill( trid_array ,0 , sizeof(trid_array));
+  
+  // トレーナーID配列を作成
+  trid_array = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof( u32 )*INF_DUNGEON_TR_DATA_MAX );
+  tmp_trid_array = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof( u32 )*INF_DUNGEON_TR_DATA_MAX );
 
   // 使用できるトレーナーデータを決定
   for( i = 0 ; i < INF_TR_AREA_DATA_MAX; i++ )
@@ -1074,6 +1080,10 @@ static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 are
       }
     }
   }
+  
+  // 確保メモリを開放
+  GFL_HEAP_FreeMemory( trid_array );
+  GFL_HEAP_FreeMemory( tmp_trid_array );
   
   return cnt;
 }

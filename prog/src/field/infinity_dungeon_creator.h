@@ -86,5 +86,5 @@ typedef struct {
 //
 //=============================================================================
 extern void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 seed ,int fs_x ,int fs_y,u8 top_floor);
-extern void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed,u8 top_floor );
+extern void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed,u8 top_floor ,HEAPID heapID);
 
