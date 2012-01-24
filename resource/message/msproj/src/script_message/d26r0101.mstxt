@@ -1198,11 +1198,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさき
-チャンピオンロード</Text>
+			<Text>トンネル　ぬければ
+ポケモンリーグ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:08:56" />
+				Time="2012-01-24T09:20:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1210,11 +1210,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先
-チャンピオンロード</Text>
+			<Text>トンネル　抜ければ
+ポケモンリーグ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:10:03" />
+				Time="2012-01-24T09:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
