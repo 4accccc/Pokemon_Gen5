@@ -59,7 +59,6 @@ EVENT_START   ev_r07r0102_woman3_01
 
     //保育士：いまの　あたし　むてき　よ！
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_woman3_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し

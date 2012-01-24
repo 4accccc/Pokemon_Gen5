@@ -50,7 +50,6 @@ EVENT_START   ev_r07r0104_maid_01
 
     //メイド：まさか　したの　３にんが
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0104_maid_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し

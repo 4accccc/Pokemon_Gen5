@@ -223,7 +223,6 @@ EVENT_START   ev_r07r0101_waitress_01
 
     //ウェイトレス：あなた！　セイガイハで　カップルに
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_waitress_01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し

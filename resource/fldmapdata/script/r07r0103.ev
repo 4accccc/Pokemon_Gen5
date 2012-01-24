@@ -57,7 +57,6 @@ EVENT_START   ev_r07r0103_ol_01
 
     //OL:かねの　ねいろが　きこえなければ
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0103_ol__01 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //トレーナー戦呼び出し
