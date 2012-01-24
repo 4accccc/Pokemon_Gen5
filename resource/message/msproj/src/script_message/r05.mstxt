@@ -2908,6 +2908,69 @@ musician_01</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r05_musician_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうぶを　して　わかったよ
+オマエ　サイコーだぜ！▼
+なんたって　グッズの
+エレキギターを　もってるもんな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:51:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>勝負を　して　わかったよ
+オマエ　サイコーだぜ！▼
+なんたって　グッズの
+エレキギターを　持ってるもんな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:51:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:51:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後に表示
+・グッズ「エレキギター」入手済みの場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:50:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナー
+musician_01</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:50:26" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T04:50:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r05_woman1_01"
 		Style="Large">
 		<LanguageCell
