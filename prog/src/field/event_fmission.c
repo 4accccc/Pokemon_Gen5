@@ -431,7 +431,7 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
       
         //開催回数でメダルセット
-        if( open_num >= 30 ){
+        if( open_num >= 10 ){
           MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HOLD_LV1 );
           if( open_num >= 50 ){
             MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HOLD_LV2 );
