@@ -543,10 +543,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいッ！！</Text>
+			<Text>おいッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T05:42:59" />
+				Time="2012-01-24T06:38:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -554,10 +554,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいッ！！</Text>
+			<Text>おいッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T05:43:02" />
+				Time="2012-01-24T06:38:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
