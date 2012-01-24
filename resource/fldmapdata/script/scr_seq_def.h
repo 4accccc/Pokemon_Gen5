@@ -4754,6 +4754,35 @@
   .short \ret_val
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  _HAVE_MUSICAL_GOODS ミュージカル：グッズ所持チェック
+ *  @param no グッズ番号
+ *  @param  ret_wk TRUE 所持  FALSE　持ってない
+ */
+//--------------------------------------------------------------
+#define _HAVE_MUSICAL_GOODS( no, ret_wk ) \
+    _ASM_HAVE_MUSICAL_GOODS no, ret_wk
+
+  .macro  _ASM_HAVE_MUSICAL_GOODS no, ret_wk
+  .short EV_SEQ_HAVE_MUSICAL_GOODS
+  .short \no
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _IS_MUSICAL_GOODS_COMPLETE ミュージカル：グッズコンプリートチェック
+ *  @param ret_wk TRUE 全グッズ所持 FALSE何か持ってない
+ */
+//--------------------------------------------------------------
+#define _IS_MUSICAL_GOODS_COMPLETE( ret_wk ) \
+    _ASM_IS_MUSICAL_GOODS_COMPLETE ret_wk
+
+  .macro  _ASM_IS_MUSICAL_GOODS_COMPLETE ret_wk
+  .short EV_SEQ_IS_MUSICAL_GOODS_COMPLETE
+  .short \ret_wk
+  .endm
 
 //--------------------------------------------------------------
 /**

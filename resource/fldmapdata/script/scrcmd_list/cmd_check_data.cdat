@@ -746,4 +746,7 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (743)
   { FALSE, FALSE, FALSE }, // NO_CMD (744)
   { TRUE, TRUE, TRUE }, // _SET_SOFT_RESET (745)
+  { TRUE, TRUE, TRUE }, // _HAVE_MUSICAL_GOODS (746)
+  { TRUE, TRUE, TRUE }, // _IS_MUSICAL_GOODS_COMPLETE (747)
+  { FALSE, FALSE, FALSE }, // NO_CMD (748)
 };

@@ -1160,6 +1160,11 @@
   //ソフトリセット
   DEF_CMD( EvCmdSetSoftReset, EV_SEQ_SET_SOFT_RESET )
 
+  //ミュージカル２
+  DEF_CMD( EvCmdHaveMusicalGoods, EV_SEQ_HAVE_MUSICAL_GOODS )
+  DEF_CMD( EvCmdIsMusicalGoodsComplete, EV_SEQ_IS_MUSICAL_GOODS_COMPLETE )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

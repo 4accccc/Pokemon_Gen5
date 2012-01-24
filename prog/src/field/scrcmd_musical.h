@@ -24,6 +24,9 @@ extern VMCMD_RESULT EvCmdSelectMusicalPoke( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdHaveMusicalGoods( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdIsMusicalGoodsComplete( VMHANDLE *core, void *wk );
+
 #endif	/* __ASM_NO_DEF_ */
 
 #endif	/* SCR_MUSICAL_H*/

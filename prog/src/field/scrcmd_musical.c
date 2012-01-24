@@ -1077,6 +1077,51 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;  
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカルグッズの所持チェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdHaveMusicalGoods( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u16  val   = SCRCMD_GetVMWorkValue( core, work );
+  u16*  ret_wk   = SCRCMD_GetVMWork( core, work );
+
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+
+  *ret_wk = MUSICAL_SAVE_ChackHaveItem( musSave , val );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカルグッズコンプリートチェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdIsMusicalGoodsComplete( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+
+  u16*  ret_wk   = SCRCMD_GetVMWork( core, work );
+
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+
+  *ret_wk = MUSICAL_SAVE_IsCompleteItem( musSave );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 #pragma mark [>func
 static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
 {
