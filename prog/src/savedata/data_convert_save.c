@@ -227,11 +227,16 @@ static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE
   //ミュージカルデータ
   if( cp_src_data->musical_entry_num > 0 )
   {
-    const MUSICAL_SAVE* cp_musical = MUSICAL_SAVE_GetMusicalSave( (SAVE_CONTROL_WORK *)cp_sv );
+    MUSICAL_SAVE* cp_musical = MUSICAL_SAVE_GetMusicalSave( (SAVE_CONTROL_WORK *)cp_sv );
     if( MUSICAL_SAVE_IsConvertItem( cp_musical ) == FALSE )
     {
       const u8* cp_have_item_bit = MUSICAL_SAVE_GetItemBitAdrs( cp_musical );
-      if( GFL_STD_MemComp( cp_src_data->musical_item, cp_have_item_bit, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0 )
+      BOOL is_diff = (GFL_STD_MemComp( cp_src_data->musical_item, cp_have_item_bit, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0);
+      BOOL is_complete = MUSICAL_SAVE_IsCompleteItem( cp_musical );
+
+      //差があるときにコンバート
+      //もしくは差がなくてもコンプリートしていればコンバート
+      if( (is_diff) || (!is_diff && is_complete) )
       {
         is_convert[DATA_CONVERT_OWNER_MUSICAL] = TRUE;
         if( data_in )
