@@ -67,8 +67,8 @@
 			Language="JPN_KANJI">
 			<Text>目標[Digit:4digits ]人</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T12:32:56" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -108,8 +108,8 @@
 			Language="JPN_KANJI">
 			<Text>目標[Digit:4digits ]匹</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T12:32:53" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:27:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -149,8 +149,8 @@
 			Language="JPN_KANJI">
 			<Text>目標[Digit:4digits ]個</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T12:33:11" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -190,8 +190,8 @@
 			Language="JPN_KANJI">
 			<Text>目標[Digit:4digits ]回</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T12:32:49" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:27:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -231,8 +231,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xright value="0" ]参加[Digit:3digits Idx="0" ]人</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:42:46" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1766,10 +1766,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ]を　見つけた！</Text>
+			<Text>[Name:Item ]を　みつけた！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:22:17" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:26:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1850,10 +1850,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ]を　見つけた！</Text>
+			<Text>[Name:Item ]を　みつけた！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:23:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:26:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1892,10 +1892,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ]を　見つけた！</Text>
+			<Text>[Name:Item ]を　みつけた！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:23:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
