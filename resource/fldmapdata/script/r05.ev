@@ -18,7 +18,7 @@
   .include  "d34r0101_def.h"
 
   //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
-  //@author Mizuguchi_Mai（ベル）
+  //@author Mizuguchi_Mai（ベル・グッズ入手イベント修正）
   //@author suginaka_katsunori（チャールズなど、ベルイベント修正）
 
 //--------------------------------------------------------------
@@ -1240,7 +1240,7 @@ EVENT_END
 /************************************************************/
 //トレーナーですが、グッズ入手処理があるためスクリプトで制御しています
 EVENT_START	ev_r05_musician_01
-  
+{
   //グッズケースを持っているかチェック
   _ITEM_CHK( ITEM_GUZZUKEESU, 1, SCWK_ANSWER )
   
@@ -1272,21 +1272,36 @@ EVENT_START	ev_r05_musician_01
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
 		
-		//勝負をしてわかったよ
-		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01 )
-		_MSGWIN_CLOSE()
+		//グッズ所持状態チェック
+		_HAVE_MUSICAL_GOODS( 84, LOCALWORK1 )
 		
-		//ミュージカルのグッズ番号をセット
-		$SCWK_TEMP0 = 84	//エレキギター
-		$SCWK_TEMP1 = TRUE	//キー待ち記号あり
+		IF $LOCALWORK1 == 0 THEN
 		
-		//グッズ入手共通処理へ
-		_CHG_COMMON_SCR	SCRID_MUSICAL_ADD_GOODS
-		
-		//グッズのエレキギターを持たせれば…
-		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_02 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+  		//勝負をしてわかったよ
+  		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01 )
+  		_MSGWIN_CLOSE()
+  		
+  		//ミュージカルのグッズ番号をセット
+  		$SCWK_TEMP0 = 84	//エレキギター
+  		$SCWK_TEMP1 = TRUE	//キー待ち記号あり
+  		
+  		//グッズ入手共通処理へ
+  		_CHG_COMMON_SCR	SCRID_MUSICAL_ADD_GOODS
+  		
+  		//グッズのエレキギターを持たせれば…
+  		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_02 )
+  		_LAST_KEYWAIT()
+  		_MSGWIN_CLOSE()
+  	
+  	//グッズを既に持っている
+  	ELSE
+  	  
+  	  //グッズのエレキギターを持たせれば…
+  		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_03 )
+  		_LAST_KEYWAIT()
+  		_MSGWIN_CLOSE()
+  	
+  	ENDIF
 	
 	ELSE
 		//戦闘済みなら
@@ -1302,7 +1317,7 @@ EVENT_START	ev_r05_musician_01
   ELSE
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_00 )
   ENDIF
-
+}
 EVENT_END
 
 /**************************************************************/

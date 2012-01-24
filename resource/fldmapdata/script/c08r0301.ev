@@ -38,12 +38,28 @@ EVENT_START   ev_c08r0301_gentleman_01
 
   //プレイヤーネームを格納
   _PLAYER_NAME( 1 )
+  
+  //所持グッズチェック
+  _HAVE_MUSICAL_GOODS( MUSICAL_GOODS_PUREZENTOBAKO, LOCALWORK1 )
+  _HAVE_MUSICAL_GOODS( MUSICAL_GOODS_FUSAFUSANOHIGE, LOCALWORK2 )
+  _HAVE_MUSICAL_GOODS( MUSICAL_GOODS_AKAIBOUSI, LOCALWORK3 )
+  _HAVE_MUSICAL_GOODS( MUSICAL_GOODS_OOKINAFUKURO, LOCALWORK4 )
+  
+  //グッズを全て所持していたならばイベント終了
+  IF $LOCALWORK1 == 1 && $LOCALWORK2 == 1 && $LOCALWORK3 == 1 && $LOCALWORK4 == 1 THEN
+    //==================================//
+    //C08R0301 グッズ入手イベント終了
+    $WK_SCENE_C08R0301 = 1
+    //==================================//
+  ENDIF
+  
+  _ITEM_CHK( ITEM_GUZZUKEESU, 1, SCWK_ANSWER )
 
   //グッズケースを持っている
-  IF $WK_SCENE_C04R0201 == 2 THEN
+  IF $SCWK_ANSWER == TRUE THEN
 
     //グッズを全て収集している
-    IF $WK_SCENE_C08R0301 == 4 THEN
+    IF $WK_SCENE_C08R0301 == 1 THEN
 
       //おじさん：ミュージカルを　たのしんでほしいよ♪
       _BALLOONWIN_OBJMSG( msg_c08r0301_goods_05, C08R0301_GENTLEMAN_01 )
@@ -78,7 +94,7 @@ EVENT_START   ev_c08r0301_gentleman_01
         DEFINE_LOCAL LCW_GOODS_NAME
 
         //アイテム入手処理
-        IF $WK_SCENE_C08R0301 == 0 THEN
+        IF $LOCALWORK1 == 0 THEN
           $SCWK_TEMP0 = MUSICAL_GOODS_PUREZENTOBAKO
           $SCWK_TEMP1 = TRUE
           _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
@@ -88,12 +104,7 @@ EVENT_START   ev_c08r0301_gentleman_01
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
 
-          //==================================//
-          //2個目のアイテムを受け取れるよう設定
-          $WK_SCENE_C08R0301 = 1
-          //==================================//
-
-        ELSIF $WK_SCENE_C08R0301 == 1 THEN
+        ELSIF $LOCALWORK2 == 0 THEN
           $SCWK_TEMP0 = MUSICAL_GOODS_FUSAFUSANOHIGE
           $SCWK_TEMP1 = TRUE
           _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
@@ -103,12 +114,7 @@ EVENT_START   ev_c08r0301_gentleman_01
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
 
-          //==================================//
-          //3個目のアイテムを受け取れるよう設定
-          $WK_SCENE_C08R0301 = 2
-          //==================================//
-
-        ELSIF $WK_SCENE_C08R0301 == 2 THEN
+        ELSIF $LOCALWORK3 == 0 THEN
           $SCWK_TEMP0 = MUSICAL_GOODS_AKAIBOUSI
           $SCWK_TEMP1 = TRUE
           _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
@@ -118,12 +124,7 @@ EVENT_START   ev_c08r0301_gentleman_01
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
 
-          //==================================//
-          //4個目のアイテムを受け取れるよう設定
-          $WK_SCENE_C08R0301 = 3
-          //==================================//
-
-        ELSIF $WK_SCENE_C08R0301 == 3 THEN
+        ELSIF $LOCALWORK4 == 0 THEN
           $SCWK_TEMP0 = MUSICAL_GOODS_OOKINAFUKURO
           $SCWK_TEMP1 = TRUE
           _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
@@ -132,11 +133,6 @@ EVENT_START   ev_c08r0301_gentleman_01
           _BALLOONWIN_OBJMSG( msg_c08r0301_goods_05, C08R0301_GENTLEMAN_01 )
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
-
-          //==================================//
-          //アイテムの受け取りを完了
-          $WK_SCENE_C08R0301 = 4
-          //==================================//
 
         ENDIF
 
