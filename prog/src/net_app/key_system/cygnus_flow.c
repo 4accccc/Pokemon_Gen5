@@ -26,6 +26,7 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_memo.h"
 #include "item/itemsym.h"
+#include "poke_tool/poke_personal.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -1477,7 +1478,8 @@ struct _CYGNUS_SAVE_WORK
   u32 flag;
 };
 
-static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_row_data[] );
+static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_row_data[], HEAPID heapID );
+static BOOL Cygnus_Save_IsValidPokemon( u16 mons_no, u16 form_no, u8 sex, HEAPID heapID );
 static BOOL Cygnus_Save_IsDemoPoke( u16 mons_no );
 static BOOL Cygnus_Save_IsStatusFixPoke( u16 mons_no );
 
@@ -1580,7 +1582,7 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
     //ナマデータをご褒美データに編集
     if( p_wk->out_state == CYGSAVE_STATE_RECEIVE )
     {
-      Cygnus_Save_ConvertRewardData( p_wk, row_data );
+      Cygnus_Save_ConvertRewardData( p_wk, row_data, heapID );
     }
   }
 
@@ -2001,7 +2003,7 @@ static void CYGNUS_SAVE_SetGameDataReward( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID
  *	@param	CYGNUS_SAVE_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_row_data[] )
+static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_row_data[], HEAPID heapID )
 {
   int i;
 
@@ -2064,7 +2066,8 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
       u16 mons_no = CYGNUS_DATA_GET_POKE_NO( cp_row_data[i] );
       u8  form_no = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
       u8  sex = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
-      if( 0 < mons_no && mons_no <= MONSNO_END )
+
+      if( Cygnus_Save_IsValidPokemon( mons_no, form_no, sex, heapID ) )
       {
         p_wk->reward_data[p_wk->reward_num].type = CYGNUS_REWARD_TYPE_POKEMON;
         p_wk->reward_data[p_wk->reward_num].no   = mons_no;
@@ -2100,8 +2103,70 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
         p_wk->reward_num++;
       }
     }
+  } 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  与えられた引数が正常かチェック
+ *
+ *	@param	u16 mons_no モンスタ番号
+ *	@param	form_no   フォルム
+ *	@param	sex        性別
+ *
+ *	@return TRUE正常  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+static BOOL Cygnus_Save_IsValidPokemon( u16 mons_no, u16 form_no, u8 sex, HEAPID heapID )
+{
+  //モンスタ番号不正
+  if( MONSNO_END < mons_no || mons_no == 0 )
+  {
+    return FALSE;
   }
-  
+  else
+  {
+    POKEMON_PERSONAL_DATA*  p_ppd = POKE_PERSONAL_OpenHandle( mons_no, 0, heapID );
+    const u32 form_max = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_form_max );
+    const POKEPER_SEX per_sex = POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_sex );
+    POKE_PERSONAL_CloseHandle( p_ppd );
+
+    //フォルム最大数が超えていたら不正
+    if( form_no > form_max )
+    {
+      return FALSE;
+    }
+
+    //性別ベクトルと性別が合わなかったら不正
+    switch( per_sex )
+    { 
+    case POKEPER_SEX_MALE:
+      if( sex != PM_MALE )
+      {
+        return FALSE;
+      }
+      break;
+    case POKEPER_SEX_UNKNOWN:
+      if( sex != PM_NEUTRAL )
+      {
+        return FALSE;
+      }
+      break;
+    case POKEPER_SEX_FEMALE:
+      if( sex != PM_FEMALE )
+      {
+        return FALSE;
+      }
+      break;
+    default:
+      if( !(sex == PM_MALE || sex == PM_FEMALE) )
+      {
+        return FALSE;
+      }
+      break;
+    }
+
+    return TRUE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
