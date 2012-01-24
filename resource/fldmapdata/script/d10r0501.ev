@@ -1233,6 +1233,16 @@ EVENT_START ev_d10r0501_poke10_01
 
     //逃げたケース
     ELSIF $LWK_ESCAPE_CK == SCR_WILD_BTL_RET_ESCAPE THEN
+      
+      //自機にカメラを戻す
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラのバインドを解く
+      _CAMERA_DEF_MOVE (1)
+      //カメラ待ち
+      _CAMERA_WAIT_MOVE()
+      _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+      _CAMERA_END()		//カメラ操作終了
+      
       //キュラム・キュロム動作モデル削除
       _OBJ_DEL( D10R0501_POKE2_01 )
       //キュラム・キュロム動作モデル生成（アニメを通常状態に戻すため）
