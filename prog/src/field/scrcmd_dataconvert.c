@@ -182,7 +182,7 @@ VMCMD_RESULT EvCmdDataConv_GetData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret = MUSICAL_SAVE_IsConvertItem( p_musical );
     break;
   case DATACONV_GET_OVER_SCORE:
-    *p_ret = ( DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_POINT, NULL ) < MUSICAL_SAVE_GetSumPoint( p_musical ) );
+    *p_ret = ( DATA_CONVERT_SAVE_GetData( p_dataconv, DATA_CONVERT_GET_ID_MUSICAL_POINT, NULL ) <= MUSICAL_SAVE_GetSumPoint( p_musical ) );
     break;
   default:
     GF_ASSERT(0);
