@@ -861,10 +861,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだよ？</Text>
+			<Text>ところで　ポケモン　げんきかよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T09:37:24" />
+				Time="2012-01-24T07:45:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -872,10 +872,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだよ？</Text>
+			<Text>ところで　ポケモン　元気かよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T09:37:27" />
+				Time="2012-01-24T07:44:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1243,10 +1243,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうしたんだい？</Text>
+			<Text>なにか　ききたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T07:44:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1254,10 +1254,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうしたんだい？</Text>
+			<Text>なにか　ききたいの？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T07:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
