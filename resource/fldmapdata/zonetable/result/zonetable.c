@@ -8332,7 +8332,7 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d10r0101_bin,
     ZONE_ID_D10,
 		MAPNAME_D10,
-		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -20644,11 +20644,11 @@ static const ZONEDATA ZoneData[] = {
 		NARC_eventdata_d26r0101_bin,
     ZONE_ID_D26R0101,
 		MAPNAME_D26,
-		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		7,
 		TRUE,
 		TRUE,
