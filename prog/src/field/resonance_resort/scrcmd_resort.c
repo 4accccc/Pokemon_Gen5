@@ -310,7 +310,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       {
         *p_ret_wk = RESORT_CHECK_SCOUT_REFUSE;
       }
-      else if( city_lv < my_city_lv )
+      else if( city_lv <= my_city_lv )
       {
         *p_ret_wk = RESORT_CHECK_SCOUT_YES;
       }
