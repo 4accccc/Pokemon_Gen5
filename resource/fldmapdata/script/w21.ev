@@ -382,6 +382,9 @@ EVENT_START	ev_reserve_w21_swleader8_01
   _FLAG_SET(FV_D27R0101_SWLEADER1_01)
   //C14GYM0101 シズイ表示
   _FLAG_RESET( FV_C14GYM0101_SWLEADER8_01 )
+  
+  //ローカルライブキャスター・ライバル通話状態を変更（二回目登場まで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_W21 )
   //========================================//
   
   // ROMバージョン取得
