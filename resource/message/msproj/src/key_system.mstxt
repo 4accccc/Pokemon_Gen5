@@ -52,6 +52,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:02" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_01"
@@ -78,6 +85,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_02"
@@ -104,6 +118,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_03"
@@ -130,6 +151,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_04"
@@ -156,6 +184,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_05"
@@ -182,6 +217,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_06"
@@ -208,6 +250,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_07"
@@ -234,6 +283,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_08"
@@ -260,6 +316,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_09"
@@ -286,6 +349,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_10"
@@ -312,6 +382,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_11"
@@ -338,6 +415,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_12"
@@ -364,6 +448,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_13"
@@ -390,6 +481,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_14"
@@ -416,6 +514,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_15"
@@ -442,6 +547,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_18"
@@ -468,6 +580,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_19"
@@ -505,6 +624,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:16:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_20"
@@ -533,6 +659,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_21"
@@ -561,6 +694,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_22"
@@ -589,6 +729,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_23"
@@ -621,6 +768,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_24"
@@ -649,6 +803,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_25"
@@ -681,6 +842,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_26"
@@ -711,6 +879,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_27"
@@ -741,6 +916,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_28"
@@ -769,6 +951,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_29"
@@ -797,6 +986,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_30"
@@ -825,6 +1021,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_31"
@@ -851,6 +1054,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_32"
@@ -879,6 +1089,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_33"
@@ -907,6 +1124,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_34"
@@ -935,6 +1159,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_50"
@@ -963,6 +1194,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-27T05:51:28" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_105"
@@ -991,6 +1229,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-27T05:51:28" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_106"
@@ -1019,6 +1264,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-27T05:51:28" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_35"
@@ -1047,6 +1299,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_36"
@@ -1075,6 +1334,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_37"
@@ -1103,6 +1369,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_51"
@@ -1131,6 +1404,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_103"
@@ -1159,6 +1439,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_104"
@@ -1187,6 +1474,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_38"
@@ -1213,6 +1507,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_39"
@@ -1241,6 +1542,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_40"
@@ -1269,6 +1577,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_41"
@@ -1297,6 +1612,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_52"
@@ -1325,6 +1647,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-27T05:52:39" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_99"
@@ -1353,6 +1682,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-10-31T06:42:33" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_100"
@@ -1381,6 +1717,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-10-31T06:42:33" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_42"
@@ -1409,6 +1752,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_43"
@@ -1437,6 +1787,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_44"
@@ -1465,6 +1822,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_53"
@@ -1493,6 +1857,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_101"
@@ -1521,6 +1892,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_102"
@@ -1549,6 +1927,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_45"
@@ -1577,6 +1962,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_46"
@@ -1605,6 +1997,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_47"
@@ -1633,6 +2032,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_48"
@@ -1661,6 +2067,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_49"
@@ -1689,6 +2102,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_54"
@@ -1717,6 +2137,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_55"
@@ -1745,6 +2172,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_56"
@@ -1773,6 +2207,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_57"
@@ -1801,6 +2242,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_58"
@@ -1827,6 +2275,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_59"
@@ -1853,6 +2308,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_60"
@@ -1881,6 +2343,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_61"
@@ -1909,6 +2378,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_62"
@@ -1935,6 +2411,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_63"
@@ -1961,6 +2444,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_64"
@@ -1987,6 +2477,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_65"
@@ -2024,6 +2521,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:18:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_66"
@@ -2061,6 +2565,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:18:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_107"
@@ -2096,6 +2607,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:18:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_67"
@@ -2124,6 +2642,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_68"
@@ -2150,6 +2675,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_69"
@@ -2176,6 +2708,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_70"
@@ -2202,6 +2741,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_71"
@@ -2228,6 +2774,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_72"
@@ -2256,6 +2809,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_73"
@@ -2293,6 +2853,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:19:35" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_74"
@@ -2319,6 +2886,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_75"
@@ -2347,6 +2921,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_76"
@@ -2373,6 +2954,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_77"
@@ -2405,6 +2993,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_78"
@@ -2437,6 +3032,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_79"
@@ -2469,6 +3071,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_STR_80"
@@ -2501,6 +3110,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2544,6 +3160,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2587,6 +3210,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2626,6 +3256,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2665,6 +3302,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2698,6 +3342,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2737,6 +3388,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2776,6 +3434,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2815,6 +3480,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2850,6 +3522,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2885,6 +3564,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2918,6 +3604,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2951,6 +3644,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2984,6 +3684,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3017,6 +3724,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3060,6 +3774,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3103,6 +3824,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3136,6 +3864,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3169,6 +3904,13 @@
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3216,6 +3958,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:38:34" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_02"
@@ -3256,6 +4005,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_03"
@@ -3296,6 +4052,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_04"
@@ -3332,6 +4095,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_04_2"
@@ -3368,6 +4138,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_05"
@@ -3408,6 +4185,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_06"
@@ -3448,6 +4232,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_07"
@@ -3488,6 +4279,13 @@
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-24T11:39:20" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="DATACONV_ROM_TITLE"
@@ -3526,6 +4324,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-07T10:06:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -3578,6 +4383,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-07T10:06:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -3632,6 +4444,13 @@ DSシステムフォントなので
 				Time="2011-07-07T10:06:51" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -3684,6 +4503,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-07T10:06:56" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -3746,6 +4572,13 @@ DSシステムフォントなので
 				Time="2011-08-29T07:20:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -3807,6 +4640,13 @@ DSシステムフォントなので
 				Time="2011-08-29T07:20:37" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -3855,6 +4695,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T11:40:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -3908,6 +4755,13 @@ DSシステムフォントなので
 				Time="2011-07-15T11:41:34" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -3956,6 +4810,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:36:00" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4012,6 +4873,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:01" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4067,6 +4935,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4113,6 +4988,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4165,6 +5047,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4215,6 +5104,13 @@ DSシステムフォントなので
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:21:44" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4273,6 +5169,13 @@ DSシステムフォントなので
 				Time="2011-08-29T07:21:44" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4321,6 +5224,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4379,6 +5289,13 @@ DSシステムフォントなので
 				Time="2011-08-29T07:21:25" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4429,6 +5346,13 @@ DSシステムフォントなので
 				User="matsumiya:W00224"
 				Time="2011-08-29T07:22:03" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4483,6 +5407,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4530,6 +5461,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4561,11 +5499,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ご利用の　サービスは　終了　いたしました
-「ワイヤレスで　うけつぐ」を　ご利用　ください▼</Text>
+			<Text>ご利用の　サービスは　終了いたしました
+「ワイヤレスで　うけつぐ」を　ご利用ください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-21T07:42:52" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4578,6 +5516,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4628,6 +5573,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4648,14 +5600,14 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケットモンスターブラック　ホワイトの
-ゲームシンクで　ポケモンを　
+ゲームシンクで　ポケモンを
 ねむらせて　ください
 ねむらせたあとに
 おもいでリンクを
 おこなうことが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:14:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4664,14 +5616,14 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケットモンスターブラック　ホワイトの
-ゲームシンクで　ポケモンを　
+ゲームシンクで　ポケモンを
 眠らせて　ください
 眠らせたあとに
-思い出リンクを
+おもいでリンクを
 おこなうことが　できます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:14:17" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4684,6 +5636,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4736,6 +5695,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4782,6 +5748,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:26:49" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4830,6 +5803,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:26:59" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4876,6 +5856,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:27:02" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -4924,6 +5911,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:27:04" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -4970,6 +5964,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:27:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5018,6 +6019,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:27:10" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5064,6 +6072,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:27:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5112,6 +6127,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:27:15" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5158,6 +6180,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5210,6 +6239,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5260,6 +6296,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5312,6 +6355,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5362,6 +6412,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5415,6 +6472,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5471,6 +6535,13 @@ DSシステムフォントなので
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5490,11 +6561,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライモンの　ミュージカルで
+			<Text>ライモンシティの　ミュージカルで
 オーナーが　かこを　なつかしんでいる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:29:41" />
+				Time="2012-01-24T08:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5502,11 +6573,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンの　ミュージカルで
+			<Text>ライモンシティの　ミュージカルで
 オーナーが　過去を　懐かしんでいる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:29:34" />
+				Time="2012-01-24T08:21:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5519,6 +6590,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5570,6 +6648,13 @@ DSシステムフォントなので
 				User="mizuguchi_mai:W00293"
 				Time="2011-11-02T08:33:10" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5630,6 +6715,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5676,6 +6768,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5726,6 +6825,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5772,6 +6878,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5822,6 +6935,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5869,6 +6989,13 @@ DSシステムフォントなので
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
 		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
 			<TextModifiedBy
@@ -5901,10 +7028,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ARポケモン　キャッチャーから
-おとどけものを　うけとりました！▼</Text>
+お届けものを　受け取りました！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:23:31" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:18:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5917,6 +7044,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2011-07-15T12:41:31" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5953,15 +7087,15 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートが　かかれていないか
-まだ　ずかんを　うけとっていないため▽
-データを　うけとることが　できません▼
-さいしょから　はじめるを　えらび
-ずかんを　てにいれてから　▽
-もういちど　えらんでください▼</Text>
+			<Text>レポートが　書かれていないか
+まだ　図鑑を　受け取っていないため▽
+データを　受け取ることが　できません▼
+最初から　はじめるを　選び
+図鑑を　手に入れてから　▽
+もう一度　選んでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:20:34" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5974,6 +7108,13 @@ DSシステムフォントなので
 				User="nagihashi_toru:W00268"
 				Time="2012-01-16T08:21:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -5998,11 +7139,11 @@ DSシステムフォントなので
 ほうしゅうデータが　ありません▼
 ARポケモン　キャプチャーを
 プレイし　ほうしゅうデータが▽
-あるじょうたいで▽
+ある　じょうたいで▽
 もういちど　えらんでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:20:41" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6011,14 +7152,14 @@ ARポケモン　キャプチャーを
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ARポケモン　キャプチャーの
-ほうしゅうデータが　ありません▼
+報酬データが　ありません▼
 ARポケモン　キャプチャーを
-プレイし　ほうしゅうデータが▽
-あるじょうたいで▽
-もういちど　えらんでください▼</Text>
+プレイし　報酬データが▽
+ある　状態で▽
+もう一度　選んでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:20:47" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:19:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6031,6 +7172,13 @@ ARポケモン　キャプチャーを
 				User="nagihashi_toru:W00268"
 				Time="2012-01-16T08:21:38" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -6068,14 +7216,14 @@ ARポケモン　キャプチャーを
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ARポケモン　キャプチャーの
-ほうしゅうデータが　ありません▼
+報酬データが　ありません▼
 ARポケモン　キャプチャーを
-プレイし　ほうしゅうデータが▽
-あるじょうたいで▽
-もういちど　えらんでください▼</Text>
+プレイし　報酬データが▽
+ある　状態で▽
+もう一度　選んでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:20:09" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6088,6 +7236,13 @@ ARポケモン　キャプチャーを
 				User="nagihashi_toru:W00268"
 				Time="2012-01-16T08:21:50" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
@@ -6122,13 +7277,13 @@ ARポケモン　キャプチャーを
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボックスに　あきがないため
-ほうしゅうデータを　うけとることが　できません▼
-ボックスを　６かしょ　あけて
-もういちど　えらんでください▼</Text>
+			<Text>ボックスに　空きがないため
+報酬データを　受け取ることが　できません▼
+ボックスを　６箇所　空けて
+もう一度　選んでください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T03:44:33" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6136,11 +7291,20 @@ ARポケモン　キャプチャーを
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ボックスにあきがない</Comment>
+			<Comment>ボックスにあきがない
+
+※箇所？　匹分？</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:21:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:20:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>208</Text>
