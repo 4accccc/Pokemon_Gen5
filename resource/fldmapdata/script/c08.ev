@@ -370,8 +370,6 @@ EVENT_START   ev_scene_c08_guide_01
   //========================================//
   //C08：誘導イベントPOS起動（１）
   $WK_SCENE_C08_LEADER7 = 2
-  //ローカルライブキャスター・ライバル通話状態を変更（C08攻撃デモまで）
-  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_0 )
   //========================================//
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()

@@ -205,6 +205,22 @@ ev_leader6_btl:
   _BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_leader_05 )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
+  
+  //タワーオブヘブンへ向かった？
+  IF $WK_SCENE_C06HAKASE == 3 THEN
+    //========================================//
+    //ローカルライブキャスター・アララギ通話状態を変更（T07到着まで）
+    _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_CARGOSERVICE )
+    //ローカルライブキャスター・ライバル通話状態を変更（D24R0301,D24R0901ベル連れ歩きまで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R06_2 )
+    //========================================//
+  
+  ELSE
+    //========================================//
+    //ローカルライブキャスター・ライバル通話状態を変更（D24R0301,D24R0901ベル連れ歩きまで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R06_3 )
+    //========================================//
+  ENDIF
 
   //================================================//
   //ジムトレーナーの視線無効

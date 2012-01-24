@@ -651,9 +651,13 @@ EVENT_START ev_tr_c08gym0101_swleader7
     
     //電光掲示板フラグセット
     _FLAG_SET( SYS_FLAG_ELBOARD_C08GYMWIN )
-
+    
+    //========================================//
     //C08プラズマ団イベント開始
     $WK_SCENE_C08_LEADER7 = 1
+    //ローカルライブキャスター・ライバル通話状態を変更（C08攻撃デモまで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_0 )
+    //========================================//
 
   ELSE
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_07 )
