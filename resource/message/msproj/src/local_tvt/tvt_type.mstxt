@@ -3273,11 +3273,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じめん　タイプか……▼
-みず　くさ　こおり　タイプの▽
+みず　くさ　こおり　タイプの
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:53" />
+				Time="2012-01-24T05:56:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3286,11 +3286,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じめん　タイプか……▼
-みず　くさ　こおり　タイプの▽
+みず　くさ　こおり　タイプの
 攻撃に　弱いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:54" />
+				Time="2012-01-24T05:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4785,11 +4785,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>むし　ほのお　タイプか……▼
-ひこう　みず　いわ　タイプの▽
+ひこう　みず　いわ　タイプの
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:47" />
+				Time="2012-01-24T05:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4798,11 +4798,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>むし　ほのお　タイプか……▼
-ひこう　みず　いわ　タイプの▽
+ひこう　みず　いわ　タイプの
 攻撃に　弱いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:47" />
+				Time="2012-01-24T05:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6201,12 +6201,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのお　　タイプか……▼
+			<Text>ほのお　タイプか……▼
 じめん　いわ　みず　タイプの
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:05" />
+				Time="2012-01-24T05:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6214,12 +6214,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほのお　　タイプか……▼
+			<Text>ほのお　タイプか……▼
 じめん　いわ　みず　タイプの
 攻撃に　弱いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:06" />
+				Time="2012-01-24T05:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
