@@ -3474,7 +3474,9 @@ static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *Str
 {
   RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( wk->p_resort_sv );
   RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+  RESORT_RECV_DATA * p_temp = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(wk->HeapID) );
 
+  GFL_STD_MemCopy( p_owner, p_temp, RESORT_RECV_DATA_SIZE );
   {
     BOOL is_debug = RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY );
     RESORT_DEBUG_FLAG_Set( RESORT_DEBUG_FLAG_SEND_DUMMY, FALSE );
@@ -3483,6 +3485,10 @@ static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *Str
   }
 
   Owner_StoreData( wk, wk->p_resort_sv );
+
+
+  GFL_STD_MemCopy( p_temp, p_owner, RESORT_RECV_DATA_SIZE );
+  GFL_HEAP_FreeMemory( p_temp );
 }
 
 //•’Ê‚ÉŽó‚¯Žæ‚é‚¾‚¯‚Ìƒe[ƒuƒ‹
