@@ -18,6 +18,7 @@
 #include "../event_name_input.h"
 #include "src/field/ev_time.h"
 #include "savedata/medalbox.h"
+#include "savedata/record.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -1113,6 +1114,15 @@ VMCMD_RESULT EvCmdResortEndService( VMHANDLE *p_core, void *p_wk_adrs )
 
   //お金がへる
   MISC_SubGold( GAMEDATA_GetMiscWork(p_gamedata), place*10 );
+
+  {
+    RECORD *p_record = GAMEDATA_GetRecordPtr( p_gamedata );
+    // レコード：買い物した合計金額
+    RECORD_Add( p_record, RECID_SHOPPING_MONEY, place*10);
+
+    // レコード：買った回数
+    RECORD_Inc( p_record, RECID_SHOPPING_CNT );
+  }
 
   //お金登録
   WORDSET_RegisterNumber( p_wordset, 1, place*10, 6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
