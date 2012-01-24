@@ -440,10 +440,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ</Text>
+			<Text>報酬　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]個</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:39:47" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -480,10 +480,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ～</Text>
+			<Text>報酬　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]個～</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:40:06" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -515,8 +515,8 @@
 			Language="JPN_KANJI">
 			<Text>残り時間　[Ctrl1:xright value="16" ][Digit:4digits Idx="2" ]分[Digit:2digits Idx="3" ]秒</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:40:25" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:04:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -633,10 +633,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]にん</Text>
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]人</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:41:30" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -673,10 +673,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]ひき</Text>
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]匹</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:41:37" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -713,10 +713,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]こ</Text>
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]個</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:41:40" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -753,10 +753,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]かい</Text>
+			<Text>クリア目標[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]回</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-28T08:41:45" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"

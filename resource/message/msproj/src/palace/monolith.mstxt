@@ -2918,10 +2918,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションせつめい</Text>
+			<Text>ミッション説明</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:36:39" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2959,10 +2959,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかん</Text>
+			<Text>制限時間</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:37:42" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3000,10 +3000,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう</Text>
+			<Text>クリア目標</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:38:13" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3041,10 +3041,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう</Text>
+			<Text>報酬</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:38:46" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3123,10 +3123,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<Text>[Digit:2digits ]分[Digit:2digits Idx="1" ]秒</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:40:29" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3287,10 +3287,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits ]ふん</Text>
+			<Text>[Digit:2digits ]分</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-24T06:30:11" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:43:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3572,10 +3572,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいこうきろく</Text>
+			<Text>最高記録</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-11-25T03:33:59" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T11:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"

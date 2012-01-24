@@ -577,10 +577,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="0" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
+			<Text>報酬　[Ctrl1:xright value="0" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]個</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3364,11 +3364,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]の
-[Name:Move Idx="1" ]を
+[Name:GPower Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3377,11 +3377,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]の
-[Name:Move Idx="1" ]を
+[Name:GPower Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3582,10 +3582,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>のこりじかん</Text>
+			<Text>残り時間</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:40:04" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3622,10 +3622,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんかにんずう</Text>
+			<Text>参加人数</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:40:34" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3662,10 +3662,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう[Digit:4digits ]ひき</Text>
+			<Text>クリア目標[Digit:4digits ]ひき</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:41:17" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3742,10 +3742,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう</Text>
+			<Text>報酬</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:42:17" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3902,10 +3902,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅんい</Text>
+			<Text>順位</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:44:55" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4062,10 +4062,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits ]にんちゅう　[Digit:3digits Idx="1" ]ばんめ</Text>
+			<Text>[Digit:3digits ]人中　[Digit:3digits Idx="1" ]番目</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:47:28" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T07:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4093,8 +4093,8 @@
 			Language="JPN">
 			<Text>クリアタイム</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:48:07" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:00:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4104,8 +4104,8 @@
 			Language="JPN_KANJI">
 			<Text>クリアタイム</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:48:14" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T10:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4422,10 +4422,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう[Digit:4digits ]にん</Text>
+			<Text>クリア目標[Digit:4digits ]にん</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:57:39" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:09:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4462,10 +4462,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう[Digit:4digits ]こ</Text>
+			<Text>クリア目標[Digit:4digits ]こ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:58:23" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:09:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4502,10 +4502,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう[Digit:4digits ]かい</Text>
+			<Text>クリア目標[Digit:4digits ]かい</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:59:00" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4542,10 +4542,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう[Digit:4digits ]</Text>
+			<Text>クリア目標[Digit:4digits ]</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:59:39" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:10:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4622,10 +4622,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits ]ふん[Digit:2digits Idx="1" ]びょう</Text>
+			<Text>[Digit:2digits ]分[Digit:2digits Idx="1" ]秒</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T08:42:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:58:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4662,10 +4662,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits ]ふん</Text>
+			<Text>[Digit:2digits ]分</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T08:42:53" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T09:58:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4902,10 +4902,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションたっせい！</Text>
+			<Text>ミッション達成！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:51:45" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4942,10 +4942,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションしっぱい！</Text>
+			<Text>ミッション失敗！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:51:35" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4984,10 +4984,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は　[Name:MusicalGoods Idx="1" ]を
-[Digit:2digits Idx="2" ]こ　てにいれた！</Text>
+[Digit:2digits Idx="2" ]こ　手に入れた！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:53:17" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5025,11 +5025,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ざんねん！　[Name:TrainerName ]は
-これいじょう　もてない！</Text>
+			<Text>残念！　[Name:TrainerName ]は
+これ以上　持てない！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:54:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:03:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5066,10 +5066,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブルスコアボーナス　はっせい！</Text>
+			<Text>ダブルスコアボーナス　発生！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T10:38:04" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:02:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5155,13 +5155,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなの　おもいが
-ハイルツリーと　きょうめいした！▼
+			<Text>みんなの　想いが
+ハイルツリーと　共鳴した！▼
 ハイリンクの
 [Name:TrainerName ]ＬＶが　[Digit:2digits Idx="1" ]あがった！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T09:01:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5278,10 +5278,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアもくひょう</Text>
+			<Text>クリア目標</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-11-25T07:06:49" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-24T08:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
