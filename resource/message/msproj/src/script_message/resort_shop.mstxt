@@ -2212,11 +2212,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-かいふくなら　おまかせ！
+せいりせいとん　なら　おまかせ！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:32:49" />
+				Time="2012-01-24T10:33:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2225,11 +2225,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【第[Digit:2digits Idx="1" ]秘書】
-回復なら　おまかせ！
+整理整とん　なら　おまかせ！
 出会った日：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:57:50" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2268,11 +2268,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
-せいりせいとん　なら　おまかせ！
+かいふくなら　おまかせ！
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-20T08:31:35" />
+				Time="2012-01-24T10:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2281,11 +2281,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【第[Digit:2digits Idx="1" ]秘書】
-整理整とん　なら　おまかせ！
+回復なら　おまかせ！
 出会った日：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:57:36" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:33:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2409,7 +2409,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>くじ役割
+			<Comment>くじ屋役割
 
 1：お店種類名
 2：お店ランク
@@ -2418,7 +2418,7 @@
 6：日</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-10T12:22:39" />
+				Time="2012-01-24T10:27:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -2441,11 +2441,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
-ポケモンを　つよくします
+ポケモンを　きれいにします
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:59:16" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2454,11 +2454,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
-ポケモンを　強くします
+ポケモンを　きれいにします
 出会った日：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:58:22" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2466,12 +2466,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>育て屋役割説明
+			<Comment>美容室役割
 
-未使用</Comment>
+1：お店種類名
+2：お店ランク
+4：年
+5：月
+6：日</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:35:51" />
+				Time="2012-01-24T10:27:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -2489,7 +2493,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3173,10 +3177,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『[Name:ResortShop Idx="0" ]』　を
-建て替えても　いいですか？</Text>
+建てかえても　いいですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T12:26:30" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

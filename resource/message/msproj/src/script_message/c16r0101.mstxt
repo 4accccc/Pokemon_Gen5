@@ -326,7 +326,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お客様を呼ぶ　には
+			<Text>お客さまを呼ぶ　には
 とにかく　通信すること　です▼
 Ｃ－ＧＥＡＲを　ＯＮにしておけば
 すれちがった　相手が　やってきます▼
@@ -342,8 +342,8 @@
 冒険　しているとき
 ときおり　のぞいてみましょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:52:22" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:02:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -353,10 +353,10 @@
 			Language="JPN">
 			<Comment>
 選択肢４
-お客様を呼ぶには回答</Comment>
+お客さまを呼ぶには回答</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T05:20:28" />
+				Time="2012-01-24T10:02:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -639,7 +639,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マーケットでは
+			<Text>マーケット　では
 冒険に　役立つ　品物を▽
 安く　買うことが　できます▼
 なかには　フレンドリィショップでは
@@ -647,7 +647,7 @@
 仕入れて　くるなんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T02:49:23" />
+				Time="2012-01-24T10:08:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -695,14 +695,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くじやでは　１日　１回の
+			<Text>くじ屋　では　１日　１回の
 抽選に　当たると▽
 豪華　景品が　もらえます▼
 １等は　なんと！
 マスターボールが　当たります▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T10:56:28" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -749,13 +749,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はなや　では
+			<Text>花屋　では
 きのみを　買うことが　できます▼
 お店に　よって
 きのみの　種類は　かわります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T03:11:40" />
+				Time="2012-01-24T10:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -802,13 +802,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほいくじょでは
+			<Text>保育所　では
 ポケモンの　タマゴを　温めて▼
 普段　より　早く
 ふか　させることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T02:58:36" />
+				Time="2012-01-24T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -859,7 +859,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうじょうでは
+			<Text>道場　では
 ポケモンを　鍛えて　強くします▼
 ポケモンの　レベルや
 ポケモンの　強さの　基礎ポイントを▽
@@ -868,8 +868,8 @@
 進化や　技を　覚えることは▽
 できないので　ご注意　ください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-11T08:53:36" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:08:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -916,13 +916,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふるどうぐや　では
+			<Text>古道具屋　では
 掘り出し物が　売っています▼
 普通の　お店では　買えない
 品物が　並ぶことが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:00:12" />
+				Time="2012-01-24T10:08:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1035,14 +1035,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>びようしつ　では
+			<Text>美容室　では
 ポケモンを　きれいに　します▼
 カットや　メイクを　することで
 ポケモンは　喜び▽
 なつきやすく　なります▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T10:56:57" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1076,7 +1076,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown ]で　たてられる
-おみは　７つの　しゅるいが　あります▼
+おみせは　７つの　しゅるいが　あります▼
 まちに　しょうたいした　とき
 じゅうにん　やりたい　しゅるいの▽
 おみせが　たてられます▼
@@ -1088,7 +1088,7 @@
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:34:03" />
+				Time="2012-01-24T09:57:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1146,7 +1146,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown ]で　たてられる
-おみは　８つの　しゅるいが　あります▼
+おみせは　８つの　しゅるいが　あります▼
 まちに　しょうたいした　とき
 じゅうにん　やりたい　しゅるいの▽
 おみせが　たてられます▼
@@ -1158,7 +1158,7 @@
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:35:01" />
+				Time="2012-01-24T09:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1488,10 +1488,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お客様を呼ぶ　には？</Text>
+			<Text>お客さまを呼ぶ　には？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T02:47:13" />
+				Time="2012-01-24T10:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1902,10 +1902,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くじや　って？</Text>
+			<Text>くじ屋　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:12:01" />
+				Time="2012-01-24T11:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1950,10 +1950,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はなや　って？</Text>
+			<Text>花屋　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:13:56" />
+				Time="2012-01-24T11:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1998,10 +1998,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほいくじょ　って？</Text>
+			<Text>保育所　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:13:45" />
+				Time="2012-01-24T11:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2046,10 +2046,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうじょう　って？</Text>
+			<Text>道場　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:13:45" />
+				Time="2012-01-24T11:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2094,10 +2094,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふるどうぐや　って？</Text>
+			<Text>古道具屋　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:13:45" />
+				Time="2012-01-24T11:52:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2190,10 +2190,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>びようしつ　って？</Text>
+			<Text>美容室　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:13:45" />
+				Time="2012-01-24T11:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -3072,10 +3072,10 @@
 たてられるように　なったんだ▼
 まちに　あそびに　やってくる
 『ほいくじょ』を　たてたい　ひとを▽　
-しょうたいして　ためしてみてね</Text>
+しょうたいして　ためしてみてね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T02:34:54" />
+				Time="2012-01-24T10:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3098,10 +3098,10 @@
 建てられるように　なったんだ▼
 街に　遊びに　やって来る
 『ほいくじょ』を　建てたい人を▽
-招待して　試してみてね</Text>
+招待して　試してみてね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T02:35:17" />
+				Time="2012-01-24T10:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3699,10 +3699,10 @@
 ひしょの　やくわりの　こうたい！▽
 おみせの　ならびかえ！▽
 なんでも　せいり　しますので▽
-わたしに　はなしかけて　ださいね▼</Text>
+わたしに　はなしかけて　くださいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-30T05:38:06" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:12:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3719,10 +3719,10 @@
 秘書の　役割の　交代！▽
 お店の　並び替え！▽
 なんでも　整理しますので▽
-わたしに　話しかけて　ださいね▼</Text>
+わたしに　話しかけて　くださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T06:31:12" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:12:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3846,10 +3846,10 @@
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
 街の　名前を　変えるには
-わたしに　話しかけて　ださいね▼</Text>
+わたしに　話しかけて　くださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:27:10" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:12:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3970,10 +3970,10 @@
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
 ネオンを　変えるには
-わたしに　話しかけて　ださいね▼</Text>
+わたしに　話しかけて　くださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:26:56" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:11:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4032,10 +4032,10 @@
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
 ネオンを　変えるには
-わたしに　話しかけて　ださいね▼</Text>
+わたしに　話しかけて　くださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:26:50" />
+				User="shimoyamada:W00184"
+				Time="2012-01-24T10:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
