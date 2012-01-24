@@ -442,6 +442,9 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
     gmm = GSYNC_ERR009;
   }
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+  // BTS506 エラー画面で読み込みアイコンが表示されているの対処
+  GSYNC_DISP_ObjEnd(pWork->pDispWork, NANR_gsync_obj_wait_time);
+  ICHI_Printf("---Wait Time Anime 非表示:ErrorDisp----\n");
   
   GSYNC_MESSAGE_SetNormalMessage(pWork->pMessageWork,gmm);
   GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,1,16);
