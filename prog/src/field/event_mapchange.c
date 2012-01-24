@@ -3810,6 +3810,10 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
   if( loc_now->zone_id == ZONE_ID_D03R0101 && ZONEDATA_EscapeEnable( loc_req->zone_id ) ){
       GAMEDATA_SetEscapeLocation( gamedata, ent );
   }
+  // ¡ƒqƒEƒ“‚Ì`iC03P17j‚É‚¢‚ÄAÚ‘±æ‚ª‰º…“¹ƒqƒEƒ“‘¤(D11R0101)‚¾‚Á‚½ê‡‚ÉÝ’è
+  if( (loc_now->zone_id == ZONE_ID_C03P17 ) && (loc_req->zone_id == ZONE_ID_D11R0101) ){
+    GAMEDATA_SetEscapeLocation( gamedata, ent );
+  }
 
 }
 
