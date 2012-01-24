@@ -2480,10 +2480,10 @@ SWANで名称とデザイン変更した</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＷＢＴ</Text>
+			<Text>ＰＷＴ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-22T08:09:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T03:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2491,10 +2491,10 @@ SWANで名称とデザイン変更した</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＢＴ</Text>
+			<Text>ＰＷＴ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-22T08:09:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T03:07:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
