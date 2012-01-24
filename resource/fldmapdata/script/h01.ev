@@ -13,6 +13,7 @@
   .include  "h01.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -168,14 +169,14 @@ ev_item_buy:
 
     //おじさん：ありがとう　ございます！▼
     _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_02, H01_MIDDLEMAN1_01, POS_DOWN )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //金額ウィンドウを消す
     _GOLD_WIN_CLOSE()
 
     //アイテム（おいしいみず）入手
-    _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_OISIIMIZU, 1 )
+    _ITEM_EVENT_SUCCESS_NOWAIT( ITEM_OISIIMIZU, 1 )
 
   ENDIF
 
