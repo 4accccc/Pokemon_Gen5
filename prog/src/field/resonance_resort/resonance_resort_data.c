@@ -1411,7 +1411,7 @@ void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_game
     }
   }
 
-  p_wk->extend_flag = 0x1F;
+  p_wk->extend_flag = 0x7F;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1621,7 +1621,7 @@ RESORT_MERGE_RESULT RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const 
       Resort_Recv_Data_SetBeaconExtendData( p_wk, cp_beacon );
     };
 
-    if( p_wk->extend_flag == 0x1F )
+    if( p_wk->extend_flag == 0x7F )
     {
       RESORT_RECV_Printf( "!!!В╖В╫В─Г}Б[ГWКоЧ╣\n!!!" );
     }
