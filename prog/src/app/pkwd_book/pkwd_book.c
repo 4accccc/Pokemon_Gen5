@@ -3242,6 +3242,11 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 		pwb_chg_cmn_cursor( wk, 0 );
 		// frame再セット
 		pwb_set_init_framelist( wk );
+		// ちらつき防止
+		// スクロール切り替え
+		pwb_set_bgscroll( wk, wk->TitleMode );
+		// 切り替え終了
+		wk->Flag &= ~FLG_CHG_TITLE;
 	}
 	// objの初期化
 	pwb_clear_obj( wk, 0 );
