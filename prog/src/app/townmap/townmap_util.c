@@ -21,6 +21,7 @@
 #include "app/townmap_data_sys.h"
 #include "field/animal_trail.h"
 #include "field/animal_trail_data.h"
+#include "savedata/key_system_save.h"
 
 #include "../resource/fldmapdata/flagwork/work_define.h"
 #include "field/script_def.h"
@@ -51,6 +52,7 @@
  *	        -> タウンマップでもゾーングループを使うようになったので
  *	        ゾーングループが返ってきます。100407
  *	        ユニオン、アジト船、けもの道については個別の分岐があります。110902
+ *	        白の樹洞、黒の摩天楼も個別の分岐があります。120124
  *
  *	@param	const GAMEDATA *cp_gamedata ゲームデータ  (エスケープロケーション取得用)
  *	@param  now_zoneID
@@ -92,6 +94,31 @@ u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
     zoneID = ANIMAL_TRAIL_DATA_GetExitData( trailID, ANIMAL_TRAIL_DATA_PARAM_ZONEID );
 
     return ZONEDATA_GetGroupID( zoneID );
+  }
+  else if( zoneID == ZONE_ID_D31R0101 ) //ZONEDATA_IsInfinityDungeon関数に無限ダンジョンのゾーングループが入ってないので検知できない
+  {
+    KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( GAMEDATA_GetSaveControlWork((GAMEDATA *)cp_gamedata) );
+    KEY_SYSTEM_WFBC wfbc_type = KEY_SYSTEM_SAVE_GetWfbc( p_key );
+
+    #if PM_VERSION == VERSION_B2
+      if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+      {
+        return ZONE_ID_BC10;
+      }
+      else
+      {
+        return ZONE_ID_WC10;
+      }
+    #else   // PM_VERSION == VERSION_B2
+      if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+      {
+        return ZONE_ID_WC10;
+      }
+      else
+      {
+        return ZONE_ID_BC10;
+      }
+    #endif  // PM_VERSION == VERSION_B2
   }
   else
   {
