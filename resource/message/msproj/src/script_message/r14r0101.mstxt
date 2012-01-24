@@ -263,10 +263,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>まちは　かわりゆく　もの……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:25" />
+				Time="2012-01-24T05:07:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -274,15 +274,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>街は　変わりゆく　もの……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T04:44:25" />
+				Time="2012-01-24T05:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-24T04:44:25" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:08:02" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#404040</CellData>
