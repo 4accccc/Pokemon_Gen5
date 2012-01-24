@@ -536,12 +536,12 @@ EVENT_START		ev_pos_d11r0101_stopper_01
 
   //アニメ：MAN2「！」
   _OBJ_ANIME( D11R0101_MAN2_01, anm_stopper_gyoe_01 )
-  _TIME_WAIT( 20 )
+  _TIME_WAIT( 40 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //メッセージ
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_man2_01, D11R0101_MAN2_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_man2_02, D11R0101_MAN2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
@@ -557,7 +557,7 @@ EVENT_END
 /*		MAN2
 /**************************************************************/
 EVENT_START		ev_d11r0101_man2_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0101_man2_02 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0101_man2_01 )
 EVENT_END
 
 /**************************************************************/
