@@ -2073,13 +2073,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　きょかしょうは
-ポケモンを　ほごしている　ばしょに▽
-はいるための　ものよ▽
-フキヨセシティから　いけるわ！▼</Text>
+			<Text>きょかしょうが　あれば
+フキヨセシティから　ひこうきで▽
+しぜんほごくに　いけるわよ！▼
+どんな　ばしょかは
+ついてからの　おたのしみね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:25:00" />
+				Time="2012-01-24T06:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2087,13 +2088,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その許可証は
-ポケモン保護区に▽
-はいるための　ものよ▽
-フキヨセシティから　いけるわ！▼</Text>
+			<Text>きょかしょうが　あれば
+フキヨセシティから　飛行機で▽
+自然保護区に　行けるわよ！▼
+どんな　場所かは
+着いてからの　お楽しみね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T10:25:21" />
+				Time="2012-01-24T06:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2136,12 +2138,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　まるいおまもりが　あると
-なぜだか　そだてやさんで　タマゴが▽
-よく　みつかるように　なるの！▼</Text>
+			<Text>まるいおまもりを　もっていると
+どうしてだか　そだてやさんで▽
+ポケモンの　タマゴが　いつもより▽
+はっけん　されやすくなるのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T08:59:39" />
+				Time="2012-01-24T06:58:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2149,12 +2152,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　まるいおまもりが　あると
-なぜだか　育て屋さんで　タマゴが▽
-よく　みつかるように　なるの！▼</Text>
+			<Text>まるいおまもりを　持っていると
+どうしてだか　育て屋さんで▽
+ポケモンの　タマゴが　いつもより▽
+発見されやすくなるのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-06T10:35:25" />
+				Time="2012-01-24T06:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2197,12 +2201,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　ひかるおまもりが　あると
-なぜだか　いろちがいの　ポケモンが▽
-よく　とびだしてくるように　なるの！▼</Text>
+			<Text>ひかるおまもりを　もっていると
+どうしてだか　ひかる　ポケモンと▽
+であいやすく　なるのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T09:00:15" />
+				Time="2012-01-24T06:57:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2210,12 +2214,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　ひかるおまもりが　あると
-なぜだか　色違いの　ポケモンが▽
-よく　飛びだしてくるように　なるの！▼</Text>
+			<Text>ひかるおまもりを　持っていると
+どうしてだか　ひかる　ポケモンと▽
+出会いやすく　なるのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-06T10:35:34" />
+				Time="2012-01-24T06:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
