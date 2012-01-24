@@ -1040,48 +1040,48 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_060">
-		<language name="JPN" width="216">フレンドリィショップに　かよいつめ
+		<language name="JPN" width="216">いろいろな　おみせに　かよいつめ
 じょうれんきゃくになった
 トレーナーの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">フレンドリィショップに　通いつめ
+		<language name="JPN_KANJI" width="216">いろいろな　お店に　通いつめ
 常連客になった
 トレーナーの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_061">
-		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+		<language name="JPN" width="216">いろいろな　おみせでの　かいもので
 １００００円も　つかった
 おかねもちの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+		<language name="JPN_KANJI" width="216">いろいろな　お店での　買い物で
 １００００円も　使った
 お金持ちの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_062">
-		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+		<language name="JPN" width="216">いろいろな　おみせでの　かいもので
 １０００００円も　つかった
 おかねもちの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+		<language name="JPN_KANJI" width="216">いろいろな　お店での　買い物で
 １０００００円も　使った
 お金持ちの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_063">
-		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+		<language name="JPN" width="216">いろいろな　おみせでの　かいもので
 １００００００円も　つかった
 おかねもちの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+		<language name="JPN_KANJI" width="216">いろいろな　お店での　買い物で
 １００００００円も　使った
 お金持ちの　ための　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_064">
-		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+		<language name="JPN" width="216">いろいろな　おみせでの　かいもので
 １０００００００円も　つかった
-おかねもちの　ための　メダル。</language>
-		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+けいざいりょくの　あかしの　メダル。</language>
+		<language name="JPN_KANJI" width="216">いろいろな　お店での　買い物で
 １０００００００円も　使った
-お金持ちの　ための　メダル。</language>
+経済力の　証しの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_065">

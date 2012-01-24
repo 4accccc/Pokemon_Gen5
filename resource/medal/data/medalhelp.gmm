@@ -894,20 +894,18 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_060">
-		<language name="JPN" width="216">しなぞろえ　ほうふな
-ショップに　かよって
+		<language name="JPN" width="216">いろいろな　おみせに　かよって
 じょうれんに　なろう！</language>
-		<language name="JPN_KANJI" width="216">品ぞろえ　豊富な
-ショップに　通って
+		<language name="JPN_KANJI" width="216">いろいろな　お店に　通って
 常連に　なろう！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_061">
 		<language name="JPN" width="216">ためた　おかねを
-ショップで　つかって
+おみせで　つかって
 きぶんは　セレブリティ！</language>
 		<language name="JPN_KANJI" width="216">貯めた　お金を
-ショップで　使って
+お店で　使って
 気分は　セレブリティ！</language>
 	</row>
 

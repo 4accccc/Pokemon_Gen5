@@ -2764,29 +2764,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しなぞろえ　ほうふな
-ショップに　かよって
+			<Text>いろいろな　おみせに　かよって
 じょうれんに　なろう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>品ぞろえ　豊富な
-ショップに　通って
+			<Text>いろいろな　お店に　通って
 常連に　なろう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -2809,28 +2807,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ためた　おかねを
-ショップで　つかって
+おみせで　つかって
 きぶんは　セレブリティ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>貯めた　お金を
-ショップで　使って
+お店で　使って
 気分は　セレブリティ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:10" />
+				Time="2012-01-24T10:14:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
