@@ -581,6 +581,7 @@ EVENT_START		ev_c04r0201_owner_01
   DEFINE_LOCAL LWK_IS_CONV
 	DEFINE_LOCAL LWK_IS_EXIST
 	DEFINE_LOCAL LWK_GET_ITEM
+	DEFINE_LOCAL LWK_COMPLETE_CK
 
   //すでに何かイベントを行ったか？
   _TALK_OBJ_START()
@@ -591,40 +592,74 @@ EVENT_START		ev_c04r0201_owner_01
   IF $LWK_IS_EXIST == TRUE && $LWK_IS_CONV == FALSE THEN
     //受け取っていない
     
+    //グッズコンプリートチェック
+    _IS_MUSICAL_GOODS_COMPLETE( LWK_COMPLETE_CK )
+    
     //過去主人公名を代入
     _DATACONV_SET_NAME( DATACONV_ID_MUSICAL, 0 )
     
-    //ふーむ！　やはり　あなたには
-	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
-	  _MSGWIN_CLOSE()
-	  
-	  //システム：（コンバート名）とおそろいのグッズをうけとりますか？
-	  _SYSWIN_MSG( msg_c04r0201_confirm_00 , POS_DEFAULT )
-    _YES_NO_WIN( SCWK_ANSWER )
+    //コンプリート済み
+    IF $LWK_COMPLETE_CK == 1 THEN
+      
+       //ふーむ！　やはり　あなたには
+       _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
+      
+       //おもいでリンク起動メッセージ
+       _BALLOONWIN_OBJMSG( msg_c04r0201_memory_01, C04R0201_OWNER_01 )
+       _MSGWIN_CLOSE()
+          
+       //暗転
+       _MAP_FADE_BLACK_OUT_SLOW()
+       //過去イベント・ミュージカルホール起動
+       _RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+       _MAP_FADE_END_CHECK()
+       //マップチェンジ
+       _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
     
-    //はい
-    IF $SCWK_ANSWER == SCR_YES THEN
-    
-      //システム：一回しか受け取れませんが よいですか？
-      _SYSWIN_MSG( msg_c04r0201_confirm_01 , POS_DEFAULT )
+    //未入手のグッズがある
+    ELSE
+      
+      //ふーむ！　やはり　あなたには
+  	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
+  	  _MSGWIN_CLOSE()
+  	  
+  	  //システム：（コンバート名）とおそろいのグッズをうけとりますか？
+  	  _SYSWIN_MSG( msg_c04r0201_confirm_00 , POS_DEFAULT )
       _YES_NO_WIN( SCWK_ANSWER )
       
       //はい
       IF $SCWK_ANSWER == SCR_YES THEN
       
-        _MSGWIN_CLOSE()
+        //システム：一回しか受け取れませんが よいですか？
+        _SYSWIN_MSG( msg_c04r0201_confirm_01 , POS_DEFAULT )
+        _YES_NO_WIN( SCWK_ANSWER )
         
-        //おもいでリンク起動メッセージ
-        _BALLOONWIN_OBJMSG( msg_c04r0201_memory_01, C04R0201_OWNER_01 )
-        _MSGWIN_CLOSE()
+        //はい
+        IF $SCWK_ANSWER == SCR_YES THEN
         
-        //暗転
-        _MAP_FADE_BLACK_OUT_SLOW()
-        //過去イベント・ミュージカルホール起動
-        _RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
-        _MAP_FADE_END_CHECK()
-        //マップチェンジ
-        _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+          _MSGWIN_CLOSE()
+          
+          //おもいでリンク起動メッセージ
+          _BALLOONWIN_OBJMSG( msg_c04r0201_memory_01, C04R0201_OWNER_01 )
+          _MSGWIN_CLOSE()
+          
+          //暗転
+          _MAP_FADE_BLACK_OUT_SLOW()
+          //過去イベント・ミュージカルホール起動
+          _RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+          _MAP_FADE_END_CHECK()
+          //マップチェンジ
+          _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+        
+        //いいえ
+        ELSE
+          _MSGWIN_CLOSE()
+          //あらあら　そうですか！
+          _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+          
+        ENDIF
       
       //いいえ
       ELSE
@@ -633,16 +668,8 @@ EVENT_START		ev_c04r0201_owner_01
         _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
-        
       ENDIF
-    
-    //いいえ
-    ELSE
-      _MSGWIN_CLOSE()
-      //あらあら　そうですか！
-      _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
+      
     ENDIF
 
   ELSE
@@ -683,7 +710,16 @@ EVENT_START		ev_reserve_c04r0201_link_event_ret02
     _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_02, C04R0201_OWNER_01 )
 
   ELSE
-
+    
+    //オーナー：おもいでリンク終了メッセージ
+    _BALLOONWIN_OBJMSG( msg_c04r0201_memory_02, C04R0201_OWNER_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    //アニメ：オーナー「！」
+    _OBJ_ANIME( C04R0201_OWNER_01, anm_mark_gyoe )
+    _OBJ_ANIME_WAIT()
+    
     //おやおや？　すでにおもちの
     _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_03, C04R0201_OWNER_01 )
   ENDIF
