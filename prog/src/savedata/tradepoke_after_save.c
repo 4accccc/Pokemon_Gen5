@@ -185,11 +185,16 @@ u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SA
   GF_ASSERT( (rom_version == VERSION_W2) || (rom_version == VERSION_B2) );
 
   switch( type ){
-  case TRPOKE_AFTER_SAVE_R04R0301:  //ブラック
+  case TRPOKE_AFTER_SAVE_R04R0301:    //ブラック
     return MONSNO_MONMEN;
-  case TRPOKE_AFTER_SAVE_R04R0801:  //ホワイト
+  case TRPOKE_AFTER_SAVE_R04R0801:    //ホワイト
     return MONSNO_TYURINE;
+  case TRPOKE_AFTER_SAVE_T02R0101_1:
+    return MONSNO_DORYUUZU;           // ドリュウズ
+  case TRPOKE_AFTER_SAVE_T02R0101_2:
+    return MONSNO_KABARUDON;          // カバルドン
   }
+  GF_ASSERT(0);
   return MONSNO_MINEZUMI; //ここに来ることはない
 }
 

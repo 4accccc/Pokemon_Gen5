@@ -747,9 +747,9 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
     pp = PokeParty_GetMemberPointer( enemy_party, 0 );
 
     // MonsNo Waza引継ぎ
-    monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    monsno = TRPOKE_AFTER_SV_GetTradeMonsNo( trpoke_sv, trade_type, GET_VERSION());
 
-    PP_SetupEx( pp, TRPOKE_AFTER_SV_GetTradeMonsNo( trpoke_sv, trade_type, GET_VERSION() ), 
+    PP_SetupEx( pp, monsno, 
         TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ),
         TRPOKE_AFTER_SV_GetID( trpoke_sv, trade_type ),
         PTL_SETUP_POW_AUTO,
@@ -757,6 +757,9 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
 
     // 第３特性に対する処理
     if( TRPOKE_AFTER_SV_IsSpeabino3( trpoke_sv, trade_type ) ){
+      // 特性３フラグセット
+      PP_Put( pp, ID_PARA_tokusei_3_flag, TRUE );
+      // とくせいセット
       PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino3( trpoke_sv, trade_type ) );
     }
     PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
