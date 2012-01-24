@@ -9,10 +9,10 @@
 			<Text>ちょっと　いいかい！？▼
 なんだか　とっても　ポケモンに
 くわしそうな　そこの　キミ！▽
-ぼくに　ちえを　かしてくれないか？</Text>
+ボクに　ちえを　かしてくれないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:43:36" />
+				Time="2012-01-24T06:17:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,10 +23,10 @@
 			<Text>ちょっと　いいかい！？▼
 なんだか　とっても　ポケモンに
 詳しそうな　そこの　キミ！▽
-ぼくに　知恵を　貸してくれないか？</Text>
+ボクに　知恵を　貸してくれないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:43:27" />
+				Time="2012-01-24T06:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73,7 +73,7 @@
 			<Text>おお！　ありがとう▼
 さっそくだけど
 なやみを　きいてくれ！▼
-ぼく　とくせい　ふゆう　の
+ボク　とくせい　ふゆう　の
 ポケモンに　じめんタイプの▽
 わざを　あてたいんだ！▼
 でも　どうしても
@@ -84,7 +84,7 @@
 きかせて　ほしいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:44:27" />
+				Time="2012-01-24T06:17:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -95,7 +95,7 @@
 			<Text>おお！　ありがとう▼
 さっそくだけど
 悩みを　きいてくれ！▼
-ぼく　特性　ふゆう　の
+ボク　特性　ふゆう　の
 ポケモンに　じめんタイプの▽
 技を　当てたいんだ！▼
 でも　どうしても
@@ -106,7 +106,7 @@
 きかせて　ほしいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T05:04:54" />
+				Time="2012-01-24T06:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -234,7 +234,7 @@
 			Language="JPN_KANJI">
 			<Text>まずは　道具について
 アドバイスを　もらいたい▼
-浮遊　ふゆう　の　ポケモンに
+特性　ふゆう　の　ポケモンに
 トリックや　すりかえ　などで▽
 道具を　渡すことで▼
 じめんタイプの　技が
@@ -248,7 +248,7 @@
 いい　アイデア　かな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T05:06:57" />
+				Time="2012-01-24T06:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1695,11 +1695,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくと　たたかうなら　また　きてくれ
+			<Text>ボクと　たたかうなら　また　きてくれ
 いつでも　うけてたつよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:17:21" />
+				Time="2012-01-24T06:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1707,11 +1707,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくと　戦うなら　また　来てくれ
+			<Text>ボクと　戦うなら　また　来てくれ
 いつでも　受けて立つよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T03:56:45" />
+				Time="2012-01-24T06:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
