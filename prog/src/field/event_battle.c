@@ -968,8 +968,14 @@ static GMEVENT_RESULT fieldBattleEvent(
 //--------------------------------------------------------------
 static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
-  u8 grp = TT_TrainerTypeGrpGet(TT_TrainerDataParaGet( tr_id, ID_TD_tr_type ) );
+  u16 tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
+  u8 grp = TT_TrainerTypeGrpGet( tr_type );
 
+  if( tr_type == TRTYPE_BCHAMP_1 || 
+      tr_type == TRTYPE_BCHAMP2_1 ){
+    //BTS738対策 ギアステーション前のノボリ・クダリとのマルチイベント戦は特別なトレーナー扱いにする
+    return TR_BEACON_SPACIAL;
+  }
   if( grp == TRTYPE_GRP_NONE ||
       grp == TRTYPE_GRP_PLASMA ){
     return TR_BEACON_NORMAL;
