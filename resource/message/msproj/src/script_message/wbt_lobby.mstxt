@@ -1558,7 +1558,7 @@ msg_wbt_menu_wcs</Comment>
 自分と　相手の　ポケモンを▽
 交換して　戦う▽
 特殊な　トーナメントです▼
-基本は　１匹づつの　交換ですが
+基本は　１匹ずつの　交換ですが
 トリプルバトルに　関しては▽
 ２匹　交換していただきます▼
 交換した　ポケモンは
@@ -1574,7 +1574,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:05:09" />
+				Time="2012-01-24T03:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1951,10 +1951,10 @@ msg_wbt_menu_wcs</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオンズトーナメント</Text>
+			<Text>チャンピオンズ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:18:24" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T03:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
