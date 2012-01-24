@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= hiro_nakamura toyama ohkubo_tomohiko ichiraku_katsuhiko fuchino_hiroki unno
+USERS	= hiro_nakamura toyama ohkubo_tomohiko ichiraku_katsuhiko fuchino_hiroki unno ohtani_mayo
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く

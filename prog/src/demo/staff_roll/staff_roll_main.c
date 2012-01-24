@@ -815,16 +815,34 @@ static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk )
   GFL_CLACT_UNIT_SetDefaultRend(wk->clunit);
 
   // ---Nの髪がなびくアニメ---
-  wk->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
-      NARC_staff_roll_n_anim01_ncgr, FALSE, 
-      CLSYS_DRAW_SUB, heapID );
-  wk->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
-      NARC_staff_roll_n_anim01_nclr, 
-      CLSYS_DRAW_SUB, 0, heapID );
-  wk->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
-      NARC_staff_roll_n_anim01_ncer, 
-      NARC_staff_roll_n_anim01_nanr, 
-      heapID );
+  {
+    u32 arc_cgx;
+    u32 arc_pal;
+    u32 arc_cel;
+    u32 arc_anm;
+
+    // バージョン別でリソース分ける
+#if	PM_VERSION == LOCAL_VERSION
+    arc_cgx = NARC_staff_roll_n_anim01_b_ncgr;
+    arc_pal = NARC_staff_roll_n_anim01_b_nclr;
+    arc_cel = NARC_staff_roll_n_anim01_b_ncer;
+    arc_anm = NARC_staff_roll_n_anim01_b_nanr;
+    ICHI_Printf("ブラックバージョン\n");
+#else
+    arc_cgx = NARC_staff_roll_n_anim01_w_ncgr;
+    arc_pal = NARC_staff_roll_n_anim01_w_nclr;
+    arc_cel = NARC_staff_roll_n_anim01_w_ncer;
+    arc_anm = NARC_staff_roll_n_anim01_w_nanr;
+    ICHI_Printf("ホワイトバージョン\n");
+#endif
+
+    wk->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
+        arc_cgx, FALSE, CLSYS_DRAW_SUB, heapID );
+    wk->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
+        arc_pal, CLSYS_DRAW_SUB, 0, heapID );
+    wk->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
+        arc_cel, arc_anm, heapID );
+  }
 
   {
     GFL_CLWK_DATA add;
@@ -1756,16 +1774,13 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
     {
       // 輝度の設定
       // OBJとBGを同時にアルファは出来ないので輝度で代用する
-      if( GET_VERSION() == VERSION_B2 )
-      {
+#if	PM_VERSION == LOCAL_VERSION
         // 黒
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, -16 );
-      }
-      else
-      {
+#else
         // 白
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 16 );
-      }
+#endif
 
       // OBJの表示
       GFL_CLACT_WK_SetDrawEnable( p_parent_wk->obj.clwk, TRUE );
@@ -1976,10 +1991,10 @@ static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag )
   {
     // Nのアニメの場合は
     // アルファの代わりに輝度を使用している
-    if( GET_VERSION() == VERSION_B2 )
-    {
-      alpha2 *= -1;   // マイナスにする
-    }
+#if	PM_VERSION == LOCAL_VERSION
+    alpha2 *= -1;   // マイナスにする
+#endif
+
     G2S_ChangeBlendBrightness( alpha2 );
   }
   else
@@ -2027,10 +2042,9 @@ static u32  CutGetDatID( CUT_WORK *p_wk, CUT_DATID_TYPE datid_type, u32 sex )
   diff = p_wk->cut_no * 12;    // 12 リソース種類×男女×バージョン
 
   // バージョンチェック
-  if( GET_VERSION() == VERSION_W2 )
-  {
-    diff += 6;   // ホワイト基準に。
-  }
+#if	PM_VERSION != LOCAL_VERSION
+  diff += 6;   // ホワイト基準に。
+#endif
 
   // 男女チェック
   if( sex == PM_FEMALE )
@@ -2046,9 +2060,18 @@ static u32  CutGetDatID( CUT_WORK *p_wk, CUT_DATID_TYPE datid_type, u32 sex )
   // Nのアニメなら指定
   if( p_wk->is_n_anime == TRUE )
   {
-    arc_pal = NARC_staff_roll_n_cut01_nclr;
-    arc_cgx = NARC_staff_roll_n_cut01_ncgr;
-    arc_scr = NARC_staff_roll_n_cut01_nscr;
+    // バージョン別でリソース分ける
+#if	PM_VERSION == LOCAL_VERSION
+    arc_pal = NARC_staff_roll_n_cut01_b_nclr;
+    arc_cgx = NARC_staff_roll_n_cut01_b_ncgr;
+    arc_scr = NARC_staff_roll_n_cut01_b_nscr;
+    ICHI_Printf("ブラックバージョン\n");
+#else
+    arc_pal = NARC_staff_roll_n_cut01_w_nclr;
+    arc_cgx = NARC_staff_roll_n_cut01_w_ncgr;
+    arc_scr = NARC_staff_roll_n_cut01_w_nscr;
+    ICHI_Printf("ホワイトバージョン\n");
+#endif
   }
   
   ICHI_Printf("pal %d cgx %d scr %d \n", arc_pal, arc_cgx, arc_scr );
