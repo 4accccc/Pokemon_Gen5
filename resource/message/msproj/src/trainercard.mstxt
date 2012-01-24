@@ -1116,10 +1116,11 @@ GFBTS1607：不要なスペース削除</Comment>
 			Language="JPN">
 			<Comment>カード裏面項目。【スワンで追加】
 ジョインアベニューに招待した人数を表示するための１行目。
-</Comment>
+
+※120124「招待」→「案内」に変更（伊藤）</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:58:50" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-24T03:05:25" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1127,10 +1128,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうたいした　ひとの　かず</Text>
+			<Text>あんないした　ひとの　かず</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:58:01" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-24T03:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1138,10 +1139,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>招待した　人の数</Text>
+			<Text>案内した　人の数</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-17T02:17:03" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-24T03:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1151,10 +1152,12 @@ GFBTS1607：不要なスペース削除</Comment>
 			Language="JPN">
 			<Comment>カード裏面項目。【スワンで追加】
 ジョインアベニューに招待した人数を表示するための２行目。
-単位はなし。</Comment>
+単位はなし。
+
+※120124「招待」→「案内」に変更（伊藤）</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:59:00" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-24T03:05:28" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
