@@ -610,6 +610,11 @@ EVENT_START   ev_pos_t03_swrival_02
 
     //戦う準備はいいか？
     _YES_NO_WIN( SCWK_ANSWER )
+    
+    //========================================//
+    //ローカルライブキャスター・ライバル通話状態を変更（カゴメタウンマルチバトル終了まで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03_1 )
+    //========================================//
 
     IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
@@ -636,11 +641,6 @@ EVENT_START   ev_pos_t03_swrival_02
       _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
       _OBJ_ANIME_WAIT()
-      
-      //========================================//
-      //ローカルライブキャスター・ライバル通話状態を変更（カゴメタウンマルチバトル終了まで）
-      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03_1 )
-      //========================================//
 
     ENDIF
 
@@ -952,6 +952,12 @@ ev_battle_check:
 
     _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
   ELSE
+  
+    //========================================//
+    //ローカルライブキャスター・ライバル通話状態を変更（全滅時まきもどり）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03 )
+    //========================================//
+    
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
