@@ -614,8 +614,11 @@ ev_n02r0502_boss_vs_end:
   //動作モデル削除
   _OBJ_DEL( N01R0502_NPOKE_01 )
   
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
   //BlackVERならゼクロム
-  IF $SCWK_ANSWER == VERSION_B2 THEN
+  IF $LCWK_VERSION == VERSION_B2 THEN
     _OBJ_ADD_EX( 18, 36, DIR_DOWN, MMDL_ID_EVENTOBJ_00, BLACKSTONE, MV_DMY )
   //Whiteならレシラム
   ELSE
