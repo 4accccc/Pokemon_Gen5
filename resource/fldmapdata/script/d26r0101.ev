@@ -402,9 +402,14 @@ EVENT_START   ev_pos_d26r0101_boss_01
 
   _TIME_WAIT( 16 )  //間
 
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9688,0,970752,5275648,327759,3178496, 30)
+
   //アニメ：Ｎ移動
   _OBJ_ANIME_AUTO( D26R0101_BOSS_01, 80, 47, FORCE_TYPE_NPC, 14, DIR_UD )
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
   //Ｎ：……きたね▼
   _BALLOONWIN_OBJMSG_POS( msg_d26r0101_boss_01, D26R0101_BOSS_01, POS_DEFAULT )
@@ -458,12 +463,18 @@ EVENT_START   ev_pos_d26r0101_boss_01
   _BALLOONWIN_OBJMSG_WB( msg_d26r0101_boss_08w, msg_d26r0101_boss_08b, D26R0101_BOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
+  _CAMERA_DEF_MOVE(30)
+
   //アニメ：Ｎ退場
   _OBJ_ANIME_AUTO( D26R0101_BOSS_01, 81, 56, FORCE_TYPE_NPC, 8, DIR_LR )
   _TIME_WAIT( 16 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( D26R0101_BOSS_01 )
+
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
 
   //========================================//
   //Ｎを非表示
