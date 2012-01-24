@@ -2765,6 +2765,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return 0;
   case RESORT_DATA_PARAM_HOBBY:
     return 0;
+  case RESORT_DATA_PARAM_CITYLV:
+    return 0; //０扱いにすることでスカウトで興味なしと言わせる
 
   default:
     GF_ASSERT_MSG(0,"未対応%d\n",param);
