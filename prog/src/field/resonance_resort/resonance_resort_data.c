@@ -900,7 +900,6 @@ static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAME
   p_wk->rank_data[2]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST );
   p_wk->rank_data[3]  = RESORT_WORK_GetData(p_resort_wk, RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY );
 
-
 #ifdef PM_DEBUG
   if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY ) )
   {
@@ -918,6 +917,14 @@ static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAME
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND2_DATA_IsValid( const RESORT_EXTEND2_DATA *cp_wk )
 {
+  int i;
+  for( i = 0; i < 4; i++ )
+  {
+    if( cp_wk->rank_data[i] > RESORT_WORK_RNKDATA_MAX )
+    {
+      return FALSE;
+    }
+  }
   return TRUE;
 }
 
@@ -961,6 +968,14 @@ static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAME
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND3_DATA_IsValid( const RESORT_EXTEND3_DATA *cp_wk )
 {
+  int i;
+  for( i = 0; i < 4; i++ )
+  {
+    if( cp_wk->rank_data[i] > RESORT_WORK_RNKDATA_MAX )
+    {
+      return FALSE;
+    }
+  }
   return TRUE;
 }
 //-------------------------------------

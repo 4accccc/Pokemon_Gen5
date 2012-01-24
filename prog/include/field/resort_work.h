@@ -44,6 +44,8 @@ typedef enum
   RESORT_WORK_GET_PARAM_MAX
 } RESORT_WORK_GET_PARAM;
 
+#define RESORT_WORK_RNKDATA_MAX (999999999)
+
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ

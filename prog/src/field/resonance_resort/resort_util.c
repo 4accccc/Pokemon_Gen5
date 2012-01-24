@@ -2104,7 +2104,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
 
       //êî
       GFL_MSG_GetString( p_msg, resort_rnkwnd_cnt_00, p_src_str );
-      WORDSET_RegisterNumber( p_wordset, 0, rnkdata[i].value, 7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 0, rnkdata[i].value, 9, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
       WORDSET_ExpandStr( p_wordset, p_dst_str, p_src_str );
       w =  PRINTSYS_GetStrWidth( p_dst_str, p_font, 0 );
       FLDMSGWIN_PrintStrBuf( p_fldmsgwin, 27*8-w, (3+i*2)*8, p_dst_str );

@@ -74,17 +74,41 @@ void RESORT_WORK_ReLoadData( RESORT_WORK *p_wk, SAVE_CONTROL_WORK *p_sv )
 {
   RECORD *p_record = SaveData_GetRecord(p_sv);
   const MISC *cp_misc = SaveData_GetMiscConst(p_sv);
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE ] = RECORD_Get(p_record, RECID_COMM_TRADE ) + RECORD_Get(p_record, RECID_WIFI_TRADE ) + RECORD_Get(p_record, RECID_IRC_TRADE );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NICKNAME ]  = RECORD_Get(p_record, RECID_NICKNAME );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST ]  = RECORD_Get(p_record, RECID_RESORT_GUID_CNT ) + RECORD_Get(p_record, RECID_RESORT_SHOP_MAKE_CNT );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY ] = RECORD_Get(p_record, RECID_SHOPPING_MONEY );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_CROSSING ]   = MISC_CrossComm_GetSuretigaiCount( cp_misc );
 
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_BATTLE ]  = RECORD_Get(p_record, RECID_COMM_BATTLE )
-    + RECORD_Get(p_record, RECID_WIFI_BATTLE )
-    + RECORD_Get(p_record, RECID_IRC_BATTLE );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_GET_POKE ] = RECORD_Get(p_record, RECID_CAPTURE_POKE );
-  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_HATCH_EGG ]   = RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
+  {
+    u64 value = 0;
+    value += RECORD_Get(p_record, RECID_COMM_TRADE );
+    value += RECORD_Get(p_record, RECID_WIFI_TRADE );
+    value += RECORD_Get(p_record, RECID_IRC_TRADE );
+    p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_TRADE ] = MATH_CLAMP( value, 0, RESORT_WORK_RNKDATA_MAX);
+  }
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NICKNAME ]  =
+    RECORD_Get(p_record, RECID_NICKNAME );
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_JA_TOURIST ]  =
+    RECORD_Get(p_record, RECID_RESORT_GUID_CNT ) 
+    + RECORD_Get(p_record, RECID_RESORT_SHOP_MAKE_CNT );
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_BUY_MONEY ] =
+    RECORD_Get(p_record, RECID_SHOPPING_MONEY );
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_CROSSING ]  =
+    MISC_CrossComm_GetSuretigaiCount( cp_misc );
+
+  {
+    u64 value = 0;
+    value += RECORD_Get(p_record, RECID_COMM_BATTLE );
+    value += RECORD_Get(p_record, RECID_WIFI_BATTLE );
+    value += RECORD_Get(p_record, RECID_IRC_BATTLE );
+    p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_NET_BATTLE ]  = MATH_CLAMP( value, 0, RESORT_WORK_RNKDATA_MAX);
+  }
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_GET_POKE ] =
+    RECORD_Get(p_record, RECID_CAPTURE_POKE );
+
+  p_wk->data[ RESORT_WORK_GET_PARAM_RNKDATA_HATCH_EGG ] =
+    RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
 }
 //----------------------------------------------------------------------------
 /**
