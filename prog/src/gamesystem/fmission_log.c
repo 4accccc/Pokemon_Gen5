@@ -446,13 +446,7 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
   FEST_MISSION_SetRTC( &entry.mission );
 
   if( ret == ENTRY_NEW ){
-    if( tbl->entry_num == FMISSION_ENTRY_TBL_MAX ){
-      //古いデータを押し出して積む
-      GFL_STD_MemCopy32( &tbl->entry[1], &tbl->entry[0], sizeof(FMISSION_ENTRY)*FMISSION_ENTRY_TBL_END);
-      tbl->entry[FMISSION_ENTRY_TBL_END] = entry;
-    }else{
-      tbl->entry[tbl->entry_num++] = entry;
-    }
+    tbl->entry[tbl->entry_num++] = entry;
   }else{
     //上書き
     tbl->entry[ret] = entry;
@@ -845,6 +839,10 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
       }
       return ENTRY_NONE;
     }
+  }
+  //テーブルがいっぱいなら積まない
+  if( tbl->entry_num >= FMISSION_ENTRY_TBL_MAX ){
+    return ENTRY_NONE;
   }
   //現在のミッションと同一なら積まない
   if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
