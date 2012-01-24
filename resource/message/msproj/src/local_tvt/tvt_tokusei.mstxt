@@ -469,12 +469,12 @@
 ダメージを　受けなくなるんだよ▼
 あと……▼
 手持ちの　先頭に　いると
-手持ちが　すなあらしの　ときは▼
+天候が　すなあらしの　ときは▼
 野生の　ポケモンと
 であいにくくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:17:58" />
+				Time="2012-01-24T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1450,13 +1450,13 @@
 こうかばつぐん　になる▽
 タイプの　技以外では▽
 ダメージを　受けることが　ないんだ▼
-協力な　特性だけど……▼
+強力な　特性だけど……▼
 状態異常や　天候による
 ダメージは　受けてしまうので▽
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:12" />
+				Time="2012-01-24T06:00:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2018,13 +2018,13 @@
 この　とくせいの　ポケモンは
 てもちの　せんとうに　いると▽
 やせいの　ポケモンと▽
-であいやすくなる　なるんだ▼
+であいやすく　なるんだ▼
 ちなみに……▼
 せんとうでの　こうかは
 まだ　はんめいして　ないんだよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:38:56" />
+				Time="2012-01-24T06:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2034,15 +2034,15 @@
 			Language="JPN_KANJI">
 			<Text>はっこう　ね……▼
 この特性の　ポケモンは
-手持ちの　戦闘に　いると▽
+手持ちの　先頭に　いると▽
 野生の　ポケモンと▽
-であいやすくなる　なるんだ▼
+であいやすく　なるんだ▼
 ちなみに……▼
 戦闘での　効果は
 まだ　判明して　ないんだよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:34:16" />
+				Time="2012-01-24T06:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6459,12 +6459,12 @@
 			Language="JPN">
 			<Text>フィルター　ね……▼
 この　とくせいの　ポケモンは
-あいてから　うける
+あいてから　うける▽
 こうかばつぐんの　ダメージを▽
 へらすことが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:59:58" />
+				Time="2012-01-24T06:02:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6474,12 +6474,12 @@
 			Language="JPN_KANJI">
 			<Text>フィルター　ね……▼
 この特性の　ポケモンは
-相手から　受ける
+相手から　受ける▽
 こうかばつぐんの　ダメージを▽
 減らすことが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:59:54" />
+				Time="2012-01-24T06:02:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6514,7 +6514,7 @@
 			Language="JPN">
 			<Text>スロースタート　ね……▼
 この　とくせいの　ポケモンは
-せんとうに　でて　５ターンの　あいだ▽
+せんとうに　でて　５ターンの　あいだ▼
 こうげきと　すばやさが
 はんぶんまで　さがってしまうんだ▼
 いかに　５ターン　たえるか！▼
@@ -6522,7 +6522,7 @@
 しょうりする　ポイント　だろうね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:42:53" />
+				Time="2012-01-24T06:02:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6532,7 +6532,7 @@
 			Language="JPN_KANJI">
 			<Text>スロースタート　ね……▼
 この特性の　ポケモンは
-戦闘に　でて　５ターンの　あいだ▽
+戦闘に　でて　５ターンの　あいだ▼
 攻撃と　すばやさが
 半分まで　さがってしまうんだ▼
 いかに　５ターン　耐えるか！▼
@@ -6540,7 +6540,7 @@
 勝利する　ポイント　だろうね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:42:56" />
+				Time="2012-01-24T06:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6760,12 +6760,12 @@
 			Language="JPN">
 			<Text>ハードロック　ね……▼
 この　とくせいの　ポケモンは
-あいてから　うける
+あいてから　うける▽
 こうかばつぐんの　ダメージを▽
 へらすことが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:01:52" />
+				Time="2012-01-24T06:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6775,12 +6775,12 @@
 			Language="JPN_KANJI">
 			<Text>ハードロック　ね……▼
 この特性の　ポケモンは
-相手から　受ける
+相手から　受ける▽
 こうかばつぐんの　ダメージを▽
 減らすことが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:01:48" />
+				Time="2012-01-24T06:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7212,14 +7212,14 @@
 			Language="JPN">
 			<Text>わるいてぐせ　ね……▼
 この　とくせいの　ポケモンは
-ちょくせつこうげき　した　ときに▽
+ちょくせつこうげき　された　ときに▽
 あいての　どうぐを　うばうんだ▼
 まぁ……▼
 もちものを　もっていないことが
 じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:45:42" />
+				Time="2012-01-24T06:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7229,14 +7229,14 @@
 			Language="JPN_KANJI">
 			<Text>わるいてぐせ　ね……▼
 この特性の　ポケモンは
-直接攻撃した　ときに▽
+直接攻撃された　ときに▽
 相手の　道具を　奪うんだ▼
 まぁ……▼
 道具を　持っていないことが
 条件なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:45:44" />
+				Time="2012-01-24T06:02:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8847,10 +8847,10 @@
 			<Text>じしんかじょう　ね……▼
 この　とくせいの　ポケモンは
 あいてを　たおしたときに▽
-こうげきの　のうりょくが　あるんだ▼</Text>
+こうげきの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:34:07" />
+				Time="2012-01-24T06:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8861,10 +8861,10 @@
 			<Text>じしんかじょう　ね……▼
 この特性の　ポケモンは
 相手を　たおしたときに▽
-攻撃の　能力が　あるんだ▼</Text>
+攻撃の　能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:34:14" />
+				Time="2012-01-24T06:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
