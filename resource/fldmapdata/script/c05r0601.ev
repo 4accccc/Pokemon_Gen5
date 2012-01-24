@@ -215,6 +215,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c05r0601_sunglasses_01
 
+_TALK_OBJ_START()
+
   //アイテム入手済みか
   IF FLAG_OFF( FE_C05R0601_ITEMGET_01 ) THEN
 
@@ -262,7 +264,12 @@ EVENT_START   ev_c05r0601_sunglasses_01
         _MSGWIN_CLOSE()
 
         //アイテム（たつじんのおび）入手
-        _ITEM_EVENT_NOWAIT( ITEM_TATUZINNOOBI, 1 )
+        _ITEM_EVENT_KEYWAIT( ITEM_TATUZINNOOBI, 1 )
+        
+        //黒服：たつじんのおび　つかいこなせー！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_06 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
 
         //========================================//
         //アイテム入手フラグON
