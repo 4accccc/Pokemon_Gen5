@@ -336,7 +336,12 @@ ev_t02_low_call_01:
     _MSGWIN_CLOSE()
 
     //アイテム（ピッピ人形）
-    _ITEM_EVENT_NOWAIT( ITEM_PIPPININGYOU, 1 )
+    _ITEM_EVENT_KEYWAIT( ITEM_PIPPININGYOU, 1 )
+    
+    //男の子：またあしたも
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //========================================//
     //タイムフラグON
@@ -493,7 +498,12 @@ ev_t02_high_call_01:
     _MSGWIN_CLOSE()
 
     //アイテム（エネコのシッポ）
-    _ITEM_EVENT_NOWAIT( ITEM_ENEKONOSIPPO, 1 )
+    _ITEM_EVENT_KEYWAIT( ITEM_ENEKONOSIPPO, 1 )
+    
+    //女の子：あしたも
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //========================================//
     //タイムフラグON

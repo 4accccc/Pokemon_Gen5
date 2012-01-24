@@ -410,7 +410,12 @@ EVENT_START   ev_r09r0201_girl4_01
         _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
         }
         //アイテム（ちからのねっこ）を取得
-        _ITEM_EVENT_NOWAIT( ITEM_TIKARANONEKKO, 1 )
+        _ITEM_EVENT_KEYWAIT( ITEM_TIKARANONEKKO, 1 )
+        
+        //お嬢様：おかいものって
+        _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_11 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
 
         //========================================//
         //タイムフラグ（イベントクリア）ON
@@ -434,7 +439,12 @@ EVENT_START   ev_r09r0201_girl4_01
         _SUB_ITEM( ITEM_SUGOIKIZUGUSURI, 1, LWK_REDUCE )
         }
         //アイテム（ちからのこな）を取得
-        _ITEM_EVENT_NOWAIT( ITEM_TIKARANOKONA, 1 )
+        _ITEM_EVENT_KEYWAIT( ITEM_TIKARANOKONA, 1 )
+        
+        //お嬢様：おかいものって
+        _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_11 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
 
         //========================================//
         //タイムフラグ（イベントクリア）ON

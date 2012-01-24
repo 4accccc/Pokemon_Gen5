@@ -551,7 +551,7 @@ EVENT_START   ev_t04_swrival_01
     _MSGWIN_CLOSE()
 
     //秘伝マシン06「ダイビング」入手
-    _ITEM_EVENT_NOWAIT( ITEM_HIDENMASIN06, 1 )
+    _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN06, 1 )
 
     //========================================//
     //アイテム入手フラグON

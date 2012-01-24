@@ -175,7 +175,12 @@ EVENT_START   ev_r04r0901_trainerm_01
       _MSGWIN_CLOSE()
 
       //アイテム（しゅんぱつのハネ×５）入手
-      _ITEM_EVENT_NOWAIT( ITEM_SYUNPATUNOHANE, 5 )
+      _ITEM_EVENT_KEYWAIT( ITEM_SYUNPATUNOHANE, 5 )
+      
+      //エリート♂：さまざまなこうげき
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON（１日１回）
@@ -191,7 +196,12 @@ EVENT_START   ev_r04r0901_trainerm_01
       _MSGWIN_CLOSE()
 
       //アイテム（しゅんぱつのハネ×１）入手
-      _ITEM_EVENT_NOWAIT( ITEM_SYUNPATUNOHANE, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_SYUNPATUNOHANE, 1 )
+      
+      //エリート♂：さまざまなこうげき
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON（１日１回）

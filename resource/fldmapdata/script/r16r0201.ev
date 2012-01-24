@@ -61,7 +61,7 @@ EVENT_START   ev_r16r0201_backpackerm_01
   _MSGWIN_CLOSE()
 
   //わざマシン９５「バークアウト」入手
-  _ITEM_EVENT_NOWAIT( ITEM_WAZAMASIN95, 1 )
+  _ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN95, 1 )
 
   //バックパッカー♂：２ねんほどまえ
   _BALLOONWIN_TALKOBJ_MSG( msg_r16r0201_backpackerm_05 )

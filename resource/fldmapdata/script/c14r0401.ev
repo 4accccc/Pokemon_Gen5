@@ -88,7 +88,12 @@ DEFINE_LOCAL LWK_BAG_CHK      //バッグの空きチェック
       _MSGWIN_CLOSE()
 
       //アイテム（ハートのうろこ×５）入手
-      _ITEM_EVENT_NOWAIT( ITEM_HAATONOUROKO, 5 )
+      _ITEM_EVENT_KEYWAIT( ITEM_HAATONOUROKO, 5 )
+      
+      //ナース：その　ハートがたの　ポケモン！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON

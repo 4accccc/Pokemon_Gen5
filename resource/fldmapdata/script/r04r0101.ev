@@ -162,7 +162,12 @@ EVENT_START   ev_r04r0101_trainerw_01
       _MSGWIN_CLOSE()
 
       //アイテム（たいりょくのハネ×５）入手
-      _ITEM_EVENT_NOWAIT( ITEM_TAIRYOKUNOHANE, 5 )
+      _ITEM_EVENT_KEYWAIT( ITEM_TAIRYOKUNOHANE, 5 )
+      
+      //エリート♀：いろんなすばやさ
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_trainerw_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON（１日１回）
@@ -178,7 +183,12 @@ EVENT_START   ev_r04r0101_trainerw_01
       _MSGWIN_CLOSE()
 
       //アイテム（たいりょくのハネ×１）入手
-      _ITEM_EVENT_NOWAIT( ITEM_TAIRYOKUNOHANE, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_TAIRYOKUNOHANE, 1 )
+      
+      //エリート♀：いろんなすばやさ
+      _BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_trainerw_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON（１日１回）

@@ -87,7 +87,12 @@ EVENT_START   ev_r16r0101_badman_01
 
       _MSGWIN_CLOSE()
       //アイテム「おいしいみず」入手
-      _ITEM_EVENT_NOWAIT( ITEM_OISIIMIZU, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+      
+      //スキンヘッズ：ずっと　あたりつづけたら
+      _BALLOONWIN_TALKOBJ_MSG( msg_r16r0101_badman_02 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //タイムフラグON

@@ -112,7 +112,12 @@ ev_t02r0302_kusa_quiz_call_01:
       _MSGWIN_CLOSE()
 
       //アイテム「草のジュエル」入手
-      _ITEM_EVENT_NOWAIT( ITEM_KUSANOZYUERU, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_KUSANOZYUERU, 1 )
+      
+      //女性：ずかんをながめると
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON
@@ -163,7 +168,12 @@ ev_t02r0302_honoo_quiz_call_01:
       _MSGWIN_CLOSE()
 
       //アイテム「炎のジュエル」入手
-      _ITEM_EVENT_NOWAIT( ITEM_HONOONOZYUERU, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_HONOONOZYUERU, 1 )
+      
+      //女性：ずかんをながめると
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON
@@ -235,7 +245,12 @@ ev_t02r0302_mizu_quiz_call_01:
       _MSGWIN_CLOSE()
 
       //アイテム「水のジュエル」入手
-      _ITEM_EVENT_NOWAIT( ITEM_MIZUNOZYUERU, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_MIZUNOZYUERU, 1 )
+      
+      //女性：ずかんをながめると
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON
