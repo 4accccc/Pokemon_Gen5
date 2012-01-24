@@ -187,27 +187,30 @@ sub_zukan_global_me_play:
 //--------------------------------------------------------------------
 sub_zukan_present_check:
 
+  // BTS724
+  // 連続でアイテムを貰える処理を削除しました ichiraku
+
   $ITEM_RESULT_COUNT = 0
 
   // 地方図鑑見たごほうび
   _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE )
   IF FLAG_OFF( FE_HYOUKA_ITEMGET_01 ) && $SCWK_ANSWER == TRUE THEN
     $ITEM_RESULT_01 = 1
-    $ITEM_RESULT_COUNT += 1
+    $ITEM_RESULT_COUNT = 1
   ENDIF
 
   // 地方図鑑捕獲ごほうび
   _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET )
-  IF FLAG_OFF( FE_HYOUKA_ITEMGET_02 ) && $SCWK_ANSWER == TRUE THEN
+  IF FLAG_OFF( FE_HYOUKA_ITEMGET_02 ) && $SCWK_ANSWER == TRUE && $ITEM_RESULT_COUNT == 0 THEN
     $ITEM_RESULT_02 = 1
-    $ITEM_RESULT_COUNT += 1
+    $ITEM_RESULT_COUNT = 1
   ENDIF
 
   // 全国図鑑ごほうび
   _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_GLOBAL )
-  IF FLAG_OFF( FE_HYOUKA_ITEMGET_03 ) && $SCWK_ANSWER == TRUE THEN
+  IF FLAG_OFF( FE_HYOUKA_ITEMGET_03 ) && $SCWK_ANSWER == TRUE && $ITEM_RESULT_COUNT == 0 THEN
     $ITEM_RESULT_03 = 1
-    $ITEM_RESULT_COUNT += 1
+    $ITEM_RESULT_COUNT = 1
   ENDIF
 
 _RET
@@ -241,19 +244,12 @@ sub_zukan_present:
       _RET
     ENDIF
 
-    $SCWK_PARAM0  = ITEM_KYOKASYOU  //「きょうかしょ」
+    $SCWK_PARAM0  = ITEM_KYOKASYOU  //「きょかしょう」
     $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
+
     _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_06 )
     _FLAG_SET( FE_HYOUKA_ITEMGET_01 )
-
-    $ITEM_RESULT_COUNT -= 1
-    IF $ITEM_RESULT_COUNT != 0 THEN
-      //「これもつかってみて！▼」
-      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
-      _BALLOONWIN_CLOSE()
-    ELSE
-    ENDIF
 
   ENDIF
 
@@ -270,14 +266,6 @@ sub_zukan_present:
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
     _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_07 )
     _FLAG_SET( FE_HYOUKA_ITEMGET_02 )
-
-    $ITEM_RESULT_COUNT -= 1
-    IF $ITEM_RESULT_COUNT != 0 THEN
-      //「これもつかってみて！▼」
-      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
-      _BALLOONWIN_CLOSE()
-    ELSE
-    ENDIF
 
   ENDIF
 
@@ -401,5 +389,4 @@ ev_zukan_machine:
 
   _CHG_LOCAL_SCR
 }
-
 
