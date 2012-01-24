@@ -760,10 +760,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いま　どこ？</Text>
+			<Text>なに　してる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T12:52:48" />
+				Time="2012-01-24T13:28:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -771,10 +771,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　どこ？</Text>
+			<Text>なに　してる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T12:52:51" />
+				Time="2012-01-24T13:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5240,13 +5240,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　ソウリュウシティの
-ポケモンジムを　めざしてる▼
-ジムリーダーは　かなり
-てごわいって　はなし　だぜ！▼</Text>
+			<Text>ソウリュウシティの　ジムリーダーは
+かなり　てごわかったぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:02:00" />
+				Time="2012-01-24T13:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5254,13 +5252,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　ソウリュウシティの
-ポケモンジムを　めざしてる▼
-ジムリーダーは　かなり
-手ごわいって　話しだぜ！▼</Text>
+			<Text>ソウリュウシティの　ジムリーダーは
+かなり　てごわかったぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T10:13:09" />
+				Time="2012-01-24T13:25:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5407,11 +5403,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマフリゲートを　さがしてる！
+			<Text>チェレンさんから　きいただろ？▼
+セイガイハの　ちかく……　どこかに
+プラズマフリゲートが　あるはずだ！▽
 オマエも　てわけ　してくれッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:09:09" />
+				Time="2012-01-24T13:22:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5419,11 +5417,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマフリゲートを　探してる！
+			<Text>チェレンさんから　きいただろ？▼
+セイガイハの　近く……　どこかに
+プラズマフリゲートが　あるはずだ！▽
 オマエも　手分け　してくれッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:09:06" />
+				Time="2012-01-24T13:23:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5877,11 +5877,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、n01r0502でＮと戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:30:53" />
+				Time="2012-01-24T13:24:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5934,11 +5933,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d08r0901でレシラム/ゼクロムと戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:30:58" />
+				Time="2012-01-24T13:24:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5991,11 +5989,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d10r0501でキュレムと戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:02" />
+				Time="2012-01-24T13:24:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6050,11 +6047,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、t01r0401、ポケモン研究所ですごいつりざお入手前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:08" />
+				Time="2012-01-24T13:24:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6105,11 +6101,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d33r0101で心の空洞イベント前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:14" />
+				Time="2012-01-24T13:24:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6162,11 +6157,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、c02でユクシーとの戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:18" />
+				Time="2012-01-24T13:24:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6217,11 +6211,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、r07r0105でエムリットとの戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:22" />
+				Time="2012-01-24T13:24:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6274,11 +6267,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、r23でアグノムとの戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:27" />
+				Time="2012-01-24T13:24:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6327,11 +6319,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d01でラティオス/ラティアスとの戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:31" />
+				Time="2012-01-24T13:24:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6380,11 +6371,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、r18でかざんのおきいし入手前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:37" />
+				Time="2012-01-24T13:24:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6433,11 +6423,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d24でヒードランとの戦闘前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:40" />
+				Time="2012-01-24T13:24:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6488,11 +6477,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>目的地メッセージ
-・クリア後、d25でみかづきのはね入手前</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:31:46" />
+				Time="2012-01-24T13:24:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6566,11 +6554,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんを　みたんだ！
-５ばんどうろへ　むかうぞッ！▼</Text>
+			<Text>ライモンの　つぎの　ポケモンジムは
+ホドモエ　なんだけどな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:49:25" />
+				Time="2012-01-24T13:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6578,11 +6566,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団を　みたんだ！
-５番道路へ　向かうぞッ！▼</Text>
+			<Text>ライモンの　次の　ポケモンジムは
+ホドモエ　なんだけどな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:56:05" />
+				Time="2012-01-24T13:28:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6618,11 +6606,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんに　バレないよう
-ライブキャスター　つかってるのか？▼</Text>
+			<Text>まかせろ！　プラズマだんは
+ライモンから　にがさないッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:55:51" />
+				Time="2012-01-24T13:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6630,11 +6618,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団に　バレないよう
-ライブキャスター　使ってるのか？▼</Text>
+			<Text>任せろ！　プラズマ団は
+ライモンから　逃がさないッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:56:13" />
+				Time="2012-01-24T13:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6671,10 +6659,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきは　たすかった！
-じゃ　ホドモエに　いくよ▼</Text>
+つぎは　ホドモエシティ　だなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:49:56" />
+				Time="2012-01-24T13:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6682,11 +6670,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきは　たすかった！
-じゃ　ホドモエに　行くよ▼</Text>
+			<Text>さっきは　助かった！
+次は　ホドモエシティ　だなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:56:19" />
+				Time="2012-01-24T13:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6722,11 +6710,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんぱい　するな！
-ぜったいに　にがさないぜッ！！▼</Text>
+			<Text>もうひとり　プラズマだんが　いたよな
+オマエ　はなしを　きいておいてくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:51:19" />
+				Time="2012-01-24T13:18:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6734,11 +6722,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>心配するな！
-絶対に　逃がさないぜッ！！▼</Text>
+			<Text>もう一人　プラズマ団が　いたよな
+オマエ　話を　きいておいてくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:56:32" />
+				Time="2012-01-24T13:18:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6826,11 +6814,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんを　みたって
-ウワサを　しらべているんだ……▼</Text>
+			<Text>ウワサだけど　カゴメタウンに
+プラズマだんが　いたらしい……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:52:12" />
+				Time="2012-01-24T13:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6838,11 +6826,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団を　みたって
-ウワサを　調べているんだ……▼</Text>
+			<Text>ウワサだけど　カゴメタウンに
+プラズマ団が　いたらしい……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T06:56:40" />
+				Time="2012-01-24T13:10:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7034,11 +7022,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんを
-みつけたら　れんらく　くれッ！▼</Text>
+			<Text>オマエも　げすいどうに　きてくれ
+プラズマだんを　さがすぞッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T10:18:45" />
+				Time="2012-01-24T13:17:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7046,11 +7034,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団を
-みつけたら　連絡くれッ！▼</Text>
+			<Text>オマエも　下水道に　きてくれ
+プラズマ団を　探すぞッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T10:18:54" />
+				Time="2012-01-24T13:17:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7217,13 +7205,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ああ　だいじょうぶ
-プラズマだんは　にがさない▼
+			<Text>だいじょうぶ！　プラズマだんは
+カゴメタウンから　にがさない▼
 だから　オマエは
 ばっちり　じゅんび　してこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T10:08:33" />
+				Time="2012-01-24T13:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7231,13 +7219,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ああ　大丈夫
-プラズマ団は　逃がさない▼
+			<Text>大丈夫！　プラズマ団は
+カゴメタウンから　逃がさない▼
 だから　オマエは
 ばっちり　準備してこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-07T10:14:40" />
+				Time="2012-01-24T13:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
