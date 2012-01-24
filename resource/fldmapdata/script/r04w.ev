@@ -72,6 +72,20 @@ INIT_EVENT_START  ev_zone_r04w
 
   ENDIF
 
+  //イベント進行状態を見てライブキャスターの状態をセット
+  IF $WK_SCENE_D02R0101_SWLEADER1 == 0 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //==================================//
+    //ローカルライブキャスター・チェレン通話状態を変更
+    _PERSON_STATE_SET_CHELEN( CHELEN_STATE_YAGURUMA )
+    //==================================//
+    
+  ELSIF $WK_SCENE_D02R0101_SWLEADER1 != 0 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //==================================//
+    //ローカルライブキャスター・チェレン通話状態を変更
+    _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
+    //==================================//
+  ENDIF
+
 INIT_EVENT_END
 
 /**************************************************************/
