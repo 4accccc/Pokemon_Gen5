@@ -986,6 +986,36 @@ BOOL ZONEDATA_IsPalaceFieldNoBingo(u16 zone_id)
 
 //==================================================================
 /**
+ * 思い出リンク用過去フィールドかどうかのチェック
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    該当したらTRUE
+ *
+ * 120124 常駐で使いたいため、fieldmap.cのzonedata_IsSepiaMap()を移設
+ *
+ * 適用
+ * ・セピア表示するか？
+ * ・ゾーンチェンジ時にすれ違いログ用位置情報を書き換えずに保持するか？
+ * ・フェスBGMにゾーンBGMを勝たせるか？
+ */
+//==================================================================
+BOOL ZONEDATA_IsPastMap(u16 zone_id)
+{
+  if ( zone_id == ZONE_ID_OLDC01R0501 ||
+       zone_id == ZONE_ID_OLDT04R0301 ||
+       zone_id == ZONE_ID_OLDT06R0101 ||
+       zone_id == ZONE_ID_OLDC08R0101 ||
+       zone_id == ZONE_ID_OLDC02GYM0202 ||
+       zone_id == ZONE_ID_OLDC05R0501 ||
+       zone_id == ZONE_ID_OLDC04R0201 ||
+       zone_id == ZONE_ID_OLDD06R0101
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
  * WFBCかどうか
  * @param   zone_id   ゾーン指定ID
  * @retval  BOOL    ビンゴマップだったらTRUE

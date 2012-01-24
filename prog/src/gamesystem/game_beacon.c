@@ -2162,6 +2162,9 @@ void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no)
 //==================================================================
 void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
+  if( ZONEDATA_IsPastMap( zone_id )){
+    return; //思い出リンクマップではゾーンを飛ばしたくないのでゾーンチェンジを通知しない
+  }
   BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id, cp_gamedata);
   GameBeaconSys->send.beacon_update = TRUE;
 }

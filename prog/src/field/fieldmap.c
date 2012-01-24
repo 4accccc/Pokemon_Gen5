@@ -500,7 +500,6 @@ static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 static BOOL zonedata_GetShadowUse( u16 zone_id );
 
 static BOOL zonedata_IsEnvSE( u16 zone_id );
-static BOOL zonedata_IsSepiaMap( u16 zone_id );
 static BOOL zonedata_IsInfinityDungeonEntrance( u16 zone_id );
 
 //data
@@ -792,7 +791,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->palace_sys = FIELD_PALACE_Create( fieldWork->heapID, gsys , fieldWork , fieldWork->map_id );
     {
       u8 *gray_scale = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
-      BOOL is_sepia = zonedata_IsSepiaMap( fieldWork->map_id );
+      BOOL is_sepia = ZONEDATA_IsPastMap( fieldWork->map_id );
       FLD_G3DPAL_Init( &fieldWork->fld_g3dPal, gray_scale, is_sepia );
     }
     
@@ -4323,27 +4322,6 @@ static BOOL zonedata_IsEnvSE( u16 zone_id )
   if ( zone_id == ZONE_ID_C06GYM0101 ) return TRUE;
   if ( zone_id == ZONE_ID_C04R1101 ) return TRUE;
   if ( zone_id == ZONE_ID_C09R0401 ) return TRUE;
-  return FALSE;
-}
-
-//==================================================================
-/**
- * @brief   ÉZÉsÉAí≤Ç…Ç∑ÇÈÇ©Ç«Ç§Ç©ÇÃîªíËèàóù
- * @date  2011.09.03
- * @author  tamada
- */
-//==================================================================
-static BOOL zonedata_IsSepiaMap( u16 zone_id )
-{
-  
-  if ( zone_id == ZONE_ID_OLDC01R0501 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDT04R0301 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDT06R0101 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDC08R0101 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDC02GYM0202 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDC05R0501 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDC04R0201 ) return TRUE;
-  if ( zone_id == ZONE_ID_OLDD06R0101 ) return TRUE;
   return FALSE;
 }
 
