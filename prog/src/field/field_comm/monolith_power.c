@@ -1118,8 +1118,13 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
   int use_count = 0;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
-  
-  mpw->use_gpower_id[use_count] = 0;  //画面上部の見えないパネル
+  s32 i;
+  //
+  // GPOWER_ID_NULLで初期化
+  for(i=0;i<GPOWER_ID_MAX+2;i++){
+    mpw->use_gpower_id[i] = GPOWER_ID_NULL;
+  }
+  mpw->use_gpower_id[use_count] = GPOWER_ID_NULL;  //画面上部の見えないパネル
   mpw->use_power[use_count] = MONO_USE_POWER_SOMEMORE;
   mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
@@ -1137,7 +1142,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
     
     use_count++;
   }
-  mpw->use_gpower_id[use_count] = 0;  //画面下部の見えないパネル
+  mpw->use_gpower_id[use_count] = GPOWER_ID_NULL;  //画面下部の見えないパネル
   mpw->use_power[use_count] = MONO_USE_POWER_SOMEMORE;
   mpw->bmp_power_name[use_count] = GFL_BMP_Create( 
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
