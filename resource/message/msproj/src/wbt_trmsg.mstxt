@@ -1650,10 +1650,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モスト　インセクト　アーティスト！
-アーティ！　キャンパスは　ここだあ！▼</Text>
+アーティ！　キャンバスは　ここだあ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T06:19:01" />
+				Time="2012-01-24T05:38:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1662,10 +1662,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モスト　インセクト　アーティスト！
-アーティ！　キャンパスは　ここだあ！▼</Text>
+アーティ！　キャンバスは　ここだあ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T06:19:04" />
+				Time="2012-01-24T05:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7032,12 +7032,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウットリ　するほどの
+			<Text>アロエ『ウットリ　するほどの
 えもいわれぬ　戦いっぷり！▽
 アンタと　出会えて　よかったよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8744,12 +8744,12 @@
 			Language="JPN_KANJI">
 			<Text>ワタル『トレーナーの　きみが
 正しくて　強い　心を　持てば▽
-ポケモンも　それに　答えてくれる▼
+ポケモンも　それに　応えてくれる▼
 そうして　トレーナーも　ポケモンも
 どんどん　強くなって　いくんだ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9366,10 +9366,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デボンコーポレーション　御曹司
-さすらいの　石集め　ダイゴッ！▼</Text>
+さすらいの　石集め！　ダイゴッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T07:14:48" />
+				Time="2012-01-24T05:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12542,10 +12542,10 @@
 			<Text>マチス『ミーの　エレクトリックな
 トリックでも　ルーズ……　まけました▼
 ユーは　エクセレーント！　これからも
-ビリビリ　つきすすむと　いいネ！</Text>
+ビリビリ　つきすすむと　いいネ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12556,10 +12556,10 @@
 			<Text>マチス『ミーの　エレクトリックな
 トリックでも　ルーズ……　まけました▼
 ユーは　エクセレーント！　これからも
-ビリビリ　つきすすむと　いいネ！</Text>
+ビリビリ　つきすすむと　いいネ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13089,10 +13089,10 @@
 おつよい　ですのね……▼
 それにしても　とても
 すばらしい　しあい　でした▽
-わたくし　かんどう　いたしましたわ</Text>
+わたくし　かんどう　いたしましたわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13104,10 +13104,10 @@
 お強い　ですのね……▼
 それにしても　とても
 すばらしい　試合でした▽
-わたくし　感動いたしましたわ</Text>
+わたくし　感動いたしましたわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13161,10 +13161,10 @@
 かんどう　いたしております▼
 あいする　ポケモンと　ともにたたかい
 しょうりを　える……　これが▽
-トレーナーの　よろこび　ですわ</Text>
+トレーナーの　よろこび　ですわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13176,10 +13176,10 @@
 感動いたしております▼
 愛する　ポケモンと　ともに戦い
 勝利を　得る……　これが▽
-トレーナーの　喜び　ですわ</Text>
+トレーナーの　喜び　ですわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:40:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -49349,12 +49349,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウットリ　するほどの
+			<Text>アロエ『ウットリ　するほどの
 えもいわれぬ　戦いっぷり！▽
 アンタと　出会えて　よかったよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51526,10 +51526,10 @@
 			<Text>マチス『ミーの　エレクトリックな
 トリックでも　ルーズ……　まけました▼
 ユーは　エクセレーント！　これからも
-ビリビリ　つきすすむと　いいネ！</Text>
+ビリビリ　つきすすむと　いいネ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -51540,10 +51540,10 @@
 			<Text>マチス『ミーの　エレクトリックな
 トリックでも　ルーズ……　まけました▼
 ユーは　エクセレーント！　これからも
-ビリビリ　つきすすむと　いいネ！</Text>
+ビリビリ　つきすすむと　いいネ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52073,10 +52073,10 @@
 おつよい　ですのね……▼
 それにしても　とても
 すばらしい　しあい　でした▽
-わたくし　かんどう　いたしましたわ</Text>
+わたくし　かんどう　いたしましたわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52088,10 +52088,10 @@
 お強い　ですのね……▼
 それにしても　とても
 すばらしい　試合でした▽
-わたくし　感動いたしましたわ</Text>
+わたくし　感動いたしましたわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52145,10 +52145,10 @@
 かんどう　いたしております▼
 あいする　ポケモンと　ともにたたかい
 しょうりを　える……　これが▽
-トレーナーの　よろこび　ですわ</Text>
+トレーナーの　よろこび　ですわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52160,10 +52160,10 @@
 感動いたしております▼
 愛する　ポケモンと　ともに戦い
 勝利を　得る……　これが▽
-トレーナーの　喜び　ですわ</Text>
+トレーナーの　喜び　ですわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-24T05:41:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
