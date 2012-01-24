@@ -86,9 +86,6 @@ extern void PokeRegulation_ModifyNickName( const REGULATION* pReg, POKEPARTY *pa
 //タマゴが手持ちに入っているかチェック
 extern BOOL PokeRegulation_CheckEggInParty( const REGULATION* pReg, POKEPARTY *party );
 
-//レベル合計チェック
-extern BOOL PokeRegulation_CheckTotalLvParty( const REGULATION* pReg, POKEPARTY *party );
-
 //==============================================================================
 //  メッセージ取得
 //==============================================================================

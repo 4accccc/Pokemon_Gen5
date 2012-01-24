@@ -653,43 +653,6 @@ BOOL PokeRegulation_CheckEggInParty( const REGULATION* pReg, POKEPARTY *party )
   }
   return FALSE;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  レベル合計超えてるかチェック
- *
- *	@param	const REGULATION* pReg  レギュレーション
- *	@param	*party  てもち
- *
- *	@return TRUEレベル合計超えてる　 FALSEレベル合計範囲内
- */
-//-----------------------------------------------------------------------------
-BOOL PokeRegulation_CheckTotalLvParty( const REGULATION* pReg, POKEPARTY *party )
-{
-  int i;
-  u32 sum = 0;
-  for( i = 0; i < PokeParty_GetPokeCount( party );i ++ )
-  { 
-    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( party, i );
-    if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) == TRUE
-        && PP_Get(p_pp, ID_PARA_tamago_flag, NULL ) == FALSE )
-    {
-      sum += PP_Get(p_pp, ID_PARA_level, NULL );
-    }
-  }
-
-  {
-    int limit_lv = Regulation_GetParam(pReg, REGULATION_LEVEL_TOTAL);
-    if( limit_lv != 0 )
-    {
-      if( limit_lv < sum )
-      {
-        return TRUE;
-      }
-    }
-  }
-
-  return FALSE;
-}
 //------------------------------------------------------------------
 /**
  * @brief   ROMからレギュレーションデータを得る
