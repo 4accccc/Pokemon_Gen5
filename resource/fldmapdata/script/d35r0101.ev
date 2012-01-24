@@ -16,6 +16,7 @@
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（マップチェンジ）
+  //@author suginaka_katsunori 地名表示処理追加
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -38,7 +39,10 @@ EVENT_START   ev_reserve_d35r0101_end
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
-	
+
+	//地名表示
+	_PLACE_NAME_DISPLAY()
+
 EVENT_END
 
 /**************************************************************/

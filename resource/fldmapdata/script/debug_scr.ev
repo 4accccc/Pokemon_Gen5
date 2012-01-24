@@ -1544,9 +1544,9 @@ EVENT_START   ev_debug_suginaka
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//ＷＢＴ１回戦
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//ＷＢＴ２回戦
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//ＷＢＴ決勝戦
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//C13R0401：船
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//C06R0201：飛行機
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//D08R0901：レシゼク戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｃ１３ネオプラズマ団イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 4 )	//過去イベント・三つ子
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 5 )	//過去イベント・シッポウ
@@ -1567,29 +1567,26 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_START()
 	
 		IF $SCWK_ANSWER == 0 THEN
-      //↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
-      _WBT_SYSTEM_START()
-      _WBT_SET_WBT_CUP( SCR_WBT_CUP_HODOMOE )
-      _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
-      _WBT_SYSTEM_ENTRY()
-      //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
-			//予約スクリプト
-			_RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
-	
+			
+			_FLAG_RESET( FV_C13R0401_SWRIVAL )
+			_FLAG_RESET( FV_C13R0401_PILOT )
+			
 			//マップチェンジ
-			_MAP_FADE_BLACK_OUT_SLOW()
-			_MAP_FADE_END_CHECK()
-			_MAP_CHANGE_NO_FADE( ZONE_ID_D05R0201, 31, 0, 15, DIR_LEFT )
+			_MAP_CHANGE( ZONE_ID_C13R0401, 6, 7, DIR_UP )
 			
 			$SCWK_TEMP0 = 428
 		
 		ELSIF $SCWK_ANSWER == 1 THEN
 			
-			//予約スクリプト
-			_RESERVE_SCRIPT( SCRID_DEBUG_WBT_SECOND_GAME )
-	
+			_FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
+			_FLAG_RESET( FV_C06R0201_HAKASE2_01 )
+			
+			$WK_SCENE_C06HAKASE = 4
+			
+			_SET_BADGE_FLAG( BADGE_ID_06 )
+			
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_D05R0201, 31, 15, DIR_LEFT )
+			_MAP_CHANGE( ZONE_ID_C06R0201, 17, 21, DIR_UP )
 			
 			$SCWK_TEMP0 = 428
 			

@@ -60,6 +60,9 @@ EVENT_START	ev_reserve_c06r0201_end
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
+	//’n–¼•\Ž¦
+	_PLACE_NAME_DISPLAY()
+	
 EVENT_END
 
 /**************************************************************/

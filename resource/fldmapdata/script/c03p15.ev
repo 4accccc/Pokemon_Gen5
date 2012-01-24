@@ -79,6 +79,11 @@ EVENT_START   ev_scene_c03p15_first_01
   _MAP_FADE_BLACK_IN()
   _DISP_FADE_END_CHECK()
 
+  //地名表示
+  _PLACE_NAME_DISPLAY()
+
+  _TIME_WAIT( 70 )
+
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
@@ -191,7 +196,7 @@ EVENT_START   ev_c03p15_pilot_01
     //リザーブスクリプト
     _RESERVE_SCRIPT( SCRID_RESERVE_C13R0401_END )
 
-    //c06フキヨセシティまでジャンプ
+    //タチワキシティまでジャンプ
     _MAP_CHANGE_NO_FADE( ZONE_ID_C13R0401, 6, 0, 5, DIR_DOWN )
 
   //いいえ
@@ -285,7 +290,12 @@ EVENT_START	ev_reserve_c03p15_end
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	_PLACE_NAME_DISPLAY()	//地名表示演出
+	IF $WK_SCENE_C03P15 != 1 THEN
+	
+		//地名表示演出
+		_PLACE_NAME_DISPLAY()
+		_DEBUG_PRINT_WK(22)
+	ENDIF
 	
 EVENT_END
 

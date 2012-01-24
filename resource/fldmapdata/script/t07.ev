@@ -50,6 +50,13 @@ EVENT_START	ev_reserve_t07_end
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
+	IF $WK_SCENE_T07 != 1 THEN
+
+		//地名表示
+		_PLACE_NAME_DISPLAY()
+		_DEBUG_PRINT_WK(22)
+	ENDIF
+	
 EVENT_END
 
 
@@ -64,6 +71,11 @@ EVENT_START   ev_scene_t07_hakase2_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 625, 305, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
   */
+	
+  //地名表示
+  _PLACE_NAME_DISPLAY()
+  
+  _TIME_WAIT( 70 )
 
   //アララギ：さて　あなたを
   _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_01, T07_HAKASE2_01, POS_DEFAULT )
