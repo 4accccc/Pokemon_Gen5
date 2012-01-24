@@ -15,12 +15,14 @@
 #include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
 #include "system/bmp_winframe.h"
+#include "field/zonedata.h"
 
 //アーカイブ
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_tvt_event_system.h"
+#include "fieldmap/zone_id.h"
 
 //自分のモジュール
 #include "app/local_tvt_sys.h"
@@ -223,6 +225,16 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
   p_param->p_message  = p_wk->param.p_message;
   p_param->p_clunit   = p_wk->param.p_clunit;
   p_param->p_msgdata  = LOCAL_TVT_MESSAGE_GetSystemMsgData(p_wk->param.p_message);
+
+  //ゾーンIDがプラズマフリゲートならば誰も呼び出さない
+  {
+    PLAYER_WORK     *p_player_wk = GAMEDATA_GetMyPlayerWork( p_wk->param.p_gamedata );
+    u16             now_zoneID   = PLAYERWORK_getZoneID( p_player_wk );
+    if(ZONEDATA_GetGroupID( now_zoneID ) == ZONE_ID_D27R0101 )
+    {
+      return;
+    }
+  }
 
   //それぞれの呼び出し設定
   {
