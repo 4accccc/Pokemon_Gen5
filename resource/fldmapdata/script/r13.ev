@@ -80,35 +80,6 @@ EVENT_START   ev_pos_r13_poke4_01
     _OBJ_ANIME( R13_POKE4_01, anm_common_turn_u )
     _OBJ_ANIME_WAIT()
   ENDIF
-  
-  /*
-  
-  //主人公の位置でアニメ分岐
-  IF $LCW_POSZ == 187 THEN
-    //アニメ：コバルオン主人公の前に
-    $LCW_POSZ += 2
-    _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
-    _OBJ_ANIME_WAIT()
-  ELSE
-    //アニメ：コバルオン主人公の前に
-    $LCW_POSZ -= 2
-    _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-  
-  //コバルオン向き合う
-  IF $LCW_POSZ != 684 && $LCW_POSZ == 187 THEN
-    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_u )
-    _OBJ_ANIME_WAIT()
-  ELSIF $LCW_POSZ != 684 && $LCW_POSZ == 193 THEN
-    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_d )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  
-  */
 
   //コバルオン：こふおおおおーっ！
   _VOICE_PLAY( MONSNO_645, 0 ) 
