@@ -272,16 +272,16 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
 
     int i;
     int cnt = 0;
-    u32 sex = LOCAL_TVT_CALLDATA_GetSecretSex( p_wk->p_data );
-    u16 person  = 0;
-    u16 msgid   = 0;
     for( i = 0; i < NELEMS(sc_call_data) && cnt < LOCAL_TVT_CALLSELECT_SELECT_MAX; i++ )
     {
       if( LOCAL_TVT_CALLDATA_IsCall( p_wk->p_data, sc_call_data[i].person )
-        && LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, person ) )
+        && LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, sc_call_data[i].person ) )
       {
+        u16 person  = 0;
+        u16 msgid   = 0;
         if( i == LOCAL_TVT_PERSON_SECRET )
         {
+          u32 sex = LOCAL_TVT_CALLDATA_GetSecretSex( p_wk->p_data );
           person  = LOCAL_TVT_PERSON_SECRET;
           if( sex == PTL_SEX_MALE )
           {
