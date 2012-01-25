@@ -3660,10 +3660,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ベーシックバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:43" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:46:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3809,10 +3809,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>トキシックバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3958,10 +3958,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ビートルバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:46" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4107,10 +4107,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ボルトバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:48" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4256,10 +4256,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>クエイクバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:50" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4405,10 +4405,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ジェットバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:52" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4554,10 +4554,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>レジェンドバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:53" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4703,10 +4703,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ウェーブバッジ
-[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
+[Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　かくとく</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-01T03:43:56" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T09:44:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
