@@ -759,7 +759,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 
       if( rnd >= RESORT_CONST_COMBO_RND_MSG_00 )
       {
-        return SexGetMsgID( sex, resort_resident_lv_02_m, resort_resident_lv_02_f );
+        return SexGetMsgID( sex, resort_resident_lv_04_m, resort_resident_lv_04_f );
       }
       else if( rnd >= RESORT_CONST_COMBO_RND_MSG_01 )
       {
@@ -767,7 +767,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       }
       else if( rnd >= RESORT_CONST_COMBO_RND_MSG_02 )
       {
-        return SexGetMsgID( sex, resort_resident_lv_04_m, resort_resident_lv_04_f );
+        return SexGetMsgID( sex, resort_resident_lv_02_m, resort_resident_lv_02_f );
       }
       else
       {
