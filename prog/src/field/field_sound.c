@@ -1365,6 +1365,13 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
   static const u16 fes_bgm_ng[] = { //フェスBGMを鳴らさないゾーン
     ZONE_ID_C13GYM0101, //毒ジム
     ZONE_ID_C13GYM0102, //毒ジム
+    ZONE_ID_D10R0401,		//ジャイアントホール（昔キュレムがいた場所）
+    ZONE_ID_D10R0501,		//ジャイアントホール（クライマックス部屋）
+    ZONE_ID_N01R0401,		//Nの城
+    ZONE_ID_N01R0402,		//Nの城
+    ZONE_ID_N01R0501,		//Nの城
+    ZONE_ID_N01R0502,		//Nの城
+    ZONE_ID_D08R0901,   //リュウラセンのとう最上階
   };
   eventWork = GAMEDATA_GetEventWork( gameData );
 
@@ -1378,12 +1385,17 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
       return specialBGMTable[i].soundIdx;
     }
   }
-  //フェスBGMにしないゾーンチェック
-  for( i = 0;i < NELEMS(fes_bgm_ng);i++){
-    if( zoneID == fes_bgm_ng[i]){
-      return SPECIAL_BGM_NONE;
+  { //フェスBGMにしないゾーンチェック
+    for( i = 0;i < NELEMS(fes_bgm_ng);i++){
+      if( zoneID == fes_bgm_ng[i]){
+        return SPECIAL_BGM_NONE;
+      }
+    }
+    if( ZONEDATA_IsPastMap( zoneID ) ){
+      return SPECIAL_BGM_NONE;  //思い出リンクマップはゾーン曲優先
     }
   }
+
   //スペシャルBGMに引っかからなければ、フェスミッション参加フラグをチェック
   if( GAMEDATA_GetFesBGMFlag( gameData) ){
     return SEQ_BGM_FES; 
