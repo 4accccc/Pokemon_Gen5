@@ -842,29 +842,41 @@ static void ZukanCheck_GetData( const ZUKAN_SAVEDATA *p_zukan_sv, EVENTWORK *p_e
 
   if( EVENTWORK_CheckEventFlag( p_ev, FE_ZUKAN_COMPLETE_LOCAL_SEE ) )
   {
+    //地方図鑑・見たをコンプリート→捕まえた数
     *p_beforemsg = msg_hyouka_hakase2_02a;
     ZUKANSAVE_GetHyouka( p_zukan_sv, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, heapID, &msgID, &count, &me );
-    if( ZUKANSAVE_CheckLocalGetComp( p_zukan_sv, heapID ) )
-    {
-      if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_02) )
-      {
-        *p_is_item = TRUE;
-      }
-    }
   }
   else
   {
+    //地方図鑑・見た数
     *p_beforemsg = msg_hyouka_hakase2_02;
     ZUKANSAVE_GetHyouka( p_zukan_sv, SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, heapID, &msgID, &count, &me );
-
     if( ZUKANSAVE_CheckLocalSeeComp( p_zukan_sv, heapID ) )
     {
       EVENTWORK_SetEventFlag( p_ev, FE_ZUKAN_COMPLETE_LOCAL_SEE );
+    }
+  }
 
-      if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_01) )
-      {
-        *p_is_item = TRUE;
-      }
+  //道具貰えるかチェック
+  if( ZUKANSAVE_CheckLocalSeeComp( p_zukan_sv, heapID ) )
+  {
+    if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_01) )
+    {
+      *p_is_item = TRUE;
+    }
+  }
+  if( ZUKANSAVE_CheckLocalGetComp( p_zukan_sv, heapID ) )
+  {
+    if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_02) )
+    {
+      *p_is_item = TRUE;
+    }
+  }
+  if( ZUKANSAVE_CheckZenkokuComp( p_zukan_sv ) )
+  {
+    if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_03) )
+    {
+      *p_is_item = TRUE;
     }
   }
 
