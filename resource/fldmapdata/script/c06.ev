@@ -484,6 +484,9 @@ EVENT_START   ev_scene_c06_swleader6_01
     _FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
     _FLAG_RESET( FV_C06R0201_HAKASE2_01 )
     //========================================//
+    //TOHのアララギ博士を非表示
+    _FLAG_SET( FV_R07R0101_HAKASE2_01 )
+    //========================================//
   ELSE
     //フウロ：まだ　タワーオブヘブンを
     _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_06, C06_SWLEADER6_01, POS_DEFAULT )
