@@ -43,6 +43,9 @@
 #include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 
+// マジコン対策ライブラリ簡易版
+#include "AMprotect_Instant.h"
+
 
 //=============================================================================
 /**
@@ -974,6 +977,26 @@ PSEL_RESULT  PSEL_GetResult(
   return param->result;
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief           マジコン検出関数からのコールバック処理
+ *
+ *  @param[in]       param1 ヒープID
+ *  @param[in]       param2 作成ヒープサイズ
+ *
+ *  @retval          param1を渡しているが意味は無い
+ */
+//------------------------------------------------------------------
+static void *_create_heap_call( void *param1, void *param2 )
+{
+  int heapID   = *(int*)param1;
+  int heapSize = *(int*)param2;
+
+  // 製品版でのこのアプリのヒープ作成
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, heapSize );  // HEAPID_PSEL, HEAP_SIZEと同意
+
+  return param1;
+}
 
 //=============================================================================
 /**
@@ -992,7 +1015,17 @@ static GFL_PROC_RESULT Psel_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   // ヒープ、パラメータなど
   {
+#ifdef AMPROTECT_FUNC
+    {
+      int CreateHeapID   = HEAPID_PSEL;
+      int CreateHeapSize = HEAP_SIZE;
+      // マジコン検出を行った後、ヒープ作成をコールバック関数内で行う
+      AM_InstantPiracyDetect( _create_heap_call, &CreateHeapID, &CreateHeapSize );
+    }
+#else
+    // デバッグ版では普通にヒープ作成
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PSEL, HEAP_SIZE );
+#endif
     work = GFL_PROC_AllocWork( proc, sizeof(PSEL_WORK), HEAPID_PSEL );
     GFL_STD_MemClear( work, sizeof(PSEL_WORK) );
     
