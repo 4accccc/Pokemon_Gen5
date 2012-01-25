@@ -93,7 +93,7 @@
 #define CHELEN_STATE_D08 (12)
 #define CHELEN_STATE_PARK (13)
 #define CHELEN_STATE_YAGURUMA (14)
-#define CHELEN_STATE_‚i‚` (15)
+#define CHELEN_STATE_JA (15)
 #define BELL_STATE_HOME (0)
 #define BELL_STATE_C12 (1)
 #define BELL_STATE_D06 (2)

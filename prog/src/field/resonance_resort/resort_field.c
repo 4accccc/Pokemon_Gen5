@@ -19,6 +19,8 @@
 #include "arc/fieldmap/zone_id.h" //for ZONE_ID_
 #include "system/prof_word.h"
 #include "savedata/medalbox.h"
+#include "savedata/person_state.h"
+#include "app/local_tvt/local_tvt_call.h"
 
 //script
 #include "../script.h"     //for SCRIPT_CallScript
@@ -309,6 +311,28 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     FLD_EXP_OBJ_CNT_PTR p_exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
     FIELD_CAMERA *p_camera  = FIELDMAP_GetFieldCamera( p_fieldmap );
     p_wk->p_effect = RESORT_FIELD_EFFECT_Init( heapID, p_exp_obj, p_camera );
+  }
+
+  //チェレンチェック
+  {
+    int i;
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+    PERSON_STATE *p_state = PERSON_STATE_GetWork( p_sv );
+
+    RESORT_PROXY_BUFF *p_buff = RESORT_SYSTEM_GetProxyBuff( p_wk->p_sys );
+    for( i = 0; i < RESORT_PROXY_BUFF_GetMax(p_buff); i++ )
+    {
+      RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_BUFF_GetData( p_buff, i );
+      if( !RESORT_PROXY_DATA_IsEmpty(p_proxy) )
+      {
+        u16 objcode = RESORT_PROXY_DATA_GetData( p_proxy, RESORT_DATA_PARAM_OBJCODE, NULL );
+        if( SWLEADER1 == objcode )
+        {
+          PERSON_STATE_SetState( p_state, LOCAL_TVT_PERSON_CHELEN, CHELEN_STATE_JA );
+          break;
+        }
+      }
+    }
   }
 
   RESORT_FIELD_Printf( "レゾナンスsetup\n" );
