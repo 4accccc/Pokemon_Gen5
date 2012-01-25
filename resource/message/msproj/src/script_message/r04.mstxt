@@ -638,8 +638,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アクロマ『なるほど！　あなたは
-かくちの　チャンピオンや▽
-ジムリーダーたちの　ように▼
+かくちの　ジムリーダーたち▼
+あるいは　ポケモンリーグにいる
+してんのうと　チャンピオンの　ように▼
 ポケモンを　たいせつに　することで
 その　つよさを　みちびきだす▼
 そういった　タイプの　ひとたちに
@@ -648,7 +649,7 @@
 これは　おれい　です▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:52:06" />
+				Time="2012-01-25T08:51:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -657,8 +658,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アクロマ『なるほど！　あなたは
-各地の　チャンピオンや▽
-ジムリーダーたちの　ように▼
+各地の　ジムリーダーたち▼
+あるいは　ポケモンリーグにいる
+四天王と　チャンピオンの　ように▼
 ポケモンを　大切に　することで
 その強さを　導きだす▼
 そういった　タイプの　人たちに
@@ -667,7 +669,7 @@
 これは　お礼です▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T05:52:09" />
+				Time="2012-01-25T08:51:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
