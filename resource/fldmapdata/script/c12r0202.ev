@@ -78,34 +78,28 @@ EVENT_START   ev_c12r0202_rivalsister_01
 
   //殿堂入り回数を取得
   _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
+  
 
   //ポケモン入手前
   IF $WK_SCENE_C12_WHITE_MEET == 1 THEN
     
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_00 )
-  
-  //ポケモン入手後から、ヒオウギジムクリアまで
-  ELSIF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     
-    _CALL ev_pokename
-    
-    //ライバル妹：あ、主人公さん！   
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
-
   //タウンマップをライバルに渡すまで
-  ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+  ELSIF $WK_SCENE_D22R0101 == 0 && $WK_SCENE_C12_WHITE_MEET == 8 THEN
 
     _CALL ev_pokename
 
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
+  
+  //タウンマップ渡しから、ヒオウギジムクリアまで
+  ELSIF $WK_SCENE_D22R0101 >= 1 && $WK_SCENE_C12GYM_OPEN <= 2 THEN
     
-  ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
-
     _CALL ev_pokename
-
-    //ライバル妹：
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
+    
+    //ライバル妹：あ、主人公さん！   
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
 
   //チャンピオンロードでライバルと戦った後なら
   ELSIF $WK_SCENE_D09R1401_SWRIVAL_01 == 1 THEN
@@ -128,7 +122,14 @@ EVENT_START   ev_c12r0202_rivalsister_01
 		//========================================//
 	
 	ENDIF
-  
+
+  ELSE
+
+    _CALL ev_pokename
+
+    //ライバル妹：
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
+
   ENDIF
 }
 EVENT_END
