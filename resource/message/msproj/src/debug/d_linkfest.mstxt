@@ -1489,10 +1489,10 @@
 		Label="dlf_check_param_magick_key">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=[Digit:10digits Idx="2" ][/System:Color]</Text>
+			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=0x[Digit:10digits Idx="2" ][/System:Color]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-19T06:25:15" />
+				Time="2012-01-24T14:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1500,10 +1500,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=[Digit:10digits Idx="2" ][/System:Color]</Text>
+			<Text>[System:Color name="1" ]zone=[Digit:3digits ] [Name:Place Idx="1" ] magick_key=0x[Digit:10digits Idx="2" ][/System:Color]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-19T06:25:19" />
+				Time="2012-01-24T14:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"

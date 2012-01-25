@@ -1875,7 +1875,7 @@ static void entryStackCheck_ParamDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evw
     //ミッションキー
     WORDSET_RegisterHexNumber( wk->wset, 2, p_entry->mission.key, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     //レベル
-    WORDSET_RegisterHexNumber( wk->wset, 3, beacon->m_level, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterHexNumber( wk->wset, 3, beacon->m_level+1, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     //タイム
     WORDSET_RegisterNumber( wk->wset, 4, FEST_MISSION_GetLife( &p_entry->mission ), 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
