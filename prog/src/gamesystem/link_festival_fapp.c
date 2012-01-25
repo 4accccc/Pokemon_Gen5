@@ -31,7 +31,7 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 #include "field/script_def.h"
 
-static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, SAVE_CONTROL_WORK* save, FMISSION_SAVE* f_save );
+static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, MEDALBOX* medalbox, FMISSION_SAVE* f_save );
 
 
 //---------------------------------------------------------
@@ -50,6 +50,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata );
   FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
   EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
+  MEDALBOX * medalbox = SaveData_GetMedalBox( save );
 
   MI_CpuClear8( pl, sizeof(LINKFEST_MISSION_RESULT));
 
@@ -72,8 +73,20 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     pl->new_record_my_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
   }
 
-  //最高参加者数を記録する
-  FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
+  { //参加者数記録
+    int join_num = LINK_FESTIVAL_GetMissionJoinNum( wk );
+  
+    //最高参加者数を記録する
+    FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
+
+    //参加者数が規定値を越えた際にオープンするメダルチェック
+    if( join_num >= 10 ){
+      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV1 );
+      if( join_num >= 30 ){
+        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV2 );
+      }
+    }
+  }
  
   //残り時間
   pl->life = wk->mission.end_life;
@@ -187,7 +200,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   }
 
   //メダルチェック
-  linkfes_SetMissionResultMedal( wk, pl, save, f_save );
+  linkfes_SetMissionResultMedal( wk, pl, medalbox, f_save );
 }
 
 //---------------------------------------------------------
@@ -200,20 +213,8 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
  *  ミッション達成回数などをインクリメントするので複数回呼び出さないこと
  */
 //---------------------------------------------------------
-static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, SAVE_CONTROL_WORK* save, FMISSION_SAVE* f_save )
+static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, MEDALBOX* medalbox, FMISSION_SAVE* f_save )
 {
-  MEDALBOX * medalbox = SaveData_GetMedalBox( save );
- 
-  { //参加者数が規定値を越えた際にオープンするメダルチェック
-    int join_num = LINK_FESTIVAL_GetMissionJoinNum( wk );
-
-    if( join_num >= 10 ){
-      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV1 );
-      if( join_num >= 30 ){
-        MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV2 );
-      }
-    }
-  }
   { //フェスのトータルスコアが規定値を越えた際にオープンするメダルチェック
     if( pl->score >= 100 ){
       MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HIGHSCORE_LV1 );
