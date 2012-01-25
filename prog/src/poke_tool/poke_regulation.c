@@ -502,7 +502,7 @@ POKE_REG_RETURN_ENUM PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, 
   ans = Regulation_GetParam(pReg, REGULATION_MUST_POKE);
   form = Regulation_GetParam(pReg, REGULATION_MUST_POKE_FORM);
   i = 0;
-  if((ans) && (cnt > 1)){ //必須ポケモンがいる
+  if((ans) && (cnt >= 1)){ //必須ポケモンがいる
     for(i = 0; i < 6; i++){
       if(monsTbl[i] == ans){
         if(formTbl[i] == form){
