@@ -11232,8 +11232,8 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAW_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">どーしてーーーーーっ！！</language>
-		<language name="JPN_KANJI" width="216">どーしてーーーーーっ！！</language>
+		<language name="JPN" width="216">どうしてーーーーーっ！！</language>
+		<language name="JPN_KANJI" width="216">どうしてーーーーーっ！！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_05_TRMSG_FIGHT_AFTER">
