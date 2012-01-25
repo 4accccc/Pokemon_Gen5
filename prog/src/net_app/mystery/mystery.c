@@ -2317,6 +2317,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_SYNC:
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     { 
+      PMSND_PlaySE( MYSTERY_SE_DECIDE );
       *p_seq  = SEQ_END;
     }
 
@@ -2340,6 +2341,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     MYSTERY_BTN_PrintMain( &p_wk->btn );
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     { 
+      PMSND_PlaySE( MYSTERY_SE_DECIDE );
       MYSTERY_BTN_Exit( &p_wk->btn );
       *p_seq  = SEQ_END;
     }
