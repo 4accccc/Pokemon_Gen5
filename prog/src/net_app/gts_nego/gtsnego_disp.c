@@ -518,6 +518,32 @@ static void _PaletteFadeSingle2(GTSNEGO_DISP_WORK* pWork, int type, int* start, 
   for(i=0;i<num;i++){
     switch(type){
     case FADE_SUB_OBJ:
+      DC_FlushRange( (void*)(addr+32*start[i]), palettenum[i] * 32 );
+      GXS_LoadOBJPltt((void*)(addr+32*start[i]), start[i]*16*2, palettenum[i] * 32);
+      break;
+    case FADE_SUB_BG:
+      DC_FlushRange( (void*)(addr+32*start[i]), palettenum[i] * 32 );
+      GXS_LoadBGPltt((void*)(addr+32*start[i]),  start[i]*16*2, palettenum[i] * 32);
+      break;
+    }
+  }
+  PaletteFadeWorkAllocFree(pP,type);
+  PaletteFadeFree(pP);
+}
+
+static void _PaletteFadeSingle3(GTSNEGO_DISP_WORK* pWork, int type, int* start, int* palettenum, int num)
+{
+  u32 addr;
+  int i;
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  PaletteFadeWorkAllocSet(pP, type, 16 * 32, pWork->heapID);
+  PaletteWorkSet_VramCopy( pP, type, 0, 16*32);
+  SoftFadePfd(pP, type,  0, 16 * 16, 6, 0);
+  addr = (u32)PaletteWorkTransWorkGet( pP, type );
+
+  for(i=0;i<num;i++){
+    switch(type){
+    case FADE_SUB_OBJ:
       /*
       DC_FlushRange( (void*)(addr+32*start[i]), palettenum[i] * 32 );
       GXS_LoadOBJPltt((void*)(addr+32*start[i]), start[i]*16*2, palettenum[i] * 32);
@@ -546,8 +572,6 @@ static void _PaletteFadeSingle2(GTSNEGO_DISP_WORK* pWork, int type, int* start, 
   PaletteFadeWorkAllocFree(pP,type);
   PaletteFadeFree(pP);
 }
-
-
 
 void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
 {
@@ -580,6 +604,13 @@ void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
           _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 2);
         }
         break;
+      case _PALETTEFADE_PATTERN1_EX:
+        {
+          int stb[]={ 1};
+          int paln[]={15};
+          _PaletteFadeSingle3( pWork,  FADE_SUB_OBJ, stb, paln, 1);
+        }
+        break;
       }
 
       switch(palette){
@@ -598,24 +629,22 @@ void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
           _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
         }
         break;
+
+      case _PALETTEFADE_PATTERN1_EX:
+        {
+          int stb[]={  0,11};
+          int paln[]={ 9, 4};
+          _PaletteFadeSingle3( pWork,  FADE_SUB_BG, stb, paln, 2);
+        }
+        break;
       }
     }
   }
   else{
-    /*
     DC_FlushRange( (void*)pWork->pVramOBJ, 16 * 32 );
     GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 16 * 32);
     DC_FlushRange( (void*)pWork->pVramBG, 16 * 32 );
     GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 16 * 32);
-    */
-    BOOL ret = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_SUB,
-        0,
-        pWork->pVramOBJ, 16 * 32 );
-    GF_ASSERT(ret);
-    ret = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB,
-        0,
-        pWork->pVramBG, 16 * 32 );
-    GF_ASSERT(ret);
   }
 
 }

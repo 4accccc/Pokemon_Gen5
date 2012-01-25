@@ -2347,7 +2347,7 @@ static void _messageEndCheck(GTSNEGO_WORK* pWork)
   TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
   pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
 
-  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN1);
+  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN1_EX);
   GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
 
   _CHANGE_STATE(pWork,_messageEndCheck2);
