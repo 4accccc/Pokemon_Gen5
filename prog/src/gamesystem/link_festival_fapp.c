@@ -55,20 +55,23 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   pl->clear_f = LINK_FESTIVAL_IsMissionClear( wk, &pl->score );
 
-  if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
-    if( !EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR )){
-      EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
-      //イベント起動用ワークを設定
-      *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_MISSION_FAILED+pl->clear_f;
+  if( wk->m_beacon->distribution_f == FALSE ){  //配信ミッションでは行わない処理
+
+    if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
+      if( !EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR )){
+        EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+        //イベント起動用ワークを設定
+        *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_MISSION_FAILED+pl->clear_f;
+      }
     }
+
+    //時間依存型の場合、失敗でもハイスコアを更新する
+    pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScore( f_save, wk->m_beacon->m_id, pl->score );
+  
+    //自分のハイスコアを記録する
+    pl->new_record_my_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
   }
 
-  //時間依存型の場合、失敗でもハイスコアを更新する
-  pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScore( f_save, wk->m_beacon->m_id, pl->score );
-  
-  //自分のハイスコアを記録する
-  pl->new_record_my_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
-  
   //最高参加者数を記録する
   FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
  
@@ -87,12 +90,14 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     FMISSION_SAVE_IncMissionTopScoreNum( f_save );
   }
 
-  //ミッションレベルアップ
-  FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
+  if( wk->m_beacon->distribution_f == FALSE ){  //配信ミッションでは行わない処理
+    //ミッションレベルアップ
+    FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
 
-  //クリアフラグが設定されていたら、設定されたフラグをOnにする
-  if( wk->m_arc->clear_flag_id != 0 ){
-    EVENTWORK_SetEventFlag( ev, wk->m_arc->clear_flag_id );
+    //クリアフラグが設定されていたら、設定されたフラグをOnにする
+    if( wk->m_arc->clear_flag_id != 0 ){
+      EVENTWORK_SetEventFlag( ev, wk->m_arc->clear_flag_id );
+    }
   }
   //ご褒美
   {
