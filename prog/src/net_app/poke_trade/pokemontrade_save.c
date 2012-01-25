@@ -323,8 +323,22 @@ static void _UnDataSend(POKEMON_TRADE_WORK* pWork)
   }
   
   MyStatus_Copy(GAMEDATA_GetMyStatus(pWork->pGameData) , &add_data.aMyStatus);
-  add_data.recvPokemon = PP_Get( ppr , ID_PARA_monsno ,NULL) ;  //貰ったポケモン
-  add_data.sendPokemon = PP_Get( pps , ID_PARA_monsno ,NULL);  //あげたポケモン
+  if( PP_Get(ppr,ID_PARA_tamago_flag,NULL) )
+  {
+    add_data.recvPokemon = MONSNO_TAMAGO;
+  }
+  else
+  {
+    add_data.recvPokemon = PP_Get( ppr , ID_PARA_monsno ,NULL) ;  //貰ったポケモン
+  }
+  if( PP_Get(pps,ID_PARA_tamago_flag,NULL) )
+  {
+    add_data.sendPokemon = MONSNO_TAMAGO;
+  }
+  else
+  {
+    add_data.sendPokemon = PP_Get( pps , ID_PARA_monsno ,NULL);  //あげたポケモン
+  }
   add_data.favorite = WIFIHISTORY_GetMyFavorite(pWH);   //趣味
   add_data.countryCount = WIFIHISTORY_GetMyCountryCount(pWH) ;  //交換した国の回数
   add_data.nature =WIFIHISTORY_GetMyNature(pWH);   //性格
