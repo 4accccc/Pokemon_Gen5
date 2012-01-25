@@ -6905,7 +6905,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_WB, // camera_area
-		19,   // padding > placeicon
+		15,   // padding > placeicon
     3,
 		197,
 		0,
@@ -16652,14 +16652,14 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
 		TRUE,
 		FALSE,
     TRUE,
-    TRUE,
+    FALSE,
 		MATRIX_ID_DUN2501, // camera_area
 		19,   // padding > placeicon
     4,
@@ -17840,7 +17840,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -17876,7 +17876,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -17912,7 +17912,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -17948,7 +17948,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -17984,7 +17984,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -18380,7 +18380,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -18416,7 +18416,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -18452,7 +18452,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -18488,7 +18488,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -18524,7 +18524,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -19856,7 +19856,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_STORM,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		10,
 		TRUE,
 		TRUE,
@@ -20396,7 +20396,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_ROOM,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		2,
 		TRUE,
 		TRUE,
@@ -20405,7 +20405,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
     TRUE,
 		MATRIX_ID_PWOOD, // camera_area
-		19,   // padding > placeicon
+		15,   // padding > placeicon
     1,
 		31,
 		0,
@@ -20504,7 +20504,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -20540,7 +20540,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -20576,7 +20576,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -20612,7 +20612,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
@@ -21188,12 +21188,12 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
 		TRUE,
 		FALSE,
-		FALSE,
+		TRUE,
     TRUE,
     FALSE,
 		MATRIX_ID_DUN2602, // camera_area
@@ -22131,7 +22131,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     TRUE,
-    FALSE,
+    TRUE,
 		MATRIX_ID_DUN3601, // camera_area
 		19,   // padding > placeicon
     1,
