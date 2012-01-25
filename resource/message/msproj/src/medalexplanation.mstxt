@@ -2516,27 +2516,27 @@
 			Language="JPN">
 			<Text>そらをとぶを　じざいに　つかい
 イッシュのそらを　じゅうおうむじんに
-またにかけた　あかしの　メダル。</Text>
+とびまわった　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そらをとぶを　自在に　使い
 イッシュの空を　縦横無尽に
-またにかけた　証しの　メダル。</Text>
+飛び回った　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3438,16 +3438,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　１０回　使った
+			<Text>デルパワーを　１０かい　つかった
 たくましい　ちからの　ながれを
 ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:21:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:21:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4974,28 +4974,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あめにもまけず　かぜにもまけず
-『はねる』を　つかった
+はねるを　つかった
 こんじょうを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>雨にも負けず　風にも負けず
-『はねる』を　使った
+はねるを　使った
 根性を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-25T08:37:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6777,29 +6777,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかんの
-エリア２から５で　トレーナーを
-すべて　たおした　せんかの　メダル。</Text>
+			<Text>イッシュのなんかん　エリア２から５
+いずれかで　すべての　トレーナーを
+たおした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関の
-エリア２から５で　トレーナーを
-すべて　倒した　戦果の　メダル。</Text>
+			<Text>イッシュの難関　エリア２から５の
+いずれかで　すべての　トレーナーを
+倒した　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6814,29 +6814,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかんの
-エリア６から１０で　トレーナーを
-すべて　たおした　せんかの　メダル。</Text>
+			<Text>イッシュのなんかん　エリア６から１０
+いずれかで　すべての　トレーナーを
+たおした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関の
-エリア６から１０で　トレーナーを
-すべて　倒した　戦果の　メダル。</Text>
+			<Text>イッシュの難関　エリア６から１０の
+いずれかで　すべての　トレーナーを
+倒した　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6851,29 +6851,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかん　エリア２から５を
-せんとう　４かい　いないで
+			<Text>イッシュのなんかん　エリア２から５
+いずれかを　せんとう　４かい　いかで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関　エリア２から５を
-戦闘回数　４回以内で
+			<Text>イッシュの難関　エリア２から５の
+いずれかを　戦闘回数　４回以下で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6888,29 +6888,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかん　エリア６から１０を
-せんとう　６かい　いないで
+			<Text>イッシュのなんかん　エリア６から１０
+いずれかを　せんとう　６かい　いかで
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関　エリア６から１０を
-戦闘回数　６回以内で
+			<Text>イッシュの難関　エリア６から１０の
+いずれかを　戦闘回数　６回以下で
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6925,29 +6925,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかんの
-エリア２から５を　１００ほ　で
+			<Text>イッシュのなんかん　エリア２から５
+いずれかを　１００ほ　いないに
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関の
-エリア２から５を　１００歩以内で
+			<Text>イッシュの難関　エリア２から５の
+いずれかを　１００歩以内に
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6962,29 +6962,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュのなんかんの
-エリア６から１０を　１０００ほ　で
+			<Text>イッシュのなんかん　エリア６から１０
+いずれかを　１０００ほ　いないに
 クリアした　せんかの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T09:21:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの難関の
-エリア６から１０を　１０００歩以内で
+			<Text>イッシュの難関　エリア６から１０の
+いずれかを　１０００歩以内に
 クリアした　戦果の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-06T10:39:58" />
+				Time="2012-01-25T08:08:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9540,16 +9540,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッドで　１０００億円いじょうの
+			<Text>ポケウッドで　１０００おく円いじょうの
 こうぎょうしゅうにゅうを　きろくした
 にんき　はいゆうの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-01-25T08:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-01-25T08:37:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

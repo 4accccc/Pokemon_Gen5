@@ -6510,27 +6510,27 @@
 			Language="JPN">
 			<Text>イッシュのなんかんの
 エリア２から５の　いずれかを
-せんとう　４かい　いないで　クリア！</Text>
+せんとう　４かい　いかで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関の
 エリア２から５の　いずれかを
-戦闘回数　４回以内で　クリアしろ！</Text>
+戦闘回数　４回以下で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -6546,27 +6546,27 @@
 			Language="JPN">
 			<Text>イッシュのなんかんの
 エリア６から１０の　いずれかを
-せんとう　６かい　いないで　クリア！</Text>
+せんとう　６かい　いかで　クリア！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュの難関の
 エリア６から１０の　いずれかを
-戦闘回数　６回以内で　クリアしろ！</Text>
+戦闘回数　６回以下で　クリアしろ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-25T08:08:15" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -9035,27 +9035,27 @@
 			Language="JPN">
 			<Text>えいがを　とるなら　やっぱり
 うれる　えいが！　めざせ
-こうぎょうしゅうにゅう　１０００億円！</Text>
+こうぎょうしゅうにゅう　１０００おく円</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-25T08:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-25T08:37:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>映画を　撮るなら　やっぱり
 売れる　映画！　めざせ
-興行収入　１０００億円！</Text>
+興行収入　１０００億円</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-25T08:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:04" />
+				Time="2012-01-25T08:37:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

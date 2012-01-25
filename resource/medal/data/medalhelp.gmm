@@ -1507,19 +1507,19 @@
 	<row id="MDL_HINT_BATTLE_052">
 		<language name="JPN" width="216">イッシュのなんかんの
 エリア２から５の　いずれかを
-せんとう　４かい　いないで　クリア！</language>
+せんとう　４かい　いかで　クリア！</language>
 		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア２から５の　いずれかを
-戦闘回数　４回以内で　クリアしろ！</language>
+戦闘回数　４回以下で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
 		<language name="JPN" width="216">イッシュのなんかんの
 エリア６から１０の　いずれかを
-せんとう　６かい　いないで　クリア！</language>
+せんとう　６かい　いかで　クリア！</language>
 		<language name="JPN_KANJI" width="216">イッシュの難関の
 エリア６から１０の　いずれかを
-戦闘回数　６回以内で　クリアしろ！</language>
+戦闘回数　６回以下で　クリアしろ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">
@@ -1901,10 +1901,10 @@
 	<row id="MDL_HINT_APPLICATION_058">
 		<language name="JPN" width="216">えいがを　とるなら　やっぱり
 うれる　えいが！　めざせ
-こうぎょうしゅうにゅう　１０００億円！</language>
+こうぎょうしゅうにゅう　１０００おく円</language>
 		<language name="JPN_KANJI" width="216">映画を　撮るなら　やっぱり
 売れる　映画！　めざせ
-興行収入　１０００億円！</language>
+興行収入　１０００億円</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_059">
