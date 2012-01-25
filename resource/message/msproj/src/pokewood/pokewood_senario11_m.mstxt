@@ -390,26 +390,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『じ……　じゃあ！
-あのUFOの　テストはっ！？</Text>
+あの　ＵＦＯの　テストはっ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-01-24T10:28:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-01-24T10:28:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『じ……　じゃあ！
-あのUFOの　テストはっ！？</Text>
+あの　ＵＦＯの　テストはっ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-01-24T10:28:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-01-24T10:28:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

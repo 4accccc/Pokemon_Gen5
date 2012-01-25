@@ -149,7 +149,7 @@
 ひつような　じょうけんを▽
 みたせば　クランク　アップ！▼
 さいしんの　ＶＦＸぎじゅつで
-あっという　まに　えいがが▽
+あっという　まに　えいが　が▽
 かんせい　するのさ！▼
 イイ　さくひんの　かんせいに
 ひつような　じょうけんは▽
@@ -159,8 +159,8 @@
 シアターで　じょうえい　されるから▽
 チェック　してくれよな！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:15:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T02:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -984,14 +984,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！▼
-さいきん　キミは　わだい　みたいだな！
-キミに　ぜひ　しゅつえん　してほしいって▽
+さいきん　キミ　わだい　みたいだな！
+キミに　しゅつえん　してほしいって▽
 だいほんが　いくつか　とどいてるぜ！▼
 まあ　くわしくは　チャレンジのときに
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T06:10:20" />
+				Time="2012-01-23T12:12:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1000,14 +1000,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｈｅｙ！　[Name:TrainerName ]！！▼
-最近　キミは　話題みたいだな！
-キミに　ぜひ　出演して　欲しいって▽
-いくつか　届いてるぜ！▼
+最近　キミ　話題みたいだな！
+キミに　出演して　欲しいって▽
+台本が　いくつか　届いてるぜ！▼
 まあ　詳しくは　チャレンジのときに
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:38:41" />
+				Time="2012-01-23T12:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1030,14 +1030,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイ！　[Name:TrainerName ]！！
-あたらしい　えいがを　とりたいのかい？▼
-わるいんだけど　しんさくの　だいほんは
-ただいま　ぜっさん　しっぴつちゅう　さ！▼
-まずは　ウチの　ボスが　いってたように
-じぶんの　デビューさくを　みてきなよ！</Text>
+しんさくを　とりたいのかい？▼
+わるいけど　あたらしい　だいほんは
+ただいま　ぜっさん　しっぴつちゅう！▼
+まずは　ボスが　いってたように
+じぶんのデビューさくを　みてきなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:34:02" />
+				Time="2012-01-23T12:14:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1046,14 +1046,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｈｅｙ！　[Name:TrainerName ]！！
-新しい　映画を　撮りたいのかい？▼
-悪いんだけど　新作の　台本は
+新作を　撮りたいのかい？▼
+悪いけど　新しい　台本は
 ただ今　絶賛　執筆中さ！▼
-まずは　ウチの　ボスが　言ってたように
-自分の　デビュー作を　観てきなよ！</Text>
+まずは　ボスが　言ってたように
+自分のデビュー作を　観てきなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:34:18" />
+				Time="2012-01-23T12:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1076,15 +1076,15 @@
 			<Text>ヘイ！　[Name:TrainerName ]！！
 デビューさくの　できは　どうだった？▼
 すくなくとも　ボスの　ウッドウさんは
-だいまんぞく　だったみたいだぜ！▼
-なぜなら　キミの　ポケウッドデビューを
+だいまんぞく　だったみたいだな！▼
+だって　キミの　ポケウッドデビューを
 きねんして　あたらしい　だいほんを▽
 もってきたんだからさ！▼
 まあ　くわしくは　チャレンジのときに
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:43:59" />
+				Time="2012-01-23T12:16:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1095,15 +1095,15 @@
 			<Text>ヘイ！　[Name:TrainerName ]！！
 デビュー作の　出来は　どうだった？▼
 少なくとも　ボスの　ウッドウさんは
-大満足　だったみたいだぜ！▼
-なぜなら　キミの　ポケウッドデビューを
+大満足　だったみたいだな！▼
+だって　キミの　ポケウッドデビューを
 記念して　新しい　台本を▽
 持って来たんだからさ！▼
 まあ　詳しくは　チャレンジの時に
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:43:54" />
+				Time="2012-01-23T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1131,14 +1131,14 @@
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-タイトルのとおり　キミと　ハチクさんが
+タイトルのとおり　キミとハチクさんの
 きょうえんを　まちのぞむ　こえが▽
 おおくて　かかれたみたいだぜ！▼
 ぜひ　チャレンジして　こんども
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:39:03" />
+				Time="2012-01-23T12:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1151,14 +1151,14 @@
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-タイトルの通り　キミと　ハチクさんが
+タイトルの通り　キミとハチクさんの
 共演を　待ち望む　声が▽
 多くて　書かれたみたいだぜ！▼
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:39:06" />
+				Time="2012-01-23T12:02:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1835,10 +1835,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おーい　どうしたんじゃ？
-ほんとうに　さつえいを　あきらめるか？</Text>
+ほんとに　さつえいを　あきらめるか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T09:44:06" />
+				Time="2012-01-23T12:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

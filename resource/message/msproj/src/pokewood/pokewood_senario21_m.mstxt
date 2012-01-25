@@ -317,26 +317,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『あのー　こうふんの　ところ
-ちょっと　すみませんが　いいすか？</Text>
+すみませんが　ちょっと　いいすか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『……あのー　興奮の　ところ
-ちょっと　すみませんが　いいすか？</Text>
+すみませんが　ちょっと　いいすか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -378,31 +378,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『ちょっと　あんた　ねえ
+			<Text>ドーブル『……あんた　ねえ
 めのまえに　ゆうれいが　いるんすよ？▽
 べつに　ポケモンが　しゃべるくらい▽
 たいしたこと　ないっしょ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『ちょっと　あんた　ねえ
+			<Text>ドーブル『……あんた　ねえ
 目の前に　幽霊が　いるんすよ？▽
 別に　ポケモンが　しゃべるくらい▽
 大したこと　ないっしょ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -447,33 +447,33 @@
 		Label="pw_event0_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『しんだっす！▼
+			<Text>ドーブル『しんだ　っす！▼
 でも　ゆうれいになって　マリアさんは
 アンタに　あいに　きたんす！▼
 ただ　ちょっとした　アクシデントで
 きおくを　うしなっちゃったんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『死んだっす！▼
+			<Text>ドーブル『死んだ　っす！▼
 でも　幽霊になって　マリアさんは
 アンタに　あいに　来たんす！▼
 ただ　ちょっとした　アクシデントで
 記憶を　失っちゃったんすねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -507,31 +507,31 @@
 		Label="pw_event0_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『いいすか？
-ポケモンが　しゃべるんすよ！▼
-ゆうれいが　きおくを　なくしたって
-べつに　おかしく　ないっしょ？▼
+			<Text>ドーブル『アンタねえ……
+ポケモンが　しゃべってるんすよ！▼
+ゆうれいが　きおくを　なくすくらい
+べつに　おどろきは　ないっしょ？▼
 というかね　じかんも　ないし
 ほんだいに　はいりますからね▼
-オレと　マリアさんと
+いいすか？　オレと　マリアさんと
 しょうぶして　くださいよ！▼
 アンタの　イカした　すがた　みたら
 マリアさんの　きおくも　ぜったい▽
 よみがえると　おもうんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T08:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T08:07:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『いいすか？
-ポケモンが　しゃべるんすよ！▼
-幽霊が　記憶を　なくしたって
-別に　おかしく　ないっしょ？▼
+			<Text>ドーブル『アンタねえ……
+ポケモンが　しゃべってるんすよ！▼
+幽霊が　記憶を　なくすくらい
+別に　驚きも　ないっしょ？▼
 というかね　時間も　ないし
 本題に　入りますからね▼
 オレと　マリアさんと
@@ -541,11 +541,11 @@
 よみがえると　思うんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:20" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -578,18 +578,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『あ！　しょうぶの　あいまに
-あいのこくはくも　おわすなく！▼
+あいのこくはくも　おわすれなく！▼
 あまい　ことばで　メロメロしちゃえば
 きっと　マリアさんの　きおくも▽
 はやく　よみがえりますって！▽
 さあさあ　しょうぶ　しましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:00:10" />
+				Time="2012-01-24T07:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:00:10" />
+				Time="2012-01-24T07:40:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1042,31 +1042,33 @@
 		Label="pw_event3_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そうだ！
-せっかくだし　あそぼうよ！▼
-そう……　あそこしか　ないよ！
+			<Text>[Name:TrainerName Idx="1" ]『ああ！　そうだ！
+せっかく　ふたり　あえたんだし▽
+あそこへ　いこうよ！▼
+そう……　あそこしか　ない！
 ふたりの　おもいでの　ばしょ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:30" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:30" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そうだ！
-せっかくだし　遊ぼう！▼
-そう……　あそこしか　ないよ！
+			<Text>[Name:TrainerName Idx="1" ]『ああ！　そうだ！
+せっかく　ふたり　会えたんだし▽
+あそこへ　行こうよ！▼
+そう……　あそこしか　ない！
 ふたりの　思い出の　場所……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:30" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:30" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1309,30 +1311,30 @@
 			<Text>[Name:TrainerName Idx="1" ]『ほら　メロメロ　だよ▼
 きみに　メロメロだった　[Name:TrainerName Idx="1" ]が
 めのまえに　いるんだよ！▼
-ほら　[Name:PokemonNickname Idx="0" ]も　いる！
+ほら　[Name:PokemonNickname Idx="0" ]も　いるよ！
 マリアも　だいすき　だったろう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ほら　メロメロだよ▼
 きみに　メロメロだった　[Name:TrainerName Idx="1" ]が
 目の前に　いるんだよ！▼
-ほら　[Name:PokemonNickname Idx="0" ]も　いるよ
-マリア　大好きだったろう？</Text>
+ほら　[Name:PokemonNickname Idx="0" ]も　いるよ！
+マリアも　大好きだったろう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1476,30 +1478,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『おいおい　なんだよ！
-どうして　だまってるの？▼
-そのまま　まりっぱなしだと
+どうして　だまってるんだい？▼
+そのまま　だまりっぱなしだと
 ぼく　きらいに　なっちゃうぞー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『おいおい　何だよ！
-どうして　だまってるの？▼
+どうして　だまってるんだい？▼
 そのまま　だまりっぱなしだと
 ぼく　嫌いに　なっちゃうぞー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1629,14 +1631,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『僕の世界に　来て！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ぼくの世界に　来て！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1729,14 +1731,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『僕の命を　きみに！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ぼくの命を　きみに！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2148,16 +2150,17 @@
 ゆうえんちの　ベンチに▽
 ひとり　すわっていた……▼
 あれは　ゆめだったのか？
-げんじつ　だったのか？▼
+げんじつ　だったのか？▽
+しんじつは　わからない……▼
 ……ただ　ぼくは　きょうも　また
 ゆうえんちへ　かよいつづける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2165,16 +2168,17 @@
 遊園地の　ベンチに▽
 ひとり　座っていた……▼
 あれは　夢だったのか？
-現実　だったのか？▼
+現実　だったのか？▽
+真実は　わからない……▼
 ……ただ　ぼくは　今日も　また
 遊園地へ　通い続ける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2238,8 +2242,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『そうすよ！
-これは　アンタの　みてる　ゆめ！▼
-げんじつの　せかいでは
+これは　アンタの　みてる　ゆめ！▽
+ゆめの　なかの　できごと　っす！▼
+そもそも　げんじつの　せかいでは
 アンタは　マリアさんと▽
 なかよく　くらして　いるんすから▼
 あ！　ほら　ねぼう　しそうだから
@@ -2248,17 +2253,18 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T06:51:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T06:51:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『そうすよ！
-これは　アンタの　見てる夢！▼
-現実の　世界では
+これは　アンタの　見てる夢！▽
+夢の　中の　出来事　っす！▼
+そもそも　現実の　世界では
 アンタは　マリアさんと▽
 仲良く　暮らして　いるんすから▼
 あ！　ほら　寝坊　しそうだから
@@ -2267,11 +2273,11 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T06:51:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T06:51:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2336,53 +2342,84 @@
 		Label="pw_event8_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>……めざめると　いつも　どおり
-げんきな　マリアが　いた……▼
-しかし　ふたたび　ねむりに　おちると
-ゆうえんちに　ドーブルがいて▽
+			<Text>……めざめると　いつもどおり
+あかるく　わらう　マリアが▽
+そこに　いた……▼
+……しかし　ねむりに　おちれば
+そこは　かならず　ゆうえんち……▼
+むくちな　マリアと　ドーブルがいて
 また　ポケモンしょうぶが　はじまる▼
 そこで　また　ゆめから　さめると
 げんきな　マリアが　いて……▼
-いったい　どちらが
-げんじつ　なのだろうか……？▼
-どちらも　ゆめ……？
-どちも　げんじつ……？▼
-……まあ　どうでも　いいか……▼
-わたしに　とっては　マリアが
-そんざいする　せかいが▽
-しんじつ　なのだから……</Text>
+おなじ　じかんと　できごとが
+なんども　くりかえされている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T11:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T11:34:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……目覚めると　いつも　どおり
-元気な　マリアが　いた……▼
-しかし　再び　眠りに　おちると
-遊園地に　ドーブルが　いて▽
-また　ポケモン勝負が　始まる▼
+			<Text>……目覚めると　いつも　通り
+明るく　笑う　マリアが▽
+そこに　いた……▼
+……しかし　眠りに　おちれば
+そこは　必ず　遊園地……▼
+無口な　マリアと　ドーブルがいて
+また　ポケモン勝負が　はじまる▼
 そこで　また　夢から　覚めると
 元気な　マリアが　いて……▼
-いったい　どちらが
-現実　なのだろうか……？▼
-どちらも　夢……？
-どちも　現実……？▼
-……まあ　どうでも　いいか……▼
-わたしに　とっては　マリアが
-存在する　世界が▽
-真実　なのだから……</Text>
+同じ　時間と　出来事が
+何度も　繰り返されている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T11:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:39" />
+				Time="2012-01-24T11:34:56" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>……いったい　どちらが
+げんじつ　なのだろうか……？▼
+どちらも　ゆめ……？
+どちらも　げんじつ……？▽
+……まあ　どうでも　いいか……▼
+ぼくに　とっては　マリアが
+そばに　いてくれること……▼
+その　しんじつが　あればいいのだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T11:34:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T11:34:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……いったい　どちらが
+現実　なのだろうか……？▼
+どちらも　夢……？
+どちらも　現実……？▽
+……まあ　どうでも　いいか……▼
+ぼくに　とっては　マリアが
+側に　いてくれること……▼
+それだけが　真実で　いいのだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:51:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:51:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2448,32 +2485,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『おもいだしたんだね！
-ああ　マリア　うれしいよ！▽
+ああ！　マリア　うれしいよ！▽
 きみに　また　あえるなんて……！▼
 どうして　なんだい？
-ぼくを　わすれるなんて</Text>
+ぼくを　わすれるなんて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:57:45" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:57:45" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『思い出したんだね
-ああ　マリア　うれしいよ！▽
+			<Text>[Name:TrainerName Idx="1" ]『思い出したんだね！
+ああ！　マリア　うれしいよ！▽
 きみに　また　会えるなんて……！▼
 どうして　なんだい？
-ぼくを　忘れるなんて</Text>
+ぼくを　忘れるなんて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:57:45" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:57:45" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2734,30 +2771,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことまで　しってる
-おまえは　いったい……
-</Text>
+そんなことまで　しってるなんて……
+ドーブル……▽
+おまえは　いったい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことで　知ってる
-お前は　一体……
-</Text>
+そんなことで　知ってるなんて……
+ドーブル……▽
+お前は　一体……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2874,15 +2911,15 @@
 どんなせかいか　わからないけど
 ポケモンが　しゃべるくらい▽
 ふしぎなことも　あるんだし▼
-それに　もう　しんでるなら
+……それに　もう　しんでるなら
 いまさら　こわいことなんてないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2891,15 +2928,15 @@
 どんな世界か　分からないけど
 ポケモンが　しゃべるくらい▽
 不思議なことも　あるんだし▼
-それに　もう　死んでるなら
+……それに　もう　死んでるなら
 今さら　怖いことなんてないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2997,19 +3034,19 @@
 		Label="pw_event9_hero_9">
 		<LanguageCell
 			Language="JPN">
-			<Text>……こうして　ぼく　ふたたび
+			<Text>……こうして　ぼくは　ふたたび
 マリアと　めぐりあえた……▼
-どうやら　わたしは　しんだらしいが
+どうやら　ぼくは　しんだらしいが
 となりには　いとしい　マリアが▽
-やさしく　ほほえんで　いる……▽
+やさしく　ほほえんでいる……▽
 おもいのこすことは　なにもない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3017,15 +3054,15 @@
 マリアと　めぐり合えた……▼
 どうやら　ぼくは　死んだらしいが
 となりには　愛しい　マリアが▽
-優しく　微笑んで　いる……▽
+優しく　微笑んでいる……▽
 思い残すことは　何もない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-01-24T03:38:14" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

@@ -827,11 +827,11 @@ msg_pw_tutorial_show_02</Comment>
 			Language="JPN">
 			<Text>これは　これは！
 スカウトさんじゃ　ありませんか！▼
-おかげで　わたしも　ねんがんの
+おかげさまで　わたしも　ねんがんの
 スクリーンデビューが　できました！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:25:11" />
+				Time="2012-01-24T03:42:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -839,13 +839,13 @@ msg_pw_tutorial_show_02</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これは　これは
+			<Text>これは　これは！
 スカウトさんじゃ　ありませんか！▼
 おかげさまで　わたしも　念願の
 スクリーンデビューが　できました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:47:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T03:40:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

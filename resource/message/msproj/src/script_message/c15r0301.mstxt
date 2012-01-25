@@ -83,11 +83,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！　[Name:TrainerName ]さん！▼
-オレ　[Name:TrainerName ]さんの
-でてる　さくひんの　だいファンなんすよ！</Text>
+じぶん　[Name:TrainerName ]さんの
+さくひんの　だいファンなんすよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T09:24:15" />
+				Time="2012-01-23T12:39:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -96,11 +96,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！　[Name:TrainerName ]さん！▼
-オレ　[Name:TrainerName ]さんの
-出てる　作品の　大ファンなんすよ！</Text>
+自分　[Name:TrainerName ]さんの
+作品の　大ファンなんすよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:20:09" />
+				Time="2012-01-23T12:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -857,11 +857,11 @@ pwfun_01_02～pwfun_01_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいも　コッテリな　ストーリーでさ
+			<Text>いまのも　コッテリな　ストーリーでさ
 まんぷく　しあわせ　って　かんじー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:26:43" />
+				Time="2012-01-23T12:39:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -869,11 +869,11 @@ pwfun_01_02～pwfun_01_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回も　コッテリな　ストーリーでさ
+			<Text>今のも　コッテリな　ストーリーでさ
 満腹　幸せ　って　感じー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:27:09" />
+				Time="2012-01-23T12:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2443,11 +2443,11 @@ pwfun_09_02～pwfun_09_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　[Name:TrainerName ]……
-フーン　ほんものは　いがいに　じみだな</Text>
+			<Text>あ　[Name:TrainerName ]　だ……
+フーン　ほんものは　いがいに　じみだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:21:21" />
+				Time="2012-01-23T12:48:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2455,11 +2455,11 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　[Name:TrainerName ]……
-フーン　本物は　意外に　地味だな</Text>
+			<Text>あ　[Name:TrainerName ]　だ……
+フーン　本物は　意外に　地味だ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:21:28" />
+				Time="2012-01-23T12:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2469,10 +2469,13 @@ pwfun_09_02～pwfun_09_04の
 			Language="JPN">
 			<Comment>♂MAN2
 
-ファン11挨拶メッセージ</Comment>
+ファン11挨拶メッセージ
+
+
+終了後イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T08:40:11" />
+				Time="2012-01-23T12:48:55" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2480,12 +2483,12 @@ pwfun_09_02～pwfun_09_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　えいが　なかなかだよ
+			<Text>さっきの　えいが　なかなかだ
 でも　なんつーか　やくしゃ　って▽
 えいがのなかで　みるもん　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T03:41:02" />
+				Time="2012-01-23T12:48:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2493,12 +2496,12 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　映画　なかなかだよ
+			<Text>さっきの　映画　なかなかだ
 でも　何つーか　役者って▽
 映画の中で　みるもん　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T03:41:00" />
+				Time="2012-01-23T12:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2514,7 +2517,7 @@ pwfun_09_02～pwfun_09_04の
 終了後イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T08:41:55" />
+				Time="2012-01-23T12:48:58" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2553,7 +2556,7 @@ pwfun_09_02～pwfun_09_04の
 終了後イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T08:41:58" />
+				Time="2012-01-23T12:49:02" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2561,11 +2564,11 @@ pwfun_09_02～pwfun_09_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　えいがは　キツかったよ
-じかいさくに　きたいしてるから</Text>
+			<Text>さっきの　えいがは　キツかったわ
+まっ　じかいさくに　きたいしてるから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:25:17" />
+				Time="2012-01-23T12:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2573,11 +2576,11 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　映画は　キツかったよ
-次回作に　期待してるから</Text>
+			<Text>さっきの　映画は　キツかったわ
+まっ　次回作に　期待してるから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:25:40" />
+				Time="2012-01-23T12:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2592,7 +2595,7 @@ pwfun_09_02～pwfun_09_04の
 終了後イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T08:42:01" />
+				Time="2012-01-23T12:49:09" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2666,13 +2669,13 @@ pwfun_09_02～pwfun_09_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はわわ……　ス　ス　ス　スターじゃ……
+			<Text>ははわ……　ス　ス　スターじゃ……
 スターの　[Name:TrainerName ]　じゃ……▼
 おお……　なんと　まばゆい……
-もっと　かおを　おがませて　くだされ……</Text>
+かおを　おがませて　くだされ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:32:39" />
+				Time="2012-01-23T12:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2680,13 +2683,13 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はわわ……　ス　ス　ス　スターじゃ……
+			<Text>はわわ……　ス　ス　スターじゃ……
 スターの　[Name:TrainerName ]　じゃ……▼
 おお……　なんと　まばゆい……
-もっと　顔を　おがませて　くだされ……</Text>
+顔を　おがませて　くだされ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:32:42" />
+				Time="2012-01-23T12:41:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2708,12 +2711,12 @@ pwfun_09_02～pwfun_09_04の
 		<LanguageCell
 			Language="JPN">
 			<Text>なあ　スター　[Name:TrainerName ]……
-さっきの　さくひんで　おどろきすぎたら▽
+さっきの　えいがで　おどろきすぎたら▽
 ワシ　じいさんが　みえたんじゃ▽
 スターの　さくひんは　さすがですのお</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:33:12" />
+				Time="2012-01-23T12:41:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4305,11 +4308,11 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　[Name:TrainerName ]……
-フーン　ほんものは　いがいに　じみだな</Text>
+			<Text>あ　[Name:TrainerName ]　だ……
+フーン　ほんものは　いがいに　じみだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:27:34" />
+				Time="2012-01-23T12:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4317,11 +4320,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　[Name:TrainerName ]……
-フーン　本物は　意外に　地味だな</Text>
+			<Text>あ　[Name:TrainerName ]　だ……
+フーン　本物は　意外に　地味だ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:28:15" />
+				Time="2012-01-23T12:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4345,12 +4348,12 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　えいが　なかなかだよ
+			<Text>さっきの　えいが　なかなかだ
 でも　なんつーか　やくしゃ　って▽
 えいがのなかで　みるもん　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T03:41:25" />
+				Time="2012-01-23T12:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4358,12 +4361,12 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　映画　なかなかだよ
+			<Text>さっきの　映画　なかなかだ
 でも　何つーか　役者って▽
 映画の中で　みるもん　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T03:42:01" />
+				Time="2012-01-23T12:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4426,11 +4429,11 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　えいがは　キツかったよ
-じかいさくに　きたいしてるから</Text>
+			<Text>さっきの　えいがは　キツかったわ
+まっ　じかいさくに　きたいしてるから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:27:11" />
+				Time="2012-01-23T12:44:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4438,11 +4441,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　映画は　キツかったよ
-次回作に　期待してるから</Text>
+			<Text>さっきの　映画は　キツかったわ
+まっ　次回作に　期待してるから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T09:28:15" />
+				Time="2012-01-23T12:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4797,11 +4800,11 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　ヤツも　オドロキだぜ！
+			<Text>さっきのヤツも　オドロキだぜ！
 あんな　えいがは　みたことねえよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:51:03" />
+				Time="2012-01-23T12:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4809,11 +4812,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　ヤツも　オドロキだぜ！
+			<Text>さっきのヤツも　オドロキだぜ！
 あんな　映画は　観たことねえよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:51:08" />
+				Time="2012-01-23T12:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4837,11 +4840,11 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　ヤツも　ゴキゲンだぜ！
+			<Text>さっきのヤツも　ゴキゲンだぜ！
 オマエの　えいがは　ハズレなし！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:50:36" />
+				Time="2012-01-23T12:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4849,11 +4852,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　ヤツも　ゴキゲンだぜ！
+			<Text>さっきのヤツも　ゴキゲンだぜ！
 オマエの　映画は　ハズレなし！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:50:44" />
+				Time="2012-01-23T12:46:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4876,11 +4879,11 @@ pwfun_17_02～pwfun_17_04の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　ヤツ！　ありゃ　いけねえ！
+			<Text>さっきのヤツ！　ありゃ　いけねえ！
 オマエが　ぜんぜん　いきてねえよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:50:13" />
+				Time="2012-01-23T12:46:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4888,11 +4891,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　ヤツ！　ありゃ　いけねえ！
+			<Text>さっきのヤツ！　ありゃ　いけねえ！
 オマエが　ぜんぜん　活きてねえよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:50:25" />
+				Time="2012-01-23T12:46:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5125,13 +5128,13 @@ pwfun_21_02～pwfun_21_04の
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　だけど……
-アタイ　あんな　アンタ　みたくない……▼
+あんな　アンタ　みたくない……▼
 ……あれは　だれの　せい？
 アンタの　ジャマする　ヤツは▽
 アタイ　ぶっつぶす　から　いって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T03:49:01" />
+				Time="2012-01-23T12:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5140,13 +5143,13 @@ pwfun_21_02～pwfun_21_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さっきの　映画だけど……
-アタイ　あんな　アンタ　みたくない……▼
+あんな　アンタ　みたくない……▼
 ……あれは　だれの　せい？
 アンタの　ジャマする　ヤツは▽
 アタイ　ぶっつぶす　から　言って……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T03:49:00" />
+				Time="2012-01-23T12:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

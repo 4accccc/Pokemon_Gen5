@@ -791,10 +791,11 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　どうぐに　ちゅうもく！</Text>
+			<Text>じぶんのポケモンを　いれかえろ！
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T08:46:23" />
+				Time="2012-01-24T09:07:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -802,10 +803,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　どうぐに　注目！</Text>
+			<Text>自分のポケモンを　入れ替えろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T08:46:25" />
+				Time="2012-01-24T09:07:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -826,10 +827,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフのせんたくが　じゅうよう！</Text>
+			<Text>セリフのせんたくが　じゅうよう！
+あいてを　いれかえろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:32:31" />
+				Time="2012-01-24T09:26:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -837,10 +839,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの選択が　重要！</Text>
+			<Text>セリフの選択が　重要！
+相手を　入れ替えろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:12:25" />
+				Time="2012-01-24T09:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -861,10 +864,11 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　どうぐに　ちゅうもく！</Text>
+			<Text>じぶんのポケモンを　いれかえろ！
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:33:05" />
+				Time="2012-01-24T09:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -872,10 +876,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　どうぐに　注目！</Text>
+			<Text>自分のポケモンを　入れ替えろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:33:19" />
+				Time="2012-01-24T09:09:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -896,10 +900,11 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぎせいを　おそれるな！</Text>
+			<Text>ぎせいを　おそれるな！
+あいての　どうぐに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T08:44:50" />
+				Time="2012-01-24T10:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -907,10 +912,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぎせいを　恐れるな！</Text>
+			<Text>ぎせいを　恐れるな！
+相手の　どうぐに　注目！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T08:45:57" />
+				Time="2012-01-24T10:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

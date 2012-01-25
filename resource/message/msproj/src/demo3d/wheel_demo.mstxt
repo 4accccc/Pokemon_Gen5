@@ -1275,10 +1275,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょっと　なに　グズグズしてるの？
-ホラ　はやく　そこに　すわって！</Text>
+さっさと　そこに　すわって！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T07:46:10" />
+				Time="2012-01-20T08:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1287,10 +1287,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっと　なに　グズグズしてるの？
-ホラ　早く　そこに　座って！</Text>
+さっさと　そこに　座って！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T07:46:11" />
+				Time="2012-01-20T08:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1340,11 +1340,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホラ　もっと　かおを　あげて！
-なにしてるの？　はやくして！</Text>
+			<Text>ちょっと　もっと　かおを　あげて！
+ホラ　ほほえむとか　できないわけ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:10:12" />
+				Time="2012-01-20T08:06:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1352,11 +1352,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホラ　もっと　顔を　上げて！
-何してるの？　早くして！</Text>
+			<Text>ちょっと　もっと　顔を　上げて！
+ホラ　微笑むとか　できないわけ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:10:18" />
+				Time="2012-01-20T08:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1405,11 +1405,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そう　いいわ　そのまま　うごかないの
-そう……　ジッと　してて……</Text>
+			<Text>やっと　それらしく　なったじゃない
+じゃあ　そのまま　ジッとして……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:43:27" />
+				Time="2012-01-21T08:45:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1417,11 +1417,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そう　いいわ　そのまま　動かないの
-そう……　ジッと　してて……</Text>
+			<Text>やっと　それらしく　なったじゃない
+じゃあ　そのまま　ジッとして……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:43:29" />
+				Time="2012-01-21T08:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

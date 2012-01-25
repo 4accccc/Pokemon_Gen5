@@ -317,26 +317,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『あのー　こうふんの　ところ
-ちょっと　すみませんが　いいすか？</Text>
+すみませんが　ちょっと　いいすか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『……あのー　興奮の　ところ
-ちょっと　すみませんが　いいすか？</Text>
+すみませんが　ちょっと　いいすか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -378,31 +378,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『ちょっと　あんた　ねえ
+			<Text>ドーブル『……あんた　ねえ
 めのまえに　ゆうれいが　いるんすよ？▽
 べつに　ポケモンが　しゃべるくらい▽
 たいしたこと　ないっしょ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『ちょっと　あんた　ねえ
+			<Text>ドーブル『……あんた　ねえ
 目の前に　幽霊が　いるんすよ？▽
 別に　ポケモンが　しゃべるくらい▽
 大したこと　ないっしょ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -447,33 +447,33 @@
 		Label="pw_event0_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『しんだっす！▼
+			<Text>ドーブル『しんだ　っす！▼
 でも　ゆうれいになって　アントニオは
 アンタに　あいに　きたんす！▼
 ただ　ちょっとした　アクシデントで
 きおくを　うしなっちゃったんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『死んだっす！▼
+			<Text>ドーブル『死んだ　っす！▼
 でも　幽霊になって　アントニオは
 アンタに　あいに　来たんす！▼
 ただ　ちょっとした　アクシデントで
 記憶を　失っちゃったんすねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -507,10 +507,10 @@
 		Label="pw_event0_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『いいすか？
-ポケモンが　しゃべるんすよ！▼
-ゆうれいが　きおくを　なくしたって
-べつに　おかしく　ないっしょ？▼
+			<Text>ドーブル『アンタねえ……
+ポケモンが　しゃべってるんすよ！▼
+ゆうれいが　きおくを　なくすくらい
+べつに　おどろきは　ないっしょ？▼
 というかね　じかんも　ないし
 ほんだいに　はいりますからね▼
 オレと　アントニオと
@@ -520,18 +520,18 @@
 よみがえると　おもうんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『いいすか？
-ポケモンが　しゃべるんすよ！▼
-幽霊が　記憶を　なくしたって
-別に　おかしく　ないっしょ？▼
+			<Text>ドーブル『アンタねえ……
+ポケモンが　しゃべってるんすよ！▼
+幽霊が　記憶を　なくすくらい
+別に　驚きも　ないっしょ？▼
 というかね　時間も　ないし
 本題に　入りますからね▼
 オレと　アントニオと
@@ -541,11 +541,11 @@
 よみがえると　思うんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:19" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -578,18 +578,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『あ！　しょうぶの　あいまに
-あいのこくはくも　おわすなく！▼
+あいのこくはくも　おわすれなく！▼
 あまい　ことばで　メロメロしちゃえば
 きっと　アントニオの　きおくも▽
 はやく　よみがえりますって！▽
 さあさあ　しょうぶ　しましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:00:09" />
+				Time="2012-01-24T07:40:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:00:09" />
+				Time="2012-01-24T07:40:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1042,31 +1042,33 @@
 		Label="pw_event3_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そうだ！
-せっかくだし　あそびましょう！▼
-そうね……　あそこしか　ないわ！
+			<Text>[Name:TrainerName Idx="1" ]『ああ！　そうだ！
+せっかく　ふたり　あえたんだし▽
+あそこへ　いきましょうよ！▼
+そう……　あそこしか　ないわ！
 ふたりの　おもいでの　ばしょ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:28" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:28" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そうだ！
-せっかくだし　遊びましょう！▼
-そうね……　あそこしか　ないわ！
+			<Text>[Name:TrainerName Idx="1" ]『ああ！　そうだ！
+せっかく　ふたり　会えたんだし▽
+あそこへ　行きましょうよ！▼
+そう……　あそこしか　ないわ！
 ふたりの　思い出の　場所……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:28" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:40:28" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1424,26 +1426,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ねえねえ　どうしたの？
-わたしよ　[Name:TrainerName Idx="1" ]だよー</Text>
+わたしよ　[Name:TrainerName Idx="1" ]だよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ねえねえ　どうしたの？
-わたしよ　[Name:TrainerName Idx="1" ]だよー</Text>
+わたしよ　[Name:TrainerName Idx="1" ]だよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1476,30 +1478,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ちょっと　なんで？
-なんで　だまってるの？▼
+なんで　だまってるのよ？▼
 あんまり　だまりっぱなしだと
 わたし　きらいに　なっちゃうわよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ちょっと　何で？
-何で　だまってるの？▼
+何で　だまってるのよ？▼
 あんまり　だまりっぱなしだと
 わたし　嫌いに　なっちゃうわよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2148,16 +2150,17 @@
 ゆうえんちの　ベンチに▽
 ひとり　すわっていた……▼
 あれは　ゆめだったのか？
-げんじつ　だったのか？▼
+げんじつ　だったのか？▽
+しんじつは　わからない……▼
 ……ただ　わたしは　きょうも　また
 ゆうえんちへ　かよいつづける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2165,16 +2168,17 @@
 遊園地の　ベンチに▽
 ひとり　座っていた……▼
 あれは　夢だったのか？
-現実　だったのか？▼
+現実　だったのか？▽
+真実は　わからない……▼
 ……ただ　わたしは　今日も　また
 遊園地へ　通い続ける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2238,8 +2242,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『そうすよ！
-これは　アンタの　みてる　ゆめ！▼
-げんじつの　せかいでは
+これは　アンタの　みてる　ゆめ！▽
+ゆめの　なかの　できごと　っす！▼
+そもそも　げんじつの　せかいでは
 アンタは　アントニオと▽
 なかよく　くらして　いるんすから▼
 あ！　ほら　ねぼう　しそうだから
@@ -2248,17 +2253,18 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T06:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T06:50:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『そうすよ！
-これは　アンタの　見てる夢！▼
-現実の　世界では
+これは　アンタの　見てる夢！▽
+夢の　中の　出来事　っす！▼
+そもそも　現実の　世界では
 アンタは　アントニオと▽
 仲良く　暮らして　いるんすから▼
 あ！　ほら　寝坊　しそうだから
@@ -2267,11 +2273,11 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T06:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:30" />
+				Time="2012-01-24T06:50:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2337,52 +2343,83 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……めざめると　いつも　どおり
-げんきな　アントニオが　いた……▼
-しかし　ふたたび　ねむりに　おちると
-ゆうえんちに　ドーブルが　いて▽
+やさしく　ほほえむ　アントニオが▽
+そこに　いた……▼
+……しかし　ねむりに　おちれば
+そこは　かならず　ゆうえんち……▼
+むくちなアントニオと　ドーブルがいて
 また　ポケモンしょうぶが　はじまる▼
 そこで　また　ゆめから　さめると
 げんきな　アントニオが　いて……▼
-いったい　どちらが
-げんじつ　なのだろうか……？▼
-どちらも　ゆめ……？
-どちも　げんじつ……？▼
-……まあ　どうでも　いい……▼
-わたしに　とっては　アントニオが
-そんざいする　せかいが▽
-しんじつ　なのだから……</Text>
+おなじ　じかんと　できごとが
+なんども　くりかえされている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T11:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T11:34:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……目覚めると　いつも　どおり
-元気な　アントニオが　いた……▼
-しかし　再び　眠りに　おちると
-遊園地に　ドーブルが　いて▽
+			<Text>……目覚めると　いつも通り
+優しく　微笑む　アントニオが▽
+そこに　いた……▼
+……しかし　眠りに　おちれば
+そこは　必ず　遊園地……▼
+無口なアントニオと　ドーブルがいて
 また　ポケモン勝負が　はじまる▼
 そこで　また　夢から　覚めると
 元気な　アントニオが　いて……▼
-いったい　どちらが
-現実　なのだろうか……？▼
-どちらも　夢……？
-どちも　現実……？▼
-……まあ　どうでも　いいか……▼
-わたしに　とっては　アントニオが
-存在する　世界が▽
-真実　なのだから……</Text>
+同じ　時間と　出来事が
+何度も　繰り返されている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T11:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T13:07:38" />
+				Time="2012-01-24T11:34:55" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>……いったい　どちらが
+げんじつ　なのだろうか……？▼
+どちらも　ゆめ……？
+どちらも　げんじつ……？▽
+……まあ　どうでも　いいか……▼
+わたしに　とっては　アントニオが
+そばに　いてくれること……▼
+それだけが　しんじつで　いいから……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:50:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:50:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……いったい　どちらが
+現実　なのだろうか……？▼
+どちらも　夢……？
+どちらも　現実……？▽
+……まあ　どうでも　いいか……▼
+わたしに　とっては　アントニオが
+側に　いてくれること……▼
+それだけが　真実で　いいから……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:50:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-24T06:50:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2447,33 +2484,33 @@
 		Label="pw_event9_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おもいだしたのね
+			<Text>[Name:TrainerName Idx="1" ]『おもいだしたのね！
 ああ　アントニオ　うれしいわ！▽
 あなたに　また　あえるなんて……！▼
 ねえ　どうしてなの？
-わたしを　わすれるなんて</Text>
+わたしを　わすれるなんて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『思い出したのね
-ああ　アントニオ　うれしいわ！▽
+			<Text>[Name:TrainerName Idx="1" ]『思い出したのね！
+ああ！　アントニオ　うれしいわ！▽
 あなたに　また　会えるなんて……！▼
 ねえ　どうしてなの？
-わたしを　忘れるなんて</Text>
+わたしを　忘れるなんて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2734,30 +2771,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことまで　しってる
-あなたは　いったい……
-</Text>
+そんなことまで　しってるなんて……
+ドーブル……▽
+あなたは　いったい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことで　知ってる
-あなたは　一体……
-</Text>
+そんなことで　知ってるなんて……
+ドーブル……▽
+あなたは　一体……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2874,15 +2911,15 @@
 どんなせかいか　わからないけど
 ポケモンが　しゃべるくらい▽
 ふしぎなことも　あるんだし▼
-それに　もう　しんでるなら
+……それに　もう　しんでるなら
 いまさら　こわいことなんてないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2891,15 +2928,15 @@
 どんな世界か　分からないけど
 ポケモンが　しゃべるくらい▽
 不思議なことも　あるんだし▼
-それに　もう　死んでるなら
+……それに　もう　死んでるなら
 今さら　怖いことなんてないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:59:54" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:59:54" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3001,15 +3038,15 @@
 アントニオと　めぐりあえた……▼
 どうやら　わたしは　しんだらしいが
 となりには　あいする　アントニオが▽
-やさしく　ほほえんで　いる……▽
+やさしく　ほほえんでいる……▽
 おもいのこすことは　なにもない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3017,15 +3054,15 @@
 アントニオと　めぐり合えた……▼
 どうやら　わたしは　死んだらしいが
 となりには　愛する　アントニオが▽
-優しく　微笑んで　いる……▽
+優しく　微笑んでいる……▽
 思い残すことは　何もない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-01-24T03:38:13" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

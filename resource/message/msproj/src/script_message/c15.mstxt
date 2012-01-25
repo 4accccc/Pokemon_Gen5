@@ -358,14 +358,14 @@ x31,z54辺りに配置
 			<Text>あー　それ　ナイスねー！▼
 えいが！　それは　アメイジングよ！▼
 その　おどろき　そして　かんどうを
-ていきょうする　この　ポケウッドの
+ていきょうする　この　ポケウッドの▽
 みりょくを　[Name:TrainerName Idx="0" ]ちゃんに▽
 かんじちゃって　もらえるもんね！▼
 じゃあ　また　あとでね！
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-17T11:43:21" />
+				Time="2012-01-24T02:54:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -373,7 +373,7 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あー　それが　ナイスねー！▼
+			<Text>あー　それ　ナイスねー！▼
 映画！　それは　アメイジングよ！▼
 その驚き　そして感動　を
 提供する　この　ポケウッドの▽
@@ -383,7 +383,7 @@ x31,z54辺りに配置
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-17T11:43:30" />
+				Time="2012-01-24T02:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1089,14 +1089,14 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　ポケウッドの　やくしゃだな！▼
+			<Text>きみも　ポケウッドの　やくしゃだな！▼
 やくしゃの　セリフ　ひとつで
 えいがが　かわることも　ある！▼
 ポケウッドの　さつえいには
 かのうせいが　いっぱいだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:01:58" />
+				Time="2012-01-23T12:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1104,14 +1104,14 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　ポケウッドの　役者だな！▼
+			<Text>君も　ポケウッドの　役者だな！▼
 役者の　セリフ　ひとつで
 映画が　変わることも　ある！▼
 ポケウッドの　撮影には
 可能性が　いっぱいだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:02:06" />
+				Time="2012-01-23T12:53:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2413,10 +2413,10 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あー！　[Name:TrainerName ]　だっ！
-ファンなんだ！　サインして　おくれよー！</Text>
+ねえねえ　サインして　おくれよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:50:44" />
+				Time="2012-01-23T12:54:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2425,10 +2425,10 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あー！　[Name:TrainerName ]　だっ！
-ファンなんだ！　サインして　おくれよー！</Text>
+ねえねえ　サインして　おくれよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:50:57" />
+				Time="2012-01-23T12:54:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2457,11 +2457,11 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>アラ　[Name:TrainerName ]……▼
-コンドハ　イツ　ワタシノ　カントクスル
-ムービーニ　シュツエン　シテクレルノ？</Text>
+コンドハ　イツ　ワタシノ
+ムービーニ　デテ　クレルノ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T03:29:58" />
+				Time="2012-01-23T12:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
