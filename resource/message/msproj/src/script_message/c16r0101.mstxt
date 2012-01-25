@@ -404,7 +404,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しょうたいする」を　選ぶと
+			<Text>「招待する」を　選ぶと
 お客さまが　街の　住人となって▽
 お店が　つくられます▼
 それぞれの　人が
@@ -413,7 +413,7 @@
 話を　よくきいて　選びましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-26T11:08:39" />
+				Time="2012-01-25T13:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -484,7 +484,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>街に　来た　お客さまへ
-「あんないする」を　やってみましょう▼
+「案内する」を　やってみましょう▼
 お客さまが　満足すると
 案内した　お店と▽
 街の　人気が　あがります▼
@@ -501,8 +501,8 @@
 上手に　案内して▽
 人気を　集めましょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T10:55:49" />
+				User="shimoyamada:W00184"
+				Time="2012-01-25T13:32:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -680,14 +680,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くじやでは　１にち　１かいの
-ちゅうせんに　あたると▽
+			<Text>くじびきや　では　くじを　ひくことで
 ごうか　けいひんが　もらえます▼
 １とうは　なんと！
 マスターボールが　あたります▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T10:56:24" />
+				User="shimoyamada:W00184"
+				Time="2012-01-25T13:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -695,14 +694,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くじ屋　では　１日　１回の
-抽選に　当たると▽
+			<Text>くじ引き屋　では　くじを　引くことで
 豪華　景品が　もらえます▼
 １等は　なんと！
 マスターボールが　当たります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:08:20" />
+				Time="2012-01-25T13:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1745,10 +1743,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あんないする　って？</Text>
+			<Text>案内する　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:05:03" />
+				Time="2012-01-25T13:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2040,10 +2038,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くじや　って？</Text>
+			<Text>くじびきや　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T15:11:56" />
+				Time="2012-01-25T13:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2051,10 +2049,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くじ屋　って？</Text>
+			<Text>くじ引き屋　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T11:51:46" />
+				Time="2012-01-25T13:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"

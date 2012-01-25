@@ -2907,11 +2907,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]　を
-こうたい　しました▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+もとの　せかいに　かえりました▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T04:58:11" />
+				User="shimoyamada:W00184"
+				Time="2012-01-25T03:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2919,11 +2919,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]　を
-交代しました▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんは
+元の　世界に　帰りました▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T12:26:54" />
+				User="shimoyamada:W00184"
+				Time="2012-01-25T04:20:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
