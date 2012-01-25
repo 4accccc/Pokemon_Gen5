@@ -11791,14 +11791,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！
-と　すれちがったら　あいさつするのが▽
+			<Text>こんにちは！▼
+と　すれちがったら　あいさつするのが
 やまの　きほん！▼
 そして　ここでは　あいさつがわりに
 ポケモンしょうぶも　するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T03:27:17" />
+				Time="2012-01-25T05:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11806,14 +11806,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！
-と　すれちがったら　あいさつするのが▽
+			<Text>こんにちは！▼
+と　すれ違ったら　あいさつするのが
 山の　基本！▼
 そして　ここでは　あいさつがわりに
 ポケモン勝負も　するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T03:27:20" />
+				Time="2012-01-25T05:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
