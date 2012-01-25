@@ -454,11 +454,11 @@
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">にげおくれた　おんな『ええ！
 あなたも　きを　つけてね！▼
-さっき　UFOが　ひとや　ポケモンを
+さっき　ＵＦＯが　ひとや　ポケモンを
 つれさっていくのを　みたわ！</language>
 		<language name="JPN_KANJI" width="256">逃げ遅れた　女『ええ！
 あなたも　気を　つけてね！▼
-さっき　UFOが　人や　ポケモンを
+さっき　ＵＦＯが　人や　ポケモンを
 連れ去っていくのを　見たわ！</language>
 	</row>
 	<row id="pw_event1_hero_3">
@@ -505,12 +505,12 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ　マズい……
 こっちに　せっきん　してくる……▼
 ……しかも　なんだ？
-UFOの　ぜんしんが　すこしずつ▽
+ＵＦＯの　ぜんしんが　すこしずつ▽
 ひかり　はじめている……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『マズい……
 こっちに　接近してくる……▼
 ……しかも　何だ？
-UFOの　全身が　少しずつ▽
+ＵＦＯの　全身が　少しずつ▽
 光り始めている……</language>
 	</row>
 	<row id="pw_event2_enemy_4">
@@ -576,11 +576,11 @@ UFOの　全身が　少しずつ▽
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
 ほとんどの　しみんが▽
-UFOに　つかまったか……▼
+ＵＦＯに　つかまったか……▼
 のこったのは　オレだけ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……
 ほとんどの　市民が▽
-UFOに　捕まったか……▼
+ＵＦＯに　捕まったか……▼
 残ったのは　オレだけ……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
@@ -589,10 +589,10 @@ UFOに　捕まったか……▼
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだ！？
-UFOから　ひかりが……▽
+ＵＦＯから　ひかりが……▽
 くそっ……　まぶしい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何だ！？
-UFOから　光が……▼
+ＵＦＯから　光が……▼
 くそっ……　まぶしい……</language>
 	</row>
 	<row id="pw_event3_enemy_3">
@@ -610,12 +610,12 @@ UFOから　光が……▼
 	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キ……　キャップ……▼
 ああ……　ダメです……
-UFOの……　ひかりが……▼
+ＵＦＯの……　ひかりが……▼
 ウウ　なんだか　きもちいい……▼
 ねむく……　なって……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キ……　キャップ……▼
 ああ……　ダメです……
-UFOの……　光が……▼
+ＵＦＯの……　光が……▼
 ウウ　何だか　気持いい……▼
 眠く……　なって……</language>
 	</row>
@@ -648,13 +648,13 @@ UFOの……　光が……▼
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャップ！！
 もうしわけありません！▼
-UFOたちに　やられ　ポケモンが
+ＵＦＯたちに　やられ　ポケモンが
 ぜんめつして　しまいました！▽
 いそぎ　こちらに　きゅうえんを▽
 おねがいします！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャップ！！
 申し訳　ありません！▼
-UFOたちに　やられ　ポケモンが
+ＵＦＯたちに　やられ　ポケモンが
 全滅してしまいました！▽
 こちらに　救援を　お願いします！</language>
 	</row>
@@ -678,7 +678,7 @@ UFOたちに　やられ　ポケモンが
 		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……▼
 たった　いま……
 イッシュぼうえいたい　ほんぶは▽
-べつの　きょだいUFOに　より▽
+べつの　きょだいＵＦＯに　より▽
 はかいされて　しまった……
 われわれのチームも　かいめつだ……▼
 [1:00:トレーナー名:1]……　おまえも……▼
@@ -686,7 +686,7 @@ UFOたちに　やられ　ポケモンが
 		<language name="JPN_KANJI" width="256">通信『[1:00:トレーナー名:1]……▼
 たった　今……
 イッシュ防衛隊　本部は▽
-別の　巨大UFOに　より▽
+別の　巨大ＵＦＯに　より▽
 破壊されて　しまったのだ……▼
 我々のチームも　壊滅だ……▼
 [1:00:トレーナー名:1]……　お前も……▼
@@ -704,13 +704,13 @@ UFOたちに　やられ　ポケモンが
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれやれ……
 ザコどもは　たおしたし▽
 ここまで　にげれば▽
-UFOも　おってこないだろう……▼
+ＵＦＯも　おってこないだろう……▼
 ……まったく　あんな　あいてと
 たたかうなんて　バカげてるよ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やれやれ……
 ザコどもは　倒したし▽
 ここまで　逃げれば▽
-UFOも　追って来ないだろう……▼
+ＵＦＯも　追って来ないだろう……▼
 ……まったく　あんな　相手と
 戦うなんて　バカげてるよ……</language>
 	</row>
@@ -741,7 +741,7 @@ UFOも　追って来ないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ　UFOさんよ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ　ＵＦＯさんよ！
 アンタたちの　もくてきは　なんだい？▼
 ひょっとしてさあ　このほしの
 せいふくでも　かんがえてるのかい？▼
@@ -750,7 +750,7 @@ UFOも　追って来ないだろう……▼
 だから　そのかわり……　
 どうか　オレだけは▽
 みのがして　くれないかなっ！？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ　UFOさんよ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ　ＵＦＯさんよ！
 アンタたちの目的は　なんだい？▼
 ひょっとしてさあ　この星の
 征服でも　考えてるのかい？▼
@@ -765,7 +765,7 @@ UFOも　追って来ないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">……じんるいを　おそう　UFO▼
+		<language name="JPN" width="256">……じんるいを　おそう　ＵＦＯ▼
 その　きょうふの　まえに
 [1:00:トレーナー名:1]は　にんげんを▽
 うらぎって　しまった……▼
@@ -773,7 +773,7 @@ UFOも　追って来ないだろう……▼
 あらわれた　[1:00:トレーナー名:1]……▼
 そのすがたは　にんげんとは　まるで
 ことなる　おそろしいもの　だった……</language>
-		<language name="JPN_KANJI" width="256">……人類を　襲う　UFO▼
+		<language name="JPN_KANJI" width="256">……人類を　襲う　ＵＦＯ▼
 その　恐怖に　屈した
 [1:00:トレーナー名:1]は　人類を▽
 裏切って　しまった……▼
@@ -798,9 +798,9 @@ UFOも　追って来ないだろう……▼
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……なんだ？
-UFOが　そらへ　のぼっていく……</language>
+ＵＦＯが　そらへ　のぼっていく……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……何だ？
-UFOが　空へ　上っていく……</language>
+ＵＦＯが　空へ　上っていく……</language>
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『にげたのか……？</language>
@@ -808,16 +808,16 @@ UFOが　空へ　上っていく……</language>
 	</row>
 	<row id="pw_event6_hero_4">
 		<language name="JPN" width="256">？？？『……　ちがう▼
-……　あの　UFOは
+……　あの　ＵＦＯは
 にげたわけでは　ない……</language>
 		<language name="JPN_KANJI" width="256">？？？『……　違う▼
-……　あの　UFOは
+……　あの　ＵＦＯは
 逃げたわけでは　ない……</language>
 	</row>
 	<row id="pw_event6_hero_5">
 		<language name="JPN" width="256">……とつぜん　あらわれ
 じんるいの　ほかくを　はじめた▽
-なぞの　UFO……▼
+なぞの　ＵＦＯ……▼
 そのきょうふから　しみんを
 まもった　[1:00:トレーナー名:1]……▼
 かれのまえに　あらわた
@@ -827,7 +827,7 @@ UFOが　空へ　上っていく……</language>
 まくを　あけたの　だった……</language>
 		<language name="JPN_KANJI" width="256">……突然　現れ
 人類の　捕獲を　始めた▽
-なぞの飛行物体　UFO……▼
+なぞの飛行物体　ＵＦＯ……▼
 その恐怖から　市民を
 守った　[1:00:トレーナー名:1]……▼
 彼の前に　現れた

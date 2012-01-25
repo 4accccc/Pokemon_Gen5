@@ -1398,31 +1398,31 @@
 			Language="JPN">
 			<Text>……なぞのかがくしゃ　Ｅに　よる
 おどろきの　ＵＦＯ　ぶんせき……▼
-[Name:TrainerName Idx="1" ]と　Eに　よって
+[Name:TrainerName Idx="1" ]と　Ｅに　よって
 じんるいの　ぎゃくてんを　かけた▽
 だいさくせんが　けっこう　される……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-25T07:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-25T07:10:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……なぞの科学者　Ｅに　よる
 驚きの　ＵＦＯ分析……▼
-[Name:TrainerName Idx="1" ]と　Eに　よって
+[Name:TrainerName Idx="1" ]と　Ｅに　よって
 人類の　逆転を　かけた▽
 大作戦が　決行される……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-25T07:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-01-25T07:10:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

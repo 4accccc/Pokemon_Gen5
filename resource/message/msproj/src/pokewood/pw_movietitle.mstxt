@@ -914,12 +914,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>元の世界に　つながる　扉を
+			<Text>元の世界に　つながる　扉
 運命を　かけた　選択
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:51:34" />
+				Time="2012-01-25T07:53:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3398,10 +3398,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>２０カットいないに　じぶんの
-ポケモンを　ぜんめつさせろ</Text>
+ポケモンを　ぜんめつ　させろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-18T11:42:48" />
+				Time="2012-01-25T07:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3475,11 +3475,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんじほう　で　セットを　たおせ
+			<Text>でんじほう　で　セットＵ１を　たおせ
 それいがいの　わざで　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-18T11:51:22" />
+				Time="2012-01-25T07:55:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3487,11 +3487,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でんじほう　で　セットを　倒せ
+			<Text>でんじほう　で　セットＵ１を　倒せ
 それ以外の　わざで　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-18T11:51:35" />
+				Time="2012-01-25T07:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3937,10 +3937,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６カットいないに　たおせ</Text>
+			<Text>６カットいないに　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:46:48" />
+				Time="2012-01-25T08:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3948,10 +3948,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６カット以内に　倒せ</Text>
+			<Text>６カット以内に　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T05:46:50" />
+				Time="2012-01-25T08:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4376,11 +4376,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カットの　間　生き残れ
+			<Text>５カットの　あいだ　生き残れ
 相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:48:51" />
+				Time="2012-01-25T08:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4415,11 +4415,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６カットの　間　生き残れ
+			<Text>６カットの　あいだ　生き残れ
 相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:09:16" />
+				Time="2012-01-25T08:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8807,10 +8807,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さらば　いきとしき　ジャイアント</Text>
+			<Text>さらば　いとしき　ジャイアント</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:37:06" />
+				Time="2012-01-25T08:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

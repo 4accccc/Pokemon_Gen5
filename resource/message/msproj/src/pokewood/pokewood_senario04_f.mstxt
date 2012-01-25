@@ -906,18 +906,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ（ヘッ！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ（フン！
 正義の味方サン▽
 油断してるね！▼
 スキを　ついて
 スクラップに　してやるわ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-25T08:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-25T08:15:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1679,7 +1679,7 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 ほうりつ？　せいぎ？▽
-そんなの　しったことですか！▼
+そんなの　しったことか！▼
 どんなてを　つかっても
 アタシは　かって　にげきる！▼
 それが　アタシの　せいぎさ！▼
@@ -1687,17 +1687,17 @@
 つかまえて　みな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:12:49" />
+				Time="2012-01-25T08:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:12:49" />
+				Time="2012-01-25T08:19:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『フン！
 法律？　正義？▽
-そんなの　知ったことですか！▼
+そんなの　知ったことか！▼
 どんな手を　使っても
 アタシは　勝って　逃げ切る！▼
 それが　アタシの　正義さ！▼
@@ -1705,11 +1705,11 @@
 捕まえて　みな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:12:49" />
+				Time="2012-01-25T08:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:12:49" />
+				Time="2012-01-25T08:19:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

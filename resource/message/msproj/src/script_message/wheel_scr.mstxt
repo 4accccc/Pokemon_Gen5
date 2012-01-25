@@ -4843,8 +4843,7 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フーン　やるわね　アナタ……▼
-それに　よく　みたら　なかなか
+			<Text>それに　よく　みたら　なかなか
 カワイイ　かお　してるし……▼
 ……そうだ　このこ　つかえるかも▼
 ……ねえ　アナタ？
@@ -4858,7 +4857,7 @@ OL</Text>
 アナタとは　あえないの……▽
 ……　……　……　……　……▽
 そう　こいびとが　できたの▼
-そう……　だから……
+そう……　だからさあ……
 え？　いま？　いまは　ライモンよ……▽
 かんらんしゃの　まえに　いるわ……▼
 それじゃあ　サヨナラ……▼
@@ -4866,7 +4865,7 @@ OL</Text>
 さあ　アナタ　ついてきなさい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:35:11" />
+				Time="2012-01-25T08:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4874,8 +4873,7 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フーン　やるわね　アナタ……▼
-それに　よく　みたら　なかなか
+			<Text>それに　よく　みたら　なかなか
 カワイイ顔　してるし……▼
 ……そうだ　この子　使えるかも▼
 ……ねえ　アナタ？
@@ -4889,7 +4887,7 @@ OL</Text>
 アナタとは　あえないの……▽
 ……　……　……　……　……▽
 そう　恋人が　できたの▼
-そう……　だから……
+そう……　だから　さあ……
 え？　今？　今は　ライモンよ……▽
 観覧車の　前に　いるけれど……▼
 それじゃあ　サヨナラ……▼
@@ -4897,7 +4895,7 @@ OL</Text>
 さあ　アナタ　ついてきなさい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:35:17" />
+				Time="2012-01-25T08:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5346,13 +5344,9 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やれやれ……▼
-この　わたくしが　かんらんしゃに
-のってあげるって　いうのに▽
-エスコートも　できないの　アナタ？▼
+			<Text>ウフフフ……　かわいかったわよ▼
 ポケモンしょうぶは　エリートでも
-おとこと　しては　まだまだ▽
-たんパンこぞう　レベルね……▼
+たんパンこぞう　みたいとこもあるのね▼
 いまは　それも　チャーミング……▼
 でも　アナタなら　これから　まなべば
 ステキな　おとこに　しんかする　ハズ▽
@@ -5363,7 +5357,7 @@ OL</Text>
 では　また　いつか　どこかでね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:40:49" />
+				Time="2012-01-25T08:47:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5371,13 +5365,9 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やれやれ……▼
-この　わたくしが　観覧車に
-乗ってあげるって　いうのに▽
-エスコートも　できないの　アナタ？▼
+			<Text>ウフフフ……　可愛かったわよ▼
 ポケモン勝負は　エリートでも
-オトコと　しては　まだまだ▽
-たんパンこぞう　レベルね……▼
+たんパンこぞう　みたいとこもあるのね▼
 今は　それも　チャーミング……▼
 でも　アナタなら　これから　学べば
 ステキな男に　進化する　ハズ▽
@@ -5388,7 +5378,7 @@ OL</Text>
 では　また　いつか　どこかでね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:40:26" />
+				Time="2012-01-25T08:49:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

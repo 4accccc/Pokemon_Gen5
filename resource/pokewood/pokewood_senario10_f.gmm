@@ -494,13 +494,13 @@
 じぶんにも　わかりません……▼
 ただ……　なぞの　おおい
 ＵＦＯが　あいてです▼
-いくら　あやしくとも　いまは　Eに
+いくら　あやしくとも　いまは　Ｅに
 たよるしか　ほうほうが　ありません</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それは……
 自分にも　分かりません……▼
 ただ……　なぞの　多い
 ＵＦＯが　相手です▼
-いくら怪しくても　今は　Eに
+いくら怪しくても　今は　Ｅに
 頼るしか　方法が　ありません</language>
 	</row>
 	<row id="pw_event0_hero_6">
@@ -531,9 +531,9 @@
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『チッ……
-Eからの　れんらくは　まだなの……</language>
+Ｅからの　れんらくは　まだなの……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『チッ……
-Eからの　連絡は　まだなの……</language>
+Ｅからの　連絡は　まだなの……</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">つうしん『きこえたぞ……
@@ -660,11 +660,11 @@ Eからの　連絡は　まだなの……</language>
 聞こえているな　私だ……</language>
 	</row>
 	<row id="pw_event2_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『Eねっ！！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅねっ！！
 こちらは　ＵＦＯから　しみんたちを▽
 まもることに　せいこう　したわ！▼
 そちらの　じょうきょうは！？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Eねっ！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅねっ！！
 こちらは　ＵＦＯから　市民たちを▽
 守ることに　成功したわ！▼
 そちらの　状況は！？</language>
@@ -698,9 +698,9 @@ Eからの　連絡は　まだなの……</language>
 一層　容易くなるだろうな……</language>
 	</row>
 	<row id="pw_event2_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『E……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ……
 なにを　いっているんです……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅ……
 何を　言ってるんです……？</language>
 	</row>
 	<row id="pw_event2_hero_7">
@@ -712,9 +712,9 @@ Eからの　連絡は　まだなの……</language>
 お前は　だまされたのだ……</language>
 	</row>
 	<row id="pw_event2_hero_8">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『E……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ……▼
 あなたは　いったい……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅ……▼
 あなたは　一体……</language>
 	</row>
 	<row id="pw_event2_hero_9">
@@ -746,8 +746,8 @@ Eからの　連絡は　まだなの……</language>
 私だ……　Ｅだ……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『E！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅ！！</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……
@@ -795,13 +795,13 @@ Eからの　連絡は　まだなの……</language>
 	</row>
 	<row id="pw_event3_hero_8">
 		<language name="JPN" width="256">……デコイＵＦＯは　はかいされ
-Eは　ちからつきた……▼
+Ｅは　ちからつきた……▼
 デコイさくせんは　しっぱいに　おわり
 じんるいは　ＵＦＯに　はいぼく……▼
 じんるいの　れきしと　みらいは
 おわりを　つげた……</language>
 		<language name="JPN_KANJI" width="256">……デコイＵＦＯは　破壊され
-Eは　力尽きた……▼
+Ｅは　力尽きた……▼
 デコイ作戦は　失敗に　終わり
 人類は　ＵＦＯに　敗北……▼
 人類の　未来と　歴史は
@@ -814,10 +814,10 @@ Eは　力尽きた……▼
 私だ……　Ｅだ……</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『E　か……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅ　か……▼
 す……　すまない……
 私は……　もう　うごけない……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E　か……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅ　か……▼
 す……　すまない……
 私は……　もう　動けない……</language>
 	</row>
@@ -858,8 +858,8 @@ Eは　力尽きた……▼
 他に　方法は　ない</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『Eは　どうするの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Eは　どうするの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｅは　どうするの……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｅは　どうするの……</language>
 	</row>
 	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">つうしん『オートうんてん　では
@@ -880,8 +880,8 @@ Eは　力尽きた……▼
 では　さらばだ……　[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event4_hero_7">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……　E……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……　E……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……　Ｅ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……　Ｅ……</language>
 	</row>
 	<row id="pw_event4_hero_8">
 		<language name="JPN" width="256">……[1:00:トレーナー名:1]に　かわって
@@ -892,7 +892,7 @@ Eは　力尽きた……▼
 ＵＦＯたちは　そらへと　きえた……▼
 ……じんるいは　しょうり　し
 ひとびとは　おおいに　よろこんだが▽
-そこに　Eと　よばれた▽
+そこに　Ｅと　よばれた▽
 じょせいの　すがたは　なかった……</language>
 		<language name="JPN_KANJI" width="256">……[1:00:トレーナー名:1]に　かわって
 デコイＵＦＯで　マザーシップの▽
@@ -902,7 +902,7 @@ Eは　力尽きた……▼
 ＵＦＯたちは　空へと　消えた……▼
 ……人類は　勝利し
 人々は　多いに　喜んだが▽
-そこに　Eと　呼ばれた▽
+そこに　Ｅと　呼ばれた▽
 女性の　姿は　なかった……</language>
 	</row>
 	<row id="pw_event5_hero_0">
