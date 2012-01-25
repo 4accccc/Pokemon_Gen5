@@ -7462,7 +7462,7 @@ static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work )
     // •S‚ÌˆÊ
     GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[0], CGOAM_NUM_0 + (p_wk->point/100));
     // \‚ÌˆÊ
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[1], CGOAM_NUM_0 + (p_wk->point/10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[1], CGOAM_NUM_0 + ( ( p_wk->point % 100 ) /10));
     // ˆê‚ÌˆÊ
     GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[2], CGOAM_NUM_0 + (p_wk->point%10));
     p_wk->sub_seq = PLATE_SEQ_WAIT;
