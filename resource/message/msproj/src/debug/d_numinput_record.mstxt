@@ -4533,10 +4533,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シングルトレイン最高連勝数</Text>
+			<Text>シングルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:25:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4544,10 +4544,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シングルトレイン最高連勝数</Text>
+			<Text>シングルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4573,10 +4573,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シングルトレイン現在連勝数</Text>
+			<Text>シングルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4584,10 +4584,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シングルトレイン現在連勝数</Text>
+			<Text>シングルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:25:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4613,10 +4613,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sシングルトレイン最高連勝数</Text>
+			<Text>Sシングルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4624,10 +4624,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sシングルトレイン最高連勝数</Text>
+			<Text>Sシングルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4653,10 +4653,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sシングルトレイン現在連勝数</Text>
+			<Text>Sシングルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4664,10 +4664,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sシングルトレイン現在連勝数</Text>
+			<Text>Sシングルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4693,10 +4693,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダブルトレイン最高連勝数</Text>
+			<Text>ダブルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4704,10 +4704,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブルトレイン最高連勝数</Text>
+			<Text>ダブルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4733,10 +4733,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダブルトレイン現在連勝数</Text>
+			<Text>ダブルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4744,10 +4744,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブルトレイン現在連勝数</Text>
+			<Text>ダブルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4773,10 +4773,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sダブルトレイン最高連勝数</Text>
+			<Text>Sダブルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4784,10 +4784,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sダブルトレイン最高連勝数</Text>
+			<Text>Sダブルトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4813,10 +4813,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sダブルトレイン現在連勝数</Text>
+			<Text>Sダブルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4824,10 +4824,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sダブルトレイン現在連勝数</Text>
+			<Text>Sダブルトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4853,10 +4853,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチトレイン最大連勝数</Text>
+			<Text>マルチトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4864,10 +4864,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マルチトレイン最大連勝数</Text>
+			<Text>マルチトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4893,10 +4893,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチトレイン現在連勝数</Text>
+			<Text>マルチトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4904,10 +4904,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マルチトレイン現在連勝数</Text>
+			<Text>マルチトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4933,10 +4933,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sマルチトレイン最大連勝数</Text>
+			<Text>Sマルチトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4944,10 +4944,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sマルチトレイン最大連勝数</Text>
+			<Text>Sマルチトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4973,10 +4973,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Sマルチトレイン現在連勝数</Text>
+			<Text>Sマルチトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:26:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4984,10 +4984,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Sマルチトレイン現在連勝数</Text>
+			<Text>Sマルチトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5013,10 +5013,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WiFiトレイン最大連勝数</Text>
+			<Text>WiFiトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5024,10 +5024,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WiFiトレイン最大連勝数</Text>
+			<Text>WiFiトレイン現在連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5053,10 +5053,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WiFiトレイン現在連勝数</Text>
+			<Text>WiFiトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5064,10 +5064,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WiFiトレイン現在連勝数</Text>
+			<Text>WiFiトレイン最高連勝数</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-25T07:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
