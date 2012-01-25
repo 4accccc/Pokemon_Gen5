@@ -1462,7 +1462,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_COMBO_PARAM_EXP:
     {
       u16 cnt = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT );
-      *p_ret_wk = FX_Whole( data * ( FX32_ONE + FX32_CONST(RESORT_CONST_COMBO_ADD_RATE) * cnt ) );
+      *p_ret_wk = FX_Whole( data * ( FX32_ONE + FX32_CONST(RESORT_CONST_COMBO_ADD_RATE) * (cnt+1)) );
     }
     break;
 
