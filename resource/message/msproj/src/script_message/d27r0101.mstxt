@@ -540,7 +540,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swrival_07">
+		Label="msg_d27r0101_swrival_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……いっておく▼
@@ -706,7 +707,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam1_05">
+		Label="msg_d27r0101_swplazmam1_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『いけ　いけ！▼
@@ -781,11 +783,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『おれの　出番だー！
+			<Text>プラズマ団『おれの　出番だー！
 違う！　ヤブクロンの　出番だー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T07:32:13" />
+				Time="2012-01-25T05:53:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -886,7 +888,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam2_05">
+		Label="msg_d27r0101_swplazmam2_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『なに　こいつ……！▼
@@ -2981,11 +2984,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『しまった！
+			<Text>プラズマ団『しまった！
 ハッチが　しまっていない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T09:33:44" />
+				Time="2012-01-25T05:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
