@@ -280,8 +280,8 @@ typedef enum{
 ///拡張パラメータ（隠し穴大調査用ポケモンINDEX）
 //=========================================
 #define  FMISSION_EXP_TRAIL_DUMMY  ( 0 )   ///<ダミーデータ
-#define  FMISSION_EXP_TRAIL_ROKON  ( 1 )   ///<ロコン
-#define  FMISSION_EXP_TRAIL_NYOROMO  ( 2 )   ///<ニョロモ
+#define  FMISSION_EXP_TRAIL_NYARUMAA  ( 1 )   ///<ニャルマー
+#define  FMISSION_EXP_TRAIL_SUKANPUU  ( 2 )   ///<スカンプー
 #define  FMISSION_EXP_TRAIL_IIBUI  ( 3 )   ///<イーブイ
 #define  FMISSION_EXP_TRAIL_BUUSUTAA  ( 4 )   ///<ブースター
 #define  FMISSION_EXP_TRAIL_SYAWAAZU  ( 5 )   ///<シャワーズ

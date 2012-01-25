@@ -45,8 +45,8 @@
 #define  FMISSION_ID_NPC_ITEMBOY_02  ( 33 )  ///<その道具 ちょうだいな！
 #define  FMISSION_ID_NPC_TRADE_01  ( 34 )  ///<目指せ わらしべ長者！
 #define  FMISSION_ID_EVENT_TRAIL_01  ( 35 )  ///<隠し穴を 探れ！
-#define  FMISSION_ID_EVENT_TRAIL_02B  ( 36 )  ///<ざわめきの 隠し穴！
-#define  FMISSION_ID_EVENT_TRAIL_02W  ( 37 )  ///<静かなる 隠し穴！
+#define  FMISSION_ID_EVENT_TRAIL_02B  ( 36 )  ///<ざわめきの 隠し穴！（B)
+#define  FMISSION_ID_EVENT_TRAIL_02W  ( 37 )  ///<静かなる 隠し穴！（W)
 #define  FMISSION_ID_EVENT_FISH_01B  ( 38 )  ///<釣り大会！
 #define  FMISSION_ID_ITEM_KOYASHI_01  ( 39 )  ///<こやし コレクター！
 #define  FMISSION_ID_ITEM_HEART_01  ( 40 )  ///<ときめく ハートは どこに？

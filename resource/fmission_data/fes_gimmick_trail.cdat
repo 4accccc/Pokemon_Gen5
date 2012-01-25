@@ -12,8 +12,8 @@
 
 static const FES_TRAIL_DATA_SET DATA_TrailMonsTbl[FMISSION_EXP_TRAIL_MONS_MAX] = {
   {   1 ,   0 },   // フシギダネ
-  {  37 ,   0 },   // ロコン
-  {  60 ,   0 },   // ニョロモ
+  { 431 ,   0 },   // ニャルマー
+  { 434 ,   0 },   // スカンプー
   { 133 ,   0 },   // イーブイ
   { 136 ,   0 },   // ブースター
   { 134 ,   0 },   // シャワーズ
