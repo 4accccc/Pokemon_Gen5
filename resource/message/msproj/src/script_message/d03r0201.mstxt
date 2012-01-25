@@ -82,7 +82,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅくがえりが　ボクは　教えます▼
+			<Text>じゅくがえりの　ボクは　教えます▼
 砂漠は　洞くつと　同じで
 あちこちから　ポケモンが　でてきます▼
 つけくわえるとですね
@@ -90,7 +90,7 @@
 歩いても　大丈夫です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:33:38" />
+				Time="2012-01-25T05:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
