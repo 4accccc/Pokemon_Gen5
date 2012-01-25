@@ -21049,7 +21049,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		TRUE,
 		FALSE,
-		TRUE,
+		FALSE,
     TRUE,
     TRUE,
 		MATRIX_ID_DUN3501, // camera_area
