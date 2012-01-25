@@ -861,10 +861,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ところで　ポケモン　げんきかよ</Text>
+			<Text>なにか　あるのかよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T07:45:01" />
+				Time="2012-01-25T11:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -872,10 +872,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ところで　ポケモン　元気かよ</Text>
+			<Text>なにか　あるのかよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T07:44:55" />
+				Time="2012-01-25T11:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6503,11 +6503,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレ……　みたんだよ
-ワンダーブリッジで　ゆうれいを▼</Text>
+			<Text>もぐるぜッ　ジャイアントホール！
+プラズマだんを　にがすかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:35:00" />
+				Time="2012-01-25T11:40:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6515,11 +6515,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレ……　みたんだよ
-ワンダーブリッジで　幽霊を▼</Text>
+			<Text>潜るぜッ　ジャイアントホール！
+プラズマ団を　逃がすかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:44:58" />
+				Time="2012-01-25T11:40:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6528,10 +6528,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>目的地メッセージ
-・h05でクレセリアとの戦闘前</Comment>
+・ジャイアントホール進入イベントから
+ ロット達とのイベントまでジ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:32:05" />
+				Time="2012-01-25T11:37:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6541,9 +6542,16 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:32:10" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-25T11:37:23" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
