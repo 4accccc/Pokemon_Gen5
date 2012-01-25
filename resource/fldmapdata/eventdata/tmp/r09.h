@@ -15,8 +15,8 @@
 #define TR_BADRIDER_08                     1
 #define TR_BADRIDER_09                     2
 #define TR_HEADS_10                        3
-#define TR_BADTEAM_03_2                    4
-#define TR_BADTEAM_03                      5
+#define TR_BADTEAM_03                      4
+#define TR_BADTEAM_03_2                    5
 #define FLD_ITEM_159                       6
 #define FLD_ITEM_157                       7
 #define FLD_ITEM_160                       8
