@@ -75,7 +75,7 @@ static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex );
 static void OutSideSave_ErasePermanent( SAVE_CONTROL_WORK *sv_ctrl );
 static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl );
 
-static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len );
+static void UnicodeToStrcode( const u16 * cp_src, u16 src_len, STRBUF *p_dst, u16 len );
 
 //==============================================================================
 //  データ
@@ -718,7 +718,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 
     //名前を本体からコンバート
     {
-      UnicodeToStrcode( info.nickName, namebuf, 5 + EOM_SIZE );
+      UnicodeToStrcode( info.nickName, info.nickNameLength, namebuf, 5 + EOM_SIZE );
     }
 
     //性別を色からコンバート
@@ -1011,14 +1011,19 @@ static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl )
  *	@param	*p_dst  コンバート先（STRCODEをSTRBUFにセット）
  */
 //-----------------------------------------------------------------------------
-static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len )
+static void UnicodeToStrcode( const u16 * cp_src, u16 src_len, STRBUF *p_dst, u16 len )
 {
   int i;
   BOOL is_eom = FALSE;
 
   u16 src[ 32 ];
 
-  GF_ASSERT( len < 32 );
+  if( src_len < len )
+  {
+    len = src_len;
+  }
+
+  GF_ASSERT( len < NELEMS(src) );
   GFL_STD_MemCopy( cp_src, src, sizeof(u16)*len );
 
   for( i = 0; i < len; i++ )
@@ -1059,12 +1064,22 @@ static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len )
     }
     else
     {
-      //他の文字は全部スペースにするよ
-      src[i]  = L'　';
+      //他の文字は全部ピリオドにするよ
+      src[i]  = L'．';
     }
   }
 
-  src[len-1]  = GFL_STR_GetEOMCode();
+  if( len == 0 )
+  {
+    src[0]  = L'な';
+    src[1]  = L'な';
+    src[2]  = L'し';
+    src[3]  = GFL_STR_GetEOMCode();
+  }
+  else
+  {
+    src[len-1]  = GFL_STR_GetEOMCode();
+  }
 
   GFL_STR_SetStringCode( p_dst, src );
 }
