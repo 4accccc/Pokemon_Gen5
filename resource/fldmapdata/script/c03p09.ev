@@ -226,6 +226,13 @@ EVENT_START   ev_c03p09_waitress_01
         _GOLD_WIN_UPDATE()
         _SE_WAIT()
 
+        //========================================//
+        // レコードを加算：買い物をした回数
+        _ADD_RECORD( RECID_SHOPPING_CNT, 1 )
+        // レコードを加算：買い物をした合計金額
+        _ADD_RECORD( RECID_SHOPPING_MONEY, LWK_ICE_GOLD )
+        //========================================//
+
         //店員：おかいあげ
         _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_08, C03P09_WAITRESS_01, POS_DOWN )
         _MSGWIN_CLOSE()

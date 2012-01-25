@@ -123,6 +123,14 @@ EVENT_START   ev_c05r0601_waitress_01
       _GOLD_WIN_UPDATE()
       _SE_WAIT()
 
+      //========================================//
+      // レコードを加算：買い物をした回数
+      _ADD_RECORD( RECID_SHOPPING_CNT, 1 )
+      // レコードを加算：買い物をした合計金額
+      _ADD_RECORD( RECID_SHOPPING_MONEY, LWK_MILK_GOLD )
+      //========================================//
+
+
       IF $LWK_MILK_NUM == 1 THEN
         _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_02, C05R0601_WAITRESS_01, POS_DL )
         _MSGWIN_CLOSE()

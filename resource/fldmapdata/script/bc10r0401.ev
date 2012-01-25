@@ -137,6 +137,11 @@ IF FLAG_OFF( LWK_FLAG ) THEN
       _MSGWIN_CLOSE()
       
       //========================================//
+      // レコードを加算：買い物をした回数
+      _ADD_RECORD( RECID_SHOPPING_CNT, 1 )
+      // レコードを加算：買い物をした合計金額
+      _ADD_RECORD( RECID_SHOPPING_MONEY, LWK_PRICE )
+
       //購入フラグセット
       _FLAG_SET( LWK_FLAG )
       //========================================//
