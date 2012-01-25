@@ -1158,10 +1158,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]と　あるく　コジョフーの
-ステップは　とても　かろやかだ！</Text>
+ステップは　とても　かろやかだ！▼
+コジョフーは　さんぽに
+まんぞく　しているみたい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T01:58:28" />
+				Time="2012-01-25T06:24:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1170,10 +1172,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]と　歩く　コジョフーの
-ステップは　とても　軽やかだ！</Text>
+ステップは　とても　軽やかだ！▼
+コジョフーは　散歩に
+満足しているみたい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T01:59:28" />
+				Time="2012-01-25T06:25:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1182,12 +1186,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・連れ歩き中で規定歩数に達している
+・連れ歩き中で規定歩数に達している＝365歩
 ・あわせて鳴き声再生
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:07" />
+				Time="2012-01-25T06:17:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1242,12 +1246,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・連れ歩き中で規定歩数の３／４に達している
+・連れ歩き中で300歩～364歩
 ・あわせて鳴き声再生
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:08" />
+				Time="2012-01-25T06:17:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1302,12 +1306,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・連れ歩き中で規定歩数の１／２に達している
+・連れ歩き中で200歩～299歩
 ・あわせて鳴き声再生
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:10" />
+				Time="2012-01-25T06:17:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1362,12 +1366,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・連れ歩き中で規定歩数の１／４に達している
+・連れ歩き中で100歩～199歩
 ・あわせて鳴き声再生
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:12" />
+				Time="2012-01-25T06:17:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1422,12 +1426,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・連れ歩き中で規定歩数の１／４に達していない
+・連れ歩き中で000歩～099歩
 ・あわせて鳴き声再生
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:13" />
+				Time="2012-01-25T06:17:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
