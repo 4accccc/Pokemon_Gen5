@@ -363,10 +363,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しかも　こっちには
-パスワードを　いれる　そうち……</Text>
+パスワードを　いれる　そうち……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T03:17:52" />
+				Time="2012-01-25T05:16:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -375,10 +375,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しかも　こっちには
-パスワードを　いれる　装置……</Text>
+パスワードを　いれる　装置……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T03:17:53" />
+				Time="2012-01-25T05:16:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
