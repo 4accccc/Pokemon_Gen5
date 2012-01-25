@@ -1606,13 +1606,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルパワーは　Ｃ－ＧＥＡＲの
-すれちがいログから　使えます▼
-すれちがいログの　画面にある
+すれ違いログから　使えます▼
+すれ違いログの　画面にある
 緑色の　さんかくマークを▽
 タッチしてみて　ください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T12:27:48" />
+				Time="2012-01-25T05:17:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1964,7 +1964,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 ハイルツリーに　話しかけて
 ミッションを　開催するか▼
 Ｃ－ＧＥＡＲの
-「すれちがいログ」から　だれかが▽
+「すれ違いログ」から　だれかが▽
 開催した　ミッションに▽
 参加することも　できる▼
 近くにいる　冒険者と
@@ -1972,7 +1972,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 より大きな　力を　得るであろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T12:31:26" />
+				Time="2012-01-25T05:18:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2039,7 +2039,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 Ｃ－ＧＥＡＲに　３つまで
 登録することが　できるのじゃ▼
 Ｃ－ＧＥＡＲの
-「すれちがいログ」から▽
+「すれ違いログ」から▽
 すれちがった　相手に　向けて▽
 使うことが　できる▼
 デルパワーを　使うには
@@ -2048,7 +2048,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 デルダマを　集めるのが　よかろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T12:31:08" />
+				Time="2012-01-25T05:18:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2859,11 +2859,11 @@ invation.mstxtのplc_mono_01を移動</Comment>
 ミッションの　お誘いが
 届くまで　時間が▽
 かかることも　あるけど▼
-「すれちがいログ」を　みて
+「すれ違いログ」を　みて
 しばらく　待っていれば　大丈夫よ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T12:17:09" />
+				Time="2012-01-25T05:18:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
