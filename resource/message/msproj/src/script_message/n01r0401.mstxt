@@ -755,10 +755,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……そこは　もういいだろう？
-さきに　すすみたまえ！[Ctrl2:CtrlSpeed ]</Text>
+さきに　すすみたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T02:48:44" />
+				Time="2012-01-25T04:06:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -767,10 +767,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……そこは　もう　いいだろう？
-先に　進みたまえ！[Ctrl2:CtrlSpeed ]</Text>
+先に　進みたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T02:48:57" />
+				Time="2012-01-25T04:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
