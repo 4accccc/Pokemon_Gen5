@@ -320,6 +320,9 @@ static GMEVENT_RESULT FlySkyBlackInEvt( GMEVENT* event, int* seq, void* work );
 static BOOL IsFlySkyOut(const int inCutinNo);
 static BOOL IsFlySkyIn(const int inCutinNo);
 
+// 例外判定
+static BOOL IsNoFade( const int inCutinNo );
+
 static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData);
 static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 static void* GetPlttStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictPlttData* pData);
@@ -873,7 +876,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     //表示状態の保存
     PushDisp(ptr);
     //カットイン共通ホワイトアウト処理　（空飛びイン以外）
-    if ( !IsFlySkyIn(ptr->CutInNo) )
+    if ( !IsFlySkyIn(ptr->CutInNo) && !IsNoFade(ptr->CutInNo) )
     {
       GMEVENT* fade_event;
       fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
@@ -2267,6 +2270,27 @@ static BOOL IsFlySkyIn(const int inCutinNo)
   if ( (inCutinNo == FLDCIID_FLY_IN) ||
        (inCutinNo == FLDCIID_FLY_IN2) )
     return TRUE;
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードの有無
+ *
+ *	@param	const int inCutinNo 
+ *
+ *	@return BOOL  TRUE:フェードなし
+ *
+ *	@note   ※スクリプトの演出でカットイン前にホワイトフェードアウトを
+ *	        使用している場合のみここにカットインIDを追加する
+ */
+//-----------------------------------------------------------------------------
+static BOOL IsNoFade( const int inCutinNo )
+{
+  if ( inCutinNo == FLDCIID_KERUDHIO ) {
+    return TRUE;
+  }
 
   return FALSE;
 }
