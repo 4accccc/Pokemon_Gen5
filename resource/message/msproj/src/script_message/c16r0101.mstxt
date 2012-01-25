@@ -1311,6 +1311,155 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_drill_sel_ans_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さまざまな　つうしんを　して
+まちに　おきゃくさまを　よびましょう▼
+つうしんした　あいては
+アベニューに　あらわれるので▽
+はなしかけて　みましょう▼
+はなしかけて　できることは
+つぎの　３つ　です▼
+「まちに　しょうたい」　すること
+「まちを　あんない」　すること▽
+「ひしょとして　スカウト」　すること▼
+くわしくは　それぞれの
+せつめいを　おききください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T03:44:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さまざまな　通信を　して
+街に　お客さまを　呼びましょう▼
+通信した　相手は
+アベニューに　現れるので▽
+話しかけて　みましょう▼
+話しかけて　できることは
+次の　３つ　です▼
+「まちに　しょうたい」　すること
+「まちを　あんない」　すること▽
+「秘書として　スカウト」　すること▼
+詳しくは　それぞれの
+説明を　おききください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T03:44:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢３
+すてきな街の回答
+（秘書追加状態）
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T02:56:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答７
+だいじょうぶ！
+0：市長名</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-26T05:19:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:52:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_ans_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「スカウトする」を　えらぶと
+おきゃくさまが　ひしょと　なって▽
+まわりの　おせわを　してくれます▼
+げんざいの　まちの　ランクが
+あいての　りそう　よりも　たかいと▽
+スカウトに　せいこう　しやすくなります▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T03:26:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「スカウトする」を　選ぶと
+お客さまが　秘書と　なって▽
+まわりの　お世話を　してくれます▼
+現在の　街の　ランクが
+相手の　理想よりも　高いと▼
+スカウトに　成功　しやすくなります▼
+</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T03:26:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-06T11:30:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+秘書に　スカウトする</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T02:57:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>回答７
+だいじょうぶ！
+0：市長名</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-26T05:19:28" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:52:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_drill_sel_01"
 		Style="Large">
 		<LanguageCell
@@ -1542,10 +1691,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょうたいする　って？</Text>
+			<Text>招待する　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T03:05:03" />
+				Time="2012-01-25T03:28:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2206,6 +2355,54 @@
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-11T08:52:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_drill_sel_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スカウトする　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T02:50:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スカウトする　って？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T02:50:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-04T15:13:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>質問用の選択
+追加2012.1.25</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-01-25T02:50:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
