@@ -689,6 +689,14 @@ EVENT_END
 //--------------------------------------------------------------
 //	トレーナー[!]マーク
 //--------------------------------------------------------------
+	_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	トレーナー[!]マーク
+//--------------------------------------------------------------
 	_ANIME_LABEL	anm_tr_gyoe
 	_ANIME_DATA	AC_MARK_GYOE_NO_SE,1
 	_ANIME_DATA	ACMD_END,0
@@ -1520,7 +1528,7 @@ EVENT_START   ev_pos_c04gym0101_guide
   //プレイヤー座標取得
   _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
   
-  _OBJ_ANIME( C04GYM0101_GUIDE_01, anm_tr_gyoe )
+  _OBJ_ANIME( C04GYM0101_GUIDE_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
 
   _OBJ_ANIME_AUTO( C04GYM0101_GUIDE_01, LWK_POSX, 58, FORCE_TYPE_NOT, 8, DIR_LR )
