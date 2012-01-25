@@ -1925,7 +1925,7 @@ static void entryStackCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
 
 
 //===================================================================================
-//ミッションリクエストユーティリティイベント
+//ミッションログリクエストユーティリティイベント
 //===================================================================================
 typedef struct _EVWK_LOG_BEACON_REQ{
   DMENU_LINK_FEST* dlf_wk;
@@ -1942,16 +1942,16 @@ typedef struct _EVWK_LOG_BEACON_REQ{
 }EVWK_LOG_BEACON_REQ;
 
 static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * work);
-static void mreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line );
-static void mreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str );
-static void mreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void mreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void mreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void mreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode );
+static void logreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line );
+static void logreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str );
+static void logreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
+static void logreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
+static void logreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
+static void logreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode );
 
 //--------------------------------------------------------------
 /**
- * ミッションリクエストイベント生成
+ * ミッションログリクエストイベント生成
  * @param wk  DEBUG_MENU_EVENT_WORK*
  */
 //--------------------------------------------------------------
@@ -1971,7 +1971,7 @@ static GMEVENT* event_CreateEventLogBeaconReq( GAMESYS_WORK* gsys, DMENU_LINK_FE
 
 //--------------------------------------------------------------
 /*
- *  @brief  ミッションリクエストイベント
+ *  @brief  ミッションログリクエストイベント
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * work)
@@ -1984,15 +1984,15 @@ static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * 
   case 0:
     sub_BmpWinAdd( &evwk->win_main, 1, 0, 31, 22 );
     sub_BmpWinAdd( &evwk->win_line, 0, 0, 1, 22 );
-    mreq_PrintCursor( wk, evwk, evwk->line );
+    logreq_PrintCursor( wk, evwk, evwk->line );
     (*seq)++;
     break;
   case 1:
     evwk->log_prm = &DATA_DebugLogParam[ evwk->action ];
     evwk->log_prm_set = &DATA_DebugLogParamSet[ evwk->log_prm->prm_type ];
-    mreq_DrawMissionType( wk, evwk );
-    mreq_DrawAction( wk, evwk );
-    mreq_DrawFake( wk, evwk );
+    logreq_DrawMissionType( wk, evwk );
+    logreq_DrawAction( wk, evwk );
+    logreq_DrawFake( wk, evwk );
     (*seq)++;
     break;
   case 2:
@@ -2003,14 +2003,14 @@ static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * 
         break;
       }else if( trg & PAD_KEY_UP ){
         evwk->line = (evwk->line+(LOGREQ_LINE_MAX-1))%LOGREQ_LINE_MAX;
-        mreq_PrintCursor( wk, evwk, evwk->line );
+        logreq_PrintCursor( wk, evwk, evwk->line );
         break;
       }else if( trg & PAD_KEY_DOWN ){
         evwk->line = (evwk->line+1)%LOGREQ_LINE_MAX;
-        mreq_PrintCursor( wk, evwk, evwk->line );
+        logreq_PrintCursor( wk, evwk, evwk->line );
         break;
       }else if( trg & PAD_BUTTON_START ){
-        mreq_LogBeaconSend( wk, evwk, FALSE );
+        logreq_LogBeaconSend( wk, evwk, FALSE );
         break;
       }
 
@@ -2057,7 +2057,7 @@ static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * 
   return GMEVENT_RES_CONTINUE;
 }
 
-static void mreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line )
+static void logreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line )
 {
   GFL_BMP_Clear( evwk->win_line.bmp, FCOL_WIN_BASE );
   GFL_MSG_GetString( wk->msgman, dlf_cursor, wk->str_tmp );
@@ -2065,19 +2065,19 @@ static void mreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8
 	GFL_BMPWIN_TransVramCharacter( evwk->win_line.win );
 }
 
-static void mreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str )
+static void logreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str )
 {
   GFL_BMP_Fill( evwk->win_main.bmp, 0, line*16, LOGREQ_WIN_MAIN_SX*8, 16, FCOL_WIN_BASE );
 	PRINTSYS_PrintColor( evwk->win_main.bmp, 0, line*16, str, wk->fontHandle, FCOL_WIN_W );
 	GFL_BMPWIN_TransVramCharacter( evwk->win_main.win );
 }
 
-static void mreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
+static void logreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
 {
   GFL_MSG_GetString( wk->msgman, dlf_log_req_type01+evwk->type, wk->str_tmp );
-  mreq_PrintLine( wk, evwk, 0, wk->str_tmp );
+  logreq_PrintLine( wk, evwk, 0, wk->str_tmp );
 }
-static void mreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
+static void logreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
 {
   int value;
 
@@ -2085,7 +2085,7 @@ static void mreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
   sub_LogParamWordset( wk, 1, evwk->action, BPRM_WSET_ACTION );
 
   sub_GetMsgToBuf( wk, dlf_log_action_id );
-  mreq_PrintLine( wk, evwk, 1, wk->str_expand );
+  logreq_PrintLine( wk, evwk, 1, wk->str_expand );
 
   //パラメータプリント
   value = wk->log_prm[evwk->log_prm->prm_type];
@@ -2096,10 +2096,10 @@ static void mreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
 
   sub_LogParamWordset( wk, 1, value, evwk->log_prm_set->wset_type );
   sub_GetMsgToBuf( wk, dlf_beacon_req_param01+evwk->log_prm->prm_type );
-  mreq_PrintLine( wk, evwk, 2, wk->str_expand );
+  logreq_PrintLine( wk, evwk, 2, wk->str_expand );
 }
 
-static void mreq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, FAKE_DATA_ID fake_id )
+static void logreq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, FAKE_DATA_ID fake_id )
 {
   u8 line = 3+fake_id;
   int* mine = &wk->fake_prm[ TR_PAT_MINE ][0];
@@ -2112,19 +2112,19 @@ static void mreq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, F
   sub_LogParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
   
   sub_GetMsgToBuf( wk, dlf_fake_tr_id+fake_id );
-  mreq_PrintLine( wk, evwk, line, wk->str_expand );
+  logreq_PrintLine( wk, evwk, line, wk->str_expand );
 }
 
-static void mreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
+static void logreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
 {
   int i;
   
   for(i = 0;i < FAKE_DATA_MAX;i++){
-    mreq_DrawFakeLine( wk, evwk, i );
+    logreq_DrawFakeLine( wk, evwk, i );
   }
 }
 
-static void mreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode )
+static void logreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode )
 {
   u16 score;
   int value = -1;
