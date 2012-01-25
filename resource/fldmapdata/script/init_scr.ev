@@ -172,10 +172,6 @@ init_flags:
   
   //R06R0101：季節研究所
   _FLAG_SET( FV_R06R0101_SWLEADER1_01 )   //チェレン
-  _FLAG_SET( FV_R06R0101_POKE_SPRING_01 ) //シキジカ（春）
-  _FLAG_SET( FV_R06R0101_POKE_SUMMER_01 ) //シキジカ（夏）
-  _FLAG_SET( FV_R06R0101_POKE_AUTUMN_01 ) //シキジカ（秋）
-  _FLAG_SET( FV_R06R0101_POKE_WINTER_01 ) //シキジカ（冬）
 
   //T03R0201：カゴメ民家のアララギ娘とベル 
   //_FLAG_SET( FV_T03R0201_HAKASE2_01 )
@@ -207,9 +203,6 @@ init_flags:
   //R22
   _FLAG_SET( FV_R22_SWBOSS_01 ) //22番道路：アクロマ
   _FLAG_SET( FV_R22_POKE5_01 ) //22番道路：テラキオン
-
-  //D02R0201
-  _FLAG_SET( FV_D02R0201_POKE6_01 ) //思索の原：ビリジオン
 
   //C03R0601
   _FLAG_SET( FV_C03R0601_SWBELL_01 )  //ヒウンシティ・ゲート：ベル

@@ -519,10 +519,10 @@
 
 #define FV_AREA_START                      600 /* 0x0258  */
 
-#define FV_BC10R0401_B                     600 /* 0x0258 ブラックシティ：移住人口BのOBJ */
-#define FV_BC10R0401_C                     601 /* 0x0259 ブラックシティ：移住人口CのOBJ */
-#define FV_BC10R0401_D                     602 /* 0x025a ブラックシティ：移住人口DのOBJ */
-#define FV_BC10R0401_E                     603 /* 0x025b ブラックシティ：移住人口EのOBJ */
+		/* not used   600(0x0258) */
+		/* not used   601(0x0259) */
+		/* not used   602(0x025a) */
+		/* not used   603(0x025b) */
 #define FV_C04R0111_PARTNER                604 /* 0x025c バトルサブウェイ、ホーム：パートナー */
 #define FV_C04R0111_NPC                    605 /* 0x025d バトルサブウェイ、ホーム：NPC */
 #define FV_C08R0101_LEADER8A_01            606 /* 0x025e ソウリュウシティR0101：シャガ */
@@ -535,11 +535,11 @@
 #define FV_BSUBWAY_RECEIPT_PARTNER         613 /* 0x0265 バトルサブウェイ、受付：パートナー */
 #define FV_POSTMAN                         614 /* 0x0266 不思議な贈り物配達員 */
 #define FV_C06_MONSTERBALL                 615 /* 0x0267 フキヨセ滑走路のモンスターボール（なみのり入手イベント） */
-#define FV_D03R0101_DARUMA_01              616 /* 0x0268 砂漠のゴリダルマ(瞑想モード)その１ */
-#define FV_D03R0101_DARUMA_02              617 /* 0x0269 砂漠のゴリダルマ(瞑想モード)その２ */
-#define FV_D03R0101_DARUMA_03              618 /* 0x026a 砂漠のゴリダルマ(瞑想モード)その３ */
-#define FV_D03R0101_DARUMA_04              619 /* 0x026b 砂漠のゴリダルマ(瞑想モード)その４ */
-#define FV_D03R0101_DARUMA_05              620 /* 0x026c 砂漠のゴリダルマ(瞑想モード)その５ */
+		/* not used   616(0x0268) */
+		/* not used   617(0x0269) */
+		/* not used   618(0x026a) */
+		/* not used   619(0x026b) */
+		/* not used   620(0x026c) */
 #define FV_C06_GIRLBOY_01                  621 /* 0x026d フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
 #define FV_MUSICAL_FUN_01                  622 /* 0x026e ミュージカルホール：出待ちのファン１人目 */
 #define FV_MUSICAL_FUN_02                  623 /* 0x026f ミュージカルホール：出待ちのファン２人目 */
@@ -551,10 +551,10 @@
 #define FV_T01R0102_TROPHY_01              629 /* 0x0275 自宅２F：バトルサブウェイのトロフィ１（データコンバート） */
 #define FV_T01R0102_TROPHY_02              630 /* 0x0276 自宅２F：バトルサブウェイのトロフィ２（データコンバート） */
 #define FV_T01R0102_TROPHY_03              631 /* 0x0277 自宅２F：バトルサブウェイのトロフィ３（データコンバート） */
-#define FV_R08R0101_POKE4                  632 /* 0x0278 セッカ湿原：ダルタニスイベントのアトス */
-#define FV_R08R0101_POKE5                  633 /* 0x0279 セッカ湿原：ダルタニスイベントのポルトス */
-#define FV_R08R0101_POKE6                  634 /* 0x027a セッカ湿原：ダルタニスイベントのアラミス */
-#define FV_R08R0101_POKE11                 635 /* 0x027b セッカ湿原：ダルタニスイベントのダルタニス */
+		/* not used   632(0x0278) */
+		/* not used   633(0x0279) */
+		/* not used   634(0x027a) */
+		/* not used   635(0x027b) */
 #define FV_R08R0101_OLDMAN1                636 /* 0x027c セッカ湿原：事情通の老人 */
 #define FV_C03R0101_MEMBER_A               637 /* 0x027d 調査隊一般隊員A */
 #define FV_C03R0101_MEMBER_B               638 /* 0x027e 調査隊一般隊員B */
@@ -666,7 +666,7 @@
 #define FV_C12_SWRIVAL_SISTER              744 /* 0x02e8 ヒオウギシティ・ライバル妹 */
 #define FV_C12_SWRIVAL                     745 /* 0x02e9 ヒオウギシティ・ライバル */
 #define FV_PC_MEDALOYAJI                   746 /* 0x02ea ポケセンのメダルおやじ */
-#define FV_D06R0101_PAIR                   747 /* 0x02eb 電気穴の洞窟連れ歩き */
+		/* not used   747(0x02eb) */
 #define FV_C03P15_SWRIVAL_01               748 /* 0x02ec ヒウンシティ：船着場ライバル */
 #define FV_H01R0201_STOPPER_01             749 /* 0x02ed スカイアローブリッジ：ストッパー */
 #define FV_D31D32_MUGEN_STOPPER            750 /* 0x02ee 無限ダンジョン：ストッパー */
@@ -731,14 +731,14 @@
 #define FV_H01R0201_STOP_01                809 /* 0x0329 スカイアローブリッジ：ストッパー */
 #define FV_R22_POKE5_01                    810 /* 0x032a 22番道路：テラキオン */
 #define FV_R22_SWBOSS_01                   811 /* 0x032b 22番道路：アクロマ */
-#define FV_D02R0201_POKE6_01               812 /* 0x032c 思索の原：ビリジオン */
-#define FV_D02R0201_RANGERM_01             813 /* 0x032d 思索の原：レンジャー */
+		/* not used   812(0x032c) */
+		/* not used   813(0x032d) */
 #define FV_C03R0601_SWBELL_01              814 /* 0x032e ヒウンシティゲート：ベル */
 #define FV_C01_POKE44_01                   815 /* 0x032f サンヨウシティ：マッギョ */
-#define FV_R06R0101_POKE_SPRING_01         816 /* 0x0330 季節研究所：シキジカ（春） */
-#define FV_R06R0101_POKE_SUMMER_01         817 /* 0x0331 季節研究所：シキジカ（夏） */
-#define FV_R06R0101_POKE_AUTUMN_01         818 /* 0x0332 季節研究所：シキジカ（秋） */
-#define FV_R06R0101_POKE_WINTER_01         819 /* 0x0333 季節研究所：シキジカ（冬） */
+		/* not used   816(0x0330) */
+		/* not used   817(0x0331) */
+		/* not used   818(0x0332) */
+		/* not used   819(0x0333) */
 #define FV_C14R0301_MAN3_01                820 /* 0x0334 セイガイハシティ：ペンションオーナー */
 #define FV_C14R0301_GIRL4_01               821 /* 0x0335 セイガイハシティ：新婚カップル妻 */
 #define FV_C14R0301_BOY4_01                822 /* 0x0336 セイガイハシティ：新婚カップル夫 */
@@ -824,8 +824,8 @@
 #define FV_R04_POKE_567_633_01             902 /* 0x0386 4番道路：バルジーナ（ウォーグル） */
 #define FV_D20_POKE_536_01                 903 /* 0x0387 サザナミ湾：ブルンゲル */
 #define FV_R14R0101_MAN3_01                904 /* 0x0388 14番道路：ストッパー */
-#define FV_C03P07_MACOMO_01                905 /* 0x0389 ヒウンシティ・チャレンジストリート：マコモ */
-#define FV_C03R1103_MACOMO_01              906 /* 0x038a ヒウンシティ・便利ビル3F：マコモ */
+		/* not used   905(0x0389) */
+		/* not used   906(0x038a) */
 #define FV_C07GYM0101_LEADDER7_01          907 /* 0x038b セッカシティジム跡地：ハチク */
 #define FV_D02R0101_SWLEADER1_01           908 /* 0x038c ヤグルマの森：チェレン・七賢人 */
 #define FV_D27R1001_R1301_POKE10_01        909 /* 0x038d プラズマフリゲート：研究施設キュレム */
@@ -862,7 +862,7 @@
 #define FV_FLDMONS_12                      940 /* 0x03ac タマゲタケ（フィールドアイテム型）１２匹目 */
 #define FV_N01R0501_BOSS_01                941 /* 0x03ad Ｎ城謁見の間フロア：N */
 #define FV_C01GYM0101_SARU_01              942 /* 0x03ae サンヨウシティ：サルショー */
-#define FV_R18_ITEM_01                     943 /* 0x03af 18版道路：どうぐ（モンスターボール） */
+#define FV_R18_ITEM_01                     943 /* 0x03af 18番道路：どうぐ（モンスターボール） */
 #define FV_T04_SWRIVAL_01                  944 /* 0x03b0 サザナミタウン：ライバル */
 #define FV_C03R0502_POKE38_01              945 /* 0x03b1 ヒウンシティ：ズルッグ */
 #define FV_D35R0101_POKE_01                946 /* 0x03b2 自然保護区：黒オノノクス */
@@ -880,7 +880,7 @@
 #define FV_D29R0101_STOP                   958 /* 0x03be ヤーコンロード：ストッパー */
 #define FV_D24_PAIR_START_BELL_01          959 /* 0x03bf リバースマウンテン：連れ歩きベル */
 #define FV_D24_PAIR_END_BELL_01            960 /* 0x03c0 リバースマウンテン：連れ歩きベル */
-#define FV_C15_SUNGLASSES_01               961 /* 0x03c1 ポケウッド：チュートリアル用キャラクター */
+		/* not used   961(0x03c1) */
 #define FV_D06R0101_WORKMAN2_01            962 /* 0x03c2 電気石の洞穴：ストッパー */
 #define FV_PKWD_STAFF_TUTORIAL01           963 /* 0x03c3 ポケウッド：チュートリアル用 */
 #define FV_PKWD_STAFF_TUTORIAL02           964 /* 0x03c4 ポケウッド：チュートリアル用 */
@@ -943,8 +943,8 @@
 #define FV_WC10_SHOPM1_02                 1021 /* 0x03fd ホワイトフォレストお店２：店員 */
 #define FV_WC10_SHOPM1_03                 1022 /* 0x03fe ホワイトフォレストお店３：店員 */
 #define FV_WC10_SHOPM1_04                 1023 /* 0x03ff ホワイトフォレストお店４：店員 */
-#define FV_D27R0101_SWPLAZMA_03           1024 /* 0x0400 プラズマフリゲート：搭乗三回目プラズマ団員 */
-#define FV_D27R0101_STOPPER_02            1025 /* 0x0401 プラズマフリゲート：搭乗二回目ストッパー */
+		/* not used  1024(0x0400) */
+		/* not used  1025(0x0401) */
 #define FV_D27R1101_SWPLAZMA_03           1026 /* 0x0402 プラズマフリゲート：搭乗三回目プラズマ団員 */
 #define FV_H05_WANDERGIRL                 1027 /* 0x0403 ワンダーブリッジ：消える少女 */
 #define FV_R14R0201_OLDMAN_01             1028 /* 0x0404 豊穣の社：うつしかがみをくれる老人 */
