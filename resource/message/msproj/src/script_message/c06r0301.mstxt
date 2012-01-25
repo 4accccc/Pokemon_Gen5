@@ -271,12 +271,10 @@
 			Language="JPN">
 			<Text>ふむふむ……▼
 あなたは　[Digit:2digits ]コの
-わざマシンを　もっているみたい▼
-もっと　たくさん　あつめたら
-ステキなものを　プレゼントするわ！</Text>
+わざマシンを　もっているのね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-25T05:03:59" />
+				Time="2012-01-25T08:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -286,12 +284,10 @@
 			Language="JPN_KANJI">
 			<Text>ふむふむ……▼
 あなたは　[Digit:2digits ]個の
-わざマシンを　持っているみたい▼
-もっと　たくさん　集めたら
-ステキなものを　プレゼントするわ！</Text>
+わざマシンを　持っているのね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-25T05:04:03" />
+				Time="2012-01-25T08:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -334,9 +330,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっぱい　あつめた　わざマシンを
-おねえさんに　みせてちょうだい！▼
-……おお！
+			<Text>……おお！
 これは　はじめて　みた！▼
 へぇー
 こんなのも　あったんだ！！▼
@@ -346,7 +340,7 @@
 プレゼント！　うけとって！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:11:54" />
+				Time="2012-01-25T08:20:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -354,9 +348,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いっぱい　集めた　わざマシンを
-おねえさんに　みせてちょうだい！▼
-……おお！
+			<Text>……おお！
 これは　はじめて　みた！▼
 へぇー
 こんなのも　あったんだ！！▼
@@ -366,7 +358,7 @@
 プレゼント！　受け取って！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:13:16" />
+				Time="2012-01-25T08:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
