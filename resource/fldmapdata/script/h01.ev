@@ -72,7 +72,7 @@ EVENT_START   ev_h01_middleman1_01
     _BALLOONWIN_OBJMSG_POS( msg_h01_middleman1_03, H01_MIDDLEMAN1_01, POS_DOWN )
 
     //—”‚Å0`4•‚ÅŽŸ‚Ì‘äŽŒ‚ðŒˆ‚ß‚é
-    _GET_RND( LOCALWORK0, 4 )
+    _GET_RND( LOCALWORK0, 5 )
 
     IF $LOCALWORK0 == 0 THEN
 
