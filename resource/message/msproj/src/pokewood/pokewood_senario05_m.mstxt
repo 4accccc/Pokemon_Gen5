@@ -95,6 +95,60 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="pw_turn_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス『クッ……　なんだ……？
+からだの　じゆうが……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:39:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:39:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス『クッ……　何だ……？
+身体の　自由が……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:39:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:39:48" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_turn_enemy_7">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス『からだが　きしむ……
+いかん……　このままでは……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:33:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:33:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス『身体が　きしむ……
+いかん……　このままでは……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:33:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:33:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="pw_event0_enemy_0">
 		<LanguageCell
 			Language="JPN">
@@ -979,26 +1033,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メカポリス『クッ……
-こ　こうなったら……！</Text>
+こ　こうなったら……！▽
+ファイナルポリスソリューション２．０▼
+はつどうッ！！
+ジャスティスエクスプロージョン！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:38:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メカポリス『クッ……
-こ　こうなったら……！</Text>
+こ　こうなったら……！▽
+ファイナルポリスソリューション２．０▼
+発動ッ！！
+ジャスティスエクスプロージョン！！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T09:38:25" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1007,27 +1067,27 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『そ　それは！
 じぶんじしんを　ぎせいにしても▽
-オレを　たおす　つもりで……！？</Text>
+オレを　たおす　つもりか……！？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T08:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T08:56:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『そ　それは！
 自分自身を　犠牲にしても▽
-オレを　倒す　つもりで……！？</Text>
+オレを　倒す　つもりか……！？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T08:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T08:56:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

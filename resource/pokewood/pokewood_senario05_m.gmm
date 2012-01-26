@@ -359,6 +359,18 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
 やってみやがれってんだ！</language>
 	</row>
+	<row id="pw_turn_enemy_4">
+		<language name="JPN" width="256">メカポリス『クッ……　なんだ……？
+からだの　じゆうが……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『クッ……　何だ……？
+身体の　自由が……</language>
+	</row>
+	<row id="pw_turn_enemy_7">
+		<language name="JPN" width="256">メカポリス『からだが　きしむ……
+いかん……　このままでは……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『身体が　きしむ……
+いかん……　このままでは……</language>
+	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">メカポリス『れんぞく　ごうとうはん
 [1:02:ポケモンニックネーム:0]ニンジャ▽
@@ -632,17 +644,23 @@
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">メカポリス『クッ……
-こ　こうなったら……！</language>
+こ　こうなったら……！▽
+ファイナルポリスソリューション２．０▼
+はつどうッ！！
+ジャスティスエクスプロージョン！！</language>
 		<language name="JPN_KANJI" width="256">メカポリス『クッ……
-こ　こうなったら……！</language>
+こ　こうなったら……！▽
+ファイナルポリスソリューション２．０▼
+発動ッ！！
+ジャスティスエクスプロージョン！！</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『そ　それは！
 じぶんじしんを　ぎせいにしても▽
-オレを　たおす　つもりで……！？</language>
+オレを　たおす　つもりか……！？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『そ　それは！
 自分自身を　犠牲にしても▽
-オレを　倒す　つもりで……！？</language>
+オレを　倒す　つもりか……！？</language>
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">メカポリス『あく……は……
