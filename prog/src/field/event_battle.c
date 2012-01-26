@@ -1106,9 +1106,6 @@ static void ReflectRecord( BATTLE_EVENT_WORK* bew )
       break;
     }
   }
-  {
-    RECORD_Add( record, RECID_WEAK_ATTACK, bp->WeakAtcNum );
-  }
 }
 
 //======================================================================

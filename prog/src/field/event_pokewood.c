@@ -1129,8 +1129,6 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
       PKWDSYS_MakeBoxofficeRecord( pkwdsys, pbew->bp, pbew->bp->pokewoodSenario );
       // ŠÅ”Âî•ñ‚ÌˆÚ“®
       PKWDSYS_MoveKanbanTemporary( pkwdsys, prew->KanbanTemporary );
-      // Œø‰ÊƒoƒcƒOƒ“‚Ì‰ñ”‚ğ‘«‚·
-      RECORD_Add( record, RECID_WEAK_ATTACK, pbew->bp->WeakAtcNum );
 
     }
     deletePokewoodBSP( pbew->bp );

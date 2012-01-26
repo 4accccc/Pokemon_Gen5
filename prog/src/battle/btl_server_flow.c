@@ -13182,6 +13182,18 @@ static void AffCounter_CountUp( WAZA_AFF_COUNTER* cnt, BTL_SVFLOW_WORK* wk, cons
 
   u16* pCnt = NULL;
 
+  // 効果がバツグンのわざが命中した回数加算
+  if( checkPlayersPoke( wk, attacker) )
+  {
+    if( fEnemyAttack )
+    {
+      if( affinity > BTL_TYPEAFF_100 )
+      {
+        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WEAK_ATTACK );
+      }
+    }
+  }
+
   // プレイヤーが攻撃側
   if( atkClientID == BTL_CLIENT_PLAYER )
   {
