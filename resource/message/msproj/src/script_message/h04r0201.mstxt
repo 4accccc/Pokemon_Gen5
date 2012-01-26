@@ -282,10 +282,10 @@
 			Language="JPN">
 			<Comment>♀
 ・トレーナー戦闘後、自動で表示
-・クリアしている場合は続けて</Comment>
+・クリアしている場合は続けてbaker_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T09:38:33" />
+				Time="2012-01-26T10:22:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -349,10 +349,10 @@
 			Language="JPN">
 			<Comment>♀
 ・
-・持っている場合は続けて</Comment>
+・持っている場合は続けてbaker_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T09:47:57" />
+				Time="2012-01-26T10:23:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -385,10 +385,10 @@
 			<Text>この　[Name:PokemonName ]が
 みつあつめを　してくれるのね！▼
 ありがとう！
-これは　かんしゃの　きもち！</Text>
+これは　かんしゃの　きもち！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T09:50:13" />
+				Time="2012-01-26T10:22:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -399,10 +399,10 @@
 			<Text>この　[Name:PokemonName ]が
 みつあつめを　してくれるのね！▼
 ありがとう！
-これは　感謝の　気持ち！</Text>
+これは　感謝の　気持ち！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T05:56:48" />
+				Time="2012-01-26T10:22:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -448,10 +448,10 @@
 			<Text>この　[Name:PokemonName ]が
 みつあつめを　してくれるのね！▼
 ありがとう！
-これは　かんしゃの　きもち！</Text>
+これは　かんしゃの　きもち！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T09:53:06" />
+				Time="2012-01-26T10:22:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -462,10 +462,10 @@
 			<Text>この　[Name:PokemonName ]が
 みつあつめを　してくれるのね！▼
 ありがとう！
-これは　感謝の　気持ち！</Text>
+これは　感謝の　気持ち！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T05:56:52" />
+				Time="2012-01-26T10:22:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
