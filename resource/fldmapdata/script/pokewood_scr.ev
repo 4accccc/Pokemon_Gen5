@@ -311,7 +311,7 @@ ev_pkwd_after_rec:
     //R20‚Ìƒ‰ƒCƒoƒ‹‚ð”ñ•\Ž¦‚É
     _FLAG_SET( FV_R20_SWRIVAL_01 )
     //R20‚Ì_OBJ_POS_CHANGE‚ð–³Œø
-    $WK_SCENE_R20 = 5
+    $WK_SCENE_R20 = 4
     //=======================================//
 
   ENDIF
