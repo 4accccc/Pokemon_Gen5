@@ -243,6 +243,10 @@ sub_gterminal_random_match:
     CASE SEQ_SUB_RNDMATCH_EXIT THEN
       $reg_return = SEQ_GOODBYE
       $i_loop = FALSE
+
+    CASE SEQ_SUB_RNDMATCH_EXIT_NOMSG THEN
+      $reg_return = SEQ_EXIT
+      $i_loop = FALSE
     
     CASE SEQ_SUB_RNDMATCH_END THEN
       $reg_return = SEQ_THROW_EXIT
@@ -342,7 +346,7 @@ sub_rndmatch_try_select:
     _RNDMATCH_GET_DATA( RNDMATCH_PARAM_PENALTY, i_ret )
     IF $i_ret == FALSE THEN
       _BALLOONWIN_OBJMSG_POS( msg_wifi_counter_09, SCWK_TARGET_OBJID, POS_DL )
-      $reg_return = SEQ_SUB_RNDMATCH_EXIT
+      $reg_return = SEQ_SUB_RNDMATCH_EXIT_NOMSG
       _RET
     ELSE
       _RNDMATCH_SET_DATA( RNDMATCH_PARAM_POWER_OFF_CNT, i_ret )

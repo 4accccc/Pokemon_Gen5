@@ -29,6 +29,7 @@
 #define SEQ_SUB_RNDMATCH_END         (0xFD)
 #define SEQ_SUB_RNDMATCH_RETURN      (0xFE)
 #define SEQ_SUB_RNDMATCH_EXIT        (0xFF)
+#define SEQ_SUB_RNDMATCH_EXIT_NOMSG  (0xFB)
 
 ///グローバルターミナルシーケンス
 #define SEQ_SUB_GTS_MENU        (0)
