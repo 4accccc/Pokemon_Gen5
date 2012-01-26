@@ -228,9 +228,6 @@ ev_leader3_btl:
   $WK_SCENE_C03P01 = 1
   _FLAG_RESET( FV_C03P01_SWBOSS_01 )
   
-  //フェスミッション誘導POSイベント起動
-  $WK_SCENE_C03P08_FESGUIDE_01 = 1
-  
   //ローカルライブキャスター・ライバル通話状態を変更（C04GYMクリアまで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C04 )
 			
