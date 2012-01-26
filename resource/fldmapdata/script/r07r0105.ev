@@ -196,7 +196,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r07r0105_sppoke2_01
 
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
 
   //エムリット：きょううん！
   _VOICE_PLAY( MONSNO_481, 0 ) 

@@ -170,7 +170,6 @@ EVENT_START   ev_pos_c02_sppoke1_01
 
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //==================================//
@@ -223,7 +222,6 @@ EVENT_START   ev_pos_c02_sppoke1_01
 
   ELSE    //いいえ
 
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
   ENDIF
@@ -235,7 +233,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c02_sppoke1_01
 
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
 
   //ユクシー：きょううん！
   _VOICE_PLAY( MONSNO_480, 0 ) 

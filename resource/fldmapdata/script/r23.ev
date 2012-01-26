@@ -64,7 +64,6 @@ EVENT_START   ev_pos_r23_sppoke3_01
 
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //==================================//
@@ -117,7 +116,6 @@ EVENT_START   ev_pos_r23_sppoke3_01
 
   ELSE    //いいえ
 
-    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
   ENDIF
@@ -129,7 +127,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r23_sppoke3_01
 
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
 
   //アグノム：きょううん！
   _VOICE_PLAY( MONSNO_482, 0 ) 
