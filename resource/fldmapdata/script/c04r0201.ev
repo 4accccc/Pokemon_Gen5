@@ -45,7 +45,6 @@ _EVENT_DATA    ev_bg_c04r0201_musical_shot
 _EVENT_DATA    ev_c04r0201_girl4_01
 _EVENT_DATA    ev_bg_c04r0201_statue_01
 _EVENT_DATA    ev_c04r0201_policeman_01
-_EVENT_DATA    ev_c04r0201_clown_01
 _EVENT_DATA    ev_c04r0201_conv_girl_01
 _EVENT_DATA    ev_reserve_c04r0201_link_event_ret01
 _EVENT_DATA    ev_reserve_c04r0201_link_event_ret02
@@ -918,40 +917,6 @@ EVENT_END
 EVENT_START		ev_c04r0201_policeman_01
 
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_policeman_01 )
-
-EVENT_END
-
-
-/************************************************************/
-/*            クラウン１（ライモンラリー）                  */
-/************************************************************/
-EVENT_START   ev_c04r0201_clown_01
-
-  _TALK_OBJ_START()
-  //ライモンラリー・ミュージカルホール通過（1回のみ）
-  IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_02 )THEN
-    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_rally_01 )
-
-    //========================================//
-    //クリア後メッセージ表示終了
-    _FLAG_SET( FE_C04_RALLYPOINT_02 )
-    //========================================//
-    //C04イベント進行
-    $WK_SCENE_C04_RALLY += 1
-    //========================================//
-
-    _SE_WAIT()
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ELSE
-    //以降のメッセージ
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_rally_02 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ENDIF
 
 EVENT_END
 

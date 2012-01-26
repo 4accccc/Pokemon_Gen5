@@ -41,7 +41,6 @@ _EVENT_DATA    ev_bg_c04r0101_sign_05
 _EVENT_DATA    ev_bg_c04r0101_sign_06
 _EVENT_DATA    ev_bg_c04r0101_sign_07
 _EVENT_DATA    ev_bg_c04r0101_sign_08
-_EVENT_DATA    ev_c04r0101_clown_01
 _EVENT_DATA_END
 
 //簡易会話用ワーク
@@ -387,39 +386,4 @@ EVENT_START ev_bg_c04r0101_sign_08
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 EVENT_END
-
-
-/************************************************************/
-/*            クラウン１（ライモンラリー）                  */
-/************************************************************/
-EVENT_START ev_c04r0101_clown_01
-
-  _TALK_OBJ_START()
-  //ライモンラリー・ギアステーション通過（1回のみ）
-  IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_01 )THEN
-    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_rally_01 )
-
-    //========================================//
-    //クリア後メッセージ表示終了
-    _FLAG_SET( FE_C04_RALLYPOINT_01 )
-    //========================================//
-    //C04イベント進行
-    $WK_SCENE_C04_RALLY += 1
-    //========================================//
-
-    _SE_WAIT()
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ELSE
-    //以降のメッセージ
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_rally_02 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-
-  ENDIF
-
-EVENT_END
-
 
