@@ -654,6 +654,8 @@ ev_first_gameclear:
   $WK_SCENE_D27_HINT_03 = 1
   $WK_SCENE_D27_HINT_04 = 1
   $WK_SCENE_D27_HINT_05 = 1
+  //アナウンス無効
+  $WK_SCENE_D27_ANNOUNCE = 2
   
   //D10R0201の人々を削除
   _FLAG_SET( FV_D10R0301_SAGE6_01 )
