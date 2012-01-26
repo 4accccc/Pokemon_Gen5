@@ -882,10 +882,14 @@ static void update_dst( DMP_MAINWORK* wk )
   }
 
   // ‘æ‚R“Á«•–{—ˆŽ‚Á‚Ä‚¢‚È‚¢“Á«
-  //PP_Put( wk->dst, ID_PARA_speabino, tokusei );
   //personalSpeabi_3rd_flag_set( wk->dst );
   switch( box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH )  )
   {
+  default:
+  case 0:
+  case 1:
+    PP_Put( wk->dst, ID_PARA_speabino, tokusei );
+    break;
   case 2:
     PP_SetTokusei3( wk->dst, mons_no, form_no );
     break;
