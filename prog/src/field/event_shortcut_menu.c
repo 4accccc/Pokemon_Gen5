@@ -967,6 +967,14 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 		*enable = ITEMCHECK_DOWSINGMACHINE;
 		return TRUE;
 
+  case SHORTCUT_ID_LIVECASTER:	    // ライブキャスター
+		*enable = ITEMCHECK_LIVECASTER;
+		return TRUE;
+
+  case SHORTCUT_ID_MEDALBOX:	      // メダルボックス
+		*enable = ITEMCHECK_MEDALBOX;
+		return TRUE;
+
 	case SHORTCUT_ID_GURASHIDEA:			// グラシデアの花
 	case SHORTCUT_ID_IDENSINOKUSABI_U:	// いでんしのくさび(合体用)
 	case SHORTCUT_ID_IDENSINOKUSABI_P:	// いでんしのくさび(分離用)
