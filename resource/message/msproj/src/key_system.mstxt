@@ -593,12 +593,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラック２　か
-ポケットモンスター　ホワイト２　と▽
+			<Text>ポケットモンスターブラック２　か
+ポケットモンスターホワイト２　と▽
 キーの　そうじゅしんが　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:45:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -606,12 +606,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラック２　か
-ポケットモンスター　ホワイト２　と▽
+			<Text>ポケットモンスターブラック２　か
+ポケットモンスターホワイト２　と▽
 キーの　送受信が　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:45:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2490,12 +2490,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラック２か
-ポケットモンスター　ホワイト２と▽
+			<Text>ポケットモンスターブラック２　か
+ポケットモンスターホワイト２　と▽
 つうしんして　キーを　おくりあえます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-17T03:08:03" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:48:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2503,12 +2503,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラック２か
-ポケットモンスター　ホワイト２と▽
+			<Text>ポケットモンスターブラック２　か
+ポケットモンスターホワイト２　と▽
 通信して　キーを　送りあえます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-17T03:08:03" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2534,12 +2534,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトと▽
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　と▽
 つうしんして　レポートを　うけつぎます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-17T03:08:01" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2547,12 +2547,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトと▽
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　と▽
 通信して　レポートを　受け継ぎます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-17T03:08:01" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:49:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2824,10 +2824,14 @@
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉを　つうじて
 ポケモングローバルリンクから▽
-うけつぎます</Text>
+うけつぎます
+ポケットモンスターブラック・ホワイトで
+ポケモンを　ねむらせて　レポートを
+さいしんの　じょうたいに　してから
+うけつぐことを　おすすめします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:30:31" />
+				Time="2012-01-26T12:52:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2837,10 +2841,14 @@
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉ経由　で
 ポケモングローバルリンクから▽
-受け継ぎます</Text>
+受け継ぎます
+ポケットモンスターブラック・ホワイトで
+ポケモンを　眠らせて　レポートを
+最新の　状態に　してから
+受け継ぐことを　おすすめします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T07:19:32" />
+				Time="2012-01-26T12:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4599,8 +4607,8 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>もう１つの　ＤＳに
-ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+ポケットモンスターブラック　か
+ポケットモンスターホワイト　の
 ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
@@ -4608,7 +4616,7 @@ DSシステムフォントなので
 えらんでください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:52" />
+				Time="2012-01-26T12:49:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4617,8 +4625,8 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳに
-ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+ポケットモンスターブラック　か
+ポケットモンスターホワイト　の
 ソフトを　セットし
 電源を　いれた　あとに
 『ＤＳダウンロードプレイ』から
@@ -4626,7 +4634,7 @@ DSシステムフォントなので
 選択してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:07:32" />
+				Time="2012-01-26T12:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5131,15 +5139,15 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　の
 「ゲームシンクせってい」で
 みることが　できる
 ゲームシンクＩＤコード　を
 にゅうりょく　してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:31" />
+				Time="2012-01-26T12:49:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5147,15 +5155,15 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　の
 「ゲームシンク設定」で　
 みることが　できる
 ゲームシンクＩＤコード　を
 入力して　ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T07:21:36" />
+				Time="2012-01-26T12:49:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5251,15 +5259,15 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトで
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　で
 ゲームシンクを　おこない
 ポケモンを　ねむらせて　ください
 ねむらせた　あとに
 おもいでリンクが　できます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:23:39" />
+				Time="2012-01-26T12:50:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5267,15 +5275,15 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトで
+			<Text>ポケットモンスターブラック　か
+ポケットモンスターホワイト　で
 ゲームシンクを　おこない
 ポケモンを　眠らせてください
 眠らせたあとに
 おもいでリンクが　できます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:26:31" />
+				Time="2012-01-26T12:50:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5599,7 +5607,7 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケットモンスターブラック　ホワイトの
+			<Text>ポケットモンスターブラック・ホワイトの
 ゲームシンクで　ポケモンを
 ねむらせて　ください
 ねむらせたあとに
@@ -5607,7 +5615,7 @@ DSシステムフォントなので
 おこなうことが　できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T08:22:56" />
+				Time="2012-01-26T12:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5615,7 +5623,7 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック　ホワイトの
+			<Text>ポケットモンスターブラック・ホワイトの
 ゲームシンクで　ポケモンを
 眠らせて　ください
 眠らせたあとに
@@ -5623,7 +5631,7 @@ DSシステムフォントなので
 おこなうことが　できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T08:23:21" />
+				Time="2012-01-26T12:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5663,12 +5671,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ゲームシンクIDコードは
-ポケットモンスターブラック２　ホワイト２
+			<Text>この　ゲームシンクＩＤコードは
+ポケットモンスターブラック・ホワイト
 のものでは　ありません▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:14:02" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:51:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5676,12 +5684,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ゲームシンクIDコードは
-ポケットモンスターブラック２　ホワイト２
+			<Text>この　ゲームシンクＩＤコードは
+ポケットモンスターブラック・ホワイト
 のものでは　ありません▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:14:06" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:51:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
