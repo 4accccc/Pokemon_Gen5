@@ -7378,7 +7378,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エリアクリアには
-エリアの　　どこかに　いる▽
+エリアの　どこかに　いる▽
 ボストレーナーを　たおすことで▼
 つぎの　エリアに
 ちょうせん　することが　できるぜ▼
@@ -7395,7 +7395,7 @@
 つかえないからな　おぼえておけよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:51:02" />
+				Time="2012-01-26T06:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
