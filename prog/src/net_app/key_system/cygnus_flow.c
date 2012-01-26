@@ -40,9 +40,7 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 #include "system/ds_system.h"
-//TODO
-#include "src/net_app/mystery/mystery_spa.h"
-#include "arc\mystery.naix"
+#include "key_system_spa.h"
 #include "system\poke2dgra.h"
 #include "pokeicon/pokeicon.h"
 #include "item/item.h"
@@ -241,7 +239,8 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_YESNO_START,
     SEQ_YESNO_DRAW_WAIT,
     SEQ_YESNO_WAIT,
-    SEQ_MAIN,
+    SEQ_NEXT_DELETE,
+    SEQ_NEST_CALL,
     SEQ_DISPLAY_DELETE,
     SEQ_END,
   };
@@ -282,7 +281,7 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         switch( ret )
         {
         case 0:
-          *p_seq  = SEQ_MAIN;
+          *p_seq  = SEQ_NEXT_DELETE;
           break;
         default:
           GF_ASSERT(0);
@@ -293,7 +292,12 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
     }
     break;
-  case SEQ_MAIN:
+
+  case SEQ_NEXT_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_NEST_CALL:
     if( Cygnus_IsReciveEnable( p_wk, NULL ) )
     {
       //Žó‚¯Žæ‚ê‚é
@@ -387,6 +391,7 @@ static void DataConv_Seq_ReciveData( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
   enum
   {
     SEQ_CALL_RECIVE_WAIT,
+    SEQ_CHECK_SP_POKE,
     SEQ_CALL_DEMO,
     SEQ_CALL_RESULT,
     SEQ_END,
@@ -398,6 +403,18 @@ static void DataConv_Seq_ReciveData( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
   case SEQ_CALL_RECIVE_WAIT:
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_ReciveWait );
     (*p_seq)++;
+    break;
+  case SEQ_CHECK_SP_POKE:
+    if( CYGNUS_SAVE_IsEffectPoke(p_wk->p_cyg_sv) )
+    {
+      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
+      (*p_seq)  = SEQ_CALL_DEMO;
+    }
+    else
+    {
+      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutWhite );
+      (*p_seq)  = SEQ_CALL_RESULT;
+    }
     break;
   case SEQ_CALL_DEMO:
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Demo );
@@ -483,41 +500,20 @@ static void DataConv_Seq_Demo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 {
   enum
   {
-    SEQ_CHECK_START_SP_POKE,
-
-    SEQ_FADEOUT_S_START,
-    SEQ_SET_G3D,
+    SEQ_INIT,
     SEQ_FADEIN_S_START,
 
     SEQ_CALL_DEMO,
     SEQ_CHECK_END_SP_POKE,
 
     SEQ_FADEOUT_E_START,
-    SEQ_RESET_G3D,
-    SEQ_FADEIN_E_START,
-
     SEQ_END,
   };
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   switch( *p_seq )
   {
-  case SEQ_CHECK_START_SP_POKE:
-    if( CYGNUS_SAVE_IsEffectPoke(p_wk->p_cyg_sv) )
-    {
-      (*p_seq)  = SEQ_FADEOUT_S_START;
-    }
-    else
-    {
-      (*p_seq)  = SEQ_END;
-    }
-    break;
-
-  case SEQ_FADEOUT_S_START:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
-    (*p_seq)++;
-    break;
-  case SEQ_SET_G3D:
+  case SEQ_INIT:
     Cygnus_3d_Init( p_wk, HEAPID_KEY_SYSTEM );
     Cygnus_Demo_Graphic_Set( p_wk, HEAPID_KEY_SYSTEM );
     (*p_seq)++;
@@ -546,19 +542,9 @@ static void DataConv_Seq_Demo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutWhite );
     (*p_seq)++;
     break;
-  case SEQ_RESET_G3D:
+  case SEQ_END:
     Cygnus_3d_Exit( p_wk );
     Cygnus_Demo_Graphic_Reset( p_wk );
-
-    CYGNUS_SAVE_SetGameDataReward( p_wk->p_cyg_sv, HEAPID_KEY_SYSTEM );
-    (*p_seq)++;
-    break;
-  case SEQ_FADEIN_E_START:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInWhite );
-    (*p_seq)++;
-    break;
-
-  case SEQ_END:
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
@@ -655,6 +641,8 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 {
   enum
   {
+    SEQ_INIT,
+    SEQ_FADEIN_START,
     SEQ_MSG_START,
     SEQ_RESULT_LOAD,
     SEQ_START,
@@ -669,6 +657,15 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 
   switch( *p_seq )
   {
+  case SEQ_INIT:
+    CYGNUS_SAVE_SetGameDataReward( p_wk->p_cyg_sv, HEAPID_KEY_SYSTEM );
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TRAY_M );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN_START:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInWhite );
+    (*p_seq)++;
+    break;
   case SEQ_MSG_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_03, KEYSYS_TEXT_TYPE_WAIT );
     (*p_seq)++;
@@ -716,6 +713,9 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   case SEQ_END:
     CYGNUS_RESULT_Release( p_wk->p_cyg_result );
+
+    GFL_BG_FillScreen( KEYSYS_BG_FRAME_WND_M ,0, 0, 5, 32, 18,GFL_BG_SCRWRT_PALNL);
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
@@ -1002,8 +1002,11 @@ static void Cygnus_Display_CreateReciveWait( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  //TODO 
   //ŽóŽæ‚è‘Ò‹@ƒAƒjƒ
+  {
+    GFL_CLWK *p_clwk = KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_LOAD_ICON, heapID );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+  }
 
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_000, KEYSYS_TEXT_TYPE_QUE ); 
 
@@ -1039,6 +1042,8 @@ static BOOL Cygnus_Display_IsEndCreateReciveWait( void *p_wk_adrs )
 static void Cygnus_Display_DeleteReciveWait( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_LOAD_ICON );
 }
 
 //=============================================================================
@@ -1322,7 +1327,7 @@ static void Cygnus_Demo_EffectMain( CYGNUS_DEMO_WORK *p_wk )
   switch( p_wk->seq )
   {
   case SEQ_INIT:
-    KEYSYS_PTC_LoadResource( p_wk->p_ptc, ARCID_MYSTERY, NARC_mystery_mystery_spa, p_wk->heapID );
+    KEYSYS_PTC_LoadResource( p_wk->p_ptc, ARCID_KEY_SYSTEM, NARC_key_system_gra_key_system_spa, p_wk->heapID );
     p_wk->seq = SEQ_INIT_WAIT;
     break;
 

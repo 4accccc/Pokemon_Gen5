@@ -18,6 +18,7 @@ targetname = key_system_gra
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR_ARC	= $(PROJECT_ARCDIR)
+TARGETDIR_H		= $(PROJECT_ROOT)/prog/src/net_app/key_system
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -65,7 +66,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc
+do-build:	subdir $(TARGETDIR_ARC)/$(targetname).narc $(TARGETDIR_H)/key_system_spa.h
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -75,11 +76,19 @@ $(TARGETDIR_ARC)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR_ARC)
 	$(COPY) $(targetname).naix $(TARGETDIR_ARC)
 
+
+$(TARGETDIR_H)/key_system_spa.h :key_system_spa.h
+	$(COPY) key_system_spa.h $(TARGETDIR_H)
+
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) key_system.spa
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+
+key_system.spa : $(parsources)
+	../../tools/SPRArchiver.exe -o key_system_spa.h ./ ./ key_system.spa
+
 endif
 
 #------------------------------------------------------------------------------
@@ -96,6 +105,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCER
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.spa
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

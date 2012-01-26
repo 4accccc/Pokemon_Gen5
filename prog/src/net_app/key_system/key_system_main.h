@@ -144,6 +144,7 @@ typedef enum
   KEYSYS_CLWK_INFO_MARK_MAX,
   KEYSYS_CLWK_INFO_ALLOW_U,
   KEYSYS_CLWK_INFO_ALLOW_D,
+  KEYSYS_CLWK_LOAD_ICON,
   KEYSYS_CLWK_MAX,
 }KEYSYS_CLWK;
 
@@ -422,6 +423,7 @@ typedef enum
   KEYSYS_BG_SCR_TITLE_M,    //タイトル表紙だけ
   KEYSYS_BG_SCR_HAVEKEY_M,  //タイトル＋所持キー
   KEYSYS_BG_SCR_HAVEKEY_S,  //所持キーだけ
+  KEYSYS_BG_SCR_TRAY_M,     //タイトル＋土台
 }KEYSYS_BG_SCR;
 extern void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr );
 

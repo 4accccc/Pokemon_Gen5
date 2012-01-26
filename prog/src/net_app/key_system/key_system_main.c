@@ -742,8 +742,8 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->main_menu_plt, sizeof(u16) * 0x10 );
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->key_system_plt, sizeof(u16) * 0x10 );
       GFL_STD_MemCopy( (u8*)cp_plt_adrs + 2 * 0x20, p_wk->data_convert_plt, sizeof(u16) * 0x10 );
-      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->cygnus_plt, sizeof(u16) * 0x10 ); //TODO
-      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->cyg_demo_plt, sizeof(u16) * 0x10 ); //TODO
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 3 * 0x20, p_wk->cygnus_plt, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 4 * 0x20, p_wk->cyg_demo_plt, sizeof(u16) * 0x10 );
 
       //ƒpƒŒƒbƒg”jŠü
       GFL_HEAP_FreeMemory( p_buff );
@@ -867,10 +867,14 @@ void KEYSYS_BG_RequestPltFade( KEYSYS_BG_WORK *p_wk, KEYSYS_BG_PLTFADE_REQ req, 
 void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr )
 {
   ARCDATID datID;
+  u32 size  = 0;  //‚O‚¾‚Æ‘S•”
 
   switch( scr )
   {
   case KEYSYS_BG_SCR_TITLE_M:
+    size  = sizeof(u16) * 32 * 5;
+    /* fall */
+  case KEYSYS_BG_SCR_TRAY_M:
     datID = NARC_key_system_gra_back01_NSCR;
     break;
   case KEYSYS_BG_SCR_HAVEKEY_M:
@@ -885,7 +889,7 @@ void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr )
   }
 
   GFL_ARC_UTIL_TransVramScreen( ARCID_KEY_SYSTEM, datID,
-      frm, 0, 0, FALSE, p_wk->heapID );
+      frm, 0, size, FALSE, p_wk->heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1085,6 +1089,15 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
     clwk_data.pos_x   = 256-8;
     clwk_data.pos_y   = 192-18;
     clwk_data.anmseq  = 14;
+    clwk_data.softpri = 0;
+    clwk_data.bgpri   = 0;
+    is_draw_enable    = FALSE;
+    break;
+  case KEYSYS_CLWK_LOAD_ICON:
+    draw_type = CLSYS_DRAW_MAIN;
+    clwk_data.pos_x   = 256/2;
+    clwk_data.pos_y   = 192/2;
+    clwk_data.anmseq  = 15;
     clwk_data.softpri = 0;
     clwk_data.bgpri   = 0;
     is_draw_enable    = FALSE;
