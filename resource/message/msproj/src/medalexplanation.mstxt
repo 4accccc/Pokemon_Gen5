@@ -2792,15 +2792,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>隠された　道具を
-１５０個も　見つけた　希に見る
+１５０個も　見つけた　まれに見る
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-26T03:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-01-26T03:20:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -3978,16 +3978,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そだてやさんに　たくさんの
+			<Text>育て屋さんに　たくさんの
 ポケモンを　預けた
 育成好きの　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-26T03:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-26T03:20:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

@@ -3763,16 +3763,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そだてやさんに　ポケモンを
+			<Text>育て屋さんに　ポケモンを
 預けて　預けて　預けまくれ！
 ……引き取ることも　忘れずに</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-26T03:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:18" />
+				Time="2012-01-26T03:20:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
