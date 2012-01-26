@@ -1742,10 +1742,15 @@ msg_wbt_menu_wcs</Comment>
 さんかポケモンは　６ひき▼
 ローテーションバトルの
 さんかポケモンは　４ひき▽
-と　なっております▼</Text>
+と　なっております▼
+また　トリプルバトルや
+ローテーションバトルを　えらんで▼
+ゆうしょうすると　ふだんよりおおくの
+バトルポイントを　もらえますので▽
+うまく　ごかつよう　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T05:54:43" />
+				Time="2012-01-26T06:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1764,10 +1769,15 @@ msg_wbt_menu_wcs</Comment>
 参加ポケモンは　６匹▼
 ローテーションバトルの
 参加ポケモンは　４匹▽
-と　なっております▼</Text>
+と　なっております▼
+また　トリプルバトルや
+ローテーションバトルを　選んで▼
+優勝すると　普段より多くの
+バトルポイントを　もらえますので▽
+うまく　ご活用ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T05:54:48" />
+				Time="2012-01-26T06:12:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
