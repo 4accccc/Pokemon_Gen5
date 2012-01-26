@@ -2708,12 +2708,13 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　じゃないスか！
-かんどうっス！　おめでとうございまっス！▼
+ヤバいっス！　かんどうっス！▽
+マジで　おめでとうございまっス！▼
 オレ……　オレ　[Name:TrainerName ]さんの
-ファン　やってきて　ほんと　よかったっス！</Text>
+ファンやってて　よかったっスよー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				Time="2012-01-26T12:52:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2722,12 +2723,13 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　じゃないスか！
-感動っス！　おめでとうございまっス！▼
+ヤバいっス！　感動っス！▽
+マジで　おめでとうございまっス！▼
 オレ……　オレ　[Name:TrainerName ]さんの
-ファン　やってきて　本当　良かったっス！</Text>
+ファンやってて　良かったっスよー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				Time="2012-01-26T12:52:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2930,23 +2932,24 @@ Bis  bald.</Text>
 ねえ　[Name:TrainerName ]ちゃん……
 きょうは　きねんすべき　ひ　なんだ……▼
 ……ボクはね　ここを　つくったとき
-ひとつの　ねがいと　ちかいを　たてたの▼
-それは　ポケウッドが
+ひとつのねがいと　ちかいを　たてたの▼
+……ここ　ポケウッドが
 せかいじゅうを　アメイジングさせる▽
 エンターテインメントの　でんどうに▽
 せいちょうする　そのひ　まで……▼
 そして　ポケウッドに　ふさわしい
-しんのスターが　うまれる　ひまで……▽
-この　だいざの　うえには▽
-なにも　たてずに　おこう　ってね▼
+しんのスターが　うまれる　ひまで……▼
+この　だいざの　うえには
+なにも　たてずに　おこう　ってね……▼
 ……だが　みてごらん
-いま　ここには　どうぞうが　たっている▼
-つまり　ボクのねがいは　かなったの……▼
-そう　[Name:TrainerName ]ちゃん……
+いま　ここに　どうぞうが　たっている▼
+つまり　ボクの　ねがいは　かなって
+ちかいは　はたされちゃったんだ……▼
+そう……　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:51:47" />
+				Time="2012-01-26T13:45:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2957,24 +2960,25 @@ Bis  bald.</Text>
 			<Text>うむ……▼
 ねえ　[Name:TrainerName ]ちゃん……
 今日は　記念すべき日　なんだ……▼
-……ボクはね　ここを　つくったとき
-一つの　願いと　誓いを　立てたの▼
-それは　ポケウッドが
+……ボクはさ　ここを　つくったとき
+一つの願いと　誓いを　立てたの▼
+……ここ　ポケウッドが
 世界中を　アメイジングさせる▽
 エンターテインメントの　殿堂に▽
 成長する　その日まで……▼
 そして　ポケウッドに　相応しい
-真のスターが　誕生する日まで……▽
-この台座の　上には▽
-何も　建てずに　おこう　ってね▼
+真のスターが　誕生する日まで……▼
+この　台座の　上には▽
+何も　建てずに　おこう　ってね……▼
 ……　……だが　みてごらん
 今ここに　銅像が　立っている▼
-つまり　ボクの願いは　かなったの……▼
-そう　[Name:TrainerName ]ちゃん……
+つまり　ボクの　願いは　かなって
+誓いは　果たされちゃったんだ……▼
+そう……　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:51:51" />
+				Time="2012-01-26T13:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3004,12 +3008,12 @@ Bis  bald.</Text>
 きょうえんしゃを　ふるわせる……▼
 きみの　えんぎが
 かんきゃくを　みりょうする……▼
-すばらしい……
-いや……▽
+きみは　すばらしい……▼
+いや……▼
 さいこうの　やくしゃさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2012-01-26T13:46:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3022,12 +3026,12 @@ Bis  bald.</Text>
 共演者を　奮わせる……▼
 君の　演技が
 観客を　魅了する……▼
-素晴らしい……
-いや……▽
+君は　素晴らしい……▼
+いや……▼
 最高の　役者さ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2012-01-26T13:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3051,14 +3055,14 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]ちゃん！！
-キミこそ　ポケウッドの▽
+			<Text>[Name:TrainerName ]ちゃん！！▼
+キミこそ　ポケウッドの
 しんの　スターだっ！！！▼
 ぎんまくという　よぞらを　ながれる
 シューティングスター　だよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2012-01-26T13:47:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3066,14 +3070,14 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]ちゃん！！
-キミこそ　ポケウッドの▽
+			<Text>[Name:TrainerName ]ちゃん！！▼
+キミこそ　ポケウッドの
 真の　スターだっ！！！▼
 銀幕という　夜空を　流れる
 シューティングスター　だよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2012-01-26T13:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -263,28 +263,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『わかってるわよ！▼
-でも　ふあんで　しかたないのよ！▽
+でも　ふあんで　しかたないのよ！
 じぶんが　こわいんだもん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:32" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:32" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『分かってるわよ！▼
-でも　不安で　仕方ないのよ！▽
+でも　不安で　仕方ないのよ！
 自分が　怖いんだもん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:32" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:32" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1661,31 +1661,31 @@
 		Label="pw_event7_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>グアイ『ダメだ……
+			<Text>グアイ『それは　できない……
 このボールも　かのじょも▽
 このせかいに　きけんすぎる……▼
 キミに　わたすわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『ダメだ……
+			<Text>グアイ『それは　できない……
 このボールも　彼女も▽
 この世界に　危険すぎる……▼
 キミに　渡すわけには……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1802,14 +1802,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グアイ『……　……　……わかった
-私は　もう　なにも　言うまい……</Text>
+私は　もう　何も　言うまい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:14:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2278,7 +2278,7 @@
 		Label="pw_event8_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『パパと　ママがね
+			<Text>モニカ『……パパと　ママがね
 げんき　だったころの　はなし……▼
 [Name:TrainerName Idx="1" ]はね　はじめて
 ここで　うみを　みたのよ……▼
@@ -2289,15 +2289,15 @@
 はいって　いっちゃったのよね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『パパと　ママがね
+			<Text>モニカ『……パパと　ママがね
 元気だった　ころの　話……▼
 [Name:TrainerName Idx="1" ]はね　初めて
 ここで　海を　見たのよ……▼
@@ -2308,11 +2308,11 @@
 入って　いっちゃったのよね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2346,37 +2346,39 @@
 		Label="pw_event8_enemy_6">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『……わたしが　あわてて
-およいで　いったらさ　アンタね▽
-おぼれかけてるのに　たのしそうに▽
+			<Text>モニカ『……わたし　あわてて
+およいでいって　おぼれかけてる▽
+アンタの　てを　つかんだの……▼
+そしたらさ　アンタ　たのしそうに▽
 ニコニコ　ニコニコ　してるんだよ？▼
 わたしも　おもわず　わらっちゃったわ
-こっちのきも　しらないで　なんて▽
+こっちの　きも　しらないで　なんて▽
 ノンキな　いもうとなの！　ってね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:20" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:20" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『……私が　あわてて
-泳いでいったらさ　アンタね▽
-おぼれかけてるのに　楽しそうに▽
+			<Text>モニカ『……私　あわてて
+泳いでいって　おぼれかけてる▽
+アンタの　手を　つかんだの……▼
+そしたらさ　アンタ　楽しそうに▽
 ニコニコ　ニコニコ　してるんだよ？▼
 私も　思わず　笑っちゃったわ
-こっちの気も　知らないで　なんて▽
+こっちの　気も　しらないで　なんて▽
 ノンキな　妹なの！　ってね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:20" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:20" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2408,29 +2410,31 @@
 		Label="pw_event8_enemy_7">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『あのときは　たのしかった……▼
-わたしたち　また　いっしょに
-ここで　あそべるのかな……</Text>
+			<Text>モニカ『なつかしいな……▼
+あーあ……
+また　あのころ　みたいに　アンタと
+あそんだりできる　かしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『あのときは　楽しかった……▼
-私たち　また　一緒に
-ここで　遊べるのかな……</Text>
+			<Text>モニカ『なつかしいな……▼
+あーあ……
+また　あのころ　みたいに　アンタと▽
+遊んだりできる　かしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2012-01-26T11:03:59" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
