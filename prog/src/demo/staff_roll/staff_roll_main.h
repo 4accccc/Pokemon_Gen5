@@ -116,6 +116,7 @@ typedef struct {
 	u8	putFrame;
 
 	s8	britness;
+	u16	logo_sync;
 
 	u8	skipCount;
 	u8	skipFlag;

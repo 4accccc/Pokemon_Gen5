@@ -86,13 +86,13 @@ enum{
 #define	LIST_START_INIT_WAIT	( wk->testStartInitWait )
 #define	LIST_START_END_WAIT		( wk->testStartEndWait )
 #define	LOGO_PUT_WAIT					( wk->testLogoWait )
-#define	DEBUG_LIST_START_INIT_WAIT	( 41 )
-#define	DEBUG_LIST_START_END_WAIT		( 0 )
-#define	DEBUG_LOGO_PUT_WAIT					( 166 )
+#define	DEBUG_LIST_START_INIT_WAIT	( 142 )
+#define	DEBUG_LIST_START_END_WAIT		( 60 )
+#define	DEBUG_LOGO_PUT_WAIT					( 138 )
 #else
-#define	LIST_START_INIT_WAIT	( 41 )			// 初期処理のロゴ表示開始までのウェイト
-#define	LIST_START_END_WAIT		( 0 )				// 初期処理のロゴ表示終了後のウェイト
-#define	LOGO_PUT_WAIT					( 166 )			// 初期処理のロゴ表示中ウェイト
+#define	LIST_START_INIT_WAIT	( 142 )			// 初期処理のロゴ表示開始までのウェイト
+#define	LIST_START_END_WAIT		( 60 )				// 初期処理のロゴ表示終了後のウェイト
+#define	LOGO_PUT_WAIT					( 138 )			// 初期処理のロゴ表示中ウェイト
 #endif	// PM_DEBUG
 
 #if	PM_VERSION == LOCAL_VERSION
@@ -178,6 +178,9 @@ enum {
 
 #define SKIP_SPEED					( 4 )			// スキップ速度
 #define	STR_FADE_SPEED			( 4 )			// スキップ時の文字列フェード速度
+// ロゴ
+#define LOGO_FADE_SYNC      ( 138 )     // ロゴのフェードシンク
+#define LOGO_FADE_SYNC_SKIP ( 34 )     // ロゴのフェードシンク
 
 typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 
@@ -683,7 +686,7 @@ static void InitBg(void)
 
 	{	// 回転拡縮小初期化
 		MtxFx22 mtx;
-	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*9, FX32_ONE*9, GFL_CALC2D_AFFINE_MAX_NORMAL );
+	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
 		GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 	}
   {	// メイン画面：カット
@@ -1650,28 +1653,33 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		GX_SetMasterBrightness( 0 );
 		GXS_SetMasterBrightness( 0 );
-		wk->britness = 0;
+		wk->logo_sync = 0;
 		wk->labelSeq++;
 		break;
 
 	case 1:
-		if( wk->skipFlag == 1 ){
-			wk->britness += ( SKIP_SPEED * 2 );
-		}else{
-			wk->britness += 2;
-		}
-		if( wk->britness >= 16 ){
-			G2_ChangeBlendAlpha( 16, 0 );
-		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
-			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
-			wk->britness = 0;
-			wk->listWait = LOGO_PUT_WAIT;
-			wk->labelSeq++;
-		}else{
-			G2_ChangeBlendAlpha( wk->britness, 16-wk->britness );
-		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*(8-wk->britness/2), FX32_ONE*(8-wk->britness/2), GFL_CALC2D_AFFINE_MAX_NORMAL );
-			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
-		}
+    {
+      s16 ev1;
+      s16 ev2;
+
+      if( wk->skipFlag == 1 ){
+        ev1 = 0 + 16 * wk->logo_sync / LOGO_FADE_SYNC_SKIP;
+        ev2 = 16 - 16 * wk->logo_sync / LOGO_FADE_SYNC_SKIP;
+      }else{
+        ev1 = 0 + 16 * wk->logo_sync / LOGO_FADE_SYNC;
+        ev2 = 16 - 16 * wk->logo_sync / LOGO_FADE_SYNC;
+      }
+      wk->logo_sync++;
+
+      if( ev1 >= 16 ){
+        G2_ChangeBlendAlpha( 16, 0 );
+        wk->logo_sync = 0;
+        wk->listWait = LOGO_PUT_WAIT;
+        wk->labelSeq++;
+      }else{
+        G2_ChangeBlendAlpha( ev1, ev2 );
+      }
+    }
 		break;
 
 	case 2:
@@ -1692,25 +1700,30 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		break;
 
 	case 3:
-		if( wk->skipFlag == 1 ){
-			wk->britness += ( SKIP_SPEED * 2 );
-		}else{
-			wk->britness += 2;
-		}
-		if( wk->britness >= 16 ){
-			G2_BlendNone();
-			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
-			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
-			//LoadLogoPalette( wk, FALSE );
-			wk->britness = 0;
-			wk->labelSeq = 0;
-			return FALSE;
-		}else{
-			G2_ChangeBlendAlpha( 16-wk->britness, wk->britness );
-		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*(1+wk->britness/2), FX32_ONE*(1+wk->britness/2), GFL_CALC2D_AFFINE_MAX_NORMAL );
-			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
-		}
+    {
+      s16 ev1;
+      s16 ev2;
+
+      if( wk->skipFlag == 1 ){
+        ev1 = 16 - 16 * wk->logo_sync / LOGO_FADE_SYNC_SKIP;
+        ev2 = 0 + 16 * wk->logo_sync / LOGO_FADE_SYNC_SKIP;
+      }else{
+        ev1 = 16 - 16 * wk->logo_sync / LOGO_FADE_SYNC;
+        ev2 = 0 + 16 * wk->logo_sync / LOGO_FADE_SYNC;
+      }
+      wk->logo_sync++;
+
+      if( ev2 >= 16 ){
+        G2_BlendNone();
+        GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+        //LoadLogoPalette( wk, FALSE );
+        wk->logo_sync = 0;
+        wk->labelSeq = 0;
+        return FALSE;
+      }else{
+        G2_ChangeBlendAlpha( ev1, ev2 );
+      }
+    }
 		break;
 	}
 
