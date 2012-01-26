@@ -52,6 +52,13 @@ struct _MUSICAL_DIST_SAVE
   GAMEDATA *gamedata;
 };
 
+// 定義値チェック（ヘッダーサイズ定義）
+SDK_COMPILER_ASSERT( ( MUSICAL_DIST_HEADER_SIZE == sizeof(DIST_DATA_HEADER) ) );
+// 定義値チェック（DLチェックに使用するサイズはヘッダー値が引かれている）
+SDK_COMPILER_ASSERT( ( MUSICAL_DIST_SAVE_SIZE == (MUSICAL_DIST_SAVE_DL_SIZE+MUSICAL_DIST_HEADER_SIZE) ) );
+// セーブ領域を超えていないかチェック
+SDK_COMPILER_ASSERT( (SAVESIZE_EXTRA_STREAMING-EXTRA_SAVE_SECTOR_SIZE) >= MUSICAL_DIST_SAVE_SIZE  );
+
 //======================================================================
 //	proto
 //======================================================================

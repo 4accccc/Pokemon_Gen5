@@ -924,7 +924,9 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
     int sizeh = size/2;
     u16 crc;
 
-    if(size > MUSICAL_DIST_SAVE_DL_SIZE){     //サイズが収まっている
+    // セーブデータに収まっているかチェック
+    // (この時点でsizeはMUSICAL_DIST_CRC_SIZEを引いた値になっています)
+    if(size > MUSICAL_DIST_SAVE_DL_SIZE){
       pWork->ErrorNo = _DOWNLOAD_ERROR;
       _CHANGE_STATE(_ErrorDisp);
       return;
@@ -975,7 +977,9 @@ static void _downloadcgear7(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_cgearsave);
     break;
   case _DOWNLOAD_MUSICAL:
-    _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload)-2);
+    // DLデータにはコンバート時にCRCが付加されているので
+    // 実サイズ（アーカイブデータサイズ）に修正
+    _musicalsave(pWork,GSYNC_DOWNLOAD_GetSize(pWork->pDownload)-MUSICAL_DIST_CRC_SIZE);
     break;
   case _DOWNLOAD_ZUKAN:
     _CHANGE_STATE(_zukansave);
@@ -1105,6 +1109,10 @@ static void _downloadcgear(G_SYNC_WORK* pWork)
     pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, CGEAR_PICTURE_SAVE_GetWorkSize() + 4); //CRC
     break;
   case _DOWNLOAD_MUSICAL:
+    // SWANでのミュージカルDLデータサイズは
+    // (MUSICAL_DIST_SAVE_DL_SIZE+MUSICAL_DIST_CRC_SIZE)以下に
+    // 収まっていなければいけない
+    // ※ アライメントを考えるとCRCは4になる
     pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, 128*1024 ); //CRCこみで128K
     break;
   case _DOWNLOAD_ZUKAN:
