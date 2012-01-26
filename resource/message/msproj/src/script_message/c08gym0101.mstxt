@@ -1262,10 +1262,10 @@ ID：veteranw_08</Text>
 アララギの　むすめから　きいた▼
 イッシュを　つくった　でんせつの
 ドラゴンポケモンを　かたるのだな▽
-では　そとで　まっていてくれ▼</Text>
+では　そとで　まっていてくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:28:46" />
+				Time="2012-01-26T09:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1277,10 +1277,10 @@ ID：veteranw_08</Text>
 アララギの　娘から　きいた▼
 イッシュを　造った　伝説の
 ドラゴンポケモンを　語るのだな▽
-では　外で　待っていてくれ▼</Text>
+では　外で　待っていてくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:28:52" />
+				Time="2012-01-26T09:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1289,12 +1289,10 @@ ID：veteranw_08</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ後、ジムの外へ
-　画面外に消えると主人公、操作可能に
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T10:57:12" />
+				Time="2012-01-26T09:01:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
