@@ -36,6 +36,8 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_RIVAL_POSX
+DEFINE_LOCAL  LCW_RIVAL_POSZ
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -84,9 +86,14 @@ ev_d11r0101_pairstart_01:
   
   //é©ã@ç¿ïWéÊìæ
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _OBJ_POS_GET( D11R0101_SWRIVAL_01,LCW_RIVAL_POSX,LCW_RIVAL_POSZ ) 
   
-  IF $LCW_POSZ == 21 THEN
-    _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_swrival_pair_start_z21 )
+  $LCW_POSX -= 2
+  
+  IF $LCW_POSZ != $LCW_RIVAL_POSZ THEN
+    _OBJ_ANIME_AUTO( D11R0101_SWRIVAL_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_staystep_r )
     _OBJ_ANIME_WAIT()
   ENDIF
     
