@@ -1799,10 +1799,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>０ー５ねん</Text>
+			<Text>０ー５年</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -1832,10 +1832,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５ー１０ねん</Text>
+			<Text>５ー１０年</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -1865,10 +1865,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０ー１５ねん</Text>
+			<Text>１０ー１５年</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -1898,10 +1898,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５ねんー</Text>
+			<Text>１５年ー</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:55:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
