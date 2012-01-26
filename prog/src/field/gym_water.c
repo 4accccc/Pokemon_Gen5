@@ -1010,12 +1010,14 @@ void GYM_WATER_SplashAnime( GAMESYS_WORK *gsys )
   }
   // アニメ再生
   {
-    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-    // IMA
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-    // ITA
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    int i;
+    for( i=0; i<2; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, 0 );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    }
   }
 
   // SE
@@ -1055,11 +1057,14 @@ void GYM_WATER_ReturnAnime( GAMESYS_WORK *gsys )
   }
   // アニメ再生
   {
-    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 2, TRUE );
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    int i;
+    for( i=0; i<3; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, 0 );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    }
   }
 }
 
@@ -1214,14 +1219,15 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
     // アニメ再生
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // IMA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
-      // ITA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
+      int i;
+      for( i=0; i<2; i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, FALSE );
 
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+      }
     }
   }
   // 水しぶき 2つ
@@ -1242,14 +1248,15 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
     // アニメ再生
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // IMA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
-      // ITA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
+      int i;
+      for( i=0; i<2; i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, FALSE );
 
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+      }
     }
   }
 
@@ -1269,13 +1276,15 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
     // アニメ再生
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // IMA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
-      // ITA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+      int i;
+      for( i=0; i<2; i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, FALSE );
+
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+      }
     }
   }
   // 帰り道アニメ
@@ -1292,16 +1301,15 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
     // アニメ再生
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // ICA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
-      // IMA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
-      // ITA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 2, FALSE );
+      int i;
+      for( i=0; i<3; i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, FALSE );
 
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+      }
     }
 
   }
@@ -2609,12 +2617,14 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk, u16 type )
 
   // ANIME再生
   {
-    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    int i;
+    for( i=0; i<2; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, 0 );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    }
   }
 
   // タスク登録
@@ -2685,12 +2695,15 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_id
 
   // ANIME再生
   {
-    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    int i;
+
+    for( i=0; i<2; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, 0 );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    }
   }
 
   // タスク登録
@@ -2733,12 +2746,14 @@ static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx
 
   // ANIME再生
   {
-    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
-    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    int i;
+    for( i=0; i<2; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, i, 0 );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    }
   }
 
   // タスク登録
@@ -2943,6 +2958,18 @@ static void ANM_TASK_Add( GYM_WATER_TMP *p_wk, u16 obj_idx, u8 anm_num )
   for( i=0; i<TASK_MAX; i++ )
   {
     ANM_TASK_WORK *task_wk = &p_wk->anm_task_wk[i];
+
+    // GFBTS395 
+    // 登録してあるOBJをもう1度登録していたので
+    // 衝突波紋（自分）のみ登録しない
+    if( task_wk->obj_idx == EFFECT_HIT_RIPPLE1 &&
+        obj_idx == EFFECT_HIT_RIPPLE1 &&
+        task_wk->is_enable == TRUE )
+    {
+      ICHI_Printf("重複したOBJはタスク追加しない\n");
+      return;
+    }
+
     if( task_wk->is_enable == FALSE )
     {
       task_wk->is_enable = TRUE;
@@ -2979,9 +3006,10 @@ static void tcb_CheckAnime( GFL_TCB *tcb, void* work )
     int i;
     for( i=0; i<p_wk->anm_num; i++ )
     {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, i );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, i, FALSE );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
   }
   ICHI_Printf("EffectIdx %d 破棄\n", p_wk->obj_idx);
 
