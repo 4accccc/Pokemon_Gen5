@@ -25,6 +25,9 @@
 #include "test/performance.h"
 #include "test/ariizumi/ari_debug.h"
 
+// マジコン対策ライブラリ簡易版
+#include "AMprotect_Instant.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -270,6 +273,22 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
   return GFL_PROC_RES_CONTINUE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	製品版で呼び出されるヒープ解放処理
+ * @param   param1		HEAPID_POKELIST
+ * @param   param2		GFL_PROC_FINISH
+ * @retval  void *		param2をそのまま返す（とPROC終了の通知を返すことになる）
+ */
+//----------------------------------------------------------------------------------
+static void *_delete_heap( void *param1, void *param2 )
+{
+  int DeleteHeapID = *(int*)param1;
+  GFL_HEAP_DeleteHeap( DeleteHeapID );
+
+  return param2;  
+}
+
 //--------------------------------------------------------------
 //	開放
 //--------------------------------------------------------------
@@ -310,8 +329,21 @@ static GFL_PROC_RESULT PokeListProc_Term( GFL_PROC * proc, int * seq , void *pwk
   }
 
   GFL_PROC_FreeWork( proc );
+
+#ifdef AMPROTECT_FUNC
+  {
+    // マジコン検出を行った後、ヒープ解放をコールバック関数内で行う
+    int DeleteHeapID = HEAPID_POKELIST;
+    int GflProcRet   = GFL_PROC_RES_FINISH;
+    //返る値はPROC終了のGFL_PROC_RES_FINISH
+    return *(int*)AM_InstantPiracyDetect( _delete_heap, &DeleteHeapID, &GflProcRet ); 
+  }
+#else
+  // デバッグ版では普通にヒープ解放と終了
   GFL_HEAP_DeleteHeap( HEAPID_POKELIST );
   return GFL_PROC_RES_FINISH;
+#endif
+
 }
 
 //--------------------------------------------------------------

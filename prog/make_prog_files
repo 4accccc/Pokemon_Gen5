@@ -1583,6 +1583,7 @@ SRCS_OVERLAY_POKELIST_COMM	= app/pokelist/plist_comm.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_POKELIST_COMM
+#LIB=>          AMProtectR2a_Instant.a
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -2817,7 +2818,6 @@ SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD = app/zukan_award/zenkoku/zenkoku_zukan_award.c
 
 # ŽO•C‘I‘ð
 #===> SRCS_OVERLAY_UI_COMMON
-#LIB=>          AMProtectR2a_Instant.a
 SRCS_OVERLAY_PSEL = demo/psel/psel.c \
                     demo/psel/psel_graphic.c
 
