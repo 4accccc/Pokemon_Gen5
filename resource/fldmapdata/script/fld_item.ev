@@ -1616,7 +1616,7 @@ EVENT_START ev_fld_item_170
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=c14 X=777 Y=164 ITEM=‚©‚¢‚ª‚ç‚Ì‚·‚¸ FLAG=171
+// MAP=c14 X=779 Y=167 ITEM=‚©‚¢‚ª‚ç‚Ì‚·‚¸ FLAG=171
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_171
   _FLD_ITEM_EVENT ITEM_KAIGARANOSUZU,1
@@ -2603,7 +2603,7 @@ EVENT_START ev_fld_item_311
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=w17 X=706 Y=740 ITEM=‚¨‚¾‚ñ‚²‚µ‚ñ‚¶‚ã FLAG=312
+// MAP=w17 X=706 Y=741 ITEM=‚¨‚¾‚ñ‚²‚µ‚ñ‚¶‚ã FLAG=312
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_312
   _FLD_ITEM_EVENT ITEM_ODANGOSINZYU,1
