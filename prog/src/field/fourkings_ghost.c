@@ -1485,8 +1485,8 @@ static void ANM_NOFOG_Play( FOURKINGS_GHOST_TMP *p_wk )
   // •\Ž¦
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
-  ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
-  ANM_Play( p_wk->exp_obj, obj_idx, 1, TRUE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
   ANM_Stop( p_wk->exp_obj, obj_idx, 3 );
 }
