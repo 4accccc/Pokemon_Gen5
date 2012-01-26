@@ -13,6 +13,7 @@
   .include  "h03.h"
 
   //@author fujimura_souichirou（騒音おばさん、一言メッセージ等）
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -244,7 +245,7 @@ EVENT_START   ev_h03_badrider_01
   IF $LOCALWORK15 >= 1 THEN
 
     //名前代入
-    _DATACONV_SET_NAME( 0 ,DATACONV_ID_SYSTEM ) 
+    _DATACONV_SET_NAME( DATACONV_ID_SYSTEM , 1 ) 
     //暴走族：アイツと　タイマンしてたころ▼
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h03_badrider2_01 )
 
