@@ -13,6 +13,7 @@
   .include  "r08.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト追加
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -110,30 +111,41 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r08_fising_01
 
-  _TALK_OBJ_START()
-  //ツリーズ：オー！　トレーナー！▼
-  _BALLOONWIN_OBJMSG( msg_r08_fising_01, R08_FISING_01 )
-  _MSGWIN_CLOSE()
+  //すごいつりざおを持っているかチェック
+  _ITEM_CHK( ITEM_SUGOITURIZAO, 1, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == TRUE THEN
+	  _TALK_OBJ_START()
+	 //ツリーズ：オー！　トレーナー！▼
+	  _BALLOONWIN_OBJMSG( msg_r08_fising_01, R08_FISING_01 )
+	  _MSGWIN_CLOSE()
 
-  //主人公座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+	  //主人公座標取得
+	  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
 
-  //アニメ：ツリーズ退場
-  IF $LCW_POSZ == 183 THEN
-    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_UD )
+	  //アニメ：ツリーズ退場
+	  IF $LCW_POSZ == 183 THEN
+	    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_UD )
+	  ELSE
+	    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_LR )
+	  ENDIF
+	  _OBJ_ANIME_WAIT()
+	  _OBJ_DEL( R08_FISING_01 )
+
+	  //========================================//
+	  //８番道路のツリーズを非表示
+	  _FLAG_SET( FV_R08_FISING_01 )
+	  //ビレッジブリッジのツリーズを表示
+	  _FLAG_RESET( FV_H04R0301_FISING_01 )
+	  //========================================//
+  
+  //すごいつりざおを持っていない
   ELSE
-    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_LR )
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r08_fising_02 )
+
   ENDIF
-  _OBJ_ANIME_WAIT()
-  _OBJ_DEL( R08_FISING_01 )
-
-  //========================================//
-  //８番道路のツリーズを非表示
-  _FLAG_SET( FV_R08_FISING_01 )
-  //ビレッジブリッジのツリーズを表示
-  _FLAG_RESET( FV_H04R0301_FISING_01 )
-  //========================================//
-
+  
 EVENT_END
 
 
