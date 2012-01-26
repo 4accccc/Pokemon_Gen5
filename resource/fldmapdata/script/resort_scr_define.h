@@ -79,6 +79,7 @@
 #define SEQ_INFOMATION_Q06        (6)
 #define SEQ_INFOMATION_Q07        (7)
 #define SEQ_INFOMATION_Q08        (8)
+#define SEQ_INFOMATION_Q09        (9)
 
 #define SEQ_INFOMATION_SHOP_00    (0)
 #define SEQ_INFOMATION_SHOP_01    (1)
