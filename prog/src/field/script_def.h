@@ -222,6 +222,7 @@
 #define SCR_POKEPARA_GET_LEVEL        (153) ///<RO •ßŠl‚µ‚½Žž‚ÌƒŒƒxƒ‹
 #define SCR_POKEPARA_OYA_SEX          (154) ///<RO e‚Ì«•Ê
 #define SCR_POKEPARA_LEVEL            (158) ///<RO Œ»Ý‚ÌƒŒƒxƒ‹
+#define SCR_POKEPARA_HP               (160) ///<RO HP
 #define SCR_POKEPARA_POW              (162) ///<RO UŒ‚
 #define SCR_POKEPARA_DEF              (163) ///<RO –hŒä
 #define SCR_POKEPARA_AGI              (164) ///<RO ‚·‚Î‚â‚³

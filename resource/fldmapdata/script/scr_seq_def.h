@@ -6067,6 +6067,7 @@
  *
  * @note
  * SCR_POKEPARA_～のうち、ROもしくはRWと書かれているものを指定することができます。
+ * ※ SCR_POKEPARA_HPはタマゴを考慮しません。
  */
 //--------------------------------------------------------------
 #define _GET_PARTY_POKE_PARAM( ret_wk, pos, para_id ) \
