@@ -33,13 +33,6 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START  ev_zone_d29r0701
 
-  // •ßŠl‚µ‚Ä‚¢‚½‚ç”ñ•\Ž¦
-  IF FLAG_ON( FE_D29R0401_POKE2_GET_01 ) THEN
-    _FLAG_SET( FV_D29R0401_POKE2_01 )
-  ELSE
-    _FLAG_RESET( FV_D29R0401_POKE2_01 )
-  ENDIF
-
 INIT_EVENT_END
 
 /**************************************************************/
