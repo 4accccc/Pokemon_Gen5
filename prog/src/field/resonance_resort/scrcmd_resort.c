@@ -2386,6 +2386,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MY_PARAM_IS_ENABLE_COMBO:
     *p_ret_wk = RESORT_UTIL_IsEnableCombo( p_sys );
     break;
+  case RESORT_MY_PARAM_IS_FEVER_CONDITION:
+    *p_ret_wk = RESORT_UTIL_IsFeverCondition( p_sys );
+    break;
   default:
     GF_ASSERT_MSG(0,"%d\n",param);
   }

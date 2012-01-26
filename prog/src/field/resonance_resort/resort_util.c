@@ -1253,6 +1253,7 @@ u32 RESORT_UTIL_AddExpShop( RESORT_RESIDENT_DATA *p_resident, RESORT_SYSTEM *p_s
     if( RESORT_UTIL_IsFeverCondition(p_sys) )
     {
       RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_FEVER_FLAG, TRUE );
+      RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_FEVER_CNT, 0 );
     }
 
     //é{ê›Ç™Ç©ÇÌÇ¡ÇΩÇ©
