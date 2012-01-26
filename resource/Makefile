@@ -187,7 +187,6 @@ SUBDIRS	=	wmi \
 			assert_err \
 			field_goout_effect \
 			resonance_resort \
-			mobiclip \
 			medal_info \
 			pkwd_announce \
 			animal_trail \
