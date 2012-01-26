@@ -7580,4 +7580,92 @@ msg_wbt_info_11へ</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_hodomoe_event"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　ホドモエイベント専用▼
+ホドモエトーナメントは
+なんでもありの　トーナメントです▼
+すべての　ポケモンと
+ポケモンに　もたせる　どうぐを▽
+りようすることが　できます▼
+また　フラットルールにより
+レベル２６いじょうの　ポケモンの▽
+レベルは２５に▼
+レベル２４より　ひくい　ポケモンは
+そのままで　たたかうことに　なります▼
+ゆうしょうすると
+バトルポイントが　もらえますので▽
+がんばって　ください！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　ホドモエイベント専用▼
+ホドモエトーナメントは
+なんでもありの　トーナメントです▼
+すべての　ポケモンと
+ポケモンに　持たせる　道具を▽
+利用することが　できます▼
+また　フラットルールにより
+レベル２６以上の　ポケモンの▽
+レベルは２５に▼
+レベル２４より　低い　ポケモンは
+そのままで　戦うことに　なります▼
+優勝すると
+バトルポイントが　もらえますので▽
+がんばって　ください！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:16" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-01-26T03:44:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
