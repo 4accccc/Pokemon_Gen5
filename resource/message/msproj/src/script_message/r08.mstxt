@@ -75,6 +75,73 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r08_fising_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+って　トレーナー
+つりざおを　もっていないのか……▼
+カノコタウンの　アララギはかせを
+メンバーに　さそおうかな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:25:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+って　トレーナー
+つりざおを　持っていないのか……▼
+カノコタウンの　アララギ博士を
+メンバーに　誘おうかな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:26:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:25:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ずごいつりざおを持っていない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:24:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:24:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T10:24:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r08_rock_ambrella_01"
 		Style="Large">
 		<LanguageCell
