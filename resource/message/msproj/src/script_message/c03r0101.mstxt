@@ -20686,11 +20686,11 @@ assistantm_01_31へ続く
 			Language="JPN">
 			<Text>あら？　もう　ぜんぶのアンケートに
 こたえてくれた　みたいね▼
-こたえた　アンケートを
+アンケートに
 もういちど　こたえる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T03:38:33" />
+				Time="2012-01-26T06:16:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20700,11 +20700,11 @@ assistantm_01_31へ続く
 			Language="JPN_KANJI">
 			<Text>あら？　もう　全部のアンケートに
 答えてくれた　みたいね▼
-答えた　アンケートを
+アンケートに
 もう一度　答える？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T03:38:36" />
+				Time="2012-01-26T06:16:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27215,13 +27215,13 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>あたらしい　たいいんが
-アンケートを　こたえないのよ▼
+アンケートに　こたえないのよ▼
 アンケートに　こたえれば
 もっと　いろいろな　ちょうさが▽
 できるのに……　もったいないな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T03:14:11" />
+				Time="2012-01-26T06:16:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27230,13 +27230,13 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>新しい　隊員が
-アンケートを　答えないのよ▼
+アンケートに　答えないのよ▼
 アンケートに　答えれば
 もっと　いろいろな　調査が▽
 できるのに……　もったいないな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-03T03:14:33" />
+				Time="2012-01-26T06:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
