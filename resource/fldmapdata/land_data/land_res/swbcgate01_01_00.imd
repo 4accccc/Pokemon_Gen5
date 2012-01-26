@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2012-01-17T15:30:37" source="swbcgate01_01_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-26T23:25:44" source="swbcgate01_01_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2012-01-17T15:30:37" source="swbcgate01_01_00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-26T23:25:44" source="swbcgate01_01_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1529,7 +1529,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="h_kage"
+	<material index="5" name="h_kage1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1793,7 +1793,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="o38_enter"
+	<material index="16" name="o38_enter1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1817,7 +1817,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="o38_gareki"
+	<material index="17" name="o38_gareki1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1841,7 +1841,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="o38_gareki_2"
+	<material index="18" name="o38_gareki_3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1865,7 +1865,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="o38_hasira"
+	<material index="19" name="o38_hasira1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1889,7 +1889,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="o38_iseki"
+	<material index="20" name="o38_iseki1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1913,7 +1913,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="o38_isi"
+	<material index="21" name="o38_isi1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1937,7 +1937,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="22" name="o38_isi_e"
+	<material index="22" name="o38_isi_e3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1961,31 +1961,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="23" name="o38_renga"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="25 25 25"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="23" tex_palette_idx="24"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="24" name="o38_renga2"
+	<material index="23" name="o38_renga2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -2003,6 +1979,30 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="24" tex_palette_idx="23"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="24" name="o38_renga5"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="23" tex_palette_idx="24"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -4575,7 +4575,7 @@
 	<polygon index="13" name="polygon13"
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
-		volume_min="-2.518066 1.312500 0.588867"
+		volume_min="-2.518066 1.281250 0.588867"
 		volume_max="2.458496 1.312500 4.144531"
 		volume_r="4.970703"
 		mtx_prim_size="1"
@@ -4589,7 +4589,7 @@
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 30"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-0.517822 1.312500 1.020752"/>
+					<pos_xyz xyz="-0.517822 1.281250 1.020752"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xz xz="-0.191895 0.914795"/>
 					<tex st="32.000000 0.000000"/>
@@ -4605,7 +4605,7 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="1.121826 1.022461"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xz xz="-2.518066 4.079834"/>
+					<pos_xyz xyz="-2.518066 1.312500 4.079834"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xz xz="-2.126953 4.144531"/>
 					<tex st="32.000000 0.000000"/>
@@ -4613,13 +4613,13 @@
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="-2.453613 3.688721"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xz xz="1.978027 3.038330"/>
+					<pos_xyz xyz="1.978027 1.281250 3.038330"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="2.458496 1.312500"/>
+					<pos_xy xy="2.458496 1.281250"/>
 					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="2.458496 2.558105"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="1.978027 1.312500"/>
+					<pos_xy xy="1.978027 1.281250"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -6896,7 +6896,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1098" kind="mesh"
+	<node index="0" name="polySurface1100" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -6937,8 +6937,8 @@
 		<display index="20" material="20" polygon="11" priority="0"/>
 		<display index="21" material="21" polygon="22" priority="0"/>
 		<display index="22" material="22" polygon="21" priority="0"/>
-		<display index="23" material="23" polygon="20" priority="0"/>
-		<display index="24" material="24" polygon="19" priority="0"/>
+		<display index="23" material="23" polygon="19" priority="0"/>
+		<display index="24" material="24" polygon="20" priority="0"/>
 		<display index="25" material="25" polygon="0" priority="0"/>
 		<display index="26" material="25" polygon="24" priority="0"/>
 		<display index="27" material="26" polygon="2" priority="0"/>
