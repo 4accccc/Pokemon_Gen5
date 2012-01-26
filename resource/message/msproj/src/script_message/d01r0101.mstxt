@@ -120,6 +120,68 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d01r0101_poke1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ラティオスは　そらの　かなたへ
+とびさっていった……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ラティオスは　空の　彼方へ
+飛び去っていった……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後
+・倒した場合のメッセージ
+・殿堂入り後に再配置
+※swanで新規作成
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:14:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティオス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:42" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d01r0101_poke2_01"
 		Style="Large">
 		<LanguageCell
@@ -228,6 +290,67 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2012-01-10T04:08:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d01r0101_poke2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ラティアスは　そらの　かなたへ
+とびさっていった……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ラティアスは　空の　彼方へ
+飛び去っていった……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後
+・倒した場合のメッセージ
+・殿堂入り後に再配置
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:14:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティアス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-26T11:13:44" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
