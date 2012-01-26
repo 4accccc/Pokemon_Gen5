@@ -5317,7 +5317,7 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>せかいの　へいわ　って
-じつは　かんたんな　ことで
+じつは　かんたんな　ことで▽
 まもられているの……▼
 これいじょうは　ヒミツ
 あなたは　しらないほうが　いいこと▼
@@ -5336,7 +5336,7 @@ OL</Text>
 さあ　いきなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T09:25:09" />
+				Time="2012-01-26T09:57:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5345,7 +5345,7 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>世界の　平和　って
-実は　簡単な　ことで
+実は　簡単な　ことで▽
 守られているの……▼
 これ以上は　ヒミツ
 あなたは　知らないほうが　いいこと▼
@@ -5364,7 +5364,7 @@ OL</Text>
 さあ　行きなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T09:35:14" />
+				Time="2012-01-26T09:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
