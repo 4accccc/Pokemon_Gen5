@@ -2845,25 +2845,25 @@
 		Label="pw_event9_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『世界を　支配する……？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『しはいする　ということ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:33" />
+				Time="2012-01-25T10:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:33" />
+				Time="2012-01-25T10:54:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『世界を　支配する……？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『支配する　ということ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:33" />
+				Time="2012-01-25T10:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:33" />
+				Time="2012-01-25T10:54:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

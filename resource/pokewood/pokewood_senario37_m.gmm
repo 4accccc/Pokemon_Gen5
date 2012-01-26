@@ -418,7 +418,7 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『パパは　いる？</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">少女『アハハ……
+		<language name="JPN" width="256">しょうじょ『アハハ……
 ゆうべから　かえってこないの▽
 だから　さびしいの　あそぼうよー</language>
 		<language name="JPN_KANJI" width="256">少女『アハハ……
@@ -505,7 +505,7 @@
 むかし　むかし
 とくべつな　ちからを　もった▽
 まじゅつしが　いました▼
-しかし　まじゅつは　なかまに　
+しかし　まじゅつしは　なかまに　
 ゆうへい　されてしまいました▽
 なぜかなー　わかるかなー？</language>
 		<language name="JPN_KANJI" width="256">少女『じゃあ　つぎね！
@@ -513,7 +513,7 @@
 むかし　むかし
 とくべつな　ちからを　もった▽
 まじゅつしが　いました▼
-しかし　まじゅつは　なかまに　
+しかし　まじゅつしは　なかまに　
 ゆうへい　されてしまいました▽
 なぜかなー　わかるかなー？</language>
 	</row>
@@ -562,10 +562,10 @@
 	<row id="pw_event2_react_enemy_3">
 		<language name="JPN" width="256">しょうじょ『え……？
 おっ……　おにいちゃん▽
-うたがりぶかーい</language>
-		<language name="JPN_KANJI" width="256">しょうじょ『え……？
+うたぐりぶかいんじゃないー</language>
+		<language name="JPN_KANJI" width="256">少女『え……？
 おっ……　おにいちゃん▽
-うたがりぶかーい</language>
+うたぐりぶかいんじゃないー</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『さあ！　あくりょう！

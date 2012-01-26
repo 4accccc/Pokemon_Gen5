@@ -390,7 +390,7 @@
 また　そんなガラクタ　買ってきて！</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいじゃないか……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいじゃない……▼
 これは　とっても　めずらしい
 モンスターボール　なんだから▼
 ごくひの　ルートで　てに　いれた
@@ -399,7 +399,7 @@
 むかしの　トレーナーの▽
 のろいが　こめられた▽
 おそろしいボール　なんだって……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいじゃないか……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいじゃない……▼
 これは　とっても　珍しい
 モンスターボール　なんだから▼
 極秘の　ルートで　手に　いれた
@@ -751,7 +751,7 @@
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うわ！！　ちょっと！！
-やめてよ！　何するの！！</language>
+やめてよ！　なにするの！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うわ！！　ちょっと！！
 やめてよ！　何するの！！</language>
 	</row>

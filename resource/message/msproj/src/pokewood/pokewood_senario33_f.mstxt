@@ -370,17 +370,17 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わかるでしょ？▼
 ポケモン　みたいにね
-自分で　わざを　つかうのよ！▼
+じぶんで　わざを　つかうのよ！▼
 Ｆー００の　からだには
 ポケモンみたいに　わざが　つかえる▽
 システムが　ついてるんだから！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:01" />
+				Time="2012-01-25T10:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:20:01" />
+				Time="2012-01-25T10:54:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2288,14 +2288,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『グッ……▼
-Ｆー００……　強いね……</Text>
+Ｆー００……　つよいね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T09:14:16" />
+				Time="2012-01-25T10:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T09:14:16" />
+				Time="2012-01-25T10:54:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

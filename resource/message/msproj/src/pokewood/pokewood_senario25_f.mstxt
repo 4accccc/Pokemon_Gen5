@@ -311,7 +311,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いいじゃないか……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいじゃない……▼
 これは　とっても　めずらしい
 モンスターボール　なんだから▼
 ごくひの　ルートで　てに　いれた
@@ -322,15 +322,15 @@
 おそろしいボール　なんだって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:11" />
+				Time="2012-01-25T10:54:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:11" />
+				Time="2012-01-25T10:54:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いいじゃないか……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいじゃない……▼
 これは　とっても　珍しい
 モンスターボール　なんだから▼
 極秘の　ルートで　手に　いれた
@@ -341,11 +341,11 @@
 恐ろしいボール　なんだって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:11" />
+				Time="2012-01-25T10:54:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:11" />
+				Time="2012-01-25T10:54:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2006,14 +2006,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『うわ！！　ちょっと！！
-やめてよ！　何するの！！</Text>
+やめてよ！　なにするの！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2012-01-25T10:54:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2012-01-25T10:54:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

@@ -538,14 +538,14 @@
 		Label="pw_event1_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『倒さなきゃ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『たおさなきゃ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-01-25T10:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-01-25T10:53:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -644,14 +644,14 @@
 		Label="pw_event1_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『図鑑でチェック！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『ずかんでチェック！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-01-25T10:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-01-25T10:53:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1661,16 +1661,16 @@
 おじいちゃん！？　しかもツルツル！？
 わたしごのみの　ダンディーのよかん！▼
 い　いいんですか？
-ぜひぜひ　お願い　しますっ！▼
+ぜひぜひ　おねがい　しますっ！▼
 わーい！　わーい！
 ツルツル！！　ダンディー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-25T10:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-01-25T10:53:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

@@ -767,11 +767,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さっき　セリフじゃが……
+			<Text>カントク『さっきの　セリフじゃが……
 うまく　えんじとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:26:02" />
+				Time="2012-01-26T07:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -779,11 +779,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『さっき　セリフじゃが……
+			<Text>監督『さっきの　セリフじゃが……
 うまく　演じとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T10:26:05" />
+				Time="2012-01-26T07:09:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1306,11 +1306,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さっき　セリフじゃが……
+			<Text>カントク『さっきの　セリフじゃが……
 うまく　えんじとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:17:27" />
+				Time="2012-01-26T07:08:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1318,11 +1318,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『さっき　セリフじゃが……
+			<Text>監督『さっきの　セリフじゃが……
 うまく　演じとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:19:44" />
+				Time="2012-01-26T07:08:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1342,11 +1342,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さっきのセリフでも
+			<Text>カントク『さっきの　セリフでも
 わるくはないと　おもうぞい</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-25T11:44:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-26T07:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -1187,13 +1187,15 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　トレーラーの　なかで
-いしょうや　メイクを　できるんや！▼
+			<Text>この　トレーラーの　なか　はな
+がくやに　なっとるのや▼
+こんなかで　フィッティングや　メイク
+だいほんチェックも　しとるで！▼
 ワシも　いま　きがえた　とこ！
 よっしゃ！　きょうも　きばるでっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T10:29:44" />
+				Time="2012-01-26T06:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1201,13 +1203,15 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　トレーラーの　中で
-着替えや　メイクを　できるんや！▼
+			<Text>この　トレーラーの　中　はな
+楽屋に　なっとるのや▼
+こん中で　フィッティングや　メイク
+台本チェックも　しとるで！▼
 ワシも　今　着替えた　とこ！
 よっしゃ！　今日も　きばるでっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T10:29:57" />
+				Time="2012-01-26T06:18:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1552,11 +1556,11 @@ msg_c15_oldman1_01_04
 だんせいには　あっとうてきに
 ナツメさんが　ウケてますよ▼
 え？　[Name:TrainerName ]さん？
-さいきんに　にゅうか　はじめたけど▽
+さいきん　にゅうかを　はじめたけど▽
 うりあげは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:36:59" />
+				Time="2012-01-26T07:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1572,11 +1576,11 @@ msg_c15_oldman1_01_04
 男性には　圧倒的に
 ナツメさんが　ウケてますよ▼
 え？　[Name:TrainerName ]さん？
-さいきんに　入荷はじめたけど▽
+最近　入荷を　はじめたけど▽
 売り上げは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:37:05" />
+				Time="2012-01-26T07:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2837,13 +2841,13 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>めでたいのう！　[Name:TrainerName ]！
-よいか！　おぬしの　デビューさくを▽
+よいか！　おぬしの　デビューさくを
 かんとくしたのは　この　わし！▼
 つまり　そだてのおや　どうぜん　じゃ！
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T12:51:26" />
+				Time="2012-01-26T03:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

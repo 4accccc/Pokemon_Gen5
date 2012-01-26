@@ -8771,11 +8771,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＬの　かのじょは　いかに
-きょだいかに　くのう　したか</Text>
+			<Text>ＯＬの　かのじょは　その
+きょだいかに　いかに　くのうしたか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:04:25" />
+				Time="2012-01-26T05:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8783,11 +8783,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬの　彼女は　いかに
-巨大化に　苦悩　したか</Text>
+			<Text>ＯＬの　彼女は　その
+巨大化に　いかに　苦悩したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T04:11:33" />
+				Time="2012-01-26T05:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8799,7 +8799,7 @@
 （主人公♀用）</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:44:01" />
+				Time="2012-01-26T05:20:04" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

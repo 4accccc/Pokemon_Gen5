@@ -446,16 +446,14 @@
 近づいては　いけない！！</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『どきなさいっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どきなさいっ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
-		<language name="JPN" width="256">じょしゅ『キャッ！！▼
-[1:00:トレーナー名:1]　はかせ！！
-ちょっと！　おちついて！！</language>
-		<language name="JPN_KANJI" width="256">助手『キャッ！！▼
-[1:00:トレーナー名:1]　博士！！
-ちょっと！　落ち着いて！！</language>
+		<language name="JPN" width="256">じょしゅ『しっかりしてください！
+[1:00:トレーナー名:1]　はかせ！！</language>
+		<language name="JPN_KANJI" width="256">助手『しっかりしてください！
+[1:00:トレーナー名:1]　博士！！</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしてよっ！</language>
@@ -554,8 +552,8 @@
 ダカラ……　ハヤク　コワシテ……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『イヤよ！　イヤっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『イヤよ！　イヤっ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]……▼
@@ -566,8 +564,8 @@
 ハヤク……　コワシテ……</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『イヤよ！　イヤッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『イヤよ！　イヤッ！！</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]……

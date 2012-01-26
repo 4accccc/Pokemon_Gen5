@@ -484,7 +484,7 @@
 このコロモリたちを　急いで……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『倒さなきゃ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『たおさなきゃ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『倒さなきゃ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
@@ -506,7 +506,7 @@
 ドロボウよ！？　常識でしょ！？</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『図鑑でチェック！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『ずかんでチェック！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『図鑑でチェック！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
@@ -755,7 +755,7 @@
 おじいちゃん！？　しかもツルツル！？
 わたしごのみの　ダンディーのよかん！▼
 い　いいんですか？
-ぜひぜひ　お願い　しますっ！▼
+ぜひぜひ　おねがい　しますっ！▼
 わーい！　わーい！
 ツルツル！！　ダンディー！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『エッ！　何！？▼
