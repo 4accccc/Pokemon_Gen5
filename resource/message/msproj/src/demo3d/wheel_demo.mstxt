@@ -1274,11 +1274,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっと　なに　グズグズしてるの？
-さっさと　そこに　すわって！</Text>
+			<Text>あたくしたち……　ひとから　みれば
+としの　はなれた　こいびと　かしら？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:08:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1286,11 +1286,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　なに　グズグズしてるの？
-さっさと　そこに　座って！</Text>
+			<Text>あたくしたち……　他人から　みれば
+年齢の　離れた　恋人かしら？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:08:20" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1308,10 +1308,10 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2</Text>
+			<Text>ADULTW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:54" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1340,11 +1340,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっと　もっと　かおを　あげて！
-ホラ　ほほえむとか　できないわけ？</Text>
+			<Text>そのまま　うごかないの
+そう……　ジッと　してて……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:06:20" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1352,11 +1352,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　もっと　顔を　上げて！
-ホラ　微笑むとか　できないわけ？</Text>
+			<Text>そのまま　動かないの
+そう……　ジッと　してて……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:06:18" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1373,10 +1373,10 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2</Text>
+			<Text>ADULTW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -1405,11 +1405,11 @@ OＬ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そう　いいわ　そのまま　うごかないの
-そう……　ジッと　してて……</Text>
+			<Text>まどの　そとも　みては　ダメ
+あたくしだけを　みていなさい……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T09:06:48" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1417,11 +1417,11 @@ OＬ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そう　いいわ　そのまま　動かないの
-そう……　ジッと　してて……</Text>
+			<Text>窓の　外も　みては　ダメ
+あたくしだけを　みていなさい……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T09:06:34" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:26:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1438,10 +1438,10 @@ OＬ</Comment>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2</Text>
+			<Text>ADULTW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">

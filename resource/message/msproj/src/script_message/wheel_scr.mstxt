@@ -428,15 +428,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂　ミニスカート
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→spring_f_07
 　いいえ→spring_f_08</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:57:52" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:37:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -504,15 +503,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂　ミニスカート
-
 ※１度観覧車に乗って以降
-
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:57:55" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -576,15 +573,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂　ミニスカート
-
 ※１度観覧車に乗って以降
-
 
 ・いいえ選択時
 ・再度話しかけると07から</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:57:58" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -682,15 +677,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂　ミニスカート
-
 ※１度観覧車に乗って以降
 
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:58:03" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -784,15 +778,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂　ミニスカート
-
 ※１度観覧車に乗って以降
-
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:58:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1218,15 +1210,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→spring_m_07
 　いいえ→spring_m_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1292,14 +1283,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1367,15 +1357,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
-
 
 ・いいえ選択時
 ・再度話しかけるとmsg_wheel_spring_m_06から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1451,14 +1439,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1550,14 +1537,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2022,15 +2008,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→summer_ｆ_07
 　いいえ→summer_ｆ_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2102,14 +2087,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2171,14 +2155,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2266,14 +2249,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:38:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2373,14 +2355,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2802,15 +2783,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→summer_m_07
 　いいえ→summer_m_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2881,14 +2861,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・いいえ選択時
 ・再度話しかけると06から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2949,14 +2928,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3015,14 +2993,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>夏：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3121,14 +3098,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>春：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3904,15 +3880,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おちる　おちばの　ひとひらに
+			<Text>まいちる　おちばの　ひとひらに
 センチメントが　とまらない……▼
 ん？　なんだ？　こむすめ　よ？
 この　ボクに　なにか　ようか？▼
 みたところ　トレーナーの　ようだが
 しょうぶしろ　とでも　いうのか？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:33:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:35:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3920,15 +3896,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>落ちる　落ち葉の　一片に
+			<Text>舞い散る　落ち葉の　一片に
 センチメントが　止まらない……▼
 ん？　何だ？　小娘よ？
 この　ボクに　何か　ようか？▼
 どうやら　トレーナーの　ようだが
 勝負しろ　とでも　いうのか？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:33:28" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:35:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4289,16 +4265,14 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>秋：主人公性別が♀
-
 ※１度観覧車に乗って以降
-
 
 ・はい/いいえ
 　はい→fall_m_07
 　いいえ→fall_m_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4357,14 +4331,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>秋：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4417,14 +4390,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>秋：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・いいえ選択時
 ・再度話しかけると06から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4501,14 +4473,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>秋：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4591,14 +4562,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>秋：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4628,15 +4598,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やれやれ……　さむいわね……▼
-でも　あんなヤツと　いっしょに
-ビーチリゾート　バケーションなんて▽
-ぜったいに　ありえないし……▼
-……あら　なに　アナタ？
-なにか　わたくしに　ごよう？</Text>
+			<Text>なに　あなた？
+あたくしの　あいてを　したいの？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:59:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4644,15 +4610,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やれやれ……　寒いわね……▼
-でも　あんなヤツと　一緒に
-ビーチリゾート　バケーションなんて▽
-絶対に　ありえないし……▼
-……あら　何　アナタ？
-何か　わたくしに　御用？</Text>
+			<Text>なに　あなた？
+あたくしの　相手を　したいの？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:59:14" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:28:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4670,11 +4632,11 @@ OL</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:26" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -4703,14 +4665,22 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　そう……
-どうせ　こどもが　したいのは▽
-ポケモンしょうぶ　なんでしょ？▼
-いいわよ　どうせ　いまは　ヒマだし
-おあいてして　あげる▼</Text>
+			<Text>ふうん……▼
+こんな　こどもまで　つかっちゃって
+あいつも　ひっし　ね▼
+よっぽど　あたくしを　やしきに
+つれもどしたいのね▼
+まあ　あたくしの　かちを
+かんがえれば　それも　とうぜんか……▼
+いいわ！
+ポケモンしょうぶで▽
+あいて　してあげる▼
+そのかわり　いいこと？▼
+あたくしに　まけたら
+すごすごと　ひきさがりなさいな！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:59:59" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:23:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4718,14 +4688,22 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　そう……
-どうせ　子供が　したいのは▽
-ポケモン勝負　なんでしょ？▼
-いいわよ　どうせ　今は　ヒマだし
-お相手して　あげる▼</Text>
+			<Text>ふうん……▼
+こんな　こどもまで　使っちゃって
+あいつも　必死ね▼
+よっぽど　あたくしを　屋敷に
+連れ戻したいのね▼
+まあ　あたくしの　価値を
+考えれば　それも　当然か……▼
+いいわ！
+ポケモン勝負で▽
+相手して　あげる▼
+そのかわり　いいこと？▼
+あたくしに　負けたら
+すごすごと　引きさがりなさいな！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:59:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4742,11 +4720,11 @@ OL</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -4775,12 +4753,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　そう……
-だったら　はやく　いって　くれる？▽
-わたくし　こどもが　とくい　じゃないの</Text>
+			<Text>じゃあ　あっちに　いってちょうだい！
+あたくし　こどもは　にがてよ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T06:47:15" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:23:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4788,12 +4765,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　そう……
-だったら　早く　行って　くれる？▽
-わたくし　子供が　得意じゃないの</Text>
+			<Text>じゃあ　あっちに　行ってちょうだい！
+あたくし　こどもは　苦手よ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T06:47:03" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:30:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4810,11 +4786,11 @@ OL</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:24" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -4843,29 +4819,21 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それに　よく　みたら　なかなか
-カワイイ　かお　してるし……▼
-……そうだ　このこ　つかえるかも▼
-……ねえ　アナタ？
-まだ　じかん　あるわよね？▼
-もうすこし　わたくし
-つきあって　あげるわ▼
-……さて　ちょっと　まってなさい
-いっぽん　れんらく　いれるから▼
-……　……もしもし？　わたくし▼
-わるいけれど　もう　わたくし
-アナタとは　あえないの……▽
-……　……　……　……　……▽
-そう　こいびとが　できたの▼
-そう……　だからさあ……
-え？　いま？　いまは　ライモンよ……▽
-かんらんしゃの　まえに　いるわ……▼
-それじゃあ　サヨナラ……▼
-……よし　これで　オーケーね▼
-さあ　アナタ　ついてきなさい▼</Text>
+			<Text>あなた　だれ　なの？▼
+あいつの　やしきで
+みたことも　ないし▼
+ましてや　そしきや　びょういんの
+かんけいしゃ　でも　ないようだし……▼
+……もしかして
+ただ　しょうぶを　したかったの？▼
+それとも　かんらんしゃに
+のりたくて　はなしかけた　とか……？▼
+まあ　いいわ！▼
+とにかく　かんらんしゃに　のりましょ
+さっ　はやく！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T08:45:05" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:23:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4873,29 +4841,21 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それに　よく　みたら　なかなか
-カワイイ顔　してるし……▼
-……そうだ　この子　使えるかも▼
-……ねえ　アナタ？
-まだ　時間　あるわよね？▼
-もう少し　わたくし
-付き合って　あげるわ▼
-……さて　ちょっと　待ってなさい
-一本　連絡　入れるから▼
-……　……もしもし？　わたくし▼
-悪いけれど　もう　わたくし
-アナタとは　あえないの……▽
-……　……　……　……　……▽
-そう　恋人が　できたの▼
-そう……　だから　さあ……
-え？　今？　今は　ライモンよ……▽
-観覧車の　前に　いるけれど……▼
-それじゃあ　サヨナラ……▼
-……よし　これで　オーケーね▼
-さあ　アナタ　ついてきなさい▼</Text>
+			<Text>あなた　だれ　なの？▼
+あいつの　屋敷で
+みたことも　ないし▼
+ましてや　組織や　病院の
+関係者でも　ないようだし……▼
+……もしかして
+ただ　勝負を　したかったの？▼
+それとも　観覧車に
+乗りたくて　話しかけた　とか……？▼
+まあ　いいわ！▼
+とにかく　観覧車に　乗りましょ
+さっ　はやく！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T08:45:43" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4912,11 +4872,11 @@ OL</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:23" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -4945,22 +4905,27 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さてと……▼
-あーあ……　やっぱり　きてるわ……
-しかも　あの　イライラした　ようす……▽
-ずーっと　コッチを　のぞきみ　してたわね▽
-そういうのが　きらわれるのに……▼
-……じゃあ　アナタ　ありがとう
-もう　いっても　いいわよ▼
-というよりも　サッサと
-どこかに　いったほうが　いいわ▼
-わたくし　これから　めんどうな
-オトナの　はなしが　まってるしね▼
-また　あえたら　おれい　してあげる
-さあ　さっさと　おいきなさい</Text>
+			<Text>よかった……
+あなたが　すなおな　ひとで▼
+すこしでも　うごいていたら
+いのちが　なかったかも……▼
+そう　あたくし
+あいつの　そしきに　ねらわれているの▼
+……　……　……
+……　……　……▼
+あっ　いいのよ
+しんじて　くれなくても……▼
+ひとは　しんじたい　ことだけ
+しんじて　いきてゆく　ものだから……▼
+ただ　これだけは　きいて！▼
+あたくしが　ぶじなら
+あしたも　せかいは　へいわ……▽
+そうでなければ……▼
+また　あえるよう
+あなたも　いのってなさい</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:37:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4968,22 +4933,27 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さてと……▼
-あーあ……　やっぱり　来てるわ……
-しかも　あの　イライラした　様子……▽
-ずーっと　コッチを　のぞき見　してたわね▽
-そういうのが　嫌われるのに……▼
-じゃあ　アナタ　ありがとう
-もう　行っても　いいわよ▼
-というよりも　サッサと
-どこかに　いったほうが　いいわ▼
-わたくし　これから　面倒な
-オトナの　話が　待ってるしね▼
-また　あえたら　お礼　してあげる
-さあ　さっさと　お行きなさい</Text>
+			<Text>よかった……
+あなたが　素直な　人で▼
+すこしでも　動いていたら
+命が　なかったかも……▼
+そう　あたくし
+あいつの　組織に　ねらわれているの▼
+……　……　……
+……　……　……▼
+あっ　いいのよ
+信じて　くれなくても……▼
+人は　信じたい　ことだけ
+信じて　生きてゆく　ものだから……▼
+ただ　これだけは　きいて！▼
+あたくしが　無事なら
+明日も　世界は　平和……▽
+そうでなければ……▼
+また　会えるよう
+あなたも　祈ってなさい</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:36:52" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:32:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5000,11 +4970,11 @@ OL</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:22" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5033,17 +5003,18 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アラ　[Name:TrainerName Idx="0" ]じゃない……
-このあいだは　たすかったわよ▽
-おかげで　いろいろ　スッキリしたもの▼
-……ハア？
-なんのことだ　って？▽
-まあ　それは　いいじゃないの▼
-それより　アナタさ
-いまは　ヒマなんでしょうね？</Text>
+			<Text>アラ　[Name:TrainerName Idx="0" ]じゃない……▼
+そうだわ！
+あなた　ちょっと　つきあいなさい▼
+なに？　ポケモンしょうぶ　よ
+ポケモンしょうぶ▼
+ちかごろ　そしきの　おっても
+てごわくなってきてね……▼
+あたくしを　たすけると　おもって
+あいてを　してくれるかしら？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:37:35" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:24:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5051,17 +5022,18 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アラ　[Name:TrainerName Idx="0" ]じゃない……
-このあいだは　助かったわよ▽
-おかげで　いろいろと　スッキリしたもの▼
-……ハア？
-何のことだ　って？▽
-まあ　それは　いいじゃないの▼
-それより　アナタさ
-今は　ヒマなんでしょうね？</Text>
+			<Text>アラ　[Name:TrainerName Idx="0" ]じゃない……▼
+そうだわ！
+あなた　ちょっと　つきあいなさい▼
+なに？　ポケモン勝負　よ
+ポケモン勝負▼
+ちかごろ　組織の　追っ手も
+手強くなってきてね……▼
+あたくしを　助けると　思って
+相手を　してくれるかしら？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:37:38" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5070,23 +5042,22 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→winter_m_07
 　いいえ→winter_m_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:21" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5115,15 +5086,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ……　それは　よかったわ
-では　わたくしに　つきあいなさい▼
-たしか　アナタ　ポケモンしょうぶに
-めが　ないんだったわよね？▼
-あらためて　おあいて　してあげるわ
-さあ　かかって　いらっしゃい▼</Text>
+			<Text>あなた……
+いい　おとこに　なれそうね▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T12:35:20" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:24:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5131,15 +5098,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ……　それは　良かったわ
-では　わたくしに　付き合いなさい▼
-確か　アナタ　ポケモン勝負に
-目が　ないんだったわよね？▼
-あらためて　お相手　してあげるわ
-さあ　かかって　いらっしゃい▼</Text>
+			<Text>あなた……
+いい　男に　なれそうね▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T12:36:02" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5148,22 +5111,21 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:20" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5192,13 +5154,13 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふうん……　まあ　いいけれど……▼
-アナタね　あいての　ことを
-かんがえるなら　じぶんが▽
-ヒマなときに　はなしかけなさい</Text>
+			<Text>じゃあ　あっちに　いってちょうだい！▼
+あたくしと　いっしょに　いるすがたを
+あいつらに　みられたら▽
+あなたを　きけんに　まきこむもの……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T12:33:45" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5206,13 +5168,13 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふうん……　まあ　いいけれど……▼
-アナタねえ　あいての　ことを
-考えるなら　自分が▽
-ヒマなときに　話しかけなさい</Text>
+			<Text>じゃあ　あっちに　行ってちょうだい！▼
+あたくしと　いっしょに　いる姿を
+あいつらに　みられたら▽
+あなたを　危険に　巻きこむもの……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T12:34:02" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5221,22 +5183,21 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・いいえ選択時
 ・再度話しかけると06から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5265,16 +5226,22 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フッ……　イイわね　アナタ……▼
-ポケモンの　あつかいも　てなれてるし
-せいちょうが　たのしみよ……▼
-……さてと　まだ　じかんは　あるわね
-もう　しばらく　つきあいなさい▼
-このまえの　おれいに　いっしょに
-かんらんしゃに　のってあげるわ▼</Text>
+			<Text>あいかわらずの　うでまえね▼
+それなら　じぶんで　じぶんの
+いのちを　まもれるでしょ▼
+だいじょうぶ！▼
+あたくしも　いまの　しょうぶで
+つよくなったし　それに▽
+じぶんのことは　じぶんで　するの▼
+これまでも……
+これからも……▼
+さっ　はやく
+かんらんしゃに　のりましょ▼
+さすがに　やつらも
+かんらんしゃには　てをださない▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:13:00" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5282,16 +5249,22 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フッ……　イイわね　アナタ……▼
-ポケモンの　扱いも　手なれてるし
-成長が　楽しみよ……▼
-……さてと　まだ　時間は　あるわね
-では　もう少し　付き合いなさい▼
-この前の　お礼に　一緒に
-観覧車に　乗ってあげるわ▼</Text>
+			<Text>相変わらずの　腕前ね▼
+それなら　自分で　自分の
+命を　守れるでしょ▼
+大丈夫！▼
+あたくしも　今の　勝負で
+強くなったし　それに▽
+自分のことは　自分で　するの▼
+これまでも……
+これからも……▼
+さっ　はやく
+観覧車に　乗りましょ▼
+さすがに　やつらも
+観覧車には　手をださない▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:12:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:34:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5300,22 +5273,21 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5344,20 +5316,27 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウフフフ……　かわいかったわよ▼
-ポケモンしょうぶは　エリートでも
-たんパンこぞう　みたいとこもあるのね▼
-いまは　それも　チャーミング……▼
-でも　アナタなら　これから　まなべば
-ステキな　おとこに　しんかする　ハズ▽
-わたくしが　ほしょうして　あげる▼
-そう……　もっと　オトナに　なったら
-また　あいにきてくれると　うれしいわ▼
-やくそくは　しないけれど　まってるわよ　
-では　また　いつか　どこかでね</Text>
+			<Text>せかいの　へいわ　って
+じつは　かんたんな　ことで
+まもられているの……▼
+これいじょうは　ヒミツ
+あなたは　しらないほうが　いいこと▼
+しれば　あなたも　あいつの
+そしきに　ねらわれる……▼
+だいじょうぶ▼
+あなたが　いつもの　まいにちを
+すごせるよう　あたくし　どこまでも▽
+にげきって　みせるから▼
+だから　あなた……
+また　あえるよう　いのってて▼
+そして　あなたが
+おとなに　なったとき　いっしょに……▼
+ううん……
+できない　やくそくは　ダメね▼
+さあ　いきなさい</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T08:47:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5365,20 +5344,27 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウフフフ……　可愛かったわよ▼
-ポケモン勝負は　エリートでも
-たんパンこぞう　みたいとこもあるのね▼
-今は　それも　チャーミング……▼
-でも　アナタなら　これから　学べば
-ステキな男に　進化する　ハズ▽
-わたくしが　保障して　あげる▼
-そう……　もっと　オトナに　なったら
-また　会いきてくれると　うれしいわ▼
-約束は　しないけれど　待ってるわよ　
-では　また　いつか　どこかでね</Text>
+			<Text>世界の　平和　って
+実は　簡単な　ことで
+守られているの……▼
+これ以上は　ヒミツ
+あなたは　知らないほうが　いいこと▼
+知れば　あなたも　あいつの
+組織に　ねらわれる……▼
+大丈夫▼
+あなたが　いつもの　毎日を
+過ごせるよう　あたくし　どこまでも▽
+逃げきって　みせるから▼
+だから　あなた……
+また　会えるよう　祈ってて▼
+そして　あなたが
+大人に　なったとき　いっしょに……▼
+ううん……
+できない　約束は　ダメね▼
+さあ　行きなさい</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T08:49:22" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5387,22 +5373,21 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♂
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYGIRL2
-幼稚園♀</Text>
+			<Text>ADULTW
+おとなのおねえさん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T09:25:17" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Importance">
@@ -5820,15 +5805,14 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい/いいえ
 　はい→winter_m_07
 　いいえ→winter_f_08</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5887,14 +5871,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・はい選択時
 ・トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5951,14 +5934,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・いいえ選択時
 ・再度話しかけると06から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6037,14 +6019,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:39:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6137,14 +6118,13 @@ OL</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>冬：主人公性別が♀
-
 ※１度観覧車に乗って以降
 
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7323,11 +7303,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♀：初回挨拶メッセージ
-
 メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:50" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7415,11 +7394,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♀：初回お別れメッセージ
-
 メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:54" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7505,11 +7483,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♀：汎用挨拶メッセージ
-
 メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:57:59" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7591,11 +7568,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♀：汎用お別れメッセージ
-
 メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:58:03" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7695,11 +7671,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♂：初回挨拶メッセージ
-
 メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:56:14" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7783,11 +7758,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♂：初回お別れメッセージ
-
 メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:56:39" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7869,11 +7843,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♂：汎用挨拶メッセージ
-
 メッセージ表示後、観覧車に乗りデモへ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:56:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -7955,11 +7928,10 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>LLC隠しキャラ♂：汎用お別れメッセージ
-
 メッセージ表示後、画面外へ</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-08-12T06:55:41" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T02:40:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
