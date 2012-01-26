@@ -806,10 +806,10 @@
 		Label="dlf_fldmenu_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションレベルかいほう</Text>
+			<Text>ミッションリクエスト</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -817,10 +817,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションレベル開放</Text>
+			<Text>ミッションリクエスト</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -845,10 +845,10 @@
 		Label="dlf_fldmenu_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション開催した回数</Text>
+			<Text>ミッションレベルかいほう</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -856,10 +856,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション開催した回数</Text>
+			<Text>ミッションレベル開放</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -884,10 +884,10 @@
 		Label="dlf_fldmenu_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　子として参加した回数</Text>
+			<Text>ミッション開催した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -895,10 +895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　子として参加した回数</Text>
+			<Text>ミッション開催した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -923,10 +923,10 @@
 		Label="dlf_fldmenu_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　最大参加人数記録</Text>
+			<Text>ミッション　子として参加した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -934,10 +934,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　最大参加人数記録</Text>
+			<Text>ミッション　子として参加した回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -955,10 +955,10 @@
 		Label="dlf_fldmenu_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションクリア数</Text>
+			<Text>ミッション　最大参加人数記録</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -966,10 +966,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションクリア数</Text>
+			<Text>ミッション　最大参加人数記録</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -987,10 +987,10 @@
 		Label="dlf_fldmenu_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　トップスコアを取った回数</Text>
+			<Text>ミッションクリア数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -998,10 +998,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　トップスコアを取った回数</Text>
+			<Text>ミッションクリア数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1019,10 +1019,10 @@
 		Label="dlf_fldmenu_11">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　トータルハイスコアALLセット</Text>
+			<Text>ミッション　トップスコアを取った回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1030,10 +1030,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　トータルハイスコアALLセット</Text>
+			<Text>ミッション　トップスコアを取った回数</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1051,10 +1051,10 @@
 		Label="dlf_fldmenu_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション　自分のハイスコアALLセット</Text>
+			<Text>ミッション　トータルハイスコアALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1062,10 +1062,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション　自分のハイスコアALLセット</Text>
+			<Text>ミッション　トータルハイスコアALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1083,10 +1083,10 @@
 		Label="dlf_fldmenu_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッション NEWフラグALLセット</Text>
+			<Text>ミッション　自分のハイスコアALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1094,10 +1094,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッション NEWフラグALLセット</Text>
+			<Text>ミッション　自分のハイスコアALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1115,10 +1115,10 @@
 		Label="dlf_fldmenu_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクけいけんちホワイト</Text>
+			<Text>ミッション NEWフラグALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1126,10 +1126,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンク経験値ホワイト</Text>
+			<Text>ミッション NEWフラグALLセット</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:31:15" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1147,10 +1147,10 @@
 		Label="dlf_fldmenu_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクけいけんちブラック</Text>
+			<Text>ハイリンクけいけんちホワイト</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:25:10" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1158,10 +1158,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンク経験値ブラック</Text>
+			<Text>ハイリンク経験値ホワイト</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T02:24:43" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1179,10 +1179,10 @@
 		Label="dlf_fldmenu_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションビーコンかんかく</Text>
+			<Text>ハイリンクけいけんちブラック</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T03:22:46" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1190,10 +1190,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションビーコンかんかく</Text>
+			<Text>ハイリンク経験値ブラック</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-21T03:22:46" />
+				Time="2012-01-25T10:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2965,6 +2965,38 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_req_id">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_id=[Digit:2digits ] [Name:FesMissionName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:41:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:40:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_id=[Digit:2digits ] [Name:FesMissionName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:55:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:55:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7725,6 +7757,4070 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_type_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_type=EFFECT_ENC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:32:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_type=EFFECT_ENC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_type_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_type=MUSHROOM_ENC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_type=MUSHROOM_ENC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:46" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_type_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_type=EVENT base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_type=EVENT base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:47" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_type_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_type=ITEM base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_type=ITEM base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:47" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_type_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>m_type=NPC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>m_type=NPC base=[Digit:4digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:54:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T06:57:48" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_ex_param_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ex=[Digit:2digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:53:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:52:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ex=[Digit:2digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:53:15" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_ex_param_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ex=none</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T06:40:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T06:40:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ex=none</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T06:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T06:40:57" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KAKERA1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KAKERA1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_TREASURE1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_TREASURE1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_LOST_ITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_LOST_ITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_LOST_ITEM_W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_LOST_ITEM_W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_LOST_ITEM_B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_LOST_ITEM_B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KINOMI1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KINOMI1</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KINOMI2</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KINOMI2</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_STONE_W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_STONE_W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_STONE_B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_STONE_B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_HERB</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_HERB</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_MANURE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_MANURE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_HEART</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_HEART</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_TREASURE2</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_TREASURE2</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_LOST_ITEM_D</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_LOST_ITEM_D</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KINOMI_D</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KINOMI_D</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KINOMI_MOVIE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KINOMI_MOVIE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_item_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_SET_KINOMI_GIFT</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:47:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_SET_KINOMI_GIFT</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:48:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_TOWER_OF_HEAVEN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_TOWER_OF_HEAVEN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_ENCEFF_FEATHER</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_ENCEFF_FEATHER</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_ENCEFF_JUWEL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_ENCEFF_JUWEL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_EGG_HATCH</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_EGG_HATCH</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_FISHING</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_FISHING</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_event_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>EVID_ANIMAL_TRAIL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>EVID_ANIMAL_TRAIL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:49:50" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_LOST_CHILDREN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_LOST_CHILDREN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_PRESENT_ITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_PRESENT_ITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_ITEM_TRADE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_ITEM_TRADE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_SHOPPING</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_SHOPPING</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_RPS</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_RPS</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_MEMORY_QUIZ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_MEMORY_QUIZ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_TR_BATTLE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_TR_BATTLE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_GET_A_PRESENT</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_GET_A_PRESENT</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_base_npc_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>TYPE_POKE_QUIZ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TYPE_POKE_QUIZ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T07:50:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_item_trade_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_TRADE_SET01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_TRADE_SET01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_item_trade_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_TRADE_SET02W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_TRADE_SET02W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_item_trade_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ITEM_TRADE_SET02B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ITEM_TRADE_SET02B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:32" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_shopping_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>SHOPPING_SET_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>SHOPPING_SET_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_shopping_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>SHOPPING_SET_02W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>SHOPPING_SET_02W</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_shopping_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>SHOPPING_SET_02B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>SHOPPING_SET_02B</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_shopping_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>SHOPPING_SET_ATTRACTION</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>SHOPPING_SET_ATTRACTION</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_shopping_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>SHOPPING_SET_EASY</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:34:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>SHOPPING_SET_EASY</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:06" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_tr_battle_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>TRAINER_SET_KARATE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TRAINER_SET_KARATE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_tr_battle_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>TRAINER_SET_ELITEW</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TRAINER_SET_ELITEW</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_tr_battle_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>TRAINER_SET_ELITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>TRAINER_SET_ELITEM</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:35:37" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_get_a_present_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>GET_A_PRESENT_SET_PC</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>GET_A_PRESENT_SET_PC</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:35" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_get_a_present_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>GET_A_PRESENT_SET_FLAG</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>GET_A_PRESENT_SET_FLAG</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:35" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_NORMAL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_NORMAL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_KAKUTOU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_KAKUTOU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_HIKOU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_HIKOU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_DOKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_DOKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_JIMEN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_JIMEN</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_IWA</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_IWA</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_MUSHI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_MUSHI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_GHOST</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_GHOST</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_HAGANE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_HAGANE</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_HONOO</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_HONOO</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_MIZU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_MIZU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_KUSA</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_KUSA</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_DENKI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_DENKI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_ESPER</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_ESPER</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_KOORI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_KOORI</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_DRAGON</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_DRAGON</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_AKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_AKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_ZENKOKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_ZENKOKU</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_LOCAL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_LOCAL</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_npc_poke_quiz_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>POKE_QUIZ_LEGEND</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:40:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>POKE_QUIZ_LEGEND</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-25T09:41:13" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>初めての きのみ 探し</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>初めての きのみ 探し</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみを 集めろ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみを 集めろ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>落し物を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>落し物を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>迷子の 少年を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>迷子の 少年を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>エンジョイ ショッピング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エンジョイ ショッピング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>タブンネを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タブンネを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンサーチ3！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンサーチ3！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>格闘家と 修行！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>格闘家と 修行！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>10人組み手！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>10人組み手！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>いっかく せんきん！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いっかく せんきん！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレジャー　ハント！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレジャー　ハント！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドキドキ 物々交換！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドキドキ 物々交換！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウキウキ 物々交換！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウキウキ 物々交換！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>エモンガを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エモンガを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>跳ね橋に 舞い落ちる ハネ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>跳ね橋に 舞い落ちる ハネ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>お宝 発掘！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お宝 発掘！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのこの 隠れんぼ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのこの 隠れんぼ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>なぞの 鉱石を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぞの 鉱石を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>光る 鉱石を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>光る 鉱石を 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>消えた 2この 財宝</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>消えた 2この 財宝</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_21">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみ 大収穫！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみ 大収穫！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_22">
+		<LanguageCell
+			Language="JPN">
+			<Text>鐘を 鳴らして……</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>鐘を 鳴らして……</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_23">
+		<LanguageCell
+			Language="JPN">
+			<Text>3回 鳴り響く 鐘</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>3回 鳴り響く 鐘</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_24">
+		<LanguageCell
+			Language="JPN">
+			<Text>エリートへの 道のり！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エリートへの 道のり！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_25">
+		<LanguageCell
+			Language="JPN">
+			<Text>ショッキング ショッピング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ショッキング ショッピング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_26">
+		<LanguageCell
+			Language="JPN">
+			<Text>記憶力トレーニング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>記憶力トレーニング！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_27">
+		<LanguageCell
+			Language="JPN">
+			<Text>記憶の 限界へ……</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>記憶の 限界へ……</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_28">
+		<LanguageCell
+			Language="JPN">
+			<Text>揺れる 草むらを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>揺れる 草むらを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_29">
+		<LanguageCell
+			Language="JPN">
+			<Text>かけらを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かけらを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_30">
+		<LanguageCell
+			Language="JPN">
+			<Text>忘れられた 落し物</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>忘れられた 落し物</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_31">
+		<LanguageCell
+			Language="JPN">
+			<Text>みつからない 落し物</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みつからない 落し物</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_32">
+		<LanguageCell
+			Language="JPN">
+			<Text>理想の お値段は……？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>理想の お値段は……？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_33">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホントの お値段は……？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホントの お値段は……？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_34">
+		<LanguageCell
+			Language="JPN">
+			<Text>その道具 ちょうだいな！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その道具 ちょうだいな！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_35">
+		<LanguageCell
+			Language="JPN">
+			<Text>目指せ わらしべ長者！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>目指せ わらしべ長者！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_36">
+		<LanguageCell
+			Language="JPN">
+			<Text>隠し穴を 探れ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>隠し穴を 探れ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_37">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざわめきの 隠し穴！（B)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざわめきの 隠し穴！（B)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_38">
+		<LanguageCell
+			Language="JPN">
+			<Text>静かなる 隠し穴！（W)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>静かなる 隠し穴！（W)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_39">
+		<LanguageCell
+			Language="JPN">
+			<Text>釣り大会！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>釣り大会！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_40">
+		<LanguageCell
+			Language="JPN">
+			<Text>こやし コレクター！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こやし コレクター！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_41">
+		<LanguageCell
+			Language="JPN">
+			<Text>ときめく ハートは どこに？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ときめく ハートは どこに？</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_42">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃんけん大会！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃんけん大会！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_43">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴと おさんぽ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴと おさんぽ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_44">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハガネールを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハガネールを 探せ！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_45">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみ探しで 大冒険！(映画)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみ探しで 大冒険！(映画)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_46">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくしあな_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくしあな_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_47">
+		<LanguageCell
+			Language="JPN">
+			<Text>図鑑クイズ_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>図鑑クイズ_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_48">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみ_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみ_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_49">
+		<LanguageCell
+			Language="JPN">
+			<Text>宝探し_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>宝探し_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_50">
+		<LanguageCell
+			Language="JPN">
+			<Text>ショッキング_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ショッキング_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_51">
+		<LanguageCell
+			Language="JPN">
+			<Text>プレゼント_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プレゼント_配信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_52">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン 図鑑クイズ(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン 図鑑クイズ(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_53">
+		<LanguageCell
+			Language="JPN">
+			<Text>終わりなき 戦い……(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>終わりなき 戦い……(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_54">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＣの お姉さん(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＰＣの お姉さん(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_id_name_55">
+		<LanguageCell
+			Language="JPN">
+			<Text>幻の きのみを 探せ！(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:52:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>幻の きのみを 探せ！(贈り物)</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T05:53:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
