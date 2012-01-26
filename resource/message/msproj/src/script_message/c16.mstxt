@@ -806,10 +806,10 @@
 ……おや？
 だれか　いらしたみたいです▼
 さっそく
-「しょうたい」して　みましょう</Text>
+「しょうたいする」を　して　みましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:17:02" />
+				Time="2012-01-26T11:58:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -824,14 +824,14 @@
 お店を　つくるには
 夢を　もって▼
 この街へ　やってきた　人を
-「しょうたい」すると　できあがります▼
+「招待」すると　できあがります▼
 ……おや？
 だれか　いらしたみたいです▼
 さっそく
-「しょうたい」して　みましょう</Text>
+「招待する」を　して　みましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:17:05" />
+				Time="2012-01-26T11:58:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -887,11 +887,11 @@
 			Language="JPN_KANJI">
 			<Text>まずは　お店を　たてましょう▼
 街を　歩く人に　話しかけて
-「しょうたいする」を　選んで▽
+「招待する」を　選んで▽
 お店を　つくって　もらいましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T07:51:43" />
+				Time="2012-01-26T11:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -938,13 +938,14 @@
 つぎは　おきゃくさまに
 おみせを　しょうかい　しましょう▼
 おきゃくさまに　はなしかけて
-「あんないする」を　しましょう▼
+「あんない」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
-さっそく　「あんない」　してみましょう</Text>
+さっそく
+「あんないする」を　してみましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T07:51:24" />
+				Time="2012-01-26T11:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -959,13 +960,14 @@
 つぎは　お客さまに
 お店を　紹介しましょう▼
 お客さまに　話しかけて
-「あんないする」を　しましょう▼
+「案内」を　しましょう▼
 ……おや？　また
 どなたか　いらっしゃったようです▽
-さっそく　「あんない」　してみましょう</Text>
+さっそく
+「案内する」を　してみましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T07:51:25" />
+				Time="2012-01-26T11:57:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,10 +1020,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お客さまを　お店に
-「あんない」して　あげましょう</Text>
+「案内」して　あげましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T07:51:16" />
+				Time="2012-01-26T11:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

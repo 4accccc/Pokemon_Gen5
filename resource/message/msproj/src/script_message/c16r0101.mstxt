@@ -226,7 +226,7 @@
 			<Text>さまざまな　つうしんを　して
 まちに　おきゃくさまを　よびましょう▼
 つうしんした　あいては
-アベニューに　あらわれるので▽
+アベニューに　やってくるので▽
 はなしかけて　みましょう▼
 はなしかけて　できることは
 つぎの　２つ　です▼
@@ -235,8 +235,8 @@
 くわしくは　それぞれの
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:25" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T11:46:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -247,17 +247,17 @@
 			<Text>さまざまな　通信を　して
 街に　お客さまを　呼びましょう▼
 通信した　相手は
-アベニューに　現れるので▽
+アベニューに　やって来るので▽
 話しかけて　みましょう▼
 話しかけて　できることは
 次の　２つ　です▼
-「まちに　しょうたい」　すること
-「まちを　あんない」　すること▼
+「街に　招待」　すること
+「街を　案内」　すること▼
 詳しくは　それぞれの
 説明を　おききください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:26" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T12:01:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -389,14 +389,14 @@
 			<Text>「しょうたいする」を　えらぶと
 おきゃくさまが▽
 まちの　じゅうにんと　なって▽
-おみせが　つくられます▼
+おみせを　つくります▼
 それぞれの　ひとが
 ゆめを　もっているので▼
 しょうたいする　ときに　あいての
 はなしを　よくきいて　えらびましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:37" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T11:39:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -406,14 +406,14 @@
 			Language="JPN_KANJI">
 			<Text>「招待する」を　選ぶと
 お客さまが　街の　住人となって▽
-お店が　つくられます▼
+お店を　つくります▼
 それぞれの　人が
 夢を　もっているので▼
 招待する　ときに　相手の
 話を　よくきいて　選びましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-25T13:32:40" />
+				Time="2012-01-26T11:39:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -463,9 +463,8 @@
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
 ランクが　アップします▼
-おみせの　ランクが　あがれば
-しなものや　サービスが▽
-べんりに　なります▼
+おみせの　ランクが　あがると
+しなものや　サービスが　ふえます▼
 まちの　ランクが　あがると
 おみせに　おかれている▽
 しなものの　おねだんが▽
@@ -474,8 +473,8 @@
 じょうずに　あんないして▽
 にんきを　あつめましょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T10:55:52" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T03:10:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -490,9 +489,8 @@
 街の　人気が　あがります▼
 人気を　たくさん　集めると
 ランクが　アップします▼
-お店の　ランクが　あがれば
-品物や　サービスが▽
-便利に　なります▼
+お店の　ランクが　あがると
+品物や　サービスが　増えます▼
 街の　ランクが　あがると
 お店に　置かれている▽
 品物の　お値段が▽
@@ -502,7 +500,7 @@
 人気を　集めましょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-25T13:32:32" />
+				Time="2012-01-26T03:09:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -735,11 +733,11 @@
 			Language="JPN">
 			<Text>はなや　では
 きのみを　かうことが　できます▼
-おみせに　よって
-きのみの　しゅるいは　かわります▼</Text>
+おみせに　よって　きのみの
+しゅるいは　かわることが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T03:11:33" />
+				Time="2012-01-26T11:42:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -749,11 +747,11 @@
 			Language="JPN_KANJI">
 			<Text>花屋　では
 きのみを　買うことが　できます▼
-お店に　よって
-きのみの　種類は　かわります▼</Text>
+お店に　よって　きのみの　種類は
+かわることが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:08:15" />
+				Time="2012-01-26T11:42:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -901,12 +899,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふるどうぐや　では
-ほりだしものが　うっています▼
-ふつうの　おみせでは　かえない
-しなものが　ならぶことが　あります▼</Text>
+ほりだしものを　うっています▼
+ほりだしものを　かんていすると
+めずらしい　どうぐが▽
+みつかる　なんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:36" />
+				Time="2012-01-26T11:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -915,12 +914,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>古道具屋　では
-掘り出し物が　売っています▼
-普通の　お店では　買えない
-品物が　並ぶことが　あります▼</Text>
+掘り出し物を　売っています▼
+掘り出し物を　鑑定すると
+珍しい　道具が▽
+みつかる　なんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:08:52" />
+				Time="2012-01-26T11:35:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1316,7 +1316,7 @@
 			<Text>さまざまな　つうしんを　して
 まちに　おきゃくさまを　よびましょう▼
 つうしんした　あいては
-アベニューに　あらわれるので▽
+アベニューに　やってくるので▽
 はなしかけて　みましょう▼
 はなしかけて　できることは
 つぎの　３つ　です▼
@@ -1327,7 +1327,7 @@
 せつめいを　おききください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-25T03:44:27" />
+				Time="2012-01-26T11:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1338,18 +1338,18 @@
 			<Text>さまざまな　通信を　して
 街に　お客さまを　呼びましょう▼
 通信した　相手は
-アベニューに　現れるので▽
+アベニューに　やって来るので▽
 話しかけて　みましょう▼
 話しかけて　できることは
 次の　３つ　です▼
-「まちに　しょうたい」　すること
-「まちを　あんない」　すること▽
+「街に　招待」　すること
+「街を　案内」　すること▽
 「秘書として　スカウト」　すること▼
 詳しくは　それぞれの
 説明を　おききください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-25T03:44:14" />
+				Time="2012-01-26T12:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3265,12 +3265,12 @@
 こんど　まちに　『ほいくじょ』という
 タマゴの　ふかを　たすける　おみせが▽
 たてられるように　なったんだ▼
-まちに　あそびに　やってくる
+まちへ　あそびに　やってくる
 『ほいくじょ』を　たてたい　ひとを▽　
 しょうたいして　ためしてみてね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:14:00" />
+				Time="2012-01-26T12:03:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3291,12 +3291,12 @@
 今度　街に　『ほいくじょ』という
 タマゴの　ふかを　助ける　お店が▽
 建てられるように　なったんだ▼
-街に　遊びに　やって来る
+街へ　遊びに　やって来る
 『ほいくじょ』を　建てたい人を▽
 招待して　試してみてね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T10:14:06" />
+				Time="2012-01-26T12:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
