@@ -239,14 +239,14 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
 
+  // デモ毎の例外処理サウンドヒープ読み込み
+  APP_EXCEPTION_SndGroupLoad( param->demo_id );
+
   //3D 初期化
   wk->engine = Demo3D_ENGINE_Init( wk->graphic, param, wk->heapID );
  
   // デモ毎の例外処理エンジン初期化
   wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
-
-  // デモ毎の例外処理サウンドヒープ読み込み
-  APP_EXCEPTION_SndGroupLoad( param->demo_id );
 
   {
     u8  type, sync;
@@ -298,9 +298,6 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   }
 #endif
 
-  // デモ毎の例外処理サウンドヒープ破棄
-  APP_EXCEPTION_SndGroupExit( wk->param->demo_id );
-
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
 
@@ -316,6 +313,9 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   //3D 破棄
   Demo3D_ENGINE_Exit( wk->engine );
   GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
+
+  // デモ毎の例外処理サウンドヒープ破棄
+  APP_EXCEPTION_SndGroupExit( wk->param->demo_id );
 
   //描画設定破棄
   DEMO3D_GRAPHIC_Exit( wk->graphic );
