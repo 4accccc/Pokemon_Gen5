@@ -13,6 +13,7 @@
   .include  "h04r0601.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori	//スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -70,7 +71,6 @@ EVENT_START   ev_h04r0601_woman3_01
 
     //女性：あら　あなたの　ポケモン
     _BALLOONWIN_TALKOBJ_MSG( msg_h04r0601_woman3_02 )
-    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
     //暗転して手持ちポケモンを回復
