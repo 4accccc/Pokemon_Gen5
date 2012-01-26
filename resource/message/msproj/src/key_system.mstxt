@@ -5891,10 +5891,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あらたな　チャンピオン</Text>
+			<Text>あらたな　ひかり</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:27:48" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T13:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5902,10 +5902,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらたな　チャンピオン</Text>
+			<Text>あらたな　ひかり</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T08:27:51" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T13:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6215,12 +6215,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンヨウシティ　の　レストラン
+			<Text>サンヨウシティの　レストラン
 コーン　ポッド　デントの▽
 ３にんの　おもいを　きこう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:40:29" />
+				Time="2012-01-26T13:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6228,12 +6228,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンヨウシティ　の　レストラン
+			<Text>サンヨウシティの　レストラン
 コーン　ポッド　デントの▽
 ３人の　思いを　きこう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:40:33" />
+				Time="2012-01-26T13:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6331,12 +6331,12 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むかし　セッカシティの
-ジムだった　ばしょで▽
+			<Text>セッカシティにある
+ゆかを　こおらせた　たてもので▽
 ハチクが　まっているようだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:29:43" />
+				Time="2012-01-26T13:22:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6344,12 +6344,12 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>昔　セッカシティの
-ジムだった　場所で▽
+			<Text>セッカシティにある
+床を　凍らせた　場所で▽
 ハチクが　待っているようだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:34:26" />
+				Time="2012-01-26T13:22:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
