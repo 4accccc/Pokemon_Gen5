@@ -6427,9 +6427,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エリアクリアには
-エリアの　どこかにいる▽
-ボストレーナーに　しょうりすることで▼
-つぎの　エリアに
+エリアの　どこかにいる▼
+ボストレーナーに
+しょうり　せねばなりません▼
+しょうりすることで　つぎの　エリアに
 ちょうせん　することが　できます▼
 エリアにいる　トレーナーと
 たいせんして　うでを　みがくもよし▼
@@ -6444,7 +6445,7 @@
 あらかじめ　ごりょうしょう　ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:44:39" />
+				Time="2012-01-26T08:51:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6454,7 +6455,8 @@
 			Language="JPN_KANJI">
 			<Text>エリアクリアには　エリアの
 どこかにいる　ボストレーナーに▽
-勝利することで▼
+勝利せねば　なりません▼
+勝利　することで
 次の　エリアに　挑戦できます▼
 エリアにいる　トレーナーと
 対戦して　腕を　磨くもよし▼
@@ -6469,7 +6471,7 @@
 あらかじめ　ご了承ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:50:50" />
+				Time="2012-01-26T08:50:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -9668,7 +9670,7 @@ NPC：MUGENBOSS（バンジロウ）
 ポケモンも　キミも　
 そろそろ　つかれて▽
 きたんじゃないかな？▼
-そんなときは　ナースや
+そんなときは
 ドクターを　さがしてごらん▼
 かれらに　はなしかければ
 かいふくして　くれるはずさ▼
@@ -9678,7 +9680,7 @@ NPC：MUGENBOSS（バンジロウ）
 はやく　おいでよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:56:02" />
+				Time="2012-01-26T08:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9692,7 +9694,7 @@ NPC：MUGENBOSS（バンジロウ）
 ポケモンも　キミも　
 そろそろ　つかれて▽
 来たんじゃないかな？▼
-そんなときは　ナースや
+そんなときは
 ドクターを　探してごらん▼
 かれらに　話しかければ
 回復して　くれるはずさ▼
@@ -9702,7 +9704,7 @@ NPC：MUGENBOSS（バンジロウ）
 早く　おいでよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:56:07" />
+				Time="2012-01-26T08:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9921,8 +9923,8 @@ Xメニューを　みてみて▼
 ポケモンも　あなたも
 そろそろ　つかれて▽
 きたんじゃ　ないかしら？▼
-そんなときは　ナースや
-ドクターを　さがしてみて▼
+そんなときは
+ナースを　さがしてみて▼
 はなしかければ
 かいふくして　くれるはずよ▼
 でも　いちどは　たたかう
@@ -9930,8 +9932,8 @@ Xメニューを　みてみて▼
 それじゃ　さきに　いくわよ
 はやく　きてね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T05:46:45" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9946,8 +9948,8 @@ Xメニューを　みてみて▼
 ポケモンも　あなたも
 そろそろ　つかれて▽
 来たんじゃ　ないかしら？▼
-そんなときは　ナースや
-ドクターを　探してみて▼
+そんなときは
+ナースを　探してみて▼
 話しかければ
 回復して　くれるはずよ▼
 でも　一度は　戦う
@@ -9955,8 +9957,8 @@ Xメニューを　みてみて▼
 それじゃ　先に　行くわよ
 早く　来てね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T05:47:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T08:57:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
