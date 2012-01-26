@@ -971,7 +971,7 @@ static BOOL MDLREC_CHECK_BsubwaySingleRenshou( MEDALREC_DATA* p_recdata, GAMEDAT
 {
   u32 renshou_cnt;
   BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( p_gamedata );
-  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_SINGLE );
+  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_SINGLE );
   return cmp_target( renshou_cnt , target_cnt );
 }
 // バトルサブウェイダブル連勝
@@ -979,7 +979,7 @@ static BOOL MDLREC_CHECK_BsubwayDoubleRenshou( MEDALREC_DATA* p_recdata, GAMEDAT
 {
   u32 renshou_cnt;
   BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( p_gamedata );
-  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_DOUBLE );
+  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_DOUBLE );
   return cmp_target( renshou_cnt , target_cnt );
 }
 // バトルサブウェイマルチ連勝
@@ -987,7 +987,7 @@ static BOOL MDLREC_CHECK_BsubwayMultiRenshou( MEDALREC_DATA* p_recdata, GAMEDATA
 {
   u32 renshou_cnt;
   BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( p_gamedata );
-  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_MULTI );
+  renshou_cnt = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_MULTI );
   return cmp_target( renshou_cnt , target_cnt );
 }
 // 友達コード登録数
