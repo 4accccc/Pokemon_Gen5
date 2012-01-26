@@ -311,8 +311,8 @@
 おてもとの　パソコンで▽
 ポケモングローバルリンクの▽
 ホームページに　アクセスし▼
-とうろく　することで　たいかいに
-さんか　できます▼
+とうろく　することで
+たいかいに　さんか　できます▼
 http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 たいかいのルールや　かいさいきかんは
 ポケモングローバルリンク▽
@@ -320,11 +320,13 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 また　Ｗｉ－Ｆｉたいかいや
 ランダムマッチの　さんかちゅうに▼
 ほんたいの　でんげんが　きれると
-しばらく　たいかいに　でられなくなります▽
+しばらく　たいかいや▽
+ランダムマッチで　たいせんが▽
+できなくなくなります▽
 ごちゅうい　ください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2012-01-17T07:09:14" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:29:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -343,11 +345,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 また　Ｗｉ－Ｆｉ大会や
 ランダムマッチの　参加中に▼
 本体の電源が　切れると
-しばらく　大会に　出られなくなります▽
+しばらく　大会や　ランダムマッチで▽
+対戦が　できなくなくなります▽
 ご注意　ください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2012-01-17T07:09:22" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:29:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -640,14 +643,14 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 			<Text>Ｗｉ－Ｆｉたいかい　または
 ランダムマッチの　さんかちゅうに▽
 ほんたいの　でんげんが　きれたため▼
-しばらくの　あいだ
-Ｗｉ－Ｆｉたいかい　には▽
-さんか　できません▼
-しばらく　じかんが　たちましたら
+１じかん
+たいかいや　ランダムマッチで▽
+たいせんが　できなくなくなります▼
+じかんが　たちましたら
 おこしください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-21T11:48:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:32:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -658,13 +661,13 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 			<Text>Ｗｉ－Ｆｉ大会 または
 ランダムマッチの　参加中に▽
 本体の電源が　切れたため▼
-しばらくの　あいだ
-Ｗｉ－Ｆｉ大会には　参加できません▼
-しばらく　時間が　たちましたら
+１時間　大会や　ランダムマッチで
+対戦が　できなくなくなります▼
+時間が　たちましたら
 お越しください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-21T11:48:09" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T12:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
