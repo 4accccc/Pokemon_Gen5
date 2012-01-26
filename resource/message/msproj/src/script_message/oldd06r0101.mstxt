@@ -6,15 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ガントル　バチュル
-ギアルに　テッシード▼
-アリガトウ
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]アリガトウ
 ボクの　トモダチ▼
 もとの　おだやかな
 くらしに　もどりたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:58:11" />
+				Time="2012-01-26T10:50:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,15 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ガントル　バチュル
-ギアルに　テッシード▼
-アリガトウ
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]アリガトウ
 ボクの　トモダチ▼
 元の　穏やかな
 暮らしに　もどりたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:59:20" />
+				Time="2012-01-26T10:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -536,11 +532,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ『では　さきに
-リュウラセンのとうに　むかいます▼</Text>
+			<Text>したっぱ『では　つぎの
+もくてきちに　むかいます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:27:11" />
+				Time="2012-01-26T10:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -548,11 +544,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『では　先に
-リュウラセンの塔に　向かいます▼</Text>
+			<Text>したっぱ『では　次の
+目的地に　むかいます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:27:11" />
+				Time="2012-01-26T10:47:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
