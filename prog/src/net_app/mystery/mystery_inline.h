@@ -411,7 +411,7 @@ static inline int Mystery_CreateFMission(const GIFT_PACK_DATA* pPack)
   }
 
   //配布データ以外が来たら不正
-  if( FMISSION_ID_ITEM_TUTORIAL_01 <= pGift->no && pGift->no < FMISSION_ID_MAX )
+  if( FMISSION_ID_NPC_POKEQUIZ_GIFT <= pGift->no && pGift->no <= FMISSION_ID_ITEM_KINOMI_GIFT )
   {
     return pGift->no;
   }

@@ -602,7 +602,6 @@ static u16  PFuncSetFailureGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd,
 /// 受け取れるフェスミッションと、それに対応したEVTLOCK定義のテーブル
 //--------------------------------------------------------------
 static const u8 fmission_to_lock_table[] = {
-  //データは仮
   FMISSION_ID_NPC_POKEQUIZ_GIFT,  EVT_LOCK_NO_FMISSION_00,  //図鑑クイズ_おくりもの
   FMISSION_ID_NPC_TRBTL_GIFT,     EVT_LOCK_NO_FMISSION_01,  //戦闘_おくりもの
   FMISSION_ID_NPC_PRESENT_GIFT,   EVT_LOCK_NO_FMISSION_02,  //プレゼント_おくりもの
@@ -664,17 +663,7 @@ static u16  PFuncSetSuccessFMissionWords( WORDSET * wordset, GIFT_PACK_DATA * gp
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   FEST_MISSION_ID fmission_id = createFMission( gpd );
   WORDSET_RegisterPlayerName( wordset, 0, mystatus );
-  {
-    STRBUF * strbuf;
-    FEST_MISSION fmwk;
-    FMISSION_DATA_MAN * fmdata_man = FMISSION_DATA_Init( heapID );
-    FMISSION_DATA_GetMissionParam( fmdata_man, fmission_id, FMISSION_LEVEL_1, &fmwk );
-    strbuf = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, heapID );
-    FMISSION_DATA_GetTitleStr( fmdata_man, strbuf, &fmwk, heapID );
-    WORDSET_RegisterWord( wordset, 1, strbuf, 0, TRUE, PM_LANG );
-    GFL_STR_DeleteBuffer( strbuf );
-    FMISSION_DATA_Release( fmdata_man );
-  }
+  WORDSET_RegisterFMissionTitle( wordset, 1, fmission_id, FMISSION_LEVEL_1 );
   return msg_postman_13;
 }
 
