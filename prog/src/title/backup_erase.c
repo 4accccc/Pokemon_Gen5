@@ -31,6 +31,7 @@
 #include "title_def.h"
 
 #include "savedata/save_outside.h"
+#include "savedata/cygnus_save_control.h" //CYGNUSSAVE_CONTROL_Erase
 
 
 //============================================================================================
@@ -417,6 +418,7 @@ static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
       OutsideSave_FlashAllErase(HEAPID_BACKUP_ERASE); //管理外セーブを最初にクリア
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
     }
+    CYGNUSSAVE_CONTROL_Erase( HEAPID_BACKUP_ERASE );  //CYGNUS共有領域をクリア
 		SaveControl_Erase( sv );
 		for( i=0; i<SAVE_EXTRA_ID_MAX; i++ ){
 			if( SaveControl_Extra_Load( sv, i, HEAPID_BACKUP_ERASE ) == LOAD_RESULT_OK ){
