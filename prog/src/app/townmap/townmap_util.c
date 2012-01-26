@@ -78,7 +78,7 @@ u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
     default:
       GF_ASSERT(0);
     case SCR_HIDE_SHIP_PLACE_C05:
-      return ZONE_ID_C05;
+      return ZONE_ID_D05;
     case SCR_HIDE_SHIP_PLACE_W21:
       return ZONE_ID_W21;
     case SCR_HIDE_SHIP_PLACE_D10:
