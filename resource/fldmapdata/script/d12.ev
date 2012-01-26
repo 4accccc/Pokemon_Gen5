@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_d12.h"
   .include  "d12.h"
   .include  "c03p13_def.h"    //for reserve
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -135,6 +137,10 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START   ev_scene_d12
 
+	_PLACE_NAME_DISPLAY()
+
+	_TIME_WAIT( 70 )
+
 	//博士表示
 	_OBJ_ADD_EX( 308,747,DIR_LEFT,MMDL_ID_EVENTOBJ_00,HAKASE2,MV_DMY )
 
@@ -214,7 +220,9 @@ EVENT_START	ev_reserve_d12
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
 
-	_PLACE_NAME_DISPLAY()	//地名表示演出
+	IF $WK_SCENE_D12 != 1 THEN 
+		_PLACE_NAME_DISPLAY()	//地名表示演出
+	ENDIF
 
 	//自機一歩移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
