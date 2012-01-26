@@ -719,13 +719,13 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おいっ！　ＡＤ！！▼
-あの　空の　雲の　形は
+あの　空の　雲の ディテールは
 わしの作品に　相応しくないッ！▼
 撮影が　進まんから
-今すぐ　どかして　こいっッ！</Text>
+今すぐ　どかして　こいッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:30:43" />
+				Time="2012-01-26T09:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -878,12 +878,12 @@ msg_c15_oldman1_01_04
 			<Text>おお！　ＡDかと　おもったら
 [Name:TrainerName ]　ではないか！▼
 おまえほどの　スター　ならば
-わしの　えいがに　だしてもよいぞ！▼
+わしの　えいがに　だしてもいいぞ！▼
 あの　ヨーテリーの　かわりに
 ポケモンやくを　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:31:51" />
+				Time="2012-01-26T09:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -894,12 +894,12 @@ msg_c15_oldman1_01_04
 			<Text>おお！　ＡDかと　思ったら
 [Name:TrainerName ]　ではないか！▼
 お前ほどの　スター　ならば
-わしの　映画に　だしてもよいぞ！▼
+わしの　映画に　だしてもいいぞ！▼
 あの　ヨーテリーの　かわりに
 ポケモン役を　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:31:50" />
+				Time="2012-01-26T09:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1040,10 +1040,10 @@ msg_c15_oldman1_01_04
 おこられて　ばかりだし……▼
 ……だけどね▼
 あのひとの　したで　はたらくと
-すごく　べんきょうに　なるんだ</Text>
+すごく　べんきょうに　なるんですよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:02:30" />
+				Time="2012-01-26T10:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1058,10 +1058,10 @@ msg_c15_oldman1_01_04
 怒られて　ばかりだし……▼
 ……だけどね▼
 あの人の　下で　働くと
-すごく　勉強に　なるんだ</Text>
+すごく　勉強に　なるんですよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T13:02:33" />
+				Time="2012-01-26T10:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
