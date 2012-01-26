@@ -89,13 +89,13 @@ enum {
 	NARC_manual_image_b_027_01_benrimenu_lz77_nbfs = 75,
 	NARC_manual_image_b_027_02_checkbox_lz77_nbfs = 76,
 	NARC_manual_image_b_027_04_select_lz77_nbfs = 77,
-	NARC_manual_image_b_016_01_dsimenu_lz77_nbfs = 78,
-	NARC_manual_image_b_016_02_erabu_lz77_nbfs = 79,
-	NARC_manual_image_b_017_01_sitagamen_lz77_nbfs = 80,
-	NARC_manual_image_b_017_02_uegamen_lz77_nbfs = 81,
-	NARC_manual_image_b_017_03_kemuri_lz77_nbfs = 82,
-	NARC_manual_image_b_046_01_medal_lz77_nbfs = 83,
-	NARC_manual_image_b_046_02_oyaji_lz77_nbfs = 84,
+	NARC_manual_image_b_046_01_medal_lz77_nbfs = 78,
+	NARC_manual_image_b_046_02_oyaji_lz77_nbfs = 79,
+	NARC_manual_image_b_016_01_dsimenu_lz77_nbfs = 80,
+	NARC_manual_image_b_016_02_erabu_lz77_nbfs = 81,
+	NARC_manual_image_b_017_01_sitagamen_lz77_nbfs = 82,
+	NARC_manual_image_b_017_02_uegamen_lz77_nbfs = 83,
+	NARC_manual_image_b_017_03_kemuri_lz77_nbfs = 84,
 	NARC_manual_image_b_bg_lz77_nbfs = 85
 };
 

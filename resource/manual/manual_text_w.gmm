@@ -640,6 +640,11 @@
 		<language name="JPN_KANJI">ポケルス</language>
 	</row>
 
+	<row id="man_txt_title_no_007_005">
+		<language name="JPN">ポケモンのタマゴ</language>
+		<language name="JPN_KANJI">ポケモンのタマゴ</language>
+	</row>
+
 	<row id="man_txt_title_no_008_001">
 		<language name="JPN">はしる</language>
 		<language name="JPN_KANJI">走る</language>
@@ -666,18 +671,18 @@
 	</row>
 
 	<row id="man_txt_title_no_008_007">
+		<language name="JPN">メダルラリー</language>
+		<language name="JPN_KANJI">メダルラリー</language>
+	</row>
+
+	<row id="man_txt_title_no_008_008">
 		<language name="JPN">ポケシフターでポケモンをつれてくる</language>
 		<language name="JPN_KANJI">ポケシフターでポケモンを連れて来る</language>
 	</row>
 
-	<row id="man_txt_title_no_008_008">
+	<row id="man_txt_title_no_008_009">
 		<language name="JPN">ポケシフターでポケモンをつかまえる</language>
 		<language name="JPN_KANJI">ポケシフターでポケモンを捕まえる</language>
-	</row>
-
-	<row id="man_txt_title_no_008_009">
-		<language name="JPN">メダルラリー</language>
-		<language name="JPN_KANJI">メダルラリー</language>
 	</row>
 
 	<row id="man_txt_page_no_001_001_001">
@@ -2008,14 +2013,14 @@
 
 	<row id="man_txt_page_no_003_009_004">
 		<language name="JPN">フェスミッションは
-すれちがった　ひとと　いっしょに
+ちかくにいる　ひとと　いっしょに
 あそぶことが　できます。
 
 すれちがいログから　だれかが
 かいさいした　フェスミッションに
 さんかすることが　できます。</language>
 		<language name="JPN_KANJI">フェスミッションは
-すれ違った　人と　一緒に
+近くにいる　人と　一緒に
 遊ぶことが　できます。
 
 すれ違いログから　だれかが
@@ -2375,18 +2380,18 @@
 ついか　されます。
 せいそくちリストは　どうろや どうくつに
 ひそむ　ポケモンを　しらべられます。
-プレイヤーが　みたことがある
-ポケモンのみ　ひょうじ　されるので
+プレイヤーが　いちどみたことがある
+ポケモンが　ひょうじ　されるので
 みたことがない　ポケモンが
-いるかどうか　しることが　できます
+いるかどうか　しることが　できます。
 </language>
 		<language name="JPN_KANJI">冒険を　進めていくと
 ポケモン図鑑に　「生息地リスト」が
 追加　されます。
 生息地リストは　道路や　洞くつに
 潜む　ポケモンを　調べられます。
-プレイヤーが　見たことがある
-ポケモンのみ　表示　されるので
+プレイヤーが　一度見たことがある
+ポケモンが　表示　されるので
 見たことがない　ポケモンが
 いるかどうかを　知ることが　できます。</language>
 	</row>
@@ -2777,6 +2782,25 @@
 うつることが　あるようです。</language>
 	</row>
 
+	<row id="man_txt_page_no_007_005_001">
+		<language name="JPN">ぼうけんの　とちゅうで　であう
+そだてやさんに　ポケモンを
+2ひき　あずけていると　タマゴが
+みつかることが　あります。
+
+タマゴを　てもちポケモンに　いれて
+いっしょに　ぼうけんすると
+タマゴを　かえすことが　できます。</language>
+		<language name="JPN_KANJI">冒険の　途中で　出会う
+育て屋さんに　ポケモンを
+2匹　あすけていると　タマゴが
+見つることが　あります。
+
+タマゴを　手持ちポケモンに　入れて
+一緒に　冒険すると
+タマゴを　かえすことが　できます。</language>
+	</row>
+
 	<row id="man_txt_page_no_008_001_001">
 		<language name="JPN">ランニングシューズを　もらったあとは
 Ｂボタンを　おしながら　いどうすると
@@ -3059,6 +3083,39 @@
 	</row>
 
 	<row id="man_txt_page_no_008_007_001">
+		<language name="JPN">「メダルラリー」は　プレイヤーの
+さまざまな　こうどうを　ひょうかし
+メダルを　プレゼントするシステムです。
+
+てにいれたメダルは　バッグの
+「たいせつなもの」にある
+「メダルボックス」を　えらぶことで
+かくにんすることが　できます。</language>
+		<language name="JPN_KANJI">「メダルラリー」は　プレイヤーの
+さまざまな　行動を　評価し
+メダルを　プレゼントするシステムです。
+
+手に入れたメダルは　バッグの
+「たいせつなもの」にある
+「メダルボックス」を　選ぶことで
+確認することが　できます。</language>
+	</row>
+
+	<row id="man_txt_page_no_008_007_002">
+		<language name="JPN">メダルは　じょうけんを　みたし
+ポケモンセンターに　いる
+「メダルおやじ」に　はなしかけることで
+てにいれることが　できます。
+
+</language>
+		<language name="JPN_KANJI">メダルは　条件を　満たし
+ポケモンセンターに　いる
+「メダルおやじ」に　話しかけることで
+手に入れることが　できます。
+</language>
+	</row>
+
+	<row id="man_txt_page_no_008_008_001">
 		<language name="JPN">ポケットモンスターの
 『ダイヤモンド・パール・プラチナ
 　ハートゴールド・ソウルシルバー』の
@@ -3077,7 +3134,7 @@
 「ポケシフター」を　選んでください。</language>
 	</row>
 
-	<row id="man_txt_page_no_008_007_002">
+	<row id="man_txt_page_no_008_008_002">
 		<language name="JPN">ダウンロードが　おわったら
 『ポケットモンスターブラック２』　または
 『ポケットモンスターホワイト２』に
@@ -3098,7 +3155,7 @@
 元のソフトに　戻すことは　できません。</language>
 	</row>
 
-	<row id="man_txt_page_no_008_008_001">
+	<row id="man_txt_page_no_008_009_001">
 		<language name="JPN">タッチスクリーンを　タッチして
 モンスターボールを　てまえに　ひき
 ポケモンに　ねらいを　さだめたら
@@ -3115,7 +3172,7 @@
 隠れている　ポケモンも　います。</language>
 	</row>
 
-	<row id="man_txt_page_no_008_008_002">
+	<row id="man_txt_page_no_008_009_002">
 		<language name="JPN">モンスターボールが　うまく　あたると
 かくれている　ポケモンが　とびでます。
 ポケモンに　むかって
@@ -3134,7 +3191,7 @@
 捕まえて　みてください。</language>
 	</row>
 
-	<row id="man_txt_page_no_008_008_003">
+	<row id="man_txt_page_no_008_009_003">
 		<language name="JPN">たまに　ピンクいろの　けむりが
 よこぎることが　あります。
 これに　モンスターボールを　あてると
@@ -3149,39 +3206,6 @@
 
 眠っているあいだ　ポケモンたちは
 動かないので　捕まえやすく　なります。</language>
-	</row>
-
-	<row id="man_txt_page_no_008_009_001">
-		<language name="JPN">「メダルラリー」は　プレイヤーの
-さまざまな　こうどうを　ひょうかし
-メダルを　プレゼントするシステムです。
-
-てにいれたメダルは　バッグの
-「たいせつなもの」にある
-「メダルボックス」を　えらぶことで
-かくにんすることが　できます。</language>
-		<language name="JPN_KANJI">「メダルラリー」は　プレイヤーの
-さまざまな　行動を　評価し
-メダルを　プレゼントするシステムです。
-
-手に入れたメダルは　バッグの
-「たいせつなもの」にある
-「メダルボックス」を　選ぶことで
-確認することが　できます。</language>
-	</row>
-
-	<row id="man_txt_page_no_008_009_002">
-		<language name="JPN">メダルは　じょうけんを　みたし
-ポケモンセンターに　いる
-「メダルおやじ」に　はなしかけることで
-てにいれることが　できます。
-
-</language>
-		<language name="JPN_KANJI">メダルは　条件を　満たし
-ポケモンセンターに　いる
-「メダルおやじ」に　話しかけることで
-手に入れることが　できます。
-</language>
 	</row>
 
 	<flowchart-group-list>

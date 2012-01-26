@@ -1477,6 +1477,31 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="man_txt_title_no_007_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンのタマゴ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンのタマゴ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="man_txt_title_no_008_001">
 		<LanguageCell
 			Language="JPN">
@@ -1605,75 +1630,75 @@
 		Label="man_txt_title_no_008_007">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケシフターでポケモンをつれてくる</Text>
+			<Text>メダルラリー</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケシフターでポケモンを連れて来る</Text>
+			<Text>メダルラリー</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_title_no_008_008">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケシフターでポケモンをつかまえる</Text>
+			<Text>ポケシフターでポケモンをつれてくる</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケシフターでポケモンを捕まえる</Text>
+			<Text>ポケシフターでポケモンを連れて来る</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_title_no_008_009">
 		<LanguageCell
 			Language="JPN">
-			<Text>メダルラリー</Text>
+			<Text>ポケシフターでポケモンをつかまえる</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルラリー</Text>
+			<Text>ポケシフターでポケモンを捕まえる</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4427,7 +4452,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッションは
-すれちがった　ひとと　いっしょに
+ちかくにいる　ひとと　いっしょに
 あそぶことが　できます。
 
 すれちがいログから　だれかが
@@ -4435,16 +4460,16 @@
 さんかすることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T13:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T13:04:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フェスミッションは
-すれ違った　人と　一緒に
+近くにいる　人と　一緒に
 遊ぶことが　できます。
 
 すれ違いログから　だれかが
@@ -4452,11 +4477,11 @@
 参加することが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-01-26T13:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-01-26T13:04:23" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5174,18 +5199,18 @@
 ついか　されます。
 せいそくちリストは　どうろや どうくつに
 ひそむ　ポケモンを　しらべられます。
-プレイヤーが　みたことがある
-ポケモンのみ　ひょうじ　されるので
+プレイヤーが　いちどみたことがある
+ポケモンが　ひょうじ　されるので
 みたことがない　ポケモンが
-いるかどうか　しることが　できます
+いるかどうか　しることが　できます。
 </Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T13:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T13:04:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5194,17 +5219,17 @@
 追加　されます。
 生息地リストは　道路や　洞くつに
 潜む　ポケモンを　調べられます。
-プレイヤーが　見たことがある
-ポケモンのみ　表示　されるので
+プレイヤーが　一度見たことがある
+ポケモンが　表示　されるので
 見たことがない　ポケモンが
 いるかどうかを　知ることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-01-26T13:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-01-26T13:04:23" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5974,6 +5999,45 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="man_txt_page_no_007_005_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんの　とちゅうで　であう
+そだてやさんに　ポケモンを
+2ひき　あずけていると　タマゴが
+みつかることが　あります。
+
+タマゴを　てもちポケモンに　いれて
+いっしょに　ぼうけんすると
+タマゴを　かえすことが　できます。</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:50:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:50:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>冒険の　途中で　出会う
+育て屋さんに　ポケモンを
+2匹　あすけていると　タマゴが
+見つることが　あります。
+
+タマゴを　手持ちポケモンに　入れて
+一緒に　冒険すると
+タマゴを　かえすことが　できます。</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="man_txt_page_no_008_001_001">
 		<LanguageCell
 			Language="JPN">
@@ -6578,6 +6642,79 @@
 		Label="man_txt_page_no_008_007_001">
 		<LanguageCell
 			Language="JPN">
+			<Text>「メダルラリー」は　プレイヤーの
+さまざまな　こうどうを　ひょうかし
+メダルを　プレゼントするシステムです。
+
+てにいれたメダルは　バッグの
+「たいせつなもの」にある
+「メダルボックス」を　えらぶことで
+かくにんすることが　できます。</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「メダルラリー」は　プレイヤーの
+さまざまな　行動を　評価し
+メダルを　プレゼントするシステムです。
+
+手に入れたメダルは　バッグの
+「たいせつなもの」にある
+「メダルボックス」を　選ぶことで
+確認することが　できます。</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_007_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルは　じょうけんを　みたし
+ポケモンセンターに　いる
+「メダルおやじ」に　はなしかけることで
+てにいれることが　できます。
+
+</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルは　条件を　満たし
+ポケモンセンターに　いる
+「メダルおやじ」に　話しかけることで
+手に入れることが　できます。
+</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="man_txt_page_no_008_008_001">
+		<LanguageCell
+			Language="JPN">
 			<Text>ポケットモンスターの
 『ダイヤモンド・パール・プラチナ
 　ハートゴールド・ソウルシルバー』の
@@ -6588,11 +6725,11 @@
 「ポケシフター」を　えらんでください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6606,15 +6743,15 @@
 「ポケシフター」を　選んでください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="man_txt_page_no_008_007_002">
+		Label="man_txt_page_no_008_008_002">
 		<LanguageCell
 			Language="JPN">
 			<Text>ダウンロードが　おわったら
@@ -6627,12 +6764,12 @@
 ポケシフターで　つれてきたポケモンを
 もとのソフトに　もどすことは　できません。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6646,16 +6783,16 @@
 ポケシフターで　連れてきたポケモンを
 元のソフトに　戻すことは　できません。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="man_txt_page_no_008_008_001">
+		Label="man_txt_page_no_008_009_001">
 		<LanguageCell
 			Language="JPN">
 			<Text>タッチスクリーンを　タッチして
@@ -6666,12 +6803,12 @@
 くさむらや　きのかげに
 かくれている　ポケモンも　います。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6683,16 +6820,16 @@
 草むらや　木陰に
 隠れている　ポケモンも　います。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="man_txt_page_no_008_008_002">
+		Label="man_txt_page_no_008_009_002">
 		<LanguageCell
 			Language="JPN">
 			<Text>モンスターボールが　うまく　あたると
@@ -6704,12 +6841,12 @@
 きめられた　じかんないに　６ひきすべて
 つかまえて　みてください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6722,16 +6859,16 @@
 決められた　時間内に　６匹すべて
 捕まえて　みてください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="man_txt_page_no_008_008_003">
+		Label="man_txt_page_no_008_009_003">
 		<LanguageCell
 			Language="JPN">
 			<Text>たまに　ピンクいろの　けむりが
@@ -6742,12 +6879,12 @@
 ねむっているあいだ　ポケモンたちは
 うごかないので　つかまえやすく　なります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -6759,85 +6896,12 @@
 眠っているあいだ　ポケモンたちは
 動かないので　捕まえやすく　なります。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="man_txt_page_no_008_009_001">
-		<LanguageCell
-			Language="JPN">
-			<Text>「メダルラリー」は　プレイヤーの
-さまざまな　こうどうを　ひょうかし
-メダルを　プレゼントするシステムです。
-
-てにいれたメダルは　バッグの
-「たいせつなもの」にある
-「メダルボックス」を　えらぶことで
-かくにんすることが　できます。</Text>
-			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>「メダルラリー」は　プレイヤーの
-さまざまな　行動を　評価し
-メダルを　プレゼントするシステムです。
-
-手に入れたメダルは　バッグの
-「たいせつなもの」にある
-「メダルボックス」を　選ぶことで
-確認することが　できます。</Text>
-			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="man_txt_page_no_008_009_002">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルは　じょうけんを　みたし
-ポケモンセンターに　いる
-「メダルおやじ」に　はなしかけることで
-てにいれることが　できます。
-
-</Text>
-			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルは　条件を　満たし
-ポケモンセンターに　いる
-「メダルおやじ」に　話しかけることで
-手に入れることが　できます。
-</Text>
-			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-26T12:34:44" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
