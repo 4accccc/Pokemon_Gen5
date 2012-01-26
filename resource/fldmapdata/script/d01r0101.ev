@@ -13,6 +13,7 @@
   .include  "d01r0101.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -609,6 +610,24 @@ EVENT_START   ev_pos_d01r0101_rati2_06
     //==================================//
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+  
+    _GET_ROM_VERSION(LCWK_VERSION)
+  
+    //Ｂ２ならラティオス
+    IF $LCWK_VERSION == VERSION_B2 THEN
+
+      _SYSWIN_MSG( msg_d01r0101_poke1_03, POS_DOWN )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+
+    //Ｗ２ならラティアス
+    ELSE
+
+      _SYSWIN_MSG( msg_d01r0101_poke2_03, POS_DOWN )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
+      
+    ENDIF
 
   ENDSWITCH
 
