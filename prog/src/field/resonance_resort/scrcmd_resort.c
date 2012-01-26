@@ -500,6 +500,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = rank-resort_city_rank_00;
     }
     break;
+  case RESORT_GET_PARAM_INSTITUTION_NUM:
+    *p_ret_wk = RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people );
+    break;
   default:
     GF_ASSERT_MSG(0, "%d", param);
   }

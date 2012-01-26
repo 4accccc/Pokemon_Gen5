@@ -560,6 +560,9 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_SECRETARY_SEL_PARADE:
     return SexGetMsgID( sex, resort_secretary_talk_15_m, resort_secretary_talk_15_f );
     break;
+  case RESORT_SECRETARY_SEL_SHOP_SORT_NONE:
+    return SexGetMsgID( sex, resort_secretary_talk_16_m, resort_secretary_talk_16_f );
+    break;
   case RESORT_RESIDENT_LV_MSGID:
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
     {

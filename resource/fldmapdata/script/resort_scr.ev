@@ -2511,7 +2511,13 @@ EVENT_START    ev_resort_secretary_pc
       _CALL sub_secretary_sort_sec
 
     CASE SEQ_SECRETARY_PC_SORT_SHOP THEN //‚¨“X“ü‚ê‘Ö‚¦
-      _CALL sub_secretary_sort_shop
+      _RESORT_GET_DATA( RESORT_GET_PARAM_INSTITUTION_NUM, LWK_RET )
+      IF $LWK_RET == 1 THEN
+        _RESORT_GET_MSGID( RESORT_SECRETARY_SEL_SHOP_SORT_NONE, LWK_MSGID )
+	      _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+      ELSE
+        _CALL sub_secretary_sort_shop
+      ENDIF
 
     CASE SEQ_SECRETARY_PC_CHANGE_NEON THEN //ƒlƒIƒ“
       _CALL sub_secretary_neon

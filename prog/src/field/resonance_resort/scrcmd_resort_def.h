@@ -74,6 +74,7 @@
 #define RESORT_GET_PARAM_CITY_ITEM            (61)
 #define RESORT_GET_PARAM_IS_PARADE            (62)
 #define RESORT_GET_PARAM_CITY_RANK_NUM        (63)
+#define RESORT_GET_PARAM_INSTITUTION_NUM      (64)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -236,6 +237,7 @@
 #define RESORT_SECRETARY_SEL_ONE              (113) //１つだけ
 #define RESORT_SECRETARY_SEL_MANY             (114) //複数
 #define RESORT_SECRETARY_SEL_PARADE           (115) //パレードを行いますか？
+#define RESORT_SECRETARY_SEL_SHOP_SORT_NONE   (116) //ショップ並び替えできない
 
   //ファン
 #define RESORT_FUN_GREET_MSGID                (120) //挨拶
