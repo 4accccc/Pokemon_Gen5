@@ -610,11 +610,6 @@ EVENT_START   ev_pos_t03_swrival_02
 
     //戦う準備はいいか？
     _YES_NO_WIN( SCWK_ANSWER )
-    
-    //========================================//
-    //ローカルライブキャスター・ライバル通話状態を変更（カゴメタウンマルチバトル終了まで）
-    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03_1 )
-    //========================================//
 
     IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
@@ -670,6 +665,8 @@ ev_pos_t03_swrivalev_01:
     $WK_SCENE_T03_SWRIVAL = 2
     //プラズマ団表示
     _FLAG_RESET( FV_T03_SWPLASMAM_01 )
+    //ローカルライブキャスター・ライバル通話状態を変更（カゴメタウンマルチバトル終了まで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03_1 )
     //========================================//
     _OBJ_ADD( T03_SWSAGE7_01 )
     _OBJ_ADD( T03_SWPLAZMAM_02 )
@@ -952,12 +949,6 @@ ev_battle_check:
 
     _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
   ELSE
-  
-    //========================================//
-    //ローカルライブキャスター・ライバル通話状態を変更（全滅時まきもどり）
-    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T03 )
-    //========================================//
-    
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
