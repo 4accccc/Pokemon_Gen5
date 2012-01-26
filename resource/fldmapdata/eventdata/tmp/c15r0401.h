@@ -32,5 +32,8 @@
 #define BG_C15R0401_06A                   9
 #define BG_C15R0401_06B                  10
 #define BG_C15R0401_06C                  11
+#define BG_C15R0401_05D                  12
+#define BG_C15R0401_05E                  13
+#define BG_C15R0401_05F                  14
 
 #endif //ZONE_C15R0401_EVB_H
