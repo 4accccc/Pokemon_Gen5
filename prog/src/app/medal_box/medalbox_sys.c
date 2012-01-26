@@ -5228,7 +5228,7 @@ static void SetPushMedalData( MEDALBOXSYS_WORK *p_wk ,MedalID medal_id , PUSHMED
   else if( set_type == PUSHMEDAL_TYPE_REMOVE )
   {
     p_wk->medal_data.push_medalid = MDLID_MAX;
-    GAMEBEACON_SendDataUpdate_PushMedal( medal_id );
+    GAMEBEACON_SendDataUpdate_PushMedal( MDLID_MAX );
   }
   else if( set_type == PUSHMEDAL_TYPE_HINT )
   {
