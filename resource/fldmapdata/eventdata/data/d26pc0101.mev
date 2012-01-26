@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/24 12:06:47
+#save date:2012/01/26 18:40:22
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\D26PC0101.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ D26PC0101_MEDALOYAJI
 #OBJ CODE Number
 MEDALMAN
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
