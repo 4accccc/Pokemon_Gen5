@@ -13,9 +13,8 @@
 #ifndef ZONE_C03P08_EVC_H
 #define ZONE_C03P08_EVC_H
 
-#define C03P08_FESGUIDE_01                 0
-#define C03P08_BUSINESSMAN_01              1
-#define C03P08_TRAINERW_01                 2
+#define C03P08_BUSINESSMAN_01              0
+#define C03P08_TRAINERW_01                 1
 
 #endif //ZONE_C03P08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

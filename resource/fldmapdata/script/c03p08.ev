@@ -24,8 +24,6 @@
 _EVENT_DATA		ev_bg_c03p08_sign_01
 _EVENT_DATA		ev_init_c03p08
 _EVENT_DATA		ev_recover_c03p08
-_EVENT_DATA		ev_c03p08_fesguide_01
-_EVENT_DATA		ev_pos_c03p08_fesguide_01
 _EVENT_DATA		ev_c03p08_businessman_01
 _EVENT_DATA		ev_c03p08_trainerw_01
 _EVENT_DATA_END
@@ -65,61 +63,6 @@ INIT_EVENT_START	ev_recover_c03p08
   _CROWD_PEOPLE_START()
 
 INIT_EVENT_END
-
-/**************************************************************/
-/*		話しかけ：フェスガイド									  */
-/**************************************************************/
-EVENT_START		ev_c03p08_fesguide_01
-
-  //チュートリアル終了
-  IF $WK_SCENE_C03P08_FESGUIDE_01 == 2 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_fesguide_05 )
-  //チュートリアル前
-  ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_fesguide_01 )
-  ENDIF
-
-EVENT_END
-
-/**************************************************************/
-/*		POS：フェスガイド									  */
-/**************************************************************/
-EVENT_START		ev_pos_c03p08_fesguide_01
-  
-  //アニメ「！」
-  _OBJ_ANIME( C03P08_FESGUIDE_01, anm_guide_gyoe )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-  _OBJ_ANIME_WAIT()
-  
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  
-  //ガイド：そこのあなた
-  _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_02,C03P08_FESGUIDE_01, POS_DEFAULT )
-  
-  //Cギアの電源状態を取得
-  _GET_CGEAR_STATUS( LOCALWORK15 )
-  
-  //Cギア
-  IF $LOCALWORK15 == 0 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_03 ,C03P08_FESGUIDE_01, POS_DEFAULT )
-  ENDIF
-  
-  //ハイリンク初回チュートリアル終了
-  IF $WK_SCENE_PALACE01 == 0 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_04 ,C03P08_FESGUIDE_01, POS_DEFAULT )
-  ENDIF
-  
-  //ガイド：ひとがたくさんいるばしょなら
-  _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_05 ,C03P08_FESGUIDE_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //========================================//
-  //POSイベント無効
-  $WK_SCENE_C03P08_FESGUIDE_01 = 2
-  //========================================//
-
-EVENT_END
 
 //--------------------------------------------------------------------
 //	ガイド：振り向き「！」
