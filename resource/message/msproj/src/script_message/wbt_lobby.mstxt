@@ -474,17 +474,15 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:03:50" />
+				Time="2012-01-26T05:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -510,17 +508,15 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:23" />
+				Time="2012-01-26T05:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -581,11 +577,9 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 チャンピオンズトーナメントでは
 ゆうしょうまでに　てもとに　のこった▼
 ポケモンの　かずに　おうじて
@@ -594,7 +588,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-21T09:30:24" />
+				Time="2012-01-26T05:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,11 +609,9 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 チャンピオンズトーナメントでは
 優勝までに　手元に　残った▼
 ポケモンの　数に　応じて
@@ -628,7 +620,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-21T09:30:33" />
+				Time="2012-01-26T05:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -686,12 +678,12 @@ msg_wbt_menu_wcs</Comment>
 さんかするさいに　ルールを
 くわしくみることが　できますので▽
 ごかくにん　ください！▼
-ちなみに　ゆうしょうすると
+ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T05:54:06" />
+				Time="2012-01-26T05:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -709,12 +701,12 @@ msg_wbt_menu_wcs</Comment>
 参加する際に　ルールを
 詳しくみることが　できますので▽
 ご確認ください！▼
-ちなみに　優勝すると
+優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T05:54:16" />
+				Time="2012-01-26T05:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -767,17 +759,15 @@ msg_wbt_menu_wcs</Comment>
 すべての　ポケモンと
 ポケモンに　もたせる　どうぐを▽
 りようすることが　できます▼
-また　フラットルールにより
-レベル２６いじょうの　ポケモンの▽
-レベルは２５に▼
-レベル２４より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル２５に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:18" />
+				Time="2012-01-26T05:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -790,17 +780,15 @@ msg_wbt_menu_wcs</Comment>
 すべての　ポケモンと
 ポケモンに　持たせる　道具を▽
 利用することが　できます▼
-また　フラットルールにより
-レベル２６以上の　ポケモンの▽
-レベルは２５に▼
-レベル２４より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル２５に　なって▽
+戦うことに　なります▼
 優勝すると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:13" />
+				Time="2012-01-26T05:19:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -847,17 +835,15 @@ msg_wbt_menu_wcs</Comment>
 すべての　ポケモンと
 ポケモンに　もたせる　どうぐを▽
 りようすることが　できます▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:42" />
+				Time="2012-01-26T05:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -871,17 +857,15 @@ msg_wbt_menu_wcs</Comment>
 すべての　ポケモンと
 ポケモンに　持たせる　道具を▽
 利用することが　できます▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:35" />
+				Time="2012-01-26T05:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -935,17 +919,15 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:48" />
+				Time="2012-01-26T05:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -966,17 +948,15 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:39" />
+				Time="2012-01-26T05:20:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1037,17 +1017,15 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:53" />
+				Time="2012-01-26T05:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1068,17 +1046,15 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:49" />
+				Time="2012-01-26T05:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1146,17 +1122,15 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:02:59" />
+				Time="2012-01-26T05:21:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1177,17 +1151,15 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:53" />
+				Time="2012-01-26T05:20:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1255,17 +1227,15 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると　ちょっぴりおおめに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:03:04" />
+				Time="2012-01-26T05:21:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1286,17 +1256,15 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると　ちょっぴり多めに
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:04:58" />
+				Time="2012-01-26T05:20:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1364,11 +1332,9 @@ msg_wbt_menu_wcs</Comment>
 しようが　きんし　されています▼
 でんせつ　まぼろしの　ポケモンも
 さんかすることが　できません▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ワールドリーダーズトーナメントでは
 ゆうしょうじまでに　てもとに　のこった▽
 ポケモンの　かずに　おうじて▽
@@ -1377,7 +1343,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-21T09:29:55" />
+				Time="2012-01-26T05:21:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1398,11 +1364,9 @@ msg_wbt_menu_wcs</Comment>
 禁止されています▼
 伝説　幻の　ポケモンも
 参加することが　できません▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 ワールドリーダーズトーナメントでは
 優勝までに　手元に　残った▽
 ポケモンの　数に　応じて▽
@@ -1411,7 +1375,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-21T09:30:01" />
+				Time="2012-01-26T05:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1536,17 +1500,15 @@ msg_wbt_menu_wcs</Comment>
 しあい　しゅうりょうご　に▼
 もちぬしの　もとに　もどされますので
 ごあんしん　ください▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ゆうしょうすると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:03:19" />
+				Time="2012-01-26T05:21:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1564,17 +1526,15 @@ msg_wbt_menu_wcs</Comment>
 交換した　ポケモンは
 試合終了後に　持ち主の　元に▽
 戻されますので　ご安心ください▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 優勝すると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T03:25:07" />
+				Time="2012-01-26T05:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -1693,11 +1653,9 @@ msg_wbt_menu_wcs</Comment>
 しあい　しゅうりょうご　に▼
 もちぬしの　もとに　もどされますので
 ごあんしん　ください▼
-また　フラットルールにより
-レベル５１いじょうの　ポケモンの▽
-レベルは５０に▼
-レベル４９より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
+また　さんかする　ポケモンは
+すべて　レベル５０に　なって▽
+たたかうことに　なります▼
 ミックスマスタートーナメントには
 イッシュちほうの　ジムリーダーが▽
 さんか　しますので▽
@@ -1708,7 +1666,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:03:30" />
+				Time="2012-01-26T05:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1726,11 +1684,9 @@ msg_wbt_menu_wcs</Comment>
 交換した　ポケモンは
 試合終了後に　持ち主の　元に▽
 戻されますので　ご安心ください▼
-また　フラットルールにより
-レベル５１以上の　ポケモンの▽
-レベルは５０に▼
-レベル４９より　低い　ポケモンは
-そのままで　戦うことに　なります▼
+また　参加する　ポケモンは
+すべて　レベル５０に　なって▽
+戦うことに　なります▼
 ミックスマスタートーナメントには
 イッシュ地方の　ジムリーダーが▽
 参加しますので▽
@@ -1741,7 +1697,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T06:05:14" />
+				Time="2012-01-26T05:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -7585,23 +7541,17 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　ホドモエイベント専用▼
-ホドモエトーナメントは
+			<Text>こんかいの　ホドモエトーナメントは
 なんでもありの　トーナメントです▼
 すべての　ポケモンと
 ポケモンに　もたせる　どうぐを▽
 りようすることが　できます▼
-また　フラットルールにより
-レベル２６いじょうの　ポケモンの▽
-レベルは２５に▼
-レベル２４より　ひくい　ポケモンは
-そのままで　たたかうことに　なります▼
 ゆうしょうすると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-26T03:44:49" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T05:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7609,23 +7559,17 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　ホドモエイベント専用▼
-ホドモエトーナメントは
+			<Text>今回の　ホドモエトーナメントは
 なんでもありの　トーナメントです▼
 すべての　ポケモンと
 ポケモンに　持たせる　道具を▽
 利用することが　できます▼
-また　フラットルールにより
-レベル２６以上の　ポケモンの▽
-レベルは２５に▼
-レベル２４より　低い　ポケモンは
-そのままで　戦うことに　なります▼
 優勝すると
 バトルポイントが　もらえますので▽
 がんばって　ください！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-26T03:44:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T05:09:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7634,10 +7578,11 @@ msg_wbt_info_11へ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・初回ホドモエトーナメント用
 ・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-01-26T03:44:16" />
+				User="matsumiya:W00224"
+				Time="2012-01-26T05:09:53" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
