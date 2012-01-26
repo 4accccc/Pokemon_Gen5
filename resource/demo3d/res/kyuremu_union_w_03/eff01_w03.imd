@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-18T22:42:36" source="kyuremu_union_w_03_009.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-26T15:10:14" source="kyuremu_union_w_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-18T22:42:36" source="kyuremu_union_w_03_009.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-01-26T15:10:14" source="kyuremu_union_w_03.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -6960,7 +6960,7 @@
 		scale="0.908203 0.908203 0.908203"
 		rotate="0.000000 0.000000 0.000000"
 		translate="2.189697 44.085449 21.711426"
-		visibility="on"
+		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
