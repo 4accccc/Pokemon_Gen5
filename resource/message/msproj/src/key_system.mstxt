@@ -7320,4 +7320,116 @@ ARポケモン　キャプチャーを
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="CYGNUS_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うけとった　ポケモンを　ボックスに
+てんそう　しました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:24:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受け取った　ポケモンを　ボックスに
+転送　しました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:24:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:24:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うけとった　どうぐを　バッグに
+てんそう　しました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:25:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受け取った　どうぐを　バッグに
+転送　しました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:25:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-01-26T09:24:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

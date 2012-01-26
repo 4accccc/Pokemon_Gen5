@@ -163,6 +163,7 @@ static POKEMON_PARAM * CYGNUS_SAVE_CreatePP( const CYGNUS_SAVE_WORK *cp_wk, u32 
 static BOOL CYGNUS_SAVE_GetItem( const CYGNUS_SAVE_WORK *cp_wk, u32 idx, u16 *p_item, u8 *p_num );
 static u32 CYGNUS_SAVE_GetItemCount( const CYGNUS_SAVE_WORK *cp_wk, u32 idx );
 static u32 CYGNUS_SAVE_GetRewardPokeMax( const CYGNUS_SAVE_WORK *cp_wk );
+static u32 CYGNUS_SAVE_GetRewardItemMax( const CYGNUS_SAVE_WORK *cp_wk );
 static u32 CYGNUS_SAVE_GetRewardMax( const CYGNUS_SAVE_WORK *cp_wk );
 
 static void CYGNUS_SAVE_SetGameDataReward( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID );
@@ -650,6 +651,12 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_FINISH_MSG_START,
     SEQ_FINISHSE_WAIT,
     SEQ_FINISH_MSG_WAIT,
+
+    SEQ_BOX_MSG_START,
+    SEQ_BOX_MSG_WAIT,
+    SEQ_BAG_MSG_START,
+    SEQ_BAG_MSG_WAIT,
+
     SEQ_END,
   };
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
@@ -706,6 +713,41 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     /* fall */
 
   case SEQ_FINISH_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd(p_wk->p_text) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_BOX_MSG_START:
+    if( CYGNUS_SAVE_GetRewardPokeMax(p_wk->p_cyg_sv) > 0 )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_10, KEYSYS_TEXT_TYPE_STREAM );
+      (*p_seq)++;
+    }
+    else
+    {
+      (*p_seq)  = SEQ_BAG_MSG_START;
+    }
+    break;
+  case SEQ_BOX_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd(p_wk->p_text) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_BAG_MSG_START:
+    if( CYGNUS_SAVE_GetRewardItemMax(p_wk->p_cyg_sv) > 0 )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_11, KEYSYS_TEXT_TYPE_STREAM );
+      (*p_seq)++;
+    }
+    else
+    {
+      (*p_seq)  = SEQ_END;
+    }
+    break;
+  case SEQ_BAG_MSG_WAIT:
     if( KEYSYS_TEXT_IsMsgEnd(p_wk->p_text) )
     {
       (*p_seq)++;
@@ -1939,6 +1981,29 @@ static u32 CYGNUS_SAVE_GetRewardPokeMax( const CYGNUS_SAVE_WORK *cp_wk )
   for( i = 0; i < cp_wk->reward_num; i++ )
   {
     if( cp_wk->reward_data[i].type == CYGNUS_REWARD_TYPE_POKEMON )
+    {
+      cnt++;
+    }
+  }
+
+  return cnt;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Ç≤ñJî¸ìπãÔÇÃêîéÊìæ
+ *
+ *	@param	const CYGNUS_SAVE_WORK *cp_wk   ÉèÅ[ÉN
+ *
+ *	@return ìπãÔÇÃêî
+ */
+//-----------------------------------------------------------------------------
+static u32 CYGNUS_SAVE_GetRewardItemMax( const CYGNUS_SAVE_WORK *cp_wk )
+{
+  int i;
+  int cnt = 0;
+  for( i = 0; i < cp_wk->reward_num; i++ )
+  {
+    if( cp_wk->reward_data[i].type == CYGNUS_REWARD_TYPE_ITEM )
     {
       cnt++;
     }
