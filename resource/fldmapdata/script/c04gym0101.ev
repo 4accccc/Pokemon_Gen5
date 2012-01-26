@@ -39,6 +39,7 @@ _EVENT_DATA_END
 //------------------------！注意！------------------------------//
 //																//
 //		LOCALWORK11～13までをジムギミックの制御に使用			//
+//		LOCALWORK1をメッセージ分岐に使用			//
 //		ゾーン内での使用を禁止します							//
 //																//
 //--------------------------------------------------------------//
@@ -171,16 +172,21 @@ EVENT_START	ev_c04gym0101_leader4_01
 		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 		//クリア前
 			
-			//バッジ入手後、H02の開通フラグで分岐
-			IF $WK_SCENE_R05 >= 3 THEN
-				//開通後、一言メッセージ
-				_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_07 )
+			//バッジ入手後、退場後
+			IF $LOCALWORK1 == 1 THEN
+				_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_09 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
-			ELSE
-				//開通前、一言メッセージ（橋を渡れるようにしておくわ）
+			//H02開通前、一言メッセージ
+			ELSIF FLAG_OFF( FV_R05_STOP ) THEN
 				_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_06 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			//H02開通後、一言メッセージ
+			ELSE
+				_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_07 )
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
@@ -1313,6 +1319,8 @@ ev_swleader04_end:
 	//========================================//
 	//このPOSの起動をさせなくする
 	$WK_SCENE_C04GYM0101_SHOWEND = 2
+	//退場イベント用メッセージオン
+	$LOCALWORK1 = 1
 	//================================================//
 
 	}
