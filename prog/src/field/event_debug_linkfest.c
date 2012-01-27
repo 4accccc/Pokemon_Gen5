@@ -2731,6 +2731,7 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
     evwk->m_base_param = evwk->req_fmwk.beacon.base_param;
     evwk->m_title = evwk->req_fmwk.beacon.m_title_id;
     evwk->m_exp = evwk->req_fmwk.beacon.m_exp_id;
+    evwk->m_distribution_f = evwk->req_fmwk.beacon.distribution_f;
   }
   evwk->m_type = evwk->req_fmwk.arc.m_type-1;
   
