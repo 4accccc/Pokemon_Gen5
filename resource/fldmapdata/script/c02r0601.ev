@@ -143,11 +143,8 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
 
   _TALK_OBJ_START()
 
-  //曜日チェック
-  _GET_WEEK( LWK_WEEKCK )
-
-  SWITCH $LWK_WEEKCK
-  CASE RTC_WEEK_SUNDAY THEN     //日曜日
+  SWITCH $OBJCHRWORK0
+  CASE WAITRESS THEN     //ウェイトレスの場合
 
     IF $WK_SCENE_C02R0601_LOSTITEM == 0 THEN    //落し物を引き受けていない
       //ウェイトレス：ハンカチを　ひろったけど　どうやら
@@ -210,7 +207,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
 
     ENDIF
 
-  CASE RTC_WEEK_MONDAY THEN     //月曜日
+  CASE BUSINESSMAN THEN     //ビジネスマンの場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -224,7 +221,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     ENDIF
    _MSGWIN_CLOSE()
 
-  CASE RTC_WEEK_TUESDAY THEN    //火曜日
+  CASE LADY THEN    //淑女の場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -238,7 +235,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     ENDIF
    _MSGWIN_CLOSE()
 
-  CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+  CASE GIRL3 THEN  //女の子３の場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -252,7 +249,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     ENDIF
    _MSGWIN_CLOSE()
 
-  CASE RTC_WEEK_THURSDAY THEN   //木曜日
+  CASE MAN3 THEN   //男性３の場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -293,7 +290,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     ENDIF
    _MSGWIN_CLOSE()
 
-  CASE RTC_WEEK_FRIDAY THEN     //金曜日
+  CASE MOUNTMAN THEN     //山男の場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -307,7 +304,7 @@ EVENT_START   ev_c02r0601_wkobjcode00_01
     ENDIF
    _MSGWIN_CLOSE()
 
-  CASE RTC_WEEK_SATURDAY THEN   //土曜日
+  CASE OL THEN   //OLの場合
 
     //落し物を持っている？
     IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
@@ -333,41 +330,38 @@ EVENT_START   ev_c02r0601_wkobjcode01_01
 
   _TALK_OBJ_START()
 
-  //曜日チェック
-  _GET_WEEK( LWK_WEEKCK )
-
-  SWITCH $LWK_WEEKCK
-  CASE RTC_WEEK_SUNDAY THEN     //日曜日
+  SWITCH $OBJCHRWORK1
+  CASE POKE33 THEN     //日曜日
 
     //ヤナップ：なっぷう！
     _EASY_TALK_POKEVOICE( MONSNO_593, msg_c02r0601_poke33_01 )
 
-  CASE RTC_WEEK_MONDAY THEN     //月曜日
+  CASE POKE20 THEN     //月曜日
 
     //ワルビル：ぬはあ！
     _EASY_TALK_POKEVOICE( MONSNO_505, msg_c02r0601_poke20_01 )
 
-  CASE RTC_WEEK_TUESDAY THEN    //火曜日
+  CASE POKE30 THEN    //火曜日
 
     //ヨーテリー：きゃうん♪
     _EASY_TALK_POKEVOICE( MONSNO_590, msg_c02r0601_poke30_01 )
 
-  CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+  CASE POKE15 THEN  //水曜日
 
     //ムンナ：むうううううううううううううううん！
     _EASY_TALK_POKEVOICE( MONSNO_540, msg_c02r0601_poke15_01 )
 
-  CASE RTC_WEEK_THURSDAY THEN   //木曜日
+  CASE POKE17 THEN   //木曜日
 
     //ミネズミ：けけー！
     _EASY_TALK_POKEVOICE( MONSNO_537, msg_c02r0601_poke17_01 )
 
-  CASE RTC_WEEK_FRIDAY THEN     //金曜日
+  CASE POKE29 THEN     //金曜日
 
     //ミルホッグ：みるっ！
     _EASY_TALK_POKEVOICE( MONSNO_538, msg_c02r0601_poke29_01 )
 
-  CASE RTC_WEEK_SATURDAY THEN   //土曜日
+  CASE POKE38 THEN   //土曜日
 
     //ズルッグ：ずっぐぉー！
     _EASY_TALK_POKEVOICE( MONSNO_637, msg_c02r0601_poke39_01 )
