@@ -687,9 +687,8 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     {
       //ÇPà Ç™ï°êîÇ†Ç¡ÇΩèÍçáÇÕÉâÉìÉ_ÉÄÇ≈åæÇ§
       int i;
-      u32 rank[8] = {0};
+      u32 rank[9] = {0};
       u32 msgID;
-      u32 rnd;
       u32 cnt = 0;
       RESORT_RESIDENT_DATA *p_resident = RESORT_ABSTRUCT_DATA_GetDataAdrs(p_abstruct);
 
@@ -714,16 +713,13 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         }
       }
 
-      for( i = 0; i < 8; i++ )
+      for( i = 0; i <= 8; i++ )
       {
         if( RESORT_UTIL_CalcRankingNum( p_people_all, p_resident, i ) == 0 )
         {
           rank[cnt] = i;
           cnt++;
-        }
-        else
-        {
-          rank[cnt] = 0;
+          NAGI_Printf( "[%d]=%d\n", cnt, i );
         }
       }
 
@@ -733,7 +729,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       }
       else
       {
-        rnd = GFL_STD_MtRand(cnt);
+        u32 rnd = GFUser_GetPublicRand(cnt);
         msgID = SexGetMsgID( sex, resort_resident_ranking_00_m, resort_resident_ranking_00_f );
         return msgID + rank[rnd];
       }
