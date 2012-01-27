@@ -28,5 +28,11 @@
 #define BG_D08R0401_DUMMY_FES_06          6
 #define BG_D08R0401_DUMMY_FES_07          7
 #define BG_D08R0401_DUMMY_FES_08          8
+#define BG_D08R0401_DUMMY_FES_09          9
+#define BG_D08R0401_DUMMY_FES_10         10
+#define BG_D08R0401_DUMMY_FES_11         11
+#define BG_D08R0401_DUMMY_FES_12         12
+#define BG_D08R0401_DUMMY_FES_13         13
+#define BG_D08R0401_DUMMY_FES_14         14
 
 #endif //ZONE_D08R0401_EVB_H

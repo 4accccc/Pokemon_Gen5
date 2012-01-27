@@ -43,5 +43,17 @@
 #define BG_D29R0301_DUMMY_FES_06          7
 #define BG_D29R0301_DUMMY_FES_07          8
 #define BG_D29R0301_DUMMY_FES_08          9
+#define BG_D29R0301_DUMMY_FES_09         10
+#define BG_D29R0301_DUMMY_FES_10         11
+#define BG_D29R0301_DUMMY_FES_11         12
+#define BG_D29R0301_DUMMY_FES_12         13
+#define BG_D29R0301_DUMMY_FES_13         14
+#define BG_D29R0301_DUMMY_FES_14         15
+#define BG_D29R0301_DUMMY_FES_15         16
+#define BG_D29R0301_DUMMY_FES_16         17
+#define BG_D29R0301_DUMMY_FES_17         18
+#define BG_D29R0301_DUMMY_FES_18         19
+#define BG_D29R0301_DUMMY_FES_19         20
+#define BG_D29R0301_DUMMY_FES_20         21
 
 #endif //ZONE_D29R0301_EVB_H

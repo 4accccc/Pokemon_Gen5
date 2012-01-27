@@ -30,5 +30,10 @@
 #define BG_D20_DUMMY_FES_03               3
 #define BG_D20_DUMMY_FES_04               4
 #define BG_D20_DUMMY_FES_05               5
+#define BG_D20_DUMMY_FES_06               6
+#define BG_D20_DUMMY_FES_07               7
+#define BG_D20_DUMMY_FES_08               8
+#define BG_D20_DUMMY_FES_09               9
+#define BG_D20_DUMMY_FES_10              10
 
 #endif //ZONE_D20_EVB_H
