@@ -402,10 +402,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
-では　ここで　まっているよ[Ctrl2:CtrlSpeed ]</Text>
+では　ここで　まっているよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:52:00" />
+				Time="2012-01-27T11:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -414,10 +414,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
-では　ここで　待っているよ[Ctrl2:CtrlSpeed ]</Text>
+では　ここで　待っているよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:52:20" />
+				Time="2012-01-27T11:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -460,10 +460,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
-では　おくまで　つれていきたまえ[Ctrl2:CtrlSpeed ]</Text>
+では　おくまで　つれていきたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:52:02" />
+				Time="2012-01-27T11:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -472,10 +472,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わかった
-では　奥まで　連れていきたまえ[Ctrl2:CtrlSpeed ]</Text>
+では　奥まで　連れていきたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:52:18" />
+				Time="2012-01-27T11:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
