@@ -702,7 +702,7 @@ u32 GPOWER_Calc_EffEncInterval( u32 interval )
   GPOWER_EFFENC_UP_LEVEL level;
   
   if(GPowerSys.occur_power[GPOWER_TYPE_EFFENC_UP] != GPOWER_ID_NULL){
-    level = GPowerSys.powerdata_data[GPOWER_TYPE_ENCOUNT_UP];
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_EFFENC_UP];
     if( level >= GPOWER_EFFENC_UP_LV_MAX ){
       GF_ASSERT(0); //データ設定ミス
       return interval;
