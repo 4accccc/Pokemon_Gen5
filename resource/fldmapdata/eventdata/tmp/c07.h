@@ -57,5 +57,7 @@
 #define BG_C07_DUMMY_FES_14              17
 #define BG_C07_DUMMY_FES_15              18
 #define BG_C07_DUMMY_FES_16              19
+#define BG_C07_DUMMY_FES_17              20
+#define BG_C07_DUMMY_FES_18              21
 
 #endif //ZONE_C07_EVB_H

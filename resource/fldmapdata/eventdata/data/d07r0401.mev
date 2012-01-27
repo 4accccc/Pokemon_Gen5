@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/26 19:35:20
+#save date:2012/01/26 23:53:33
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d07r0401.wms
 #SECTION START:OBJ_EVENT
@@ -267,7 +267,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-8
+21
 #event number: 0
 #Bg Event Label
 HIDE_ITEM_070
@@ -371,7 +371,176 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -584
+552 0 152
+#event number: 8
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_08
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 16 56
+#event number: 9
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_09
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 -16 -536
+#event number: 10
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_10
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+664 -16 -504
+#event number: 11
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_11
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+664 -16 -536
+#event number: 12
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_12
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 0 -8
+#event number: 13
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_13
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 0 200
+#event number: 14
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_14
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 200
+#event number: 15
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_15
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 0 184
+#event number: 16
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_16
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 48 200
+#event number: 17
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_17
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 -152
+#event number: 18
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_18
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -120
+#event number: 19
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_19
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -72
+#event number: 20
+#Bg Event Label
+BG_D07R0401_DUMMY_FES_20
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 16 88
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

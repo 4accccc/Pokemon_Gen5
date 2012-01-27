@@ -50,5 +50,11 @@
 #define HIDE_ITEM_080                     2
 #define HIDE_ITEM_081                     3
 #define HIDE_ITEM_082                     4
+#define BG_D11R0101_DUMMY_FES_01          5
+#define BG_D11R0101_DUMMY_FES_02          6
+#define BG_D11R0101_DUMMY_FES_03          7
+#define BG_D11R0101_DUMMY_FES_04          8
+#define BG_D11R0101_DUMMY_FES_05          9
+#define BG_D11R0101_DUMMY_FES_06         10
 
 #endif //ZONE_D11R0101_EVB_H
