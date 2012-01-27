@@ -329,53 +329,53 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_hero_10">
+		Label="pw_turn_hero_9">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『あ……う……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『あ……う……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_enemy_10">
+		Label="pw_turn_enemy_9">
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『オ……ワ……リ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『オ……ワ……リ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-18T01:42:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T08:41:33" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
