@@ -2389,7 +2389,7 @@ typedef struct _EVWK_PARAM_SET_REQ{
   int     m_exp;
   u8      m_type;
   FEST_MISSION  req_fmwk;
-  FEST_MISSION  def_fmwk;
+  FEST_MISSION  tmp_fmwk;
 
   const D_LOG_PARAM* log_prm;
   const D_LOG_PRM_SET* log_prm_set;
@@ -2415,6 +2415,7 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
 static void logreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
+static void mreq_DecideSelect( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 
 static void psreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 line );
 static void psreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 line, STRBUF* str );
@@ -2541,6 +2542,11 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
         (*seq) = 1;
         break;
       }
+      if( trg & PAD_BUTTON_SELECT ){
+        mreq_DecideSelect( wk, evwk, event );
+        (*seq) = 1;
+        break;
+      }
     }
     break;
   case 3:
@@ -2606,11 +2612,11 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
     break;
   case MREQ_LINE_TITLE:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_title_tutorial, msg_fm_explain_tutorial-1,
-      &evwk->m_title, &evwk->update_f, BPRM_WSET_MISSION_MSGID_NAME ));
+      &evwk->m_title, NULL, BPRM_WSET_MISSION_MSGID_NAME ));
     break;
   case MREQ_LINE_EXP:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_explain_tutorial, msg_fm_explain_evt_10,
-      &evwk->m_exp, &evwk->update_f, BPRM_WSET_MISSION_MSGID_NAME ));
+      &evwk->m_exp, NULL, BPRM_WSET_MISSION_MSGID_NAME ));
     break;
   }
 }
@@ -2619,6 +2625,16 @@ static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVEN
   switch( evwk->line ){
   case MREQ_LINE_LEVEL:
     evwk->m_level = (evwk->m_level+1)%4;
+    break;
+  }
+}
+static void mreq_DecideSelect( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event )
+{
+  switch( evwk->line ){
+  case MREQ_LINE_LEVEL:
+    if( evwk->req_fmwk.arc.host != FMISSION_HOST_COMM ){
+      evwk->m_distribution_f ^= 1;
+    }
     break;
   }
 }
@@ -2727,7 +2743,7 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
 {
   if( evwk->m_id_update_f ){
     FMISSION_DATA_GetMissionParam( wk->fm_data_man, evwk->m_id, evwk->m_level, &evwk->req_fmwk );
-    evwk->def_fmwk = evwk->req_fmwk;  //デフォルトパラメータコピー
+    evwk->tmp_fmwk = evwk->req_fmwk;  //デフォルトパラメータコピー
     evwk->m_base_param = evwk->req_fmwk.beacon.base_param;
     evwk->m_title = evwk->req_fmwk.beacon.m_title_id;
     evwk->m_exp = evwk->req_fmwk.beacon.m_exp_id;
