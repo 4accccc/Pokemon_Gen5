@@ -795,30 +795,30 @@
 			<Text>[Name:TrainerName Idx="1" ]『チッ　マズいわね……
 こっちに　せっきん　してくる……▼
 ……しかも　なに？
-ＵＦＯの　ぜんしんが　すこしずつ▽
+ＵＦＯの　からだが　すこしずつ▽
 ひかり　はじめてる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T06:43:15" />
+				Time="2012-01-27T02:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T06:43:15" />
+				Time="2012-01-27T02:57:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『チッ　マズいわね……
 こっちに　接近してくる……▼
 ……しかも　何？
-ＵＦＯの　全身が　少しずつ▽
+ＵＦＯの　表面が　少しずつ▽
 光り始めてる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T06:43:15" />
+				Time="2012-01-27T02:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T06:43:15" />
+				Time="2012-01-27T02:57:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
