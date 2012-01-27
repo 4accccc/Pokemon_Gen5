@@ -74,6 +74,9 @@ extern BOOL RESORT_PEOPLE_GetTalkFlag( const RESORT_PEOPLE *cp_wk );
 //住人しか使えない
 extern RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk );
 
+extern void RESORT_PEOPLE_ResetPos( RESORT_PEOPLE *p_wk );
+extern void RESORT_PEOPLE_GetInstitutionFrontPos( RESORT_PEOPLE *p_wk, u16 *p_x, u16 *p_z, u16 *p_dir );
+
 //=============================================================================
 /**
  *					人物管理ワーク

@@ -53,6 +53,7 @@ typedef struct
 typedef struct
 {
   void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
+  void (*GetMapPos)( const RESORT_PEOPLE *cp_wk, u16 *p_x, u16 *p_z, u16 *p_dir );
 } RESORT_PEOPLE_FUNCTION;
 
 //-------------------------------------
@@ -70,6 +71,8 @@ struct _RESORT_PEOPLE
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
   const RESORT_BINARY_PEOPLE_DATA *cp_binary;
   const RESORT_PEOPLE_FUNCTION *cp_function;
+  const RESORT_BINARY_SHOP   *cp_shop;
+  const RESORT_BINARY_INSTITUTION *cp_institution;
 };
 
 //-------------------------------------
@@ -77,6 +80,7 @@ struct _RESORT_PEOPLE
 //=====================================
 //住民
 static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
+static void Resident_GetMapPos( const RESORT_PEOPLE *cp_wk, u16 *p_x, u16 *p_z, u16 *p_dir );
 
 //代理人
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
@@ -86,6 +90,7 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INI
 
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header );
+static void Secretary_GetMapPos( const RESORT_PEOPLE *cp_wk, u16 *p_x, u16 *p_z, u16 *p_dir );
 
 //その他
 static void Resort_People_CreateMmdl( RESORT_PEOPLE *p_wk,  const RESORT_PEOPLE_INIT_PARAM *cp_param );
@@ -102,18 +107,22 @@ static const RESORT_PEOPLE_FUNCTION sc_people_function[RESORT_PEOPLE_TYPE_MAX]  
   //RESORT_PEOPLE_TYPE_RESIDENT
   {
     Resident_SetupMmdHeader,
+    Resident_GetMapPos,
   },
   //RESORT_PEOPLE_TYPE_PROXY
   {
     Proxy_SetupMmdHeader,
+    NULL,
   },
   //RESORT_PEOPLE_TYPE_TOURIST
   {
     Tourist_SetupMmdHeader,
+    NULL,
   },
   //RESORT_PEOPLE_TYPE_SECRETARY
   {
     Secretary_SetupMmdHeader,
+    Secretary_GetMapPos,
   },
 };
 
@@ -159,6 +168,8 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
   p_wk->p_abstruct_data = cp_param->p_data;
   p_wk->create      = cp_param->create;
+  p_wk->cp_shop     = cp_param->cp_shop;
+  p_wk->cp_institution = cp_param->cp_institution;
 
   //人物生成時には必ず不正検査を行う  //重いのでやらなくなりました
   //RESORT_ABSTRUCT_DATA_ModifyProfWord( p_wk->p_abstruct_data, heapID );
@@ -295,6 +306,61 @@ RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk )
   return RESORT_RESIDENT_DATA_GetInstitution( p_resident );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  位置を再セット
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ResetPos( RESORT_PEOPLE *p_wk )
+{
+  if( p_wk->cp_function->GetMapPos )
+  {
+    u16 grid_x, grid_z, dir;
+    VecFx32 vec;
+
+    MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+
+    p_wk->cp_function->GetMapPos( p_wk, &grid_x, &grid_z, &dir );
+
+    vec.x = GRID_SIZE_FX32( grid_x ) + MMDL_VEC_X_GRID_OFFS_FX32;
+    vec.y = 0;
+    vec.z = GRID_SIZE_FX32( grid_z ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+
+    MMDL_SetVectorPos( p_mmdl, &vec );
+    MMDL_SetGridPosX( p_mmdl, grid_x );
+    MMDL_SetGridPosZ( p_mmdl, grid_z );
+    MMDL_SetDirDisp( p_mmdl, dir );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設の前の位置を取得
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ *	@param	*p_x    X
+ *	@param	*p_z    Z
+ *	@param	*p_dir  方向
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_GetInstitutionFrontPos( RESORT_PEOPLE *p_wk, u16 *p_x, u16 *p_z, u16 *p_dir )
+{
+  GF_ASSERT( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT );
+
+  p_wk->cp_function->GetMapPos( p_wk, p_x, p_z, p_dir );
+
+  if( *p_dir == DIR_LEFT )
+  {
+    *p_x  -= 1;
+    *p_dir  = DIR_RIGHT;
+  }
+  else
+  {
+    *p_x  += 1;
+    *p_dir  = DIR_LEFT;
+  }
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  データを比較
@@ -464,21 +530,35 @@ static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_IN
 {
   u16 grid_x, grid_z, dir;
 
-  u16 idx = RESORT_ABSTRUCT_DATA_GetBufferIndex(p_wk->p_abstruct_data);
-  RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( p_wk );
-  u16 id  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
-  const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_param->cp_shop,id);
-  u16 data_3dmd = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data,RESORT_BINARY_SHOP_PARAM_3DMD_L+!(idx%2));
-
-  RESORT_MAP_GetResidentGridPosOfs( data_3dmd, &grid_x, &grid_z, &dir );
-
-  grid_x += RESORT_BINARY_INSTITUTION_GetData(cp_param->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
-  grid_z += RESORT_BINARY_INSTITUTION_GetData(cp_param->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+  Resident_GetMapPos( p_wk, &grid_x, &grid_z, &dir );
 
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  位置取得
+ *
+ *	@param	const RESORT_PEOPLE *cp_wk
+ *	@param	*p_x
+ *	@param	*p_z
+ *	@param	*p_dir 
+ */
+//-----------------------------------------------------------------------------
+static void Resident_GetMapPos( const RESORT_PEOPLE *cp_wk, u16 *p_x, u16 *p_z, u16 *p_dir )
+{
+  u16 idx = RESORT_ABSTRUCT_DATA_GetBufferIndex(cp_wk->p_abstruct_data);
+  RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( (RESORT_PEOPLE*)cp_wk );
+  u16 id  = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+  const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_wk->cp_shop,id);
+  u16 data_3dmd = RESORT_BINARY_SHOP_DATA_GetData(cp_shop_data,RESORT_BINARY_SHOP_PARAM_3DMD_L+!(idx%2));
+
+  RESORT_MAP_GetResidentGridPosOfs( data_3dmd, p_x, p_z, p_dir );
+
+  (*p_x) += RESORT_BINARY_INSTITUTION_GetData(cp_wk->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_X );
+  (*p_z) += RESORT_BINARY_INSTITUTION_GetData(cp_wk->cp_institution, idx, RESORT_BINARY_INSTITUTION_PARAM_GRID_Z );
+}
 //-------------------------------------
 ///代理人
 //=====================================
@@ -527,12 +607,29 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INI
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, const RESORT_PEOPLE_INIT_PARAM *cp_param, MMDL_HEADER *p_header )
 {
   u16 grid_x, grid_z, dir;
-  u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
-  RESORT_MAP_GetSecretaryGridPos( kind, &grid_x, &grid_z, &dir );
+  Secretary_GetMapPos( p_wk, &grid_x, &grid_z, &dir );
+
   p_header->dir = dir;
   MMDLHEADER_SetGridPos( p_header, grid_x, grid_z, 0 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回位置取得
+ *
+ *	@param	const RESORT_PEOPLE *cp_wk
+ *	@param	*p_x
+ *	@param	*p_z
+ *	@param	*p_dir 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void Secretary_GetMapPos( const RESORT_PEOPLE *cp_wk, u16 *p_x, u16 *p_z, u16 *p_dir )
+{
+  u16 kind = RESORT_ABSTRUCT_DATA_GetData( cp_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
+  RESORT_MAP_GetSecretaryGridPos( kind, p_x, p_z, p_dir );
+}
 
 //----------------------------------------------------------------------------
 /**

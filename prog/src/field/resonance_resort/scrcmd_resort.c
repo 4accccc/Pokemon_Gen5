@@ -60,6 +60,7 @@ static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
 static u16 Resort_Scrcmd_GetMmdlID( SCRCMD_WORK *p_wk );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 
+extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 //=============================================================================
 /**
  *					スクリプトコマンド外部公開
@@ -195,7 +196,14 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_GET_PARAM_MERGE_FLAG:
     {
-      u16 want_job  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u16 want_job_def  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+
+      u16 trainerID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+      u16 ver = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_VER, NULL );
+      u16 sp = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SPECIAL, NULL );
+
+      u16 want_job = RESORT_DATA_GetWantJobModify( want_job_def, trainerID, ver, sp, p_city, p_shop );
+
       RESORT_INSTITUTION_DATA *p_insti = RESORT_PEOPLE_GetInstitution( p_people );
       u16 shopID = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
 
@@ -579,6 +587,24 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( param )
   {
+  case RESORT_JOBCHANGE_RESIDENT_TURN:
+    *p_ret_wk = RESORT_UTIL_Convert( p_sys, p_src, RESORT_DATA_TYPE_RESIDENT );
+    //住民と主人公の位置を修正
+    {
+      u16 x, z, dir;
+      VecFx32 vec;
+      FIELD_PLAYER *p_player = FIELDMAP_GetFieldPlayer( p_field );
+      RESORT_PEOPLE_ResetPos( p_people );
+      RESORT_PEOPLE_GetInstitutionFrontPos( p_people, &x, &z, &dir );
+
+      FIELD_PLAYER_GetPos(p_player, &vec );
+      vec.x = GRID_SIZE_FX32( x ) + MMDL_VEC_X_GRID_OFFS_FX32;
+      vec.z = GRID_SIZE_FX32( z ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+      FIELD_PLAYER_SetPos(p_player, &vec );
+      FIELD_PLAYER_SetDir(p_player, dir);
+    }
+    break;
+
   case RESORT_JOBCHANGE_RESIDENT:
     *p_ret_wk = RESORT_UTIL_Convert( p_sys, p_src, RESORT_DATA_TYPE_RESIDENT );
     break;

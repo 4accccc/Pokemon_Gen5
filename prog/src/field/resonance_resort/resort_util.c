@@ -2644,6 +2644,7 @@ u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESO
   RESORT_ABSTRUCT_DATA *p_dst_adrs = NULL;
   RESORT_PLACEID  placeID = RESORT_MAP_GetPeoplePlace(dst_type);
   RESORT_DATA_TYPE src_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_src);
+  RESORT_CITY_DATA *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
 
   if( src_type == dst_type )
   {
@@ -2664,7 +2665,12 @@ u32 RESORT_UTIL_Convert( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_src, RESO
 
       //Ç»ÇËÇΩÇ¢èÓïÒ
       u16 want_idx = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
-      const RESORT_BINARY_SHOP_DATA *cp_want_data = RESORT_BINARY_SHOP_GetData( p_shop,want_idx);
+      u16 trainerID = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_TRAINER_ID, NULL );
+      u16 ver = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_VER, NULL );
+      u16 sp = RESORT_RESIDENT_DATA_GetData( p_src_data, RESORT_DATA_PARAM_SPECIAL, NULL );
+      //àÍíUÉfÉtÉHÇ…ïœä∑
+      u16 shopno = RESORT_DATA_GetWantJobModify( want_idx, trainerID, ver, sp, p_city_data, p_shop );
+      const RESORT_BINARY_SHOP_DATA *cp_want_data = RESORT_BINARY_SHOP_GetData( p_shop,shopno);
       u16 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_want_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
 
