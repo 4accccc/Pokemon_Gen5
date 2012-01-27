@@ -135,7 +135,7 @@ EVENT_START ev_c14r0501_lady_01
     IF $LWK_WALK_ANSWER == 1 THEN
       
        //LADY：またきがむいたら
-      _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_09,C14R0501_LADY_01, POS_DEFAULT )
+      _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_08,C14R0501_LADY_01, POS_DEFAULT )
       _MSGWIN_CLOSE()
       
       //連れ歩き解除
@@ -465,6 +465,10 @@ EVENT_START ev_bg_c14r0501_tv_01
   //散歩イベント起動中
   ELSE
     
+    //アニメ：LADY振り向き
+    _OBJ_ANIME( C14R0501_LADY_01,anm_dir_u )
+    _OBJ_ANIME_WAIT()
+    
     //ギザウィンSE再生
     _SE_PLAY( SEQ_SE_SYS_58 )
     
@@ -474,8 +478,7 @@ EVENT_START ev_bg_c14r0501_tv_01
     _AB_KEYWAIT_MARK()
     _GIZAPLAINWIN_CLOSE()
     
-    //アニメ：LADY振り向き
-    _OBJ_ANIME( C14R0501_LADY_01,anm_staystep_u )
+    //アニメ：主人公振り向き
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
     _OBJ_ANIME_WAIT()
     
@@ -505,6 +508,10 @@ EVENT_START ev_bg_c14r0501_trash_01
   
   //散歩イベント起動中
   ELSE
+    
+    //アニメ：LADY振り向き
+    _OBJ_ANIME( C14R0501_LADY_01,anm_dir_r )
+    _OBJ_ANIME_WAIT()
     
     //ギザウィンSE再生
     _SE_PLAY( SEQ_SE_SYS_58 )
@@ -540,6 +547,10 @@ EVENT_START ev_pos_c14r0501_stopper_01
   
   //ギザウィンSE再生
   _SE_PLAY( SEQ_SE_SYS_58 )
+  
+  //アニメ：LADY振り向き
+  _OBJ_ANIME( C14R0501_LADY_01,anm_dir_d )
+  _OBJ_ANIME_WAIT()
   
   //LADY：ちょっと　あなたー！
   _GIZAPLAINWIN_MSG_POS( msg_c14r0501_lady_10, POS_DOWN )
