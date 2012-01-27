@@ -2666,10 +2666,10 @@ msg_wbt_announce_09へ</Comment>
 			Language="JPN">
 			<Text>これが　じつりょく　なのか？
 のこった　ポケモンは　[Digit:1digit ]ひきッ！▽
-みごとな　しょうり　ですっ！！</Text>
+みごとな　しょうり　ですっ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T04:13:16" />
+				Time="2012-01-27T11:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2679,10 +2679,10 @@ msg_wbt_announce_09へ</Comment>
 			Language="JPN_KANJI">
 			<Text>これが　実力なのか？
 残った　ポケモンは　[Digit:1digit ]匹ッ！▽
-見事な　勝利ですっ！！</Text>
+見事な　勝利ですっ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T04:13:45" />
+				Time="2012-01-27T11:48:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
