@@ -2078,11 +2078,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　としょかん
+			<Text>この　としょしつ
 まえは　ジムだったんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T02:45:37" />
+				Time="2012-01-27T11:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2090,11 +2090,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　図書館
+			<Text>この図書室
 前は　ジムだったんだぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T02:45:43" />
+				Time="2012-01-27T11:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
