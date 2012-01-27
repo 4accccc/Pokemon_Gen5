@@ -7923,6 +7923,88 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_mission_level_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>lv=[Digit:1digit ] 配信=[Digit:1digit Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:37:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:24:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>lv=[Digit:1digit ] 配信=[Digit:1digit Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:38:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:25:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_title_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:3digits ] 「[Name:FesMissionName Idx="1" ]」</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:27:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:25:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:3digits ] 「[Name:FesMissionName Idx="1" ]」</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:27:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:26:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_exp_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:3digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:26:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:26:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:3digits ] [Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:26:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:26:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_mission_ex_param_01">
 		<LanguageCell
 			Language="JPN">
@@ -11821,6 +11903,3846 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fmission_title_dummy</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fmission_title_dummy</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fmission_exp_dummy</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fmission_exp_dummy</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_tutorial</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_tutorial</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_02b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_02b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_02w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_02w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_02_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_02_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_03b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_03b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_03w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_03w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_item_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_item_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_21">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_22">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_23">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_24">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_03_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_03_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_25">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_26">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_27">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_06b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_06b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_28">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_06w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_06w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_29">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_30">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_31">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_08b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_08b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_32">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_08w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_08w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_33">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_34">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_09_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_09_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_35">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_36">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_37">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_38">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_39">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_14</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_14</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_40">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_15</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_15</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_41">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_16</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_16</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_42">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_17</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_17</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_43">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_npc_18</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_npc_18</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_44">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_poke_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_poke_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_45">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_poke_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_poke_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_46">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_poke_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_poke_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_47">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_48">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_49">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_50">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_51">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_52">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_53">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_54">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_55">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_56">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_57">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_58">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_59">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_title_evt_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_title_evt_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_60">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_tutorial</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_tutorial</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_61">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_62">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_02b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_02b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_63">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_02w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_02w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_64">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_02_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_02_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_65">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_03b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_03b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_66">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_03w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_03w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_67">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_68">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_69">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_70">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_71">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_72">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_73">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_74">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_75">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_76">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_77">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_item_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_item_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_78">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_79">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_80">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_81">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_03_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_03_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_82">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_83">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_84">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_06b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_06b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_85">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_06w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_06w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_86">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_87">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_88">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_08b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_08b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_89">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_08w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_08w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_90">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_91">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_09_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_09_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_92">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_93">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_11</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_94">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_12</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_95">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_13</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_96">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_14</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_14</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_97">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_15</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_15</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_98">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_16</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_16</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_99">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_17</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_17</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_100">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_npc_18</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_npc_18</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_101">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_102">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_103">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_104">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_105">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_106">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_107">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_poke_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_poke_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_108">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_01</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_109">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_01_s</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_110">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_02</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_111">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_03</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_112">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_04</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_113">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_05</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_114">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_06</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_115">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_07</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_116">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_07b</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_117">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_07w</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_118">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_08</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_119">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_09</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlf_mission_msg_id_120">
+		<LanguageCell
+			Language="JPN">
+			<Text>msg_fm_explain_evt_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:21:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>msg_fm_explain_evt_10</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-26T14:22:07" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

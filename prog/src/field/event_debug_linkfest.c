@@ -36,6 +36,7 @@
 #include "debug_message.naix"
 #include "msg/debug/msg_d_numinput.h"
 #include "msg/debug/msg_d_linkfest.h"
+#include "msg/msg_fest_mission.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/debug_symbol.naix"  //DEBUG_SYM_
@@ -221,6 +222,7 @@ typedef enum{
   BPRM_WSET_MEX_NPC_GET_A_PRESENT,
   BPRM_WSET_MEX_NPC_POKE_QUIZ,
   BPRM_WSET_MISSION_ID_NAME,
+  BPRM_WSET_MISSION_MSGID_NAME,
 }BPRM_WSET_TYPE;
 
 typedef enum{
@@ -1298,6 +1300,9 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     break;
   case BPRM_WSET_MISSION_ID_NAME:
     GFL_MSG_GetString( wk->msgman, dlf_mission_id_name_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MISSION_MSGID_NAME:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_msg_id_01+value, wk->str_tmp );
     break;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
@@ -2379,9 +2384,10 @@ typedef struct _EVWK_PARAM_SET_REQ{
   int     m_base_param;
   int     m_ex_param;
   int     m_level;
+  int     m_distribution_f;
+  int     m_title;
+  int     m_exp;
   u8      m_type;
-  u8      m_title_def;
-  u8      m_exp_def;
   FEST_MISSION  req_fmwk;
   FEST_MISSION  def_fmwk;
 
@@ -2393,9 +2399,22 @@ typedef struct _EVWK_PARAM_SET_REQ{
   BMP_WIN win_line;
 }EVWK_PARAM_SET_REQ;
 
+enum{
+ MREQ_LINE_ID,
+ MREQ_LINE_BASE_PARAM,
+ MREQ_LINE_EX_PARAM,
+ MREQ_LINE_LEVEL,
+ 
+ MREQ_LINE_SWITCH,
+
+ MREQ_LINE_TITLE = MREQ_LINE_SWITCH,
+ MREQ_LINE_EXP,
+};
+
 static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * work);
 static void logreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
+static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 
 static void psreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 line );
 static void psreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 line, STRBUF* str );
@@ -2405,9 +2424,11 @@ static void logreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
 static void logreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 direct_mode );
 
 static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
+static void mreq_MakeCustomMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, FEST_MISSION* fmwk );
 static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
 static void mreq_DrawMissionID( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
 static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
+static void mreq_DrawMissionTitle( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk );
 
 //--------------------------------------------------------------
 /**
@@ -2434,7 +2455,7 @@ static GMEVENT* event_CreateEventParamSetReq( GAMESYS_WORK* gsys, DMENU_LINK_FES
 
     evwk->action = FMISSION_LOG_ACT_GRP_BEACON;
   }else{
-    evwk->line_max = 3;
+    evwk->line_max = 6;
 
     evwk->m_id = 1;
     evwk->m_level = 0;
@@ -2472,6 +2493,7 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
       mreq_GetMissionParam( wk, evwk );
       mreq_DrawMissionID( wk, evwk );
       mreq_DrawMissionParam( wk, evwk );
+      mreq_DrawMissionTitle( wk, evwk );
     }
     (*seq)++;
     break;
@@ -2492,6 +2514,8 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
       }else if( trg & PAD_BUTTON_START ){
         if( evwk->mode == PARAM_SET_REQ_BEACON ){
           logreq_LogBeaconSend( wk, evwk, FALSE );
+          (*seq) = 1;
+          break;
         }else{
           mreq_MissionStart( wk, evwk );
           (*seq) = 0xFF;
@@ -2500,15 +2524,23 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
         break;
       }
 
-      if( (trg & PAD_BUTTON_A) == 0 ){
+      if( trg & PAD_BUTTON_A ){
+        if( evwk->mode == PARAM_SET_REQ_BEACON ){
+          logreq_Decide( wk, evwk, event );
+        }else{
+          mreq_Decide( wk, evwk, event );
+        }
+        (*seq) = 1;
         break;
       }
       if( evwk->mode == PARAM_SET_REQ_BEACON ){
-        logreq_Decide( wk, evwk, event );
-      }else{
-        mreq_Decide( wk, evwk, event );
+        break;
       }
-      (*seq) = 1;
+      if( trg & PAD_BUTTON_X ){
+        mreq_DecideX( wk, evwk, event );
+        (*seq) = 1;
+        break;
+      }
     }
     break;
   case 3:
@@ -2555,16 +2587,16 @@ static void logreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVE
 static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event )
 {
   switch( evwk->line ){
-  case 0:
+  case MREQ_LINE_ID:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, 0, FMISSION_ID_END,
       &evwk->m_id, &evwk->m_id_update_f, BPRM_WSET_MISSION_ID_NAME ));
     break;
-  case 1:
+  case MREQ_LINE_BASE_PARAM:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, 
       evwk->m_prm_set->min , evwk->m_prm_set->max-1,
       &evwk->m_base_param, &evwk->update_f, BPRM_WSET_MBASE_EFF_ENC+evwk->m_type ));
     break;
-  case 2:
+  case MREQ_LINE_EX_PARAM:
     if( evwk->log_prm_set == NULL || evwk->log_prm_set->min < 0 ){
       break;
     }
@@ -2572,13 +2604,21 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
       evwk->log_prm_set->min, evwk->log_prm_set->max,
       &evwk->m_ex_param, evwk->log_prm_set->wset_type ));
     break;
-  default:
-    {
-      u8 fake_id = evwk->line-3;
-      const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[fake_id];
-        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-        f_prm->min, f_prm->max, &(wk->fake_prm[TR_PAT_FAKE][fake_id]),f_prm->wset_type ));
-    }
+  case MREQ_LINE_TITLE:
+    GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_title_tutorial, msg_fm_explain_tutorial-1,
+      &evwk->m_title, &evwk->update_f, BPRM_WSET_MISSION_MSGID_NAME ));
+    break;
+  case MREQ_LINE_EXP:
+    GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_explain_tutorial, msg_fm_explain_evt_10,
+      &evwk->m_exp, &evwk->update_f, BPRM_WSET_MISSION_MSGID_NAME ));
+    break;
+  }
+}
+static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event )
+{
+  switch( evwk->line ){
+  case MREQ_LINE_LEVEL:
+    evwk->m_level = (evwk->m_level+1)%4;
     break;
   }
 }
@@ -2689,6 +2729,8 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
     FMISSION_DATA_GetMissionParam( wk->fm_data_man, evwk->m_id, evwk->m_level, &evwk->req_fmwk );
     evwk->def_fmwk = evwk->req_fmwk;  //デフォルトパラメータコピー
     evwk->m_base_param = evwk->req_fmwk.beacon.base_param;
+    evwk->m_title = evwk->req_fmwk.beacon.m_title_id;
+    evwk->m_exp = evwk->req_fmwk.beacon.m_exp_id;
   }
   evwk->m_type = evwk->req_fmwk.arc.m_type-1;
   
@@ -2714,21 +2756,32 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
   evwk->update_f = FALSE;
 }
 
+static void mreq_MakeCustomMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, FEST_MISSION* fmwk )
+{
+  FEST_BEACON* beacon = &fmwk->beacon;
+
+  //カスタムパラメータセット
+  beacon->m_id = evwk->m_id;
+  beacon->base_param = evwk->m_base_param;
+  beacon->ex_param = evwk->m_ex_param;
+  beacon->distribution_f = evwk->m_distribution_f;
+  beacon->m_title_id = evwk->m_title;
+  beacon->m_exp_id = evwk->m_exp;
+}
+
 static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
 {
   FEST_MISSION* fmwk = &wk->req_mission.mission;
   FEST_BEACON* beacon = &fmwk->beacon;
 
   wk->mission_req_f = TRUE;
-  wk->req_mission.mission = evwk->req_fmwk;
+  FMISSION_DATA_GetMissionParam( wk->fm_data_man, evwk->m_id, evwk->m_level, fmwk );
   
   fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
   FEST_MISSION_SetRTC( fmwk );
 
   //カスタムパラメータセット
-  beacon->m_id = evwk->m_id;
-  beacon->base_param = evwk->m_base_param;
-  beacon->ex_param = evwk->m_ex_param;
+  mreq_MakeCustomMissionParam( wk, evwk, fmwk );
 }
 
 static void mreq_DrawMissionID( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
@@ -2738,7 +2791,7 @@ static void mreq_DrawMissionID( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
   sub_LogParamWordset( wk, 1, evwk->m_id, BPRM_WSET_MISSION_ID_NAME );
 
   sub_GetMsgToBuf( wk, dlf_mission_req_id );
-  psreq_PrintLine( wk, evwk, 0, wk->str_expand );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_ID, wk->str_expand );
 }
 static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
 {
@@ -2746,7 +2799,7 @@ static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk
   WORDSET_RegisterNumber(wk->wset, 0, evwk->m_base_param, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   sub_LogParamWordset( wk, 1, evwk->m_base_param, BPRM_WSET_MBASE_EFF_ENC+evwk->m_type );
   sub_GetMsgToBuf( wk, dlf_mission_type_01+evwk->m_type );
-  psreq_PrintLine( wk, evwk, 1, wk->str_expand );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_BASE_PARAM, wk->str_expand );
 
   //エクストラパラメータプリント
   if( evwk->log_prm_set == NULL || evwk->log_prm_set->min < 0 ){
@@ -2756,7 +2809,35 @@ static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk
     sub_LogParamWordset( wk, 1, evwk->m_ex_param, evwk->log_prm_set->wset_type );
     sub_GetMsgToBuf( wk, dlf_mission_ex_param_01 );
   }
-  psreq_PrintLine( wk, evwk, 2, wk->str_expand );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_EX_PARAM, wk->str_expand );
+
+  //レベル、配信フラグ
+  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_level+1, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 1, evwk->m_distribution_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_GetMsgToBuf( wk, dlf_mission_level_01 );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_LEVEL, wk->str_expand );
+}
+static void mreq_DrawMissionTitle( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
+{
+  mreq_MakeCustomMissionParam( wk, evwk, &evwk->req_fmwk );
+  GFL_BMP_Fill( evwk->win_main.bmp, 0, MREQ_LINE_TITLE*16, MISSION_REQ_WIN_MAIN_SX*8, 6*16, FCOL_WIN_BASE );
+
+  //タイトル
+  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_title, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_tmp, &evwk->req_fmwk, wk->tmpHeapID );
+  sub_FreeWordset( wk->wset, 1, wk->str_tmp );
+  sub_GetMsgToBuf( wk, dlf_mission_title_01 );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_TITLE, wk->str_expand );
+
+  //説明文
+  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_exp, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_LogParamWordset( wk, 1, evwk->m_exp, BPRM_WSET_MISSION_MSGID_NAME );
+  sub_GetMsgToBuf( wk, dlf_mission_exp_01 );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_EXP, wk->str_expand );
+  
+  //
+  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->str_expand, &evwk->req_fmwk, wk->tmpHeapID );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_EXP+1, wk->str_expand );
 }
 
 //===========================================================================
