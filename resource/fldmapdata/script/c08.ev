@@ -140,16 +140,20 @@ INIT_EVENT_START   ev_zone_c08
     //========================================//
     //C08シャガ表示
     _FLAG_RESET( FV_C08_SWLEADER7_01 )
+    //C08R0101シャガ非表示
+    _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
     //POS有効
     $WK_SCENE_C08_LINK_EVENT = 1
     //========================================//
   ENDIF
   
   //ゲームクリア状態でリンクイベント起動ならシャガを表示・POSを有効に（C08R0101から退室バージョン）
-  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_04 == 0 && FLAG_ON( FE_C08_LINKEV_ZONE ) THEN
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_04 == 0 && FLAG_ON( FE_C08_LINKEV_ZONE ) && FLAG_OFF( FV_C08R0101_SWLEADER7_01 ) THEN
     //========================================//
     //C08シャガ非表示
     _FLAG_SET( FV_C08_SWLEADER7_01 )
+    //C08R0101シャガ非表示
+    _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
     //SCENE_CHANGE有効
     $WK_SCENE_C08_LINK_EVENT = 2
     //========================================//
@@ -1615,9 +1619,23 @@ EVENT_START   ev_c08_swleader7_01
   _PLAYER_NAME( 0 )
   //バッジフラグ取得
   _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_08 )
-
+  
+  //おもいでリンク起動時
+  IF $WK_SCENE_C08_LINK_EVENT == 1 THEN
+  
+    _TALK_OBJ_START()
+    //シャガ：起動
+    _BALLOONWIN_OBJMSG_POS( msg_c08_memory_01 , C08_SWLEADER7_01 , POS_DEFAULT)
+    _MSGWIN_CLOSE()
+    _MAP_FADE_BLACK_OUT_SLOW()
+    //過去イベント・ソウリュウ起動
+    _RESERVE_SCRIPT( SCRID_RESERVE_OLDC08R0101_EVENT_01 )
+    _MAP_FADE_END_CHECK()
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC08R0101, 9, 0, 9, DIR_DOWN )
+    
   //ヴィオ戦前（振り向きなし一言メッセージ）
-  IF $WK_SCENE_C08_SWPLAZMA <= 4 THEN
+  ELSIF $WK_SCENE_C08_SWPLAZMA <= 4 THEN
     _TALK_START_TURN_NOT()
     _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_12 , C08_SWLEADER7_01 , POS_DEFAULT)
     _LAST_KEYWAIT()
@@ -1959,6 +1977,8 @@ EVENT_START   ev_pos_c08_link_event
   
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
   
   $LCW_POSZ -= 2
   //アニメ：シャガ隣接
@@ -1966,6 +1986,12 @@ EVENT_START   ev_pos_c08_link_event
   _OBJ_ANIME_WAIT()
   IF $LCW_POSX != 418 THEN
     _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //上からPOSを踏んだ際には主人公ふりむき
+  IF $LWK_DIR == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME_WAIT()
   ENDIF
   
@@ -2076,6 +2102,8 @@ EVENT_START   ev_reserve_c08_link_event_ret
   $WK_SYS_LINK_EVENT_04 = 1
   //C08シャガ非表示
   _FLAG_SET( FV_C08_SWLEADER7_01 )
+  //C08R0101シャガ表示
+  _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
   //========================================//
 
 EVENT_END

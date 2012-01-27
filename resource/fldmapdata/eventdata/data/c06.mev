@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/29 14:44:51
+#save date:2012/01/27 12:15:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -834,7 +834,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POS_C06_HAKASE_01
@@ -867,6 +867,23 @@ WK_SCENE_C06_LOCALTVT
 EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -840
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POS_C06_PALACEBLOCK_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 40
 #size
 1 1
 #Map Event List Data End
