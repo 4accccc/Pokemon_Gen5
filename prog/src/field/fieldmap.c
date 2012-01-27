@@ -4306,6 +4306,9 @@ static BOOL zonedata_GetShadowUse( u16 zone_id )
   if ( ZONEDATA_IsColosseum(zone_id) == TRUE) return FALSE;
   // syachi GFBTS 1888
   if ( zone_id == ZONE_ID_D20R0101 ) return FALSE;
+  if ( zone_id == ZONE_ID_D20R0201 ) return FALSE;
+  if ( zone_id == ZONE_ID_D20R0301 ) return FALSE;
+  if ( zone_id == ZONE_ID_D20R0401 ) return FALSE;
   return TRUE;
 }
 
