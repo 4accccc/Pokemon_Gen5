@@ -1676,7 +1676,12 @@ void ZUKANSAVE_GetHyouka( const ZUKAN_SAVEDATA * zw, u16 mode, HEAPID heap_id, u
         *p_me = SEQ_ME_HYOUKA6;
       } else {
         *p_msg = get_msgid( LocalGetTable, *p_count );
-        *p_me = get_msgid( LocalMeGetTable, *p_count );
+
+        // MEはコンプ除外を考慮したカウントにする
+        {
+          u16 num = ZUKANSAVE_GetLocalGetCompCount( zw, heap_id );
+          *p_me = get_msgid( LocalMeGetTable, num );
+        }
       }
     }
     break;
@@ -1690,7 +1695,12 @@ void ZUKANSAVE_GetHyouka( const ZUKAN_SAVEDATA * zw, u16 mode, HEAPID heap_id, u
         *p_me = SEQ_ME_HYOUKA6;
       } else {
         *p_msg = get_msgid( LocalSeeTable, *p_count );
-        *p_me = get_msgid( LocalMeGetTable, *p_count ); //MEは見たと捕まえた同じ
+
+        // MEはコンプ除外を考慮したカウントにする
+        {
+          u16 num = ZUKANSAVE_GetLocalSeeCompCount( zw, heap_id );
+          *p_me = get_msgid( LocalMeGetTable, num ); //MEは見たと捕まえた同じ
+        }
       }
     }
     break;
@@ -1705,7 +1715,12 @@ void ZUKANSAVE_GetHyouka( const ZUKAN_SAVEDATA * zw, u16 mode, HEAPID heap_id, u
         *p_me = SEQ_ME_HYOUKA6;
       } else {
         *p_msg = get_msgid( GlobalGetTable, *p_count );
-        *p_me = get_msgid( GlobalMeGetTable, *p_count );
+
+        // MEはコンプ除外を考慮したカウントにする
+        {
+          u16 num = ZUKANSAVE_GetZenkokuGetCompCount( zw );
+          *p_me = get_msgid( GlobalMeGetTable, num );
+        }
       }
     }
     break;
