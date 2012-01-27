@@ -170,12 +170,17 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
+  _OBJ_DEL( D27R0201_SWPLAZMAW_01 )
+  
+  _OBJ_ANIME( D27R0201_SWPLAZMAM_01 ,anm_swplazma_bye_02_02 )
+  _OBJ_ANIME_WAIT()
+  
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   
   //動作モデル削除
   _OBJ_DEL( D27R0201_SWPLAZMAM_01 )
-  _OBJ_DEL( D27R0201_SWPLAZMAW_01 )
+  
   
   _SE_WAIT()
   
@@ -261,17 +266,21 @@ _ANIME_LABEL	anm_swplazma_bye_01
 _ANIME_LABEL	anm_swplazma_bye_02
   _ANIME_DATA	AC_WALK_R_4F,1
   _ANIME_DATA	AC_WALK_D_4F,4
-  _ANIME_DATA	AC_WALK_L_4F,1
-  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_L_4F,2
   _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swplazma_bye_02_02
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ライバル：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_bye_01
-  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,2
   _ANIME_DATA	ACMD_END,0
-
 
 /************************************************************/
 /*					バリア解除スイッチ（１）				*/
