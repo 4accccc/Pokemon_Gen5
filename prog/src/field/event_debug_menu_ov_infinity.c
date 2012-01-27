@@ -661,13 +661,14 @@ static void GetInfTrDataCheck( void )
 
   OS_Printf("TRIDは1オリジンで表示します(バトルサブウェイデータメーカーでの表示にあわせている)\n");
 
-  // 回復トレーナー以外をチェックする
-  for( tr_id = 0; tr_id < INF_TR_AREA_DATA_MAX  ; tr_id++ )
+  for( tr_id = 0; tr_id < INF_DUNGEON_TR_ID_MAX  ; tr_id++ )
   {
+    BOOL set_item   = FALSE;
+    BOOL same_item  = FALSE;
+    u16 item_no = 0;
     s32 i;
     u32 poke_index;
     BSUBWAY_POKEMON_ROM_DATA  prd_d;
-    const INF_TR_AREA_DATA* sc_tr_data = INF_TOOL_GetTrainerParam(tr_id);
 
     //トレーナーデータセット
     trd = FBI_TOOL_AllocTrainerRomData(&tr_data ,ARCID_INFINITY_DUGENON_TR ,
@@ -679,6 +680,24 @@ static void GetInfTrDataCheck( void )
       BOOL item_find = FALSE;
       GFL_ARC_LoadData( &prd_d,ARCID_INFINITY_DUGENON_PD,
           trd->use_poke_table[poke_index] );
+
+      // アイテム重複チェック
+      if( set_item == FALSE )
+      {
+        // 先頭のアイテムを保存
+        item_no   = prd_d.item_no;
+        same_item = TRUE;
+        set_item = TRUE;
+      }
+      else
+      {
+        // 異なったアイテムを所持しているかチェック
+        if( item_no != prd_d.item_no )
+        {
+          same_item = FALSE;
+        }
+      }
+
 
       // 持ち物チェック
       for( i = 0 ; i < NELEMS( c_item_table ) ; i++ )
@@ -737,43 +756,54 @@ static void GetInfTrDataCheck( void )
             GF_ASSERT_MSG(0,"TRID:%d \n複数の努力値が混ざっています\n",tr_id+1);
           }
         }
+    
+        // 抽選トレーナーのみチェック
+        if( tr_id < INF_DUNGEON_TR_DATA_MAX )
+        {
+          const INF_TR_AREA_DATA* sc_tr_data = INF_TOOL_GetTrainerParam(tr_id);
 
-        if( sc_tr_data->version == VERSION_W2 )
-        {
-          if( exp[_SPOW] > 0 )
+          if( sc_tr_data->version == VERSION_W2 )
           {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特攻の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            if( exp[_SPOW] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特攻の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
+            if( exp[_SDEF] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特防の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
+            if( exp[_AGI] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n素早さの努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
           }
-          if( exp[_SDEF] > 0 )
+          else if( sc_tr_data->version == VERSION_B2 )
           {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n特防の努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            if( exp[_POW] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n攻撃の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
+            if( exp[_DEF] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n防御の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
+            if( exp[_HP] > 0 )
+            {
+              GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\nHPの努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
+            }
           }
-          if( exp[_AGI] > 0 )
+          else
           {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n素早さの努力値を持ったポケモンがホワイトに出現しています。\n",tr_id+1,prd_d.mons_no);
+            GF_ASSERT(0);
           }
-        }
-        else if( sc_tr_data->version == VERSION_B2 )
-        {
-          if( exp[_POW] > 0 )
-          {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n攻撃の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
-          }
-          if( exp[_DEF] > 0 )
-          {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\n防御の努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
-          }
-          if( exp[_HP] > 0 )
-          {
-            GF_ASSERT_MSG(0,"TRID:%d モンスター番号:%d\nHPの努力値を持ったポケモンがブラックに出現しています。\n",tr_id+1,prd_d.mons_no);
-          }
-        }
-        else
-        {
-          GF_ASSERT(0);
         }
       }
+    }
 
+    // 手持ちポケモンのアイテムチェック
+    if( (same_item == TRUE) && (ITEM_DUMMY_DATA != item_no) )
+    {
+      GF_ASSERT_MSG(0,"TRID:%d\n手持ちポケモンのアイテムが全て同じです。",tr_id+1);
     }
 
     GFL_HEAP_FreeMemory( trd );
