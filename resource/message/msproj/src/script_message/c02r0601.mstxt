@@ -1274,10 +1274,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は
-ハンカチを　てわたした！</Text>
+よごれたハンカチを　てわたした！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:32:09" />
+				Time="2012-01-27T12:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1286,10 +1286,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は
-ハンカチを　手渡した！</Text>
+よごれたハンカチを　手渡した！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:53:23" />
+				Time="2012-01-27T12:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1298,10 +1298,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>・アイテム削除処理
-　No000「よごれたハンカチ」未発注</Comment>
+　No000「よごれたハンカチ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T06:47:29" />
+				Time="2012-01-27T12:13:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
