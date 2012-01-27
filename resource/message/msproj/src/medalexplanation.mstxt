@@ -4053,29 +4053,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　ポケモンに　みとめられた
-トレーナーと　ともにいた　ポケモンを
+			<Text>でんせつの　ドラゴンポケモンに
+みとめられた　えいゆうの　トモダチを
 なかまにした　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-27T02:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-27T02:20:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　ポケモンに　認められた
-トレーナーと　共にいた　ポケモンを
+			<Text>伝説の　ドラゴンポケモンに
+認められた　英雄の　トモダチを
 仲間にした　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-27T02:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-27T02:20:38" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

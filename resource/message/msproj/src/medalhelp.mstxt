@@ -7894,28 +7894,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ジョインアベニューで
-おきゃくさんを　まねきいれると
+おきゃくさんに　はなしかけると
 おみやげが　もらえるかも！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-27T11:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-27T11:25:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニューで
-お客さんを　招き入れると
+お客さんに　話しかけると
 お土産が　もらえるかも！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-27T11:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2012-01-27T11:25:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
