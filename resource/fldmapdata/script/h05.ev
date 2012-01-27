@@ -420,7 +420,7 @@ EVENT_START   ev_pos_h05_poke488_01
     _OBJ_POS_CHANGE( H05_POKE488_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
 
     //アニメ：クレセリア振り向き
-    _OBJ_ANIME( H05_POKE488_01, anm_common_turn_d )
+    _OBJ_ANIME( H05_POKE488_01, anm_common_turn_l )
     _OBJ_ANIME_WAIT()
 
     //アニメ：主人公振り向き
@@ -446,7 +446,7 @@ EVENT_START   ev_h05_poke488_01
   _FLAG_SET( FE_H05_POKE488_BTL_01 )
   //========================================//
 
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
 
   //クレセリア：るなーん
   _VOICE_PLAY( MONSNO_488, 0 ) 
