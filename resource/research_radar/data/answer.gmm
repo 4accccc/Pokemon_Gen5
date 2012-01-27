@@ -491,16 +491,16 @@
         <language name="JPN_KANJI" width="256">寄付する</language>
       </row><row id="answer_54">
         <language name="JPN" width="256">０ー５ねん</language>
-        <language name="JPN_KANJI" width="256">０ー５ねん</language>
+        <language name="JPN_KANJI" width="256">０ー５年</language>
       </row><row id="answer_55">
         <language name="JPN" width="256">５ー１０ねん</language>
-        <language name="JPN_KANJI" width="256">５ー１０ねん</language>
+        <language name="JPN_KANJI" width="256">５ー１０年</language>
       </row><row id="answer_56">
         <language name="JPN" width="256">１０ー１５ねん</language>
-        <language name="JPN_KANJI" width="256">１０ー１５ねん</language>
+        <language name="JPN_KANJI" width="256">１０ー１５年</language>
       </row><row id="answer_57">
         <language name="JPN" width="256">１５ねんー</language>
-        <language name="JPN_KANJI" width="256">１５ねんー</language>
+        <language name="JPN_KANJI" width="256">１５年ー</language>
       </row><row id="answer_58">
         <language name="JPN" width="256">そとであそぶ</language>
         <language name="JPN_KANJI" width="256">外で遊ぶ</language>

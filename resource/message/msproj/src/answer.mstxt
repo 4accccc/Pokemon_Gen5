@@ -1801,12 +1801,12 @@
 			Language="JPN_KANJI">
 			<Text>０ー５年</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T08:55:17" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-27T02:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-26T13:59:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1834,12 +1834,12 @@
 			Language="JPN_KANJI">
 			<Text>５ー１０年</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T08:55:23" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-27T02:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-26T13:59:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1867,12 +1867,12 @@
 			Language="JPN_KANJI">
 			<Text>１０ー１５年</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T08:55:26" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-27T02:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-26T13:59:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1900,12 +1900,12 @@
 			Language="JPN_KANJI">
 			<Text>１５年ー</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T08:55:31" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-27T02:08:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-01-26T13:59:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
