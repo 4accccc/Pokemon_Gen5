@@ -1490,53 +1490,53 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『なにっ！？
-デストロ……　えっ？</Text>
+デトスロロ……　えっ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『なにっ！？
-デストロ……　えっ？</Text>
+デトスロロ……　えっ？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>メカポリス『デストロイ
-セキュリティシステム！</Text>
+			<Text>メカポリス『ノン！　ノン！
+デストロイセキュリティシステムだ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メカポリス『デストロイ
-セキュリティシステム！</Text>
+			<Text>メカポリス『ノン！　ノン！
+デストロイセキュリティシステムだ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:06:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1576,27 +1576,29 @@
 		Label="pw_event6_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>メカポリス『うおおっ！　やめろ！
+			<Text>メカポリス『ぐはっ！！　やめろ！
+デストロイセキュリティシステム！！▽
 わたしは　こくさいコップの……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:20:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メカポリス『うおおっ！　やめろ！
+			<Text>メカポリス『ぐはっ！！　やめろ！
+デストロイセキュリティシステム！！▽
 私は　国際コップの……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:20:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1609,18 +1611,18 @@
 ダイナミックエンジンは▽
 じしょう　せいきの　おおどろぼう▽
 [Name:PokemonNickname Idx="0" ]ニンジャの▽
-まのてを　のがれた▼
+まの　てを　のがれた▼
 すごいぞ！
 デストロイセキュリティシステム！▼
 がんばれ！
 デストロイセキュリティシステム！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:49" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-27T02:30:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

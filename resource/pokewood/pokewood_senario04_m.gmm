@@ -710,15 +710,15 @@
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なにっ！？
-デストロ……　えっ？</language>
+デトスロロ……　えっ？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『なにっ！？
-デストロ……　えっ？</language>
+デトスロロ……　えっ？</language>
 	</row>
 	<row id="pw_event6_enemy_2">
-		<language name="JPN" width="256">メカポリス『デストロイ
-セキュリティシステム！</language>
-		<language name="JPN_KANJI" width="256">メカポリス『デストロイ
-セキュリティシステム！</language>
+		<language name="JPN" width="256">メカポリス『ノン！　ノン！
+デストロイセキュリティシステムだ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ノン！　ノン！
+デストロイセキュリティシステムだ！</language>
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それが……
@@ -733,9 +733,11 @@
 おまわりさーん！</language>
 	</row>
 	<row id="pw_event6_enemy_3">
-		<language name="JPN" width="256">メカポリス『うおおっ！　やめろ！
+		<language name="JPN" width="256">メカポリス『ぐはっ！！　やめろ！
+デストロイセキュリティシステム！！▽
 わたしは　こくさいコップの……</language>
-		<language name="JPN_KANJI" width="256">メカポリス『うおおっ！　やめろ！
+		<language name="JPN_KANJI" width="256">メカポリス『ぐはっ！！　やめろ！
+デストロイセキュリティシステム！！▽
 私は　国際コップの……</language>
 	</row>
 	<row id="pw_event6_hero_4">
@@ -745,7 +747,7 @@
 ダイナミックエンジンは▽
 じしょう　せいきの　おおどろぼう▽
 [1:02:ポケモンニックネーム:0]ニンジャの▽
-まのてを　のがれた▼
+まの　てを　のがれた▼
 すごいぞ！
 デストロイセキュリティシステム！▼
 がんばれ！
