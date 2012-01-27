@@ -6452,13 +6452,14 @@ http://www.pokemon-gl.com/
 			<Text>ランダムマッチ　または
 Ｗｉ－Ｆｉたいかいの　さんかちゅうに▽
 ほんたいの　でんげんが　きれたため▼
-しばらくの　あいだ
-ランダムマッチに　さんか　できません▼
-しばらく　じかんが　たちましたら
+１じかん
+ランダムマッチや　たいかいで▽
+たいせんが　できなくなくなります▼
+じかんが　たちましたら
 おこしください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-26T12:50:19" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T15:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6469,13 +6470,13 @@ http://www.pokemon-gl.com/
 			<Text>ランダムマッチ　または
 Ｗｉ－Ｆｉ大会の　参加中に▽
 本体の電源が　切れたため▼
-しばらくの　あいだ
-ランダムマッチに　参加できません▼
-しばらく　時間が　たちましたら
+１時間　ランダムマッチや　大会で
+対戦が　出来なくなります▼
+時間が　たちましたら
 お越しください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-26T12:50:21" />
+				User="shimoyamada:W00184"
+				Time="2012-01-26T15:40:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6561,12 +6562,12 @@ http://www.pokemon-gl.com/
 			<Text>ランダムマッチ または
 Ｗｉ－Ｆｉたいかいの　さんかちゅうに▽
 ほんたいの　でんげんが　きれると▼
-ランダムマッチには
-しばらく　さんか　できなくなります▽
+しばらく　ランダムマッチや　たいかいで　
+たいせんが　できなくなくなります▽
 ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:30:14" />
+				Time="2012-01-26T15:18:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6577,12 +6578,12 @@ http://www.pokemon-gl.com/
 			<Text>ランダムマッチ または
 Ｗｉ－Ｆｉ大会の　参加中に▽
 本体の電源が　切れると▼
-ランダムマッチには
-しばらく　参加できなくなります▽
+しばらく　ランダムマッチや　大会で　
+対戦が　出来なくなくなります▽
 ご注意　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:30:18" />
+				Time="2012-01-26T15:20:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
