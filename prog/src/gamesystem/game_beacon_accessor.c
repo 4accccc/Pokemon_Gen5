@@ -193,12 +193,7 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
   int start_log_no = 0, update_logno;
   const GAMEBEACON_INFO *update_info;
   int new_stack_count = 0;
-  RTCTime recv_time;
-  u16 time;
   
-  GFL_RTC_GetTime(&recv_time);
-  time = (recv_time.hour << 8) | recv_time.minute;
-   
   do{
     GAMEBEACON_RECV_CLOCK clock;
 
@@ -208,7 +203,7 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
     }
     update_info = GAMEBEACON_Get_BeaconLogDirect(update_logno, &clock );
     if(GAMEBEACON_InfoTbl_SetBeacon(
-        stack_infotbl, update_info, clock.clock /*time*/, FALSE) == GAMEBEACON_INFO_TBL_MAX){
+        stack_infotbl, update_info, &clock, FALSE) == GAMEBEACON_INFO_TBL_MAX){
       break;  //スタックテーブルがいっぱいになった
     }
     GAMEBEACON_Reset_UpdateFlag(update_logno);
@@ -280,7 +275,7 @@ void GAMEBEACON_Stack_PutBack(const GAMEBEACON_INFO_TBL *stack_infotbl)
  *
  * @param   infotbl		  ビーコンテーブルへのポインタ
  * @param   set_info		登録するビーコン
- * @param   time        受信日時(上位8bit：時(0～23)、下位8bit：分(0～59))
+ * @param   clock       受信日時 GAMEBEACON_RECV_CLOCK型
  * @param   push_out    TRUE:データがいっぱいの場合、先頭のデータをところてん式に
  *                           押し出ししてセットします。
  *                      FALSE:データいっぱいの場合、登録不可として処理を終了します
@@ -291,7 +286,7 @@ void GAMEBEACON_Stack_PutBack(const GAMEBEACON_INFO_TBL *stack_infotbl)
  * 新規ユーザーの場合はテーブルの最後に追加
  */
 //==================================================================
-int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_INFO *set_info, u16 time, BOOL push_out)
+int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_INFO *set_info,  GAMEBEACON_RECV_CLOCK* clock, BOOL push_out)
 {
   int log_no;
   
@@ -299,7 +294,7 @@ int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_
     if(infotbl->info[log_no].version_bit == 0 
         || infotbl->info[log_no].trainer_id == set_info->trainer_id){
       infotbl->info[log_no] = *set_info;
-      infotbl->time[log_no] = time;
+      infotbl->time[log_no] = GAMEBEACON_RecvClock2TimeCode( clock->hour, clock->min );
       return log_no;
     }
   }
@@ -309,7 +304,7 @@ int GAMEBEACON_InfoTbl_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEACON_
     MI_CpuCopy32( &infotbl->info[1], &infotbl->info[0], sizeof(GAMEBEACON_INFO)*GAMEBEACON_INFO_TBL_END);
     MI_CpuCopy16( &infotbl->time[1], &infotbl->time[0], sizeof(u16)*GAMEBEACON_INFO_TBL_END);
     infotbl->info[GAMEBEACON_INFO_TBL_END] = *set_info;
-    infotbl->time[GAMEBEACON_INFO_TBL_END] = time;
+    infotbl->time[GAMEBEACON_INFO_TBL_END] = GAMEBEACON_RecvClock2TimeCode( clock->hour, clock->min );
     return GAMEBEACON_INFO_TBL_END;
   }
   return GAMEBEACON_INFO_TBL_MAX;

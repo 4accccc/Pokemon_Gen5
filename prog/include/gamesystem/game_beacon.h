@@ -32,8 +32,9 @@
 #define GAMEBEACON_INFO_TBL_END   (GAMEBEACON_INFO_TBL_MAX-1)
 
 ///受け取り可能バージョン定義
-#define GAMEBEACON_RECV_VERSION_FULL  (0xFFFF)  //全バージョン受け取り可
-#define GAMEBEACON_RECV_VERSION_SWAN  (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
+#define GAMEBEACON_RECV_VERSION_FULL   (0xFFFF)  //全バージョン受け取り可
+#define GAMEBEACON_RECV_VERSION_SWAN   (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
+#define GAMEBEACON_RECV_VERSION_SYACHI (0x0003)  //BWが受け取れる
 
 typedef enum{
   GAMEBEACON_TYPE_COMMON,    ///<BWと互換する(bwとswan両方で受け取る)
@@ -204,10 +205,17 @@ typedef enum{
 typedef union _GAMEBEACON_RECV_CLOCK{
   struct{
     u8  min;
-    u8  hour;
+    u8  hour:7;
+    u8  research_f:1; //アンケートリサーチデータ取得済みか？
   };
   u16 clock;
 }GAMEBEACON_RECV_CLOCK;
+
+static inline u16 GAMEBEACON_RecvClock2TimeCode( u8 hour, u8 min )
+{
+  return ((hour<<8)|min);
+}
+
 
 ///送受信されるビーコンパラメータ
 typedef struct _GAMEBEACON_INFO GAMEBEACON_INFO;

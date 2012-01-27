@@ -464,6 +464,78 @@ static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
 
 //--------------------------------------------------------------
 /**
+ * ログからアンケート情報を収集する
+ *
+ * @param   bsys		
+ * @param   info		ビーコン情報
+ */
+//--------------------------------------------------------------
+static BOOL BeaconInfo_SetQuestionnaire(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
+{
+  //アンケート反映
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
+  QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
+  MISC *misc = SaveData_GetMisc(sv_ctrl);
+  int search_question_id, team_q_id, i;
+  u32 answer, lower_version = FALSE;
+    
+  if( info->pm_version == VERSION_WHITE || info->pm_version == VERSION_BLACK ){
+    lower_version = TRUE; //ホワイトorブラック
+  }else{
+    //ホワイト2 or ブラック2
+    if( info->version_bit & GAMEBEACON_RECV_VERSION_SYACHI ){
+      return FALSE; //SWANからBW互換ビーコンが来たらアンケート結果受け取りをupdate時まで遅延させる
+    }
+  }
+    
+  for(i = 0; i < QUESTION_NUM_PER_TOPIC; i++){
+    int j;
+
+    search_question_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, i);
+    if(search_question_id == INVESTIGATING_QUESTION_NULL){
+      continue;
+    }
+    //送り主がBWの時、スワンで変わった質問の結果は受け取らない
+    if( lower_version && QUESTIONNAIRE_INDEX_IsSwanNewQuestion( search_question_id ) ){
+      continue;
+    }
+    if(search_question_id == QUESTION_ID_PLAY_TIME){
+      u8 answer_num = QIDATA_Get_AnswerNum(search_question_id);
+      answer = info->play_hour / 10;
+      answer++; //0は無回答なので1インクリメント
+      if(answer > answer_num){
+        answer = answer_num;
+      }
+    }
+    else{
+      answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
+    }
+    if(answer == 0){  //0は無回答
+      continue;
+    }
+    //アンケート反映
+    if(QuestionnaireWork_IsTodayAnswerNumFull(questsave, search_question_id, answer) == FALSE){
+      QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
+      QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
+      bsys->new_entry = TRUE;
+      IWASAWA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
+    }
+    //調査隊依頼成果反映
+    for(j = 0; j < MAX_QNUM_PER_RESEARCH_REQ; j++) {
+      team_q_id = MISC_GetResearchQuestionID(misc, j);
+      if(team_q_id == QUESTION_ID_DUMMY){ continue; }
+
+      //受けている依頼と、調査中の質問が同じならカウントアップ
+      if( team_q_id == search_question_id ){
+        MISC_AddResearchCount(misc, j, 1);
+      }
+    }
+  } //end of for()
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
  * ログに新しいビーコン情報をセットする
  *
  * @param   bsys		
@@ -492,6 +564,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   }
   
   //アンケート反映
+#if 0
   {
     SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
     QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
@@ -548,7 +621,8 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       }
     } //end of for()
   } //end of アンケート反映
-  
+#endif
+
   //ログにセット
   {
     RTCTime recv_time;
@@ -559,6 +633,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
     setlog->time = 0;
     setlog->clock.hour = recv_time.hour;
     setlog->clock.min = recv_time.minute;
+    setlog->clock.research_f = BeaconInfo_SetQuestionnaire( bsys, info );
     bsys->update_log |= 1 << bsys->end_log;
     if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
       bsys->log_num++;
@@ -747,7 +822,7 @@ static void BeaconInfo_CheckCGearInfo(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
 BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
-  int i;
+  int i = 0;
   BOOL same_player = FALSE;
   BOOL same_data   = FALSE;
   BOOL is_search   = FALSE;
@@ -769,17 +844,36 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   if( GAMEBEACON_Check_Error( info ) ){
     return FALSE;
   }
-  
+  {
+    int ct;
+    for( ct = 0, i = bsys->start_log; ct < bsys->log_num; ct++ ){
+      if(bsys->log[i].info.trainer_id == info->trainer_id){
+        if( bsys->log[i].info.send_counter == info->send_counter){
+          same_data = TRUE; //ログに同じデータを受信済み
+          break;
+        }
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH ){
+          is_search = TRUE; //同じプレイヤーから届いたサーチビーコン
+          break;
+        }
+        same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
+        break;
+      }
+      if( ++i >= GAMEBEACON_SYSTEM_LOG_MAX ){
+        i = 0;  //回り込み
+      }
+    }
+  }
+#if 0  
   if(bsys->start_log <= bsys->end_log){
     for(i = bsys->start_log; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
-        {
-          is_search = TRUE;
-          break;
-        }
         if( bsys->log[i].info.send_counter == info->send_counter){
           same_data = TRUE; //ログに同じデータを受信済み
+          break;
+        }
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH ){
+          is_search = TRUE; //同じプレイヤーから届いたサーチビーコン
           break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
@@ -790,13 +884,12 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   else{
     for(i = bsys->start_log; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
-        {
-          is_search = TRUE;
-          break;
-        }
         if( bsys->log[i].info.send_counter == info->send_counter){
           same_data = TRUE; //ログに同じデータを受信済み
+          break;
+        }
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH ){
+          is_search = TRUE; //同じプレイヤーから届いたサーチビーコン
           break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
@@ -805,13 +898,12 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     }
     for(i = 0; i <= bsys->end_log; i++){
       if(bsys->log[i].info.trainer_id == info->trainer_id){
-        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH )
-        {
-          is_search = TRUE;
-          break;
-        }
         if( bsys->log[i].info.send_counter == info->send_counter){
           same_data = TRUE; //ログに同じデータを受信済み
+          break;
+        }
+        if(info->action.action_no == GAMEBEACON_ACTION_SEARCH ){
+          is_search = TRUE; //同じプレイヤーから届いたサーチビーコン
           break;
         }
         same_player = TRUE; //1プレイヤーは対になった1つのログバッファしか持たない
@@ -819,12 +911,16 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
       }
     }
   }
+#endif
 
+  if( same_data ){
+    //前回受信したのと同じデータなので更新しない
+    return FALSE;
+  }
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
   DEBUG_MAIN_TIME_AVERAGE_StartFunc();
 #endif
   //リゾートビーコン受け取り
-  if( same_data == FALSE)
   {
     if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
     {
@@ -852,15 +948,19 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
         }
       }
     }
-  }
+  } //リゾートビーコン受け取り終了
+
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
   DEBUG_MAIN_TIME_AVERAGE_EndFunc();
 #endif
 
-  //ログに同じデータがあるので受信しない
-  //  間にリゾートの処理を挟むため、直接returnする形式から変更
-  if( is_search || same_data )
+  //同じプレイヤーのサーチビーコンだったらアンケート回収だけ試みる
+  if( is_search )
   {
+    if( bsys->log[i].clock.research_f == FALSE ){
+      //アンケートがまだ未収集
+      bsys->log[i].clock.research_f = BeaconInfo_SetQuestionnaire( bsys, info );
+    }
     return FALSE;
   }
   
@@ -899,6 +999,10 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     bsys->log[i].clock.hour = recv_time.hour;
     bsys->log[i].clock.min = recv_time.minute;
 
+    if( bsys->log[i].clock.research_f == FALSE ){
+      //アンケートがまだ未収集
+      bsys->log[i].clock.research_f = BeaconInfo_SetQuestionnaire( bsys, info );
+    }
     bsys->update_log |= 1 << i;
     MATSUDA_Printf("sameBeacon %d件目\n", i);
   }
@@ -1684,7 +1788,7 @@ void GAMEBEACON_SendDataUpdate_MedalCount( u8 medal_count )
 
 //==================================================================
 /**
- * 送信データ更新：メダル獲得数をバッファに反映する
+ * 送信データ更新：イチオシメダルをバッファに反映する
  *
  * @param   pms		
  */

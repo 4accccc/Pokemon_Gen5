@@ -1841,14 +1841,16 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
 
   if(direct_mode && wk->view_wk != NULL){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
     RTCTime recv_time;
-    u16 time;
+    GAMEBEACON_RECV_CLOCK clock;
     GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
 
     GFL_RTC_GetTime(&recv_time);
-    time = (recv_time.hour << 8) | recv_time.minute;
-
+    clock.clock = 0;
+    clock.hour = recv_time.hour;
+    clock.min = recv_time.minute;
+    
     GAMEBEACON_InfoTbl_SetBeacon(
-      wk->view_wk->infoStack, info, time, FALSE);
+      wk->view_wk->infoStack, info, &clock, FALSE);
 
 //    DEBUG_SendBeaconCancel(); //送信キャンセル
   }
