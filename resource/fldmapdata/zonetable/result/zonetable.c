@@ -12412,7 +12412,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		camera_area_dummy, // camera_area
+		MATRIX_ID_H01, // camera_area
 		19,   // padding > placeicon
     3,
 		5,
@@ -14919,7 +14919,7 @@ static const ZONEDATA ZoneData[] = {
 		FMISSION_MAP_ATTR_NONE,
 		NARC_eventdata_t04r0101_bin,
     ZONE_ID_T04,
-		MAPNAME_T04,
+		MAPNAME_GATE_BRIDGE,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
@@ -16971,7 +16971,7 @@ static const ZONEDATA ZoneData[] = {
 		FMISSION_MAP_ATTR_NONE,
 		NARC_eventdata_c14r0601_bin,
     ZONE_ID_C14,
-		MAPNAME_C14,
+		MAPNAME_GATE_BRIDGE,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
