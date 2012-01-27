@@ -345,6 +345,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   {
     if( i<partyMax )
     {
+      int monsno;
       POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
       work->plateWork[i] = PLIST_PLATE_CreatePlate( work , i , pp );
     }
@@ -2916,6 +2917,45 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
 }
 
 //--------------------------------------------------------------------------
+//  決定時チェック
+//--------------------------------------------------------------------------
+static void PLIST_CheckDecide( PLIST_WORK *work )
+{
+  if( work->pokeCursor == PL_SEL_POS_ENTER )  // カーソル位置が「決定」
+  {
+    work->selectState = PSSEL_DECIDE;
+  }
+  else
+  if( work->pokeCursor == PL_SEL_POS_EXIT )   // カーソル位置が「やめる」
+  {
+    work->selectState = PSSEL_RETURN;
+  }
+  else
+  {
+    if( work->canSelectEgg == FALSE &&
+        PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
+    {
+      // ポケモンの上にカーソルがあるので各種チェックを行う
+      // タマゴを選択不可で且つタマゴを選択しようとしたらエラー
+      PMSND_PlaySystemSE( PLIST_SND_ERROR );
+    }
+    else
+    if( work->mainSeq == PSMS_MOVE_ITEM && 
+        work->pokeCursor == work->changeTarget )
+    {  
+      // アイテム移動＆メール移動で同じ場所で決定したらエラー
+      PMSND_PlaySystemSE( PLIST_SND_ERROR );
+    }
+    else
+    {
+//      OS_Printf("mode=%d, cursor=%d, change=%d, use=%d\n", work->mainSeq, work->pokeCursor,work->changeTarget, work->useTarget);
+      work->selectState = PSSEL_SELECT;
+    }
+  }
+
+}
+
+//--------------------------------------------------------------------------
 //  ポケモン選択画面 キー操作
 //--------------------------------------------------------------------------
 static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
@@ -2977,27 +3017,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     }
     else if( trg & PAD_BUTTON_A )
     {
-      if( work->pokeCursor == PL_SEL_POS_ENTER )
-      {
-        work->selectState = PSSEL_DECIDE;
-      }
-      else
-      if( work->pokeCursor == PL_SEL_POS_EXIT )
-      {
-        work->selectState = PSSEL_RETURN;
-      }
-      else
-      {
-        if( work->canSelectEgg == FALSE &&
-            PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
-        {
-          PMSND_PlaySystemSE( PLIST_SND_ERROR );
-        }
-        else
-        {
-          work->selectState = PSSEL_SELECT;
-        }
-      }
+      PLIST_CheckDecide( work );
     }
     
     //十字キー移動処理
@@ -3221,6 +3241,13 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       if( work->canSelectEgg == FALSE && ret <= PL_SEL_POS_POKE6 &&
           PLIST_PLATE_IsEgg( work , work->plateWork[ret] ) == TRUE )
       {
+        PMSND_PlaySystemSE( PLIST_SND_ERROR );
+      }
+      else
+      if( work->mainSeq == PSMS_MOVE_ITEM && ret <= PL_SEL_POS_POKE6 &&
+          ret == work->changeTarget )
+      {
+      // アイテム移動＆メール移動で同じ場所で決定したらエラー
         PMSND_PlaySystemSE( PLIST_SND_ERROR );
       }
       else
