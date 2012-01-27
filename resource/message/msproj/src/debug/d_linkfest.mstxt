@@ -1367,6 +1367,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_num_input03">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="0" ] [System:Color name="1" ][Name:PMS Idx="1" ] NG[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T07:34:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T07:34:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="0" ] [System:Color name="1" ][Name:PMS Idx="1" ] NG[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T07:34:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T07:34:16" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_cursor"
 		Style="Large">
 		<LanguageCell
@@ -7926,10 +7958,10 @@
 		Label="dlf_mission_level_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>lv=[Digit:1digit ] 配信=[Digit:1digit Idx="1" ]</Text>
+			<Text>item=[Name:Item ] num=[Digit:3digits Idx="1" ] lv=[Digit:1digit Idx="2" ] 配=[Digit:1digit Idx="3" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-26T14:37:58" />
+				Time="2012-01-27T07:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -7937,10 +7969,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>lv=[Digit:1digit ] 配信=[Digit:1digit Idx="1" ]</Text>
+			<Text>item=[Name:Item ] num=[Digit:3digits Idx="1" ] lv=[Digit:1digit Idx="2" ] 配=[Digit:1digit Idx="3" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-26T14:38:14" />
+				Time="2012-01-27T07:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"

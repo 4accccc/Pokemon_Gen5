@@ -24,6 +24,7 @@
 
 #include "field_sound.h"
 #include "field/eventwork.h"
+#include "item/item.h"
 
 #include "event_debug_local.h"
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
@@ -200,6 +201,7 @@ typedef enum{
   BPRM_WSET_TRNAME_EX,
   BPRM_WSET_MONSNAME,
   BPRM_WSET_ITEMNAME,
+  BPRM_WSET_ITEMNAME_CHECK,
   BPRM_WSET_FWAZA,
   BPRM_WSET_GPOWER,
   BPRM_WSET_ACTION,
@@ -706,7 +708,7 @@ static void sub_BmpWinAdd( BMP_WIN* bmpwin, u8 px, u8 py, u8 sx, u8 sy );
 static void sub_BmpWinDel( BMP_WIN* bmpwin );
 static void sub_GetMsgToBuf( DMENU_LINK_FEST* wk, u8 msg_id );
 static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
-static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type );
+static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type );
 
 static GMEVENT* event_CreateEventNumInput( DMENU_LINK_FEST* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func );
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LINK_FEST* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type );
@@ -1208,33 +1210,40 @@ static void sub_GetZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf 
  *  @brief  指定パラメータワード展開
  */
 //----------------------------------------------------------
-static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type )
+static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type )
 {
   switch( type ){
   case BPRM_WSET_TRNAME:
     WORDSET_RegisterTrainerName( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_TRNAME_EX:
     if( value == 0){
       MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
     }else{
       WORDSET_RegisterTrainerName( wk->wset, idx, value );
-      return;
+      return TRUE;
     }
     break;
   case BPRM_WSET_MONSNAME:
   case BPRM_WSET_MBASE_EFF_ENC:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_ITEMNAME:
     WORDSET_RegisterItemName( wk->wset, idx, value );
-    return;
+    return TRUE;
+  case BPRM_WSET_ITEMNAME_CHECK:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value )){
+      return FALSE;
+    }
+    return TRUE;
   case BPRM_WSET_FWAZA:
     WORDSET_RegisterWazaName( wk->wset, idx, DATA_FieldWazaTbl[value]);
-    return;
+    return TRUE;
   case BPRM_WSET_GPOWER:
     WORDSET_RegisterGPowerName( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_ACTION:
     GFL_MSG_GetString( wk->msgman, dlf_action_00+value, wk->str_tmp );
     break;
@@ -1270,7 +1279,7 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     break;
   case BPRM_WSET_MBASE_MUSHROOM_ENC:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_MushroomMonsTbl[value] );
-    return;
+    return TRUE;
   case BPRM_WSET_MBASE_EVENT:
     GFL_MSG_GetString( wk->msgman, dlf_mission_base_event_01+value, wk->str_tmp );
     break;
@@ -1282,7 +1291,7 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     break;
   case BPRM_WSET_MEX_EVENT_TRAIL:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_TrailMonsTbl[value] );
-    return;
+    return TRUE;
   case BPRM_WSET_MEX_NPC_ITEM_TRADE:
     GFL_MSG_GetString( wk->msgman, dlf_npc_item_trade_01+value, wk->str_tmp );
     break;
@@ -1306,6 +1315,7 @@ static void sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     break;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+  return TRUE;
 }
 
 //----------------------------------------------------------
@@ -1550,13 +1560,14 @@ static GMEVENT_RESULT event_NumInputMain( GMEVENT * event, int *seq, void * work
 //--------------------------------------------------------------
 static void ninput_PrintNumWin( DMENU_LINK_FEST* wk, EVWK_NINPUT* evwk, BMP_WIN* bmpwin, int num )
 {
+  BOOL ok_f = TRUE;
   WORDSET_RegisterNumber(wk->wset, 0, num, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
   if( evwk->wset_type == BPRM_WSET_NONE ){
     sub_GetMsgToBuf( wk, dlf_num_input01 );
   }else{
-    sub_LogParamWordset( wk, 1, num, evwk->wset_type );
-    sub_GetMsgToBuf( wk, dlf_num_input02 );
+    ok_f = sub_LogParamWordset( wk, 1, num, evwk->wset_type );
+    sub_GetMsgToBuf( wk, dlf_num_input02+(ok_f^1) );
   }
 
   GFL_BMP_Clear( bmpwin->bmp, FCOL_WIN_BASE );
@@ -2387,6 +2398,8 @@ typedef struct _EVWK_PARAM_SET_REQ{
   int     m_distribution_f;
   int     m_title;
   int     m_exp;
+  int     m_item;
+  int     m_pay;
   u8      m_type;
   FEST_MISSION  req_fmwk;
   FEST_MISSION  tmp_fmwk;
@@ -2415,6 +2428,7 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
 static void logreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
+static void mreq_DecideY( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 static void mreq_DecideSelect( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event );
 
 static void psreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk, u8 line );
@@ -2539,14 +2553,14 @@ static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * w
       }
       if( trg & PAD_BUTTON_X ){
         mreq_DecideX( wk, evwk, event );
-        (*seq) = 1;
-        break;
-      }
-      if( trg & PAD_BUTTON_SELECT ){
+      }else if( trg & PAD_BUTTON_Y ){
+        mreq_DecideY( wk, evwk, event );
+      }else if( trg & PAD_BUTTON_SELECT ){
         mreq_DecideSelect( wk, evwk, event );
-        (*seq) = 1;
+      }else{
         break;
       }
+      (*seq) = 1;
     }
     break;
   case 3:
@@ -2610,6 +2624,10 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
       evwk->log_prm_set->min, evwk->log_prm_set->max,
       &evwk->m_ex_param, evwk->log_prm_set->wset_type ));
     break;
+  case MREQ_LINE_LEVEL:
+    GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, ITEM_HAIPAABOORU, ITEM_KURITHIKATTO3,
+      &evwk->m_item, NULL, BPRM_WSET_ITEMNAME_CHECK ));
+    break;
   case MREQ_LINE_TITLE:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_title_tutorial, msg_fm_explain_tutorial-1,
       &evwk->m_title, NULL, BPRM_WSET_MISSION_MSGID_NAME ));
@@ -2625,6 +2643,19 @@ static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVEN
   switch( evwk->line ){
   case MREQ_LINE_LEVEL:
     evwk->m_level = (evwk->m_level+1)%4;
+    break;
+  }
+}
+static void mreq_DecideY( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event )
+{
+  int cont = GFL_UI_KEY_GetCont();
+  switch( evwk->line ){
+  case MREQ_LINE_LEVEL:
+    if( cont & PAD_BUTTON_L ){
+      evwk->m_pay = ((evwk->m_pay+126)%127)+1;
+    }else{
+      evwk->m_pay = ((evwk->m_pay+1)%127)+1;
+    }
     break;
   }
 }
@@ -2748,8 +2779,15 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
     evwk->m_title = evwk->req_fmwk.beacon.m_title_id;
     evwk->m_exp = evwk->req_fmwk.beacon.m_exp_id;
     evwk->m_distribution_f = evwk->req_fmwk.beacon.distribution_f;
+    evwk->m_item = evwk->req_fmwk.beacon.item;
+    evwk->m_pay = evwk->req_fmwk.beacon.pay;
   }
   evwk->m_type = evwk->req_fmwk.arc.m_type-1;
+
+  if( ITEM_IsDisableItem( evwk->m_item) ||
+      ITEM_IsOnlyOneItem( evwk->m_item )){
+    evwk->m_item = evwk->req_fmwk.beacon.item;
+  }
   
   evwk->m_prm_set = &DATA_MissionBaseParam[ evwk->m_type ];
   evwk->log_prm_set = NULL;
@@ -2784,6 +2822,8 @@ static void mreq_MakeCustomMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ
   beacon->distribution_f = evwk->m_distribution_f;
   beacon->m_title_id = evwk->m_title;
   beacon->m_exp_id = evwk->m_exp;
+  beacon->item = evwk->m_item;
+  beacon->pay = evwk->m_pay;
 }
 
 static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
@@ -2828,9 +2868,11 @@ static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk
   }
   psreq_PrintLine( wk, evwk, MREQ_LINE_EX_PARAM, wk->str_expand );
 
-  //レベル、配信フラグ
-  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_level+1, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  WORDSET_RegisterNumber(wk->wset, 1, evwk->m_distribution_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  //アイテム、アイテム数、レベル、配信フラグ
+  sub_LogParamWordset( wk, 0, evwk->m_item, BPRM_WSET_ITEMNAME );
+  WORDSET_RegisterNumber(wk->wset, 1, evwk->m_pay, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 2, evwk->m_level+1, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 3, evwk->m_distribution_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   sub_GetMsgToBuf( wk, dlf_mission_level_01 );
   psreq_PrintLine( wk, evwk, MREQ_LINE_LEVEL, wk->str_expand );
 }
