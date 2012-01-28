@@ -11,6 +11,7 @@
 
   //@author fujimura_souichirou
   //@author suginaka_katsunori
+  //@author Mizuguchi_Mai（ライブキャスター）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,9 +28,21 @@ _EVENT_DATA   ev_bg_t01r0401_note_01
 _EVENT_DATA   ev_t01r0401_hakase2_01
 _EVENT_DATA   ev_t01r0401_hakase1_01
 _EVENT_DATA   ev_t01r0401_poke29_01
-_EVENT_DATA	ev_t01r0401_poke60_01
+_EVENT_DATA   ev_t01r0401_poke60_01
+_EVENT_DATA   ev_zone_t01r0401
 _EVENT_DATA_END
 
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_t01r0401
+
+  //==================================//
+  //ローカルライブキャスター・博士通話状態を変更
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_RESEARCHINSTITUTE )
+  //==================================//
+
+INIT_EVENT_END
 
 /************************************************************/
 /*  写真たて                                                */

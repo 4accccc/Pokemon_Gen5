@@ -10,6 +10,7 @@
   .include  "r01_def.h"
 
   //@author fujimura_souichirou（一言メッセージ配置）
+  //@author Mizuguchi_Mai（ライブキャスター）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,7 +28,23 @@ _EVENT_DATA   ev_bg_t01_board_05
 _EVENT_DATA   ev_t01_bigman_01
 _EVENT_DATA   ev_t01_woman2_01
 _EVENT_DATA   ev_t01_babygirl1_01
+_EVENT_DATA   ev_zone_t01
 _EVENT_DATA_END //データ終端を指定しています。
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_t01
+  
+  //心の空洞イベント未見なら博士の状態を変更
+  IF $WK_SCENE_SPPOKE_EVENT_01 != 4 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //==================================//
+    //ローカルライブキャスター・博士通話状態を変更
+    _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_D33R0101 )
+    //==================================//
+  ENDIF
+
+INIT_EVENT_END
 
 
 /************************************************************/
