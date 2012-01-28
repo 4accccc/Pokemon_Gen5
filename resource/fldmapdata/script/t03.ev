@@ -321,8 +321,8 @@ EVENT_START   ev_pos_t03_hakase2_01
     //アニメ：アララギ娘民家の中へ
     _OBJ_ANIME( T03_HAKASE2_01, anm_walk_u )
     _OBJ_ANIME_WAIT()
-    _OBJ_DEL( T03_HAKASE2_01 )
     _SE_PLAY( SEQ_SE_KAIDAN )
+    _OBJ_DEL( T03_HAKASE2_01 )
     _SE_WAIT()
 
   //昼の場合
@@ -352,8 +352,8 @@ EVENT_START   ev_pos_t03_hakase2_01
     //アニメ：おばあさん民家の中へ
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_u )
     _OBJ_ANIME_WAIT()
+    _SE_PLAY( SEQ_SE_KAIDAN )
     _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-    _SE_PLAY( SEQ_SE_KAIDAN ) 
     _SE_WAIT()
 
     //アニメ：アララギ娘民家の中へ

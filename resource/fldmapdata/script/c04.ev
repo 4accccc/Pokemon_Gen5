@@ -939,18 +939,13 @@ EVENT_START   ev_c04_swheroine_01
     _OBJ_ANIME_WAIT()
 
     _OBJ_DEL( C04_TBOSS_01 )
-
-    //ŠK’iSE
-    _SE_PLAY( SEQ_SE_KAIDAN ) 
-    _SE_WAIT()
     
     _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
-	  _OBJ_ANIME_WAIT()
-	
-	_OBJ_DEL( C04_TBOSSBL_01 )
-	
+    _OBJ_ANIME_WAIT()
+
     //ŠK’iSE
-    _SE_PLAY( SEQ_SE_KAIDAN ) 
+     _SE_PLAY( SEQ_SE_KAIDAN ) 
+	_OBJ_DEL( C04_TBOSSBL_01 )
 	_SE_WAIT()
 
     _TIME_WAIT( 15 )

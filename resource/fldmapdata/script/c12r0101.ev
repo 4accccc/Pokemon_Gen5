@@ -318,7 +318,6 @@ EVENT_START ev_pos_c12r0101_gameclear
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _TIME_WAIT(8)
   
   //フィールド上にアララギ父配置
   _OBJ_ADD_EX( 5, 10, DIR_UP, MMDL_ID_EVENTOBJ_00, HAKASE1, MV_DMY )
@@ -389,7 +388,6 @@ EVENT_START ev_pos_c12r0101_gameclear
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _TIME_WAIT( 8 )
   
   //アララギ父動作モデル削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )

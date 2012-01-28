@@ -122,10 +122,10 @@ EVENT_START		ev_pos_r05_swbell_01
 
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //フィールド上にベル配置
   _OBJ_ADD_EX( 377, 438, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+  _SE_WAIT()
   
   //メッセージ：おうい！
   _BALLOONWIN_OBJMSG_MF( msg_r05_swbell_01,msg_r05_swbell_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
