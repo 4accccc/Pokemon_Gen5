@@ -113,7 +113,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       $OBJCHRWORK0 = SPPOKE02_ZE //OBJをゼクロムに
 
       //システム：まわりの　オーラを　とりこんだ
-      _SYSWIN_MSG( msg_d08r0901_dstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
+      _SYSWIN_MSG( msg_d08r0901_dstone_02, POS_DOWN )
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
@@ -184,7 +184,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       $OBJCHRWORK0 = SPPOKE01_RE //OBJをレシラムに
 
       //システム：まわりの　オーラを　とりこんだ
-      _SYSWIN_MSG( msg_d08r0901_lstone_02, POS_DOWN )   //【仮】ストーン浮上デモ
+      _SYSWIN_MSG( msg_d08r0901_lstone_02, POS_DOWN )
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
