@@ -218,6 +218,7 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
 
   Mb_DataConv_Seq_Set( p_wk, Mb_DataConv_SeqFunc_FadeIn, p_seq );
 
+  PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -422,7 +423,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_COMM_WAIT:
     if( MB_COMM_IsInitComm(p_wk->p_comm) )
     {
-      //MB_DATA_DEBUG_ScreenDraw( 32*2 );
+      MB_DATA_DEBUG_ScreenDraw( 32*2 );
       GF_ASSERT_MSG_HEAVY( MB_IsMultiBootChild(),"This DS is not multiboot child!!\n");
       GFL_NET_ReloadIconTopOrBottom(TRUE, p_wk->heapID );
 
@@ -457,7 +458,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     break;
 
   case SEQ_CHECK_ROM:
-    //MB_DATA_DEBUG_ScreenDraw( 32*2 );
+    MB_DATA_DEBUG_ScreenDraw( 32*2+1*2 );
     p_wk->p_data = MB_DATA_InitSystem( p_wk->heapID );
     p_wk->card_type = MB_DATA_GetCardType( p_wk->p_data );
 
@@ -475,13 +476,13 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       MB_DATA_SetCardType( p_wk->p_data, CARD_TYPE_WB );
       OS_TPrintf( "ダミーカードなのでWBとして認識させるよ\n" );
       (*p_seq)++;
-      MB_DATA_DEBUG_ScreenDraw( 32*2+1*2 );
+      MB_DATA_DEBUG_ScreenDraw( 32*2+2*2 );
     }
     else
 #endif
     if( p_wk->card_type == CARD_TYPE_WB )
     {
-      MB_DATA_DEBUG_ScreenDraw( 32*2+2*2 );
+      MB_DATA_DEBUG_ScreenDraw( 32*2+3*2 );
       (*p_seq)++;
     }
     else
@@ -496,7 +497,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     }
     break;
   case SEQ_LOAD_DATA:
-    MB_DATA_DEBUG_ScreenDraw( 32*2+3*2 );
+    MB_DATA_DEBUG_ScreenDraw( 32*2+4*2 );
     if( MB_DATA_LoadDataFirst( p_wk->p_data ) == TRUE )
     {
 #ifdef DEBUG_MB_ERROR_KEYINPUT
@@ -525,7 +526,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     break;
   case SEQ_LOAD_ERR:
     {
-      //MB_DATA_DEBUG_ScreenDraw( 32*2+4*2 );
+      MB_DATA_DEBUG_ScreenDraw( 32*2+5*2 );
       switch( MB_DATA_GetErrorState( p_wk->p_data ) )
       {
       case DES_MISS_LOAD_BACKUP:

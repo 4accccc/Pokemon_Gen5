@@ -199,7 +199,7 @@ void  MB_DATA_ResetSaveLoad( MB_DATA_WORK *dataWork )
 BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork )
 {
   //自前で読み込む・・・
-  //MB_DATA_DEBUG_ScreenDraw( 64+dataWork->subSeq );
+  MB_DATA_DEBUG_ScreenDraw( 64 );
   switch( dataWork->cardType )
   {
   case CARD_TYPE_DP:
