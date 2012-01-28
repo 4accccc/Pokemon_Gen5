@@ -94,9 +94,6 @@ enum{
  MENU_BEACON_REQ,
  MENU_STACK_CHECK,
  MENU_STACK_CLEAR,
- MENU_RECV_BUF_CHECK,
- MENU_RECV_BUF_CLEAR,
- MENU_MY_GPOWER,
  MENU_MISSION_END,
  MENU_MISSION_MEMBER_CHECK,
  MENU_MISSION_EVPOS_CHECK,
@@ -177,13 +174,14 @@ typedef enum{
 
 #define LOGREQ_FWAZA_MAX  (10)
 
-typedef enum{
+enum{
  TR_PAT_MINE,
  TR_PAT_FAKE,
  TR_PAT_MAX,
-}TR_PATTERN;
+};
+typedef u8 TR_PATTERN;
 
-typedef enum{
+enum{
   FAKE_ID,
   FAKE_NAME,
   FAKE_ZONE,
@@ -193,15 +191,16 @@ typedef enum{
   FAKE_SCORE,
   FAKE_TR_VIEW,
   FAKE_DATA_MAX,
-}FAKE_DATA_ID;
+};
+typedef u8 FAKE_DATA_ID;
 
-typedef enum{
+enum{
   BPRM_WSET_NONE,
-  BPRM_WSET_TRNAME,
   BPRM_WSET_TRNAME_EX,
   BPRM_WSET_MONSNAME,
   BPRM_WSET_ITEMNAME,
   BPRM_WSET_ITEMNAME_CHECK,
+  BPRM_WSET_ITEMNAME_CHECK_SP,
   BPRM_WSET_FWAZA,
   BPRM_WSET_GPOWER,
   BPRM_WSET_ACTION,
@@ -225,9 +224,10 @@ typedef enum{
   BPRM_WSET_MEX_NPC_POKE_QUIZ,
   BPRM_WSET_MISSION_ID_NAME,
   BPRM_WSET_MISSION_MSGID_NAME,
-}BPRM_WSET_TYPE;
+};
+typedef u8 BPRM_WSET_TYPE;
 
-typedef enum{
+enum{
  LOG_PSET_DEFAULT,     //デフォルト(トレーナー名)  
  LOG_PSET_MONSNO,      //ポケモン種族名
  LOG_PSET_ITEM,        //アイテム名
@@ -235,33 +235,21 @@ typedef enum{
  LOG_PSET_WAZA,        //技
  LOG_PSET_FREEWORD,    //フリーワード
  LOG_PSET_MAX,
-}LOG_PSET_TYPE;
+};
+typedef u8 LOG_PSET_TYPE;
 
-typedef enum{
+enum{
  MBASE_PSET_MONSNO,      //ポケモン種族名
  MBASE_PSET_MUSHROOM,    //キノコポケモン種族名
  MBASE_PSET_EVENT,       //イベントミッションタイプ
  MBASE_PSET_ITEM,        //アイテムミッション アイテムセット名
  MBASE_PSET_NPC,         //NPCミッションパターン
  MBASE_PSET_MAX,
-}MBASE_PSET_TYPE;
-
-typedef enum{
- BEACON_ARG_NONE,
- BEACON_ARG_U8,
- BEACON_ARG_U16,
- BEACON_ARG_U32,
- BEACON_ARG_STR,
- BEACON_ARG_U16_STR,
- BEACON_ARG_GDATA_U32,
- BEACON_ARG_FWORD,
- BEACON_ARG_GPOWER,
- BEACON_ARG_FWAZA,
-}BEACON_ARG_TYPE;
+};
+typedef u8 MBASE_PSET_TYPE;
 
 typedef enum{
  NINPUT_STACK_CHECK_THROW,
- NINPUT_GPOWER,
  //フィールドメニュ
  NINPUT_MISSION_BEACON_WAIT,
  NINPUT_MISSION_LEVEL_OPEN,
@@ -282,40 +270,28 @@ typedef enum{
  NINPUT_MISSION_MEMBER_NUM,
 }NINPUT_ID;
 
-typedef void (*BEACON_SET_FUNC_NONE)(void);
-typedef void (*BEACON_SET_FUNC_U8)(u8);
-typedef void (*BEACON_SET_FUNC_U16)(u16);
-typedef void (*BEACON_SET_FUNC_U32)(u32);
-typedef void (*BEACON_SET_FUNC_STR)(const STRBUF*);
-typedef void (*BEACON_SET_FUNC_U16_STR)(u16,const STRBUF*);
-typedef void (*BEACON_SET_FUNC_GDATA_U32)(GAMEDATA* gdata,u32);
-typedef void (*BEACON_SET_FUNC_GDATA_STR)(GAMEDATA* gdata, const STRBUF*);
-typedef void (*BEACON_SET_FUNC_GPOWER)(GPOWER_ID);
-
 //======================================================================
 //
 //構造体定義
 //
 //======================================================================
 typedef struct _D_LOG_PARAM{
-  void* func;
   LOG_PSET_TYPE  prm_type; //パラメータタイプ
-  BEACON_ARG_TYPE   arg_type; //引数の型タイプ
 }D_LOG_PARAM;
 
 typedef struct _D_FAKE_PRM_SET{
   BPRM_WSET_TYPE  wset_type;
-  int keta;
-  int min,max;
+  u8 keta;
+  u16 min,max;
 }D_FAKE_PRM_SET;
 
 typedef struct _D_LOG_PRM_SET{
-  int min,max;   //パラメータのmix,max
+  s16 min,max;   //パラメータのmix,max
   BPRM_WSET_TYPE wset_type;
 }D_LOG_PRM_SET;
 
 typedef struct _D_MISSION_PRM_SET{
-  int min,max;   //パラメータのmix,max
+  s16 min,max;   //パラメータのmix,max
   const D_LOG_PRM_SET* tbl;
 }D_MISSION_PRM_SET;
 
@@ -349,11 +325,6 @@ typedef struct _DMENU_LINK_FEST{
   FEST_MISSION* fmwk;
   FMISSION_DATA_MAN*  fm_data_man;
 
-  BEACON_VIEW*    view_wk;
-  BEACON_STATUS* b_status;
-  GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
-  GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
- 
   GFL_FONT* fontHandle;
 	GFL_MSGDATA* msgman;						//メッセージマネージャー
   WORDSET* wset;
@@ -390,7 +361,7 @@ typedef struct {
 }NINPUT_PARAM;
 
 typedef struct{
-  int min, max;
+  s16 min, max;
 }NINPUT_MINMAX;
 
 //======================================================================
@@ -413,8 +384,6 @@ static const DEBUG_MENU_LIST DATA_DebugLinkFestMenuList[] =
   { dlf_menu_10, (void*)MENU_MISSION_EVPOS_CHECK, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_11, (void*)MENU_MISSION_EVFLAG_CHECK, GFL_OVERLAY_BLANK_ID },
 
-//  { dlf_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
-//  { dlf_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_12, (void*)MENU_MISSION_SPOT_MODE, GFL_OVERLAY_BLANK_ID },
   { dlf_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
@@ -463,101 +432,101 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestFromFieldMenuData = {
  *  @brief  FMISSION_LOG_ACTIOONの並びと同一である必要があります
  */
 static const D_LOG_PARAM DATA_DebugLogParam[FMISSION_LOG_ACT_MAX] = {
-  ///< 0
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  ///< 1
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  ///< 2
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  ///< 3
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
+ ///< 0
+ { LOG_PSET_DEFAULT },
+ ///< 1
+ { LOG_PSET_DEFAULT },
+ ///< 2
+ { LOG_PSET_DEFAULT },
+ ///< 3
+ { LOG_PSET_DEFAULT },
 
-  ///<FMISSION_LOG_ACT_POKE_ENCOUNT  [ポケモン名]とエンカウントした 4
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  ///<FMISSION_LOG_ACT_POKE_WIN  [ポケモン名]を倒した 5
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, }, 
-  ///<FMISSION_LOG_ACT_POKE_CAPTURE [ポケモン名]を捕まえた 6
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_U16,	},
-  /// FMISSION_LOG_ACT_POKE_ESCAPE [ポケモン名]に逃げられたor逃げた 7
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_TR_ENCOUNT トレーナー戦開始 8
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_TR_WIN トレーナー戦勝利 9
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_GAMEOVER 全滅した 10 
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_ITEM_USE [アイテム名]を使用した 11 
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_ITEM_GET [アイテム名]を手に入れた 12
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_FIELD_SKILL [フィールド技]を使った 13
-  { NULL,                                 LOG_PSET_WAZA,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_SHOPPING 買い物中 14
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_GPOWER デルパワーを使った 15
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_FERRIS_WHEEL 観覧車に乗った 16
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_WATCH_SIGNBOARD 看板を調べている 17
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// MISSION_LOG_ACT_SODATEYA_EGG タマゴを受け取った 18
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_EFF_ENC_WIN [ポケモン名]を倒した(揺れ草) 19
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_EFF_ENC_CAPTURE [ポケモン名]を捕まえた(揺れ草) 20
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_MUSHROOM_WIN [ポケモン名]を倒した(キノコエンカウント) 21
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_MUSHROOM_CAPTURE [ポケモン名]を捕まえた(キノコエンカウント) 22
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_KIRA_ITEM_GET [アイテム名]を見つけた(エフェクトアイテム) 23
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
+ ///<FMISSION_LOG_ACT_POKE_ENCOUNT [ポケモン名]とエンカウントした 4
+ { LOG_PSET_MONSNO },
+ ///<FMISSION_LOG_ACT_POKE_WIN [ポケモン名]を倒した 5
+ { LOG_PSET_MONSNO },	  
+ ///<FMISSION_LOG_ACT_POKE_CAPTURE [ポケモン名]を捕まえた 6
+ { LOG_PSET_MONSNO	},
+ /// FMISSION_LOG_ACT_POKE_ESCAPE [ポケモン名]に逃げられたor逃げた 7
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_TR_ENCOUNT トレーナー戦開始 8
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_TR_WIN トレーナー戦勝利 9
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_GAMEOVER 全滅した 10 
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_ITEM_USE [アイテム名]を使用した 11 
+ { LOG_PSET_ITEM },
+ /// FMISSION_LOG_ACT_ITEM_GET [アイテム名]を手に入れた 12
+ { LOG_PSET_ITEM },
+ /// FMISSION_LOG_ACT_FIELD_SKILL [フィールド技]を使った 13
+ { LOG_PSET_WAZA },
+ /// FMISSION_LOG_ACT_SHOPPING 買い物中 14
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_GPOWER デルパワーを使った 15
+ { LOG_PSET_GPOWER },
+ /// FMISSION_LOG_ACT_FERRIS_WHEEL 観覧車に乗った 16
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_WATCH_SIGNBOARD 看板を調べている 17
+ { LOG_PSET_DEFAULT },
+ /// MISSION_LOG_ACT_SODATEYA_EGG タマゴを受け取った 18
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_EFF_ENC_WIN [ポケモン名]を倒した(揺れ草) 19
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_EFF_ENC_CAPTURE [ポケモン名]を捕まえた(揺れ草) 20
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_MUSHROOM_WIN [ポケモン名]を倒した(キノコエンカウント) 21
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_MUSHROOM_CAPTURE [ポケモン名]を捕まえた(キノコエンカウント) 22
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_KIRA_ITEM_GET [アイテム名]を見つけた(エフェクトアイテム) 23
+ { LOG_PSET_ITEM },
 
-  /// FMISSION_LOG_ACT_TOWER_OF_HEAVEN 鐘を鳴らした 24
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_FEATHER_GET [アイテム名]を見つけた(羽) 25
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_JEWEL_GET [アイテム名]を見つけた(ジュエルと石) 26
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_EGG_HATCH [ポケモン名]が生まれた 27
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_FISHING_ENCOUNT [ポケモン名]を釣り上げた 28
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_ANIMAL_TRAIL_ENCOUNT [ポケモン名]を見つけた(獣道) 29
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
+ /// FMISSION_LOG_ACT_TOWER_OF_HEAVEN 鐘を鳴らした 24
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_FEATHER_GET [アイテム名]を見つけた(羽) 25
+ { LOG_PSET_ITEM },
+ /// FMISSION_LOG_ACT_JEWEL_GET [アイテム名]を見つけた(ジュエルと石) 26
+ { LOG_PSET_ITEM },
+ /// FMISSION_LOG_ACT_EGG_HATCH [ポケモン名]が生まれた 27
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_FISHING_ENCOUNT [ポケモン名]を釣り上げた 28
+ { LOG_PSET_MONSNO },
+ /// FMISSION_LOG_ACT_ANIMAL_TRAIL_ENCOUNT [ポケモン名]を見つけた(獣道) 29
+ { LOG_PSET_MONSNO },
 
-  /// FMISSION_LOG_ACT_HELP_CHILD まいごを助けた 30
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_PRESENT_ITEM <[アイテム名]を渡した 31
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_ITEM_TRADE 道具交換成功 32
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_ITEM_BUY [アイテム名]を買った 33
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_RPS_WIN じゃんけんに買った 34
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_MEMORY_QUIZ_CLEAR 記憶クイズに正解した 35
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_TR_BATTLE_WIN トレーナーを倒した 36
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_GET_A_PRESENT [アイテム名]をもらった 37
-  { NULL,                                 LOG_PSET_ITEM,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_POKE_QUIZ_CLEAR 図鑑クイズに正解 38
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_RUN_OUT_OF_MONEY お金が足りない 39
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_RPS_LOSE じゃんけんに負けた 40
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER クイズに不正解(記憶・図鑑クイズ共用) 41
-  { NULL,                                 LOG_PSET_DEFAULT,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_POKE_DOWN [ポケモン名]が瀕死 42
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_POKE_HP_LITTLE [ポケモン名]のHPが少ない 43
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_POKE_PP_LITTLE [ポケモン名]のPPが少ない 44
-  { NULL,                                 LOG_PSET_MONSNO,	  BEACON_ARG_NONE, },
-  /// FMISSION_LOG_ACT_FREEWORD 一言メッセージ 45
-  { NULL,                                 LOG_PSET_FREEWORD,	  BEACON_ARG_NONE, },
+ /// FMISSION_LOG_ACT_HELP_CHILD まいごを助けた 30
+ { LOG_PSET_DEFAULT },
+ /// FMISSION_LOG_ACT_PRESENT_ITEM <[アイテム名]を渡した 31
+ { LOG_PSET_ITEM  },
+ /// FMISSION_LOG_ACT_ITEM_TRADE 道具交換成功 32
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_ITEM_BUY [アイテム名]を買った 33
+ { LOG_PSET_ITEM  },
+ /// FMISSION_LOG_ACT_RPS_WIN じゃんけんに買った 34
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_MEMORY_QUIZ_CLEAR 記憶クイズに正解した 35
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_TR_BATTLE_WIN トレーナーを倒した 36
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_GET_A_PRESENT [アイテム名]をもらった 37
+ { LOG_PSET_ITEM  },
+ /// FMISSION_LOG_ACT_POKE_QUIZ_CLEAR 図鑑クイズに正解 38
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_RUN_OUT_OF_MONEY お金が足りない 39
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_RPS_LOSE じゃんけんに負けた 40
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER クイズに不正解(記憶・図鑑クイズ共用) 41
+ { LOG_PSET_DEFAULT  },
+ /// FMISSION_LOG_ACT_POKE_DOWN [ポケモン名]が瀕死 42
+ { LOG_PSET_MONSNO  },
+ /// FMISSION_LOG_ACT_POKE_HP_LITTLE [ポケモン名]のHPが少ない 43
+ { LOG_PSET_MONSNO  },
+ /// FMISSION_LOG_ACT_POKE_PP_LITTLE [ポケモン名]のPPが少ない 44
+ { LOG_PSET_MONSNO  },
+ /// FMISSION_LOG_ACT_FREEWORD 一言メッセージ 45
+ { LOG_PSET_FREEWORD  },
 };
 
 //ログアクションビーコン
@@ -565,7 +534,7 @@ static const  D_LOG_PRM_SET DATA_DebugLogParamSet[LOG_PSET_MAX] = {
  { -1, -1, BPRM_WSET_NONE,}, //LOG_PSET_DEFAULT, デフォルト
  { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //LOG_PSET_MONSNO,    ポケモン種族名
  { ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //LOG_PSET_ITEM,       アイテム名
- { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //LOG_PSET_GPOWER,      Gパワー名
+ { 0, GPOWER_ID_MAX-1, BPRM_WSET_GPOWER }, //LOG_PSET_GPOWER,      Gパワー名
  { 0, LOGREQ_FWAZA_MAX-1, BPRM_WSET_FWAZA }, //LOG_PSET_WAZA,        技名
  { 0, NAMEIN_SHORTCUT_RET_MAX-1, BPRM_WSET_FREEWORD }, //LOG_PSET_FREEWORD,    フリーワード8文字
 };
@@ -714,12 +683,8 @@ static GMEVENT* event_CreateEventNumInput( DMENU_LINK_FEST* wk, int key, int min
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LINK_FEST* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type );
 static GMEVENT* event_CreateEventNumInputRetWorkEx( DMENU_LINK_FEST* wk, int key, int min, int max, int* ret_wk, int* ret_flag, BPRM_WSET_TYPE wset_type );
 static GMEVENT* event_CreateEventDataCheck( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk, DATA_CHECK_MODE mode );
-//static GMEVENT* event_CreateEventLogBeaconReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk );
 static GMEVENT* event_CreateEventParamSetReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk, PARAM_SET_REQ_MODE mode );
-//static GMEVENT* event_CreateEventMissionReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk );
 
-static int ninput_GetMiscCount( DMENU_LINK_FEST* wk, int param );
-static void ninput_SetMiscCount( DMENU_LINK_FEST* wk, int param, int value );
 static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param );
 static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value );
 
@@ -743,7 +708,6 @@ GMEVENT* DEBUG_EVENT_LinkFest( GAMESYS_WORK* gsys, void* parent_work )
   event = GMEVENT_Create( gsys, NULL, event_LinkFestMain, sizeof(DMENU_LINK_FEST) );
 
   wk = GMEVENT_GetEventWork( event );
-  wk->view_wk = (BEACON_VIEW*)parent_work;
   
   dmenu_RefarenceGet( wk, gsys );
   dmenu_WorkInit( wk );
@@ -765,7 +729,6 @@ GMEVENT* DEBUG_EVENT_LinkFestFromField( GAMESYS_WORK* gsys,void* parent_work )
   event = GMEVENT_Create( gsys, NULL, event_LinkFestFromFieldMain, sizeof(DMENU_LINK_FEST) );
 
   wk = GMEVENT_GetEventWork( event );
-  wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
 
   dmenu_RefarenceGet( wk, gsys );
   dmenu_WorkInit( wk );
@@ -782,7 +745,6 @@ static void dmenu_RefarenceGet( DMENU_LINK_FEST* wk, GAMESYS_WORK* gsys )
 {
   wk->gsys = gsys; 
   wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
-  wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
   wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   wk->int_sv = SaveData_GetIntrude( wk->save );
@@ -945,12 +907,6 @@ static GMEVENT_RESULT event_LinkFestMain( GMEVENT * event, int *seq, void * work
       case MENU_STACK_CLEAR:
         FMISSION_LOG_TBL_Clear( LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys ) );
         break;
-      case MENU_RECV_BUF_CHECK:
-        GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_STACK ) );
-        break;
-      case MENU_RECV_BUF_CLEAR:
-        DEBUG_RecvBeaconBufferClear();
-        break;
       case MENU_MISSION_MEMBER_CHECK:
         GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_MEMBER ) );
         break;
@@ -1025,24 +981,17 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
         break;
       }
       switch( ret ){
-      case MENU_RECV_BUF_CHECK:
-        GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_STACK ) );
-        break;
-      case MENU_RECV_BUF_CLEAR:
-        DEBUG_RecvBeaconBufferClear();
-        break;
       case MENU_MISSION_ENTRY_STACK_CHECK:
         GMEVENT_CallEvent( event, event_CreateEventDataCheck( wk->gsys, wk, DATA_CHECK_MODE_ENTRY_STACK ) );
         break;
       case MENU_MISSION_REQ:
+        if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
+          break;
+        }
         GMEVENT_CallEvent( event, event_CreateEventParamSetReq( wk->gsys, wk, PARAM_SET_REQ_MISSION ) );
         wk->mission_req_f = FALSE;
         *seq = SEQ_MISSION_START_CHECK;
         return GMEVENT_RES_CONTINUE;
-      case MENU_MY_GPOWER:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, NINPUT_GPOWER, 0, GPOWER_ID_CAPTURE_S+1,
-            ninput_SetDebugParam, ninput_GetDebugParam) );
-        break;
       case MENU_TUTORIAL_CLEAR:
         dmenu_TutorialClear( wk );
         break;
@@ -1213,9 +1162,6 @@ static void sub_GetZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf 
 static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WSET_TYPE type )
 {
   switch( type ){
-  case BPRM_WSET_TRNAME:
-    WORDSET_RegisterTrainerName( wk->wset, idx, value );
-    return TRUE;
   case BPRM_WSET_TRNAME_EX:
     if( value == 0){
       MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
@@ -1234,7 +1180,16 @@ static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
   case BPRM_WSET_ITEMNAME_CHECK:
     WORDSET_RegisterItemName( wk->wset, idx, value );
     if( ITEM_IsDisableItem( value ) ||
-        ITEM_IsOnlyOneItem( value )){
+        ITEM_IsOnlyOneItem( value ) ||
+        value == ITEM_MASUTAABOORU){
+      return FALSE;
+    }
+    return TRUE;
+  case BPRM_WSET_ITEMNAME_CHECK_SP:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( value == 0 ) return TRUE;
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value ) ){
       return FALSE;
     }
     return TRUE;
@@ -1242,8 +1197,14 @@ static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     WORDSET_RegisterWazaName( wk->wset, idx, DATA_FieldWazaTbl[value]);
     return TRUE;
   case BPRM_WSET_GPOWER:
-    WORDSET_RegisterGPowerName( wk->wset, idx, value );
-    return TRUE;
+    if( GPOWER_IsEnableID( value ) ){
+      WORDSET_RegisterGPowerName( wk->wset, idx, value );
+      return TRUE;
+    }else{
+      GFL_MSG_GetString( wk->msgman, dlf_ng_gpower_name, wk->str_tmp );
+      sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+      return FALSE;
+    }
   case BPRM_WSET_ACTION:
     GFL_MSG_GetString( wk->msgman, dlf_action_00+value, wk->str_tmp );
     break;
@@ -1494,6 +1455,9 @@ static GMEVENT_RESULT event_NumInputMain( GMEVENT * event, int *seq, void * work
         break;
       }
       if( trg & PAD_BUTTON_A ){
+        if( !sub_LogParamWordset( wk, 0, evwk->value, evwk->wset_type )){
+          break;
+        }
         if( prm->ret_wk != NULL ){
           *prm->ret_wk = evwk->value;
         }else{
@@ -2125,255 +2089,6 @@ static void entryStackCheck_PageDraw( DMENU_LINK_FEST* wk, EVWK_DATA_CHECK* evwk
 	GFL_BG_LoadScreenV_Req( evwk->win.frm );
 }
 
-#if 0
-//===================================================================================
-//ミッションログリクエストユーティリティイベント
-//===================================================================================
-typedef struct _EVWK_LOG_BEACON_REQ{
-  DMENU_LINK_FEST* dlf_wk;
-
-  u8      line;
-  int     type;
-  int     action;
-
-  const D_LOG_PARAM* log_prm;
-  const D_LOG_PRM_SET* log_prm_set;
-
-  BMP_WIN win_main;
-  BMP_WIN win_line;
-}EVWK_LOG_BEACON_REQ;
-
-static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * work);
-static void logreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line );
-static void logreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str );
-static void logreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void logreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void logreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk );
-static void logreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode );
-
-//--------------------------------------------------------------
-/**
- * ミッションログリクエストイベント生成
- * @param wk  DEBUG_MENU_EVENT_WORK*
- */
-//--------------------------------------------------------------
-static GMEVENT* event_CreateEventLogBeaconReq( GAMESYS_WORK* gsys, DMENU_LINK_FEST* wk )
-{
-  EVWK_LOG_BEACON_REQ* evwk;
-  GMEVENT* event;
-
-  event = GMEVENT_Create( gsys, NULL, event_LogBeaconReqMain, sizeof(EVWK_LOG_BEACON_REQ) );
-
-  evwk = GMEVENT_GetEventWork( event );
-  evwk->dlf_wk = wk; 
-
-  evwk->action = FMISSION_LOG_ACT_GRP_BEACON;
-  return event;
-}
-
-//--------------------------------------------------------------
-/*
- *  @brief  ミッションログリクエストイベント
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT event_LogBeaconReqMain( GMEVENT * event, int *seq, void * work)
-{
-  EVWK_LOG_BEACON_REQ* evwk = (EVWK_LOG_BEACON_REQ*)work;
-  DMENU_LINK_FEST* wk = evwk->dlf_wk;
-
-  switch(*seq)
-  {
-  case 0:
-    sub_BmpWinAdd( &evwk->win_main, 1, 0, 31, 22 );
-    sub_BmpWinAdd( &evwk->win_line, 0, 0, 1, 22 );
-    logreq_PrintCursor( wk, evwk, evwk->line );
-    (*seq)++;
-    break;
-  case 1:
-    evwk->log_prm = &DATA_DebugLogParam[ evwk->action ];
-    evwk->log_prm_set = &DATA_DebugLogParamSet[ evwk->log_prm->prm_type ];
-    logreq_DrawMissionType( wk, evwk );
-    logreq_DrawAction( wk, evwk );
-    logreq_DrawFake( wk, evwk );
-    (*seq)++;
-    break;
-  case 2:
-    {
-      int trg = GFL_UI_KEY_GetTrg();
-      if( trg & PAD_BUTTON_B){
-        (*seq) = 0xFF;
-        break;
-      }else if( trg & PAD_KEY_UP ){
-        evwk->line = (evwk->line+(LOGREQ_LINE_MAX-1))%LOGREQ_LINE_MAX;
-        logreq_PrintCursor( wk, evwk, evwk->line );
-        break;
-      }else if( trg & PAD_KEY_DOWN ){
-        evwk->line = (evwk->line+1)%LOGREQ_LINE_MAX;
-        logreq_PrintCursor( wk, evwk, evwk->line );
-        break;
-      }else if( trg & PAD_BUTTON_START ){
-        logreq_LogBeaconSend( wk, evwk, FALSE );
-        break;
-      }
-
-      if( (trg & PAD_BUTTON_A) == 0 ){
-        break;
-      }
-      switch( evwk->line ){
-      case 0:
-        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, TR_PAT_MAX-1,
-            &evwk->type, BPRM_WSET_LOG_REQ_TYPE));
-        break;
-      case 1:
-        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            FMISSION_LOG_ACT_GRP_BEACON, FMISSION_LOG_ACT_MAX-1,
-            &evwk->action, BPRM_WSET_ACTION ));
-        break;
-      case 2:
-        if( evwk->log_prm_set->min >= 0 ){
-          GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            evwk->log_prm_set->min, evwk->log_prm_set->max,
-            &wk->log_prm[evwk->log_prm->prm_type], evwk->log_prm_set->wset_type ));
-        }
-        break;
-      default:
-        {
-          u8 fake_id = evwk->line-3;
-          const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[fake_id];
-          GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            f_prm->min, f_prm->max, &(wk->fake_prm[TR_PAT_FAKE][fake_id]),f_prm->wset_type ));
-        }
-        break;
-      }
-      (*seq) = 1;
-    }
-    break;
-  case 3:
-    (*seq) = 1;
-    break;
-  default:
-    sub_BmpWinDel( &evwk->win_line );
-    sub_BmpWinDel( &evwk->win_main );
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-static void logreq_PrintCursor( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line )
-{
-  GFL_BMP_Clear( evwk->win_line.bmp, FCOL_WIN_BASE );
-  GFL_MSG_GetString( wk->msgman, dlf_cursor, wk->str_tmp );
-	PRINTSYS_PrintColor( evwk->win_line.bmp, 0, line*16, wk->str_tmp, wk->fontHandle, FCOL_WIN_W );
-	GFL_BMPWIN_TransVramCharacter( evwk->win_line.win );
-}
-
-static void logreq_PrintLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 line, STRBUF* str )
-{
-  GFL_BMP_Fill( evwk->win_main.bmp, 0, line*16, LOGREQ_WIN_MAIN_SX*8, 16, FCOL_WIN_BASE );
-	PRINTSYS_PrintColor( evwk->win_main.bmp, 0, line*16, str, wk->fontHandle, FCOL_WIN_W );
-	GFL_BMPWIN_TransVramCharacter( evwk->win_main.win );
-}
-
-static void logreq_DrawMissionType( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
-{
-  GFL_MSG_GetString( wk->msgman, dlf_log_req_type01+evwk->type, wk->str_tmp );
-  logreq_PrintLine( wk, evwk, 0, wk->str_tmp );
-}
-static void logreq_DrawAction( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
-{
-  int value;
-
-  WORDSET_RegisterNumber( wk->wset, 0, evwk->action, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  sub_LogParamWordset( wk, 1, evwk->action, BPRM_WSET_ACTION );
-
-  sub_GetMsgToBuf( wk, dlf_log_action_id );
-  logreq_PrintLine( wk, evwk, 1, wk->str_expand );
-
-  //パラメータプリント
-  value = wk->log_prm[evwk->log_prm->prm_type];
-
-  WORDSET_RegisterNumber( wk->wset, 0, value,  5, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
-  sub_FreeWordset( wk->wset, 2, wk->beacon_nickname );
-  sub_FreeWordset( wk->wset, 3, wk->beacon_fword );
-
-  sub_LogParamWordset( wk, 1, value, evwk->log_prm_set->wset_type );
-  sub_GetMsgToBuf( wk, dlf_beacon_req_param01+evwk->log_prm->prm_type );
-  logreq_PrintLine( wk, evwk, 2, wk->str_expand );
-}
-
-static void logreq_DrawFakeLine( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, FAKE_DATA_ID fake_id )
-{
-  u8 line = 3+fake_id;
-  int* mine = &wk->fake_prm[ TR_PAT_MINE ][0];
-  int* fake = &wk->fake_prm[ TR_PAT_FAKE ][0];
-  const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[fake_id];
-
-  WORDSET_RegisterNumber(wk->wset, 0, fake[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  WORDSET_RegisterNumber(wk->wset, 1, mine[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  sub_LogParamWordset( wk, 2, fake[fake_id], f_prm->wset_type );
-  sub_LogParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
-  
-  sub_GetMsgToBuf( wk, dlf_fake_tr_id+fake_id );
-  logreq_PrintLine( wk, evwk, line, wk->str_expand );
-}
-
-static void logreq_DrawFake( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk )
-{
-  int i;
-  
-  for(i = 0;i < FAKE_DATA_MAX;i++){
-    logreq_DrawFakeLine( wk, evwk, i );
-  }
-}
-
-static void logreq_LogBeaconSend( DMENU_LINK_FEST* wk, EVWK_LOG_BEACON_REQ* evwk, u8 direct_mode )
-{
-  u16 score;
-  int value = -1;
-  int* fake = &wk->fake_prm[evwk->type][0]; 
-
-  sub_BeaconInfoSet( wk, evwk->type );
-
-  if( evwk->log_prm_set->max >= 0 ){
-    value = wk->log_prm[ evwk->log_prm->prm_type ];
-  }
-
-  DEBUG_SendBeaconPriorityEgnoreFlagSet( TRUE );
-  score = wk->fmwk->my_score;
-  if( evwk->type != TR_PAT_MINE ){
-    wk->fmwk->my_score = fake[FAKE_SCORE];  //スコア偽装
-  }
-
-  if( evwk->action < FMISSION_LOG_ACT_GRP_BEACON ){
-    OS_Printf("SetFesBeacon = %d, param = %d\n", evwk->action, value );
-  }else if( evwk->action == FMISSION_LOG_ACT_FREEWORD ){
-    GAMEBEACON_Set_FreeWord( (const STRBUF*)wk->beacon_fword, value );
-    OS_Printf("SetFesFreeWord = %d, param = %d\n", evwk->action, value );
-  }else{
-    GAMEBEACON_Set_FMissionLogAction( evwk->action, value );
-    OS_Printf("SetLogAction = %d, param = %d\n", evwk->action, value );
-  } 
-  if( evwk->type != TR_PAT_MINE ){
-    wk->fmwk->my_score = score;  //スコアを書き戻す
-  }
-  DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );
-
-#if 0
-  if(direct_mode && wk->view_wk != NULL){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
-    RTCTime recv_time;
-    u16 time;
-    GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
-
-    GFL_RTC_GetTime(&recv_time);
-    time = (recv_time.hour << 8) | recv_time.minute;
-    GAMEBEACON_InfoTbl_SetBeacon(
-      wk->view_wk->infoStack, info, time, FALSE);
-  }
-#endif
-}
-
-#endif
-
 //===================================================================================
 //パラメータセットリクエストユーティリティイベント
 //===================================================================================
@@ -2398,8 +2113,12 @@ typedef struct _EVWK_PARAM_SET_REQ{
   int     m_distribution_f;
   int     m_title;
   int     m_exp;
+  int     m_time;
+  int     m_goal;
   int     m_item;
   int     m_pay;
+  int     m_sp_item;
+  int     m_sp_pay;
   u8      m_type;
   FEST_MISSION  req_fmwk;
   FEST_MISSION  tmp_fmwk;
@@ -2417,11 +2136,14 @@ enum{
  MREQ_LINE_BASE_PARAM,
  MREQ_LINE_EX_PARAM,
  MREQ_LINE_LEVEL,
+ MREQ_LINE_SP_ITEM,
  
  MREQ_LINE_SWITCH,
 
  MREQ_LINE_TITLE = MREQ_LINE_SWITCH,
+ MREQ_LINE_GOAL,
  MREQ_LINE_EXP,
+ MREQ_LINE_MAX,
 };
 
 static GMEVENT_RESULT event_ParamSetReqMain( GMEVENT * event, int *seq, void * work);
@@ -2470,7 +2192,7 @@ static GMEVENT* event_CreateEventParamSetReq( GAMESYS_WORK* gsys, DMENU_LINK_FES
 
     evwk->action = FMISSION_LOG_ACT_GRP_BEACON;
   }else{
-    evwk->line_max = 6;
+    evwk->line_max = MREQ_LINE_MAX;
 
     evwk->m_id = 1;
     evwk->m_level = 0;
@@ -2628,9 +2350,17 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, ITEM_HAIPAABOORU, ITEM_KURITHIKATTO3,
       &evwk->m_item, NULL, BPRM_WSET_ITEMNAME_CHECK ));
     break;
+  case MREQ_LINE_SP_ITEM:
+    GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, 0, ITEM_KURITHIKATTO3,
+      &evwk->m_sp_item, NULL, BPRM_WSET_ITEMNAME_CHECK_SP ));
+    break;
   case MREQ_LINE_TITLE:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_title_tutorial, msg_fm_explain_tutorial-1,
       &evwk->m_title, NULL, BPRM_WSET_MISSION_MSGID_NAME ));
+    break;
+  case MREQ_LINE_GOAL:
+    GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, 1, 9999,
+      &evwk->m_goal, NULL, BPRM_WSET_NONE ));
     break;
   case MREQ_LINE_EXP:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, msg_fm_explain_tutorial, msg_fm_explain_evt_10,
@@ -2640,9 +2370,32 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
 }
 static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT * event )
 {
+  int cont = GFL_UI_KEY_GetCont();
+  FEST_MISSION* fmwk = &evwk->req_fmwk;
+
   switch( evwk->line ){
   case MREQ_LINE_LEVEL:
     evwk->m_level = (evwk->m_level+1)%4;
+    FMISSION_DATA_GetMissionParam( wk->fm_data_man, evwk->m_id, evwk->m_level, &evwk->tmp_fmwk );
+    fmwk->beacon.time = evwk->tmp_fmwk.beacon.time;
+    fmwk->beacon.goal = evwk->tmp_fmwk.beacon.goal;
+    fmwk->beacon.pay = evwk->tmp_fmwk.beacon.pay;
+    evwk->m_time = fmwk->beacon.time;
+    evwk->m_goal = fmwk->beacon.goal;
+    evwk->m_pay = fmwk->beacon.pay;
+    break;
+  case MREQ_LINE_SP_ITEM:
+    if( cont & PAD_BUTTON_L ){
+      evwk->m_time -= 30;
+      if( evwk->m_time <= 60 ){
+        evwk->m_time = 60*60;
+      }
+    }else{
+      evwk->m_time += 30;
+      if( ++evwk->m_pay >= 60*60 ){
+        evwk->m_pay = 60;
+      }
+    }
     break;
   }
 }
@@ -2652,9 +2405,20 @@ static void mreq_DecideY( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVEN
   switch( evwk->line ){
   case MREQ_LINE_LEVEL:
     if( cont & PAD_BUTTON_L ){
-      evwk->m_pay = ((evwk->m_pay+126)%127)+1;
+      if( --evwk->m_pay <= 0 ){
+        evwk->m_pay = 127;
+      }
     }else{
-      evwk->m_pay = ((evwk->m_pay+1)%127)+1;
+      if( ++evwk->m_pay >= 128 ){
+        evwk->m_pay = 1;
+      }
+    }
+    break;
+  case MREQ_LINE_SP_ITEM:
+    if( cont & PAD_BUTTON_L ){
+      evwk->m_sp_pay = (evwk->m_sp_pay+127)%128;
+    }else{
+      evwk->m_sp_pay = (evwk->m_sp_pay+1)%128;
     }
     break;
   }
@@ -2781,14 +2545,13 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
     evwk->m_distribution_f = evwk->req_fmwk.beacon.distribution_f;
     evwk->m_item = evwk->req_fmwk.beacon.item;
     evwk->m_pay = evwk->req_fmwk.beacon.pay;
+    evwk->m_sp_item = evwk->req_fmwk.beacon.sp_item;
+    evwk->m_sp_pay = evwk->req_fmwk.beacon.sp_pay;
+    evwk->m_goal = evwk->req_fmwk.beacon.goal;
+    evwk->m_time = evwk->req_fmwk.beacon.time;
   }
   evwk->m_type = evwk->req_fmwk.arc.m_type-1;
 
-  if( ITEM_IsDisableItem( evwk->m_item) ||
-      ITEM_IsOnlyOneItem( evwk->m_item )){
-    evwk->m_item = evwk->req_fmwk.beacon.item;
-  }
-  
   evwk->m_prm_set = &DATA_MissionBaseParam[ evwk->m_type ];
   evwk->log_prm_set = NULL;
 
@@ -2824,6 +2587,10 @@ static void mreq_MakeCustomMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ
   beacon->m_exp_id = evwk->m_exp;
   beacon->item = evwk->m_item;
   beacon->pay = evwk->m_pay;
+  beacon->sp_item = evwk->m_sp_item;
+  beacon->sp_pay = evwk->m_pay;
+  beacon->goal = evwk->m_goal;
+  beacon->time = evwk->m_time;
 }
 
 static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
@@ -2875,6 +2642,13 @@ static void mreq_DrawMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk
   WORDSET_RegisterNumber(wk->wset, 3, evwk->m_distribution_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   sub_GetMsgToBuf( wk, dlf_mission_level_01 );
   psreq_PrintLine( wk, evwk, MREQ_LINE_LEVEL, wk->str_expand );
+
+  //ダブルスコアアイテム
+  sub_LogParamWordset( wk, 0, evwk->m_sp_item, BPRM_WSET_ITEMNAME );
+  WORDSET_RegisterNumber(wk->wset, 1, evwk->m_sp_pay, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 2, evwk->m_time, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_GetMsgToBuf( wk, dlf_mission_sp_item_01 );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_SP_ITEM, wk->str_expand );
 }
 static void mreq_DrawMissionTitle( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk )
 {
@@ -2888,54 +2662,21 @@ static void mreq_DrawMissionTitle( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk
   sub_GetMsgToBuf( wk, dlf_mission_title_01 );
   psreq_PrintLine( wk, evwk, MREQ_LINE_TITLE, wk->str_expand );
 
-  //説明文
-  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_exp, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-  sub_LogParamWordset( wk, 1, evwk->m_exp, BPRM_WSET_MISSION_MSGID_NAME );
-  sub_GetMsgToBuf( wk, dlf_mission_exp_01 );
-  psreq_PrintLine( wk, evwk, MREQ_LINE_EXP, wk->str_expand );
+  //目標値と説明文
+  WORDSET_RegisterNumber(wk->wset, 0, evwk->m_goal, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 1, evwk->m_exp, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_LogParamWordset( wk, 2, evwk->m_exp, BPRM_WSET_MISSION_MSGID_NAME );
+  sub_GetMsgToBuf( wk, dlf_mission_goal_01 );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_GOAL, wk->str_expand );
   
   //
   FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->str_expand, &evwk->req_fmwk, wk->tmpHeapID );
-  psreq_PrintLine( wk, evwk, MREQ_LINE_EXP+1, wk->str_expand );
+  psreq_PrintLine( wk, evwk, MREQ_LINE_EXP, wk->str_expand );
 }
 
 //===========================================================================
 //数値入力ゲッター＆セッター
 //===========================================================================
-//--------------------------------------------------------------
-/*
- *  @brief  Misc関係　ゲット 
- */
-//--------------------------------------------------------------
-static int ninput_GetMiscCount( DMENU_LINK_FEST* wk, int param )
-{
-  switch(param){
-  case 0:
-    return MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );
-  case 1:
-    return MISC_CrossComm_GetThanksRecvCount( wk->misc_sv );
-  }
-  return 0;
-}
-
-//--------------------------------------------------------------
-/*
- *  @brief  Misc関係　セット 
- */
-//--------------------------------------------------------------
-static void ninput_SetMiscCount( DMENU_LINK_FEST* wk, int param, int value )
-{
-  switch(param){
-  case 0:
-    MISC_CrossComm_SetSuretigaiCount( wk->misc_sv, value );
- //   DEBUG_BEACON_VIEW_SuretigaiCountSet( wk->view_wk, value );
-    break;
-  case 1:
-    MISC_CrossComm_SetThanksRecvCount( wk->misc_sv, value );
-    break;
-  }
-}
-
 //--------------------------------------------------------------
 /*
  *  @brief  デバッグフラグ関係　ゲット 
@@ -2946,17 +2687,6 @@ static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
   switch(param){
   case NINPUT_STACK_CHECK_THROW:
     return DEB_LINKFEST_GetLogStackCheckThrowFlag( wk->fest_sys );
-  case NINPUT_GPOWER: 
-    {
-      INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
-      GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(int_sv,0);
-      if( gpower_id == GPOWER_ID_NULL ){
-        return 0;
-      }else{
-        return gpower_id+1;
-      }
-    }
-    break;
   case NINPUT_MISSION_BEACON_WAIT:
     return DEB_LINKFEST_GetBeaconWait( wk->fest_sys )/60;
   case NINPUT_MISSION_OPEN_NUM_SET:
@@ -3004,17 +2734,6 @@ static int ninput_GetDebugParam( DMENU_LINK_FEST* wk, int param )
 static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
 {
   switch(param){
-  case NINPUT_GPOWER:
-    {
-      INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
-      if( value == 0 ){
-        value = GPOWER_ID_NULL;
-      }else{
-        value -= 1;
-      }
-      ISC_SAVE_SetGPowerID( int_sv, value, 0 );
-    }
-    break;
   case NINPUT_MISSION_BEACON_WAIT:
     DEB_LINKFEST_SetBeaconWait( wk->fest_sys, value*60 );
     break;

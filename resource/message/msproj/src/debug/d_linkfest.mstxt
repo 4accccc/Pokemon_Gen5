@@ -1399,6 +1399,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_ng_gpower_name">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="1" ]NG GPOWER[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:44:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="1" ]NG GPOWER[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:44:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_cursor"
 		Style="Large">
 		<LanguageCell
@@ -7987,6 +8019,31 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlf_mission_sp_item_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>s_item=[Name:Item ] num=[Digit:3digits Idx="1" ] time=[Digit:4digits Idx="2" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T09:53:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T09:52:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>s_item=[Name:Item ] num=[Digit:3digits Idx="1" ] time=[Digit:4digits Idx="2" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T09:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-27T09:53:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="dlf_mission_title_01">
 		<LanguageCell
 			Language="JPN">
@@ -8012,13 +8069,13 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dlf_mission_exp_01">
+		Label="dlf_mission_goal_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits ] [Name:PMS Idx="1" ]</Text>
+			<Text>goal=[Digit:4digits ] e=[Digit:3digits Idx="1" ] [Name:PMS Idx="2" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-26T14:26:52" />
+				Time="2012-01-28T07:37:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -8026,10 +8083,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits ] [Name:PMS Idx="1" ]</Text>
+			<Text>goal=[Digit:4digits ] e=[Digit:3digits Idx="1" ] [Name:PMS Idx="2" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-01-26T14:26:54" />
+				Time="2012-01-28T07:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
