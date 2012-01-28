@@ -289,6 +289,11 @@ EVENT_START   ev_pos_c03r0301_cleaningm_01
   _CAMERA_WAIT_MOVE()	//ƒJƒƒ‰ˆÚ“®‘Ò‚¿
   _OBJ_ANIME_WAIT()
   
+  IF $LCW_POSX != 7 THEN
+    _OBJ_ANIME( C03R0301_CLEANINGM_01, anm_common_turn_u  )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
   //12ƒtƒŒ[ƒ€‘Ò‚¿
   _TIME_WAIT ( 12 )
   
