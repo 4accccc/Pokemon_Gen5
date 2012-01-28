@@ -13,6 +13,7 @@
   .include  "r04r0901.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -175,10 +176,15 @@ EVENT_START   ev_r04r0901_trainerm_01
 
     //手持ちに条件を満たしたポケモンがいた（お題の値と同じ）
     IF $LWK_POKE_POW_GOOD == 1 THEN
+    
+      _MSGWIN_CLOSE()
+      
+      //アニメ：「…」
+      _OBJ_ANIME( R04R0901_TRAINERM_01 , anm_common_tenten )
+      _OBJ_ANIME_WAIT()
 
       //エリート♂：きみの　《ポケモン》！　まさに
       _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_04 )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アイテム（しゅんぱつのハネ×５）入手
@@ -196,10 +202,15 @@ EVENT_START   ev_r04r0901_trainerm_01
 
     //手持ちに条件を満たしたポケモンがいた（お題の値より高い）
     ELSIF $LWK_POKE_POW_HIGH == 1 THEN
+    
+      _MSGWIN_CLOSE()
+      
+      //アニメ：「…」
+      _OBJ_ANIME( R04R0901_TRAINERM_01 , anm_common_tenten )
+      _OBJ_ANIME_WAIT()
 
       //エリート♂：きみの　《ポケモン》！
       _BALLOONWIN_TALKOBJ_MSG( msg_r04r0901_trainerm_03 )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アイテム（しゅんぱつのハネ×１）入手

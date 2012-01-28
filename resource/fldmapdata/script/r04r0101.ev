@@ -13,6 +13,7 @@
   .include  "r04r0101.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -162,10 +163,15 @@ EVENT_START   ev_r04r0101_trainerw_01
 
     //手持ちに条件を満たしたポケモンがいた（お題の値と同じ）
     IF $LWK_POKE_AGI_GOOD == 1 THEN
+    
+      _MSGWIN_CLOSE()
+      
+      //アニメ：「…」
+      _OBJ_ANIME( R04R0101_TRAINERW_01 , anm_common_tenten )
+      _OBJ_ANIME_WAIT()
 
       //エリート♀：あなたの　《ポケモン》！　まさに
       _BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_trainerw_04 )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アイテム（たいりょくのハネ×５）入手
@@ -183,10 +189,15 @@ EVENT_START   ev_r04r0101_trainerw_01
 
     //手持ちに条件を満たしたポケモンがいた（お題の値より高い）
     ELSIF $LWK_POKE_AGI_HIGH == 1 THEN
+    
+      _MSGWIN_CLOSE()
+      
+      //アニメ：「…」
+      _OBJ_ANIME( R04R0101_TRAINERW_01 , anm_common_tenten )
+      _OBJ_ANIME_WAIT()
 
       //エリート♀：あなたの　《ポケモン》！
       _BALLOONWIN_TALKOBJ_MSG( msg_r04r0101_trainerw_03 )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アイテム（たいりょくのハネ×１）入手
