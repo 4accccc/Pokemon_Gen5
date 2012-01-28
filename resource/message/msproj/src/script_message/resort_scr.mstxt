@@ -1345,10 +1345,11 @@ SWANビーコン０（基本バグ？）
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ここは　あたらしい　まちですか？▼</Text>
+あたらしい　まちが　あるなんて
+ビックリ　です！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T04:05:01" />
+				Time="2012-01-28T04:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1357,10 +1358,11 @@ SWANビーコン０（基本バグ？）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ここは　新しい　街ですか？▼</Text>
+新しい　街が　あるなんて
+ビックリ　です！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:54:07" />
+				User="shimoyamada:W00184"
+				Time="2012-01-28T04:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2407,10 +2409,11 @@ SWANビーコン０♀（基本バグ？）
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ここは　あたらしい　まちですか？▼</Text>
+あたらしい　まちが　あるなんて
+ビックリ　です！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-01T04:50:43" />
+				User="shimoyamada:W00184"
+				Time="2012-01-28T04:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2419,10 +2422,11 @@ SWANビーコン０♀（基本バグ？）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ここは　新しい　街ですか？▼</Text>
+新しい　街が　あるなんて
+ビックリ　です！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:35:52" />
+				User="shimoyamada:W00184"
+				Time="2012-01-28T04:05:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -11036,10 +11040,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あんないする</Text>
+			<Text>案内する</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-01-27T08:37:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12841,10 +12845,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみせを　ならび　かえる</Text>
+			<Text>おみせを　ならびかえる</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T11:55:07" />
+				User="shimoyamada:W00184"
+				Time="2012-01-28T04:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12852,10 +12856,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お店を　並び　かえる</Text>
+			<Text>お店を　並びかえる</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-25T13:03:41" />
+				Time="2012-01-27T08:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90001,10 +90005,11 @@ ME
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>やって来た通信経路で使用</Comment>
+			<Comment>やって来た通信経路で使用
+</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-06T11:22:55" />
+				Time="2012-01-28T04:10:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
