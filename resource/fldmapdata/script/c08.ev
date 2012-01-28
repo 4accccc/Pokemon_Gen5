@@ -62,6 +62,8 @@ _EVENT_DATA    ev_reserve_c08_plazma_comming_02
 
 _EVENT_DATA    ev_recover_c08
 _EVENT_DATA    ev_scene_c08_link_event
+
+_EVENT_DATA    ev_c08_ninja_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -226,7 +228,7 @@ INIT_EVENT_START ev_init_c08
   //クリア前・プラズマ団イベント終了時
   ELSIF $WK_SCENE_C08_NINJA >= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
     _DEBUG_PRINT_WK( 9 )
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 162, DIR_DOWN )
   ENDIF
   
   //データコンバートフラグチェック
@@ -247,8 +249,6 @@ INIT_EVENT_END
 /* POS：街到着でアイリス解説                                   */
 /**************************************************************/
 EVENT_START   ev_pos_c08_swchampion_01
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
@@ -302,8 +302,6 @@ EVENT_START   ev_pos_c08_swchampion_01
   _FLAG_SET(SYS_FLAG_ARRIVE_C08)
   //========================================//
   
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 /**************************************************************/
@@ -311,8 +309,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_scene_c08_guide_01
 {
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 
   //アニメ：主人公ジムから出る
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 405, 147, FORCE_TYPE_NOT, 8, DIR_LR)
@@ -375,8 +371,7 @@ EVENT_START   ev_scene_c08_guide_01
   //C08：誘導イベントPOS起動（１）
   $WK_SCENE_C08_LEADER7 = 2
   //========================================//
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+
 }
 EVENT_END
 
@@ -384,9 +379,6 @@ EVENT_END
 /*  POS：シャガ誘導（２）                                   */
 /**************************************************************/
 EVENT_START   ev_pos_c08_guide_02
-  
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
@@ -407,8 +399,7 @@ EVENT_START   ev_pos_c08_guide_02
   //C08R0101伝説解説SCENE_CHANGEイベント起動
   $WK_SCENE_C08R0101 = 1
   //========================================//
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
 EVENT_END
 
 /**************************************************************/
@@ -416,8 +407,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c08_guide_03
 {
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
   //シャガ：着いたぞ
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_03 , C08_SWLEADER7_01 , POS_DEFAULT)
@@ -452,8 +441,7 @@ EVENT_START   ev_pos_c08_guide_03
   //C08シャガ非表示
   _FLAG_SET( FV_C08_SWLEADER7_01 )
   //========================================//
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+
 }
 EVENT_END
 
@@ -517,10 +505,6 @@ EVENT_END
 /*  RESERVE：プラズマ団イベント開始（同一ゾーンで使用）       */
 /**************************************************************/
 EVENT_START   ev_reserve_c08_plazma_comming_02
-
-
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
   //暗転復帰
   _MAP_FADE_BLACK_IN()
@@ -772,9 +756,6 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   //BGMチェンジでの環境SEポーズ状態をCLEAR
   _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
   
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
-  
 EVENT_END
 
 
@@ -1002,9 +983,14 @@ ev_c08_ninja_comming:
   _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
 	
 	//アニメ：シャガ・主人公「！」
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_look_ninja_gyoe )
-	_OBJ_ANIME( C08_SWLEADER7_01 , anm_look_ninja_gyoe )
-	_OBJ_ANIME_WAIT()
+	IF $LCW_POSX == 405 && $LCW_POSZ == 146 THEN
+	  _OBJ_ANIME( C08_SWLEADER7_01 , anm_common_gyoe )
+	  _OBJ_ANIME( MMDL_ID_PLAYER , anm_look_ninja_gyoe )
+	ELSE
+	  _OBJ_ANIME( MMDL_ID_PLAYER , anm_look_ninja_gyoe )
+	  _OBJ_ANIME( C08_SWLEADER7_01 , anm_look_ninja_gyoe )
+	  _OBJ_ANIME_WAIT()
+	ENDIF
 	
 	//？？？：ジムがかくしばしょか
   _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DOWN)
@@ -1300,24 +1286,53 @@ _ANIME_LABEL	anm_c08_swleader7_run_b
   _ANIME_DATA	AC_DIR_PAUSE_OFF,1
   _ANIME_DATA	ACMD_END,0
   
+
+/**************************************************************/
+/* 話しかけ：ダークトリニティ戦                                  */
+/**************************************************************/
+EVENT_START   ev_c08_ninja_01
+
+  _TALK_OBJ_START()
+  
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
+  
+  _CALL ev_c08_vs_ninja
+
+EVENT_END
+  
 /**************************************************************/
 /*  POS：ダークトリニティ戦                                  */
 /**************************************************************/
 EVENT_START   ev_pos_c08_ninja_01
-  //ハイリンク通信ブロック処理
-  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
   
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
   
   $LCW_POSX += 1
   
   //アニメ：ダークトリニティ隣接
   _OBJ_ANIME_AUTO( C08_NINJA_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_UD)
   _OBJ_ANIME_WAIT()
+  
+  IF $LWK_DIR == DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  _CALL ev_c08_vs_ninja
+
+EVENT_END
+
+/**************************************************************/
+/*  CALL：ダークトリニティ戦                                  */
+/**************************************************************/
+ev_c08_vs_ninja:
   
   //？？？：おっしゃるとおり
   _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_03 , C08_NINJA_01 , POS_DEFAULT)
@@ -1328,6 +1343,9 @@ EVENT_START   ev_pos_c08_ninja_01
     
   //結果チェック
   _CALL ev_battle_check
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   
   //？？？：……ざんねん
   _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_04 , C08_NINJA_01 , POS_DEFAULT)
@@ -1377,6 +1395,21 @@ EVENT_START   ev_pos_c08_ninja_01
 	
 	//プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  IF $LCW_POSX >= 441 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 440, LCW_POSZ, FORCE_TYPE_ALL, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //プレイヤー座標でふりむきを分岐
+  IF $LCW_POSZ == 177 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_staystep_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  ELSE
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_staystep_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  ENDIF
+  _OBJ_ANIME_WAIT()
 	
 	_PLAYER_NAME( 0 )
 	
@@ -1427,10 +1460,16 @@ EVENT_START   ev_pos_c08_ninja_01
   //フィールド上にチェレン配置
   _OBJ_ADD_EX( 446, 175, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
   
+  _OBJ_ANIME( C08_SWLEADER7_01 , anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 442, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_LR)
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l )
-  _OBJ_ANIME_WAIT()
+  
+  IF $LCW_POSZ != 175 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //プレイヤー・ライバル名代入
   _PLAYER_NAME( 0 )
@@ -1553,11 +1592,8 @@ EVENT_START   ev_pos_c08_ninja_01
   //ローカルライブキャスター・チェレン通話状態を変更（C08会話まで）
   _PERSON_STATE_SET_CHELEN( CHELEN_STATE_C14 )
   //========================================//
-    
-  //ハイリンク通信ブロック処理終了
-  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
-EVENT_END
 
+_RET
 //--------------------------------------------------------------
 //	シャガ到着
 //--------------------------------------------------------------
@@ -1663,9 +1699,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c08_swsage7_01
     
-    //ハイリンク通信ブロック処理
-    _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
-    
     _TALK_OBJ_START()
     
     //イベント曲再生
@@ -1729,9 +1762,6 @@ EVENT_START   ev_c08_swsage7_01
     
     //ダークトリニティイベント（１）起動
     _CALL ev_c08_ninja_comming
-    
-    //ハイリンク通信ブロック処理終了
-    _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
     
 EVENT_END
 
