@@ -1669,10 +1669,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0" ]こ</Text>
+			<Text>[Digit:4digits Idx="0" ]個</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:58:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1680,10 +1680,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>パワー画面（使用しない）</Comment>
+			<Comment>ミッション選択画面で使用（SWANから）
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:59:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -3164,10 +3165,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]ひき</Text>
+			<Text>[Digit:4digits ]匹</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:42:01" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3205,10 +3206,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ</Text>
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-23T10:44:04" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:36:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3328,10 +3329,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ][Digit:3digits Idx="1" ]こ～</Text>
+			<Text>[Name:Item ][Digit:3digits Idx="1" ]個～</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-26T10:46:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3369,10 +3370,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]にん</Text>
+			<Text>[Digit:4digits ]人</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-29T04:24:54" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3410,10 +3411,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]かい</Text>
+			<Text>[Digit:4digits ]回</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-08-29T04:26:12" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"

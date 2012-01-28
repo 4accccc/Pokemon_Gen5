@@ -3782,10 +3782,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits ]にん</Text>
+			<Text>[Digit:3digits ]人</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:43:02" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3822,10 +3822,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひき</Text>
+			<Text>匹</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:43:55" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4022,10 +4022,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]ひき</Text>
+			<Text>[Digit:4digits ]匹</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:46:24" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4222,10 +4222,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ][Digit:2digits Idx="1" ]こ</Text>
+			<Text>[Name:Item ][Digit:2digits Idx="1" ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:50:46" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4262,10 +4262,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>＋[Digit:2digits ]こ</Text>
+			<Text>＋[Digit:2digits ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-02T04:51:34" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4302,10 +4302,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]こ</Text>
+			<Text>[Digit:4digits ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:49:44" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4342,10 +4342,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits ]かい</Text>
+			<Text>[Digit:4digits ]回</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T02:50:29" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:27:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4422,10 +4422,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Digit:4digits ]にん</Text>
+			<Text>クリア目標[Digit:4digits ]人</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T09:09:38" />
+				Time="2012-01-28T10:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4462,10 +4462,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Digit:4digits ]こ</Text>
+			<Text>クリア目標[Digit:4digits ]個</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T09:09:46" />
+				Time="2012-01-28T10:28:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4502,10 +4502,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリア目標[Digit:4digits ]かい</Text>
+			<Text>クリア目標[Digit:4digits ]回</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T09:10:02" />
+				Time="2012-01-28T10:28:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4582,10 +4582,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ][Digit:2digits Idx="1" ]こ～</Text>
+			<Text>[Name:Item ][Digit:2digits Idx="1" ]個～</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T03:00:49" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4702,10 +4702,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]ひき</Text>
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]匹</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T10:47:14" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4742,10 +4742,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]にん</Text>
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]人</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T10:47:48" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4782,10 +4782,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]こ</Text>
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T10:48:11" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4822,10 +4822,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]かい</Text>
+			<Text>[Name:TrainerName ]のスコア[Digit:4digits Idx="1" ]回</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-05T10:48:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T10:28:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4984,10 +4984,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は　[Name:MusicalGoods Idx="1" ]を
-[Digit:2digits Idx="2" ]こ　手に入れた！</Text>
+[Digit:2digits Idx="2" ]個　手に入れた！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T08:04:02" />
+				Time="2012-01-28T10:28:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"

@@ -313,10 +313,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>消えた　[Digit:4digits Idx="1" ]この　財宝</Text>
+			<Text>消えた　[Digit:4digits Idx="1" ]個の　財宝</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T08:40:01" />
+				Time="2012-01-28T10:50:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2810,12 +2810,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　きのみを
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道の　キラキラ光る
 場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:51:29" />
+				Time="2012-01-28T11:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2863,12 +2863,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　かけらを
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道の　キラキラ光る
 場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:52:11" />
+				Time="2012-01-28T11:07:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2916,12 +2916,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　お宝を
-[Digit:4digits Idx="1" ]こ以上　探せ！
+[Digit:4digits Idx="1" ]個以上　探せ！
 洞穴や森の　キラキラ光る
 場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-13T02:21:05" />
+				Time="2012-01-28T11:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3075,10 +3075,10 @@
 			<Text>キラキラと　光る鉱石を　探せ！
 洞穴や道を　探して
 落ちている　道具を
-[Digit:4digits Idx="1" ]こ以上　集めよう！</Text>
+[Digit:4digits Idx="1" ]個以上　集めよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:15:31" />
+				Time="2012-01-28T11:07:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3128,10 +3128,10 @@
 			<Text>キラキラと　光る鉱石を　探せ！
 洞穴や道を　探して
 落ちている　道具を
-[Digit:4digits Idx="1" ]こ以上　集めよう！</Text>
+[Digit:4digits Idx="1" ]個以上　集めよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:48:09" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3179,12 +3179,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　きのみを
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道の　キラキラ光る
 場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:42:54" />
+				Time="2012-01-28T11:07:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3232,11 +3232,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　きのみを
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 森や道で　たくさん　みつかるらしい！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:48:04" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:07:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3283,11 +3283,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:48:00" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3334,11 +3334,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:56" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3385,11 +3385,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:53" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T11:09:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3437,12 +3437,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　こやしを
-[Digit:4digits Idx="1" ]こ以上　集めよう！
+[Digit:4digits Idx="1" ]個以上　集めよう！
 洞穴や　森の　キラキラ光る
 場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:14:11" />
+				Time="2012-01-28T11:12:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3489,11 +3489,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>街や　道に　落ちている　
-道具を　[Digit:4digits Idx="1" ]こ以上　集めよう！
+道具を　[Digit:4digits Idx="1" ]個以上　集めよう！
 キラキラ光る　場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:18:37" />
+				Time="2012-01-28T11:12:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
