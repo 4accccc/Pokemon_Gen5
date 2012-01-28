@@ -389,10 +389,10 @@
 			Language="JPN">
 			<Text>じゅうなん　ね……▼
 この　とくせいの　ポケモンは
-せんとうで　マヒに　ならないよ▼</Text>
+せんとうで　まひに　ならないよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:09" />
+				Time="2012-01-28T05:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -402,10 +402,10 @@
 			Language="JPN_KANJI">
 			<Text>じゅうなん　ね……▼
 この特性の　ポケモンは
-戦闘で　マヒに　ならないよ▼</Text>
+戦闘で　まひに　ならないよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:12:39" />
+				Time="2012-01-28T05:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -511,14 +511,14 @@
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▽
 こうげき　してきた　あいてを▽
-マヒ　させることが　あるんだ▼
+まひ　させることが　あるんだ▼
 あと……▼
 てもちの　せんとうに　いると
 でんきタイプの　ポケモンと▽
 であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:01:13" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -530,14 +530,14 @@
 この特性の　ポケモンは
 直接攻撃された　ときに▽
 攻撃してきた　相手を▽
-マヒ　させることが　あるんだ▼
+まひ　させることが　あるんだ▼
 あと……▼
 手持ちの　先頭に　いると
 でんきタイプの　ポケモンと▽
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:26:02" />
+				Time="2012-01-28T05:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1491,10 +1491,13 @@
 			Language="JPN">
 			<Text>ふゆう　ね……▼
 この　とくせいの　ポケモンは
-じめんタイプの　わざを　うけないんだ▼</Text>
+じめんタイプの　わざを　うけないんだ▼
+あっ！　わすれていたよ▼
+ゆいいつ　れいがいの　わざがあって
+すなかけは　くらってしまうね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:27:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1504,10 +1507,13 @@
 			Language="JPN_KANJI">
 			<Text>ふゆう　ね……▼
 この特性の　ポケモンは
-じめんタイプの　技を　受けないんだ▼</Text>
+じめんタイプの　技を　受けないんだ▼
+あっ！　忘れていたよ▼
+唯一　例外の　技があって
+すなかけは　くらってしまうね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:23" />
+				Time="2012-01-28T05:35:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1544,11 +1550,11 @@
 この　とくせいの　ポケモンは
 ちょくせつこうげき　された　ときに▼
 こうげき　してきた　あいてを
-どく　マヒ　ねむりの▽
+どく　まひ　ねむりの▽
 どれかに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:17:14" />
+				Time="2012-01-28T05:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1560,11 +1566,11 @@
 この特性の　ポケモンは
 直接攻撃された　ときに▼
 攻撃してきた　相手を
-どく　マヒ　ねむりの▽
+どく　まひ　ねむりの▽
 どれかに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:17:08" />
+				Time="2012-01-28T05:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1599,15 +1605,15 @@
 			Language="JPN">
 			<Text>シンクロ　ね……▼
 この　とくせいの　ポケモンは
-どく　マヒ　やけどに　されると▽
+どく　まひ　やけどに　されると▽
 あいても　おなじに　してしまうんだ▼
 あと……▼
 てもちの　せんとうに　いると
 おなじ　せいかくの　ポケモンと▽
 であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:29:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1617,7 +1623,7 @@
 			Language="JPN_KANJI">
 			<Text>シンクロ　ね……▼
 この特性の　ポケモンは
-どく　マヒ　やけどに　されると▽
+どく　まひ　やけどに　されると▽
 相手も　同じに　してしまうんだ▼
 あと……▼
 手持ちの　先頭に　いると
@@ -1625,7 +1631,7 @@
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:24:43" />
+				Time="2012-01-28T05:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1664,12 +1670,12 @@
 のうりょくが　さがらないんだ▼
 ただし！▼
 やけどの　こうげき　はんげんや
-マヒの　すばやさ　はんげんは▽
+まひの　すばやさ　はんげんは▽
 こうかの　たいしょうでは　ないので▽
 ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:51:14" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:32:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1683,12 +1689,12 @@
 能力が　さがらないんだ▼
 ただし！▼
 やけどの　攻撃　半減や
-マヒの　すばやさ　半減は▽
+まひの　すばやさ　半減は▽
 効果の　対象では　ないので▽
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:27:33" />
+				Time="2012-01-28T05:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1792,12 +1798,12 @@
 この　とくせいは
 でんきタイプの　わざを▽
 ひきつける　こうかも　もっているんだ▼
-１ｖｓ１では　いみがないけど
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 やくにたつと　おもうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:29:06" />
+				Time="2012-01-28T05:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1817,12 +1823,12 @@
 この特性は
 でんきタイプの　技を▽
 ひきつける　効果も　持っているんだ▼
-１ｖｓ１では　意味がないけど
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 役に立つと　思うよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:28:55" />
+				Time="2012-01-28T05:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3327,13 +3333,13 @@
 とくせいを　もった　ポケモンと▽
 いっしょに　せんとうへ　さんかさせると▽
 とくこうが　あがるんだ▼
-１ｖｓ１では　いみがないけど
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 おたがいの　とくこうを　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:44:48" />
+				Time="2012-01-28T05:39:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3347,13 +3353,13 @@
 特性を　持った　ポケモンと▽
 一緒に　戦闘に　参加させると▽
 特攻が　あがるんだ▼
-１ｖｓ１では　意味がないけど
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 お互いの　特攻を　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:44:51" />
+				Time="2012-01-28T05:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3392,13 +3398,13 @@
 とくせいを　もった　ポケモンと▼
 いっしょに　せんとうへ　さんかさせると
 とくこうが　あがるんだ▼
-１ｖｓ１では　いみがないけど
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 おたがいの　とくこうを　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:44:57" />
+				Time="2012-01-28T05:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3412,13 +3418,13 @@
 特性を　持った　ポケモンと▼
 一緒に　戦闘へ　参加させると
 特攻が　あがるんだ▼
-１ｖｓ１では　意味がないけど
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 お互いの　特攻を　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:45:00" />
+				Time="2012-01-28T05:41:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4287,7 +4293,7 @@
 のうりょくが　さがらないんだ▼
 ただし！▼
 やけどの　こうげき　はんげんや
-マヒの　すばやさ　はんげんは▽
+まひの　すばやさ　はんげんは▽
 こうかの　たいしょうでは　ないので▽
 ちゅうい　すること▼
 あと……▼
@@ -4295,8 +4301,8 @@
 やせいの　ポケモンと▽
 であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:53:30" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4310,7 +4316,7 @@
 能力が　さがらないんだ▼
 ただし！▼
 やけどの　攻撃半減や
-マヒの　すばやさ半減は▽
+まひの　すばやさ半減は▽
 効果の　対象では　ないので▽
 注意すること▼
 あと……▼
@@ -4319,7 +4325,7 @@
 であいにくくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:46:28" />
+				Time="2012-01-28T05:32:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5545,15 +5551,15 @@
 この　とくせいの　ポケモンは
 じょうたいいじょうに　なると▽
 すばやさが　あがるんだ▼
-マヒの　すばやさ　はんげんも
+まひの　すばやさ　はんげんも
 むこうに　なるんだよ▼
 あと……▼
 てもちの　せんとうに　いると
 やせいの　ポケモンと▽
 であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:51:56" />
+				User="matsumiya:W00224"
+				Time="2012-01-28T05:32:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5565,7 +5571,7 @@
 この特性の　ポケモンは
 状態異常に　なると▽
 すばやさが　あがるんだ▼
-マヒの　すばやさ　半減も
+まひの　すばやさ　半減も
 無効に　なるんだよ▼
 あと……▼
 手持ちの　先頭に　いると
@@ -5573,7 +5579,7 @@
 であいにくくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:32:32" />
+				Time="2012-01-28T05:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6640,12 +6646,12 @@
 この　とくせいは
 みずタイプの　わざを▽
 ひきつける　こうかも　もっているんだ▼
-１ｖｓ１では　いみがないけど
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 やくにたつと　おもうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:01:26" />
+				Time="2012-01-28T05:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6665,12 +6671,12 @@
 この特性は
 みずタイプの　技を▽
 ひきつける　効果も　持っているんだ▼
-１ｖｓ１では　意味がないけど
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 役に立つと　思うよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:01:09" />
+				Time="2012-01-28T05:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7613,12 +7619,12 @@
 みかたの　じょうたいいじょうを▽
 なおす　ことが　あるんだ▼
 じぶんは　かいふく　できないから
-１ｖｓ１では　いみがないけど▽
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 こころづよい　とくせい　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:07:30" />
+				Time="2012-01-28T05:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7632,12 +7638,12 @@
 味方の　状態異常を▽
 治すことが　あるんだ▼
 自分は　回復できないから
-１ｖｓ１では　意味がないけど▽
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 こころづよい　特性だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:07:16" />
+				Time="2012-01-28T05:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7676,12 +7682,12 @@
 みかたへの　ダメージを▽
 へらして　くれるんだ▼
 じぶんへの　ダメージは　へらないから
-１ｖｓ１では　いみがないけど▽
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 こころづよい　とくせいだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:08:11" />
+				Time="2012-01-28T05:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7696,11 +7702,11 @@
 減らして　くれるんだ▼
 自分への　ダメージは　減らないから
 １ｖｓ１では　意味がないけど▽
-ダブルや　トリプルの　戦闘では▽
+ダブルバトルや　トリプルバトル　では▽
 こころづよい　特性だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:08:04" />
+				Time="2012-01-28T05:42:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8119,12 +8125,12 @@
 この　とくせいの　ポケモンは
 みかたの　こうどうを　よみとって▽
 どうしうちを　ふせぐんだ▼
-１ｖｓ１では　いみがないけど
-ダブルや　トリプルの　せんとうでは▽
+シングルバトルでは　いみが　ないけど
+ダブルバトルや　トリプルバトル　では▽
 じゅうような　とくせいだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:51:08" />
+				Time="2012-01-28T05:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8136,12 +8142,12 @@
 この特性の　ポケモンは
 味方の　行動を　読み取って▽
 同士討ちを　ふせぐんだ▼
-１ｖｓ１では　意味がないけど
-ダブルや　トリプルの　戦闘では▽
+シングルバトルでは　意味が　ないけど
+ダブルバトルや　トリプルバトル　では▽
 重要な　特性だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:51:12" />
+				Time="2012-01-28T05:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
