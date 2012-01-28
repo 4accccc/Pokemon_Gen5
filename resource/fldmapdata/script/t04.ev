@@ -557,6 +557,11 @@ EVENT_START   ev_t04_swrival_01
     //アイテム入手フラグON
     _FLAG_SET( FE_T04_ITEMGET_01 )
     //========================================//
+    
+    //プライヤー名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
 
     //ライバル：それは　ダイビング▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_02 )
@@ -637,6 +642,11 @@ EVENT_START   ev_t04_swrival_01
       _CALL ev_sage7
 
     ELSE
+      
+      //プライヤー名代入
+      _PLAYER_NAME( 0 )
+      //ライバル名代入
+      _RIVAL_NAME( 1 )
 
       //ライバル：……ッチ
       _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_05 )
@@ -647,6 +657,11 @@ EVENT_START   ev_t04_swrival_01
 
   //会話２回目以降
   ELSE
+    
+    //プライヤー名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
 
     //ライバル：でさ　オマエ
     _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_03 )
@@ -724,6 +739,11 @@ EVENT_START   ev_t04_swrival_01
       _CALL ev_sage7
 		
     ELSE
+      
+      //プライヤー名代入
+      _PLAYER_NAME( 0 )
+      //ライバル名代入
+      _RIVAL_NAME( 1 )
 
       //ライバル：……ッチ
       _BALLOONWIN_TALKOBJ_MSG( msg_t04_swrival_end_05 )
