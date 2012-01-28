@@ -73,6 +73,7 @@ INIT_EVENT_START   ev_zone_c06
     //C06フウロ表示
     _FLAG_RESET( FV_C06_SWLEADER6_01 )
     //========================================//
+    _SXY_MOVE_NPC_POS( C06_SWLEADER6_01, DIR_DOWN , 78, 0, 269 )
   ENDIF
   
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
@@ -97,10 +98,7 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_c06
-  //C06到着イベント終了でリンクイベント起動ならフウロを移動
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FV_C06_SWLEADER6_01 ) THEN
-    _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN)
-  ENDIF
+  
 INIT_EVENT_END
 
 /**************************************************************/
