@@ -349,6 +349,7 @@ static void _OccurPowerClear(GPOWER_TYPE type)
   }
   GPowerSys.occur_power[type] = GPOWER_ID_NULL;
   GPowerSys.life[type] = 0;
+  GPowerSys.powerdata_data[type] = 0;
   if(GPowerSys.my_power_type == type){
     GPowerSys.my_power_type = GPOWER_TYPE_NULL;
   }
