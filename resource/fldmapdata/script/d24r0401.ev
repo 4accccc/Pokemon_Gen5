@@ -126,8 +126,6 @@ EVENT_START   ev_pos_d24r0401_poke485_01
   _YES_NO_WIN( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
-
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     _TIME_WAIT ( 8 )  //間
@@ -153,8 +151,6 @@ EVENT_START   ev_pos_d24r0401_poke485_01
     _TIME_WAIT ( 60 )  //落下待ち
 
   ELSE    //いいえ
-
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //アニメ：主人公一歩後ろに下がる
