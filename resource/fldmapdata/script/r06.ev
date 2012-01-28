@@ -91,10 +91,11 @@ EVENT_START   ev_pos_r06_swleader1_01
 	
 	//階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //チェレン動作モデル削除
   _OBJ_DEL( R06_SWLEADER1_01 )
+  
+  _SE_WAIT()
   
   //アニメ：主人公も退場
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_to_up2 )

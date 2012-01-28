@@ -445,15 +445,15 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   
+  //アクロマ配置変更
+  _OBJ_POS_CHANGE( D11R0101_SWBOSS_01, 51, 0, 0, DIR_DOWN )
+  
   //アニメ：上を向く
   _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_u )
   _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
   
   _TIME_WAIT( 4 )
-  
-  //アクロマ配置変更
-  _OBJ_POS_CHANGE( D11R0101_SWBOSS_01, 51, 0, 0, DIR_DOWN )
   
   _SE_WAIT()
   _OBJ_ANIME_WAIT()

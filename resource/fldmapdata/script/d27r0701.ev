@@ -198,7 +198,10 @@ EVENT_START	ev_scene_d27r0701_plazmam_01
   
   //ライバル動作モデル削除
   _OBJ_DEL( D27R0701_SWRIVAL_01 )
-  _SE_WAIT()
+  
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SE_WAIT()
+  ENDIF
   
   //アニメ：主人公向きなおす
   IF $LCWK_VERSION == VERSION_B2 THEN

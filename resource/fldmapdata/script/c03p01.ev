@@ -183,12 +183,13 @@ EVENT_START   ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x13)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
-  //アクロマ動作OBJ非表示
-  _OBJ_DEL(C03P01_SWBOSS_01)
 
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //アクロマ動作OBJ非表示
+  _OBJ_DEL(C03P01_SWBOSS_01)
+  
   _SE_WAIT()
   
   //イベント曲終了

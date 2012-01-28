@@ -327,10 +327,11 @@ EVENT_START   ev_scene_c08_guide_01
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //シャガ動作OBJ表示
   _OBJ_ADD( C08_SWLEADER7_01 )
+  
+  _SE_WAIT()
   
   //アニメ：シャガジムから出る
   _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 405, 145, FORCE_TYPE_NOT, 8, DIR_LR)
@@ -1452,13 +1453,14 @@ ev_c08_vs_ninja:
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //フィールド上にチェレン配置
+  _OBJ_ADD_EX( 446, 175, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
+  
   _SE_WAIT()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
-  
-  //フィールド上にチェレン配置
-  _OBJ_ADD_EX( 446, 175, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
   
   _OBJ_ANIME( C08_SWLEADER7_01 , anm_staystep_r )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
@@ -1538,11 +1540,12 @@ ev_c08_vs_ninja:
   //イベント曲終了
   _END_EVENT_BGM()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   //チェレン動作OBJ削除
   _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   //プレイヤー・ライバル名代入

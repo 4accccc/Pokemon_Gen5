@@ -104,9 +104,10 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   
   //階段SE
   _SE_PLAY( SEQ_SE_KAIDAN ) 
-  _SE_WAIT()
-
+  
   _OBJ_ADD( C03R0601_SWBELL_01 )  //ベル表示
+  
+  _SE_WAIT()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_BERU )
@@ -147,10 +148,13 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   //アニメ：ベル退場
   _OBJ_ANIME_AUTO( C03R0601_SWBELL_01, 5, 14, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
-  _OBJ_DEL( C03R0601_SWBELL_01 )
   
   //階段SE
   _SE_PLAY( SEQ_SE_KAIDAN ) 
+  
+  //ベル動作モデル削除
+  _OBJ_DEL( C03R0601_SWBELL_01 )
+  
   _SE_WAIT()
   
   //イベント曲終了

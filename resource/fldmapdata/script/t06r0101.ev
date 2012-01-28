@@ -422,12 +422,12 @@ _TALK_OBJ_START()
 
     //階段SE再生
     _SE_PLAY( SEQ_SE_KAIDAN )
+    
+    //フィールド上にバンジロウ配置
+    _OBJ_ADD_EX( 6, 12, DIR_UP, MMDL_ID_EVENTOBJ_00, MUGENBOSS, MV_DMY )
 
     //SE待ち
     _SE_WAIT()
-
-     //フィールド上にバンジロウ配置
-    _OBJ_ADD_EX( 6, 12, DIR_UP, MMDL_ID_EVENTOBJ_00, MUGENBOSS, MV_DMY )
 
     //プレイヤーの向きを取得
     _PLAYER_DIR_GET( LWK_DIR ) 
@@ -542,8 +542,9 @@ _TALK_OBJ_START()
       _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 12, FORCE_TYPE_NPC, 4, DIR_UD )
     ENDIF
     _OBJ_ANIME_WAIT()
-    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    
     _SE_PLAY( SEQ_SE_KAIDAN )    //階段SE再生
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
     _SE_WAIT()    //SE待ち
 
     //自機座標取得

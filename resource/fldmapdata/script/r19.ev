@@ -212,10 +212,12 @@ ev_r19_swbell_bye_01:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
-  //サポートOBJ消す
-  _OBJ_DEL( R19_SWBELL_01 )
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //サポートOBJ消す
+  _OBJ_DEL( R19_SWBELL_01 )
+  
   _SE_WAIT()
   
 _RET
@@ -229,12 +231,13 @@ ev_r19_swbell_bye_02:
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_downwalk )
   _OBJ_ANIME_WAIT()
-    
-  //サポートOBJ消す
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //サポートOBJ消す
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
   _SE_WAIT()
   
 _RET

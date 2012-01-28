@@ -418,10 +418,13 @@ EVENT_START   ev_scene_c06_swleader6_01
 
   //階段SE
   _SE_PLAY( SEQ_SE_KAIDAN ) 
+  
+  //フウロ再配置（表示）
+  _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 268, DIR_DOWN )
+  
   _SE_WAIT()
   
-  //フウロと博士再配置（表示）
-  _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 268, DIR_DOWN )
+  //博士再配置（表示）
   _OBJ_POS_CHANGE( C06_HAKASE2_01, 84, 0, 279, DIR_UP )
 
   _TIME_WAIT( 15 )
@@ -603,7 +606,6 @@ EVENT_START   ev_reserve_c06_link_event_ret
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _TIME_WAIT( 8 )
   
   //フウロ動作モデル削除
   _OBJ_DEL( C06_SWLEADER6_01 )

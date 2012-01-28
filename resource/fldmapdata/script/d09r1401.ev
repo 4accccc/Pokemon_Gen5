@@ -43,9 +43,11 @@ EVENT_START   ev_pos_d09r1401_swrival_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
 
-   //フィールド上にライバル配置
-  _OBJ_ADD_EX( 21, LCW_POSZ, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   _SE_PLAY( SEQ_SE_KAIDAN )  //階段SE再生
+  
+  //フィールド上にライバル配置
+  _OBJ_ADD_EX( 21, LCW_POSZ, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  
   _SE_WAIT()  //SE待ち
 
   //ライバル曲再生

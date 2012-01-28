@@ -166,10 +166,11 @@ EVENT_START		ev_pos_d05_swleader5_01
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //ヤーコン動作モデル削除
   _OBJ_DEL(D05_SWLEADER5_01)
+  
+  _SE_WAIT()
   
   //アニメ：主人公・ライバルWBT入室
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_go_wbt_player )
@@ -267,10 +268,11 @@ EVENT_START		ev_scene_d05_swplazma_01
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //ライバル動作モデル生成
   _OBJ_ADD( D05_SWRIVAL_01 )
+  
+  _SE_WAIT()
   
   //アニメ：ライバル出てくる
   _OBJ_ANIME( D05_SWRIVAL_01, anm_out_wbt_rival )
@@ -331,10 +333,11 @@ EVENT_START		ev_scene_d05_swplazma_01
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //アクロマ動作モデル生成
   _OBJ_ADD( D05_SWBOSS_01 )
+  
+  _SE_WAIT()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )

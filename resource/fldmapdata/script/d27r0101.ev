@@ -754,10 +754,11 @@ ev_d27r0101_first_end:
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //七賢人動作OBJ生成
   _OBJ_ADD( D27R0101_SWSAGE7_01 )
+  
+  _SE_WAIT()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_7_SAGE )
@@ -1258,11 +1259,12 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_rival_to_r1201_01 )
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   //動作モデル削除
   _OBJ_DEL( D27R0101_SWRIVAL_01 )
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   //アニメ：主人公船内へ
@@ -1315,11 +1317,12 @@ EVENT_START	ev_pos_d27r0101_second_b_01
   _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_rival_to_r1201_01 )
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   //動作モデル削除
   _OBJ_DEL( D27R0101_SWRIVAL_01 )
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   //アニメ：主人公船内へ

@@ -139,10 +139,11 @@ EVENT_START		ev_pos_c03_swchampion_02
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
   
   //アイリスOBJ削除
   _OBJ_DEL( C03_SWCHAMPION_02 )
+  
+  _SE_WAIT()
   
   //==================================//
   

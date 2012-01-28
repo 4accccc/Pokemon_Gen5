@@ -136,11 +136,12 @@ EVENT_START		ev_scene_c03p17_swchampion_02
   _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()   //カメラ操作終了
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   //ライバル動作モデル削除
   _OBJ_DEL( C03P17_SWRIVAL_01 )
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_l )

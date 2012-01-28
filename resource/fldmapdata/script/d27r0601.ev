@@ -211,11 +211,12 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   //ゲーチス動作モデル削除
   _OBJ_DEL( D27R0601_SWSAGE1_01 )
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   //ライバル動作モデル生成
