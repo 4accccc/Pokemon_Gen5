@@ -576,6 +576,70 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dlc_num_input03">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="0" ] [System:Color name="1" ][Name:PMS Idx="1" ] NG[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T03:26:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T03:26:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="0" ] [System:Color name="1" ][Name:PMS Idx="1" ] NG[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T03:26:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T03:26:04" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_ng_gpower_name">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="1" ]NG GPOWER[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:41:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:40:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="1" ]NG GPOWER[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:41:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-01-28T04:41:12" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dlc_cursor"
 		Style="Large">
 		<LanguageCell

@@ -1,4 +1,4 @@
-//===============================================================================
+//============================================================
 /*
  *  @file event_debug_livecomm.c
  *  @brief  すれ違い通信デバッグメニューイベント
@@ -312,15 +312,6 @@ static const DEBUG_MENU_LIST DATA_DebugLiveCommFromFieldMenuList[] =
   { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
-static const DEBUG_MENU_LIST DATA_DebugLiveCommFromFMissionMenuList[] =
-{
-  { dlc_menu_02, (void*)MENU_BEACON_REQ, GFL_OVERLAY_BLANK_ID },
-  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
-  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
-  { dlc_menu_10, (void*)MENU_MY_GPOWER, GFL_OVERLAY_BLANK_ID },
-  { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
-};
-
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
   NARC_debug_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommMenuList),
@@ -339,16 +330,6 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFieldMenuData = {
   NULL,
   NULL
 };
-static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFMissionMenuData = {
-  NARC_debug_message_d_livecomm_dat,
-  NELEMS(DATA_DebugLiveCommFromFMissionMenuList),
-  DATA_DebugLiveCommFromFMissionMenuList,
-  &DATA_DebugMenuList_Default, //流用
-  1, 1, 24, 17,
-  NULL,
-  NULL
-};
-
 
 /*
  *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
@@ -494,7 +475,7 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 0, BREQ_FWAZA_MAX-1, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
  { 1, 7, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
  { 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
- { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
+ { 0, GPOWER_ID_MAX-1, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
  { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_SCORE,    ミッションスコア
@@ -544,9 +525,10 @@ static void sub_BmpWinAdd( BMP_WIN* bmpwin, u8 px, u8 py, u8 sx, u8 sy );
 static void sub_BmpWinDel( BMP_WIN* bmpwin );
 static void sub_GetMsgToBuf( DMENU_LIVE_COMM* wk, u8 msg_id );
 static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
-static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM_WSET_TYPE type );
+static BOOL sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM_WSET_TYPE type );
 
 static GMEVENT* event_CreateEventNumInput( DMENU_LIVE_COMM* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func );
+static GMEVENT* event_CreateEventNumInputEx( DMENU_LIVE_COMM* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func, BPRM_WSET_TYPE wset_type );
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LIVE_COMM* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type );
 static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk, GAMEBEACON_INFO_TBL* info_tbl );
 static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk );
@@ -620,29 +602,6 @@ GMEVENT* DEBUG_EVENT_LiveCommFromField( GAMESYS_WORK* gsys,void* parent_work )
   dmenu_WorkInitCommon( wk, gsys );
   wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
   wk->menu_init_data = &DebugLiveCommFromFieldMenuData;
-
-  dmenu_WorkInit( wk );
-
-  return event;
-}
-
-//--------------------------------------------------------------
-/**
- * すれ違い通信デバッグメニュー ミッションログメニューイベント生成
- * @param wk  DEBUG_MENU_EVENT_WORK*
- */
-//--------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_LiveCommFromFMission( GAMESYS_WORK* gsys,void* parent_work )
-{
-  DMENU_LIVE_COMM* wk;
-  GMEVENT* event;
-
-  event = GMEVENT_Create( gsys, NULL, event_LiveCommMain, sizeof(DMENU_LIVE_COMM) );
-
-  wk = GMEVENT_GetEventWork( event );
-  dmenu_WorkInitCommon( wk, gsys );
-  wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
-  wk->menu_init_data = &DebugLiveCommFromFMissionMenuData;
 
   dmenu_WorkInit( wk );
 
@@ -863,8 +822,8 @@ static GMEVENT_RESULT event_LiveCommFromFieldMain( GMEVENT * event, int *seq, vo
         DEBUG_RecvBeaconBufferClear();
         break;
       case MENU_MY_GPOWER:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, GPOWER_ID_CAPTURE_S+1,
-            ninput_SetDebugParam, ninput_GetDebugParam) );
+        GMEVENT_CallEvent( event, event_CreateEventNumInputEx( wk, 1, 0, GPOWER_ID_MAX-1,
+            ninput_SetDebugParam, ninput_GetDebugParam, BPRM_WSET_GPOWER ) );
         break;
       }
       *seq = SEQ_MENU_INIT; 
@@ -951,32 +910,38 @@ static void sub_GetZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf 
  *  @brief  指定パラメータワード展開
  */
 //----------------------------------------------------------
-static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM_WSET_TYPE type )
+static BOOL sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM_WSET_TYPE type )
 {
   switch( type ){
   case BPRM_WSET_TRNAME:
     WORDSET_RegisterTrainerName( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_TRNAME_EX:
     if( value == 0){
       MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
     }else{
       WORDSET_RegisterTrainerName( wk->wset, idx, value );
-      return;
+      return TRUE;
     }
     break;
   case BPRM_WSET_MONSNAME:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_ITEMNAME:
     WORDSET_RegisterItemName( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_FWAZA:
     WORDSET_RegisterWazaName( wk->wset, idx, DATA_FieldWazaTbl[value]);
-    return;
+    return TRUE;
   case BPRM_WSET_GPOWER:
-    WORDSET_RegisterGPowerName( wk->wset, idx, value );
-    return;
+    if( GPOWER_IsEnableID( value ) ){
+      WORDSET_RegisterGPowerName( wk->wset, idx, value );
+      return TRUE;
+    }else{
+      GFL_MSG_GetString( wk->msgman, dlc_ng_gpower_name, wk->str_tmp );
+      sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+      return FALSE;
+    }
   case BPRM_WSET_ACTION:
     GFL_MSG_GetString( wk->msgman, dlc_action_00+value, wk->str_tmp );
     break;
@@ -1000,10 +965,10 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
     break;
   case BPRM_WSET_POKEWOOD:
     WORDSET_RegisterPokewoodMovieTitle( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_WBT:
     WORDSET_RegisterWBTTournamentName( wk->wset, idx, value );
-    return;
+    return TRUE;
   case BPRM_WSET_COLOR:
     GFL_MSG_GetString( wk->msgman, dlc_color_01+value, wk->str_tmp );
     break;
@@ -1018,6 +983,7 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
     break;
   }
   sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+  return TRUE;
 }
 
 //----------------------------------------------------------
@@ -1177,6 +1143,11 @@ static GMEVENT* event_CreateEventNumInput( DMENU_LIVE_COMM* wk, int key, int min
   return event_CreateEventNumInputCore( wk,
             key, min, max, set_func, get_func, NULL, BPRM_WSET_NONE );
 }
+static GMEVENT* event_CreateEventNumInputEx( DMENU_LIVE_COMM* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func, BPRM_WSET_TYPE wset_type )
+{
+  return event_CreateEventNumInputCore( wk,
+            key, min, max, set_func, get_func, NULL, wset_type );
+}
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LIVE_COMM* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type )
 {
   return event_CreateEventNumInputCore( wk,
@@ -1213,6 +1184,9 @@ static GMEVENT_RESULT event_NumInputMain( GMEVENT * event, int *seq, void * work
         break;
       }
       if( trg & PAD_BUTTON_A ){
+        if( !sub_BeaconParamWordset( wk, 0, evwk->value, evwk->wset_type ) ){
+          break;  //値がNG範囲なので入力決定しない 
+        }
         if( prm->ret_wk != NULL ){
           *prm->ret_wk = evwk->value;
         }else{
@@ -1281,8 +1255,8 @@ static void ninput_PrintNumWin( DMENU_LIVE_COMM* wk, EVWK_NINPUT* evwk, BMP_WIN*
   if( evwk->wset_type == BPRM_WSET_NONE ){
     sub_GetMsgToBuf( wk, dlc_num_input01 );
   }else{
-    sub_BeaconParamWordset( wk, 1, num, evwk->wset_type );
-    sub_GetMsgToBuf( wk, dlc_num_input02 );
+    BOOL ok_f = sub_BeaconParamWordset( wk, 1, num, evwk->wset_type );
+    sub_GetMsgToBuf( wk, dlc_num_input02+(!ok_f) );
   }
 
   GFL_BMP_Clear( bmpwin->bmp, FCOL_WIN_BASE );
