@@ -267,12 +267,13 @@ EVENT_START		ev_pos_c16_tutorial_01
   _OBJ_ANIME( C16_SECRETARY_04, anm_first_sec04_goaway )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_player_bye_owner )
 	_OBJ_ANIME_WAIT()
-  _OBJ_DEL( C16_OWNER_01 )
+
   _OBJ_DEL( C16_SECRETARY_03 )
   _OBJ_DEL( C16_SECRETARY_04 )
 
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
+  _OBJ_DEL( C16_OWNER_01 )
   _SE_WAIT()
 
   //秘書前に
@@ -353,7 +354,6 @@ _ANIME_LABEL	anm_first_sec03_goaway
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
-  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -364,7 +364,6 @@ _ANIME_LABEL	anm_first_sec04_goaway
   _ANIME_DATA AC_WAIT_8F, 1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
-  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -373,7 +372,6 @@ _ANIME_LABEL	anm_first_sec04_goaway
 _ANIME_LABEL	anm_first_owner_goaway_01
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
-  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -463,8 +461,11 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_sec01_inroom
   _ANIME_DATA AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,5
-  _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_first_sec01_inroom02
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -472,8 +473,8 @@ _ANIME_LABEL	anm_first_sec01_inroom
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_sec02_inroom
 	_ANIME_DATA	AC_WALK_L_8F,4
-  _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*			チュートリアル用秘書２					                      */
@@ -530,12 +531,13 @@ EVENT_START	ev_reserve_c16_tutorial
 
     _OBJ_DEL( C16_SECRETARY_02 )
 
+    _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_inroom02 )
+    _OBJ_ANIME_WAIT()
+
     //階段SE再生
     _SE_PLAY( SEQ_SE_KAIDAN )
-    _SE_WAIT()
-
     _OBJ_DEL( C16_SECRETARY_01 )
-
+    _SE_WAIT()
 
     //秘書を追加
     _RESORT_SET_PRESET_PEOPLE( RESORT_PEOPLE_TYPE_SECRETARY, RESORT_PRESET_SECRETARY_01 )

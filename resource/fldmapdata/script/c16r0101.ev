@@ -624,13 +624,14 @@ sub_prize_goout_owner:
   _OBJ_ANIME( C16R0101_SECRETARY_02, anm_sec02_goout )
   _OBJ_ANIME_WAIT()
 
-  //äKíiSEçƒê∂
-  _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
-
-  _OBJ_DEL( C16R0101_OWNER )
   _OBJ_DEL( C16R0101_SECRETARY_01 )
   _OBJ_DEL( C16R0101_SECRETARY_02 )
+
+  //äKíiSEçƒê∂
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _OBJ_DEL( C16R0101_OWNER )
+  _SE_WAIT()
+
 }
 _RET
 
