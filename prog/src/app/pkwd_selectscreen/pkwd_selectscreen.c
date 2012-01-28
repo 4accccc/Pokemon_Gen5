@@ -1556,8 +1556,7 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
         POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0+j, pp );
         wk->svdata[i].my_monsno[j] = PP_Get( pp, ID_PARA_monsno, NULL);
       }
-      
-    
+
       // 先頭手持ちポケモン名取得
       POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
       WORDSET_RegisterPokeMonsName( wk->svdata[i].wordset, 0, pp );
@@ -1567,6 +1566,7 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
        OS_Printf( "\n");
       GFL_HEAP_FreeMemory( pp );
     }else{
+      // 読み込めなかった
       wk->svdata[i].scenario_no = -1;
     }
   }
@@ -2257,9 +2257,10 @@ static BOOL SubSeq_DecideWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
 }
 
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
 //----------------------------------------------------------------------------------
 /**
- * @brief	メッセーじ表示終了待ち
+ * @brief	メッセージ表示終了待ち
  *
  * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
  *
@@ -2269,10 +2270,19 @@ static BOOL SubSeq_DecideWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 static BOOL SubSeq_MsgWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   //メッセージ描画終了待ち
-  if(PRINTSYS_PrintStreamGetState( wk->print_stream )==PRINTSTREAM_STATE_DONE)
-  {
+  int state = PRINTSYS_PrintStreamGetState( wk->print_stream );
+  switch(state){
+  case PRINTSTREAM_STATE_DONE:
     PRINTSYS_PrintStreamDelete( wk->print_stream );
     wk->seq = wk->subseq;
+    break;
+  case PRINTSTREAM_STATE_RUNNING :  // 実行中
+    // メッセージスキップ
+    if( ( GFL_UI_KEY_GetCont() & MSG_SKIP_BTN ) || GFL_UI_TP_GetCont() )
+    {
+      PRINTSYS_PrintStreamShortWait( wk->print_stream, 0 );
+    }
+    break;
   }
   return FALSE;
 
