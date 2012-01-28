@@ -769,6 +769,7 @@ sub_come_shop:
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
         _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
+        _SYSWIN_MSG( resort_sys_24, POS_DOWN )
 
       CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
         _SYSWIN_MSG( resort_sys_13_00, POS_DOWN )
@@ -802,6 +803,8 @@ sub_come_shop:
         _SYSWIN_MSG( resort_sys_20_me, POS_DOWN )
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
+        _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_PEOPLE_TYPE_RESIDENT, LWK_LIST_RET_IDX, 1 )
+        _SYSWIN_MSG( resort_sys_24, POS_DOWN )
       ENDSWITCH
     ENDIF
 
@@ -1368,6 +1371,8 @@ sub_resident_merge:
 
     //○○に転職した
     _SYSWIN_MSG( resort_sys_07, POS_DOWN )
+    _RESORT_SET_WORD( RESORT_WORD_WANT_SHOP, RESORT_WORD_PARAM_FRONT, 0, 1 )
+    _SYSWIN_MSG( resort_sys_24, POS_DOWN )
     _SYSWIN_CLOSE()
 
     //フェードアウト
