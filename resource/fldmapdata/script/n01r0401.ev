@@ -281,7 +281,6 @@ EVENT_START		ev_scene_n01r0401_boss_03
   
   //Ｎ：さあ！案内したまえ
   _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_05, N01R0401_BOSS_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //連れ歩き開始
