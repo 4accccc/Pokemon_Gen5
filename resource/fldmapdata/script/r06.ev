@@ -319,8 +319,9 @@ EVENT_START   ev_pos_r06_legend_meet_01
   _MSGWIN_CLOSE()
   
   //========================================//
-  //R06七賢人ロット非表示
+  //R06七賢人ロット・事情通老人非表示
   _FLAG_SET( FV_R06_SAGE6_01 )
+  _FLAG_SET( FV_R06_OLDMAN1_01 )
   //R06コバルオン遭遇イベントPOS無効
   $WK_SCENE_R06_LEGEND_MEET = 2
   //========================================//
