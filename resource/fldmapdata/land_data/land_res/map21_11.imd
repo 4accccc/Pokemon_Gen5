@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2012-01-18T18:53:05" source="map21_11_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-01-28T16:33:52" source="map21_11_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2012-01-18T18:53:05" source="map21_11_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2012-01-28T16:33:52" source="map21_11_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -7108,7 +7108,7 @@
 	<polygon index="33" name="polygon33"
 		vertex_size="32" polygon_size="8"
 		triangle_size="0" quad_size="8"
-		volume_min="0.125000 -0.156250 -3.468750"
+		volume_min="0.125000 -0.171875 -3.468750"
 		volume_max="3.718750 1.093750 -0.625000"
 		volume_r="4.810059"
 		mtx_prim_size="1"
@@ -7137,11 +7137,11 @@
 					<tex st="32.250000 1.437500"/>
 					<pos_xz xz="0.125000 -3.187500"/>
 					<tex st="47.125000 -2.000000"/>
-					<pos_xyz xyz="3.250000 -0.156250 -1.660156"/>
+					<pos_xyz xyz="3.250000 -0.171875 -1.660156"/>
 					<tex st="32.250000 -2.000000"/>
 					<pos_xz xz="3.250000 -1.937500"/>
 					<tex st="32.250000 14.000000"/>
-					<pos_xy xy="2.375000 -0.156250"/>
+					<pos_xy xy="2.375000 -0.171875"/>
 					<tex st="47.125000 14.000000"/>
 					<pos_xz xz="2.375000 -1.660156"/>
 					<tex st="32.250000 18.000000"/>
@@ -7149,11 +7149,11 @@
 					<tex st="47.125000 18.000000"/>
 					<pos_xz xz="3.250000 -2.214844"/>
 					<tex st="47.125000 2.000000"/>
-					<pos_xy xy="2.375000 -0.156250"/>
+					<pos_xy xy="2.375000 -0.171875"/>
 					<tex st="32.250000 2.000000"/>
 					<pos_xz xz="2.375000 -1.937500"/>
 					<tex st="47.437500 -4.312500"/>
-					<pos_xz xz="1.258057 -0.625000"/>
+					<pos_xyz xyz="1.258057 -0.156250 -0.625000"/>
 					<tex st="32.250000 -4.312500"/>
 					<pos_xy xy="1.812500 -0.156250"/>
 					<tex st="32.250000 17.000000"/>
