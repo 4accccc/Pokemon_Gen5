@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/26 17:23:19
+#save date:2012/01/28 15:51:39
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ R11_POKE6_01
 #OBJ CODE Number
 POKE6
 #MOVE CODE Number
-MV_DOWN
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 80 136
+72 80 88
 #event number: 1
 #type
 1
