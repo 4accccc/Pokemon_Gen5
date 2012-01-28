@@ -75,13 +75,13 @@ EVENT_START ev_pos_d27_hint_01b
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1001_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -129,13 +129,13 @@ EVENT_START ev_pos_d27_hint_02b
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX += 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1001_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -183,13 +183,13 @@ EVENT_START ev_pos_d27_hint_03b
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1001_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -237,13 +237,13 @@ EVENT_START ev_pos_d27_hint_04b
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1001_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -292,13 +292,13 @@ EVENT_START ev_pos_d27_hint_05b
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX += 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1001_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -346,13 +346,13 @@ EVENT_START ev_pos_d27_hint_01w
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSZ -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_22 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_22 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R2101_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -400,13 +400,13 @@ EVENT_START ev_pos_d27_hint_02w
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSZ -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_23 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_23 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R2201_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -454,13 +454,13 @@ EVENT_START ev_pos_d27_hint_03w
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX -= 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_24 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_24 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1801_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -508,13 +508,13 @@ EVENT_START ev_pos_d27_hint_04w
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX += 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_25 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_25 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R2101_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -563,13 +563,13 @@ EVENT_START ev_pos_d27_hint_05w
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   $LCW_POSX += 1
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_06 )
+  
   //アニメ：「！」
   _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  
-  //トレーナー曲再生
-  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_06 )
   
   //アニメ：隣接
   _OBJ_ANIME_AUTO( D27R1901_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
@@ -617,16 +617,16 @@ EVENT_START ev_d27_hint_01
     
     //B2
     IF $LCWK_VERSION == VERSION_B2 THEN
-      _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
-      _OBJ_ANIME_WAIT()
       //トレーナー曲再生
       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
+      _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
     //W2
     ELSE
-      _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
-      _OBJ_ANIME_WAIT()
       //トレーナー曲再生
       _TRAINER_BGM_SET(  TRID_SWPLAZMAM_22 )
+      _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
     ENDIF
      
      //戦闘前メッセージ
@@ -684,16 +684,16 @@ EVENT_START ev_d27_hint_02
 
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
+       _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      //W2
      ELSE
-       _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_23 )
+       _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      ENDIF
     
      //戦闘前メッセージ
@@ -751,16 +751,16 @@ EVENT_START ev_d27_hint_03
 
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
+       _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      //W2
      ELSE
-       _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_24 )
+       _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      ENDIF
      
      //戦闘前メッセージ
@@ -818,16 +818,16 @@ EVENT_START ev_d27_hint_04
   
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
+       _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      //W2
      ELSE
-       _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAM_25 )
+       _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      ENDIF
     
      //戦闘前メッセージ
@@ -898,16 +898,16 @@ EVENT_START ev_d27_hint_06
     
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
+       _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      //W2
      ELSE
-       _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAW_06 )
+       _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      ENDIF
     
      //戦闘前メッセージ
@@ -965,16 +965,16 @@ EVENT_START ev_d27_hint_07
 
      //B2
      IF $LCWK_VERSION == VERSION_B2 THEN
-       _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAW_05 )
+       _OBJ_ANIME( D27R1001_HINT_07, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      //W2
      ELSE
-       _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
-       _OBJ_ANIME_WAIT()
        //トレーナー曲再生
        _TRAINER_BGM_SET(  TRID_SWPLAZMAW_07 )
+       _OBJ_ANIME( D27R2201_HINT_07, anm_common_gyoe )
+       _OBJ_ANIME_WAIT()
      ENDIF
     
      //戦闘前メッセージ
