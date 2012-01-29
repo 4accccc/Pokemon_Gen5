@@ -48,7 +48,7 @@ static const BOOL PlaceNameShakeFlag = TRUE;  //動きの揺れ追加
 //===========================================================================
 // ■ 定数
 //===========================================================================
-#define PN_PLATE_BMP_XSIZE_CHR (32) // ビットマップの x サイズ ( キャラ単位 )
+#define PN_PLATE_BMP_XSIZE_CHR (25) // ビットマップの x サイズ ( キャラ単位 )
 #define PN_PLATE_BMP_YSIZE_CHR (2) // ビットマップの y サイズ ( キャラ単位 )
 #define	COLOR_NO_LETTER (1)  // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW (2)  // 影部分のカラー番号
