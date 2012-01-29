@@ -1512,6 +1512,8 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
 
       if( MMDL_GetOBJCode( p_wk->mmdl ) != code ){
         FIELD_PLAYER_ChangeOBJCode( p_wk->player, code );
+        // 自機の表示コード固定を解除
+        FIELD_PLAYER_ClearOBJCodeFix( p_wk->player );
       }
 
       // SE停止
