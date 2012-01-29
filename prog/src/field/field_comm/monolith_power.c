@@ -56,7 +56,8 @@ enum{
 #define GPOWER_NAME_BMP_LEN_Y     (2)
 
 ///1フレームに描画するGパワー名の数 (キューに貯めるには数が多すぎるので自分でフレームを分けて描画)
-#define GPOWER_NAME_WRITE_NUM     (3)
+//↑sw120128 プリントキュー未使用かつハイリンク通信がなくなったので、一気にかける数を指定
+#define GPOWER_NAME_WRITE_NUM     (100)
 
 ///一度に画面に表示されるパワー項目数
 #define POWER_ITEM_DISP_NUM   (7)
