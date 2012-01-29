@@ -4091,10 +4091,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアタイム</Text>
+			<Text>のこりじかん</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T10:00:31" />
+				Time="2012-01-28T12:14:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4102,10 +4102,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアタイム</Text>
+			<Text>残り時間</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T10:00:26" />
+				Time="2012-01-28T12:14:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
