@@ -4484,13 +4484,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようちえんじを　さがして
+			<Text>えんじを　さがして
 じゃんけん　しょうぶを　しよう！
 [Digit:4digits Idx="1" ]にんいじょうに　かて！
 こううんに　めぐまれるのは　だれ！？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:39:44" />
+				Time="2012-01-28T12:17:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4498,13 +4498,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようちえんじを　探して
+			<Text>えんじを　探して
 じゃんけん　勝負をしよう！
 [Digit:4digits Idx="1" ]人以上に　勝て！
 幸運に　恵まれるのは　だれだ！？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:46:42" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T12:17:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4966,11 +4966,11 @@
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
 ポケモンを　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
+[Digit:4digits Idx="1" ]ひきいじょう　たおすか
+つかまえれば　クリア！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:17:01" />
+				Time="2012-01-28T13:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5017,12 +5017,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆれる　くさむらにいる
-ポケモンを　さがせ！
-[Digit:4digits Idx="1" ]ひき　さがせば　クリア！</Text>
+			<Text>ゆれる　くさむらや
+つちけむりの　あがる　ばしょにいる
+ポケモンを　さがしてみよう！
+[Digit:4digits Idx="1" ]ひき　さがせば　たっせい！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:38:14" />
+				Time="2012-01-28T14:08:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5030,12 +5031,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>揺れる　草むらにいる
-ポケモンを　探せ！
-[Digit:4digits Idx="1" ]匹　探せば　クリア！</Text>
+			<Text>揺れる　草むらや
+土煙のあがる　場所にいる
+ポケモンを　探してみよう！
+[Digit:4digits Idx="1" ]匹　探せば　達成！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:46:16" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T14:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5070,11 +5072,11 @@
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
 [Name:PokemonName ]を　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
+[Digit:4digits Idx="1" ]ひきいじょう　たおすか
+つかまえたら　ミッション　たっせい！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:52:39" />
+				Time="2012-01-28T13:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5084,11 +5086,11 @@
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらにいる
 [Name:PokemonName ]を　探してみよう！
-制限時間内に
-[Digit:4digits Idx="1" ]匹以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]匹以上　倒すか
+捕まえたら　ミッション　達成！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:46:12" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T13:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5231,13 +5233,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-ネジやまにて
-はっけん　ほうこくアリ！</Text>
+			<Text>[Name:PokemonName ]を　さがせ！
+ほらあなで　つちけむりの
+あがる　ばしょを　さがしてみよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-13T03:18:59" />
+				Time="2012-01-28T12:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5245,13 +5246,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>揺れる　草むらにいる
-[Name:PokemonName ]を　探してみよう！
-ネジ山にて
-発見　報告アリ！</Text>
+			<Text>[Name:PokemonName ]を　探せ！
+洞穴で　土煙のあがる
+場所を　探してみよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-13T03:19:20" />
+				Time="2012-01-28T12:58:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5260,10 +5260,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション説明文
-メタグロス</Comment>
+ハガネール</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:32:32" />
+				Time="2012-01-28T12:22:18" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -5704,12 +5704,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
+ポケモンを　みつけよう！
 [Digit:4digits Idx="1" ]ひきいじょう
-であうことが　できれば　せいこう！</Text>
+であうことが　できれば　たっせい！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:17:24" />
+				Time="2012-01-28T14:08:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5718,12 +5718,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地の　隠し穴を　巡って
-ポケモンを　探せ！
+ポケモンを　みつけよう！
 [Digit:4digits Idx="1" ]匹以上
-出会うことが　できれば　成功！</Text>
+出会うことが　できれば　達成！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:45:23" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T14:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5731,17 +5731,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※通常隠し穴</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:15:22" />
+				Time="2012-01-28T13:05:06" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+※通常隠し穴</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:15:22" />
+				Time="2012-01-28T13:05:07" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -5757,12 +5759,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
+ポケモンを　みつけよう！
 めずらしい　ポケモンに
 であえる　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:58:48" />
+				Time="2012-01-28T14:09:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5771,12 +5773,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地の　隠し穴を　巡って
-ポケモンを　探せ！
+ポケモンを　みつけよう！
 珍しい　ポケモンに
 出会える　かも？？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:45:18" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T14:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5785,18 +5787,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション説明文
-※通常隠し穴</Comment>
+※ゲーム内レア</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:54:03" />
+				Time="2012-01-28T13:05:10" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ミッション説明文
-※通常隠し穴</Comment>
+※ゲーム内レア</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-12T13:54:11" />
+				Time="2012-01-28T13:05:10" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -5812,12 +5814,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
+ポケモンを　みつけよう！
 めずらしい　ポケモンに
 であえるかも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:40:51" />
+				Time="2012-01-28T14:09:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5826,12 +5828,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地の　隠し穴を　巡って
-ポケモンを　探せ！
+ポケモンを　みつけよう！
 珍しい　ポケモンに
 出会える　かも？？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:45:15" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T14:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5869,10 +5871,10 @@
 			<Text>めずらしい　ポケモンの
 はっけん　ほうこくが　あった！
 かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！</Text>
+ポケモンを　みつけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:19:58" />
+				Time="2012-01-28T14:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5883,10 +5885,10 @@
 			<Text>珍しい　ポケモンの
 発見　報告があった！
 各地の　隠し穴を　巡って
-ポケモンを　探せ！</Text>
+ポケモンを　みつけよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T05:23:13" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-28T14:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5923,10 +5925,10 @@
 			<Text>ホウエンちほうの　ポケモンが
 かくしあなで　みつかった　らしい！
 かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！</Text>
+ポケモンを　みつけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-20T03:01:42" />
+				Time="2012-01-28T14:13:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5937,10 +5939,10 @@
 			<Text>ホウエン地方の　ポケモンが
 隠し穴で　みつかった　らしい！
 各地の　隠し穴を　巡って
-ポケモンを　探せ！</Text>
+ポケモンを　みつけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-20T03:05:06" />
+				Time="2012-01-28T14:13:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5975,12 +5977,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
-めずらしい　ポケモンを　さがせ！
+めずらしい　ポケモンを　みつけよう！
 つかまえて　そだてれば
 ポケモンしょうぶで　かつやく　するぞ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-20T03:03:00" />
+				Time="2012-01-28T14:13:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5989,12 +5991,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地の　隠し穴を　巡って
-珍しい　ポケモンを　探せ！
+珍しい　ポケモンを　みつけよう！
 捕まえて　育てれば
 ポケモン勝負で　活躍するぞ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-20T03:03:48" />
+				Time="2012-01-28T14:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
