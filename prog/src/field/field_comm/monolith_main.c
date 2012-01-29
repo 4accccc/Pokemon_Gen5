@@ -187,7 +187,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 	GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
 	//ƒq[ƒvì¬
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MONOLITH, 0x70000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MONOLITH, 0x100000 );
   
   monosys = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_SYSTEM), HEAPID_MONOLITH);
   GFL_STD_MemClear(monosys, sizeof(MONOLITH_SYSTEM));
@@ -621,7 +621,7 @@ static void _Setup_MessageSetting(MONOLITH_SETUP *setup)
 
 	setup->tcbl_sys = GFL_TCBL_Init(HEAPID_MONOLITH, HEAPID_MONOLITH, 4, 32);
 	setup->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MONOLITH );
+		GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_MONOLITH );
 	setup->printQue = PRINTSYS_QUE_Create( HEAPID_MONOLITH );
 	setup->wordset = WORDSET_Create(HEAPID_MONOLITH);
 

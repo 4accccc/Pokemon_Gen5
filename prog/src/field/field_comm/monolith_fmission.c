@@ -70,7 +70,8 @@ enum{
 #define GPOWER_NAME_BMP_LEN_Y     (2)
 
 ///1フレームに描画するフェスミッション名の数 (キューに貯めるには数が多すぎるので自分でフレームを分けて描画)
-#define GPOWER_NAME_WRITE_NUM     (3)
+///↑120129 キュー未使用で、Swanではハイリンクで通信接続されることもないので、分割無しで書ききれる数を指定
+#define GPOWER_NAME_WRITE_NUM     (100)
 
 ///一度に画面に表示される項目数
 #define POWER_ITEM_DISP_NUM   (7)
@@ -558,13 +559,17 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
     // 「ミッション開始パネル処理」(非表示)
     MonolithTool_PanelOBJ_SetEnable(&mfw->panel, FALSE);
     //
+#if 0
     if(mfw->power_list_num < POWER_ITEM_DISP_NUM){
       (*seq) = 3;
     }else{
       (*seq) = 1;
     }
+#else
+    (*seq)++;
+#endif
     break;
-#if 1
+#if 0
   // 文字列の処理で重たいため少し修正
   // はじめの(POWER_ITEM_DISP_NUM)を読み込んだら、とりあえず画面だけ表示し、
   // その後、streamが始まるまでに残りを読み込むようにした
