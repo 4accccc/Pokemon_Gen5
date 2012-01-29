@@ -335,7 +335,6 @@ static void SetDispFlag( FIELD_PLACE_NAME* system ); // 表示フラグをセットする
 static void ResetDispFlag( FIELD_PLACE_NAME* system ); // 表示フラグを落とす
 static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system ); // 地名が変化したかどうかをチェックする
 static void UpdatePlaceName( FIELD_PLACE_NAME* system ); // 表示する地名を更新する
-static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID ); // 侵入先かどうかをチェックする
 // ユーティリティ
 static BOOL CheckPlaceNameFlag( u16 zoneID, BOOL isSaveRecovery ); // 地名表示フラグを取得する
 // デバッグ
@@ -1370,24 +1369,8 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
     return;
   }
 
-  // 侵入先にいる
-  if( CheckIntrudeField( system, zoneID ) ) 
   {
-    // 侵入先のプレイヤー名を展開
-    GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
-    INTRUDE_COMM_SYS_PTR intrudeComm= Intrude_Check_CommConnect( gameComm );
-    u8 intrudeNetID = Intrude_GetPalaceArea( system->gameData );
-    MYSTATUS* status = Intrude_GetMyStatus( system->gameData, intrudeNetID );
-    STRBUF* strbuf = GFL_MSG_CreateString( system->message, MAPNAME_INTRUDE );
-    GFL_MSG_GetString( system->message,	strID, system->nameBuf );
-    WORDSET_RegisterPlayerName( system->wordset, 0, status );
-    WORDSET_RegisterPlaceName( system->wordset, 1, strID );
-    WORDSET_ExpandStr( system->wordset, system->nameBuf, strbuf );
-    GFL_STR_DeleteBuffer( strbuf );
-    system->seasonID  = GAMEDATA_GetIntrudeSeasonID( system->gameData, intrudeNetID );
-  }
-  // 自分のフィールドにいる
-  else {
+
     //レゾナンスリゾートはフリーワード
     if( ZONEDATA_IsResonanceResort( zoneID)  )
     {
@@ -1404,46 +1387,6 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
   }
   system->nameLen = GFL_STR_GetBufferLength( system->nameBuf );
   system->zoneID  = zoneID;
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief 侵入先かどうかをチェックする
- *
- * @param system
- * @param zoneID
- *
- * @return 指定したゾーンが侵入先なら TRUE
- *         そうでなければ FALSE
- */
-//-----------------------------------------------------------------------------------
-static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID )
-{
-  GAME_COMM_SYS_PTR gameComm;
-  INTRUDE_COMM_SYS_PTR intrudeComm;
-  FIELD_STATUS* fieldStatus;
-  int myNetID;
-  u8 intrudeNetID;
-
-  gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
-  intrudeComm = Intrude_Check_CommConnect( gameComm );
-  fieldStatus = GAMEDATA_GetFieldStatus( system->gameData );
-  myNetID = GAMEDATA_GetIntrudeMyID( system->gameData );
-
-  if( intrudeComm ) {
-    intrudeNetID = Intrude_GetPalaceArea( system->gameData );
-
-    // 他人のフィールドにいる
-    if( FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
-      return TRUE;
-    }
-    // 他人のパレスにいる
-    else if( ZONEDATA_IsPalace( zoneID ) && (myNetID != intrudeNetID) ) {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
 }
 
 //-----------------------------------------------------------------------------------
