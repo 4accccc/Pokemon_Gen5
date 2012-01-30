@@ -1644,6 +1644,10 @@ EVENT_START  ev_infinity_dungeon_area_arrival
   ENDIF
   _OBJ_ANIME_WAIT()
 
+  // エレベータ前に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 2, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+
   // エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
  
@@ -2659,7 +2663,7 @@ _ANIME_LABEL	anm_move_arrival_02_w
 // 到着イベントキャラがエレベータに乗り込む
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_arrival_model_03
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,2
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
