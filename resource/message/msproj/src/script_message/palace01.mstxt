@@ -2040,7 +2040,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 登録することが　できるのじゃ▼
 Ｃ－ＧＥＡＲの
 「すれ違いログ」から▽
-すれちがった　相手に　向けて▽
+すれ違った　相手に　向けて▽
 使うことが　できる▼
 デルパワーを　使うには
 デルダマが　必要じゃ▼
@@ -2048,7 +2048,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 デルダマを　集めるのが　よかろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-25T05:18:07" />
+				Time="2012-01-30T02:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2854,7 +2854,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 			Language="JPN_KANJI">
 			<Text>フェスミッションを　開催すると
 近くにいる　冒険者は▼
-Ｃ－ＧＥＡＲの　「すれちがいログ」から
+Ｃ－ＧＥＡＲの　「すれ違いログ」から
 同じミッションに　参加できるわ▼
 ミッションの　お誘いが
 届くまで　時間が▽
@@ -2863,7 +2863,7 @@ invation.mstxtのplc_mono_01を移動</Comment>
 しばらく　待っていれば　大丈夫よ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-25T05:18:13" />
+				Time="2012-01-30T02:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
