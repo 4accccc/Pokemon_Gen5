@@ -1585,7 +1585,7 @@ static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
   { 224, msg_hyouka_i24 },
   { 244, msg_hyouka_i25 },
   { 264, msg_hyouka_i26 },
-  { 289, msg_hyouka_i27 },
+  { 284, msg_hyouka_i27 },
   { 296, msg_hyouka_i28 },
   {   0, msg_hyouka_i28 },  //Sentinel
 };
