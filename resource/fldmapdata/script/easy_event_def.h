@@ -379,6 +379,19 @@
 
 //--------------------------------------------------------------
 /**
+ *  @brief  3Dデモ専用マップブラックアウト　BGMフェードアウト付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_FADE_CALL( frame ) _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_FADE_CALL frame
+
+  .macro  _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_FADE_CALL frame
+  _ASM_MAP_FADE_BLACK_OUT
+  _ASM_PLAY_BGM_SILENT \frame 
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  @brief  3Dデモ専用マップブラックイン呼び出し
  */
 //--------------------------------------------------------------
@@ -394,9 +407,9 @@
  *  @brief  3Dデモ専用マップブラックアウト　BGMPush付き
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_PUSH_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_PUSH_CALL
 
-  .macro  _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
+  .macro  _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_PUSH_CALL
   _ASM_MAP_FADE_BLACK_OUT
   _ASM_BGM_PUSH BGM_FADEOUT_FRAME 
   _ASM_MAP_FADE_END_CHECK
@@ -407,13 +420,14 @@
  *  @brief  3Dデモ専用マップブラックイン BGMPop付き
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
+#define _DEMO_FADEIN_BLACK_WITH_BGM_POP_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_POP_CALL
 
-  .macro  _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
+  .macro  _ASM_DEMO_FADEIN_BLACK_WITH_BGM_POP_CALL
   _ASM_MAP_FADE_BLACK_IN
   _ASM_BGM_POP  0,BGM_FADEIN_FRAME 
   _ASM_MAP_FADE_END_CHECK
   .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -424,6 +438,19 @@
 
   .macro  _ASM_DEMO_FADEOUT_WHITE_CALL
   _ASM_MAP_FADE_WHITE_OUT
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+  //--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップホワイトアウト　BGMフェードアウト付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_FADE_CALL( frame ) _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_FADE_CALL frame
+
+  .macro  _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_FADE_CALL frame
+  _ASM_MAP_FADE_WHITE_OUT
+  _ASM_PLAY_BGM_SILENT \frame 
   _ASM_MAP_FADE_END_CHECK
   .endm
 
@@ -444,9 +471,9 @@
  *  @brief  3Dデモ専用マップホワイトアウト　BGMPush付き
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_PUSH_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_PUSH_CALL
 
-  .macro  _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+  .macro  _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_PUSH_CALL
   _ASM_MAP_FADE_WHITE_OUT
   _ASM_BGM_PUSH BGM_FADEOUT_FRAME 
   _ASM_MAP_FADE_END_CHECK
@@ -457,9 +484,9 @@
  *  @brief  3Dデモ専用マップホワイトイン BGMPop付き
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+#define _DEMO_FADEIN_WHITE_WITH_BGM_POP_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_POP_CALL
 
-  .macro  _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+  .macro  _ASM_DEMO_FADEIN_WHITE_WITH_BGM_POP_CALL
   _ASM_MAP_FADE_WHITE_IN
   _ASM_BGM_POP  0,BGM_FADEIN_FRAME 
   _ASM_MAP_FADE_END_CHECK

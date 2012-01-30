@@ -136,7 +136,7 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
  * BGM 変更 ( 無音曲再生 )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
- * @note 現在再生中のBGMを破棄し、無音BGMを再生している。
+ * @note 現在再生中のBGMを破棄し、無音BGMを再生している。環境SEもとめる。対コマンド
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
@@ -151,7 +151,6 @@ VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
     event = EVENT_FSND_PlayEventBGMSilent( gsys, frame );
     SCRIPT_CallEvent( script, event );
   }
-
   // フィールドサウンド。
   // 環境SE停止。
   {
@@ -160,7 +159,31 @@ VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
     FSND_PauseEnvSE( fsound, FSND_ENVSE_PAUSE_BGM_CHANGE );
     SCREND_CHK_SetBitOn( SCREND_CHK_ENVSE_BGMPLAY_PAUSE );
   }
-  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGM 変更 ( 無音曲再生 ) 単発バージョン
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * @note 現在再生中のBGMを破棄し、無音BGMを再生している。
+ *       通常版との違いは対コマンドではないこと。
+ *       また、環境音を止めないこと
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlaySilentSingle( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work   = wk;
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
+  u16           frame  = VMGetU16( core ); // コマンド第一引数: FOフレーム数
+
+  {
+    GMEVENT* event;
+    event = EVENT_FSND_PlayEventBGMSilent( gsys, frame );
+    SCRIPT_CallEvent( script, event );
+  }
   return VMCMD_RESULT_SUSPEND;
 }
 

@@ -872,9 +872,11 @@
   NO_CMD() //DEF_CMD( EvCmdLegMoveBall, EV_SEQ_LEG_MOVE_BALL )
   NO_CMD() //DEF_CMD( EvCmdLegStartBallAnm, EV_SEQ_LEG_START_BALL_ANM )
   NO_CMD() //DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
-  NO_CMD() //DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
+  
+  //無音BGMの再生(単発コマンド&環境音は止めない)
+  DEF_CMD( EvCmdBgmPlaySilentSingle, EV_SEQ_PLAY_BGM_SILENT )
 
-  //無音BGMの再生
+  //無音BGMの再生(対コマンド&環境音も停止)
   DEF_CMD( EvCmdBgmPlaySilent, EV_SEQ_START_EVENT_BGM_SILENT )
 
   //レールへマップチェンジノーフェード版

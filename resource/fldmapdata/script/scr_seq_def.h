@@ -3486,11 +3486,13 @@
   .short  \frame
   .endm
 
+
 //--------------------------------------------------------------
 /**
   * @def _START_EVENT_BGM_SILENT 
 	* @brief 無音曲を再生する
 	* @param frame フェードアウトフレーム数
+  * @note 無音曲を再生し、環境音もストップ。_END_EVENT_BGMと対で使用する
   */
 //--------------------------------------------------------------
 #define _START_EVENT_BGM_SILENT( frame ) \
@@ -3498,6 +3500,23 @@
 
   .macro  _ASM_START_EVENT_BGM_SILENT frame
   .short  EV_SEQ_START_EVENT_BGM_SILENT
+  .short  \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+  * @def _PLAY_BGM_SILENT 
+	* @brief 無音曲を再生する
+	* @param frame フェードアウトフレーム数
+  * @note _START_EVENT_BGM_SILENTの派生コマンドで単発呼び用。
+  *     　_START_EVENT_BGM_SILENTと異なり環境SEはとめない
+  */
+//--------------------------------------------------------------
+#define _PLAY_BGM_SILENT( frame ) \
+		_ASM_PLAY_BGM_SILENT frame
+
+  .macro  _ASM_PLAY_BGM_SILENT frame
+  .short  EV_SEQ_PLAY_BGM_SILENT
   .short  \frame
   .endm
 
@@ -4792,8 +4811,8 @@
  *        必ず対で使ってください。ブラックアウト・ホワイトインです
  */
 //--------------------------------------------------------------
-#define _DEMO_MUSICAL_DRESSUP_FADEOUT_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
-#define _DEMO_MUSICAL_DRESSUP_FADEIN_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+#define _DEMO_MUSICAL_DRESSUP_FADEOUT_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_PUSH_CALL
+#define _DEMO_MUSICAL_DRESSUP_FADEIN_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_POP_CALL
 
 
 //======================================================================
@@ -10690,8 +10709,8 @@
  *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
-#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_PUSH_CALL
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_PUSH_CALL
 
 //--------------------------------------------------------------
 /**
@@ -10703,8 +10722,8 @@
  *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
  */
 //--------------------------------------------------------------
-#define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
-#define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+#define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_POP_CALL
+#define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_POP_CALL
 
 //--------------------------------------------------------------
 /**
@@ -10719,6 +10738,24 @@
 //--------------------------------------------------------------
 #define _DEMO_FADEOUT_BLACK_CALL_SINGLE() _ASM_DEMO_FADEOUT_BLACK_CALL
 #define _DEMO_FADEOUT_WHITE_CALL_SINGLE() _ASM_DEMO_FADEOUT_WHITE_CALL
+
+  //--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードアウト単独呼び出し BGMフェード付き
+ *
+ *  @note デモ呼出し後そのままマップチェンジがあり、対コマンドが使えない場合に呼びます
+ *        呼ばれるデモが専用BGM付きの場合に、現在の曲をフェードアウトし止める必要がある場合に使います
+ *
+ *        内部的には無音BGMに切り替えています。対コマンドではないので環境SEは止めません。
+ *        このコマンドを用いてBGM付きデモを呼び出した後、マップチェンジを行うなど
+ *        明示的にゾーンBGMの復帰処理が呼ばれないとデモ後に無音のままになります。
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL_SINGLE( frame ) _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_FADE_CALL frame
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL_SINGLE( frame ) _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_FADE_CALL frame
  
 //======================================================================
 //  テレビトランシーバーデモ
