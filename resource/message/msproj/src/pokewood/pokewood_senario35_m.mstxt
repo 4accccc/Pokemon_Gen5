@@ -68,41 +68,6 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_enemy_0"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>じょしゅ『ダメです！　Ｆー００！
-いうことを　ききませんっ！！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>助手『ダメです！　Ｆー００！
-いうことを　ききませんっ！！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="pw_event0_enemy_0"
 		Style="Large">
 		<LanguageCell
@@ -722,26 +687,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-Ｆー００を　ぼくが……</Text>
+Ｆー００を　こわすなんて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-Ｆー００を　ぼくが……</Text>
+僕に　Ｆー００を　壊すなんて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1302,34 +1267,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『きやすめは　やめろッ！▼
-ぼくは……　Ｆー００を……▼
+オレは……　Ｆー００を……▼
 じぶんの　はつめいした　たいせつな
 ロボットを！　ともだちを！▽
 このてで　こわしたんだぞッ！！▼
 その　どこが　ただしいんだ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:12" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:12" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『気休めは　やめろ！▼
-僕は……　Ｆー００を……▼
+オレは……　Ｆー００を……▼
 自分の　発明した　大切な
 ロボットを！　友達を！▽
 この手で　壊したんだぞッ！！▼
 その　どこが　正しいんだ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:32" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:32" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1396,28 +1361,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わかってるっ！！▼
-だから　どうにかして　ぼくが
+だから　どうにかして　オレが
 なおしたかったんだよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:06" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『分かってるっ！！▼
-だから　どうにかして　僕が
+だから　どうにかして　オレが
 直したかったんだよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:12" />
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T12:49:12" />
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2046,7 +2011,7 @@
 なかの……　よい……▼
 きょうだい　みたいでした……▼
 ……グフッ！！▼
-……だけどね……
+……　だけどね……
 あなたは　けんきゅうしゃ……▼
 じぶんの……　つくった……
 ロボットに　たいして▽
@@ -2054,12 +2019,12 @@
 その……　せきにんを……
 はたして……　ください……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2069,7 +2034,7 @@
 仲の……　良い……▼
 兄弟　みたいでした……▼
 ……グフッ！！▼
-……だけど……
+……　だけど……
 あなたは　研究者……▼
 自分の……　造った……
 ロボットに　対する▽
@@ -2077,12 +2042,12 @@
 その……　責任を……
 果たして……　ください……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:32:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

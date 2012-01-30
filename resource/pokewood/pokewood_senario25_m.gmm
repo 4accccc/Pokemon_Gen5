@@ -667,7 +667,7 @@
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">モニカ『なによ……　もう……</language>
-		<language name="JPN_KANJI" width="256">モニカ『なによ……　もう……</language>
+		<language name="JPN_KANJI" width="256">モニカ『何よ……　もう……</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
@@ -726,7 +726,7 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">モニカ『もう！！　なんなの！？
 なんで　まけないのよっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『もう！！　なんなの！？
+		<language name="JPN_KANJI" width="256">モニカ『もう！！　何なの！？
 なんで　負けないのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_1">
@@ -763,9 +763,9 @@
 	</row>
 	<row id="pw_event5_enemy_3">
 		<language name="JPN" width="256">モニカ『つかうわけないでしょ！！
-こんなもの　こわして　やるわ！！</language>
+こんなもの　こわして　やる！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『使うわけないでしょ！！
-こんなもの　壊して　やるわ！！</language>
+こんなもの　壊して　やる！！</language>
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！！

@@ -459,11 +459,11 @@
 		<language name="JPN" width="256">モニカ『ああ！　もうっ！！
 そもそも　[1:00:トレーナー名:1]！！▼
 もとはと　いえば　ぜーんぶ
-あんたの　せい　なんだから！！</language>
+あなたの　せい　なんだから！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ああ！　もうっ！！
 そもそも　[1:00:トレーナー名:1]！！▼
 元はと　言えば　ぜーんぶ
-あんたの　せい　なんだから！！</language>
+あなたの　せい　なんだから！！</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめん……</language>
@@ -516,11 +516,11 @@
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">モニカ『ちょっと！　[1:00:トレーナー名:1]！
 なんで　ボーっと　してるのっ！？▼
-ほんとうに　わたしの　こと
+しんけんに　わたしの　こと
 たすけようと　おもってくれてる！？</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちょっと！　[1:00:トレーナー名:1]！
 何で　ボーっと　してるのっ！？▼
-本当に　私のこと
+真剣に　私のこと
 助けようと　思ってくれてる！？</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
@@ -747,7 +747,7 @@
 だって　わたしは　もう
 にんげん　じゃないもの……</language>
 		<language name="JPN_KANJI" width="256">モニカ『どこだって　いいわ……
-人のいない　ところ　なら……▼
+人の　いない　ところ　なら……▼
 だって　私は　もう
 人間　じゃないもの……</language>
 	</row>
@@ -903,7 +903,7 @@
 見過ごして　しまったのだ……▼
 ……私は　この件の
 責任を　取って▽
-秘密警察を　辞めた……</language>
+秘密警察を　辞職した……</language>
 	</row>
 	<row id="pw_event7_enemy_8">
 		<language name="JPN" width="256">……あれから　１０ねんいじょうの

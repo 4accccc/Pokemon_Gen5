@@ -1642,14 +1642,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なによ……　もう……</Text>
+			<Text>モニカ『何よ……　もう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:18:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1904,15 +1904,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『もう！！　なんなの！？
+			<Text>モニカ『もう！！　何なの！？
 なんで　負けないのよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2105,26 +2105,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『つかうわけないでしょ！！
-こんなもの　こわして　やるわ！！</Text>
+こんなもの　こわして　やる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『使うわけないでしょ！！
-こんなもの　壊して　やるわ！！</Text>
+こんなもの　壊して　やる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2012-01-30T13:18:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

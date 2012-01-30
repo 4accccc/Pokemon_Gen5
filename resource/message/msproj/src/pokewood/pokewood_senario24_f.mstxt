@@ -3222,7 +3222,7 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『ジュジュベが
 きえて　しまった！▼
-ぬいぐるみ『と　いうことは
+ぬいぐるみ『……と　いうことは
 このせかいも　じきに　きえるね……▼
 [Name:TrainerName Idx="1" ]ひめ『どうするの？▼
 ぬいぐるみ『のこってる　しろとびらを
@@ -3232,17 +3232,17 @@
 もとの　せかいへ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T12:36:36" />
+				Time="2012-01-30T13:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T12:36:36" />
+				Time="2012-01-30T13:33:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『ジュジュベが
 消えてしまった！▼
-ぬいぐるみ『と　いうことは
+ぬいぐるみ『……と　いうことは
 この世界も　じきに　消えるね……▼
 [Name:TrainerName Idx="1" ]姫『どうするの？▼
 ぬいぐるみ『残ってる　白扉を
@@ -3252,11 +3252,11 @@
 元の　世界へ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T12:36:36" />
+				Time="2012-01-30T13:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T12:36:36" />
+				Time="2012-01-30T13:33:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

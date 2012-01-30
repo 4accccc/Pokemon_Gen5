@@ -2941,27 +2941,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そうだな……
 ぼくは　いつも　ひとりきり　だから▽
-さみしいから　なのかな……</Text>
+さみしいのかもな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-01-30T13:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-01-30T13:31:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そうだな……
 僕は　いつも　ひとりきり　だから▽
-さみしいのから　なのかな……</Text>
+さみしいのかもな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-01-30T13:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-01-30T13:31:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

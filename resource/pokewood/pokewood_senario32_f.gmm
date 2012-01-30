@@ -480,7 +480,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたし　[1:00:トレーナー名:1]
 きみの　ともだちよ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『私　[1:00:トレーナー名:1]
-きみの　友達よ……</language>
+君の　友達よ……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">Ｆー００『トモダチ　ッテ　ナニ？</language>

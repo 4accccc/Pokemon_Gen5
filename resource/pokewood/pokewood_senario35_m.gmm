@@ -353,12 +353,6 @@
 		<language name="JPN" width="256">じょしゅ</language>
 		<language name="JPN_KANJI" width="256">じょしゅ</language>
 	</row>
-	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">じょしゅ『ダメです！　Ｆー００！
-いうことを　ききませんっ！！</language>
-		<language name="JPN_KANJI" width="256">助手『ダメです！　Ｆー００！
-いうことを　ききませんっ！！</language>
-	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]……</language>
 		<language name="JPN_KANJI" width="256">Ｆー００『[1:00:トレーナー名:1]……</language>
@@ -501,9 +495,9 @@
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
-Ｆー００を　ぼくが……</language>
+Ｆー００を　こわすなんて……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
-Ｆー００を　ぼくが……</language>
+僕に　Ｆー００を　壊すなんて……</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">じょしゅ『はかせっ！▼
@@ -617,13 +611,13 @@
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『きやすめは　やめろッ！▼
-ぼくは……　Ｆー００を……▼
+オレは……　Ｆー００を……▼
 じぶんの　はつめいした　たいせつな
 ロボットを！　ともだちを！▽
 このてで　こわしたんだぞッ！！▼
 その　どこが　ただしいんだ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『気休めは　やめろ！▼
-僕は……　Ｆー００を……▼
+オレは……　Ｆー００を……▼
 自分の　発明した　大切な
 ロボットを！　友達を！▽
 この手で　壊したんだぞッ！！▼
@@ -653,10 +647,10 @@
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わかってるっ！！▼
-だから　どうにかして　ぼくが
+だから　どうにかして　オレが
 なおしたかったんだよっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『分かってるっ！！▼
-だから　どうにかして　僕が
+だから　どうにかして　オレが
 直したかったんだよっ！！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
@@ -818,7 +812,7 @@
 なかの……　よい……▼
 きょうだい　みたいでした……▼
 ……グフッ！！▼
-……だけどね……
+……　だけどね……
 あなたは　けんきゅうしゃ……▼
 じぶんの……　つくった……
 ロボットに　たいして▽
@@ -831,7 +825,7 @@
 仲の……　良い……▼
 兄弟　みたいでした……▼
 ……グフッ！！▼
-……だけど……
+……　だけど……
 あなたは　研究者……▼
 自分の……　造った……
 ロボットに　対する▽

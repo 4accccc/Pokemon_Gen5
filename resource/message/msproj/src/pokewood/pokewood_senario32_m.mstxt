@@ -730,14 +730,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『僕は　[Name:TrainerName Idx="1" ]
-きみの　友達だ……</Text>
+君の　友達だ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:31:47" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

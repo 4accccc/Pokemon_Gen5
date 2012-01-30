@@ -357,7 +357,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さあ　Ｆー００……
 わたしと　いっしょに　あそぼう</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さあ　Ｆー００……
-わたしと　一緒に　遊ぼう</language>
+私と　一緒に　遊ぼう</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">Ｆー００『アソブ！　アソブ！
@@ -625,7 +625,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そっか……
 わたしも　たのしいよ　Ｆー００……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そっか……
-わたしも　楽しいよ　Ｆー００……</language>
+私も　楽しいよ　Ｆー００……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">Ｆー００『[1:00:トレーナー名:1]！ダイスキ！▼
@@ -875,7 +875,7 @@
 バッテリーが　きれちゃうからさ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そう……▼
 お前が　喜んでいるのを　みると
-わたしも　すごく　うれしいよ▼
+私も　すごく　うれしいよ▼
 でも　そろそろ　終わりに　しないとね
 バッテリーが　切れちゃうからさ</language>
 	</row>
@@ -963,7 +963,7 @@
 痛いときや　悲しいとき……
 辛いときに　泣くことは　本当は▽
 とても　大切なことなのよ……▼
-でもね　わたしは　お前が
+でもね　私は　お前が
 泣く姿　なんか　見たくなくてさ▽
 負の感情に　関する　データは▽
 プログラムは　しなかったの……▼
@@ -984,7 +984,7 @@
 わたしは　いつも　ひとりきり　だから▽
 さみしいのかな……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうね……
-わたしは　いつも　ひとりきり　だから▽
+私は　いつも　ひとりきり　だから▽
 さみしいのかな……</language>
 	</row>
 	<row id="pw_event8_enemy_4">
@@ -999,7 +999,7 @@
 わたしには　Ｆー００が　いるね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『Ｆー００……▼
 そうか……　そうだね……
-わたしには　Ｆー００が　いるね……</language>
+私には　Ｆー００が　いるね……</language>
 	</row>
 	<row id="pw_event8_enemy_5">
 		<language name="JPN" width="256">Ｆー００『ナカヨシ！

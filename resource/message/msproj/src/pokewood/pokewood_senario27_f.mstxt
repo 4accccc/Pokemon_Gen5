@@ -745,27 +745,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『ちょっと　いまのダレ！！
+			<Text>モニカ『ちょっと！　いまのダレ！！
 しつれいなこと　いわないでっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:18:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ちょっと　いまのダレ！！
+			<Text>モニカ『ちょっと！　今のダレ！！
 失礼なこと　言わないでっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2012-01-30T13:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:28:16" />
+				Time="2012-01-30T13:18:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1128,31 +1128,31 @@
 			Language="JPN">
 			<Text>モニカ『[Name:TrainerName Idx="1" ]……
 フ……　フフフ……▽
-あなたの　かお　みたら……▽
+[Name:TrainerName Idx="1" ]の　かお　みたら……▽
 なんだか　あんしんして……▽
 わたし……　つかれちゃった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:25" />
+				Time="2012-01-30T13:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:25" />
+				Time="2012-01-30T13:18:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『[Name:TrainerName Idx="1" ]……
 フ……　フフフ……▽
-あなたの　顔　見たら……▽
+[Name:TrainerName Idx="1" ]の　顔　見たら……▽
 何だか　安心して……▽
 私……　疲れちゃった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:25" />
+				Time="2012-01-30T13:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T07:54:25" />
+				Time="2012-01-30T13:18:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

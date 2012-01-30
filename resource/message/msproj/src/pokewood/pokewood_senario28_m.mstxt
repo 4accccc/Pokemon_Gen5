@@ -449,28 +449,28 @@
 			<Text>モニカ『ああ！　もうっ！！
 そもそも　[Name:TrainerName Idx="1" ]！！▼
 もとはと　いえば　ぜーんぶ
-あんたの　せい　なんだから！！</Text>
+あなたの　せい　なんだから！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ああ！　もうっ！！
 そもそも　[Name:TrainerName Idx="1" ]！！▼
 元はと　言えば　ぜーんぶ
-あんたの　せい　なんだから！！</Text>
+あなたの　せい　なんだから！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -674,29 +674,29 @@
 			Language="JPN">
 			<Text>モニカ『ちょっと！　[Name:TrainerName Idx="1" ]！
 なんで　ボーっと　してるのっ！？▼
-ほんとうに　わたしの　こと
+しんけんに　わたしの　こと
 たすけようと　おもってくれてる！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:21" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:21" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちょっと！　[Name:TrainerName Idx="1" ]！
 何で　ボーっと　してるのっ！？▼
-本当に　私のこと
+真剣に　私のこと
 助けようと　思ってくれてる！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:21" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:08:21" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1482,16 +1482,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『どこだって　いいわ……
-人のいない　ところ　なら……▼
+人の　いない　ところ　なら……▼
 だって　私は　もう
 人間　じゃないもの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1953,14 +1953,14 @@
 見過ごして　しまったのだ……▼
 ……私は　この件の
 責任を　取って▽
-秘密警察を　辞めた……</Text>
+秘密警察を　辞職した……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:18:24" />
+				Time="2012-01-30T13:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:18:24" />
+				Time="2012-01-30T13:18:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

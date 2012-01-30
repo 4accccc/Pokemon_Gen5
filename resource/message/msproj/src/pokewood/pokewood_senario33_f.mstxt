@@ -85,14 +85,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さあ　Ｆー００……
-わたしと　一緒に　遊ぼう</Text>
+私と　一緒に　遊ぼう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1484,14 +1484,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そっか……
-わたしも　楽しいよ　Ｆー００……</Text>
+私も　楽しいよ　Ｆー００……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2529,16 +2529,16 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そう……▼
 お前が　喜んでいるのを　みると
-わたしも　すごく　うれしいよ▼
+私も　すごく　うれしいよ▼
 でも　そろそろ　終わりに　しないとね
 バッテリーが　切れちゃうからさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:17:57" />
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:17:57" />
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2890,7 +2890,7 @@
 痛いときや　悲しいとき……
 辛いときに　泣くことは　本当は▽
 とても　大切なことなのよ……▼
-でもね　わたしは　お前が
+でもね　私は　お前が
 泣く姿　なんか　見たくなくてさ▽
 負の感情に　関する　データは▽
 プログラムは　しなかったの……▼
@@ -2899,11 +2899,11 @@
 私みたいに　なって欲しくないしね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T08:13:07" />
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T08:13:07" />
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2953,15 +2953,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そうね……
-わたしは　いつも　ひとりきり　だから▽
+私は　いつも　ひとりきり　だから▽
 さみしいのかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:19" />
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3010,14 +3010,14 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『Ｆー００……▼
 そうか……　そうだね……
-わたしには　Ｆー００が　いるね……</Text>
+私には　Ｆー００が　いるね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T08:13:07" />
+				Time="2012-01-30T13:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T08:13:07" />
+				Time="2012-01-30T13:31:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

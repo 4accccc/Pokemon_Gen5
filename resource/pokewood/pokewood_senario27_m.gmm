@@ -490,9 +490,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『デカいな……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">モニカ『ちょっと　いまのダレ！！
+		<language name="JPN" width="256">モニカ『ちょっと！　いまのダレ！！
 しつれいなこと　いわないでっ！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ちょっと　いまのダレ！！
+		<language name="JPN_KANJI" width="256">モニカ『ちょっと！　今のダレ！！
 失礼なこと　言わないでっ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">

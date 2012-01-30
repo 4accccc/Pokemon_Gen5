@@ -799,7 +799,7 @@
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう！　なんなんです！
 いいかげんに　してくださいよっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう！　なんなんです！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう！　何なんです！
 いい加減に　してくださいよっ！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
