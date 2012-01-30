@@ -1950,6 +1950,7 @@ static void gjiki_SetMove_Walk(
     code = AC_WALK_U_2F;
     flat_check = FALSE;
   }
+#if 0
   else if( (input->mbit & PLAYER_MOVEBIT_DASH) &&
       (input->key_cont & PLAYER_PAD_DASH) )
   {
@@ -1978,6 +1979,16 @@ static void gjiki_SetMove_Walk(
       }
     }
   }
+#else
+  //スワンでは自機の変身がない& BWのバッジチェックゲート専用上下床アトリビュートがないので
+  //不要なチェック部分を省いて60ms速度アップ 120130
+  else if( (input->mbit & PLAYER_MOVEBIT_DASH) &&
+      (input->key_cont & PLAYER_PAD_DASH) )
+  {
+    code = AC_DASH_U_4F;
+    gjiki_OnMoveBit( gjiki, JIKI_MOVEBIT_DASH );
+  }
+#endif
   else
   {
     code = AC_WALK_U_8F;
