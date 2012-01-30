@@ -109,7 +109,22 @@ EVENT_START   ev_t01r0401_hakase2_01
     
     //図鑑評価（アララギ娘）へ
     _GLOBAL_CALL SCRID_ZUKAN_DAUGHTER
-
+	
+    _ITEM_CHK( ITEM_KYOKASYOU, 1, SCWK_ANSWER )
+    
+    //きょかしょうをもっていない場合
+    IF $SCWK_ANSWER == FALSE THEN
+    
+        _OBJ_ANIME( T01R0401_HAKASE2_01, anm_common_gyoe )
+        _OBJ_ANIME_WAIT()
+    
+        //アララギ娘：イッシュ図鑑にとうろくされる
+        _BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_06 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+    
+    ENDIF
+    
     //========================================//
     //会話済みフラグON
     _FLAG_SET( FE_T01R0401_HAKASE2_TALK )
