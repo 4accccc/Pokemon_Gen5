@@ -28,6 +28,10 @@ DEFINE_LOCAL  LWK_MEDAL_RANK
 DEFINE_LOCAL  LWK_MEDAL_COUNT
 DEFINE_LOCAL  LWK_MEDAL_NEXT
 DEFINE_LOCAL  LWK_OYAJI_ID
+DEFINE_LOCAL  OYAJIX
+DEFINE_LOCAL  OYAJIZ
+DEFINE_LOCAL  PLAYERX
+DEFINE_LOCAL  PLAYERZ
 
 //ドア変数定義
 DEFINE_LOCAL	DOOR_ANIME_ID
@@ -102,7 +106,13 @@ sub_medaloyaji_status:
   _RET
 
 sub_medaloyaji_move:
-  /* 未実装 */
+  _OBJ_POS_GET( LWK_OYAJI_ID, OYAJIX, OYAJIZ )
+  _PLAYER_POS_GET( PLAYERX, PLAYERZ )
+  IF $PLAYERX == $OYAJIX && $PLAYERZ == $OYAJIZ THEN
+      //自機と位置が重なっていたら一つ右にずらす
+      $OYAJIX += 1
+      _OBJ_POS_CHANGE( LWK_OYAJI_ID, OYAJIX, 0, OYAJIZ, DIR_DOWN )
+  ENDIF
   _RET
 
 /********************************************************************/
