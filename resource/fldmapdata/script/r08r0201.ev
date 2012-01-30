@@ -13,6 +13,7 @@
   .include  "r08r0201.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //指定ミスを修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -45,8 +46,8 @@ EVENT_END
 /*  助手♂：話しかけ（アイテム入手）                          */
 /**************************************************************/
 EVENT_START   ev_r08r0201_assistantm_01
-  //アイテム（ちからのねっこ）入手
-  _EASY_TALK_ITEM_EVENT( ITEM_TIKARANONEKKO, 1, FE_R08R0201_ITEMGET_01, msg_r08r0201_assistantm_01, msg_r08r0201_assistantm_02, msg_r08r0201_assistantm_02 )
+  //アイテム（ちからのこな）入手
+  _EASY_TALK_ITEM_EVENT( ITEM_TIKARANOKONA, 1, FE_R08R0201_ITEMGET_01, msg_r08r0201_assistantm_01, msg_r08r0201_assistantm_02, msg_r08r0201_assistantm_02 )
 EVENT_END
 
 
