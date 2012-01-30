@@ -486,6 +486,7 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void zoneChange_UpdatePlayerWork( GAMEDATA *gdata, u32 zone_id );
 static void zoneChange_SetCameraArea( FIELDMAP_WORK* fieldWork, u32 zone_id );
+static void zoneChange_CheckDiamondDust( FIELDMAP_WORK *fieldWork );
 
 static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id );
 
@@ -977,14 +978,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       
       FIELD_WEATHER_Set(
           fieldWork->weather_sys, weather_id, HEAPID_WEATHER );
-
-      // ダイアモンドダストメダル取得
-      if( weather_id == WEATHER_NO_DIAMONDDUST )
-      {
-        SAVE_CONTROL_WORK* p_sv=GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
-        MEDALBOX *p_medal_box = SaveData_GetMedalBox( p_sv );
-        MEDALBOX_SetTitleMedalAchive( p_medal_box , MDLID_DIAMONDDUST );
-      }
+      
+      // ダイアモンドダストチェック
+      zoneChange_CheckDiamondDust( fieldWork );
     }
 
     //外出エフェクト
@@ -3150,6 +3146,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	//天候リクエスト
 	zoneChange_SetWeather( fieldWork, new_zone_id );
 
+  // ダイアモンドダストチェック
+  zoneChange_CheckDiamondDust( fieldWork );
+
   SET_CHECK("zonechange: camera area");
   //カメラエリアの設定
   zoneChange_SetCameraArea( fieldWork, new_zone_id );
@@ -3283,6 +3282,30 @@ static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id )
 	if( w_no != WEATHER_NO_NUM ){
 		FIELD_WEATHER_Change( we, w_no );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダイアモンドダストメダルの取得チェック
+ *
+ *	@param	*fieldWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void zoneChange_CheckDiamondDust( FIELDMAP_WORK *fieldWork )
+{
+  // ダイアモンドダストメダル取得
+  u32 weather_id = GAMEDATA_GetWeatherNo( fieldWork->gamedata );
+
+  if( weather_id == WEATHER_NO_DIAMONDDUST )
+  {
+    SAVE_CONTROL_WORK* p_sv=GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+    MEDALBOX *p_medal_box = SaveData_GetMedalBox( p_sv );
+    MEDALBOX_SetTitleMedalAchive( p_medal_box , MDLID_DIAMONDDUST );
+  }
+
+  ONOUE_Printf("ダイアモンドダストチェック\n");
 }
 
 //----------------------------------------------------------------------------
