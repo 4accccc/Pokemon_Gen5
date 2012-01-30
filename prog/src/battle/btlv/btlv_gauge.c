@@ -235,6 +235,8 @@ struct _BTLV_GAUGE_CLWK
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
+  //
+  s32           sicknum;      // 状態
 
   GFL_TCB*      tcb;
 };
@@ -284,6 +286,7 @@ typedef struct
   int               count;
 }BTLV_GAUGE_DAMAGE_EFFECT_WORK;
 
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
@@ -306,6 +309,9 @@ static  void  PutBallOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeDamageObj( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, int put_dot );
 static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, int pos );
 static  void  Gauge_Yure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
+
+static void   btlv_chk_gaugestatus( BTLV_GAUGE_WORK* bgw, const BtlvMcssPos pos, int *color, int *sick_anm, const s32 mode );
+static void   btlv_init_pkwdshow_gauge( BTLV_GAUGE_WORK* bgw );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
@@ -360,6 +366,9 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, int pokewood, HEAPID he
   if( pokewood != BTL_POKEWOOD_SHOW )
   {
     BTLV_GAUGE_LoadResorce( bgw );
+  }
+  else{
+    btlv_init_pkwdshow_gauge( bgw );
   }
  
   return bgw;
@@ -2349,6 +2358,13 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
     APP_COMMON_ST_ICON_DOKU,        // 毒
     APP_COMMON_ST_ICON_DOKUDOKU,    // どくどく
   };
+  //
+  // 上映の時はセット
+  if( bgw->pokewood == BTL_POKEWOOD_SHOW ){
+    bgw->bgcl[ pos ].sicknum = sick_anm[ sick ];
+    return;
+  }
+  
   //ゲージが存在しないときはなにもせずにリターン
   if( bgw->bgcl[ pos ].status_clwk == NULL )
   {
@@ -2474,6 +2490,14 @@ void  BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value )
 //--------------------------------------------------------------
 BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
 { 
+  // ポケウッドの上映処理
+  if( bgw->pokewood == BTL_POKEWOOD_SHOW ){
+    GF_ASSERT_MSG( (BTLV_EFFECT_GetBtlRule()==BTL_RULE_SINGLE), "シングル戦じゃない\n" );
+    GF_ASSERT_MSG( (BTLV_EFFECT_GetBtlCompetitor()==BTL_COMPETITOR_TRAINER), "トレーナー戦じゃない\n" );
+    btlv_chk_gaugestatus( bgw, pos, color, sick_anm, 0 );
+    return( TRUE );
+  }
+
   //ゲージが存在しないor紐付けられているポケモンが変化しているときはなにもせずにリターン
   if( ( bgw->bgcl[ pos ].base_clwk == NULL ) || 
       ( bgw->bgcl[ pos ].gauge_enable == 0 ) || 
@@ -2484,15 +2508,54 @@ BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* col
     return FALSE;
   }
 
-  *color = GAUGETOOL_GetGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax );
+  btlv_chk_gaugestatus( bgw, pos, color, sick_anm, 1 );
+  return( TRUE );
+}
 
-  *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
- if( *sick_anm == APP_COMMON_ST_ICON_POKERUS )
-  { 
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージの状態を取得（HPゲージの色とステータスアイコンの状態）
+ *
+ * @param[in]   bgw       BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param[in]   pos       取得するポジション
+ * @param[in]   mode      (0:PokeWood再生、1:通常)
+ * @param[out]  color     ポケモンに影響を与える色情報
+ * @param[out]  sick_anm  状態異常の値
+ *
+ */
+//--------------------------------------------------------------
+static void btlv_chk_gaugestatus( BTLV_GAUGE_WORK* bgw, const BtlvMcssPos pos, int *color, int *sick_anm, const s32 mode )
+{
+  // 判定
+  if( mode == 0 ){
+    // ポケウッド上映時(SetStatusでの情報をセット)
+    *sick_anm = bgw->bgcl[ pos ].sicknum;
+  }
+  else{
+    // シーケンスの状態をセット
+    *sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+  }
+  
+  *color = GAUGETOOL_GetGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax );
+  if( *sick_anm == APP_COMMON_ST_ICON_POKERUS )
+  {
     *sick_anm = APP_COMMON_ST_ICON_NONE;
   }
+}
 
-  return TRUE;
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージの初期化(PokewoodShow)
+ *
+ * @param[in]   bgw       BTLV_GAUGE_WORK管理構造体へのポインタ
+ *
+ */
+//--------------------------------------------------------------
+static void btlv_init_pkwdshow_gauge( BTLV_GAUGE_WORK* bgw )
+{
+  // 初期アニメセット
+  bgw->bgcl[0].sicknum = APP_COMMON_ST_ICON_NONE;
+  bgw->bgcl[1].sicknum = APP_COMMON_ST_ICON_NONE;
 }
 
 //----------------------------------------------------------------------------
