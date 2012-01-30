@@ -678,7 +678,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
     POKEPARTY *ppt = SaveData_GetTemotiPokemon(svdt);
     MISC * misc = GAMEDATA_GetMiscWork( cmw->gamedata );
     //時間書き換えによるペナルティチェック
-    if (!SYSTEMDATA_IdentifyMACAddress(sysdt) || !SYSTEMDATA_IdentifyRTCOffset(sysdt) )
+    if ( !SYSTEMDATA_IdentifyRTCOffset(sysdt) )
     {
       //ペナルティ時間を設定する
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
