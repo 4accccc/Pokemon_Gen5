@@ -3074,7 +3074,9 @@ static void audience_main( PKWD_BRIEFING_WORK *wk )
 //  エンドロール関係
 //=============================================================================================
 
-#define ENDROL_BGM_FADE_SYNC  ( 40 )
+
+#define __BTL_PKWD_BRIEFING_C__
+#include "..\..\..\resource\pokewood\pokewood_parameter.cdat"
 //----------------------------------------------------------------------------------
 /**
  * @brief	あらすじ表示半透明処理
@@ -3145,7 +3147,7 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     break;
   case BLEND_SEQ_END_PUT_BEFORE:
     if(tw->CG2d.wait==0){
-      PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, 5 );
+      PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, ENDROL_BGM_FADE_SYNC-5 );
       tw->CG2d.wait++;
     }else if(tw->CG2d.wait==ENDROL_BGM_FADE_SYNC-10){
       tw->blend_seq = BLEND_SEQ_END_PUT;
@@ -3339,7 +3341,7 @@ static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int align, HEAP
   // 左右分割のときだけ「END」スクリーンを転送する
   if(scroll==(pokewood_pos+POKEWOOD_LOG_SCREEN_HEIGHT) && align!=0){
     transSideEndScreen( &tw->CG2d, heapID, align );
-    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, 5 );
+    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, ENDROL_BGM_FADE_SYNC-5 );
   }
   
   // 左右分割の時の「END」スクリーン登場にあわせた観客リアクション
