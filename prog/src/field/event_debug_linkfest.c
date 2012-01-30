@@ -2392,8 +2392,8 @@ static void mreq_DecideX( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVEN
       }
     }else{
       evwk->m_time += 30;
-      if( ++evwk->m_pay >= 60*60 ){
-        evwk->m_pay = 60;
+      if( evwk->m_time >= 60*60 ){
+        evwk->m_time = 60;
       }
     }
     break;
