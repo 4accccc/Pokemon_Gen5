@@ -324,14 +324,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょういん『それでは　みなさま
-しゅうこう　いたします</Text>
+しゅっこう　いたします</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1313,30 +1313,30 @@
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ハチクマンさん！
 あなたの　ねらいは　おみとおしよ！▽
 きゃくせんは　いって　しまったわ！▼
-ふねの　つみにの　ブラックダイアも
+ふねの　つみにの　ブラックダイヤも
 ぶじに　たびだったわよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ハチクマンさん！
 あなたの　ねらいは　お見通しよ！▽
 客船は　行って　しまったわ！▼
-船の　積荷の　ブラックダイアも
+船の　積荷の　ブラックダイヤも
 無事に　旅立ったわよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1491,23 +1491,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『ブラックダイアは
+			<Text>ハチクマン『ブラックダイヤは
 わがはいの　やぼうの　ために▽
 ぜったいに　ひつような　しろもの！▼
 かならず　わがてに　おさめるのだ！
 かいじんを　みくびるで　ないわ！！▼
 さらば！　[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ブラックダイアは
+			<Text>ハチクマン『ブラックダイヤは
 我輩の　野望の　ために▽
 絶対に　必要な　代物！▼
 必ず　我が手に　収めるのだ！
@@ -1515,11 +1515,11 @@
 さらば！　[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1537,7 +1537,7 @@
 			<Text>あくの　かいじん　ハチクマンは
 ごうかきゃくせんを　おって▽
 うみの　なかへ　きえた……▼
-そうまでして　ブラックダイアを
+そうまでして　ブラックダイヤを
 もとめる　ハチクマンの▽
 おそろしい　やぼうとは……？▼
 しかし　われわれには
@@ -1547,19 +1547,19 @@
 がんばれ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>悪の　怪人　ハチクマンは
 豪華客船を　追って▽
 海の　中へと　消えた……▼
-そうまでして　ブラックダイアを
+そうまでして　ブラックダイヤを
 求める　ハチクマンの▽
 恐ろしい　野望とは……？▼
 しかし　我々には
@@ -1569,12 +1569,12 @@
 がんばれ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1592,30 +1592,30 @@
 			<Text>ハチクマン『ふかく……▼
 わが　ポケモンが　たおれては
 きゃくせんに　つまれた▽
-ひほう　ブラックダイアを▽
+ひほう　ブラックダイヤを▽
 ぬすめぬでは　ないか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『不覚……▼
 我が　ポケモンが　倒れては
 客船に　積まれた▽
-秘宝　ブラックダイアを▽
+秘宝　ブラックダイヤを▽
 盗めぬでは　ないか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1631,26 +1631,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……
-ひほう　ブラックダイア……？</Text>
+ひほう　ブラックダイヤ……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:46:40" />
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:46:40" />
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……
-秘宝　ブラックダイア……？</Text>
+秘宝　ブラックダイヤ……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1666,32 +1666,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『しらぬのか……▼
-ブラックダイアは　その　もちぬしの
+ブラックダイヤは　その　もちぬしの
 のうりょくを　なんばいにも▽
 パワーアップさせると　いう▽
 しんぴの　ひほう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『知らぬのか……▼
-ブラックダイアは　その　持ち主の
+ブラックダイヤは　その　持ち主の
 能力を　何倍にも▽
 パワーアップさせると　いう▽
 神秘の　秘宝……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1742,28 +1742,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『そうだ……▼
-ブラックダイアさえ　あれば
+ブラックダイヤさえ　あれば
 きさま　など……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『そうだ……▼
-ブラックダイアさえ　あれば
+ブラックダイヤさえ　あれば
 貴様　など……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1845,30 +1845,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……　うふふふ▼
-じゃあ　そのブラックダイアが
+じゃあ　そのブラックダイヤが
 あれば　わたし　もっと　もっと▽
 かわいいヒロインに　なれるね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……　うふふふ▼
-じゃあ　そのブラックダイアが
+じゃあ　そのブラックダイヤが
 あれば　私　もっと　もっと▽
 可愛いヒロインに　なれるね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1992,7 +1992,7 @@
 			Language="JPN">
 			<Text>あくの　かいじん　ハチクマンを
 たおした　[Name:PokemonNickname Idx="0" ]ガール！！▼
-しかし　ブラック　ダイヤの
+しかし　ブラックダイヤの
 パワーを　しった▽
 かのじょの　あしは　なぜか▽
 きゃくせんに　むかっていった！▼
@@ -2001,18 +2001,18 @@
 めを　さませ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>悪の　怪人　ハチクマンを
 倒した　[Name:PokemonNickname Idx="0" ]ガール！！▼
-しかし　ブラック　ダイヤの
+しかし　ブラックダイヤの
 パワーを　知った▽
 彼女の　足は　なぜか▽
 客船に　向かっていった！▼
@@ -2021,12 +2021,12 @@
 目を　覚ませ！
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2119,7 +2119,7 @@
 やぶれた　[Name:PokemonNickname Idx="0" ]ガール……▼
 いっぽう……▼
 ごうか　きゃくせんに　つまれた
-ひほう　ブラックダイアを▽
+ひほう　ブラックダイヤを▽
 ぬすみだした　ハチクマンは▽
 それを　たかいねだんで　うりとばし▽
 ゆうがに　くらしたと　いう……▼
@@ -2130,11 +2130,11 @@
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2142,7 +2142,7 @@
 敗れた　[Name:PokemonNickname Idx="0" ]ガール……▼
 一方……▼
 豪華客船に　積まれた
-秘宝　ブラックダイアを▽
+秘宝　ブラックダイヤを▽
 盗みだした　ハチクマンは▽
 それを　高額な値で　売り飛ばし▽
 優雅に　暮らしたと　いう……▼
@@ -2153,11 +2153,11 @@
 [Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:31" />
+				Time="2012-01-30T08:46:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
