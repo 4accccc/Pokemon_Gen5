@@ -4704,10 +4704,10 @@ BW♀
 			Language="JPN">
 			<Text>げんざい　[Name:ResortTown ]は
 サービスきかんちゅう　です！▽
-のこり　[Digit:2digits Idx="1" ]にち　です▼</Text>
+のこり　[Digit:2digits Idx="1" ]にち　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-30T09:44:39" />
+				Time="2012-01-30T12:59:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4717,10 +4717,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>現在　[Name:ResortTown ]は
 サービス期間中　です！▽
-残り　[Digit:2digits Idx="1" ]日　です▼</Text>
+残り　[Digit:2digits Idx="1" ]日　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-21T04:19:42" />
+				Time="2012-01-30T12:59:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4772,10 +4772,10 @@ BW♀
 			Language="JPN">
 			<Text>げんざい　[Name:ResortTown ]は
 サービスきかんちゅう　です！▽
-のこり　[Digit:2digits Idx="1" ]にち　です▼</Text>
+のこり　[Digit:2digits Idx="1" ]にち　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-30T09:44:57" />
+				Time="2012-01-30T13:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4785,10 +4785,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>現在　[Name:ResortTown ]は
 サービス期間中　です！▽
-残り　[Digit:2digits Idx="1" ]日　です▼</Text>
+残り　[Digit:2digits Idx="1" ]日　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T11:27:04" />
+				Time="2012-01-30T13:00:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
