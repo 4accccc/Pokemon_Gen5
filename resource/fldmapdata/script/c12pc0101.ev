@@ -27,7 +27,20 @@ _EVENT_DATA    ev_c12pc0101_fix_shop
 _EVENT_DATA    ev_reserve_c12pc0101_pcguide_01
 _EVENT_DATA		ev_c12pc0101_woman1_01
 _EVENT_DATA		ev_c12pc0101_middleman2_01
+_EVENT_DATA    ev_init_c12pc0101
 _EVENT_DATA_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c12pc0101
+
+  //イベント進行で配置を分岐
+  IF $WK_SCENE_C12_WHITE_MEET == 5 && FLAG_OFF( FV_PC_OMOIDELINK ) THEN
+    _OBJ_POS_CHANGE( C12PC0101_BREEDERM_01, 1, 0, 12, DIR_DOWN )
+  ENDIF
+
+INIT_EVENT_END
 
 //=============================================================
 // ポケモンセンターガイドイベント
