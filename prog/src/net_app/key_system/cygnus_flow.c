@@ -454,7 +454,7 @@ static void DataConv_Seq_ReciveWait( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
 
   enum
   {
-    RECIVE_WAIT_SYNC  = 120,
+    RECIVE_WAIT_SYNC  = 180,
   };
 
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
@@ -466,7 +466,7 @@ static void DataConv_Seq_ReciveWait( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     (*p_seq)++;
     break;
   case SEQ_MSG_START:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_03, KEYSYS_TEXT_TYPE_WAIT ); 
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_02, KEYSYS_TEXT_TYPE_WAIT ); 
     (*p_seq)++;
     break;
   case SEQ_WAIT:
@@ -699,7 +699,7 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
   case SEQ_FINISH_MSG_START:
-    PMSND_PlaySE( CYGNUS_SE_FINISH );
+    PMSND_PlaySE( KEYSYS_SE_SAVE );
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_05, KEYSYS_TEXT_TYPE_STREAM_WAIT );
     (*p_seq)++;
     break;
@@ -1547,7 +1547,7 @@ static const  CYGNUS_REWARD_DATA sc_debug_data[] =
     1,
     PM_MALE,
     0,
-    TRUE
+    FALSE
   },
   {
     CYGNUS_REWARD_TYPE_POKEMON,
@@ -1555,11 +1555,27 @@ static const  CYGNUS_REWARD_DATA sc_debug_data[] =
     1,
     PM_MALE,
     0,
-    TRUE
+    FALSE
   },
   {
     CYGNUS_REWARD_TYPE_POKEMON,
     MONSNO_HUSIGIDANE,
+    0,
+    PM_MALE,
+    0,
+    FALSE
+  },
+  {
+    CYGNUS_REWARD_TYPE_POKEMON,
+    MONSNO_HITOKAGE,
+    0,
+    PM_MALE,
+    0,
+    FALSE
+  },
+  {
+    CYGNUS_REWARD_TYPE_POKEMON,
+    MONSNO_ZENIGAME,
     0,
     PM_MALE,
     0,
@@ -1592,6 +1608,22 @@ static const  CYGNUS_REWARD_DATA sc_debug_data[] =
   {
     CYGNUS_REWARD_TYPE_ITEM,
     101,
+    0,
+    0,
+    1,
+    FALSE,
+  },
+  {
+    CYGNUS_REWARD_TYPE_ITEM,
+    102,
+    0,
+    0,
+    1,
+    FALSE,
+  },
+  {
+    CYGNUS_REWARD_TYPE_ITEM,
+    103,
     0,
     0,
     1,
@@ -2348,7 +2380,7 @@ static BOOL Cygnus_Save_IsStatusFixPoke( u16 mons_no )
 //=============================================================================
 #define CYGNUS_RESULT_ICON_NUM            (CYGNUS_REWARD_DATA_NUM)
 #define CYGNUS_RESULT_ICON_MOVE_DISTANCE  (16)
-#define CYGNUS_RESULT_ICON_MOVE_SYNC      (5)
+#define CYGNUS_RESULT_ICON_MOVE_MS        (10*16)
 
 //-------------------------------------
 ///	‚P‚Â‚ÌƒAƒCƒRƒ“
@@ -2360,7 +2392,7 @@ typedef struct
   u32       res_cel;
   GFL_CLWK *p_clwk;
   GFL_CLACTPOS def_pos;
-  s32       cnt;
+  u64       start_ms;
   BOOL      is_start;
 } CYGNUS_RESULT_ICON;
 
@@ -2683,6 +2715,8 @@ static void Cygnus_Result_wk_StartMove( CYGNUS_RESULT_ICON *p_wk )
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
 
   p_wk->is_start  = TRUE;
+
+  p_wk->start_ms = OS_TicksToMilliSeconds(OS_GetTick());
 }
 //----------------------------------------------------------------------------
 /**
@@ -2697,7 +2731,9 @@ static BOOL Cygnus_Result_wk_WaitMove( CYGNUS_RESULT_ICON *p_wk )
 {
   if( p_wk->is_start )
   {
-    if( p_wk->cnt > CYGNUS_RESULT_ICON_MOVE_SYNC )
+    u64 now_ms  = OS_TicksToMilliSeconds(OS_GetTick()) - p_wk->start_ms;
+
+    if( now_ms > CYGNUS_RESULT_ICON_MOVE_MS )
     {
       GFL_CLACT_WK_SetPos( p_wk->p_clwk, &p_wk->def_pos, CLSYS_DEFREND_MAIN );
       GFL_CLACT_WK_SetObjMode( p_wk->p_clwk, GX_OAM_MODE_NORMAL );
@@ -2710,15 +2746,14 @@ static BOOL Cygnus_Result_wk_WaitMove( CYGNUS_RESULT_ICON *p_wk )
       {
         GFL_CLACTPOS  pos;
         pos.x = p_wk->def_pos.x;
-        pos.y = p_wk->def_pos.y - CYGNUS_RESULT_ICON_MOVE_DISTANCE + CYGNUS_RESULT_ICON_MOVE_DISTANCE * p_wk->cnt / CYGNUS_RESULT_ICON_MOVE_SYNC;
+        pos.y = p_wk->def_pos.y - CYGNUS_RESULT_ICON_MOVE_DISTANCE + CYGNUS_RESULT_ICON_MOVE_DISTANCE * now_ms / CYGNUS_RESULT_ICON_MOVE_MS;
         GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, CLSYS_DEFREND_MAIN );
       }
       {
-        s16 ev1 = 0 + 16 * p_wk->cnt / CYGNUS_RESULT_ICON_MOVE_SYNC;
-        s16 ev2 = 16 - 16 * p_wk->cnt / CYGNUS_RESULT_ICON_MOVE_SYNC;
+        s16 ev1 = 0 + 16 * now_ms / CYGNUS_RESULT_ICON_MOVE_MS;
+        s16 ev2 = 16 - 16 * now_ms / CYGNUS_RESULT_ICON_MOVE_MS;
         G2_ChangeBlendAlpha( ev1, ev2 );
       }
-      p_wk->cnt++;
     }
   }
   return FALSE;
