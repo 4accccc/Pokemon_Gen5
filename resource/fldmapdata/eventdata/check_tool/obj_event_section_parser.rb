@@ -17,16 +17,18 @@ class OBJEventSection
   @@keyward_SECTION_END = "#SECTION End:OBJ_EVENT"
   @@keyward_hold_event_number = "#hold event number:"
   @@keyward_hold_event_type = "#hold event type:"
+  @@keyward_linked_worldmap_file = "# linked worldmap file name"
 
   # 初期化
   def initialize
     @hold_event_number = 0
     @hold_event_type = 0
     @event = Array.new
+    @wms_filename = ""
   end
 
   # ゲッター
-  attr_reader :hold_event_number, :hold_event_type, :event
+  attr_reader :hold_event_number, :hold_event_type, :event, :wms_filename
 
   private
   #=========================================
@@ -38,7 +40,8 @@ class OBJEventSection
     file.close()
 
     section_data = Array.new
-    in_section = false
+    in_section      = false
+    in_linked_file  = false
 
     lines.each do |line|
       if in_section then
@@ -46,6 +49,14 @@ class OBJEventSection
       else
         if line =~ /#{@@keyward_SECTION_START}/ then in_section = true end
       end
+
+      # wmsファイル名取得
+      if in_linked_file == true then
+        @wms_filename = line.strip
+        in_linked_file = false
+      end
+      # wmsファイル名定義ライン検索
+      if line =~ /#{@@keyward_linked_worldmap_file}/ then in_linked_file = true end
 
       if in_section then section_data << line end
     end
