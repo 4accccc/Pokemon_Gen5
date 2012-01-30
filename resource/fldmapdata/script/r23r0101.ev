@@ -12,6 +12,8 @@
   .include  "msg_r23r0101.h"
   .include  "r23r0101.h"
 
+  //@author suginaka_katsunori
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -73,7 +75,6 @@ EVENT_START	ev_r23r0101_trainerw_01
 
     //女性：あら　あなたの　ポケモン
     _BALLOONWIN_TALKOBJ_MSG( msg_r23r0101_trainerw_02 )
-    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
     //暗転して手持ちポケモンを回復
