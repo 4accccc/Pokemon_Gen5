@@ -2378,30 +2378,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パソコンに　あずけている　ポケモンは
-ボックスを　せいりすることで
-すきな　ボックスに　いどうさせたり
-ばしょを　こうかんすることが　できます。</Text>
+「ボックスを　せいりする」ことで
+すきな　ボックスに　いどう　させたり
+あずけている　ばしょを
+こうかん　することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パソコンに　預けている　ポケモンは
-ボックスを　整理することで
+「ボックスを　整理する」ことで
 好きな　ボックスに　移動させたり
-場所を　交換することが　できます。</Text>
+預けている　場所を
+交換することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2412,16 +2414,16 @@
 「いどうする」を　タッチすると
 みぎがわに　ボックスが　ひょうじされます。
 
-せんたくしている　ポケモンを　ボックスに
-いどうさせることで　ポケモンを
-ボックスに　いどうさせることが　できます。</Text>
+せんたく　している　ポケモンは
+すきな　ボックスに
+いどう　させることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2429,16 +2431,16 @@
 「移動する」をタッチすると
 右側に　ボックスが　表示されます。
 
-選択している　ポケモンを　ボックスに
-移動させることで　ポケモンを
-ボックスに　移動させることが　できます。</Text>
+選択している　ポケモンは
+好きな　ボックスに
+移動させることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2446,19 +2448,20 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボックスを　せいりするときに
-あおいろのボタンを　タッチすると
+あおいろの　ボタンを　タッチすると
 いれかえモードに　きりかわります。
 
 いれかえモードでは　こうもくウインドウが
-ひょうじされなくなり　ポケモンの
-いれかえだけを　おこなうことが　できます。</Text>
+ひょうじ　されなくなり
+ポケモンの　いれかえだけを
+おこなうことが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-18T10:47:40" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-18T10:47:40" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2466,16 +2469,17 @@
 青色のボタンを　タッチすると
 入れ替えモードに　切り替わります。
 
-入れ替えモードでは　項目ウインドウが
-表示されなくなり　ポケモンの
-入れ替えだけを　行うことが　できます。</Text>
+入れ替えモードでは
+項目ウインドウが　表示されなくなり
+ポケモンの　入れ替えだけを
+おこなうことが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2483,38 +2487,40 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボックスを　せいりするときに
-きいろのボタンを　タッチすると
+きいろの　ボタンを　タッチすると
 ふくすういどうモードに　きりかわります。
 
-ボックスを　タッチすると　てんせんが
-ひょうじされ　いどうさせたいポケモンを
-かこうことで　てんせんないの　ポケモンを
-いちどに　いどうさせることが　できます。</Text>
+ボックスを　タッチすると
+てんせんが　ひょうじ　されます。
+いどう　させたい　ポケモンを
+かこむことで　てんせんないの　ポケモンを
+まとめて　いどう　させることができます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボックスを　整理するときに
-黄色のボタンを　タッチすると
+黄色の　ボタンを　タッチすると
 複数移動モードに　切り替わります。
 
-ボックスを　タッチすると　点線が
-表示され　移動させたいポケモンを
-囲うことで　点線内の　ポケモンを
-一度に　移動させることが　できます。</Text>
+ボックスを　タッチすると
+点線が　表示されます。
+移動させたい　ポケモンを
+囲むことで　点線内の　ポケモンを
+まとめて　移動させることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3587,81 +3593,81 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアの　みぎしたに　ある
-スパナのマークを　タッチすると
+スパナマークを　タッチすると
 Ｃギアを　カスタマイズできます。
-わくを　タッチすることで　いろを
-へんこうしたり　てんとうする　ボタンを
-タッチすることで　すきなばしょに
-ボタンを　いどうするこが　できます。
+わくを　タッチして　いろをかえたり
+てんとうする　ボタンを　タッチすることで
+ボタンを　すきな　ばしょに
+いどう　させることが　できます。
 ？マークを　タッチすると　Ｃギアの
 ヘルプを　みることができます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｃ－ＧＥＡＲの　右下に　ある
-スパナのマークを　タッチすると
+スパナマークを　タッチすると
 Ｃ－ＧＥＡＲを　カスタマイズできます。
-枠を　タッチすることで　色を
-変更したり　点灯する　ボタンを
-タッチすることで　好きな場所に
-ボタンを　移動することが　できます。
+枠を　タッチして　色を変更したり
+点灯する　ボタンを　タッチすることで
+ボタンを　好きな　場所に
+移動させることが　できます。
 ？マークを　タッチすると　Ｃ－ＧＥＡＲの
 ヘルプを　みることができます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_001_004">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアの　ちゅうおうに　ひょうじされた
-よこながのマークは　すれちがいログ　です。
-タッチすると　Ｃギアを　ちかくで
-つかっているひとが　わかります。
-そのひとの　ようすや
+			<Text>Ｃギアの　ちゅうおうに　ひょうじされる
+しかくのマークが　すれちがいログ　です。
+タッチすると　ちかくで　Ｃギアを
+つかっている　ひとがいるか　わかります。
+ちかくの　ひとの　ゲームでの　ようすや
 プロフィールが　わかったり
 メッセージの　やりとりなどが　できます。
 また　フェスミッションが　はっせいすると
-てんめつし　しらせてくれます。</Text>
+てんめつして　しらせてくれます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｃ－ＧＥＡＲの　下のほうに　表示された
-横長のマークは　すれ違いログです。
-タッチすると　Ｃ－ＧＥＡＲを　近くで
-使っている人が　分かります。
-その人の　様子や
+			<Text>Ｃ－ＧＥＡＲの　中央に　表示される
+しかくの　マークが　すれ違いログです。
+タッチすると　近くで　Ｃ－ＧＥＡＲを
+使っている　人がいるか　わかります。
+近くの人の　ゲームでの様子や
 プロフィールが　わかったり
 メッセージの　やりとりなどが　できます。
 また　フェスミッションが　発生すると
-点滅し　知らせてくれます。</Text>
+点滅して　知らせてくれます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:39:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3702,37 +3708,39 @@
 		Label="man_txt_page_no_003_002_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがいログの
+			<Text>すれちがいログ　がめんの　したにある
 さんかくマークを　タッチすると
 ハイルツリーから　うけとった
 デルパワーを　つかうことが　できます。
+
 デルパワーを　うけとるには
 ハイリンクにある　ハイルツリーを
 かくにん　してください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれ違いログの
+			<Text>すれ違いログ　画面の　下にある
 三角マークを　タッチすると
 ハイルツリーから　受け取った
 デルパワーを　使うことが　できます。
+
 デルパワーを　受け取るには
 ハイリンクにある　ハイルツリーを
 確認してください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3819,29 +3827,29 @@
 			Language="JPN">
 			<Text>メダルマークを　タッチすると
 つうしんあいてが　てにいれた
-メダルのかずや　とうろくしている
-イチオシメダルを　みることが　できます。
-</Text>
+メダルの　かずや　とうろく　している
+イチオシメダルを　みることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メダルマークを　タッチすると
-通信相手が　手に入れた　メダルの数や
-イチオシメダルを　見ることが　できます。</Text>
+通信相手が　手に入れた　
+メダルの　数や　登録している
+イチオシメダルを　みることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:39:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4106,15 +4114,15 @@
 
 ゲームシンクとは
 ボックスにいる　ポケモンを　ねむらせて
-せかいじゅうの　トレーナーの　レポートを
-おくる　しくみのこと　です。</Text>
+トレーナーの　レポートを
+おくる　しくみの　ことです。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4125,16 +4133,15 @@
 
 ゲームシンクとは
 ボックスにいる　ポケモンを　眠らせて
-世界中の　トレーナーの　レポートを
-送る　仕組みのこと　です。
-</Text>
+トレーナーの　レポートを
+送る　仕組みの　ことです。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4145,18 +4152,18 @@
 まるい　わくは　むせんつうしんの
 じょうきょうによって　いろが　かわります。
 
-つかっているＤＳとの
+つかっている　ＤＳとの
 Ｗｉ－Ｆｉせっていが　すませてある
 むせんアクセスポイントが
 ちかくに　ある　ばあいは
 みどりいろに　ひかります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4182,35 +4189,35 @@
 		Label="man_txt_page_no_003_008_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>ニンテンドーゾーンなど
-みんなが　Ｗｉ－Ｆｉつうしんを　つかえる
+			<Text>ニンテンドーゾーンなど　みんなが
+Ｗｉ－Ｆｉつうしんを　つかえる
 むせんアクセスポイントが
 ちかくに　ある　ばあいは
-「Ｗｉ－Ｆｉ」の　丸い　枠は
+「Ｗｉ－Ｆｉ」の　まるい　わくは
 あおいろに　ひかります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ニンテンドーゾーンなど
-みんなが　Ｗｉ－Ｆｉ通信を　使える
+			<Text>ニンテンドーゾーンなど　みんなが
+Ｗｉ－Ｆｉ通信を　使える
 無線アクセスポイントが
 近くにある　場合は
 「Ｗｉ－Ｆｉ」の　丸い　枠は
 青色に　光ります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4353,26 +4360,27 @@
 「ＷＩＲＥＬＥＳＳ」と　書かれた
 丸い　枠を　タッチすると
 イッシュ地方の　真ん中に　ある
-ハイリンクと　呼ばれる場所に
+ハイリンクと　呼ばれる　場所に
 移動することが　できます。
 
 ハイリンクの　真ん中には
 ハイルツリーと　呼ばれる　木があります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_009_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイルツリーにむかって　Ａボタンをおすと
-フェスミッションを　うけることが　できます。
+			<Text>ハイルツリーに　むかって
+Ａボタンを　おすと　フェスミッションを
+うけることが　できます。
 
 ミッションには　さまざまな
 もくひょうが　あります。
@@ -4381,16 +4389,17 @@
 ポケモンしょうぶを　します。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイルツリーに向かって　Ａボタンを押すと
-フェスミッションを　受けることが　できます。
+			<Text>ハイルツリーに　向かって
+Ａボタンを　押すと　フェスミッションを
+受けることが　できます。
 
 ミッションには　さまざまな
 目標が　あります。
@@ -4399,52 +4408,52 @@
 ポケモン勝負を　します。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_003_009_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミッションを　クリアするには
-スコアを　ためるひつようが　あります。
+			<Text>ミッションは　スコアを
+ためることで　クリアできます。
+スコアを　ためるには
 ミッションの　しじに　そった
-こうどうを　とることで
-スコアが　たまります。
+こうどうを　とる　ひつようが　あります。
 
 スコアが　おおいほど
 ミッションを　クリアしたときの
 ほうしゅうが　おおくなります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションを　クリアするには
-スコアを　ためる必要が　あります。
+			<Text>ミッションは　スコアを
+ためることで　クリアできます。
+スコアを　ためるには
 ミッションの　指示に　そった
-行動を　とることで
-スコアが　たまります。
+行動を　とる　必要が　あります。
 
 スコアが　多いほど
 ミッションを　クリアしたときの
 報酬が　多くなります。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T03:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T03:39:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4452,7 +4461,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッションは
-ちかくにいる　ひとと　いっしょに
+ちかくに　いる　ひとと　いっしょに
 あそぶことが　できます。
 
 すれちがいログから　だれかが
@@ -4460,16 +4469,16 @@
 さんかすることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フェスミッションは
-近くにいる　人と　一緒に
+近くに　いる　人と　一緒に
 遊ぶことが　できます。
 
 すれ違いログから　だれかが
@@ -4477,11 +4486,11 @@
 参加することが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4493,17 +4502,17 @@
 ふしぎな　ちからのこと　です。
 
 デルパワーは　つかうことで
-けいけんちを　おおくもらえたり
-ポケモンを　つかまえやすくしたり
-さまざまな　こうかを　はっきします。
+けいけんちが　おおく　もらえたり
+ポケモンが　つかまえやすくなったりと
+さまざまな　こうかを　はっき　します。
 どうじに　３つまで　うけとれます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4512,17 +4521,17 @@
 不思議な　力のこと　です。
 
 デルパワーは　使うことで
-経験値を　多くもらえたり
-ポケモンを　捕まえやすくしたり
+経験値が　多く　もらえたり
+ポケモンが　捕まえやすくなったりと
 さまざまな　効果を　発揮します。
 同時に　３つまで　受け取れます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4530,39 +4539,40 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーを　つかうには
-ハイリンクから　でたあと
+ハイリンクから　でたあとに
 Ｃギアの　ちゅうおうに　ある
 「すれちがいログ」を　タッチして
+あらわれた　つぎの　がめんにある
 さんかくマークを　タッチして　ください。
-
 また　デルパワーを　つかうには
 きめられた　かずの
-デルダマが　ひつようです。</Text>
+デルダマが　ひつよう　です。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルパワーを　使うには
-ハイリンクから　出た後
+ハイリンクから　でたあとに
 Ｃ－ＧＥＡＲの　中央にある
 「すれ違いログ」を　タッチして
+現れた　次の　画面にある
 三角マークを　タッチしてください。
 
 また　デルパワーを　使うには
 決められた　数の　デルダマが　必要です。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4572,36 +4582,36 @@
 			<Text>ハイルツリーが　せいちょうし
 レベルが　あがることで
 あたらしい　デルパワーを
-うけとれる　ように　なります。
+うけとれるように　なります。
 
 レベルを　あげるには
 フェスミッションを　うけて
 スコアを　たくさん　ためます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイルツリーが　成長し
-レベルが　上がることで
+レベルが　あがることで
 新しい　デルパワーを
-受け取れる　ように　なります。
+受け取れるように　なります。
 
-レベルを　上げるには
+レベルを　あげるには
 フェスミッションを　受けて
-スコアを　沢山　ためます。</Text>
+スコアを　たくさん　ためます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4685,40 +4695,40 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>したがめんの　みどりいろの　マークか
-スタートボタンを　おすと　ならびかたが
-ひょうじされ　ポケットの　どうぐの
-ならびを　へんこうできます。
+スタートボタンを　おすと　ひょうじされる
+ならびかたを　えらぶことで
+どうぐの　ならびを　へんこう　できます。
 セレクトボタンを　おすと
-ポケットの　どうぐを　じゆうに
-いれかえることが　できます。
+ポケットの　どうぐの　じゅんばんを
+じゆうに　いれかえることが　できます。
 Ｌ／Ｒボタンを　おすと
 ページを　きりかえることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>下画面の　緑色の　マークか
-スタートボタンを　押すと　並び方が
-表示され　ポケットの　どうぐの
-並びを　変更できます。
+スタートボタンを　押すと　表示される
+並び方を　選ぶことで
+道具の　並びを　変更できます。
 セレクトボタンを　押すと
-ポケットの　道具を
+ポケットの　道具の　順番を
 自由に　入れ替えることが　できます。
-Ｌ／Ｒボタンを　押すと　ページを
-切り替えることが　できます。</Text>
+Ｌ／Ｒボタンを　押すと
+ページを　切り替えることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T03:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-21T04:30:06" />
+				Time="2012-01-30T03:55:22" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4726,34 +4736,38 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バッグには　「フリースペース」が
-よういされています。
-ポケットの　どうぐを　えらんで
-「フリーズペースへ」を　えらぶことで
-すきなどうぐを　フリースペースに
-いどうさせることが　できます。</Text>
+ようい　されています。
+
+まず　ポケットの　どうぐを　えらびます。
+つぎに　「フリースペースへ」を
+えらぶことで　すきな　どうぐを
+フリースペースに
+いどう　させることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バッグには　「フリースペース」が
 用意されています。
-ポケットの　どうぐを　選んで
-「フリーズペースへ」を　選ぶことで
-好きなどうぐを　フリースペースに
+
+まず　ポケットの　道具を　選びます。
+次に　「フリーズペースへ」を
+選ぶことで　好きな　道具を
+フリースペースに
 移動させることが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4960,41 +4974,41 @@
 		Label="man_txt_page_no_005_002_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｘボタンメニューで
+			<Text>Ｘボタンで　ひらいた　メニューから
 じぶんの　なまえを　えらぶと
-トレーナーカードを　かくにん　することが
-できます。
+トレーナーカードを
+かくにん　することが　できます。
 
 したがめんの　ひだりしたに　ある
 マークを　タッチすると
-いま　いくつ　ジムバッジを　もっているか
-かくにんすることが　できます。</Text>
+ジムバッジを　どれだけ　もっているか
+かくにん　することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｘボタンメニューで
+			<Text>Ｘボタンで　開いた　メニューから
 自分の　名前を　選ぶと
-トレーナーカードを　確認　することが
-できます。
+トレーナーカードを
+確認することが　できます。
 
 下画面の　左下に　ある
 マークを　タッチすると
-今　いくつ　ジムバッジを　持っているか
+ジムバッジを　どれだけ　持っているか
 確認することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5088,36 +5102,36 @@
 ついか　されます。
 
 メダルマークを　タッチすることで
-せっていされている　イチオシメダルや
-いま　もっている　メダルの　かずを
-かくにんすることが　できます。
+せってい　されている　イチオシメダルや
+メダルを　どれだけ　もっているのか
+かくにん　することが　できます。
 </Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>冒険を　進めて行くと
 トレーナーカードに　メダルマークが
-追加　されます。
+追加されます。
 
 メダルマークを　タッチすることで
 設定されている　イチオシメダルや
-今　持っている　メダルの　数を
+メダルを　どれだけ　持っているのか
 確認することが　できます。
 </Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:43:01" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5149,45 +5163,53 @@
 説明や　生息している　場所
 鳴き声や　高さや　重さ
 タイプや　足跡を
-見ることが　できます。</Text>
+みることが　できます。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_005_003_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンずかんは　「ＳＴＡＲＴ」を
-おすと　ばんごう　ごじゅうおん　いろ
-かたちなどから　あてはまる　ポケモンを
-さがすことが　できます。</Text>
+			<Text>ポケモンずかんは　リストがめんで
+「ＳＴＡＲＴ」を　おすと
+けんさくモードに　なります。
+
+けんさくモードでは
+ばんごう　ごじゅうおん　いろ
+かたち　などから　あてはまる
+ポケモンを　さがすことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン図鑑は　「ＳＴＡＲＴ」を
-押すと　番号　五十音　色や　形などから
-あてはまる　ポケモンを　検索することが
-できます。</Text>
+			<Text>ポケモン図鑑は　リスト画面で
+「ＳＴＡＲＴ」を　押すと
+検索モードに　なります。
+
+検索モードでは
+番号　五十音　色や　形などから
+あてはまる　ポケモンを
+探すことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5197,39 +5219,38 @@
 			<Text>ぼうけんを　すすめていくと
 ポケモンずかんに　「せいそくちリスト」が
 ついか　されます。
-せいそくちリストは　どうろや どうくつに
-ひそむ　ポケモンを　しらべられます。
-プレイヤーが　いちどみたことがある
-ポケモンが　ひょうじ　されるので
-みたことがない　ポケモンが
-いるかどうか　しることが　できます。
-</Text>
+
+せいそくちリストは　ばしょごとに
+であった　ポケモンを　ひょうじ　します。
+その　ばしょに　くらす　ポケモンを
+すべて　みたり　つかまえると
+スタンプマークが　ついか　されます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>冒険を　進めていくと
 ポケモン図鑑に　「生息地リスト」が
-追加　されます。
-生息地リストは　道路や　洞くつに
-潜む　ポケモンを　調べられます。
-プレイヤーが　一度見たことがある
-ポケモンが　表示　されるので
-見たことがない　ポケモンが
-いるかどうかを　知ることが　できます。</Text>
+追加されます。
+
+生息地リストは　場所ごとに
+であった　ポケモンを　表示します。
+その場所に　暮らす　ポケモンを
+すべて　みたり　捕まえると
+スタンプマークが　追加されます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T13:04:29" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6004,37 +6025,37 @@
 			Language="JPN">
 			<Text>ぼうけんの　とちゅうで　であう
 そだてやさんに　ポケモンを
-2ひき　あずけていると　タマゴが
+２ひき　あずけていると　タマゴが
 みつかることが　あります。
 
-タマゴを　てもちポケモンに　いれて
-いっしょに　ぼうけんすると
-タマゴを　かえすことが　できます。</Text>
+タマゴは　げんきな　ポケモンと
+いっしょに　つれあるくことで
+なかから　ポケモンが　あらわれます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:50:07" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:50:07" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>冒険の　途中で　出会う
 育て屋さんに　ポケモンを
-2匹　あすけていると　タマゴが
-見つることが　あります。
+２匹　預けていると　タマゴが
+みつかることが　あります。
 
-タマゴを　手持ちポケモンに　入れて
-一緒に　冒険すると
-タマゴを　かえすことが　できます。</Text>
+タマゴは　元気な　ポケモンと
+一緒に　連れ歩くことで
+中から　ポケモンが　あらわれます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6347,35 +6368,35 @@
 			Language="JPN">
 			<Text>みぎしたの　ふうせんマークの
 ボタンを　おすと　ライブキャスターに
-さんかしているひとと　ミニゲームを
+さんかしている　ひとと　ミニゲームで
 あそぶことが　できます。
 
 おしたボタンにより　それぞれ　ちがう
 ゲームを　あそぶことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>右下の　風船マークの　ボタンを
 押すと　ライブキャスターに
-参加しているひとと　ミニゲームを
+参加している　人と　ミニゲームで
 遊ぶことが　できます。
 
 押したボタンにより　それぞれ　違う
 ミニゲームを　遊ぶことが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6383,25 +6404,25 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミニゲームは　ライブキャスターを
-はじめた　プレイヤーだけが
-じっこうすることが　できます。
+さいしょに　はじめた　プレイヤーだけが
+じっこう　することが　できます。
 
 また　『ポケットモンスターブラック』
 『ポケットモンスターホワイト』の
 プレイヤーとは　ミニゲームを
 あそぶことは　できません。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミニゲームは　ライブキャスターを
-はじめた　プレイヤーだけが
+最初に　はじめた　プレイヤーだけが
 実行することが　できます。
 
 また　『ポケットモンスターブラック』
@@ -6409,12 +6430,12 @@
 プレイヤーとは　ミニゲームを
 遊ぶことは　できません。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6426,36 +6447,36 @@
 ジムバッジは　ジムリーダーに　かった
 あかしとして　もらえる　バッジです。
 
-トレーナーカードがめんの　ひだりしたの
-マークを　タッチすると
-いま　いくつ　ジムバッジを　もっているか
-かくにんすることが　できます。</Text>
+トレーナーカードがめんの
+ひだりしたにある　マークを　タッチすると
+ジムバッジを　どれだけ　もっているか
+かくにん　することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュ地方には　８つの　ジムが　あり
 それぞれに　ジムリーダーが　います。
-ジムバッジは　ジムリーダーに　勝利した
+ジムバッジは　ジムリーダーに　勝った
 証として　もらえる　バッジです。
 
-トレーナーカード画面の　左下の
-マークを　タッチすると
-今　いくつ　ジムバッジを　持っているか
+トレーナーカード画面の
+左下にある　マークを　タッチすると
+ジムバッジを　どれだけ　持っているか
 確認することが　できます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:55:22" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6604,38 +6625,40 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>べんりボタンには　３４こ　まで
-きのうや　どうぐを　とうろくできます。
-とうろくを　かいじょしたい　ばあいは
-しかくい　マークを　タッチして
+どうぐや　きのうを　とうろく　できます。
+とうろくを　かいじょ　したい　ばあいは
+しかくの　マークを　タッチするか
+Ｙボタンを　おして
 チェックを　はずして　ください。
-２つ　いじょう　とうろくしていると
+２つ　いじょう　とうろく　していると
 セレクトボタンで　べんりボタンの
 こうもくを　ならびかえられます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T03:55:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>便利ボタンには　３４こ　まで
-機能や　道具を　登録できます。
+道具や　機能を　登録できます。
 登録を　解除したい　場合は
-四角の　マークを　タッチして
+四角の　マークを　タッチするか
+Ｙボタンを　押して
 チェックを　はずして　ください。
 ２つ以上　登録していると
 セレクトボタンで　便利ボタンの
 項目を　並び替えられます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:33" />
+				User="nakamura_akira:W00280"
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6643,72 +6666,69 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>「メダルラリー」は　プレイヤーの
-さまざまな　こうどうを　ひょうかし
-メダルを　プレゼントするシステムです。
+さまざまな　こうどうを　ひょうかして
+メダルを　プレゼントする　システムです。
 
-てにいれたメダルは　バッグの
+てにいれた　メダルは　バッグの
 「たいせつなもの」にある
 「メダルボックス」を　えらぶことで
-かくにんすることが　できます。</Text>
+かくにん　することが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>「メダルラリー」は　プレイヤーの
-さまざまな　行動を　評価し
-メダルを　プレゼントするシステムです。
+さまざまな　行動を　評価して
+メダルを　プレゼントする　システムです。
 
-手に入れたメダルは　バッグの
+手に入れた　メダルは　バッグの
 「たいせつなもの」にある
 「メダルボックス」を　選ぶことで
 確認することが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="man_txt_page_no_008_007_002">
 		<LanguageCell
 			Language="JPN">
-			<Text>メダルは　じょうけんを　みたし
-ポケモンセンターに　いる
+			<Text>メダルは　じょうけんを　みたすと
+ポケモンセンターに　あらわれる
 「メダルおやじ」に　はなしかけることで
-てにいれることが　できます。
-
-</Text>
+てにいれることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T02:22:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルは　条件を　満たし
-ポケモンセンターに　いる
+			<Text>メダルは　条件を　満たすと
+ポケモンセンターに　現れる
 「メダルおやじ」に　話しかけることで
-手に入れることが　できます。
-</Text>
+手に入れることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T03:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-26T12:34:49" />
+				Time="2012-01-30T03:39:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
