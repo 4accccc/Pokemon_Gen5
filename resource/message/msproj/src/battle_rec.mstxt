@@ -4812,10 +4812,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0" ]れんしょう</Text>
+			<Text>れんしょう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="shimoyamada:W00184"
+				Time="2012-01-30T06:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4823,10 +4823,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0" ]連勝</Text>
+			<Text>連勝</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="shimoyamada:W00184"
+				Time="2012-01-30T06:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
