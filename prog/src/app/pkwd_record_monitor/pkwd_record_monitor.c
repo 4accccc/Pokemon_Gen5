@@ -3045,7 +3045,7 @@ static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 	s32		j;
 	u16		max_profits = 0;  // 最高収益
 	u16		scenario[PKWD_RECORD_MONITOR_SCENARIO_MAX];  // 最高収益
-	u8		profits_idx;
+	u8		profits_idx=0;
 	BOOL	bflg;
 	//
 	// openチェック
