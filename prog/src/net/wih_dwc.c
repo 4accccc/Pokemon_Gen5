@@ -421,8 +421,6 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
   }
   if(retcode==0){
     _localWork->level=0;
-    _localWork->levelGame = 0;
-    _localWork->levelTimer = 0;
   }
   else if(_localWork->levelGame!=0){
     if(_localWork->levelTimer == 0){
