@@ -2907,7 +2907,7 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
   }
 
   //JA“Á•Ê•â³252‚È‚ç‚ÎU‚ç‚È‚¢
-  if( exp >= PRMEXP_REVISION_MAX )
+  if( exp >= PRMEXP_REVISION_MAX && up > 0 )
   {
     return -1;
   }
