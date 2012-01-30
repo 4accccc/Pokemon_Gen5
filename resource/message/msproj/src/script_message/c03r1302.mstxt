@@ -147,12 +147,10 @@ meine Führerscheinprüfung...▼
 		<LanguageCell
 			Language="JPN">
 			<Text>やぁ　きみは　ヒウンアイスを
-たべたことが　あるかい？▼
-ぼくは　かようびに　かえたけれど
-なかなか　かえないんだよねぇ</Text>
+たべたことが　あるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T06:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -161,12 +159,10 @@ meine Führerscheinprüfung...▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やぁ　きみは　ヒウンアイスを
-食べたことが　あるかい？▼
-ぼくは　火曜日に　買えたけれど
-なかなか　買えないんだよねぇ</Text>
+食べたことが　あるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T06:51:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -175,10 +171,10 @@ meine Führerscheinprüfung...▼
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ヒウンアイスのヒント</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T06:51:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
