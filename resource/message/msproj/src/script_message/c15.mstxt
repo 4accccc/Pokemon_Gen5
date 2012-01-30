@@ -2843,13 +2843,13 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>めでたいのう！　[Name:TrainerName ]！
-よいか！　おぬしの　デビューさくを
+よいか！　おぬしの　デビューさくを▽
 かんとくしたのは　この　わし！▼
 つまり　そだてのおや　どうぜん　じゃ！
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T03:30:03" />
+				Time="2012-01-30T07:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2858,13 +2858,13 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>めでたいのう！　[Name:TrainerName ]！
-よいか！　おぬしの　デビュー作を
+よいか！　おぬしの　デビュー作を▽
 監督したのは　この　わし！▼
 つまり　育ての親　同然じゃ！
 感謝を　忘れては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-19T12:52:10" />
+				Time="2012-01-30T07:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2944,12 +2944,12 @@ Bis  bald.</Text>
 ……だが　みてごらん
 いま　ここに　どうぞうが　たっている▼
 つまり　ボクの　ねがいは　かなって
-ちかいは　はたされちゃったんだ……▼
+ちかいも　はたされちゃったんだ……▼
 そう……　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:45:37" />
+				Time="2012-01-30T07:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2973,12 +2973,12 @@ Bis  bald.</Text>
 ……　……だが　みてごらん
 今ここに　銅像が　立っている▼
 つまり　ボクの　願いは　かなって
-誓いは　果たされちゃったんだ……▼
+誓いも　果たされちゃったんだ……▼
 そう……　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:45:58" />
+				Time="2012-01-30T07:33:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
