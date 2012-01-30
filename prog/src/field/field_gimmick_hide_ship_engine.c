@@ -2686,7 +2686,7 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
       u16 obj_idx = OBJ_PIPE_1 + idx;
       u16 connect_idx = 0;
       int size_ofs_z = 0;  // 接続パイプ用
-      int tmp_idx;
+      int tmp_idx = -1;    // インデックスとしてありえない値を入れておく
       if( idx == 3 || idx == 11 || idx == 4 || idx == 12 )
       {
         if( PIPE_CONNECT_GetFlag( p_wk, obj_idx, &connect_idx ) == FALSE )
