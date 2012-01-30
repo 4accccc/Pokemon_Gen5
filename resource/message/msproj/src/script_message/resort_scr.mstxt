@@ -4703,11 +4703,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　[Name:ResortTown ]は
-サービス　きかんちゅうです！▽
+サービスきかんちゅう　です！▽
 のこり　[Digit:2digits Idx="1" ]にち　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:10:48" />
+				Time="2012-01-30T09:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4771,11 +4771,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>げんざい　[Name:ResortTown ]は
-サービス　きかんちゅうです！▽
+サービスきかんちゅう　です！▽
 のこり　[Digit:2digits Idx="1" ]にち　です▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-24T11:26:59" />
+				Time="2012-01-30T09:44:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9472,11 +9472,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown Idx="3" ]は
-げんざい　サービス　きかんちゅう　です▽
-あと　[Digit:2digits Idx="4" ]にち　　おみのがしなく！▼</Text>
+げんざい　サービスきかんちゅう　です▽
+あと　[Digit:2digits Idx="4" ]にち　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T08:03:20" />
+				Time="2012-01-30T09:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9486,10 +9486,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:ResortTown Idx="3" ]は
 現在　サービス期間中　です▽
-あと　[Digit:2digits Idx="4" ]日　　おみのがしなく！▼</Text>
+あと　[Digit:2digits Idx="4" ]日　おみのがしなく！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:21:08" />
+				User="shimoyamada:W00184"
+				Time="2012-01-30T06:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10414,11 +10414,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown Idx="3" ]は
-げんざい　サービス　きかんちゅう　です▽
-あと　[Digit:2digits Idx="4" ]にち　　おみのがしなく！▼</Text>
+げんざい　サービスきかんちゅう　です▽
+あと　[Digit:2digits Idx="4" ]にち　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T08:03:42" />
+				Time="2012-01-30T09:43:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -10428,10 +10428,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:ResortTown Idx="3" ]は
 現在　サービス期間中　です▽
-あと　[Digit:2digits Idx="4" ]日　　おみのがしなく！▼</Text>
+あと　[Digit:2digits Idx="4" ]日　おみのがしなく！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:45:26" />
+				User="shimoyamada:W00184"
+				Time="2012-01-30T06:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
