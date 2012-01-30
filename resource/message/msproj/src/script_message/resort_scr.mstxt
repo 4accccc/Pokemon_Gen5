@@ -70340,11 +70340,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『街で　お客に出会った　数』が
+『街で　お客に　出会った　数』が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:50:08" />
+				Time="2012-01-30T05:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -70544,11 +70544,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:08:51" />
+				Time="2012-01-30T05:51:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -70612,11 +70612,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『すれ違った　人の　数』が
+『すれ違った人の　数』が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:58:35" />
+				Time="2012-01-30T06:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -72849,11 +72849,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街で　お客に出会った　数』が
+『街で　お客に　出会った　数』が
 ３５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:00:19" />
+				Time="2012-01-30T05:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74007,11 +74007,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街で　お客に出会った　数』が
+『街で　お客に　出会った　数』が
 ７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:03:03" />
+				Time="2012-01-30T05:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74075,11 +74075,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『街で　お客に出会った　数』が
+『街で　お客に　出会った　数』が
 ７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:03:09" />
+				Time="2012-01-30T05:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -129045,10 +129045,10 @@ PWT
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街で　お客に出会った　数</Text>
+			<Text>街で　お客に　出会った　数</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T06:13:19" />
+				Time="2012-01-30T06:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
