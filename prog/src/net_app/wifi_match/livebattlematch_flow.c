@@ -1091,6 +1091,11 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           reg = POKE_REG_ILLEGAL_POKE;
         }
 
+        if( reg == POKE_REG_TOTAL_LV_FAILED )
+        {
+          p_wk->failed_bit |= POKEFAILEDBIT_SUM_LEVEL;
+        }
+
         p_wk->failed_cnt = 0;
         if( POKE_REG_OK == reg )
         {
