@@ -491,7 +491,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = SecretaryList_Exit;
       sbw->wk.List_Change = SecretaryList_Change;
       sbw->wk.List_Decide = SecretaryList_Decide;
-      sbw->wk.msg_start   = mes_shop_09_17;
+      sbw->wk.msg_start   = mes_shop_09_23;
       sbw->wk.msg_select  = mes_shop_09_18;
       sbw->wk.msg_decide  = mes_shop_09_19;
       sbw->wk.call_back = SortPeople_move_callback;
