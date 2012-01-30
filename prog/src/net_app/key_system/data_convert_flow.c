@@ -750,7 +750,8 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_CHECK_LOGIN:
     if( p_wk->is_wifi_start )
     {
-      (*p_seq)++;
+      *p_seq  = SEQ_MSG_INPUT_START;
+      //(*p_seq)++;
     }
     else
     {
