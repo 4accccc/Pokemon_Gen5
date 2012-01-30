@@ -449,240 +449,72 @@
 これでも　くらうが　いいわ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！▼
-なんだ！　そのポケモンさばき　は！
-おはなしにも　ならぬわっ！▼
-きさまの　ような　こぞうとは
-たたかう　きにも　ならぬ！▼
-もうよい！　さらばだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！▼
-なんだ！　そのポケモンさばき　は！
-お話にも　ならぬわっ！▼
-貴様の　ような　小僧とは
-戦う気にも　ならぬ！▼
-もうよい！　さらばだ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『あれ……
-ぼく　こんな　はずじゃ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『あれ……
-ぼく　こんな　はずじゃ……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event2_hero_2">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンに
-あいてにも　されなかった▽
-[1:02:ポケモンニックネーム:0]マン……▼
-とくに　かつやくも　ない　かれが
-だれなのか　しりたいものが▽
-いるはずも　ない……▼
-ともかく……▼
-ありがとう！
-[1:02:ポケモンニックネーム:0]マン！▼
-さらば！
-[1:02:ポケモンニックネーム:0]マン！</language>
-		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンに
-相手にも　されなかった▽
-[1:02:ポケモンニックネーム:0]マン……▼
-特に　活躍も　ない　彼が
-だれなのか　知りたい者が▽
-いるはずも　ない……▼
-ともかく……▼
-ありがとう！
-[1:02:ポケモンニックネーム:0]マン！▼
-さらば！
-[1:02:ポケモンニックネーム:0]マン！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">ハチクマン『グムムム……▼
-わがはいの　おうぎを
-ものともせず　しかも▽
-いちげきで　しずめるとは……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グムムム……▼
-我輩の　奥義を
-物ともせず　しかも▽
-一撃で　しずめるとは……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『ハチクマン！
-ここは　みんなの　りそうの▽
-つまった　ゆうえんちだ！▼
-おとなしく　たちされ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『ハチクマン！
-ここは　みんなの　理想の▽
-つまった　遊園地だ！▼
-おとなしく　立ち去れ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">ハチクマン『よいだろう……
-きょうの　ところは　ひいてやる▼
-だが……　[1:02:ポケモンニックネーム:0]マンが
-りそうと　しんじつの　ししゃ　なら▽
-げんじつと　げんそうの　かいじんが▽
-この　ハチクマン　よ……▼
-おぼえて　おくがいい……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『よいだろう……
-今日の　ところは　引いてやる▼
-だが……　[1:02:ポケモンニックネーム:0]マンが
-理想と　真実の　使者　なら▽
-現実と　幻想の　怪人が▽
-この　ハチクマン　よ……▼
-覚えて　おくがいい……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">ゆうえんちの　きゃく『わー！
-みてみて！　かっこいい！▽
-[1:02:ポケモンニックネーム:0]マン　だって！</language>
-		<language name="JPN_KANJI" width="256">遊園地の　客『わー！
-見て見て！　かっこいい！▽
-[1:02:ポケモンニックネーム:0]マン　だって！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『……
-かいじん　ハチクマン……▽
-いったい　なにもの　なんだ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『……
-怪人　ハチクマン……▽
-いったい　何者　なんだ……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event3_hero_5">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンを
-こらしめ　ゆうえんちの　ききを▽
-すくった　[1:02:ポケモンニックネーム:0]マン！▼
-しかし
-ハチクマンは　ふてきな▽
-ことばを　のこし　きえた……▼
-イッシュの　りそうと　しんじつを
-まもるため！▼
-ゆけゆけ！
-[1:02:ポケモンニックネーム:0]マン！▼
-たたかえ！
-[1:02:ポケモンニックネーム:0]マン！</language>
-		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンを
-こらしめ　遊園地の　危機を▽
-救った　[1:02:ポケモンニックネーム:0]マン！▼
-しかし
-ハチクマンは　不敵な▽
-言葉　残し　消えた……▼
-イッシュの　理想と　真実を
-守るため！▼
-行け行け！
-[1:02:ポケモンニックネーム:0]マン！▼
-戦え！
-[1:02:ポケモンニックネーム:0]マン！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
-おろかなり！　[1:02:ポケモンニックネーム:0]マン！▼
-わがはいを　たおす　さいだいの
-チャンスを　のがしおって！！▼
-まわりを　みてみるが　よいわっ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！
-おろかなり！　[1:02:ポケモンニックネーム:0]マン！▼
-我輩を　倒す　最大の
-チャンスを　逃しおって！！▼
-周りを　見てみるが　よいわっ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">ゆうえんちの　きゃく『ねえねえ！
-ちょっと　みてよ！　ステキねえ！▽
-かいじん　ハチクマン　ですって！</language>
-		<language name="JPN_KANJI" width="256">遊園地の　客『ねえねえ！
-ちょっと　見てよ！　ステキねえ！▽
-怪人　ハチクマン　ですって！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">ハチクマン『ファファファ！！
-ひとびとの　ちゅうもくは▽
-わがはいに　あつまっておる！▼
-きさまの　ような　ヒーローより
-よの　なかは　かいじんを▽
-のぞんで　おるのだっ！　</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
-大衆の　注目は▽
-我輩に　集まっておる！▼
-貴様の　ような　ヒーローより
-世の中は　怪人を▽
-望んで　おるのだっ！　</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『そんな……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『そんな……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンの
-にんきの　まえに▽
-[1:02:ポケモンニックネーム:0]マンは▽
-ちから　つきた……▼
-しょうぶ……▼
-その　いっしゅんの　せんたくが
-かれの　ヒーローとしての▽
-うんめいを　きめたのだ……▼
-ざんねん！
-[1:02:ポケモンニックネーム:0]マン！▼
-さらば！
-[1:02:ポケモンニックネーム:0]マン！</language>
-		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンの
-人気の　前に▽
-[1:02:ポケモンニックネーム:0]マンは▽
-力　尽きた……▼
-勝負……▼
-その　一瞬の　選択が
-彼の　ヒーローとしての▽
-運命を　決めたのだ……▼
-残念！
-[1:02:ポケモンニックネーム:0]マン！▼
-さらば！
-[1:02:ポケモンニックネーム:0]マン！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">ハチクマン『グムムム……▼
-こんな　よわきな　こぞうに
-わがはいが　やぶれるとは……▼
-この　くつじょく……
-いずれ　はらしてやるぞ……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グムムム……▼
-こんな　弱気な　小僧に
-我輩が　敗れるとは……▼
-この　くつじょく……
-いずれ　晴らしてやるぞ……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『ハ　ハチクマン！
-ヒ　ヒーローは　つよく　かっこよく
-まけないって　きまってるんだ！▼
-さ　さあ！
-いますぐ　ここから　たちさってよ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『ハ　ハチクマン！
-ヒ　ヒーローは　強く　かっこよく
-負けないって　決まってるんだ！▼
-さ　さあ！
-今すぐ　ここから　立ち去ってよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンを
-こらしめ　ゆうえんちの　ききを▽
-すくった　[1:02:ポケモンニックネーム:0]マン！▼
-しかし　かれには　よわむしという
-ヒーローとして　ちめいてきな▽
-じゃくてんが　あった！▼
-せかいの　りそうと　しんじつを
-まもるため！▼
-たたかえ！　
-[1:02:ポケモンニックネーム:0]マン！▼
-びびるな！
-[1:02:ポケモンニックネーム:0]マン！</language>
-		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンを
-こらしめ　遊園地の　危機を▽
-救った　[1:02:ポケモンニックネーム:0]マン！▼
-しかし　彼には　弱虫という
-ヒーローとして　致命的な▽
-弱点が　あった！▼
-世界の　理想と　真実を
-守るため！▼
-戦え！　
-[1:02:ポケモンニックネーム:0]マン！▼
-ビビるな！
-[1:02:ポケモンニックネーム:0]マン！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
@@ -737,56 +569,20 @@
 [1:02:ポケモンニックネーム:0]マン！</language>
 	</row>
 	<row id="pw_event7_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『あれれ……
-ワザが　あたらなかった……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『あれれ……
-ワザが　当たらなかった……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event7_enemy_0">
-		<language name="JPN" width="256">ハチクマン『グムム……
-わざのひとつも　まともに　だせぬとは▽
-それでも　きさまは　ヒーローかッ！▼
-わがはいの　あくの　テンションは
-さがりまくりで　あるっ！！▼
-ええい！　もう　よいわッ！
-わがはいは　アジトに　かえるッ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グムム……▼
-わざのひとつも　満足に　出せぬとは
-それでも　貴様は　ヒーローかッ！▼
-我輩の　悪の　テンションは
-下がりまくりで　あるっ！！▼
-ええい！　もう　良いわ！
-我輩は　アジトに　帰るっ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event7_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『そんな！
-ちょっと　まってくれよーっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『そんな！
-ちょっと　待ってくれよーっ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event7_hero_2">
-		<language name="JPN" width="256">あくのかいじん　ハチクマンに
-こうげきも　できなかった▽
-[1:02:ポケモンニックネーム:0]マン……▼
-ヒーローとして　あるまじき　ミスを
-おかした　なさけない　かれに▽
-ハチクマンの　やるきは▽
-ちからつきて　しまった……▼
-がんばれ！
-ハチクマン！▼
-たたかえ！
-ハチクマン！</language>
-		<language name="JPN_KANJI" width="256">悪の怪人　ハチクマンを　前に
-攻撃も　出来なかった▽
-[1:02:ポケモンニックネーム:0]マン……▼
-ヒーローとして　あるまじき　ミスを
-犯した　情けない　彼に▽
-ハチクマンの　やる気は▽
-力尽きて　しまった……▼
-がんばれ！
-ハチクマン！▼
-戦え！
-ハチクマン！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

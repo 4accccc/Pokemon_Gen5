@@ -141,10 +141,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうえんちの　きゃくＡ</Text>
+			<Text>ゆうえんちのきゃくＡ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T04:01:36" />
+				Time="2012-01-30T04:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -152,10 +152,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊園地の　客Ａ</Text>
+			<Text>遊園地の客Ａ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T04:01:47" />
+				Time="2012-01-30T04:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -207,10 +207,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうえんちの　きゃくＢ</Text>
+			<Text>ゆうえんちのきゃくＢ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T04:02:11" />
+				Time="2012-01-30T04:15:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -218,10 +218,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊園地の　客Ｂ</Text>
+			<Text>遊園地の客Ｂ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T04:02:06" />
+				Time="2012-01-30T04:15:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,10 +306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライモンの　みなさん</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T10:04:11" />
+				Time="2012-01-30T04:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -317,10 +317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンの　みなさん</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T10:04:16" />
+				Time="2012-01-30T04:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -13141,10 +13141,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>おびえる　しみんたち</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:58:51" />
+				Time="2012-01-30T04:17:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -13152,10 +13152,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>おびえる　市民たち</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T04:06:32" />
+				Time="2012-01-30T04:17:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -13174,10 +13174,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:58:51" />
+				Time="2012-01-30T04:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -13185,10 +13185,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T04:06:32" />
+				Time="2012-01-30T04:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14674,10 +14674,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:49:29" />
+				Time="2012-01-30T04:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -14685,10 +14685,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団　アキト</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T07:49:33" />
+				Time="2012-01-30T04:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15174,10 +15174,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだんアキト</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T08:34:43" />
+				Time="2012-01-30T04:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -15185,10 +15185,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>劇団アキト</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T07:19:29" />
+				Time="2012-01-30T04:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18872,10 +18872,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４ばんどうろのみなさん</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:43:27" />
+				Time="2012-01-30T04:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18883,10 +18883,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４道路の皆さん</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:44:26" />
+				Time="2012-01-30T04:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -19241,10 +19241,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げきだん　アキト</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T06:08:52" />
+				Time="2012-01-30T04:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -19252,10 +19252,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げきだん　アキト</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T07:12:57" />
+				Time="2012-01-30T04:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20307,10 +20307,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライモンの　みなさん</Text>
+			<Text>Ｐ　キャスティング</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:51:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T04:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20318,10 +20318,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンの　みなさん</Text>
+			<Text>Ｐ　Ｃａｓｔｉｎｇ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:51:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T04:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

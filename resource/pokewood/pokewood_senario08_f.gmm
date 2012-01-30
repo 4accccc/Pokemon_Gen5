@@ -800,7 +800,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……なに？
 ＵＦＯが　そらへ　のぼっていく……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……何？
-ＵＦＯが　空へ　上っていく……</language>
+ＵＦＯが　空へ　昇っていく……</language>
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『にげたの……？</language>

@@ -444,35 +444,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『ファー　ファファファ！▼
-なんだ！　そのポケモンさばき　は！
-おはなしにも　ならぬわっ！▼
-きさまの　ような　こむすめとは
-たたかう　きにも　ならぬ！▼
-もうよい！　さらばだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ファー　ファファファ！▼
-なんだ！　そのポケモンさばき　は！
-お話にも　ならぬわっ！▼
-貴様の　ような　小娘とは
-戦う気にも　ならぬ！▼
-もうよい！　さらばだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -486,72 +476,50 @@
 		Label="pw_event2_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『もう……
-こんな　はずじゃ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『もう……
-こんな　はずじゃ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event2_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくのかいじん　ハチクマンに
-あいてにも　されなかった▽
-[Name:PokemonNickname Idx="0" ]キッド……▼
-とくに　かつやくも　ない　かのじょが
-だ　なのか　しりたいものが▽
-いるはずも　ない……▼
-ともかく……▼
-ありがとう！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-さらば！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪の怪人　ハチクマンに
-相手にも　されなかった▽
-[Name:PokemonNickname Idx="0" ]キッド……▼
-特に　活躍も　ない　彼女が
-だれなのか　知りたい者が▽
-いるはずも　ない……▼
-ともかく……▼
-ありがとう！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-さらば！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -559,31 +527,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『グムムム……▼
-わがはいの　おうぎを
-ものともせず　しかも▽
-いちげきで　しずめるとは……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『グムムム……▼
-我輩の　奥義を
-物ともせず　しかも▽
-一撃で　しずめるとは……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -598,35 +560,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『ちょっと！
-ハチクマンさん　わかる？
-▼
-ここは　みんなの　りそうが
-つまった　ゆうえんち　なの！▼
-おとなしく　かえりなさいっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『ちょっと！
-ハチクマンさん　わかる？
-▼
-ここは　みんなの　理想が
-つまった　遊園地　なの！▼
-おとなしく　帰りなさいっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -640,144 +592,100 @@
 		Label="pw_event3_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『よいだろう……
-きょうの　ところは　ひいてやる▼
-だが……　[Name:PokemonNickname Idx="0" ]キッドが
-りそうと　しんじつの　ししゃ　なら▽
-げんじつと　げんそうの　かいじんが▽
-この　ハチクマン　よ……▼
-おぼえて　おくがいい……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『よいだろう……
-今日の　ところは　引いてやる▼
-だが……　[Name:PokemonNickname Idx="0" ]キッドが
-理想と　真実の　使者　なら▽
-現実と　幻想の　怪人が▽
-この　ハチクマン　よ……▼
-覚えて　おくがいい……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event3_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうえんちの　きゃく『わー！
-オイ　みろよっ！　かわいいぜ！▽
-[Name:PokemonNickname Idx="0" ]キッド　だってよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊園地の　客『わー！
-オイ　見ろよっ！　かわいいぜ！▽
-[Name:PokemonNickname Idx="0" ]キッド　だってよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event3_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『……
-かいじん　ハチクマン　さん……▽
-いったい　なにもの　なの……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『……
-怪人　ハチクマン　さん……▽
-いったい　何者　なのかな……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event3_hero_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくのかいじん　ハチクマンを
-こらしめ　ゆうえんちの　ききを▽
-すくった　[Name:PokemonNickname Idx="0" ]キッド！▼
-しかし
-ハチクマンは　ふてきな▽
-ことばを　のこし　きえた……▼
-イッシュの　りそうと　しんじつを
-まもるため！▼
-ゆけゆけ！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-たたかえ！
-[Name:PokemonNickname Idx="0" ]キッド！
-</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪の怪人　ハチクマンを
-こらしめ　遊園地の　危機を▽
-救った　[Name:PokemonNickname Idx="0" ]キッド！▼
-しかし
-ハチクマンは　不敵な▽
-言葉を　残し　消えた……▼
-イッシュの　理想と　真実を
-守るため！▼
-行け行け！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-戦え！
-[Name:PokemonNickname Idx="0" ]キッド！
-</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -785,33 +693,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『ファー　ファファファ！
-おろかなり！　[Name:PokemonNickname Idx="0" ]キッド！▼
-わがはいを　たおす　さいだいの
-チャンスを　のがしおって！！▼
-まわりを　みてみるが　よいわっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ファー　ファファファ！
-おろかなり！　[Name:PokemonNickname Idx="0" ]キッド！▼
-我輩を　倒す　最大の
-チャンスを　逃しおって！！▼
-周りを　見てみるが　よいわっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -826,29 +726,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうえんちの　きゃく『ねえねえ！
-ちょっと　みてよ！　ステキねえ！▽
-かいじん　ハチクマン　ですって！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>遊園地の　客『ねえねえ！
-ちょっと　見てよ！　ステキねえ！▽
-怪人　ハチクマン　ですって！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -862,107 +758,75 @@
 		Label="pw_event4_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『ファファファ！！
-ひとびとの　ちゅうもくは▽
-わがはいに　あつまっておる！▼
-きさまの　ような　ヒロインより
-よの　なかは　かいじんを▽
-のぞんで　おるのだっ！　</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ファファファ！！
-大衆の　注目は▽
-我輩に　集まっておる！▼
-貴様の　ような　ヒロインより
-世の中は　怪人を▽
-望んで　おるのだっ！　</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『そんな……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『そんな……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event4_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくのかいじん　ハチクマンの
-にんきの　まえに▽
-[Name:PokemonNickname Idx="0" ]キッドは▽
-ちから　つきた……▼
-しょうぶ……▼
-その　いっしゅんの　せんたくが
-かのじょの　ヒロインとしての▽
-うんめいを　きめたのだ……▼
-ざんねん！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-さらば！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪の怪人　ハチクマンの
-人気の　前に▽
-[Name:PokemonNickname Idx="0" ]キッドは▽
-力　尽きた……▼
-勝負……▼
-その　一瞬の　選択が
-彼女の　ヒロインとしての▽
-運命を　決めたのだ……▼
-残念！
-[Name:PokemonNickname Idx="0" ]キッド！▼
-さらば！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -970,33 +834,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『グムムム……▼
-こんな　よわきな　こむすめに
-わがはいが　やぶれるとは……▼
-この　くつじょく……
-いずれ　はらしてやるぞ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『グムムム……▼
-こんな　弱気な　小娘に
-我輩が　敗れるとは……▼
-この　くつじょく……
-いずれ　晴らしてやるぞ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1011,35 +867,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『……ハ
-ハチクマンさん！▼
-ヒ　ヒロインは　つよく　かれんで
-まけないって　きまってるでしょ！▼
-ほ　ほら！
-はやく　どこかへ　いってよっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『……ハ
-ハチクマンさん！▼
-ヒ　ヒロインは　強く　キュートで
-負けないって　決まってるでしょ！▼
-ほ　ほら！
-早く　どこかへ　行ってよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1053,47 +899,25 @@
 		Label="pw_event5_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくのかいじん　ハチクマンを
-こらしめ　ゆうえんちの　ききを▽
-すくった　[Name:PokemonNickname Idx="0" ]キッド！▼
-しかし　かのじょには　よわむしという
-ヒロインとして　ちめいてきな▽
-じゃくてんが　あった！▼
-せかいの　りそうと　しんじつを
-まもるため！▼
-たたかえ！　
-[Name:PokemonNickname Idx="0" ]キッド！▼
-びびるな！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪の怪人　ハチクマンを
-こらしめ　遊園地の　危機を▽
-救った　[Name:PokemonNickname Idx="0" ]マン！▼
-しかし　彼女には　弱虫という
-ヒロインとして　致命的な▽
-弱点が　あった！▼
-世界の　理想と　真実を
-守るため！▼
-戦え！　
-[Name:PokemonNickname Idx="0" ]キッド！▼
-ビビるな！
-[Name:PokemonNickname Idx="0" ]キッド！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T05:58:57" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1236,136 +1060,100 @@
 		Label="pw_event7_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]マン『あれれ……
-ワザが　あたらなかった……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]マン『あれれ……
-ワザが　当たらなかった……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『グムム……
-わざのひとつも　まともに　だせぬとは▽
-それでも　きさまは　ヒロインかッ！▼
-わがはいの　あくの　テンションは
-さがりまくりで　あるっ！！▼
-ええい！　もう　よいわッ！
-わがはいは　アジトに　かえるッ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T11:29:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『グムム……▼
-わざのひとつも　満足に　出せぬとは
-それでも　貴様は　ヒロインかッ！▼
-我輩の　悪の　テンションは
-下がりまくりで　あるっ！！▼
-ええい！　もう　良いわッ！
-我輩は　アジトに　帰るッ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:41" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]マン『そんな！
-ちょっと　まってくれよーっ！！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]マン『そんな！
-ちょっと　待ってくれよーっ！！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event7_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくのかいじん　ハチクマンに
-こうげきも　できなかった▽
-[Name:PokemonNickname Idx="0" ]マン……▼
-ヒーローとして　あるまじき　ミスを
-おかした　なさけない　かれに▽
-ハチクマンの　やるきは▽
-ちからつきて　しまった……▼
-がんばれ！
-ハチクマン！▼
-たたかえ！
-ハチクマン！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>悪の怪人　ハチクマンを　前に
-攻撃も　出来なかった▽
-[Name:PokemonNickname Idx="0" ]マン……▼
-ヒーローとして　あるまじき　ミスを
-犯した　情けない　彼に▽
-ハチクマンの　やる気は▽
-力尽きて　しまった……▼
-がんばれ！
-ハチクマン！▼
-戦え！
-ハチクマン！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T07:08:37" />
+				Time="2012-01-30T05:54:37" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
