@@ -356,7 +356,7 @@
         <language name="JPN_KANJI" width="256">田舎</language>
       </row><row id="answer_9">
         <language name="JPN" width="256">あたまがいい</language>
-        <language name="JPN_KANJI" width="256">頭が良い</language>
+        <language name="JPN_KANJI" width="256">頭がいい</language>
       </row><row id="answer_10">
         <language name="JPN" width="256">うんどうできる</language>
         <language name="JPN_KANJI" width="256">運動できる</language>
