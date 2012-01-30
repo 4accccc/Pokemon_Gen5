@@ -2612,10 +2612,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>イッシュリンク：メインメニューの下画面に表示されるガイドテキスト
+
+CYGNUS連動用</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:18:40" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:13:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -6781,10 +6783,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>CYGNUS:項目名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:13:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -6837,10 +6839,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>連動開始確認</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:14:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -6893,10 +6895,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>送受信演出中
+（実際は何もしていない）</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:14:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -6949,10 +6952,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>受け取り結果画面
+（セーブが終わるまで表示）</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:15:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7003,10 +7007,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>天候３匹登場演出用
+（専用演出が入る）</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:15:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7059,10 +7064,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>受け取り結果画面
+（セーブ完了後に表示）</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:15:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7121,10 +7127,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受け取れない状態：SWANのセーブがない</Comment>
+			<Comment>エラーメッセージ１
+受け取れない状態：SWANのセーブがない</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:21:23" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:15:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7183,10 +7190,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受け取れない状態：報酬データがない。一度も受け取っていない</Comment>
+			<Comment>エラーメッセージ２
+受け取れない状態：報酬データがない。一度も受け取っていない</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:21:38" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:15:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7243,10 +7251,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受け取れない状態：報酬データがない。受け取ったことはある</Comment>
+			<Comment>エラーメッセージ３
+受け取れない状態：報酬データがない。受け取ったことはある</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-16T08:21:50" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:16:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7305,10 +7314,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ボックスにあきがない</Comment>
+			<Comment>エラーメッセージ４
+ボックスにあきがない</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:51:48" />
+				Time="2012-01-30T11:16:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7361,10 +7371,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>ポケモンを受け取った場合に表示
+CYGNUS_05の後に表示</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-26T09:24:55" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:16:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7417,10 +7428,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>道具を受け取った場合に表示
+CYGNUS_05の後に表示</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-26T09:24:55" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:17:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
