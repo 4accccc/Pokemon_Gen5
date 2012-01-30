@@ -6761,10 +6761,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３DSリンク</Text>
+			<Text>３ＤＳリンク</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:17:34" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:31:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6772,10 +6772,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３DSリンク</Text>
+			<Text>３ＤＳリンク</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:17:38" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:31:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6815,11 +6815,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンARサーチャーから
+			<Text>ポケモンＡＲサーチャーから
 ちょうさデータを　うけとりますか？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:06:17" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:31:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6827,11 +6827,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンARサーチャーから
-ちょうさデータを　うけとりますか？</Text>
+			<Text>ポケモンＡＲサーチャーから
+調査データを　受け取りますか？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:10:46" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:33:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6871,11 +6871,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンARキャッチャーに
+			<Text>ポケモンＡＲキャッチャーに
 せつぞく　しています</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:32:46" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6883,11 +6883,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンARキャッチャーに
-せつぞく　しています</Text>
+			<Text>ポケモンＡＲキャッチャーに
+接続しています</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:32:46" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6941,10 +6941,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンARサーチャーから
-ちょうさデータを　うけとっています</Text>
+調査データを　受け取っています</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:50:37" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7052,11 +7052,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょうさデータを
-レポートに　かきこみました！▼</Text>
+			<Text>調査データを
+レポートに　書き込みました！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:33:41" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:33:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7097,14 +7097,14 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートがないため
+			<Text>レポートが　ないため
 ちょうさデータを　うけとれません▼
 『さいしょから　はじめる』を　えらび
 ポケモンずかんを　てにいれるまで▽
 ぼうけんを　すすめて　ください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:30:46" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:34:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7112,14 +7112,14 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートがないため
-ちょうさデータを　うけとれません▼
-『さいしょから　はじめる』を　えらび
-ポケモンずかんを　てにいれるまで▽
-ぼうけんを　すすめて　ください▼</Text>
+			<Text>レポートが　ないため
+調査データを　受け取れません▼
+『最初から　はじめる』を　選び
+ポケモン図鑑を　手に入れるまで▽
+冒険を　進めて　ください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:31:07" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:34:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7160,14 +7160,14 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンARサーチャーの
+			<Text>ポケモンＡＲサーチャーの
 ちょうさデータが　ありませんでした▼
-ニンテンドー３DSで
-ポケモンARサーチャーを　あそんで▽
+ニンテンドー３ＤＳで
+ポケモンＡＲサーチャーを　あそんで▽
 ちょうさデータを　あつめてください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:47:12" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:32:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7175,14 +7175,14 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンARサーチャーの
-ちょうさデータが　ありませんでした▼
-ニンテンドー３DSで
-ポケモンARサーチャーを　あそんで▽
-ちょうさデータを　あつめてください▼</Text>
+			<Text>ポケモンＡＲサーチャーの
+調査データが　ありませんでした▼
+ニンテンドー３ＤＳで
+ポケモンＡＲサーチャーを　遊んで▽
+調査データを　集めてください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:47:21" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7223,13 +7223,13 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンARサーチャーの
+			<Text>ポケモンＡＲサーチャーの
 ちょうさデータが　ありませんでした▼
-ポケモンARサーチャーを　きどうして
+ポケモンＡＲサーチャーを　きどうして
 ちょうさデータを　おくってください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:49:48" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:32:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7237,13 +7237,13 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンARサーチャーの
-ちょうさデータが　ありませんでした▼
-ポケモンARサーチャーを　きどうして
-ちょうさデータを　おくってください▼</Text>
+			<Text>ポケモンＡＲサーチャーの
+調査データが　ありませんでした▼
+ポケモンＡＲサーチャーを　起動して
+調査データを　送ってください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:49:57" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7299,14 +7299,14 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょうさデータを　うけとるには
-ボックスに　６ひきぶんの▽
-あきが　ひつように　なります▼
-ボックスを　せいりしてから
-もういちど　やりなおして　ください▼</Text>
+			<Text>調査データを　受け取るには
+ボックスに　６匹分の▽
+空きが　必要に　なります▼
+ボックスを　整理してから
+もう一度　やりなおして　ください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T06:51:43" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7359,11 +7359,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うけとった　ポケモンを
-ボックスに　てんそう　しました▼</Text>
+			<Text>受け取った　ポケモンを
+ボックスに　転送しました▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:05:32" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:36:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7416,11 +7416,11 @@ CYGNUS_05の後に表示</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うけとった　どうぐを
-バッグに　おくりました▼</Text>
+			<Text>受け取った　道具を
+バッグに　送りました▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:05:23" />
+				User="matsumiya:W00224"
+				Time="2012-01-30T11:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
