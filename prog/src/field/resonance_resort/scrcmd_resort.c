@@ -1795,7 +1795,7 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
   const HEAPID heapID = FIELDMAP_GetHeapID( p_field );
 
   *p_ret_wk = 0;
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  for( i = RESORT_RESIDENT_DATA_NUM-1; i >= 0; i-- )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
@@ -1820,7 +1820,7 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
     return VMCMD_RESULT_CONTINUE;
   }
 
-  i = 0;
+  i = RESORT_RESIDENT_DATA_NUM-1;
   while( 1 )
   {
     RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
@@ -1870,8 +1870,11 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
         }
       }
     }
-    i++;
-    i%=RESORT_RESIDENT_DATA_NUM;
+    i--;
+    if( i < 0 )
+    {
+      i = RESORT_RESIDENT_DATA_NUM-1;
+    }
   }
 
   return VMCMD_RESULT_CONTINUE;

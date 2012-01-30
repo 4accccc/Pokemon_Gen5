@@ -1984,7 +1984,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
   }
 
   //データを集める
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  for( i = RESORT_RESIDENT_DATA_NUM-1; i >= 0; i-- )
   {
     RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
