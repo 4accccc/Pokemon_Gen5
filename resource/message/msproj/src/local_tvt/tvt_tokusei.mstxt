@@ -1969,11 +1969,11 @@
 			Language="JPN">
 			<Text>ようりょくそ　ね……▼
 この　とくせいの　ポケモンは
-てんきが　ひざしがつよいの　ばあい▽
+ひざしがつよい　てんきの　ばあい▽
 すばやさが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:57:45" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:25:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1983,11 +1983,11 @@
 			Language="JPN_KANJI">
 			<Text>ようりょくそ　ね……▼
 この特性の　ポケモンは
-天候が　ひざしがつよいの　場合▽
+ひざしがつよい 天候の　場合▽
 すばやさが　倍に　なるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:30:03" />
+				Time="2012-01-31T12:25:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3059,7 +3059,7 @@
 			Language="JPN">
 			<Text>ものひろい　ね……▼
 この　とくせいの　ポケモンは
-あいてが　つかった　きのみを▽
+あいてが　つかった　どうぐを▽
 そのターンの　おわりに　ひろってきて▽
 じぶんの　もちものに　できるんだ▼
 あと……▼
@@ -3076,7 +3076,7 @@
 じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:44:29" />
+				Time="2012-01-31T12:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3086,7 +3086,7 @@
 			Language="JPN_KANJI">
 			<Text>ものひろい　ね……▼
 この特性の　ポケモンは
-相手が　使った　きのみを▽
+相手が　使った　道具を▽
 そのターンの　終わりに　ひろってきて▽
 自分の　持ち物に　できるんだ▼
 あと……▼
@@ -3103,7 +3103,7 @@
 条件なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:44:33" />
+				Time="2012-01-31T12:08:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3760,17 +3760,13 @@
 			Language="JPN">
 			<Text>ヘドロえき　ね……▼
 この　とくせいの　ポケモンは
-ダメージを　あたえた　あいてから▼
-たいりょくを　すいとる　わざで
-ダメージを　うけた　ばあいに▼
-たいりょくを　かいふく　させず
-ぎゃくに　ダメージを　あたえるんだ▼
-でも……▼
-こうげきの　ダメージは　うけるので
-ちゅうい　すること▼</Text>
+たいりょくを　すいとる　わざで▽
+ダメージを　うけた　ばあい▼
+うけた　ダメージの　はんぶん　だけ
+あいての　たいりょくを　へらすんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:17:17" />
+				Time="2012-01-31T12:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3780,17 +3776,13 @@
 			Language="JPN_KANJI">
 			<Text>ヘドロえき　ね……▼
 この特性の　ポケモンは
-ダメージを　与えた　相手から▼
-体力を　すいとる　技で
-ダメージを　受けた　場合に▼
-体力を　回復させず
-逆に　ダメージを　与えるんだ▼
-でも……▼
-攻撃の　ダメージは　受けるので
-注意すること▼</Text>
+体力を　吸い取る　技で▽
+ダメージを　うけた　場合▼
+受けた　ダメージの　半分だけ
+相手の　体力を　減らすんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:17:26" />
+				Time="2012-01-31T12:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4107,11 +4099,11 @@
 			<Text>ひでり　ね……▼
 この　とくせいの　ポケモンは
 せんとうに　でるだけで▼
-てんきを　ひざしがつよいに
+ひざしがつよい　てんきに
 へんか　させるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:18:10" />
+				Time="2012-01-31T12:27:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4122,11 +4114,11 @@
 			<Text>ひでり　ね……▼
 この特性の　ポケモンは
 戦闘に　でるだけで▼
-天候を　ひざしがつよいに
+ひざしがつよい　天候に
 変化させるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:18:04" />
+				Time="2012-01-31T12:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4584,11 +4576,13 @@
 			Language="JPN">
 			<Text>でんきエンジン　ね……▼
 この　とくせいの　ポケモンは
-でんきタイプの　わざを　うけると▽
+でんきタイプの　わざを　うけても
+ダメージは　むこうに　なるよ▼
+それどころか
 すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:04:28" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:11:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4598,11 +4592,13 @@
 			Language="JPN_KANJI">
 			<Text>でんきエンジン　ね……▼
 この特性の　ポケモンは
-でんきタイプの　技を　受けると▽
+でんきタイプの　技を　受けても
+ダメージは　無効に　なるよ▼
+それどころか
 すばやさの　能力が　あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:48:02" />
+				Time="2012-01-31T12:12:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4638,10 +4634,13 @@
 			<Text>とうそうしん　ね……▼
 この　とくせいの　ポケモンは
 せいべつが　おなじ　あいてには▽
-わざの　いりょくが　あがるんだ▼</Text>
+わざの　いりょくが　あがるんだ▼
+……だけどね
+せいべつが　ちがう　あいてだと▽
+わざの　いりょくは　さがってしまうよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T03:56:51" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:13:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4652,10 +4651,13 @@
 			<Text>とうそうしん　ね……▼
 この特性の　ポケモンは
 性別が　同じ　相手には▽
-技の　威力が　あがるんだ▼</Text>
+技の　威力が　あがるんだ▼
+……だけどね
+性別が　違う　相手だと▽
+技の　威力は　さがってしまうよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:48:17" />
+				Time="2012-01-31T12:13:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4806,12 +4808,11 @@
 			Language="JPN">
 			<Text>くいしんぼう　ね……▼
 この　とくせいの　ポケモンは
-たいりょくの　へりが　すくなくても▽
-たいりょく　かいふくの　きのみを▽
-つかって　くれるんだ▼</Text>
+たいりょくが　はんぶんいかに　なると▽
+もっている　きのみを　たべるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:06:37" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4821,12 +4822,11 @@
 			Language="JPN_KANJI">
 			<Text>くいしんぼう　ね……▼
 この特性の　ポケモンは
-体力の　減りが　少なくても▽
-体力　回復の　きのみを▽
-使ってくれるんだ▼</Text>
+体力が　半分以下に　なると▽
+持っている　きのみを　食べるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:38:44" />
+				Time="2012-01-31T12:17:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5099,12 +5099,12 @@
 てんきが　あめの　ばあい▽
 たいりょくが　かいふくするんだけど……▼
 ほのおタイプの　わざを　うけたときや
-てんきが　ひざしがつよいの　ばあいは▽
+ひざしがつよい　てんきの　ばあいは▽
 たいりょくが　へって　しまうから▽
 ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T07:15:48" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5118,12 +5118,12 @@
 天候が　あめの　場合▽
 体力が　回復するんだけど……▼
 ほのおタイプの　技を　受けたときや
-天候が　ひざしがつよいの　場合は▽
+ひざしがつよい　天候の　場合は▽
 体力が　減ってしまうから▽
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:51:46" />
+				Time="2012-01-31T12:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5490,14 +5490,14 @@
 			Language="JPN">
 			<Text>サンパワー　ね……▼
 この　とくせいの　ポケモンは
-てんきが　ひざしがつよいの　ばあい▽
+ひざしがつよい　てんきの　ばあい▽
 とくこうが　あがるんだけど……▼
 かわりに　まいターン
 たいりょくが　へるように　なるから▽
 ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T07:47:55" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:27:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5507,14 +5507,14 @@
 			Language="JPN_KANJI">
 			<Text>サンパワー　ね……▼
 この特性の　ポケモンは
-天候が　ひざしがつよいの　場合▽
+ひざしがつよい　天候の　場合▽
 特攻が　あがるんだけど……▼
 代わりに　毎ターン
 体力が　減るように　なるから▽
 注意すること▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:54:49" />
+				Time="2012-01-31T12:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5892,14 +5892,10 @@
 			<Text>テクニシャン　ね……▼
 この　とくせいの　ポケモンは
 よわい　わざの　いりょくを▽
-あげることが　できるんだ▼
-ほかの　こうかで
-わざの　いりょくが　あがっていると▽
-こうかが　はつどう　しなくなるから▽
-ちゅうい　すること▼</Text>
+あげることが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:41:34" />
+				Time="2012-01-31T12:34:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5910,14 +5906,10 @@
 			<Text>テクニシャン　ね……▼
 この特性の　ポケモンは
 弱い　技の　威力を▽
-あげることが　できるんだ▼
-他の　効果で
-技の　威力が　あがっていると▽
-効果が　発動しなくなるから▽
-注意すること▼</Text>
+あげることが　できるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:41:38" />
+				Time="2012-01-31T12:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5952,11 +5944,11 @@
 			Language="JPN">
 			<Text>リーフガード　ね……▼
 この　とくせいの　ポケモンは
-てんきが　ひざしがつよいの　ばあい▽
+ひざしがつよい　てんきの　ばあい▽
 じょうたいいじょうに　ならないんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T08:30:21" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5966,11 +5958,11 @@
 			Language="JPN_KANJI">
 			<Text>リーフガード　ね……▼
 この特性の　ポケモンは
-天候が　ひざしがつよいの　場合▽
+ひざしがつよい　天候の　場合▽
 状態異常に　ならないんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:41:46" />
+				Time="2012-01-31T12:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7108,13 +7100,13 @@
 			Language="JPN">
 			<Text>フラワーギフト　ね……▼
 この　とくせいの　チェリムは
-てんきが　ひざしがつよいの　ばあい▼
+ひざしがつよい　てんきの　ばあい▼
 すがたが　へんかして
 こうげきと　とくぼうの　のうりょくが▽
 あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:45:22" />
+				Time="2012-01-31T12:29:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7124,13 +7116,13 @@
 			Language="JPN_KANJI">
 			<Text>フラワーギフト　ね……▼
 この特性の　チェリムは
-天候が　ひざしがつよいの　場合▼
+ひざしがつよい　天候の　場合▼
 姿が　変化して
 攻撃と　特防の　能力が▽
 あがるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:45:27" />
+				Time="2012-01-31T12:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8066,12 +8058,12 @@
 この　とくせいの　ポケモンは
 じぶんが　つかった　きのみを▽
 ふっかつ　させることが　あるんだ▼
-てんきが　ひざしがつよいの　ばあいは
+ひざしがつよい　てんきの　ばあいは
 かならず　ふっかつ　するから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T03:28:39" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T12:30:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8083,12 +8075,12 @@
 この特性の　ポケモンは
 自分が　使った　きのみを▽
 復活させることが　あるんだ▼
-天候が　ひざしがつよいの　場合は
+ひざしがつよい　天候の　場合は
 必ず　復活するから▽
 おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:09:39" />
+				Time="2012-01-31T12:30:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
