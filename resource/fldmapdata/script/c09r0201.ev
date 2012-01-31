@@ -13,6 +13,7 @@
   .include  "c09r0201.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -119,7 +120,7 @@ EVENT_START   ev_c09r0201_bigfour2_01
       //戦闘前---------------------------------------------------
 
       //ギーマ：ここで　きめるのは
-      _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_01 )
+      _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_01 ,C09R0201_BIGFOUR2_01 ,POS_UP )
       _MSGWIN_CLOSE()
 
       //========================================//
@@ -162,12 +163,12 @@ EVENT_START   ev_c09r0201_bigfour2_01
       IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
         //四天王全員に勝利済みならエレベータへの誘導メッセージを表示
         //ギーマ：だが　まだ　おわり　ではない！▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_04 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_04 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ELSE
         //それ以外なら通常メッセージを表示
         //ギーマ：まけは　まけ……▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_02 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_02 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ENDIF
       _LAST_KEYWAIT()
@@ -181,12 +182,12 @@ EVENT_START   ev_c09r0201_bigfour2_01
       IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
         //四天王全員に勝利済みならエレベータへの誘導メッセージを表示
         //ギーマ：だが　まだ　おわり　ではない！▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_04 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_04 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ELSE
         //戦闘後メッセージ
         //ギーマ：ぶざまな　はいぼくしゃ……▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_03 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_03 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ENDIF
       _LAST_KEYWAIT()
@@ -204,7 +205,7 @@ EVENT_START   ev_c09r0201_bigfour2_01
       //戦闘前---------------------------------------------------
 
       //ギーマ：じんせいは　あたえられた
-      _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_05 )
+      _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_05 ,C09R0201_BIGFOUR2_01 ,POS_UP )
       _MSGWIN_CLOSE()
 
       //========================================//
@@ -247,12 +248,12 @@ EVENT_START   ev_c09r0201_bigfour2_01
       IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
         //四天王全員に勝利済みならエレベータへの誘導メッセージを表示
         //ギーマ：だが　まだ　おわり　ではない！▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_08 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_08 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ELSE
         //それ以外なら通常メッセージを表示
         //ギーマ：さて　よのなか　には
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_06 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_06 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ENDIF
       _LAST_KEYWAIT()
@@ -266,12 +267,12 @@ EVENT_START   ev_c09r0201_bigfour2_01
       IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
         //四天王全員に勝利済みならエレベータへの誘導メッセージを表示
         //ギーマ：だが　まだ　おわり　ではない！▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_08 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_08 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ELSE
         //戦闘後メッセージ
         //ギーマ：どんなことに　だって　いみはある▼
-        _BALLOONWIN_TALKOBJ_MSG( msg_c09r0201_bigfour2_07 )
+        _BALLOONWIN_OBJMSG_POS( msg_c09r0201_bigfour2_07 ,C09R0201_BIGFOUR2_01 ,POS_UP )
 
       ENDIF
       _LAST_KEYWAIT()
