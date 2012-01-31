@@ -870,14 +870,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子そうは　いくか！</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『そうは　いくか！</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-31T10:25:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-31T10:25:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

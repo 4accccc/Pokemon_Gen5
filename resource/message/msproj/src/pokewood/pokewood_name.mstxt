@@ -6648,10 +6648,10 @@ MONSNO_657の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとがた</Text>
+			<Text>人型</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T08:58:44" />
+				Time="2012-01-31T11:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6688,10 +6688,10 @@ MONSNO_657の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ</Text>
+			<Text>怪物</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-31T11:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

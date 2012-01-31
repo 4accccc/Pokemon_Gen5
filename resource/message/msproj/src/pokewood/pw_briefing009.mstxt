@@ -389,7 +389,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName ]の
+			<Text>[Ctrl1:xcenter ]ＵＦＯと　戦う　[Name:TrainerName Idx="1" ]の
 [Ctrl1:xcenter ]前に　突如　現れた
 [Ctrl1:xcenter ]なぞの　女　Ｅ……
 
@@ -397,7 +397,7 @@
 [Ctrl1:xcenter ]ＵＦ０研究家と　名乗った……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:58:23" />
+				Time="2012-01-31T08:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
