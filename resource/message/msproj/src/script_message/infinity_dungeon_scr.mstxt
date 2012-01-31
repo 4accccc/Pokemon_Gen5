@@ -9743,7 +9743,7 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ここまでは　これたようね
 やるわね▼
-がんばっている　あなたに
+がんばっている　キミに
 もうひとつ　いいことを▽
 おしえてあげる▼
 みちに　まよった！▼
@@ -9763,7 +9763,7 @@ NPC：MUGENBOSS（バンジロウ）
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-28T05:05:01" />
+				Time="2012-01-31T02:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9773,7 +9773,7 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ここまでは　来れたようね
 やるわね▼
-がんばっている　あなたに
+がんばっている　キミに
 もうひとつ　いいことを▽
 教えてあげる▼
 道に　迷った！▼
@@ -9793,7 +9793,7 @@ NPC：MUGENBOSS（バンジロウ）
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-28T05:05:30" />
+				Time="2012-01-31T02:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
