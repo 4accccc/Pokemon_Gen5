@@ -49,7 +49,7 @@ EVENT_START   ev_t01r0301_middlewoman2_01
     //主人公名代入
     _PLAYER_NAME( 0 )
     //名前代入
-    _DATACONV_SET_NAME( DATACONV_ID_DENDOU,1 ) 
+    _DATACONV_SET_NAME( DATACONV_ID_SYSTEM,1 ) 
 
     //チェレンの母：あなた　《前作主人公》に　にてる……かも▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t01r0301_middlewoman2_01 )
