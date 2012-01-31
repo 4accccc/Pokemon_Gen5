@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/11 17:46:19
+#save date:2012/01/31 11:32:23
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION START:OBJ_EVENT
@@ -689,7 +689,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 -32 40
+200 -16 -136
 #event number: 11
 #Bg Event Label
 BG_R22_DUMMY_FES_10
@@ -702,7 +702,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 -32 8
+-136 -32 -24
 #event number: 12
 #Bg Event Label
 BG_R22_DUMMY_FES_11
@@ -780,7 +780,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 -32 136
+-136 -32 104
 #event number: 18
 #Bg Event Label
 BG_R22_DUMMY_FES_17
@@ -793,7 +793,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 -16 -200
+24 -16 -200
 #event number: 19
 #Bg Event Label
 BG_R22_DUMMY_FES_18
@@ -806,7 +806,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 -32 72
+-104 -32 88
 #event number: 20
 #Bg Event Label
 HIDE_ITEM_195

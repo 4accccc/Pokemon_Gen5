@@ -56,5 +56,15 @@
 #define BG_D11R0101_DUMMY_FES_04          8
 #define BG_D11R0101_DUMMY_FES_05          9
 #define BG_D11R0101_DUMMY_FES_06         10
+#define BG_D11R0101_DUMMY_FES_07         11
+#define BG_D11R0101_DUMMY_FES_08         12
+#define BG_D11R0101_DUMMY_FES_09         13
+#define BG_D11R0101_DUMMY_FES_10         14
+#define BG_D11R0101_DUMMY_FES_11         15
+#define BG_D11R0101_DUMMY_FES_12         16
+#define BG_D11R0101_DUMMY_FES_13         17
+#define BG_D11R0101_DUMMY_FES_14         18
+#define BG_D11R0101_DUMMY_FES_15         19
+#define BG_D11R0101_DUMMY_FES_16         20
 
 #endif //ZONE_D11R0101_EVB_H

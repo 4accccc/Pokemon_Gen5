@@ -82,8 +82,7 @@
 #define BG_R23_DUMMY_FES_18              22
 #define BG_R23_DUMMY_FES_19              23
 #define BG_R23_DUMMY_FES_20              24
-#define BG_R23_DUMMY_FES_21              25
-#define HIDE_ITEM_197                    26
-#define HIDE_ITEM_198                    27
+#define HIDE_ITEM_197                    25
+#define HIDE_ITEM_198                    26
 
 #endif //ZONE_R23_EVB_H

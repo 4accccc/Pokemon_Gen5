@@ -41,5 +41,8 @@
 #define BG_R12_DUMMY_FES_11              14
 #define HIDE_ITEM_168                    15
 #define HIDE_ITEM_169                    16
+#define BG_R12_DUMMY_FES_12              17
+#define BG_R12_DUMMY_FES_13              18
+#define BG_R12_DUMMY_FES_14              19
 
 #endif //ZONE_R12_EVB_H
