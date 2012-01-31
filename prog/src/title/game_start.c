@@ -718,7 +718,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 
     //名前を本体からコンバート
     {
-      UnicodeToStrcode( info.nickName, info.nickNameLength, namebuf, 5 + EOM_SIZE );
+      UnicodeToStrcode( info.nickName, info.nickNameLength+1, namebuf, 5 + EOM_SIZE );
     }
 
     //性別を色からコンバート
@@ -1078,7 +1078,7 @@ static void UnicodeToStrcode( const u16 * cp_src, u16 src_len, STRBUF *p_dst, u1
   }
   else
   {
-    src[len-1]  = GFL_STR_GetEOMCode();
+    src[len]  = GFL_STR_GetEOMCode();
   }
 
   GFL_STR_SetStringCode( p_dst, src );
