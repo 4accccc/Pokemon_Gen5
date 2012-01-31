@@ -261,7 +261,7 @@ static void Wb_Save_Conv_ConvertData( const void *cp_data_adrs, WB_SAVE_CONV_DAT
 
   //“a“°“ü‚è
   {
-    const WB_DENDOU_RECORD *cp_dendou = WB_SAVE_GetBlockAddress( (void *)cp_data_adrs, WB_GMDATA_ID_MUSICAL );
+    const WB_DENDOU_RECORD *cp_dendou = WB_SAVE_GetBlockAddress( (void *)cp_data_adrs, WB_GMDATA_ID_GAMECLEAR_POKE );
 
     GFL_STD_MemCopy( cp_dendou->pokemon, p_wk->pokemon, sizeof(WB_DENDOU_POKEMON_DATA_INSIDE)*TEMOTI_POKEMAX );
 
