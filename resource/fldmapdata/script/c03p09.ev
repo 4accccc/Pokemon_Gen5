@@ -197,7 +197,7 @@ EVENT_START   ev_c03p09_waitress_01
     IF $LWK_ICE_NUM_SELECT == 0 || $LWK_ICE_NUM_SELECT == 1 THEN
 
       //バッグ空きチェック
-      _ADD_ITEM_CHK( ITEM_HIUNAISU, 1, LWK_BAG_CHK )
+      _ADD_ITEM_CHK( ITEM_HIUNAISU, LWK_ICE_NUM, LWK_BAG_CHK )
       //金額チェック
       _CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD )
 
@@ -779,7 +779,7 @@ ev_c03p09_waitress_call_01:
     IF $LWK_ICE_NUM_SELECT == 0 || $LWK_ICE_NUM_SELECT == 1 THEN
 
       //バッグ空きチェック
-      _ADD_ITEM_CHK( ITEM_HIUNAISU, 1, LWK_BAG_CHK )
+      _ADD_ITEM_CHK( ITEM_HIUNAISU, LWK_ICE_NUM, LWK_BAG_CHK )
       //金額チェック
       _CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD )
 
