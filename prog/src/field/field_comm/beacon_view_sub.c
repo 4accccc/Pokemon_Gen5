@@ -2643,6 +2643,7 @@ void DEBUG_BEACON_VIEW_MemberListClear( BEACON_VIEW_PTR wk )
   draw_LogNumWindow( wk );
   obj_UpDownViewSet( wk );
   obj_ThanksViewSet( wk );
+  BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
 
   wk->init_f = FALSE;
 }
