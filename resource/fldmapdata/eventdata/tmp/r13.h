@@ -70,5 +70,8 @@
 #define HIDE_ITEM_172                    23
 #define HIDE_ITEM_173                    24
 #define HIDE_ITEM_174                    25
+#define BG_R13_DUMMY_FES_16              26
+#define BG_R13_DUMMY_FES_17              27
+#define BG_R13_DUMMY_FES_18              28
 
 #endif //ZONE_R13_EVB_H

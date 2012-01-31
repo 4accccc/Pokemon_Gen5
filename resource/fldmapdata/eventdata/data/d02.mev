@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/08 16:19:31
+#save date:2012/01/31 9:41:22
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -422,7 +422,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-25
+27
 #event number: 0
 #Bg Event Label
 BG_D02_ROCK_01
@@ -565,7 +565,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 72
+-56 0 136
 #event number: 11
 #Bg Event Label
 BG_D02_DUMMY_FES_02
@@ -578,7 +578,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 -104
+-8 0 72
 #event number: 12
 #Bg Event Label
 BG_D02_DUMMY_FES_03
@@ -734,7 +734,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 0 -392
+232 0 -376
 #event number: 24
 #Bg Event Label
 BG_D02_DUMMY_FES_15
@@ -747,7 +747,33 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 0 -360
+200 0 -408
+#event number: 25
+#Bg Event Label
+BG_D02_DUMMY_FES_16
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 -120
+#event number: 26
+#Bg Event Label
+BG_D02_DUMMY_FES_17
+#Bg Event Type
+BG_TALK_TYPE_DUMMY_FES
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 -184
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

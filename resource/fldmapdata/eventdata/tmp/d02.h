@@ -53,5 +53,7 @@
 #define BG_D02_DUMMY_FES_13              22
 #define BG_D02_DUMMY_FES_14              23
 #define BG_D02_DUMMY_FES_15              24
+#define BG_D02_DUMMY_FES_16              25
+#define BG_D02_DUMMY_FES_17              26
 
 #endif //ZONE_D02_EVB_H

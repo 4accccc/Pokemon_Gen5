@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/10 17:36:39
+#save date:2012/01/31 10:21:07
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0801.wms
 #SECTION START:OBJ_EVENT
@@ -107,7 +107,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 -16 56
+-168 -16 72
 #event number: 2
 #Bg Event Label
 BG_D24R0801_DUMMY_FES_02
@@ -133,7 +133,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 -16 40
+-136 -16 56
 #event number: 4
 #Bg Event Label
 BG_D24R0801_DUMMY_FES_04
