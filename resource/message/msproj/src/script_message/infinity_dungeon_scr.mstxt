@@ -2457,14 +2457,14 @@
 なんの　ようじ？▼
 ここから　さきは　かるいきもちで
 ちょうせんする　ばしょじゃ　ないわよ▼
-こどもは　エリア5で　あそんでなさい▼
+こどもは　エリア５で　あそんでなさい▼
 え？　ほんきで　つぎの　エリアを
 めざしているの？▼
 わかったわ　あいてを　してあげる
 さあ　かかってきなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:10:25" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T10:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2476,14 +2476,14 @@
 何の　用事？▼
 ここから　先は　軽い気持ちで
 挑戦する　場所じゃ　ないわよ▼
-子供は　エリア5で　遊んでなさい▼
+子供は　エリア５で　遊んでなさい▼
 え？　本気で　次の　エリアを
 目指しているの？▼
 わかったわ　相手を　してあげる
 さあ　かかってきなさい！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:10:31" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T10:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23102,12 +23102,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え　かいふく　したいの？▼
-それなら　うえのほうに
-ドクターが　いたよ</Text>
+			<Text>かいふく　したいなら
+うえのほうに　ドクターが　いたよ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:51:28" />
+				User="matsumiya:W00224"
+				Time="2012-01-31T09:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23115,12 +23114,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え　回復したいの？▼
-それなら　上の方に
-ドクターが　いたよ</Text>
+			<Text>回復したいなら
+上の方に　ドクターが　いたよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T05:28:27" />
+				Time="2012-01-31T09:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23155,12 +23153,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え　かいふく　したいの？▼
-それなら　うえのほうに
-ドクターが　いたわよ</Text>
+			<Text>かいふく　したいなら
+うえのほうに　ドクターが　いたわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T05:27:26" />
+				Time="2012-01-31T09:59:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23168,12 +23165,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え　回復したいの？
-それなら　上の方に
-ドクターが　いたわよ</Text>
+			<Text>回復したいなら
+上の方に　ドクターが　いたわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T05:28:22" />
+				Time="2012-01-31T09:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
