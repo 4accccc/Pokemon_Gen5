@@ -2835,7 +2835,7 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉを　つうじて
-ポケモングローバルリンクから▽
+ゲームシンクをした　レポートから
 うけつぎます
 ポケットモンスターブラック・ホワイトで
 ポケモンを　ねむらせて　レポートを
@@ -2843,7 +2843,7 @@ CYGNUS連動用</Comment>
 うけつぐことを　おすすめします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T12:52:24" />
+				Time="2012-01-31T11:01:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2852,7 +2852,7 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉ経由　で
-ポケモングローバルリンクから▽
+ゲームシンクをした　レポートから
 受け継ぎます
 ポケットモンスターブラック・ホワイトで
 ポケモンを　眠らせて　レポートを
@@ -2860,7 +2860,7 @@ CYGNUS連動用</Comment>
 受け継ぐことを　おすすめします</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T12:52:43" />
+				Time="2012-01-31T11:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4551,8 +4551,8 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>もう１つの　ＤＳに
-ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+ポケットモンスターブラックか
+ポケットモンスターホワイトの
 ソフトを　セットし
 でんげんを　いれた　あとに
 『ＤＳダウンロードプレイ』から
@@ -4560,7 +4560,7 @@ DSシステムフォントなので
 えらんでください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:22:00" />
+				Time="2012-01-31T11:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4569,8 +4569,8 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳに
-ポケットモンスター　ブラックか
-ポケットモンスター　ホワイトの
+ポケットモンスターブラックか
+ポケットモンスターホワイトの
 ソフトを　セットし
 電源を　入れた　あとに
 『ＤＳダウンロードプレイ』から
@@ -4578,7 +4578,7 @@ DSシステムフォントなので
 選択してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:07:25" />
+				Time="2012-01-31T11:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
