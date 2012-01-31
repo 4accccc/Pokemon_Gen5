@@ -920,7 +920,7 @@ EVENT_START ev_hide_item_136
 EVENT_END
 
 EVENT_START ev_hide_item_137
-//‚S”Ô“¹˜H‚a ( 398, 552 )
+//‚S”Ô“¹˜H‚a ( 406, 544 )
 	_ITEM_EVENT_HIDEITEM( 72, 1, FLAG_HIDEITEM_137 )// ‚ ‚©‚¢‚©‚¯‚ç
 EVENT_END
 
