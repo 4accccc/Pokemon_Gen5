@@ -17,6 +17,7 @@
 #include "gamesystem/game_event.h"
 
 #include "field/fieldmap_proc.h"
+#include "map_attr.h"     //MAPATTR_FLAGBIT_*
 
 //======================================================================
 //	define
@@ -53,5 +54,7 @@ extern void FIELD_DEBUG_ClearDrawCallBackWork(void);
 extern void FIELD_DEBUG_AddDrawLandNum(void);
 extern void FIELD_DEBUG_DebugFont_Print( FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf );
 extern void FIELD_DEBUG_DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y );
+extern BOOL FIELD_DEBUG_GetHitcheckEnable( FIELD_DEBUG_WORK *work );
+extern void FIELD_DEBUG_SetHitcheckBit( FIELD_DEBUG_WORK *work ,MAPATTR_FLAGBIT bit );
 
 #endif //FIELD_DEBUG_H_FILE

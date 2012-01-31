@@ -121,6 +121,22 @@ BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 
   return( FALSE );
 }
+
+
+// 
+//=============================================================================
+/**
+ *					フィールドあたり判定メニューイベント
+*/
+//=============================================================================
+typedef struct {
+  HEAPID heapID;
+  FLDMENUFUNC *menuFunc;
+  FIELDMAP_WORK *fieldWork;
+  FIELD_DEBUG_WORK *debug;
+} HIT_CHECK_WK;
+static GMEVENT_RESULT debugMenuFieldHitchCheck( GMEVENT *event, int *seq, void *wk );
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　フィールド当たり判定情報
@@ -130,10 +146,21 @@ BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 //--------------------------------------------------------------
 BOOL debugMenuCallProc_FieldHitchCheckData( DEBUG_MENU_EVENT_WORK *wk )
 {
-  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
-  FIELD_DEBUG_SetHitchCheckPrint( debug );
+  HIT_CHECK_WK      *work;
+  GMEVENT           *event      = wk->gmEvent;
+  HEAPID            heapID      = wk->heapID;
+  FIELDMAP_WORK     *fieldWork  = wk->fieldWork;
+  
+  // メニューイベント生成
+  GMEVENT_Change( event, debugMenuFieldHitchCheck, sizeof(HIT_CHECK_WK) );
+  work = GMEVENT_GetEventWork( event );
 
-  return( FALSE );
+  // メニューイベント生成
+  work->fieldWork = fieldWork;
+  work->heapID    = wk->heapID;
+  work->debug     = FIELDMAP_GetDebugWork( fieldWork );
+
+  return TRUE;
 }
 
 //======================================================================
@@ -1589,6 +1616,143 @@ static GMEVENT_RESULT debugCutin(
     OS_Printf("DebugCutinNo %d\n",DbgCutinNo);
   }
 
+  return( GMEVENT_RES_CONTINUE );
+}
+
+
+///メニューリスト用項目
+static const DEBUG_MENU_LIST MenuList[] =
+{
+  { DEBUG_FIELD_HITCHECK_MENU_01 , (void*)DEBUG_FIELD_HITCHECK_MENU_01 , GFL_OVERLAY_BLANK_ID },  // 進入不可
+  { DEBUG_FIELD_HITCHECK_MENU_02 , (void*)DEBUG_FIELD_HITCHECK_MENU_02 , GFL_OVERLAY_BLANK_ID },  // 水アトリビュート
+  { DEBUG_FIELD_HITCHECK_MENU_03 , (void*)DEBUG_FIELD_HITCHECK_MENU_03 , GFL_OVERLAY_BLANK_ID },  // 敵出現有り
+  { DEBUG_FIELD_HITCHECK_MENU_04 , (void*)DEBUG_FIELD_HITCHECK_MENU_04 , GFL_OVERLAY_BLANK_ID },  // 足跡有り
+  { DEBUG_FIELD_HITCHECK_MENU_05 , (void*)DEBUG_FIELD_HITCHECK_MENU_05 , GFL_OVERLAY_BLANK_ID },  // 水飛沫有り
+  { DEBUG_FIELD_HITCHECK_MENU_06 , (void*)DEBUG_FIELD_HITCHECK_MENU_06 , GFL_OVERLAY_BLANK_ID },  // 草揺れ有り
+  { DEBUG_FIELD_HITCHECK_MENU_07 , (void*)DEBUG_FIELD_HITCHECK_MENU_07 , GFL_OVERLAY_BLANK_ID },  // 映り込み有り
+  { DEBUG_FIELD_HITCHECK_MENU_08 , (void*)DEBUG_FIELD_HITCHECK_MENU_08 , GFL_OVERLAY_BLANK_ID },  // 影表示有り
+  { DEBUG_FIELD_HITCHECK_MENU_09 , (void*)DEBUG_FIELD_HITCHECK_MENU_09 , GFL_OVERLAY_BLANK_ID },  // ライト有り
+};
+
+///リスト メニューヘッダー
+static const FLDMENUFUNC_HEADER MenuHeader =
+{
+  7,    //リスト項目数
+  8,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+//-------------------------------------
+///   メニュー初期化変数
+//=====================================
+static const DEBUG_MENU_INITIALIZER DebugMenuHitCheckInitializer = {
+  NARC_debug_message_d_field_dat,
+  NELEMS(MenuList),
+  MenuList,
+  &MenuHeader,
+  1, 1, 30, 16,
+  NULL,
+  NULL
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  当たり判定メニュー
+ *
+ *	@param	*event
+ *	@param	*seq
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuFieldHitchCheck( GMEVENT *event, int *seq, void *wk )
+{
+  HIT_CHECK_WK *work = wk;
+
+  switch( *seq ){
+  case 0:
+    // 起動するか、終了させるか判断
+    if( FIELD_DEBUG_GetHitcheckEnable(work->debug) )
+    {
+      // チェックを終了させる->メニューを表示せず終了
+      FIELD_DEBUG_SetHitchCheckPrint( work->debug );
+      return GMEVENT_RES_FINISH;
+    }
+    else
+    {
+      // 選択肢表示->イベント継続
+      work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuHitCheckInitializer );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    
+    switch( FLDMENUFUNC_ProcMenu(work->menuFunc) ){
+    // 操作なし
+    case FLDMENUFUNC_NULL:
+      // イベント継続
+      return( GMEVENT_RES_CONTINUE );
+    // キャンセル
+    case FLDMENUFUNC_CANCEL:
+      {
+        (*seq)++;
+        return( GMEVENT_RES_CONTINUE );
+      }
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_01:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_HITCH);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_02:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_WATER);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_03:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_ENCOUNT);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_04:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_FOOTMARK);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_05:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_SPLASH);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_06:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_GRASS);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_07:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_REFLECT);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_08:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_SHADOW);
+      break;
+    case DEBUG_FIELD_HITCHECK_MENU_09:
+      FIELD_DEBUG_SetHitcheckBit(work->debug,MAPATTR_FLAGBIT_LIGHT);
+      break;
+    }
+
+    // 選択内容設定
+    FIELD_DEBUG_SetHitchCheckPrint( work->debug );
+    (*seq)++;
+    break;
+  case 2:
+    // メニュー終了
+    FLDMENUFUNC_DeleteMenu( work->menuFunc );
+    return GMEVENT_RES_FINISH;
+  }
   return( GMEVENT_RES_CONTINUE );
 }
 

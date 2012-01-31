@@ -19,6 +19,7 @@
 #include "arc/debug/hitch_check.naix"
 
 #include "system/main.h"  //HEAPID_FIELDMAP
+
 //======================================================================
 //	define
 //======================================================================
@@ -82,6 +83,7 @@ struct _TAG_FIELD_DEBUG_WORK
   fx32              unit_ox;
   fx32              unit_oz;
   fx32              unit_oy;
+  MAPATTR_FLAGBIT   hitcheck_bit; // 当たり判定時にチェックするビット
 };
 
 RENDER_INFO DbgRenderInfo = {0,0,0,0};
@@ -156,6 +158,7 @@ FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
 	work->gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
 	work->player = GAMESYSTEM_GetMyPlayerWork( work->gsys );
   work->g3dMapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
+  work->hitcheck_bit  = MAPATTR_FLAGBIT_HITCH;
 	
 	{	//デバッグ用フォント初期化
 		DebugFont_Init( work );
@@ -392,7 +395,11 @@ static void g3d_unit_Main( FIELD_DEBUG_WORK *work )
         continue;
       }
       ph->y = gridData.height;
-      if( MAPATTR_GetHitchFlag( gridData.attr )){
+
+
+      //アトリビュートValueが無効か、進入不可フラグがOnなら通れない
+      if( (MAPATTR_IsEnable( gridData.attr ) == FALSE) ||
+          (MAPATTR_GetAttrFlag( gridData.attr ) & work->hitcheck_bit)){
         continue;
       }
       ph->draw_f = FALSE; 
@@ -931,6 +938,35 @@ static void DebugFieldMemPrint_Proc( FIELD_DEBUG_WORK *work )
     sprintf( str, "PLTV REM:%d USE:%d",size, (16*1024)-size);
 		DebugFont_Print( work, 0,  7, str );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒットチェックの有効状態を取得
+ *
+ *	@param	*work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_DEBUG_GetHitcheckEnable( FIELD_DEBUG_WORK *work )
+{
+  return work->flag_hitch_check;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  当たり判定チェック時にチェックするビットを設定する
+ *
+ *	@param	*work 
+ *	@param	bit 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void FIELD_DEBUG_SetHitcheckBit( FIELD_DEBUG_WORK *work ,MAPATTR_FLAGBIT bit )
+{
+  work->hitcheck_bit = bit;
 }
 	
 //--------------------------------------------------------------
