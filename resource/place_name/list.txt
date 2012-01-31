@@ -118,8 +118,4 @@
 "place_name_obj.NCER"
 "place_name_obj.NCGR"
 "place_name_obj.NCLR"
-"place_name_season.NANR"
-"place_name_season.NCER"
-"place_name_season.NCGR"
-"place_name_season.NCLR"
 "place_name_string.NCLR"

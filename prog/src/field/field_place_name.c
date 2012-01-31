@@ -10,9 +10,8 @@
 #include "field_place_name.h"
 #include "place_name_letter.h"
 #include "system/main.h"
-
+#include "print/printsys.h"
 #include "system/bmp_oam.h"
-#include "print/wordset.h"
 #include "field/zonedata.h"
 #include "field/field_status.h"
 #include "field/intrude_common.h"
@@ -115,6 +114,7 @@ static BOOL GetVersionIsWhite( void )
 // パレットリソース
 typedef enum {
 	PLTT_RES_PLATE,	// プレートオブジェクトで使用するパレット
+	PLTT_RES_SEASON,	// シーズン
 	PLTT_RES_NUM      // 総数
 } PLTT_RES_INDEX;
 
@@ -187,7 +187,7 @@ struct _FIELD_PLACE_NAME {
 
   GAMESYS_WORK* gameSystem;
   GAMEDATA*     gameData;
-  WORDSET*      wordset;
+  PRINT_QUE*    printQue;
 	HEAPID        heapID;
   ARCHANDLE*    arcHandle;
 	GFL_MSGDATA*  message;
@@ -227,6 +227,14 @@ struct _FIELD_PLACE_NAME {
   // BG パレット
   void* BGPalBinary; // バイナリデータ
 	NNSG2dPaletteData* BGPalData; // バイナリ展開データ
+
+  // BGスクリーン
+  void* BGScrBinary; // バイナリデータ
+	NNSG2dScreenData* BGScrData; // バイナリ展開データ
+
+  // BGキャラクター
+  void* BGCharBinary; // バイナリデータ
+	NNSG2dCharacterData* BGCharData; // バイナリ展開データ
 };
 
 
@@ -243,6 +251,15 @@ static void SetAlpha( const FIELD_PLACE_NAME* system );
 static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID ); // BG パレットデータを読み込む
 static void UnloadBGPaletteData( FIELD_PLACE_NAME* system ); // BG パレットデータを解放する
 static void TransBGPalette( FIELD_PLACE_NAME* system ); // BG パレットを転送する
+
+static void LoadBGCharacterData( FIELD_PLACE_NAME* system, ARCDATID charID );
+static void UnLoadBGCharacterData( FIELD_PLACE_NAME* system );
+static void TransBGCharacterData( FIELD_PLACE_NAME* system );
+
+static void LoadBGScreenData( FIELD_PLACE_NAME* system, ARCDATID scrID);
+static void UnLoadBGScreenData( FIELD_PLACE_NAME* system );
+static void TransBGScreenData( FIELD_PLACE_NAME* system );
+
 static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを確保する
 static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを解放する
 // OBJ
@@ -384,10 +401,14 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   if( GetVersionIsWhite() )
   {
     LoadBGPaletteData( system, NARC_place_name_place_name_back_w_NCLR );
+    LoadBGCharacterData( system, NARC_place_name_place_name_back_w_NCGR );
+    LoadBGScreenData( system, NARC_place_name_place_name_back_w_NSCR );
   }
   else
   {
     LoadBGPaletteData( system, NARC_place_name_place_name_back_NCLR );
+    LoadBGCharacterData( system, NARC_place_name_place_name_back_NCGR );
+    LoadBGScreenData( system, NARC_place_name_place_name_back_NSCR );
   }
   AllocBGNullCharArea( system );
 
@@ -406,6 +427,8 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 {
   SaveNowZoneID( system );
 
+  UnLoadBGScreenData( system );
+  UnLoadBGCharacterData( system );
   UnloadBGPaletteData( system ); 
 
   DeletePlate( system );
@@ -429,7 +452,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 // ■動作
 //====================================================================================
 
-//#define TICK_TEST
+#define TICK_TEST
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムの動作処理
@@ -451,7 +474,7 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 
   //DEBUG_PrintSystemState( system );
 #ifdef TICK_TEST
-  OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
+  OS_TFPrintf( 3, "[%d:%d]: ", GetState(system), GetStateSeq(system) );
   start = OS_GetTick();
 #endif
 
@@ -469,24 +492,17 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 #endif 
 
   {
-    static void (*Process_FADEIN[])( FIELD_PLACE_NAME* system ) =
-    {
-      Process_FADEIN_Both,
-      Process_FADEIN_UpDown,
-      Process_FADEIN_DownUp,
-    };
     // 状態に応じた動作
     switch( GetState(system) ) {
     case SYSTEM_STATE_HIDE:         Process_HIDE( system );		      break;
     case SYSTEM_STATE_SETUP:        Process_SETUP( system );		    break;
-    case SYSTEM_STATE_FADEIN:       Process_FADEIN[PlaceNameMoveType%NELEMS(Process_FADEIN)]( system );	      break;
+    case SYSTEM_STATE_FADEIN:       Process_FADEIN_Both( system );	break;
     case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( system );	break;
     case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( system );	      break;
     case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( system );	break;
     case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
     }
   }
-
 	// プレートオブジェクトを動かす
   MovePlate( system );
 
@@ -516,6 +532,8 @@ void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system )
   case SYSTEM_STATE_WAIT_FADEOUT:	Draw_WAIT_FADEOUT( system ); break;
   case SYSTEM_STATE_FADEOUT:	    Draw_FADEOUT( system );	     break;
 	} 
+
+  PRINTSYS_QUE_Main( system->printQue );
 }
 
 
@@ -751,7 +769,6 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID )
 {
   ARCHANDLE* handle;
   HEAPID heapID;
-  u32 size;
 
   GF_ASSERT( system->BGPalBinary == NULL );
   GF_ASSERT( system->BGPalData == NULL );
@@ -759,11 +776,7 @@ static void LoadBGPaletteData( FIELD_PLACE_NAME* system, ARCDATID pltID )
   heapID = GetHeapID( system ); 
   handle = GetArcHandle( system );
 
-  size = GFL_ARC_GetDataSizeByHandle( handle, pltID ); // データサイズ取得
-  system->BGPalBinary = GFL_HEAP_AllocMemory( heapID, size );	// データバッファ確保
-  GFL_ARC_LoadDataByHandle( handle, pltID, system->BGPalBinary ); // データ取得
-  NNS_G2dGetUnpackedPaletteData( system->BGPalBinary, &system->BGPalData ); // バイナリを展開
-
+  system->BGPalBinary = GFL_ARCHDL_UTIL_LoadPalette( handle, pltID, &system->BGPalData, heapID );
 }
 
 //------------------------------------------------------------------------------------
@@ -793,6 +806,99 @@ static void TransBGPalette( FIELD_PLACE_NAME* system )
 {
   GFL_BG_LoadPalette( 
       BG_FRAME, system->BGPalData->pRawData, 0x20, BG_PALETTE_NO );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラクター読込
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LoadBGCharacterData( FIELD_PLACE_NAME* system, ARCDATID charID )
+{
+  ARCHANDLE* handle;
+  HEAPID heapID;
+
+  GF_ASSERT( system->BGCharBinary == NULL );
+  GF_ASSERT( system->BGCharData == NULL );
+
+  heapID = GetHeapID( system ); 
+  handle = GetArcHandle( system );
+
+  system->BGCharBinary = GFL_ARCHDL_UTIL_LoadBGCharacter(handle, charID, FALSE, &system->BGCharData, heapID);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラクター破棄
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UnLoadBGCharacterData( FIELD_PLACE_NAME* system )
+{
+  if( system->BGCharBinary ) {
+    GFL_HEAP_FreeMemory( system->BGCharBinary );
+    system->BGCharBinary = NULL;
+    system->BGCharData = NULL;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャラクター転送
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void TransBGCharacterData( FIELD_PLACE_NAME* system )
+{
+  GFL_BG_LoadCharacter(BG_FRAME, system->BGCharData->pRawData, system->BGCharData->szByte, 0);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリーン読込
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LoadBGScreenData( FIELD_PLACE_NAME* system, ARCDATID scrID)
+{
+  ARCHANDLE* handle;
+  HEAPID heapID;
+
+  GF_ASSERT( system->BGScrBinary == NULL );
+  GF_ASSERT( system->BGScrData == NULL );
+
+  heapID = GetHeapID( system ); 
+  handle = GetArcHandle( system );
+
+  system->BGScrBinary = GFL_ARCHDL_UTIL_LoadScreen(handle, scrID, FALSE, &system->BGScrData, heapID);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリーン破棄
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UnLoadBGScreenData( FIELD_PLACE_NAME* system )
+{
+  if( system->BGScrBinary ) {
+    GFL_HEAP_FreeMemory( system->BGScrBinary );
+    system->BGScrBinary = NULL;
+    system->BGScrData = NULL;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリーンを転送する
+ *
+ *	@param	FIELD_PLACE_NAME* system ワーク
+ */
+//-----------------------------------------------------------------------------
+static void TransBGScreenData( FIELD_PLACE_NAME* system )
+{
+  GFL_BG_LoadScreenBufferOfs( BG_FRAME, system->BGScrData->rawData, system->BGScrData->szByte, 0 );
+  GFL_BG_LoadScreenV_Req( BG_FRAME );
 }
 
 //------------------------------------------------------------------------------------
@@ -881,6 +987,11 @@ static void LoadOBJResource( FIELD_PLACE_NAME* system )
 		GFL_CLGRP_PLTT_RegisterEx( 
 				handle, NARC_place_name_place_name_string_NCLR,
 				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, heapID );
+
+	system->resPltt[ PLTT_RES_SEASON ] = 
+		GFL_CLGRP_PLTT_RegisterEx( 
+				handle, NARC_place_name_place_name_obj_NCLR,
+				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME_SEAZON_ICON * 32, 0, 1, heapID );
 
 	system->resChar = GFL_CLGRP_CGR_Register( 
       handle, NARC_place_name_place_name_obj_NCGR, 
@@ -1033,10 +1144,11 @@ static void CreatePlate( FIELD_PLACE_NAME* system )
   {
     PN_PLATE_TOP_INIT_PARAM param;
     GF_ASSERT( system->plate[PLATE_TOP] == NULL );
-
     GFL_STD_MemClear( &param, sizeof(PN_PLATE_TOP_INIT_PARAM ) );
+
     param.bmpOamSys       = system->bmpOamSys;
     param.fontPlttRegIdx  = system->resPltt[ PLTT_RES_PLATE ];
+    param.printQue        = system->printQue;
 
     system->plate[PLATE_TOP]  = PN_PLATE_Create(
      GetHeapID( system ), 
@@ -1053,8 +1165,11 @@ static void CreatePlate( FIELD_PLACE_NAME* system )
   {
     PN_PLATE_BOTTOM_INIT_PARAM param;
     GF_ASSERT( system->plate[PLATE_BOTTOM] == NULL );
-
     GFL_STD_MemClear( &param, sizeof(PN_PLATE_BOTTOM_INIT_PARAM ) );
+
+    param.objPltIdx = system->resPltt[ PLTT_RES_SEASON ];
+    param.objCgrIdx = system->resChar;
+    param.objCelIdx = system->resCell;
 
     system->plate[PLATE_BOTTOM]  = PN_PLATE_Create(
      GetHeapID( system ), 
@@ -1502,28 +1617,34 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
     break;
 
   case 1:
-    GFL_BG_ClearCharacter( BG_FRAME );
+    //GFL_BG_ClearCharacter( BG_FRAME );
+    IncStateSeq( system );
+    break;
+
+  case 2:
     GFL_BG_ClearScreen( BG_FRAME );
+    IncStateSeq( system );
+    break;
+
+  case 3:
     TransBGPalette( system ); 
+    IncStateSeq( system );
+    break;
+
+  case 4:
+    TransBGCharacterData( system );
     IncStateSeq( system );
     break; 
 
-  case 2:
+  case 5:
+    TransBGScreenData( system );
+    IncStateSeq( system );
+    break; 
 
-  if( GetVersionIsWhite() )
-  {
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_w_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
-    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_w_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
-  }
-  else
-  {
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
-    GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
-  }
+  case 6:
     GFL_BG_SetPriority( BG_FRAME, FLD_PLACE_NAME_BG_PRIORITY );
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
     SetAlpha( system );
-    IncStateSeq( system );
     GX_SetVisibleWnd( GX_WNDMASK_OW );
     G2_SetWndOBJInsidePlane(GX_WND_PLANEMASK_BG0
         |GX_WND_PLANEMASK_BG1
@@ -1534,15 +1655,15 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
         |GX_WND_PLANEMASK_BG1
         |GX_WND_PLANEMASK_BG2
         |GX_WND_PLANEMASK_OBJ, TRUE );
+    IncStateSeq( system );
+    break;
 
-    break; 
-
-  case 3:
+  case 7:
     SetupPlate(system);
     IncStateSeq( system );
     break;
 
-  case 4:
+  case 8:
     if( CheckPlate(system ) )
     {
       ChangeState( system, SYSTEM_STATE_FADEIN );
@@ -1743,21 +1864,6 @@ static void Draw_SETUP( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void Draw_FADEIN( const FIELD_PLACE_NAME* system )
 {
-#if 0
-	int val1, val2;
-	float rate;
-	// αブレンディング係数を更新
-  if( PlaceNameMoveType == 0 )
-  {
-    rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEIN;
-  }
-  else
-  {
-    rate  = (float)system->stateCount / (float)(PROCESS_TIME_FADEIN*2);
-  }
-	val1 = (int)( ALPHA_VALUE_1 * rate );
-	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
-#endif 
   SetAlpha( system );
 }
 
@@ -1803,15 +1909,6 @@ static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void Draw_FADEOUT( const FIELD_PLACE_NAME* system )
 {
-#if 0
-	int val1, val2;
-	float rate;
-	
-	// αブレンディング係数を更新
-	rate  = (float)system->stateCount / (float)PROCESS_TIME_FADEOUT;
-	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
-	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
-#endif
   SetAlpha( system );
 } 
 
@@ -1890,10 +1987,11 @@ static void CreateWordset( FIELD_PLACE_NAME* system )
 {
   HEAPID heapID;
 
-  GF_ASSERT( system->wordset == NULL );
 
   heapID = GetHeapID( system ); 
-  system->wordset = WORDSET_Create( heapID );
+  system->printQue      = PRINTSYS_QUE_Create( heapID );
+  PRINTSYS_QUE_ForceCommMode( system->printQue, TRUE );
+  //処理負荷対策のため強制分割
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateWordset\n" );
@@ -1954,9 +2052,9 @@ static void CreatePlaceNameBuffer( FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void DeleteWordset( FIELD_PLACE_NAME* system )
 {
-  if( system->wordset ) {
-    WORDSET_Delete( system->wordset );
-    system->wordset = NULL;
+  if( system->printQue ) {
+    PRINTSYS_QUE_Delete( system->printQue );
+    system->printQue = NULL;
   }
 
 #ifdef DEBUG_PRINT_ON

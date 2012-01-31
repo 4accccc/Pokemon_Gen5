@@ -191,6 +191,7 @@ typedef struct
   u16             placeCelIdx;              //場所アイコン用セル
   u16             placeIconIndex;           //ZoneTableから読み込んだ番号
   GFL_CLACTPOS    pos;                      //現在の位置
+  PRINT_QUE*      printQue;
 } PN_PLATE_TOP;
 typedef struct
 {
@@ -198,9 +199,6 @@ typedef struct
   PN_MOVE         move;                     //複合動作
   PN_LINER        liner;                    //直線動作
   GFL_CLWK*       seasonIcon;               //季節アイコン
-  u16             seasonCgrIdx;             //季節アイコン用キャラ
-  u16             seasonPltIdx;             //季節アイコン用パレット
-  u16             seasonCelIdx;             //季節アイコン用セル
   GFL_CLACTPOS    pos;                      //現在の位置
 } PN_PLATE_BOTTOM;
 
@@ -565,6 +563,8 @@ static void Pn_Plate_Top_Init( PN_PLATE *plate, void *wk_adrs, const void *param
   PN_PLATE_TOP  *wk = wk_adrs;
   const PN_PLATE_TOP_INIT_PARAM  *param  = param_adrs;
 
+  wk->printQue = param->printQue;
+
   //背面の設定
   GFL_CLACT_WK_SetAnmSeq( plate->backobj, 0 );
 
@@ -750,6 +750,7 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
   {
     SEQ_LOAD_PLACEICON,
     SEQ_PRINT_BMP,
+    SEQ_PRINT_BMP_WAIT,
     SEQ_LOAD_PLT,
     SEQ_LOAD_CHR,
     SEQ_EXIT,
@@ -760,6 +761,8 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
   {
   case SEQ_LOAD_PLACEICON:
     wk->placeIconIndex  = ZONEDATA_GetPlaceIconIdx(wk->setup_param.zoneID);
+    //一旦消去
+    GFL_BMP_Clear( wk->bmp, 0 );
     (*seq)++;
     break;
   case SEQ_PRINT_BMP:
@@ -767,8 +770,6 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
     {
       PRINTSYS_LSB  color;
 
-      //一旦消去
-      GFL_BMP_Clear( wk->bmp, 0 );
 
       color = PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACK );
 
@@ -788,20 +789,29 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
         STRCODE code[]  = L"あああああのホワイトフォレスト";
         code[15]  = GFL_STR_GetEOMCode();
         GFL_STR_SetStringCodeOrderLength( strbuf, code, 128 );
-        PRINTSYS_PrintColor( wk->bmp, 0, 0, strbuf, wk->setup_param.font, color );
+        //PRINTSYS_PrintColor( wk->bmp, 0, 0, strbuf, wk->setup_param.font, color );
+        PRINTSYS_PrintQueColor( wk->printQue, wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
         GFL_STR_DeleteBuffer( strbuf );
       }
       else
 #endif
       {
-        PRINTSYS_PrintColor( wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
+        //PRINTSYS_PrintColor( wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
+        PRINTSYS_PrintQueColor( wk->printQue, wk->bmp, 0, 0, wk->setup_param.placeName, wk->setup_param.font, color );
       }
-      BmpOam_ActorBmpTrans( wk->bmpOamActor );
     }
     (*seq)++;
     break;
+  case SEQ_PRINT_BMP_WAIT:
+    if( !PRINTSYS_QUE_IsExistTarget( wk->printQue, wk->bmp ) )
+    {
+      BmpOam_ActorBmpTrans( wk->bmpOamActor );
+      (*seq)++;
+    }
+    break;
   case SEQ_LOAD_PLT:
     //地名アイコンパレット上書き
+#if 0
     {
       NNSG2dPaletteData* plttData;
       void * plttBuff;
@@ -813,6 +823,7 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
 
       GFL_HEAP_FreeMemory( plttBuff );
     }
+#endif
     (*seq)++;
     break;
   case SEQ_LOAD_CHR:
@@ -1078,27 +1089,11 @@ static void Pn_Plate_Bottom_Init( PN_PLATE *plate, void *wk_adrs, const void *pa
   //背面の設定
   GFL_CLACT_WK_SetAnmSeq( plate->backobj, 1 );
 
-  //季節アイコンリソース読込み
-  {
-	  wk->seasonPltIdx = 
-		GFL_CLGRP_PLTT_RegisterEx( 
-				plate->arcHandle, NARC_place_name_place_name_season_NCLR,
-				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME_SEAZON_ICON * 32, 0, 1, plate->heapID );
-
-	  wk->seasonCgrIdx = GFL_CLGRP_CGR_Register( 
-      plate->arcHandle, NARC_place_name_place_name_season_NCGR, 
-      FALSE, CLSYS_DRAW_MAIN, plate->heapID );
-
-	  wk->seasonCelIdx = GFL_CLGRP_CELLANIM_Register( 
-      plate->arcHandle, NARC_place_name_place_name_season_NCER, 
-      NARC_place_name_place_name_season_NANR, plate->heapID );
-  }
-
   //季節アイコン作成
   {
     GFL_CLWK_DATA data  = {0};
     wk->seasonIcon = GFL_CLACT_WK_Create( plate->unit, 
-          wk->seasonCgrIdx, wk->seasonPltIdx, wk->seasonCelIdx,
+          param->objCgrIdx, param->objPltIdx, param->objCelIdx,
           &data, 0, plate->heapID );
     GFL_CLACT_WK_SetDrawEnable( wk->seasonIcon, FALSE );
     GFL_CLACT_WK_SetBgPri( wk->seasonIcon, FLD_PLACE_NAME_BG_PRIORITY );
@@ -1122,13 +1117,6 @@ static void Pn_Plate_Bottom_Exit( PN_PLATE *plate, void *wk_adrs )
   {
     GFL_CLACT_WK_Remove( wk->seasonIcon );
     wk->seasonIcon = NULL;
-  }
-
-  //季節アイコンリソース破棄
-  {
-		GFL_CLGRP_PLTT_Release( wk->seasonPltIdx );
-    GFL_CLGRP_CGR_Release( wk->seasonCgrIdx );
-    GFL_CLGRP_CELLANIM_Release( wk->seasonCelIdx );
   }
 }
 //----------------------------------------------------------------------------
@@ -1209,7 +1197,7 @@ static BOOL Pn_Plate_Bottom_Update( PN_PLATE *plate, void *wk_adrs )
 static BOOL UpdateFunction_Bottom_Setup( PN_PLATE *plate, PN_PLATE_BOTTOM *wk, u32 *seq )
 {
   //季節によって変更
-  GFL_CLACT_WK_SetAnmSeq( wk->seasonIcon, wk->setup_param.seasonID );
+  GFL_CLACT_WK_SetAnmSeq( wk->seasonIcon, wk->setup_param.seasonID+2 );
 
   return FALSE;
 }

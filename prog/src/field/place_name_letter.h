@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "print/gf_font.h"  // for GFL_FONT
 #include "system/bmp_oam.h" // for BmpOam_xxxx
+#include "print/printsys.h"
 //=========================================================================
 // ■地名表示オブジェクト（上部、下部のオブジェクト）
 //=========================================================================
@@ -22,11 +23,14 @@ typedef struct
 {
   BMPOAM_SYS_PTR  bmpOamSys;
   u16 fontPlttRegIdx;
+  PRINT_QUE* printQue;
 } PN_PLATE_TOP_INIT_PARAM;
 
 typedef struct 
 {
-  int dummy;
+  u16 objPltIdx;
+  u16 objCgrIdx;
+  u16 objCelIdx;
 } PN_PLATE_BOTTOM_INIT_PARAM;
 //=========================================================================
 // ■設定パラメータ
