@@ -2822,29 +2822,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たくさんの　ポケモンの
-ニックネームを　かんがえた
+			<Text>ポケモンの　ニックネームを
+たくさん　かんがえた
 なづけおやに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-31T10:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-31T10:22:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たくさんの　ポケモンの
-ニックネームを　考えた
+			<Text>ポケモンの　ニックネームを
+たくさん　考えた
 名付け親に　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-31T10:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-01-31T10:22:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
