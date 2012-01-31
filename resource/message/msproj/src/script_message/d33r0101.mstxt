@@ -9,10 +9,10 @@
 			<Text>アララギ『あら……
 [Name:TrainerName ]　じゃない？▼
 あなたも　ここに　めをつけるなんて
-さすが　ずかんの　もちぬし！</Text>
+さすが　ずかんの　もちぬし！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:36:19" />
+				Time="2012-01-31T09:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,10 +23,10 @@
 			<Text>アララギ『あら……
 [Name:TrainerName ]　じゃない？▼
 あなたも　ここに　めをつけるなんて
-さすが　図鑑の　持ち主！</Text>
+さすが　図鑑の　持ち主！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:45:59" />
+				Time="2012-01-31T09:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -35,14 +35,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・フラグ成立で出現（フラグ条件未定）
+・フラグ成立で出現
 ・GRIDX＝16、GRIDZ＝22
 　posで会話スタート
 　！マーク表示後に主人公に隣接してメッセージ
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:46:13" />
+				Time="2012-01-31T09:53:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
