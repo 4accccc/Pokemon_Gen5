@@ -1,4 +1,5 @@
 #pragma once
+#include "print/printsys.h"
 
 static const STRCODE sc_pdwacc_gamesync_id_buff[]={
   65,	//A0
@@ -38,7 +39,8 @@ static const STRCODE sc_pdwacc_gamesync_id_buff[]={
   56,	//8 29
   57,	//9 30
 };
-
+// ++ アクセスコードの文字間に入れるスペース 任天堂様からの共有ソース
+#define PASSWORD_CHARACTER_SPACE (1)
 
 //------------------------------------------------------------------------------
 /**
@@ -49,23 +51,25 @@ static const STRCODE sc_pdwacc_gamesync_id_buff[]={
 inline void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf)
 {
   int i;
-
   u64 moji;
   u16 word;
-  STRCODE disp[13*sizeof(STRCODE)];
   s32 id = profileID;
   u16 crc = GFL_STD_CrcCalc( &id, 4 );
   u64 code = id + crc * 0x100000000;
+  const u16 xadd_param[1] = {PASSWORD_CHARACTER_SPACE};
+
   OS_TPrintf("id=%x crc=%x code=%x\n",id,crc,code);
 
   moji = code;
-  GFL_STD_MemFill(disp,0xff,sizeof(disp));
+  GFL_STR_ClearBuffer(pStrbuf);
   for(i = 0; i < 10 ; i++){
     word = moji & 0x1f;
     moji = moji >> 5;
-    disp[i]=sc_pdwacc_gamesync_id_buff[word];
+    // ++ アクセスコードの字間にスペース(x加算)を入れる 任天堂様からの共有ソース
+    GFL_STR_AddCode(pStrbuf, sc_pdwacc_gamesync_id_buff[word]);
+    PRINTSYS_CreateTagCode(pStrbuf, PRINTSYS_TAGGROUP_CTRL_GEN, PRINTSYS_CTRL_GENERAL_X_ADD, NELEMS(xadd_param), xadd_param);
+
   }
-  GFL_STR_SetStringCode(pStrbuf,disp);
 }
 
 //------------------------------------------------------------------------------
