@@ -80,8 +80,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しごとが　いそがしくてねえ
-しゅうに　いちど　かえってこれたら
+			<Text>しごとが　ふつうに　いそがしくてねえ
+よるに　かえってこれたら▽
 おんのじ　なんだよなァ▼
 かみさんには　さびしい
 おもいを　させて　わるいが▼
@@ -92,7 +92,7 @@
 きみに　やるから　もらってくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:05:35" />
+				Time="2012-01-31T10:14:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100,8 +100,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仕事が　忙しくてねえ
-週に　一度　帰ってこれたら
+			<Text>仕事が　普通に　忙しくてねえ
+夜に　帰ってこれたら▽
 御の字　なんだよなァ▼
 かみさんには　さびしい
 思いを　させて　悪いが▼
@@ -112,7 +112,7 @@
 きみに　やるから　もらってくれ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:07:43" />
+				Time="2012-01-31T10:14:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -169,11 +169,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あしたから　また　しゅっちょう！
+			<Text>あしたも　ふつうに　しごと！
 オレって　スーパービジネスマンだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:08:53" />
+				Time="2012-01-31T10:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -181,11 +181,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>明日から　また　出張！
+			<Text>明日も　普通に　仕事！
 オレって　スーパービジネスマンだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:09:04" />
+				Time="2012-01-31T10:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
