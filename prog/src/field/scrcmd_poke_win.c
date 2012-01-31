@@ -50,7 +50,7 @@ typedef struct POKE_WIN_WORK_tag{
 	u32	ChrRes;
 	u32	PalRes;
 	u32	CelRes;
-
+  u32 wait;
 }POKE_WIN_WORK;
 
 static void PutPokeWin( POKE_WIN_WORK * wk );
@@ -84,6 +84,7 @@ VMCMD_RESULT EvCmdDispPokeWin( VMHANDLE *core, void *wk )
   call_event = GMEVENT_Create( gsys, NULL, PokeWinEvt, sizeof(POKE_WIN_WORK) );
 
   evt_wk = GMEVENT_GetEventWork(call_event);
+  evt_wk->wait = 0;
   PutPokeWin( evt_wk );
   InitPokeObj(evt_wk, monsno, form, sex, rare, 0);
 
@@ -198,6 +199,11 @@ static GMEVENT_RESULT PokeWinEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    if( ++evt_wk->wait > 15 ){  //連打で消えないように0.5秒ウェイト
+      (*seq)++;
+    }
+    break;
+  case 1:
     if ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL) )
     {
       //解放処理
@@ -206,7 +212,7 @@ static GMEVENT_RESULT PokeWinEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 1:
+  case 2:
     //ＢＭＰ解放
     GFL_BMPWIN_Delete( evt_wk->PokeWin );
     //終了
