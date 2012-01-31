@@ -417,11 +417,11 @@
 	</row>
 	<row id="pw_turn_enemy_4">
 		<language name="JPN" width="256">レディアン『くちから　でまかせ……▼
-ケンキューインがもつ　とくせいの
+ケンキューインが　もつ　とくせいの
 こうかが　はじまったのかしら……</language>
 		<language name="JPN_KANJI" width="256">レディアン『口先三寸……▼
-ケンキューインが持つ　特性の
-効果発動　したのかしら……</language>
+ケンキューインが持つ　特性が
+発動　したのかしら……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">レディアン『こら　まちなさい！

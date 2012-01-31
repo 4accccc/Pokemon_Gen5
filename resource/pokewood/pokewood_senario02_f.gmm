@@ -603,7 +603,7 @@
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">ふねのきてき『ブォーッツ！</language>
-		<language name="JPN_KANJI" width="256">ふねのきてき『ブォーッツ！</language>
+		<language name="JPN_KANJI" width="256">汽笛『ブォーッツ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">ハチクマン『グムムム……▼
@@ -653,13 +653,13 @@
 		<language name="JPN" width="256">ハチクマン『ブラックダイヤは
 わがはいの　やぼうの　ために▽
 ぜったいに　ひつような　しろもの！▼
-かならず　わがてに　おさめるのだ！
+かならず　わがてに　おさめてやる！
 かいじんを　みくびるで　ないわ！！▼
 さらば！　[1:02:ポケモンニックネーム:0]ガール！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ブラックダイヤは
 我輩の　野望の　ために▽
 絶対に　必要な　代物！▼
-必ず　我が手に　収めるのだ！
+必ず　我が手に　収めてやる！
 怪人を　見くびるで　ないわ！！▼
 さらば！　[1:02:ポケモンニックネーム:0]ガール！</language>
 	</row>

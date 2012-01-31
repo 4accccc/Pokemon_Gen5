@@ -338,28 +338,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レディアン『くちから　でまかせ……▼
-ケンキューインがもつ　とくせいの
+ケンキューインが　もつ　とくせいの
 こうかが　はじまったのかしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T09:07:17" />
+				Time="2012-01-31T03:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T09:07:17" />
+				Time="2012-01-31T03:27:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『口先三寸……▼
-ケンキューインが持つ　特性の
-効果発動　したのかしら……</Text>
+ケンキューインが持つ　特性が
+発動　したのかしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T09:07:17" />
+				Time="2012-01-31T03:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T09:07:17" />
+				Time="2012-01-31T03:27:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

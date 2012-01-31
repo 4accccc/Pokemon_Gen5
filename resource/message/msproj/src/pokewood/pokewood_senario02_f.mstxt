@@ -1251,14 +1251,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふねのきてき『ブォーッツ！</Text>
+			<Text>汽笛『ブォーッツ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-31T03:14:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-01-31T03:14:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1494,32 +1494,32 @@
 			<Text>ハチクマン『ブラックダイヤは
 わがはいの　やぼうの　ために▽
 ぜったいに　ひつような　しろもの！▼
-かならず　わがてに　おさめるのだ！
+かならず　わがてに　おさめてやる！
 かいじんを　みくびるで　ないわ！！▼
 さらば！　[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:37" />
+				Time="2012-01-31T03:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:37" />
+				Time="2012-01-31T03:19:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ブラックダイヤは
 我輩の　野望の　ために▽
 絶対に　必要な　代物！▼
-必ず　我が手に　収めるのだ！
+必ず　我が手に　収めてやる！
 怪人を　見くびるで　ないわ！！▼
 さらば！　[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:37" />
+				Time="2012-01-31T03:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:37" />
+				Time="2012-01-31T03:19:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
