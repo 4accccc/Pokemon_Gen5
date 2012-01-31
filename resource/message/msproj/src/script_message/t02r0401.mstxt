@@ -605,10 +605,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ウフフ……
-では　きいてくださいね▼</Text>
+では　きいてくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:02:29" />
+				Time="2012-01-31T11:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -617,10 +617,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ウフフ……
-では　聴いてくださいね▼</Text>
+では　聴いてくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:02:29" />
+				Time="2012-01-31T11:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
