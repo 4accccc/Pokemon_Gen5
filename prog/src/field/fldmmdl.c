@@ -180,6 +180,9 @@ static int mmdl_rockpos_GetPosNumber( const MMDL *mmdl );
 static BOOL mmdl_rockpos_CheckPos( const MMDL *mmdl );
 static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos );
 
+static inline void MMDL_CallDrawDeleteProc( MMDL * mmdl );
+static inline void MMDL_CallMoveDeleteProc( MMDL * mmdl );
+
 //======================================================================
 //  フィールド動作モデル　システム
 //======================================================================
@@ -564,8 +567,24 @@ MMDL * MMDLSYS_AddMMdlHeaderID( MMDLSYS *mmdlsys,
  * @retval  nothing
  */
 //--------------------------------------------------------------
+static inline void MMDL_DeleteCore( MMDL * mmdl, BOOL comp_draw_init_f )
+{
+  if( comp_draw_init_f ){
+    MMDL_CallDrawDeleteProc( mmdl );
+  }
+
+  if( mmdl->status_bit&MMDL_STABIT_MOVEPROC_INIT ){
+    MMDL_CallMoveDeleteProc( mmdl );
+    mmdl_DeleteTCB( mmdl );
+  }
+  
+  --mmdl->pMMdlSys->mmdl_count;
+  GF_ASSERT( mmdl->pMMdlSys->mmdl_count >= 0 );
+  GFL_STD_MemClear32( mmdl, MMDL_SIZE );
+}
 void MMDL_Delete( MMDL * mmdl )
 {
+#if 0
   const MMDLSYS *mmdlsys;
   
   mmdlsys = MMDL_GetMMdlSys( mmdl );
@@ -581,6 +600,9 @@ void MMDL_Delete( MMDL * mmdl )
   
   mmdlsys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
   mmdl_ClearWork( mmdl );
+#else
+  MMDL_DeleteCore( mmdl, MMDLSYS_CheckCompleteDrawInit( mmdl->pMMdlSys ));
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2193,7 +2215,7 @@ void MMDL_CallMoveProc( MMDL * mmdl )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDL_CallMoveDeleteProc( MMDL * mmdl )
+static inline void MMDL_CallMoveDeleteProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->move_proc_list );
   GF_ASSERT( mmdl->move_proc_list->delete_proc );
@@ -2257,7 +2279,7 @@ void MMDL_CallDrawProc( MMDL * mmdl )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDL_CallDrawDeleteProc( MMDL * mmdl )
+static inline void MMDL_CallDrawDeleteProc( MMDL * mmdl )
 {
   GF_ASSERT( mmdl->draw_proc_list );
   GF_ASSERT( mmdl->draw_proc_list->delete_proc );
@@ -4208,8 +4230,11 @@ static MMDL * mmdlsys_SearchAlies(
 //--------------------------------------------------------------
 void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *mmdlsys )
 {
+//  OSTick s_tick,e_tick;
+#if 0
   u32 no = 0;
   MMDL *mmdl;
+//  s_tick = OS_GetTick();
   
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
     //本来であれば更にエイリアスチェックが入る
@@ -4221,6 +4246,30 @@ void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *mmdlsys )
       MMDL_Delete( mmdl );
     }
   }
+#else
+  u32 no = 0, max, comp_draw_init_f;
+//  s_tick = OS_GetTick();
+
+  max = MMDLSYS_GetMMdlMax( mmdlsys );
+  comp_draw_init_f = MMDLSYS_CheckCompleteDrawInit(mmdlsys);
+ 
+  for( no = 0; no < max; no++ )
+  {
+    MMDL *mmdl = &(mmdlsys->pMMdlBuf[no]);
+    if( !(mmdl->status_bit&MMDL_STABIT_USE ) ||
+         (mmdl->status_bit&MMDL_STABIT_ZONE_DEL_NOT)){
+      continue;
+    }
+    if( mmdl->obj_id!=MMDL_ID_PLAYER ){
+      MMDL_DeleteCore( mmdl, comp_draw_init_f );
+    }else{
+      GF_ASSERT(0);
+    }
+  }
+
+#endif
+//  e_tick = OS_GetTick()-s_tick;
+//  OS_Printf("DelMmdl=%d\n", (u32)e_tick );
 }
 
 //======================================================================
@@ -4266,7 +4315,7 @@ static void mmdl_AddTCB( MMDL *mmdl, const MMDLSYS *sys )
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static void mmdl_DeleteTCB( MMDL *mmdl )
+static inline void mmdl_DeleteTCB( MMDL *mmdl )
 {
 #if 0 //tcb追加されず削除される事もある
   GF_ASSERT( mmdl->pTCB );
