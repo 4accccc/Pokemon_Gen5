@@ -18272,29 +18272,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たましいを　すいとって　もやす。
-ほのおを　ゆらして　あいてを
-さいみんじょうたいに　する。</Text>
+			<Text>あやしげな　ほのおで　もやされた
+たましいは　いきばを　なくし
+この　よを　えいえんに　さまよう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>魂を　吸い取って　燃やす。
-腕の　炎を　揺らして
-相手を　催眠状態に　する。</Text>
+			<Text>怪しげな　炎で　燃やされた
+魂は　行き場を　なくし
+この　世を　永遠に　さまよう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

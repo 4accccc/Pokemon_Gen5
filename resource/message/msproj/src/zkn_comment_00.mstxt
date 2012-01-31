@@ -18272,29 +18272,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャンデラの　ほのおに　つつまれると
-たましいが　すいとられ　もやされる。
-ぬけがらの　からだ　だけが　のこる。</Text>
+			<Text>あやしげな　ほのおで　もやされた
+たましいは　いきばを　なくし
+この　よを　えいえんに　さまよう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:49" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:49" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャンデラの　炎に　包まれると
-魂が　吸い取られ　燃やされる。
-抜け殻の　体　だけが　残る。</Text>
+			<Text>怪しげな　炎で　燃やされた
+魂は　行き場を　なくし
+この　世を　永遠に　さまよう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:49" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:49" />
+				User="nishino:W00221"
+				Time="2012-01-31T11:56:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
