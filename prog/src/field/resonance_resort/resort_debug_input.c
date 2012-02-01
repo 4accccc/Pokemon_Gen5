@@ -584,6 +584,8 @@ static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *Str
 
 static BOOL IsPageOpen_ZoneID_JA( DEBUG_INPUT_WORK *p_wk );
 static BOOL IsPageOpen_True( DEBUG_INPUT_WORK *p_wk );
+
+static void RecvCommon_StoreData( DEBUG_INPUT_WORK *p_wk, const RESORT_RECV_DATA * p_data );
 //STR_PARAM_PAGE‚ÌStore,RestoreŠÖ”
 static void City_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL City_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
@@ -3473,21 +3475,17 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 static void ButtonAction_OwnerReLoad( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
 {
   RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( wk->p_resort_sv );
-  RESORT_RECV_DATA * p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
   RESORT_RECV_DATA * p_temp = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(wk->HeapID) );
 
-  GFL_STD_MemCopy( p_owner, p_temp, RESORT_RECV_DATA_SIZE );
   {
     BOOL is_debug = RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_SEND_DUMMY );
     RESORT_DEBUG_FLAG_Set( RESORT_DEBUG_FLAG_SEND_DUMMY, FALSE );
-    RESORT_RECV_DATA_SetMyData( p_owner, wk->p_gamedata );
+    RESORT_RECV_DATA_SetMyData( p_temp, wk->p_gamedata );
     RESORT_DEBUG_FLAG_Set( RESORT_DEBUG_FLAG_SEND_DUMMY, is_debug );
   }
 
-  Owner_StoreData( wk, wk->p_resort_sv );
+  RecvCommon_StoreData( wk, p_temp );
 
-
-  GFL_STD_MemCopy( p_temp, p_owner, RESORT_RECV_DATA_SIZE );
   GFL_HEAP_FreeMemory( p_temp );
 }
 
