@@ -3093,17 +3093,17 @@ EVENT_START ev_fld_item_381
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=382
+// MAP=D24 X=669 Y=307 ITEM=あなぬけのヒモ FLAG=382
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_382
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_ANANUKENOHIMO,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=383
+// MAP=d280101 X=38 Y=43 ITEM=あなぬけのヒモ FLAG=383
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_383
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_ANANUKENOHIMO,1
 EVENT_END
 
 //--------------------------------------------------------------
