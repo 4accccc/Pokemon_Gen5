@@ -597,7 +597,7 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
       RESORT_PEOPLE_ResetPos( p_people );
       RESORT_PEOPLE_GetInstitutionFrontPos( p_people, &x, &z, &dir );
 
-      if( x < 11 )
+      if( x <= 11 )
       {
         //¶‘¤
         x = 11;
