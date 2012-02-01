@@ -1894,9 +1894,9 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
 
   // 画面外まで移動させる
   IF $LWK_D_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME( D31R0601_MUGENBOSS, anm_move_down_7 )
+    _OBJ_ANIME( D31R0601_MUGENBOSS, anm_move_down_6 )
   ELSE
-    _OBJ_ANIME( D31R0501_MUGENBOSS, anm_move_down_7 )
+    _OBJ_ANIME( D31R0501_MUGENBOSS, anm_move_down_6 )
   ENDIF
 
   // 主人公が見送る
@@ -2757,8 +2757,8 @@ _ANIME_LABEL	anm_move_down_3
 //--------------------------------------------------------------------
 // 画面外移動用
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_down_7
-	_ANIME_DATA	AC_WALK_D_8F,7
+_ANIME_LABEL	anm_move_down_6
+	_ANIME_DATA	AC_WALK_D_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
