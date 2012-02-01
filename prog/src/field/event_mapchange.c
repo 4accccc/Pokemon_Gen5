@@ -3568,6 +3568,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
       mc_work->seasonUpdateEnable = FALSE;
       //イベントコール
       GMEVENT_CallEvent( event, call_event );
+
     }
     (*seq)++;
     break;
@@ -3581,6 +3582,8 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
     (*seq)++;
     break;
   case 3:
+    // SWANではハイリンクに行った時に地名表示を行うようにする
+    FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), work->Loc.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
