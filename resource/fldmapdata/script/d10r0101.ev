@@ -123,7 +123,7 @@ EVENT_START ev_pos_d10r0101_swplazmam_03
   _OBJ_ANIME_WAIT()
   
   //元プラズマ団員：おーい！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0101_swplazmam_01 , D10R0101_SWPLAZMAM_03 ,POS_DEFAULT )
+  _PLAINWIN_MSG_DOWN( msg_d10r0101_swplazmam_01 )
   _MSGWIN_CLOSE()
   
   //プラズマ団員：いよいよ　だな！
