@@ -149,12 +149,13 @@ extern void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, con
  *	@brief  風船出現
  *
  *	@param	CTVT_GAME_WORK  *gameWork
+ *	@param  u8    balloon_wk_idx    使用するワークのIDX
  *
  *	@retval TRUE  出現した
  *	@retval FALSE 出現できなかった
  */
 //-----------------------------------------------------------------------------
-extern BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk );
+extern BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk, const u8 balloon_wk_idx );
 
 //----------------------------------------------------------------------------
 /**

@@ -2338,7 +2338,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   // 受信データ種類判別
   switch( p_recv->data_type ){
   case CCGDT_BALOON_APPEAR:   // 風船出現
-    CTVT_GAME_BalloonAppear( gameWork );
+    CTVT_GAME_BalloonAppear( gameWork, p_recv->burst_idx );
     break;
   case CCGDT_RND:   // 乱数シード値
     // 親のデータのみ受信

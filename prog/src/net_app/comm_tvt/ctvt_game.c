@@ -537,6 +537,8 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 static BOOL balloon_end_check( CTVT_GAME_WORK *p_wk );
 // 誰の風船を出すか計算して求める
 static u8   balloon_find_idx( CTVT_GAME_WORK *p_wk );
+// 風船を出せるかどうか、出せるならIDXを取得
+static BOOL balloon_get_appear_idx( CTVT_GAME_WORK *p_wk, u8 *p_idx );
 
 // タスクに設定するタスク関数(風船用)
 static void TaskFunc( GFL_TCB* p_tcb, void* p_work );
@@ -546,7 +548,7 @@ static void TaskFunc2( GFL_TCB* p_tcb, void* p_work );
 static void TaskFuncScore( GFL_TCB* p_tcb, void* p_work );
 
 // タスクに登録されている風船とタッチの当たり判定
-static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_idx );
+static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx );
 // タスクに登録されている風船同士の距離判定
 static void balloon_collision_check( CTVT_GAME_WORK *p_wk );
 // 2点の距離の壁判定処理(移動も自動)
@@ -1157,86 +1159,83 @@ void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 t
  *	@brief  風船出現
  *
  *	@param	CTVT_GAME_WORK  *gameWork
+ *	@param  u8    balloon_wk_idx    使用するワークのIDX
  *
  *	@retval TRUE  出現した
  *	@retval FALSE 出現できなかった
  */
 //-----------------------------------------------------------------------------
-BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
+BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk, const u8 balloon_wk_idx )
 {
-  u8  i;
 
-  // 空いてるタスクを探す
-  for( i=0; i<BALLOON_MAX; i++ )
+  if( p_wk->balloon_wk[balloon_wk_idx].tcb == NULL )
   {
-    if( p_wk->balloon_wk[i].tcb == NULL )
+    p_wk->balloon_wk[balloon_wk_idx].tcb = GFL_TCB_AddTask( p_wk->task, TaskFunc, &p_wk->balloon_wk[balloon_wk_idx], 0 );
+    GF_ASSERT( p_wk->balloon_wk[balloon_wk_idx].tcb != NULL );
+
+    if( p_wk->balloon_wk[balloon_wk_idx].tcb != NULL )
     {
-      p_wk->balloon_wk[i].tcb = GFL_TCB_AddTask( p_wk->task, TaskFunc, &p_wk->balloon_wk[i], 0 );
-      GF_ASSERT( p_wk->balloon_wk[i].tcb != NULL );
+      // 誰の風船か
+      u8  idx = balloon_find_idx( p_wk );
 
-      if( p_wk->balloon_wk[i].tcb != NULL )
+      // 風船出現位置調整
       {
-        // 誰の風船か
-        u8  idx = balloon_find_idx( p_wk );
-
-        // 風船出現位置調整
+        u8  rnd;
+        u8  i;
+        // 前の乱数と同じにならないようにする
+        // 無限ループになるのが怖いから最大10回にする
+        for( i=0; i<10; i++ )
         {
-          u8  rnd;
-          u8  i;
-          // 前の乱数と同じにならないようにする
-          // 無限ループになるのが怖いから最大10回にする
-          for( i=0; i<10; i++ )
+          rnd = get_rand(BALLOON_RND_W_MAX);
+          if( rnd != p_wk->balloon_rnd_w )
           {
-            rnd = get_rand(BALLOON_RND_W_MAX);
-            if( rnd != p_wk->balloon_rnd_w )
-            {
-              break;
-            }
-          }
-          p_wk->balloon_rnd_w = rnd;
-
-          for( i=0; i<10; i++ )
-          {
-            rnd = get_rand(BALLOON_RND_V_MAX);
-            if( rnd != p_wk->balloon_rnd_v )
-            {
-              break;
-            }
-          }
-          p_wk->balloon_rnd_v = rnd;
-
-          // Zをずらす為の調整用
-          p_wk->balloon_z_cnt++;
-          p_wk->balloon_z_cnt %= 3;
-        }
-
-        // 風船出現
-        balloon_set( p_wk, &p_wk->balloon_wk[i], p_wk->unit_idx[idx] );
-        p_wk->balloon_wk[i].parent_g3dUtil = p_wk->g3dUtil;
-        // 通常風船
-        p_wk->balloon_wk[i].type = BALLOON_NORMAL;
-
-        // 出現した風船が他の風船と重なっているかチェック
-        {
-          u8  j;
-          for( j=0; j<BALLOON_MAX; j++ )
-          {
-            // 違う風船 かつ サイズが同じ かつ 表示している
-            // ならチェックする
-            if( ( j != i ) && ( p_wk->balloon_wk[i].size == p_wk->balloon_wk[j].size ) && ( p_wk->balloon_wk[j].visible == TRUE ) )
-            {
-              // 壁判定
-              collision_vec( 
-                  &p_wk->balloon_wk[i].status.trans.x, &p_wk->balloon_wk[i].status.trans.y,
-                  &p_wk->balloon_wk[j].status.trans.x, &p_wk->balloon_wk[j].status.trans.y,
-                  p_wk->balloon_wk[i].status.scale.x * 140, 1 );
-
-            }
+            break;
           }
         }
+        p_wk->balloon_rnd_w = rnd;
 
-        return TRUE;
+        for( i=0; i<10; i++ )
+        {
+          rnd = get_rand(BALLOON_RND_V_MAX);
+          if( rnd != p_wk->balloon_rnd_v )
+          {
+            break;
+          }
+        }
+        p_wk->balloon_rnd_v = rnd;
+
+        // Zをずらす為の調整用
+        p_wk->balloon_z_cnt++;
+        p_wk->balloon_z_cnt %= 3;
       }
+
+      // 風船出現
+      balloon_set( p_wk, &p_wk->balloon_wk[balloon_wk_idx], p_wk->unit_idx[idx] );
+      ICHI_Printf("balloon_wk_idx %d idx %d \n", balloon_wk_idx, idx );
+      p_wk->balloon_wk[balloon_wk_idx].parent_g3dUtil = p_wk->g3dUtil;
+      // 通常風船
+      p_wk->balloon_wk[balloon_wk_idx].type = BALLOON_NORMAL;
+
+      // 出現した風船が他の風船と重なっているかチェック
+      {
+        u8  j;
+        for( j=0; j<BALLOON_MAX; j++ )
+        {
+          // 違う風船 かつ サイズが同じ かつ 表示している
+          // ならチェックする
+          if( ( j != balloon_wk_idx ) && ( p_wk->balloon_wk[balloon_wk_idx].size == p_wk->balloon_wk[j].size ) && ( p_wk->balloon_wk[j].visible == TRUE ) )
+          {
+            // 壁判定
+            collision_vec( 
+                &p_wk->balloon_wk[balloon_wk_idx].status.trans.x, &p_wk->balloon_wk[balloon_wk_idx].status.trans.y,
+                &p_wk->balloon_wk[j].status.trans.x, &p_wk->balloon_wk[j].status.trans.y,
+                p_wk->balloon_wk[balloon_wk_idx].status.scale.x * 140, 1 );
+
+          }
+        }
+      }
+
+      return TRUE;
     }
   }
 
@@ -1316,7 +1315,7 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
   BOOL  ret;
   u16   ret_idx;    // どの風船が当たったかIDXを格納
 
-  ret = balloon_hit_check( p_wk, data->tpx, data->tpy, &ret_idx );
+  ret = balloon_hit_check( p_wk, data->frame, data->tpx, data->tpy, &ret_idx );
   // Hit Check
   // 当たりがある → 送信
   if( ret == TRUE )
@@ -3337,6 +3336,22 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   // ↑までデバッグ
 #endif
 
+  // タッチペンの座標を送信する
+  {
+    u32 tpx,tpy;
+    const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+
+    if( isTrg == TRUE )
+    {
+      // 通信データ送信
+      CTVT_GAME_SEND_DATA data;
+      data.tpx = tpx;
+      data.tpy = tpy;
+      data.frame = gameWork->frame;
+      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TP );
+      ICHI_Printf("touch! tpx %d tpy %d frame %d \n", tpx, tpy, gameWork->frame);
+    }
+  }
 
   // データ受信していないならメインを回さない
   // ずれが発生するため
@@ -3361,9 +3376,16 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     {
       // 風船出現させる
       {
-        // 通信データ送信
-        CTVT_GAME_SEND_DATA data = {0,};
-        CTVT_COMM_SendGameReq( commWork, data, CCGDT_BALOON_APPEAR );
+        u8 balloon_idx = 0;
+        // 風船出現できるか判定
+        if( balloon_get_appear_idx( gameWork, &balloon_idx ) == TRUE )
+        {
+          // 通信データ送信
+          CTVT_GAME_SEND_DATA data = {0,};
+          // 出現する風船のタスクIDXを設定
+          data.burst_idx = balloon_idx;
+          CTVT_COMM_SendGameReq( commWork, data, CCGDT_BALOON_APPEAR );
+        }
       }
       
       gameWork->balloon_flg = 0;
@@ -3376,22 +3398,6 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     else
     {
       gameWork->balloon_wait--;
-    }
-  }
-
-  // タッチペンの座標を送信する
-  {
-    u32 tpx,tpy;
-    const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
-
-    if( isTrg == TRUE )
-    {
-      // 通信データ送信
-      CTVT_GAME_SEND_DATA data;
-      data.tpx = tpx;
-      data.tpy = tpy;
-      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TP );
-      //ICHI_Printf("touch!\n");
     }
   }
 
@@ -6317,13 +6323,37 @@ static u8 balloon_find_idx( CTVT_GAME_WORK *p_wk )
   return ret_idx;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船を出せるかどうか取得
+ *
+ *	@param	CTVT_GAME_WORK *p_wk
+ *	@param	*p_idx  出せるときにどのワークを使用するかのIDX
+ *
+ *	@return TRUEで出せる
+ */
+//-----------------------------------------------------------------------------
+static BOOL balloon_get_appear_idx( CTVT_GAME_WORK *p_wk, u8 *p_idx )
+{
+  u8 i;
+
+  // 空いてるタスクを探す
+  for( i=0; i<BALLOON_MAX; i++ )
+  {
+    if( p_wk->balloon_wk[i].tcb == NULL )
+    {
+      *p_idx = i;
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 // タスクに設定するタスク関数(風船用)
 static void TaskFunc( GFL_TCB* p_tcb, void* p_work )
 {
   BALLOON_WORK  *p_wk = (BALLOON_WORK*)p_work;
-
-  if( p_wk->visible == TRUE )
-  {
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     DEBUG_MAIN_TIME_AVERAGE_StartFunc(2);
@@ -6333,6 +6363,8 @@ static void TaskFunc( GFL_TCB* p_tcb, void* p_work )
     DEBUG_MAIN_TIME_AVERAGE_EndFunc(2);
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
+  if( p_wk->visible == TRUE )
+  {
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     DEBUG_MAIN_TIME_AVERAGE_StartFunc(3);
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
@@ -6384,6 +6416,7 @@ static void TaskFuncScore( GFL_TCB* p_tcb, void* p_work )
  *	@brief  タスクに登録されている風船とタッチの当たり判定
  *
  *	@param	CTVT_GAME_WORK* p_wk    ゲーム管理構造体
+ *	@param  frame     タッチした時のフレーム
  *	@param	tpx       タッチX座標
  *	@param	tpy       タッチY座標
  *	@param	*ret_idx  割れた風船のIDXを格納（当たったときのみ）　
@@ -6392,7 +6425,7 @@ static void TaskFuncScore( GFL_TCB* p_tcb, void* p_work )
  *	@retval FALSE   当たり無し
  */
 //-----------------------------------------------------------------------------
-static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_idx )
+static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx )
 {
   u8  i;
 
@@ -6412,7 +6445,8 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
 
   for( i=0; i<BALLOON_MAX; i++ )
   {
-    BOOL  b_hit = FALSE;
+    BOOL    b_hit = FALSE;
+    VecFx32 hit_pos;    // 風船の当たり判定用座標
 
     if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
     {
@@ -6420,7 +6454,11 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
       continue;
     }
 
-    //OS_Printf("モデル座標 %.2f:%.2f:%.2f\n", (float)((float)p_wk->balloon_wk[i].status.trans.x/FX32_ONE), (float)((float)p_wk->balloon_wk[i].status.trans.y/FX32_ONE),(float)((float)p_wk->balloon_wk[i].status.trans.z/FX32_ONE) );
+    // 送られてきたフレーム時の風船座標を計算して取得する
+    CTVT_BALLOON_GetHitVec( &p_wk->balloon_wk[i], frame, &hit_pos );
+
+    //OS_Printf("モデル座標 現 %.2f:%.2f:%.2f\n", (float)((float)p_wk->balloon_wk[i].status.trans.x/FX32_ONE), (float)((float)p_wk->balloon_wk[i].status.trans.y/FX32_ONE),(float)((float)p_wk->balloon_wk[i].status.trans.z/FX32_ONE) );
+    //OS_Printf("モデル座標 過 %.2f:%.2f:%.2f\n", (float)((float)hit_pos.x/FX32_ONE), (float)((float)hit_pos.y/FX32_ONE),(float)((float)hit_pos.z/FX32_ONE) );
 
 
     // 球設定
@@ -6429,7 +6467,7 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
 #ifdef PM_DEBUG
     r = p_wk->balloon_wk[i].status.scale.x * p_wk->debug_r;
 #endif
-    VEC_Set( &center, p_wk->balloon_wk[i].status.trans.x, p_wk->balloon_wk[i].status.trans.y, p_wk->balloon_wk[i].status.trans.z );
+    VEC_Set( &center, hit_pos.x, hit_pos.y, hit_pos.z );
 
     //OS_Printf("w %.2f PosScale %.2f 半径 %.2f size %x \n", (float)((float)modelInfo->boxW/FX32_ONE),(float)((float)modelInfo->posScale/FX32_ONE),(float)((float)r/FX32_ONE), p_wk->balloon_wk[i].status.scale.x );
 

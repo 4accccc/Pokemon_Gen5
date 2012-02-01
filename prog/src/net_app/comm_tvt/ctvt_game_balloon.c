@@ -65,6 +65,11 @@ enum{
 */
 //=============================================================================
 
+// 風船1のエフェクト（破裂）
+static BOOL baloon_effect_burst( BALLOON_WORK *p_wk );
+// 風船1のエフェクト（アルファフェードアウト）
+static BOOL baloon_effect_alpha( BALLOON_WORK *p_wk );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  風船初期化
@@ -99,6 +104,7 @@ void CTVT_BALLOON_Init( BALLOON_WORK* p_wk )
   p_wk->anm_flg = FALSE;
   p_wk->scale   = 0;
   p_wk->point_type = BALLOON_POINT_OK_2PT;
+  p_wk->effect_wait = 0;
 
   // タスクは必ずNULL
   p_wk->tcb = NULL;
@@ -136,98 +142,57 @@ void CTVT_BALLOON_Destroy( BALLOON_WORK*  p_wk )
 //-----------------------------------------------------------------------------
 void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
 {
+  u16   now_frame;
+  s32   def;  // マイナスになる可能性がある
+  u8    i;
+
+  now_frame = CTVT_GAME_GetFrame( p_wk->p_game_wk );
+  def = now_frame - p_wk->save_frame;
+
+  if( def <= 0 )
+  {
+    return;
+  }
+  // 現フレーム保存
+  p_wk->save_frame = now_frame;
 
   // HIT時は移動しない
-  if( p_wk->type != BALLOON_NORMAL )
+  //ICHI_Printf("balloon %d type %d point_type %d \n", p_wk->tcb, p_wk->type, p_wk->point_type );
+
+  // 経過フレーム数分ループ
+  for( i=0; i<def; i++ )
   {
-    if( p_wk->alpha == 31 )
+    if( p_wk->type != BALLOON_NORMAL )
     {
-
-      // 得点がプラスとマイナスで演出を分ける
-      switch( p_wk->point_type ){
-      case BALLOON_POINT_OK_2PT:
-      case BALLOON_POINT_OK_4PT:
-        {
-          GFL_G3D_OBJ*    obj;
-          u16             head_obj_idx;
-          BOOL            anm_end;
-
-          head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
-          // 3つあるからどれ使うかtypeで指定
-          obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
-
-          // キャッチのアニメを再生
-          anm_end = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 2, FX32_ONE );  // ica
-
-          // アニメ終了チェック
-          if( anm_end == FALSE )
-          {
-            p_wk->alpha -= 3;
-          }
-        }
-        break;
-
-      case BALLOON_POINT_NG_1PT:
-      case BALLOON_POINT_NG_2PT:
-        {
-          VecFx32 scale_tmp;
-
-          // 風船を徐々に拡大する
-          if( p_wk->scale < SCALE_MAX )
-          {
-            p_wk->scale += SCALE_ADD;
-            if( p_wk->scale > SCALE_MAX )
-            {
-              p_wk->scale = SCALE_MAX;
-            }
-
-            VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
-            VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
-          }
-
-          if( p_wk->scale == SCALE_MAX )
-          {
-            p_wk->alpha -= 3;
-          }
-        }
-        break;
-
-      default:
-        GF_ASSERT(0);
-      }
-    }
-    // アニメ終了したら、αフェードして消える
-    else
-    {
-      p_wk->alpha -= 3;
-      if( p_wk->alpha <= 0 )
+      // 風船破裂
+      //
+      if( p_wk->alpha == 31 )
       {
-        CTVT_BALLOON_Destroy( p_wk );
-        return;
+        // 風船の破裂エフェクト
+        BOOL ret = baloon_effect_burst( p_wk );
+        // エフェクト終了判定
+        if( ret == TRUE )
+        {
+          p_wk->alpha -= 1;
+        }
       }
-    }
-  }
-  else
-  {
-    // 経過フレーム数で移動するように変更
-    u16   now_frame;
-    s32   def;  // マイナスになる可能性がある
-    u8    i;
-    now_frame = CTVT_GAME_GetFrame( p_wk->p_game_wk );
-    def   = now_frame - p_wk->save_frame;
-
-    if( def > 0 )
-    {
-      p_wk->save_frame = now_frame;
-      for( i=0; i<def; i++ )
+      // アニメ終了したら、αフェードして消える
+      else
       {
-        VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
+        // 風船のアルファエフェクト
+        BOOL ret = baloon_effect_alpha( p_wk );
+        if( ret == TRUE )
+        {
+          // タスク破棄
+          CTVT_BALLOON_Destroy( p_wk );
+          return;
+        }
       }
     }
     else
     {
-      // -だと進んでるので、前のフレームに戻す
-      CTVT_GAME_CommFrameSet( p_wk->p_game_wk, p_wk->save_frame );
+      // 経過フレーム数で移動するように変更
+      VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
     }
   }
 
@@ -309,6 +274,160 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
       GFL_G3D_DRAW_DrawObject( obj, &p_wk->status );
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  当たり判定用の風船座標計算
+ *
+ *	@param	p_wk   風船構造体へのポインタ
+ *	@param  frame　取得したいときのフレーム
+ *	@param  p_pos　計算した座標を格納するポインタ
+ */
+//-----------------------------------------------------------------------------
+void CTVT_BALLOON_GetHitVec( BALLOON_WORK* p_wk, u32 frame, VecFx32 *p_pos )
+{
+  u16 now_frame;
+
+  s32   def;
+  u8    i;
+  now_frame = CTVT_GAME_GetFrame( p_wk->p_game_wk );
+  def   = now_frame - frame;
+
+  // 座標をコピー
+  VEC_COPY( p_pos, &p_wk->status.trans );
+
+  if( def < 0 )
+  {
+    GF_ASSERT_MSG(0, "受信したフレームの方が進んでいる\n");
+    return;
+  }
+
+  // フレーム差の分だけ座標を過去に戻す
+  for( i=0; i<def; i++ )
+  {
+    VEC_Subtract( p_pos, &p_wk->vec, p_pos );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船1の破裂エフェクト
+ *
+ *	@param	BALLOON_WORK *p_wk 
+ *
+ *	@return TRUEでエフェクト終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL baloon_effect_burst( BALLOON_WORK *p_wk )
+{
+  // 得点がプラスとマイナスで演出を分ける
+  switch( p_wk->point_type ){
+  case BALLOON_POINT_OK_2PT:
+  case BALLOON_POINT_OK_4PT:
+    {
+      GFL_G3D_OBJ*    obj;
+      u16             head_obj_idx;
+      BOOL            anm_end;
+
+      head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
+      // 3つあるからどれ使うかtypeで指定
+      obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
+
+      // キャッチのアニメを再生
+      anm_end = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 2, FX32_ONE );  // ica
+
+      // アニメ終了チェック
+      if( anm_end == FALSE )
+      {
+        return TRUE;
+      }
+    }
+    break;
+
+  case BALLOON_POINT_NG_1PT:
+  case BALLOON_POINT_NG_2PT:
+    {
+      VecFx32 scale_tmp;
+
+      // 風船を徐々に拡大する
+      if( p_wk->scale < SCALE_MAX )
+      {
+        p_wk->scale += SCALE_ADD;
+        if( p_wk->scale > SCALE_MAX )
+        {
+          p_wk->scale = SCALE_MAX;
+        }
+
+        VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
+        VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+      }
+
+      if( p_wk->scale == SCALE_MAX )
+      {
+        return TRUE;
+      }
+    }
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船1のアルファフェードアウトエフェクト
+ *
+ *	@param	BALLOON_WORK *p_wk 
+ *
+ *	@return TRUEでエフェクト終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL baloon_effect_alpha( BALLOON_WORK *p_wk )
+{
+  p_wk->alpha -= 3;
+  if( p_wk->alpha <= 0 )
+  {
+    p_wk->alpha = 0;
+    // 成功のエフェクトの方が失敗のエフェクトよりも
+    // かかるフレーム数が多い
+    // 帳尻を合わせる為に
+    // 失敗の時は差の10フレームだけ空で回す。
+    //
+    if( p_wk->point_type == BALLOON_POINT_OK_2PT || 
+        p_wk->point_type == BALLOON_POINT_OK_4PT )
+    {
+      // 成功の時はすぐさま風船を破棄してよい
+      return TRUE;
+    }
+    else
+    {
+      if( p_wk->visible == TRUE )
+      {
+        // 最初の1回のみ(=初期化)
+
+        // 非表示設定にする
+        p_wk->visible = FALSE;
+        // 空ループ用ウェイト設定
+        p_wk->effect_wait = 10; // 10フレーム差
+      }
+      else
+      {
+        // 空ループ回し
+        p_wk->effect_wait--;
+        if( p_wk->effect_wait <= 0 )
+        {
+          CTVT_BALLOON_Destroy( p_wk );
+          return TRUE;
+        }
+      }
+    }
+  }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
