@@ -7379,10 +7379,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリアクリアには
+			<Text>エリアクリア　するには
 エリアの　どこかに　いる▽
-ボストレーナーを　たおすことで▼
-つぎの　エリアに
+ボストレーナーを　たおすこと！▼
+そうすれば　つぎの　エリアに
 ちょうせん　することが　できるぜ▼
 エリアにいる　トレーナーと　
 たいせんして　うでを　みがくもよし▼
@@ -7397,7 +7397,7 @@
 つかえないからな　おぼえておけよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T06:03:40" />
+				Time="2012-02-01T02:49:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7405,10 +7405,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリアクリアには
-エリアの　どこかにいる▽
-ボストレーナーを　倒すことで▼
-次の　エリアに
+			<Text>エリアクリア　するには
+エリアの　どこかに　いる▽
+ボストレーナーを　倒すすこと！▼
+そうすれば　次の　エリアに
 挑戦することが　できるぜ▼
 エリアにいる　トレーナーと　
 対戦して　腕を　磨くもよし▼
@@ -7423,7 +7423,7 @@
 使えないからな！　覚えておけよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T05:13:40" />
+				Time="2012-02-01T02:49:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
