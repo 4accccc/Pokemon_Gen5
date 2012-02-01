@@ -325,8 +325,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
       // BGM再生開始
       // 2回目のスクリプトが終了まで再生する。
       //
-      // 【仮】ラベルは仮
-      PMSND_PlayBGM( SEQ_BGM_ENDING );
+      PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
 
       NowSeqFinish( work, seq );
     }
