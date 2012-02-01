@@ -1511,12 +1511,31 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
     // 横から話しかけた時は一歩下に移動
     IF $LWK_PLAYER_Z == 6 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_2 )
-      _OBJ_ANIME_WAIT()
+      
+      // 主人公を見送る
+      _TIME_WAIT( 8 )
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _OBJ_ANIME( D31R0601_WKOBJCODE00, anm_boss_look_player_02 )
+      ELSE
+        _OBJ_ANIME( D31R0501_WKOBJCODE00, anm_boss_look_player_02 )
+      ENDIF
+
+
     ELSIF $LWK_PLAYER_Z == 5 THEN
+      // 上から話しかけてきた
       // ボスの左下まで移動
       _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 5, 8, FORCE_TYPE_NOT, 8, DIR_LR)
-      _OBJ_ANIME_WAIT()
+
+      // 主人公を見送る
+      _TIME_WAIT( 8 )
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _OBJ_ANIME( D31R0601_WKOBJCODE00, anm_boss_look_player_01 )
+      ELSE
+        _OBJ_ANIME( D31R0501_WKOBJCODE00, anm_boss_look_player_01 )
+      ENDIF
+
     ENDIF
+    _OBJ_ANIME_WAIT()
 
     // 入り口まで移動
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 14, FORCE_TYPE_NOT, 8, DIR_LR)
@@ -1592,6 +1611,10 @@ EVENT_START  ev_infinity_dungeon_area_arrival_tutorial
   ENDIF
   _OBJ_ANIME_WAIT()
 
+  // 退出音再生
+  _CALL play_floor_move_se
+  _SE_WAIT()
+  
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
    
 }
@@ -1712,8 +1735,12 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_01
   _OBJ_ANIME_WAIT()
 
   // 画面外まで移動させる
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_3 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_1 )
   _OBJ_ANIME_WAIT()
+   
+  // 退出音再生
+  _CALL play_floor_move_se
+  _SE_WAIT()
   
   // OBJ削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
@@ -1758,6 +1785,10 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_02
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_down_3 )
   _OBJ_ANIME_WAIT()
    
+  // 退出音再生
+  _CALL play_floor_move_se
+  _SE_WAIT()
+  
   // OBJ削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
@@ -1804,13 +1835,17 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_left_3 )
   _OBJ_ANIME_WAIT()
    
+  // 退出音再生
+  _CALL play_floor_move_se
+  _SE_WAIT()
+  
   // OBJ削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
 EVENT_END
 
 //----------------------------------------------------------------------------
-//	エリア2用チュートリアルイベント(ボス部屋)
+//	エリア3用チュートリアルイベント(ボス部屋)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
 {
@@ -1854,18 +1889,24 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
   // 主人公よける
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 7, 11, FORCE_TYPE_NOT, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_left_dir )
   _OBJ_ANIME_WAIT() 
 
   // 画面外まで移動させる
-  
-  // 主人公の前まで移動
   IF $LWK_D_VERSION == VERSION_B2 THEN
     _OBJ_ANIME( D31R0601_MUGENBOSS, anm_move_down_7 )
   ELSE
     _OBJ_ANIME( D31R0501_MUGENBOSS, anm_move_down_7 )
   ENDIF
+
+  // 主人公が見送る
+  _TIME_WAIT( 5 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_boss_area3 )
   _OBJ_ANIME_WAIT()
+   
+  // 退出音再生
+  _CALL play_floor_move_se
+  _SE_WAIT()
    
   // 主人公もどる
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 11, FORCE_TYPE_NOT, 8, DIR_UD)
@@ -1876,8 +1917,7 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
   // 非表示フラグセット
   _FLAG_SET( FV_D31R0601_MUGENBOSS_01 ) // リセット
   _FLAG_SET( FV_D31R0501_MUGENBOSS_01 ) // リセット
-
-   
+ 
   // OJB削除
   IF $LWK_D_VERSION == VERSION_B2 THEN
     _OBJ_DEL( D31R0601_MUGENBOSS )
@@ -2703,8 +2743,8 @@ _ANIME_LABEL	anm_move_up_2
 //--------------------------------------------------------------------
 // 画面外まで移動用
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_up_3
-	_ANIME_DATA	AC_WALK_U_8F,3
+_ANIME_LABEL	anm_move_up_1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -2749,4 +2789,30 @@ _ANIME_LABEL	anm_move_left_3
 	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+// バンジロウイベントよう見送り
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_look_boss_area3
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ボス見送り（上から話しかけ）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_look_player_01
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ボス見送り（横から話しかけ）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_look_player_02
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
