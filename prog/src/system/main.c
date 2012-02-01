@@ -67,7 +67,7 @@ static  void  _set_sound_mode( CONFIG *config );
 static void DEBUG_StackOverCheck(void);
 static void DEBUG_UI_AutoKey(void);
 
-#if defined(DEBUG_ONLY_FOR_shimoyamada)
+#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nakamura_akira)
 #define DEBUG_TIME_Printf(...) OS_TFPrintf(3,__VA_ARGS__)
 #endif  //defined
 #endif //PM_DEBUG
@@ -75,6 +75,8 @@ static void DEBUG_UI_AutoKey(void);
 #ifndef DEBUG_TIME_Printf
 #define DEBUG_TIME_Printf(...) /*  */
 #endif
+
+#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 //------------------------------------------------------------------
 //  èàóùéûä‘AVERAGE
