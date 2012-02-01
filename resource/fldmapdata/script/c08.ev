@@ -506,10 +506,11 @@ EVENT_END
 /*  RESERVE：プラズマ団イベント開始（同一ゾーンで使用）       */
 /**************************************************************/
 EVENT_START   ev_reserve_c08_plazma_comming_02
-  
   //暗転復帰
   _MAP_FADE_BLACK_IN()
   _DISP_FADE_END_CHECK()
+  
+  _GET_ROM_VERSION( LCW_VERSION )
 
   //アニメ：主人公消す
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish_on)
@@ -756,7 +757,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   
   //BGMチェンジでの環境SEポーズ状態をCLEAR
   _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
-  
+
 EVENT_END
 
 
@@ -783,6 +784,8 @@ _ANIME_LABEL	anm_sage7_look_lr
 /**************************************************************/
 ball_out:
 
+  _GET_ROM_VERSION( LCW_VERSION )
+
   //オノノクス動作OBJ表示（バージョンによって位置を分岐）
   IF $LCW_VERSION == VERSION_B2 THEN
     _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 419, 0, 163, 3, 8 )
@@ -808,12 +811,14 @@ ball_out:
 _RET
 
 ball_in:
+
+  _GET_ROM_VERSION( LCW_VERSION )
   
   //ボール戻り演出をバージョン分岐
   IF $LCW_VERSION == VERSION_B2 THEN
-    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 164 )
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 163 )
   ELSE
-    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 166 )
+    _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 419, 0, 165 )
   ENDIF
   
   //ポケ非表示フレーム待ち
@@ -828,9 +833,9 @@ ball_in:
   
   //ボールしまい演出をバージョン分岐
   IF $LCW_VERSION == VERSION_B2 THEN
-    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 164, 3, 8 )
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 163, 3, 8 )
   ELSE
-    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 166, 3, 8 )
+    _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 419, 3, 165, 3, 8 )
   ENDIF
   
 _RET
