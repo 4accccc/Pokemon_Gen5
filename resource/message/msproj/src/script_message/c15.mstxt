@@ -2842,14 +2842,14 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めでたいのう！　[Name:TrainerName ]！
-よいか！　おぬしの　デビューさくを▽
+			<Text>めでたいのう！　[Name:TrainerName ]！▼
+よいか！　おぬしの　デビューさくを
 かんとくしたのは　この　わし！▼
 つまり　そだてのおや　どうぜん　じゃ！
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T07:08:09" />
+				Time="2012-02-01T08:18:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2857,14 +2857,14 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めでたいのう！　[Name:TrainerName ]！
-よいか！　おぬしの　デビュー作を▽
+			<Text>めでたいのう！　[Name:TrainerName ]！▼
+よいか！　おぬしの　デビュー作を
 監督したのは　この　わし！▼
 つまり　育ての親　同然じゃ！
 感謝を　忘れては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T07:08:13" />
+				Time="2012-02-01T08:19:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2937,11 +2937,11 @@ Bis  bald.</Text>
 せかいじゅうを　アメイジングさせる▽
 エンターテインメントの　でんどうに▽
 せいちょうする　そのひ　まで……▼
-そして　ポケウッドに　ふさわしい
+……そして　ポケウッドに　ふさわしい
 しんのスターが　うまれる　ひまで……▼
 この　だいざの　うえには
 なにも　たてずに　おこう　ってね……▼
-……だが　みてごらん
+……　……だが　みてごらん
 いま　ここに　どうぞうが　たっている▼
 つまり　ボクの　ねがいは　かなって
 ちかいも　はたされちゃったんだ……▼
@@ -2949,7 +2949,7 @@ Bis  bald.</Text>
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T07:33:11" />
+				Time="2012-02-01T08:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2966,9 +2966,9 @@ Bis  bald.</Text>
 世界中を　アメイジングさせる▽
 エンターテインメントの　殿堂に▽
 成長する　その日まで……▼
-そして　ポケウッドに　相応しい
+……そして　ポケウッドに　相応しい
 真のスターが　誕生する日まで……▼
-この　台座の　上には▽
+この　台座の　上には
 何も　建てずに　おこう　ってね……▼
 ……　……だが　みてごらん
 今ここに　銅像が　立っている▼
@@ -2978,7 +2978,7 @@ Bis  bald.</Text>
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T07:33:18" />
+				Time="2012-02-01T08:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3062,7 +3062,7 @@ Bis  bald.</Text>
 シューティングスター　だよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:47:04" />
+				Time="2012-02-01T08:18:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3077,7 +3077,7 @@ Bis  bald.</Text>
 シューティングスター　だよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:47:01" />
+				Time="2012-02-01T08:29:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

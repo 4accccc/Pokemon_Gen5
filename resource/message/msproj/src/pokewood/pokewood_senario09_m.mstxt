@@ -2766,26 +2766,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なんだろう……
-ＵＦОの　ようすが　へんだ……</Text>
+ＵＦＯの　ようすが　へんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-02-01T08:00:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2012-02-01T08:00:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『何だろう……
-ＵＦОの様子が　変だ……</Text>
+ＵＦＯの様子が　変だ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-01T08:00:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-01T08:00:08" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

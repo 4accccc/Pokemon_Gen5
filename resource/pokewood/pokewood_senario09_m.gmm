@@ -956,9 +956,9 @@
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだろう……
-ＵＦОの　ようすが　へんだ……</language>
+ＵＦＯの　ようすが　へんだ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何だろう……
-ＵＦОの様子が　変だ……</language>
+ＵＦＯの様子が　変だ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">ＵＦＯ『フウォォン！　フウォォン！</language>
