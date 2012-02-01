@@ -1172,7 +1172,8 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロムは　しっていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……でんせつの
+ドラゴンポケモンは　しっていた▼
 ながく　いきて
 おおくの　ひとを　しっていた▼
 にんげんと　ポケモンは　これまでも
@@ -1180,13 +1181,13 @@ N</Text>
 その　かんけいせいの　なかで
 ひとの　おこないが　ポケモンに▽
 ただいなる　えいきょうを　およぼす▼
-それゆえ　りそうを　おいもとめる……▼
+それゆえ　しんじつを　おいもとめる……▼
 ポケモンと　ひとの
 みらいを　きりひらく　ものを▽
 たすけようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:52" />
+				Time="2012-02-01T07:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1194,7 +1195,8 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロムは　知っていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……伝説の
+ドラゴンポケモンは　知っていた▼
 長く　生きて
 多くの　ヒトを　知っていた▼
 人間と　ポケモンは　これまでも
@@ -1202,13 +1204,13 @@ N</Text>
 その関係性の　中で
 ヒトの　行いが　ポケモンに▽
 多大なる　影響を　及ぼす▼
-それゆえ　理想を　追い求める……▼
+それゆえ　真実を　追い求める……▼
 ポケモンと　ヒトの
 未来を　切り拓く　モノを▽
 助けようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:53" />
+				Time="2012-02-01T07:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1250,7 +1252,8 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラムは　しっていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……でんせつの
+ドラゴンポケモンは　しっていた▼
 ながく　いきて
 おおくの　ひとを　しっていた▼
 にんげんと　ポケモンは　これまでも
@@ -1264,7 +1267,7 @@ N</Text>
 たすけようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:57" />
+				Time="2012-02-01T07:38:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1272,7 +1275,8 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラムは　知っていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……伝説の
+ドラゴンポケモンは　知っていた▼
 長く　生きて
 多くの　ヒトを　知っていた▼
 人間と　ポケモンは　これまでも
@@ -1286,7 +1290,7 @@ N</Text>
 助けようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:01:00" />
+				Time="2012-02-01T07:38:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
