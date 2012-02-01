@@ -46041,28 +46041,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしは　ポケモンと　およぐことで
-ママンボウの　いいところを▽
+パールル　シェルダーの　いいところ▽
 ぜーんぶ　はあく　したの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:27:26" />
+				Time="2012-02-01T06:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:27:26" />
+				Time="2012-02-01T06:41:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしは　ポケモンと　泳ぐことで
-ママンボウの　いいところを▽
+パールル　シェルダーの　いいところ▽
 ぜーんぶ　把握したの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:27:26" />
+				Time="2012-02-01T06:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:27:26" />
+				Time="2012-02-01T06:41:44" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -46371,27 +46371,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こだかい　おかの　うえ……
+			<Text>くぼんだ　ばしょ……
 むかいあう　きみと　わたし……▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:41:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>小高い　丘の　上……
+			<Text>くぼんだ　場所……
 相対する　君と　私……▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:41:44" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
