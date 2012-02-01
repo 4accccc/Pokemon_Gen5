@@ -170,7 +170,6 @@ EVENT_START   ev_t07_informationw_01
   IF $SCWK_ANSWER == SCR_YES THEN   //はい
     //ひこうきに　のって　おまちください▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t07_infomationw_02 )
-    _AB_KEYWAIT()
     _MSGWIN_CLOSE()
       
     //３Ｄデモコール
