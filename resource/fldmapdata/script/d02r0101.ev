@@ -40,6 +40,15 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_SWLEADE1_POSX
+DEFINE_LOCAL  LCW_SWLEADE1_POSZ
+
+//------------------------------注意--------------------------------//
+//下記のローカルワークを使用しているため注意して下さい。
+
+// LOCALWORK15→チェレン戻り位置設定
+//------------------------------------------------------------------//
+
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -229,12 +238,28 @@ ev_d02r0101_pairstart_01:
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //チェレン座標取得
+  _OBJ_POS_GET( D02R0101_SWLEADER1_01,LCW_SWLEADE1_POSX,LCW_SWLEADE1_POSZ ) 
+    
+  IF $LCW_POSZ != $LCW_SWLEADE1_POSZ || $LOCALWORK15 == 0 THEN
+    _DEBUG_PRINT_WK( 99 )
+    _OBJ_ANIME_AUTO( D02R0101_SWLEADER1_01, 68, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+    
+  IF $LCW_POSZ != $LCW_SWLEADE1_POSZ THEN
+    _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
   IF FLAG_OFF( FE_D02R0101_SWLEADER1_FIRST ) THEN
     //一緒に行こう！（初回会話）
-    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_01, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_01, D02R0101_SWLEADER1_01, POS_UP )
   ELSE
     //ヤグルマの森で（離脱後会話）
-    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_12, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_12, D02R0101_SWLEADER1_01, POS_UP )
   ENDIF
   
    {
@@ -242,7 +267,7 @@ ev_d02r0101_pairstart_01:
   
   //はい
   IF $SCWK_ANSWER == SCR_YES THEN
-    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_03, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_03, D02R0101_SWLEADER1_01, POS_UP )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
@@ -250,16 +275,6 @@ ev_d02r0101_pairstart_01:
     _PLAYER_FORM_GET( SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
       _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
-    ENDIF
-    
-    //自機座標取得
-    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-    $LCW_POSX -= 2
-    _OBJ_ANIME_AUTO( D02R0101_SWLEADER1_01,LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-    _OBJ_ANIME_WAIT()
-    IF $LCW_POSZ != 69 THEN
-      _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_staystep_r)
-      _OBJ_ANIME_WAIT()
     ENDIF
     
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
@@ -270,6 +285,8 @@ ev_d02r0101_pairstart_01:
     //==================================//
     //初回会話完了フラグ
     _FLAG_SET(FE_D02R0101_SWLEADER1_FIRST)
+    //入室イベント初期化
+    $LOCALWORK15 = 0
     //==================================//
     
   //いいえ
@@ -279,13 +296,18 @@ ev_d02r0101_pairstart_01:
     _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_swleader1_act )
     _OBJ_ANIME_WAIT()
 
-    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_02, D02R0101_SWLEADER1_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_02, D02R0101_SWLEADER1_01, POS_UP )
     _MSGWIN_CLOSE()
     
     //アニメ：主人公戻す
     _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_dir_r )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
+    
+    //==================================//
+    //入室イベント終了状態（マップ遷移で初期化）
+    $LOCALWORK15 = 1
+    //==================================//
 
   ENDIF
   }
@@ -300,6 +322,7 @@ ev_d02r0101_pairend_01:
   
   //アニメ：主人公振り向き
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
   _OBJ_ANIME_WAIT()
   
   //チェレン：いちどそとにでる？
