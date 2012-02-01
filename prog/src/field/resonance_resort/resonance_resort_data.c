@@ -685,6 +685,11 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
   {
     return FALSE;
   }
+  if( cp_wk->special_deliverly != 0 )
+  {
+    return FALSE;
+  }
+
   return TRUE;
 }
 
