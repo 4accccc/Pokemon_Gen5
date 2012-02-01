@@ -756,7 +756,6 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_END:
     CYGNUS_RESULT_Release( p_wk->p_cyg_result );
 
-    GFL_BG_FillScreen( KEYSYS_BG_FRAME_WND_M ,0, 0, 5, 32, 18,GFL_BG_SCRWRT_PALNL);
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_SEQ_Return( p_seqwk );
     break;

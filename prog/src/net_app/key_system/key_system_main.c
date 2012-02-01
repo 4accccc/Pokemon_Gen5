@@ -872,10 +872,10 @@ void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr )
   switch( scr )
   {
   case KEYSYS_BG_SCR_TITLE_M:
-    size  = sizeof(u16) * 32 * 5;
-    /* fall */
-  case KEYSYS_BG_SCR_TRAY_M:
     datID = NARC_key_system_gra_back01_NSCR;
+    break;
+  case KEYSYS_BG_SCR_TRAY_M:
+    datID = NARC_key_system_gra_back04_NSCR;
     break;
   case KEYSYS_BG_SCR_HAVEKEY_M:
     datID = NARC_key_system_gra_back03_NSCR;

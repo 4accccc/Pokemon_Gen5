@@ -21,10 +21,11 @@ enum {
 	NARC_key_system_gra_back01_NSCR = 7,
 	NARC_key_system_gra_back02_NSCR = 8,
 	NARC_key_system_gra_back03_NSCR = 9,
-	NARC_key_system_gra_menu_frame_NSCR = 10,
-	NARC_key_system_gra_obj_NCER = 11,
-	NARC_key_system_gra_obj_NANR = 12,
-	NARC_key_system_gra_key_system_spa = 13
+	NARC_key_system_gra_back04_NSCR = 10,
+	NARC_key_system_gra_menu_frame_NSCR = 11,
+	NARC_key_system_gra_obj_NCER = 12,
+	NARC_key_system_gra_obj_NANR = 13,
+	NARC_key_system_gra_key_system_spa = 14
 };
 
 /* NARC_KEY_SYSTEM_GRA_NAIX_ */
