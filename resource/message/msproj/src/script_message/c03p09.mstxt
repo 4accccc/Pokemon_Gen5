@@ -386,10 +386,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せっかく　きてくれたのに……
-あのう　また　きてくださいね！▼</Text>
+あのう　また　きてくださいね！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T07:07:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -398,10 +398,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>せっかく　来てくれたのに……
-あのう　また　来てくださいね！▼</Text>
+あのう　また　来てくださいね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:51:50" />
+				Time="2012-02-01T07:07:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
