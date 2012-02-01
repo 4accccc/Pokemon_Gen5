@@ -673,17 +673,17 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( tmpHeapID, POKETOOL_GetWorkSize() );
 
     PP_Setup( pp, MONSNO_YOOTERII, 5, 0 );
-    PP_Put( pp, ID_PARA_waza1, WAZANO_TAIATARI );
-    PP_Put( pp, ID_PARA_waza2, WAZANO_NIRAMITUKERU );
-    PP_Put( pp, ID_PARA_waza3, WAZANO_KAGIWAKERU );
-    PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
+    PP_SetWazaPos( pp, WAZANO_TAIATARI, 0 );
+    PP_SetWazaPos( pp, WAZANO_NIRAMITUKERU, 1 );
+    PP_SetWazaPos( pp, WAZANO_KAGIWAKERU, 2 );
+    PP_SetWazaPos( pp, WAZANO_NULL, 3 );
     PokeParty_Add( partyMine, pp );
     
     PP_Setup( pp, MONSNO_TYORONEKO, 2, 0 );
-    PP_Put( pp, ID_PARA_waza1, WAZANO_HIKKAKU );
-    PP_Put( pp, ID_PARA_waza2, WAZANO_NAKIGOE );
-    PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
-    PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
+    PP_SetWazaPos( pp, WAZANO_HIKKAKU, 0 ); //É`ÉáÉçÉlÉRÇÃPPÇÕå©Ç¶Ç»Ç¢ÇØÇ«îOÇÃÇΩÇﬂ
+    PP_SetWazaPos( pp, WAZANO_NAKIGOE, 1 );
+    PP_SetWazaPos( pp, WAZANO_NULL,    2 );
+    PP_SetWazaPos( pp, WAZANO_NULL,    3 );
     PokeParty_Add( partyEnemy, pp );
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
