@@ -463,9 +463,9 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『この　ハチク砲は
 強力な　エネルギーとともに▽
 あらゆるものを　発射する▽
-超高性能マシン！▼
+超高性能マシンで　あるっ！▼
 しかも　ブラックダイヤ効果により
-発射物の能力を　何倍にも▽
+発射物の　能力を　何倍にも▽
 パワーアップ　するのだっ！</language>
 	</row>
 	<row id="pw_event0_hero_2">
@@ -677,8 +677,8 @@
 ハチク砲！　発射ーーーッ！！</language>
 	</row>
 	<row id="pw_event2_hero_4">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『キャーッ！！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『キャーッ！！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『フギャーッ！！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『フギャーッ！！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！

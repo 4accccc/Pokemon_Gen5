@@ -502,17 +502,17 @@
 			<Text>ハチクマン『この　ハチク砲は
 強力な　エネルギーとともに▽
 あらゆるものを　発射する▽
-超高性能マシン！▼
+超高性能マシンで　あるっ！▼
 しかも　ブラックダイヤ効果により
-発射物の能力を　何倍にも▽
+発射物の　能力を　何倍にも▽
 パワーアップ　するのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:45" />
+				Time="2012-02-01T07:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-30T08:46:45" />
+				Time="2012-02-01T07:31:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1663,25 +1663,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『うわーっ！！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『おわーっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-01T07:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-01T07:31:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『うわーっ！！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『おわーっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-01T07:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-01T07:31:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
