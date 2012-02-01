@@ -2491,7 +2491,7 @@ void  BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value )
 BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm )
 { 
   // ポケウッドの上映処理
-  if( bgw->pokewood == BTL_POKEWOOD_SHOW ){
+  if((bgw->pokewood == BTL_POKEWOOD_SHOW)&&(bgw->bgcl[pos].gauge_enable)){
     GF_ASSERT_MSG( (BTLV_EFFECT_GetBtlRule()==BTL_RULE_SINGLE), "シングル戦じゃない\n" );
     GF_ASSERT_MSG( (BTLV_EFFECT_GetBtlCompetitor()==BTL_COMPETITOR_TRAINER), "トレーナー戦じゃない\n" );
     btlv_chk_gaugestatus( bgw, pos, color, sick_anm, 0 );
