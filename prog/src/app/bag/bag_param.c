@@ -9,6 +9,8 @@
  */
 //=============================================================================
 #include "app/bag.h"
+#include "field/field_subscreen.h"
+
 //=============================================================================
 /**
  *                定数定義
@@ -67,6 +69,18 @@ BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MO
 
   bag->mode       = mode;
   bag->cycle_flg  = ( PLAYERWORK_GetMoveForm( GAMEDATA_GetMyPlayerWork(gmData) ) == PLAYER_MOVE_FORM_CYCLE );
+
+  // ダウジングを使用中かどうか判定
+  if( FIELD_SUBSCREEN_DOWSING == GAMEDATA_GetSubScreenMode(gmData) )
+  {
+    bag->dowsing_flg = TRUE;
+    ONOUE_Printf("ダウジング起動中\n");
+  }
+  else
+  {
+    bag->dowsing_flg = FALSE;
+    ONOUE_Printf("ダウジング未起動\n");
+  }
   
   return bag;
 }

@@ -170,6 +170,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
 static void _VBlank( GFL_TCB *tcb, void *work );
 static void _startState(FIELD_ITEMMENU_WORK* pWork);
 static void _RepositoryItemSort( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode );
+static BOOL _check_use_dowsing_msg( FIELD_ITEMMENU_WORK* pWork );
 
 #ifdef PM_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -3945,7 +3946,56 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
     stringbuff[j] = strtbl[tbl[i]];
     j++;
   }
+
+  // ダウジング使用メッセージに差し替える必要があるかチェック
+  if( _check_use_dowsing_msg( pWork ) )
+  {
+    for( i=0; i < BAG_MENUTBL_MAX; i++ )
+    {
+      // 使うメニューのメッセージを差し替える
+      if( pWork->submenuList[i] == BAG_MENU_TSUKAU )
+      {
+        stringbuff[i] = mes_bag_135;
+        break;
+      }
+    }
+  }
+
   ITEMDISP_MenuWinDisp( pWork, stringbuff, j );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ダウジング起動中専用メッセージに書き換える必要があるか取得
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL _check_use_dowsing_msg( FIELD_ITEMMENU_WORK* pWork )
+{
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+
+  // 正しく取得できなかった
+  if( item==NULL )
+  {
+    return FALSE;
+  }
+
+  // アイテムIDが設定されていない
+  if( item->id == ITEM_DUMMY_DATA ){
+    return FALSE;
+  }
+
+  // ダウジングマシンの時のみ
+  if( item->id == ITEM_DAUZINGUMASIN )
+  {
+    // ダウジング起動中はTRUE
+    return pWork->dowsing_flg;
+  }
+
+  return FALSE;
 }
 
 
@@ -4274,6 +4324,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->icwk       = &pParam->icwk;
   pWork->mode       = pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
+  pWork->dowsing_flg= pParam->dowsing_flg;
   pWork->repository_sort_mode  = pParam->repository_sort_type;
 
   // アイテム破損データを修復

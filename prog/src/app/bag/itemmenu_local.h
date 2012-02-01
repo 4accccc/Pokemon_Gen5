@@ -185,6 +185,7 @@ struct _FIELD_ITEMMENU_PARAM {
   BAG_CURSOR*         pBagCursor;
   MYITEM_PTR          pMyItem;
   BOOL                cycle_flg;        ///< 自転車かどうか？
+  BOOL                dowsing_flg;      ///< サブスクリーンがダウジングかどうか
 //  GMEVENT             * event;
 //  FIELDMAP_WORK       * fieldmap;
 

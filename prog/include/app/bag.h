@@ -61,6 +61,7 @@ typedef struct {
   ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー。「つかう」が出ない状態であれば不必要
   BAG_MODE            mode;         ///< バッグ呼び出しモード
   BOOL                cycle_flg;    ///< 自転車かどうか？
+  BOOL                dowsing_flg;    ///< サブスクリーンがダウジングかどうか
   // [OUT] 外部に返すメンバ
   BAG_NEXTPROC_ENUM   next_proc; ///< バッグから抜けるときの動作
   int ret_item; ///< 選択したアイテム
