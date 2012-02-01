@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/31 10:59:57
+#save date:2012/02/01 15:08:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -359,7 +359,7 @@ C05_WORKMAN
 #OBJ CODE Number
 WORKMAN
 #MOVE CODE Number
-MV_RND
+MV_RND_DR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -375,13 +375,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-4
+0
 #Move Limit Z Number
-2
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -584
+-56 0 -680
 #event number: 12
 #type
 1
@@ -406,13 +406,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+1
 #Move Limit Z Number
-3
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -552
+120 0 -536
 #event number: 13
 #type
 1
@@ -421,7 +421,7 @@ C05_WOMAN2_02
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_RND
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -437,13 +437,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-4
+0
 #Move Limit Z Number
-4
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -488
+424 0 -312
 #event number: 14
 #type
 1
@@ -514,7 +514,7 @@ C05_BADMAN
 #OBJ CODE Number
 BADMAN
 #MOVE CODE Number
-MV_RT2
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -522,7 +522,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C05_BADMAN
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -530,13 +530,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-6
+0
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 0 -280
+456 0 -232
 #event number: 17
 #type
 1
@@ -545,7 +545,7 @@ C05_BABYGIRL1
 #OBJ CODE Number
 BABYGIRL1
 #MOVE CODE Number
-MV_RND
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -561,9 +561,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
-2
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -576,7 +576,7 @@ C05_WOMAN2_03
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND_UDL
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -680
+120 0 -632
 #event number: 19
 #type
 1

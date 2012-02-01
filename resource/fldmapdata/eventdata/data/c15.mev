@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/23 21:26:01
+#save date:2012/02/01 15:16:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15.wms
 #SECTION START:OBJ_EVENT
@@ -948,7 +948,7 @@ C15_WOMAN3_01
 #OBJ CODE Number
 WOMAN3
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -970,7 +970,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 16 -376
+136 16 -456
 #event number: 31
 #type
 1
