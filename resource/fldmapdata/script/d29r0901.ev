@@ -12,6 +12,8 @@
   .include  "msg_d29r0901.h"
   .include  "d29r0901.h"
   .include  "d29r0401_def.h"    // SCRID_RESERVE_D29R0401_DOOR_OUT 
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -120,11 +122,24 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_d29r0901_rezisteel
 
- // くろがねの　ちからを　かんじさせる
+  _TALK_START_TURN_NOT()
+
+  //くろがねの　ちからを　かんじさせる
   _SYSWIN_MSG( msg_d29r0901_poke57_01, POS_DOWN )
   _SYSWIN_CLOSE()
 
-  _TALK_OBJ_START()
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+    _OBJ_ANIME( D29R0901_REZISTEEL, anm_dir_d )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( D29R0901_REZISTEEL, anm_dir_u )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( D29R0901_REZISTEEL, anm_dir_r )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( D29R0901_REZISTEEL, anm_dir_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
 
   // 鳴き声
   _VOICE_PLAY( MONSNO_379, 0 )
@@ -165,4 +180,22 @@ EVENT_START   ev_d29r0901_rezisteel
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
 
