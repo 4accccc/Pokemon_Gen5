@@ -18477,14 +18477,15 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
-タイムマシンが　あったら
-『[Name:Answer Idx="0" ]』　ようだな▼
-とはいえ　やっぱり
-いま　げんざいを　たのしむのが▽
+タイムマシンに
+のぞむのは……▼
+『[Name:Answer Idx="0" ]』　か……▼
+おもしろい　けっかだが　まずは
+今　げんざいを　たのしむのが▽
 いちばん　じゃないかな▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-12-25T07:44:59" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:54:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18493,14 +18494,15 @@ assistantm_01_25へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
-タイムマシンが　あったら
-『[Name:Answer Idx="0" ]』　ようだな▼
-とはいえ　やっぱり
+タイムマシンに
+望むのは……▼
+『[Name:Answer Idx="0" ]』　か……▼
+おもしろい　結果だが　まずは
 今　現在を　楽しむのが▽
 １番　じゃないかな▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-12-25T07:45:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T06:54:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
