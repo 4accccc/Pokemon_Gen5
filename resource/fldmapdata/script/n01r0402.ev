@@ -113,11 +113,7 @@ EVENT_START	ev_scene_n01r0402_boss_01
   
   //äKíiSEçƒê∂
   _SE_PLAY( SEQ_SE_KAIDAN )
-  
-  _TIME_WAIT( 8 )
-  
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-  
   _SE_WAIT()
   
   _CAMERA_WAIT_MOVE()
