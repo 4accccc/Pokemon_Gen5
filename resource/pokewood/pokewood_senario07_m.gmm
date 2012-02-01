@@ -632,14 +632,22 @@
 変わっちまったな……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">メカポリス『かわってなど　いない
-おれは　ずっと　こくさいポリスの▽
-あやつりにんぎょう……▽
-ただの　マシンだったのさ</language>
-		<language name="JPN_KANJI" width="256">メカポリス『変わってなど　いない
-おれは　ずっと　国際ポリスの▽
-操り人形……▽
-ただの　マシンだったのさ</language>
+		<language name="JPN" width="256">メカポリス『かわった……か
+なにを　いまさら……▽
+しょせん　おれなんて▽
+そしきの　はぐるま▼
+こくさいコップの
+あやつりにんぎょう……▼
+ただの　マシン
+だったって　ことさ……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『変わった……か
+何を　いまさら……▽
+しょせん　おれなんて▽
+組織の　歯車▼
+国際コップの
+操り人形……▼
+ただの　マシン
+だったって　ことさ……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">きどうたいいん『そういん！

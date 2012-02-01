@@ -519,16 +519,17 @@
 			Language="JPN">
 			<Text>ストレンジ『[Name:TrainerName Idx="1" ]はかせ……
 はずかしながら　わたしの　メガネが▽
+じかん　てんそうきの▽
 ぶひんに　はさまって　います！▼
 このままでは　ごさどうが
 おきて　しまいます！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T07:05:54" />
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T07:05:54" />
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1266,16 +1267,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ストレンジ『ウーン……
-てんそうきが　はつねつ　していて▼
-ちょっと　きけんな
+てんそうきが　はつねつ　していて▽
+ちょっと　きけんな▽
 じょうたい　ですね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1966,30 +1967,30 @@
 			<Text>[Name:TrainerName Idx="1" ]はかせ『……ん？
 どうしたんだ？▼
 このとおり　わたしは　ぶじだよ！
-じっけんしっぱいは　くやしいが
+じっけんしっぱいは　くやしいが▽
 まだまだ　あきらめないよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『……ん？
 どうしたんだ？▼
 この通り　わたしは　無事だよ！
-実験失敗は　くやしいが
+実験失敗は　くやしいが▽
 まだまだ　あきらめないよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2045,18 +2046,18 @@
 そこに　うつる　とても　きみょうな
 いきもの　の　すがたに……▼
 じかん　てんそうきから　もれだした
-エネルギーの　えいきょう　だろうか▼
-わたしは [Name:PokemonNickname Idx="0" ]と
+エネルギーの　えいきょう　だろうか▽
+わたしは [Name:PokemonNickname Idx="0" ]と▽
 ひとつに　なって　しまった……▼
 こうして　わたしの　けんきゅうは
 おわったのだ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:02" />
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:02" />
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2066,18 +2067,18 @@
 そこに　映る　とても　奇妙な
 いきもの　の　姿に……▼
 時間転送機から　もれ出した
-エネルギーの　影響　だろうか▼
-わたしは [Name:PokemonNickname Idx="0" ]と
+エネルギーの　影響　だろうか▽
+わたしは [Name:PokemonNickname Idx="0" ]と▽
 一体化　してしまった……▼
 こうして　わたしの　研究は
 終わったのだ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:02" />
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:02" />
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2177,32 +2178,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ストレンジ『[Name:TrainerName Idx="1" ]はかせ！
-ちょっと　まって　ください……！▼
-バカな！　タキオン　りゅうしが
+ちょっと　まって　ください……！▽
+バカな！　タキオン　りゅうしが▽
 はっせい　している……！？▼
 はかせ！　ストーップ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T06:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T06:58:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ストレンジ『[Name:TrainerName Idx="1" ]博士！
-ちょっと　待って　ください……！▼
-バカな！　タキオン粒子が
+ちょっと　待って　ください……！▽
+バカな！　タキオン粒子が▽
 発生している……！？▼
 博士！　ストーップ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T06:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T06:58:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2293,18 +2294,18 @@
 たびだった　わたしでは　あったが▽
 すぐに　こうかいする　はめとなった▼
 ストレンジの　いうとおり
-じかん　てんそうきは　おかしかった▼
-わたしを　みらい　ではなく
+じかん　てんそうきは　おかしかった▽
+わたしを　みらい　ではなく▽
 １おくねんも　まえの▽
 かこの　じだいへと▽
 タイムスリップ　させたのだから……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2312,17 +2313,17 @@
 旅立った　わたしでは　あったが▽
 すぐに　後悔する　はめとなった▼
 ストレンジの　いうとおり
-時間転送機は　おかしかった▼
-わたしを　未来　ではなく
+時間転送機は　おかしかった▽
+わたしを　未来　ではなく▽
 １億年も　前の　過去の　時代へと▽
 タイムスリップ　させたのだから……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:39:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2338,8 +2339,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……おおむかしの　せかいでは
-てんそうきは　しゅうりできない▼
-えいえんに　もとの　じだいには
+てんそうきは　しゅうりできない▽
+えいえんに　もとの　じだいには▽
 かえれないのだ……▼
 はくぶつかんで　みた
 カセキのような　ポケモンが▽
@@ -2348,18 +2349,18 @@
 わるくはない……▽
 わたしは　そう　おもうことにした</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T05:56:00" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T04:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T05:56:00" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T04:27:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……大昔の　世界では
-時間転送機は　修理できない▼
-永遠に　元の　時代には
+時間転送機は　修理できない▽
+永遠に　元の　時代には▽
 帰れないのだ……▼
 博物館で　みた
 カセキのような　ポケモンが▽
@@ -2368,12 +2369,12 @@
 悪くはない……▽
 わたしは　そう　思うことにした</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T05:56:00" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T04:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-16T05:56:00" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T04:27:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

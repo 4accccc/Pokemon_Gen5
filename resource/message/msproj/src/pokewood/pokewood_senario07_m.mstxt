@@ -1063,31 +1063,39 @@
 		Label="pw_event4_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>メカポリス『かわってなど　いない
-おれは　ずっと　こくさいポリスの▽
-あやつりにんぎょう……▽
-ただの　マシンだったのさ</Text>
+			<Text>メカポリス『かわった……か
+なにを　いまさら……▽
+しょせん　おれなんて▽
+そしきの　はぐるま▼
+こくさいコップの
+あやつりにんぎょう……▼
+ただの　マシン
+だったって　ことさ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2012-02-01T09:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2012-02-01T09:01:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メカポリス『変わってなど　いない
-おれは　ずっと　国際ポリスの▽
-操り人形……▽
-ただの　マシンだったのさ</Text>
+			<Text>メカポリス『変わった……か
+何を　いまさら……▽
+しょせん　おれなんて▽
+組織の　歯車▼
+国際コップの
+操り人形……▼
+ただの　マシン
+だったって　ことさ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2012-02-01T09:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2012-02-01T09:01:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -433,7 +433,7 @@
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">ひとがた『ギャギョッ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギャギョッ！</language>
+		<language name="JPN_KANJI" width="256">人型『ギャギョッ！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（なんてこと……▼
@@ -451,7 +451,7 @@
 		<language name="JPN" width="256">ひとがた『ギュー　グオーッ！▼
 おとこのひと『うわーっ！
 だれか　たすけてくれー！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギュー　グオーッ！▼
+		<language name="JPN_KANJI" width="256">人型『ギュー　グオーッ！▼
 男の人『うわーっ！
 だれか　助けてくれー！</language>
 	</row>
@@ -471,13 +471,13 @@
 ひとがた『グルルル！　ギャワッ！</language>
 		<language name="JPN_KANJI" width="256">男の人『だれでもいいっ！
 早く　来てくれー！▼
-ひとがた『グルルル！　ギャワッ！</language>
+人型『グルルル！　ギャワッ！</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]（なんとか　ひとがたを
 おいはらって　たすけを　よんでいる▽
 ひとの　ところへ　いくのよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（なんとか　ひとがたを
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（なんとか　人型を
 追い払って　助けを　呼んでいる▽
 人の　所へ　行くのよ！</language>
 	</row>
@@ -485,14 +485,14 @@
 		<language name="JPN" width="256">ひとがた『グワラァ！
 ギャギガギ！　ゴギギャ！▼
 おとこのひと『だれかー……</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グワラァ！
+		<language name="JPN_KANJI" width="256">人型『グワラァ！
 ギャギガギ！　ゴギギャ！▼
 男の人『だれかー……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ひとがた『ガギィ！　ガギィ！
 ガギガギョオ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ガギィ！　ガギィ！
+		<language name="JPN_KANJI" width="256">人型『ガギィ！　ガギィ！
 ガギガギョオ！</language>
 	</row>
 	<row id="pw_event1_hero_1">
@@ -506,7 +506,7 @@
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ひとがた『ギリィ　グギョアッ！▼
 アギギギ！　ギョギョン！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギリィ　グギョアッ！▼
+		<language name="JPN_KANJI" width="256">人型『ギリィ　グギョアッ！▼
 アギギギ！　ギョギョン！</language>
 	</row>
 	<row id="pw_event1_hero_2">
@@ -522,7 +522,7 @@
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">ひとがた『グリャー！
 ゴゴルルル……</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グリャー！
+		<language name="JPN_KANJI" width="256">人型『グリャー！
 ゴゴルルル……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
@@ -531,7 +531,7 @@
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">ひとがた『グオオ！　ギャーッス！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グオオ！　ギャーッス！</language>
+		<language name="JPN_KANJI" width="256">人型『グオオ！　ギャーッス！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっつけてやるわ！</language>
@@ -539,11 +539,11 @@
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ひとがた『ギギッ……　ギ？</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギギッ……　ギ？</language>
+		<language name="JPN_KANJI" width="256">人型『ギギッ……　ギ？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ひとがた『ギギルルウ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギギルルウ！</language>
+		<language name="JPN_KANJI" width="256">人型『ギギルルウ！</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こうなったら
@@ -558,7 +558,7 @@
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">ひとがた『ギャギャッ！？
 ウグググ……</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギャギャッ！？
+		<language name="JPN_KANJI" width="256">人型『ギャギャッ！？
 ウグググ……</language>
 	</row>
 	<row id="pw_event2_hero_2">
@@ -568,7 +568,7 @@
 ていこうする　なんて▽
 おもっても　いなかった▽
 ってこと　なのかしら……！？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ひとがたが
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『人型が
 ひるんでいるの？▼
 まさか　人間が
 抵抗する　なんて▽
@@ -577,7 +577,7 @@
 	</row>
 	<row id="pw_event2_enemy_2">
 		<language name="JPN" width="256">ひとがた『イギギギ……！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『イギギギ……！</language>
+		<language name="JPN_KANJI" width="256">人型『イギギギ……！</language>
 	</row>
 	<row id="pw_event2_enemy_3">
 		<language name="JPN" width="256">？？？『ユ……
@@ -587,7 +587,7 @@
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">ひとがた『ガゴォウ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ガゴォウ！</language>
+		<language name="JPN_KANJI" width="256">人型『ガゴォウ！</language>
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……うう！　ダメ！▼
@@ -600,7 +600,7 @@
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">ひとがた『ギヒヒヒ……！
 ギャス！　ギャッギャオン！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギヒヒヒ……！
+		<language name="JPN_KANJI" width="256">人型『ギヒヒヒ……！
 ギャス！　ギャッギャオン！</language>
 	</row>
 	<row id="pw_event3_hero_2">
@@ -619,7 +619,7 @@
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">ひとがた『グォア！　ギャウ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グォア！　ギャウ！</language>
+		<language name="JPN_KANJI" width="256">人型『グォア！　ギャウ！</language>
 	</row>
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">？？？『キョ……
@@ -632,7 +632,7 @@
 ひとがたたちを　やっつけたわ！▼
 ……さっきの　おとこのひとは？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！
-ひとがたたちを　やっつけたわ！▼
+人型たちを　やっつけたわ！▼
 ……さっきの　男の人は？</language>
 	</row>
 	<row id="pw_event4_enemy_0">
@@ -668,7 +668,7 @@
 かのじょを　まつ　ものとは……？▼
 いまだ　きりは　はれないが
 よあけは　ちかい……</language>
-		<language name="JPN_KANJI" width="256">ひとがたを　撃退し
+		<language name="JPN_KANJI" width="256">人型を　撃退し
 無事　人命救助に　成功した▽
 [1:00:トレーナー名:1]▼
 絶望的な　情況で
@@ -680,7 +680,7 @@
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ひとがた『ギャギガ！
 グギュギュギュ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギャギガ！
+		<language name="JPN_KANJI" width="256">人型『ギャギガ！
 グギュギュギュ！</language>
 	</row>
 	<row id="pw_event5_hero_1">
@@ -698,7 +698,7 @@
 おとこのひと『う……　あ……
 ぐ……　う……▼
 ……</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギシシシ……▼
+		<language name="JPN_KANJI" width="256">人型『ギシシシ……▼
 男の人『う……　あ……
 ぐ……　う……▼
 ……</language>
@@ -718,7 +718,7 @@
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">ひとがた『グギョアーッ！
 ギョギョアオーン！！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『グギョアーッ！
+		<language name="JPN_KANJI" width="256">人型『グギョアーッ！
 ギョギョアオーン！！</language>
 	</row>
 	<row id="pw_event5_hero_3">
@@ -763,7 +763,7 @@
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">ひとがた『ギゲェ！
 グエエオウ！</language>
-		<language name="JPN_KANJI" width="256">ひとがた『ギゲェ！
+		<language name="JPN_KANJI" width="256">人型『ギゲェ！
 グエエオウ！</language>
 	</row>
 	<row id="pw_event6_hero_1">

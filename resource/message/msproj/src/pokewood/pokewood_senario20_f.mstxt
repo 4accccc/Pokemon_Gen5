@@ -311,29 +311,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わ　わたし……
 はじめて　みた　ときから▽
-あなたに　むちゅうで……▽
-ずっと　みていました！</Text>
+あなたに　むちゅうで……▼
+だいすきです！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『わ　私……
 初めて　みた　時から▽
-あなたに　夢中で……▽
-ずっと　みていました！</Text>
+あなたに　夢中で……▼
+大好きです！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -564,17 +564,17 @@
 （ドーブルちゃんも
 やるきマンマン　だぜ▼
 いままで　オレに
-こくはくしてきた　おんなのコたち……▼
-なかせた　かずは　ほしのかず
+こくはくしてきた　おんなのコたち……▽
+なかせた　かずは　ほしのかず▽
 それでも　みつからないぜ▽
 マイ　スイートハニー……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -582,17 +582,17 @@
 （ドーブルちゃんも
 やる気マンマン　だぜ▼
 今まで　オレに
-告白してきた　女のコたち……▼
-泣かせた　数は　星の数
+告白してきた　女のコたち……▽
+泣かせた　数は　星の数▽
 それでも　みつからないぜ▽
 マイ　スイートハニー……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -980,30 +980,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カミロ『あー！　もう！
-ききわけの　わるい　コだなあ！▼
-くちで　いっても　わからないなら
+ききわけの　わるい　コだなあ！▽
+くちで　いっても　わからないなら▽
 じつりょくこうし　するしか　ないぜ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『あー！　もう！
-聞き分けの　悪い　コだなあ！▼
-口で　いっても　分からないなら
+聞き分けの　悪い　コだなあ！▽
+口で　いっても　分からないなら▽
 実力行使　するしか　ないぜ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1175,30 +1175,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カミロ『な　なんだよ！
-おべんちゃら　かよ？▼
-そんなこと　されても
+おべんちゃら　かよ？▽
+そんなこと　されても▽
 ちっとも　うれしくなんか……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『な　なんだよ！
-おべんちゃら　かよ？▼
-そんな事　されても
+おべんちゃら　かよ？▽
+そんな事　されても▽
 ちっとも　うれしくなんか……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:51:37" />
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:51:37" />
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1217,15 +1217,15 @@
 （へんだな……　なぜだろう
 わるい　きは　しない……▼
 あのコ　オレの　ポケモンの
-こうげきを　すべて　うけいれて……▼
+こうげきを　すべて　うけいれて……▽
 なんて　こころの　ひろい　コだ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1233,15 +1233,15 @@
 （変だな……　なぜだろう
 悪い気は　しない……▼
 あのコ　オレの　ポケモンの
-攻撃を　すべて　受け入れて……▼
+攻撃を　すべて　受け入れて……▽
 なんて　心の広いコだ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1380,30 +1380,30 @@
 			<Text>カミロ『ふう……▼
 （なんだろう……　ふしぎだ
 いっしょにいて　やすらかな▽
-きもちになれる　おんなのコ……▼
+きもちになれる　おんなのコ……▽
 マイ　スイートハニー……！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『ふう……▼
 （何だろう……　不思議だ
 一緒にいて　安らかな▽
-気持ちになれる　女のコ……▼
+気持ちになれる　女のコ……▽
 マイ　スイートハニー……！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:45:42" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1501,34 +1501,34 @@
 			<Text>カミロ『フン　なんだい？
 もう　ねを　あげるのかい？▼
 きみなら　もしかして……
-って　おもったけど▼
-やっぱり　そのへんの
+って　おもったけど▽
+やっぱり　そのへんの▽
 おんなのコと　おなじ▽
 スイートハニーには　ほどとおいな……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:13:01" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:13:01" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『フン　何だい？
 もう　音を上げるのかい？▼
 きみなら　もしかして……
-って　思ったけど▼
-やっぱり　その辺の
+って　思ったけど▽
+やっぱり　その辺の▽
 女のコと　同じ▽
 スイートハニーには　ほど遠いな……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:13:01" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T09:13:01" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1579,33 +1579,33 @@
 			Language="JPN">
 			<Text>カミロ『ざんねんだけど
 オレ　きみ　みたいな▽
-ふつうの　おんなのコには
+ふつうの　おんなのコには▽
 きょうみ　ないんでね……▼
 もう　あうことも　ないだろう
 いくぞ　ドーブルちゃん！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T02:51:20" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T02:51:20" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カミロ『残念だけど
 オレ　きみ　みたいな▽
-普通の　女のコには
+普通の　女のコには▽
 興味　無いんでね……▼
 もう　会うことも　ないだろう
 行くぞ　ドーブルちゃん！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T02:51:20" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T02:51:20" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1744,15 +1744,15 @@
 オレの　ドーブルちゃんを▽
 たおすなんて　ひどいじゃないか！▼
 マジかよ……　しんじられないぜ
-わるいけど　もう　あいたくない▼
+わるいけど　もう　あいたくない▽
 きみじゃ　ダメなんだ……ぜ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T08:12:26" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T08:12:26" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1760,15 +1760,15 @@
 オレの　ドーブルちゃんを▽
 倒すなんて　ひどいじゃないか！▼
 マジかよ……　信じられないぜ
-悪いけど　もう　会いたくない▼
+悪いけど　もう　会いたくない▽
 きみじゃ　ダメなんだ……ぜ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T08:12:26" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-07T08:12:26" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1776,30 +1776,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わたし　ダメなんだ……
-ダメなコなんだ……▼
-カミロさん　きびしい……！
+ダメなコなんだ……▽
+カミロさん　きびしい……！▼
+えへへ……　えへへへ……▼
 おとこらしいよぉ……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『私　ダメなんだ……
-ダメなコなんだ……▼
-カミロさん　厳しい……！
+ダメなコなんだ……▽
+カミロさん　厳しい……！▼
+えへへ……　えへへへ……▼
 男らしいよぉ……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T07:08:50" />
+				Time="2012-02-01T11:01:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1893,25 +1895,25 @@
 		Label="pw_event5_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『エヘへ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『えへへ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『エヘへ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『えへへ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-26T02:24:25" />
+				Time="2012-02-01T11:01:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

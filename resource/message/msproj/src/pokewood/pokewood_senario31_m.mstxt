@@ -90,7 +90,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]（ひとがたは
+			<Text>[Name:TrainerName Idx="1" ]（人型は
 鳴き声を　上げるだけで▽
 知能や　感情が▽
 あるようには　思えなかった……▼
@@ -100,11 +100,11 @@
 理解を　超えている……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T03:55:28" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -130,14 +130,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>霧の中の　かいぶつ『ブフォア……</Text>
+			<Text>霧の中の　怪物『ブフォア……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -165,16 +165,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『赤い霧の
+			<Text>[Name:TrainerName Idx="1" ]『赤い霧が
 よどんで　たまっている……▽
 あれが　ある限り……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -263,17 +263,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>霧の中の　かいぶつ『ブフォ……
+			<Text>霧の中の　怪物『ブフォ……
 ワレニ　立チ向カウ……▽
 勇気？　理解不能▽
 愚カ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -339,15 +339,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>霧の中の　かいぶつ『ブフッ……
+			<Text>霧の中の　怪物『ブフッ……
 終末　近イ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -410,17 +410,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>霧の中の　かいぶつ『時間……▼
+			<Text>霧の中の　怪物『時間……▼
 第４ノ　ポテンシャル
 無意味……▽
 我　永遠……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -483,16 +483,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>霧の中の　かいぶつ『生命……
+			<Text>霧の中の　怪物『生命……
 終ワル……　スベテ……▽
 地平面ノ　彼方……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -624,15 +624,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]（空耳　じゃない！
-ひとがたの　声とも　違う▽
+人型の　声とも　違う▽
 この　声の　主は……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -693,14 +693,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]（この　声の　主が
-ひとがたの　親玉　なのか？</Text>
+人型の　親玉　なのか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -759,15 +759,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとがた『ギョッ　ギヨギョ……
+			<Text>人型『ギョッ　ギヨギョ……
 ……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -821,16 +821,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『今の　ひとがた……
+			<Text>[Name:TrainerName Idx="1" ]『今の　人型……
 初めから　ぼくの　ポケモンを▽
 まきぞえに　する　つもりで……？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -935,17 +935,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブルルル……
+			<Text>怪物『ブルルル……
 人間ドモ……▽
 我ガ　下僕ト　ナルベシ……▼
 ブルルン！　ブヒュルル　ブバア</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1005,14 +1005,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブバァーッ！</Text>
+			<Text>怪物『ブバァーッ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T10:19:39" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1067,17 +1067,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブフー…… 
+			<Text>怪物『ブフー…… 
 事象ノ　地平面ノ　奥底▽
 暗黒星雲　ヨリ　来タル……▽
 ブヒュー　バファッ　ブルル……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:00:40" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:00:40" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1138,18 +1138,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『バヒュッ！▼
+			<Text>怪物『バヒュッ！▼
 コレガ　コノ　星ノ
 生命ノ……　感情……▼
 個体トシテノ　レゾンデートルニ
 固執スル　故ノ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1202,17 +1202,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『光量子ノ　波動
+			<Text>怪物『光量子ノ　波動
 コヒーレンス……▼
 ユラギ……　相殺　サレル……
 １１次元宇宙ガ……　閉ジル……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1239,15 +1239,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『かいぶつが……
+			<Text>[Name:TrainerName Idx="1" ]『怪物が……
 苦しそうに　している……？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:20:33" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:20:33" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1273,17 +1273,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『心……
+			<Text>怪物『心……
 個性……　多様化……▼
 特異点ニ　到レバ
 不必要ナ　概念……！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1345,16 +1345,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ビュフルル……
+			<Text>怪物『ビュフルル……
 取ルニ　足ラナイ　星ノ▽
 原始的ナ　知性体メ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1400,14 +1400,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブボァ……</Text>
+			<Text>怪物『ブボァ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:20:33" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-08T13:20:33" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1435,18 +1435,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブルゥ　ブアア……▼
+			<Text>怪物『ブルゥ　ブアア……▼
 下劣ナ　文明
 幼稚ナ　知性▽
 軟弱ナ　肉体▼
 コノ　星ハ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1516,7 +1516,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『我ニ　事ヲ
+			<Text>怪物『我ニ　事ヲ
 問ウ　トハ　愚カナ▼
 貴様ラハ　知ルマイ
 深キ　暗黒ヲ　ノゾク　時▽
@@ -1524,11 +1524,11 @@
 貴様ヲ　ノゾイテイル　事ヲ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1591,16 +1591,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブヒュウルル！▼
+			<Text>怪物『ブヒュウルル！▼
 サラバダ……　未成熟デ
 原始的ナ　知性体ヨ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1627,15 +1627,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブシュウゥ……▼
+			<Text>怪物『ブシュウゥ……▼
 ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1664,15 +1664,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『霧が……　晴れた……▼
-いったい　あの　かいぶつは
+いったい　あの　怪物は
 何だったんだろう……？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T13:21:32" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1744,16 +1744,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『今……
+			<Text>怪物『今……
 ３次元宇宙ノ　物理法則ガ▽
 破レ　収縮スル……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1817,17 +1817,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブヒャヒャ！
+			<Text>怪物『ブヒャヒャ！
 バヒフフフ！▼
 コノ　世界ノ　生命
 スベテノ　最期ノ　時……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1894,17 +1894,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ブルブルブル……▼
+			<Text>怪物『ブルブルブル……▼
 何モ　カモ……
 長波長ノ　スペクトルニ▽
 シフト　スル……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1975,7 +1975,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ナントイウ
+			<Text>怪物『ナントイウ
 生命力……▼
 ヨモヤ　コノ　星ノ
 生命　トハ　思エヌ……▼
@@ -1983,11 +1983,11 @@
 高次元ノ　存在……？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2065,15 +2065,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『ウワー▼
+			<Text>怪物『ウワー▼
 ヤラレター</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2257,7 +2257,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『赤イ霧……▼
+			<Text>怪物『赤イ霧……▼
 １１ノ　次元間ノ　対称性ヲ　破ル
 メタフィジカル宇宙ノ　ユラギ▼
 我ヲ　コノ　星ニ　導キシ
@@ -2267,11 +2267,11 @@
 干渉スル　コトハ　不可能……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T10:01:35" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T10:01:35" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2317,17 +2317,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいぶつ『思考ハ　意味ヲ　為サナイ▼
+			<Text>怪物『思考ハ　意味ヲ　為サナイ▼
 １１次元宇宙ノ　存在ニ
 ３次元宇宙ノ　ポテンシャルハ▽
 コトゴトク　無力……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T01:51:36" />
+				Time="2012-02-01T02:40:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
