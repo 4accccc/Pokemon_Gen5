@@ -2592,7 +2592,7 @@ static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap)
   {
     MMDL *fmmdl = FIELD_PLAYER_GetMMdl( field_player );
     const VecFx32 * now_pos = MMDL_GetVectorPosAddress( fmmdl );
-    LOCATION_SetDirect( return_loc, FIELDMAP_GetZoneID(fieldmap), DIR_DOWN,
+    LOCATION_SetDirect( return_loc, FIELDMAP_GetZoneID(fieldmap), EXIT_DIR_DOWN,
         now_pos->x, now_pos->y, now_pos->z );
   }
   else
