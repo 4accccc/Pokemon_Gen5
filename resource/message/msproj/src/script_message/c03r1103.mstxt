@@ -842,13 +842,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>１つの　ボックスには　つかまえた
-ポケモンを　３０ひき　あずけられます▼
+ポケモンを　３０ぴき　あずけられます▼
 さいしょは　８こしか　ない
 ボックスですが　あずければ▽
 どんどん　ふえていきますよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:31:34" />
+				Time="2012-02-01T06:40:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
