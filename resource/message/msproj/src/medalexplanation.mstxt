@@ -8091,27 +8091,27 @@
 			Language="JPN">
 			<Text>ジョインアベニューで　１００にんの
 おきゃくさんを　あんないした
-むてきの　あんないにんの　メダル。</Text>
+てんかむてきの　ガイドの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニューで　１００人の
 お客さんを　案内した
-無敵の　案内人の　メダル。</Text>
+天下無敵の　ガイドの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -8221,15 +8221,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０けんの　おみせを　つくった
+			<Text>ジョインアベニューで
+２０けんの　おみせを　つくった
 カリスマオーナーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:33:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -8442,27 +8443,27 @@
 			Language="JPN">
 			<Text>ジョインアベニューで
 １００かい　おみやげを　もらった
-さいこうの　おくりものの　メダル。</Text>
+さいこうの　にんきものの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジョインアベニューで
 １００回　お土産を　もらった
-最高の　贈り物の　メダル。</Text>
+最高の　人気者の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2012-02-01T09:01:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

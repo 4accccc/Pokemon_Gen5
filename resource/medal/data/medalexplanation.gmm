@@ -2105,10 +2105,10 @@
 	<row id="MDL_EXP_APPLICATION_025">
 		<language name="JPN" width="216">ジョインアベニューで　１００にんの
 おきゃくさんを　あんないした
-むてきの　あんないにんの　メダル。</language>
+てんかむてきの　ガイドの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで　１００人の
 お客さんを　案内した
-無敵の　案内人の　メダル。</language>
+天下無敵の　ガイドの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_026">
@@ -2130,7 +2130,8 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_028">
-		<language name="JPN" width="216">２０けんの　おみせを　つくった
+		<language name="JPN" width="216">ジョインアベニューで
+２０けんの　おみせを　つくった
 カリスマオーナーの　ための　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
 ２０軒の　お店を　作った
@@ -2176,10 +2177,10 @@
 	<row id="MDL_EXP_APPLICATION_033">
 		<language name="JPN" width="216">ジョインアベニューで
 １００かい　おみやげを　もらった
-さいこうの　おくりものの　メダル。</language>
+さいこうの　にんきものの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
 １００回　お土産を　もらった
-最高の　贈り物の　メダル。</language>
+最高の　人気者の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_034">
