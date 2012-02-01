@@ -1828,15 +1828,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頭が良い人と　運動ができる人
+			<Text>頭がいい人と　運動ができる人
 選ぶならどちらを選ぶ？　のアンケート</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T09:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T09:01:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1898,15 +1898,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>外見の良い人と　心がキレイな人
+			<Text>外見のいい人と　心がキレイな人
 選ぶなら　どちらを選ぶ？　のアンケート</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T09:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-01T09:01:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
