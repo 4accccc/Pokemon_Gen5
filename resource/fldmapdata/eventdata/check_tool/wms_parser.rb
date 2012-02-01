@@ -22,7 +22,7 @@ class WMSParam
     @Height = 0
     @x_offset = 0
     @z_offset = 0
-    @block_size = ""
+    @block_size = "32 32" # デフォルト値を設定しておく
   end
 
   # ゲッター

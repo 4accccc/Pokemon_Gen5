@@ -11,6 +11,10 @@ $KCODE = "SJIS"
 require "mev_parser.rb"
 require 'csv'
 
+#ポジションタイプ定数
+EVENTDATA_POS_TYPE_GRID = "EVENTDATA_POSTYPE_GRID"
+EVENTDATA_POS_TYPE_RAIL = "EVENTDATA_POSTYPE_RAIL"
+
 # チェックするmevのディレクトリ
 PATH_TO_DIR     = "../data/"
 TARGET_FILENAME = "*.mev"
@@ -19,7 +23,7 @@ TARGET_FILENAME = "*.mev"
 result_file = ARGV[0]
 
 # イベントデータ型定義
-$fes_event = Struct.new("FesData", :filename, :id ,:type ,:x,:y,:z )
+$fes_event = Struct.new("FesData", :filename, :id ,:type ,:x,:y,:z ,"is_rail" )
 
 # フェスイベントを設定する
 def set_fes_event( dst ,filename ,event ,mev_data)
@@ -30,15 +34,24 @@ def set_fes_event( dst ,filename ,event ,mev_data)
   # ブロックサイズ取得
   bs = mev_data.wms_param.block_size.split("\s")
   
-  # ブロックオフセット(Mayaではブロックの中心が０になっている)
-  x_ofxs = (bs[0].to_i)/2
-  z_ofxs = (bs[1].to_i)/2
+  if event.Pos_Type.include?( EVENTDATA_POS_TYPE_GRID ) then
+    # ブロックオフセット(Mayaではブロックの中心が０になっている)
+    x_ofxs = (bs[0].to_i)/2
+    z_ofxs = (bs[1].to_i)/2
 
-  # ワールド座標に変換
-  pos[0] = ((pos[0].to_f-8)/16).round + x_ofxs + mev_data.wms_param.x_offset.to_i*32
-  pos[1] = (pos[1].to_i/16).round
-  pos[2] = z_ofxs - ((pos[2].to_f+8)/16).round + mev_data.wms_param.z_offset.to_i*32
-  dst << $fes_event.new( filename ,event.Event_Label ,event.Event_Type ,pos[0],pos[1],pos[2] )
+    # ワールド座標に変換
+    pos[0] = ((pos[0].to_f-8)/16).round + x_ofxs + mev_data.wms_param.x_offset.to_i*32
+    pos[1] = (pos[1].to_i/16).round
+    pos[2] = z_ofxs - ((pos[2].to_f+8)/16).round + mev_data.wms_param.z_offset.to_i*32
+    # グリッドデータを設定
+    dst << $fes_event.new( filename ,event.Event_Label ,event.Event_Type ,pos[0],pos[1],pos[2] ,"×" )
+  
+
+  elsif event.Pos_Type.include?( EVENTDATA_POS_TYPE_RAIL ) then
+    
+    # レールデータ
+    dst << $fes_event.new( filename ,event.Event_Label ,event.Event_Type ,pos[0],pos[1],pos[2],"○" )
+  end
 end
 
 
@@ -68,11 +81,11 @@ filenames.each{|filename|
 # =====================================
 # データ出力
 CSV.open(result_file, 'w') do |writer|
-  writer << [ "ファイル名", "ID"  ,"場所" ,"BGイベントタイプ" ]
+  writer << [ "ゾーン名", "ID"  ,"場所" ,"BGイベントタイプ","レール" ]
   # 検索結果出力
   event_list.each{|data|
     pos_str = "%d %d %d"%[data.x,data.y,data.z]
-    writer << [ File.basename(data.filename,".mev"), data.id ,pos_str ,data.type ]
+    writer << [ File.basename(data.filename,".mev"), data.id ,pos_str ,data.type,data.is_rail ]
   }
     writer << [ "イベント総数：%d"%[event_list.size] ]
 end
