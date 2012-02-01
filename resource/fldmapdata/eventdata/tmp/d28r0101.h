@@ -17,6 +17,7 @@
 #define TR_BACKPACKERM_26                  3
 #define TR_SCIENTISTW_13                   4
 #define D28R0101_ROCK_01                   5
+#define FLD_ITEM_383                       6
 
 #endif //ZONE_D28R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d28r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
