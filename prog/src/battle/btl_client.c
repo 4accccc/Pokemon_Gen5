@@ -10943,7 +10943,7 @@ static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WOR
   if(psw->Estimate.ending_point<0){
     _leave_audience( viewCore, psw, psw->Audience.account );          // 観客を減らす
     _set_audience_reaction( viewCore, psw, POKEWOOD_AUDIENCE_HATE );  // 残った観客に「?」を表示
-  }else if( psw->Estimate.ending_point>15 ){
+  }else if( psw->Estimate.ending_point>POKEWOOD_STRANGE_THRESHOLD ){
   // ストレンジエンド
     _set_audience_reaction( viewCore, psw, POKEWOOD_AUDIENCE_SURPRISE );  // 驚きマーク
   }
