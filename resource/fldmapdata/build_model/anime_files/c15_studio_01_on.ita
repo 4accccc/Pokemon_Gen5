@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-26T16:59:53" source="c15_studio_01.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-01-31T20:05:39" source="c15_studio_01_on.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -43,7 +43,7 @@
 	2.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="2">
+<tex_srt_anm_array size="3">
 	<tex_srt_anm index="0" material_name="c15_studio_5">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="1"/>
@@ -57,6 +57,13 @@
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="40" data_head="41"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="c15_studio_9">
+		<tex_scale_s frame_step="1" data_size="1" data_head="2"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="1"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 

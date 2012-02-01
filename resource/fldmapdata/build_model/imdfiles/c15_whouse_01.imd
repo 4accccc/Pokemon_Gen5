@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-06T16:15:30" source="c15_whouse_01.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-01-27T11:50:23" source="c15_whouse_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-12-06T16:15:30" source="c15_whouse_01.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2012-01-27T11:50:23" source="c15_whouse_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -393,8 +393,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="1" name="polygon1"
-		vertex_size="62" polygon_size="20"
-		triangle_size="6" quad_size="14"
+		vertex_size="58" polygon_size="19"
+		triangle_size="6" quad_size="13"
 		volume_min="-2.687500 0.125000 -2.625000"
 		volume_max="3.937500 3.500000 1.750000"
 		volume_r="5.236328"
@@ -439,7 +439,7 @@
 					<tex st="31.687500 20.687500"/>
 					<pos_xy xy="-2.687500 2.531250"/>
 				</primitive>
-				<primitive index="2" type="quads" vertex_size="48">
+				<primitive index="2" type="quads" vertex_size="44">
 					<tex st="48.437500 19.875000"/>
 					<pos_s xyz="3.937500 1.875000 -2.375000"/>
 					<tex st="48.437500 16.125000"/>
@@ -510,18 +510,9 @@
 					<pos_xy xy="-1.250000 2.375000"/>
 					<tex st="63.937500 21.187500"/>
 					<pos_xy xy="0.500000 2.375000"/>
-					<tex st="52.187500 30.750000"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_s xyz="-1.312500 2.187500 1.437500"/>
-					<tex st="52.187500 31.937500"/>
-					<pos_xy xy="-1.312500 2.000000"/>
-					<tex st="55.875000 31.937500"/>
-					<pos_xz xz="-1.312500 1.750000"/>
-					<tex st="55.875000 31.062500"/>
-					<pos_xy xy="-1.312500 2.125000"/>
 					<tex st="55.875000 30.375000"/>
 					<nrm xyz="0.000000 0.980469 0.195313"/>
-					<pos_xy xy="2.312500 2.125000"/>
+					<pos_s xyz="2.312500 2.125000 1.750000"/>
 					<tex st="52.187500 30.375000"/>
 					<pos_yz yz="2.187500 1.437500"/>
 					<tex st="52.187500 16.125000"/>
@@ -551,8 +542,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="2" name="polygon2"
-		vertex_size="30" polygon_size="8"
-		triangle_size="0" quad_size="8"
+		vertex_size="26" polygon_size="7"
+		triangle_size="0" quad_size="7"
 		volume_min="-2.812500 2.468750 -2.750000"
 		volume_max="3.812500 3.750000 1.687500"
 		volume_r="5.430420"
@@ -578,7 +569,7 @@
 					<tex st="0.187500 31.000000"/>
 					<pos_xy xy="0.000000 3.750000"/>
 				</primitive>
-				<primitive index="1" type="quads" vertex_size="24">
+				<primitive index="1" type="quads" vertex_size="20">
 					<tex st="58.875000 30.812500"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_xy xy="3.812500 2.468750"/>
@@ -597,18 +588,9 @@
 					<pos_xy xy="0.000000 3.750000"/>
 					<tex st="57.000000 31.000000"/>
 					<pos_xy xy="-2.812500 2.718750"/>
-					<tex st="58.875000 16.062500"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_yz yz="2.468750 -2.750000"/>
-					<tex st="58.875000 30.812500"/>
-					<pos_xz xz="-2.812500 1.687500"/>
-					<tex st="57.000000 30.812500"/>
-					<pos_xy xy="-2.812500 2.718750"/>
-					<tex st="57.000000 16.062500"/>
-					<pos_xz xz="-2.812500 -2.750000"/>
 					<tex st="12.812500 16.062500"/>
 					<nrm xyz="0.343750 0.939453 0.000000"/>
-					<pos_xy xy="1.000000 3.750000"/>
+					<pos_s xyz="1.000000 3.750000 -2.750000"/>
 					<tex st="12.812500 30.812500"/>
 					<pos_xz xz="1.000000 1.687500"/>
 					<tex st="57.000000 30.812500"/>
@@ -638,8 +620,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="3" name="polygon3"
-		vertex_size="36" polygon_size="13"
-		triangle_size="4" quad_size="9"
+		vertex_size="30" polygon_size="11"
+		triangle_size="4" quad_size="7"
 		volume_min="-3.000000 0.125000 -2.875000"
 		volume_max="4.000000 3.500000 1.687500"
 		volume_r="5.184570"
@@ -648,7 +630,7 @@
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="4">
+			<primitive_array size="3">
 				<primitive index="0" type="quad_strip" vertex_size="12">
 					<mtx idx="0"/>
 					<tex st="4.125000 0.812500"/>
@@ -682,26 +664,9 @@
 					<pos_xy xy="-2.687500 2.531250"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
-					<tex st="-4.187500 0.812500"/>
-					<nrm xyz="-0.914063 0.000000 0.406250"/>
-					<pos_xy xy="-2.687500 2.031250"/>
-					<tex st="-4.187500 2.750000"/>
-					<pos_xy xy="-2.687500 2.531250"/>
-					<tex st="-4.375000 0.812500"/>
-					<nrm xyz="-0.978516 0.000000 0.207031"/>
-					<pos_s xyz="-2.812500 1.968750 1.187500"/>
-					<tex st="-4.375000 2.750000"/>
-					<pos_xy xy="-2.812500 2.468750"/>
-					<tex st="-7.750000 0.812500"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_yz yz="1.968750 -2.500000"/>
-					<tex st="-7.750000 2.750000"/>
-					<pos_xy xy="-2.812500 2.468750"/>
-				</primitive>
-				<primitive index="2" type="quad_strip" vertex_size="6">
 					<tex st="7.937500 0.812500"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xy xy="3.812500 1.968750"/>
+					<pos_s xyz="3.812500 1.968750 -2.500000"/>
 					<tex st="7.937500 2.750000"/>
 					<pos_xy xy="3.812500 2.468750"/>
 					<tex st="4.375000 0.812500"/>
@@ -715,7 +680,7 @@
 					<tex st="4.125000 2.750000"/>
 					<pos_xy xy="3.687500 2.531250"/>
 				</primitive>
-				<primitive index="3" type="triangles" vertex_size="12">
+				<primitive index="2" type="triangles" vertex_size="12">
 					<tex st="-5.000000 1.687500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="4.000000 0.125000 -2.875000"/>
@@ -760,8 +725,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="4"
-		vertex_size="136" polygon_size="43"
-		triangle_size="10" quad_size="33"
+		vertex_size="122" polygon_size="39"
+		triangle_size="10" quad_size="29"
 		volume_min="-3.000000 0.125000 -2.875000"
 		volume_max="4.431152 3.750000 1.750000"
 		volume_r="5.706055"
@@ -773,8 +738,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="136" polygon_size="43"
-	triangle_size="10" quad_size="33"/>
+<output_info vertex_size="122" polygon_size="39"
+	triangle_size="10" quad_size="29"/>
 
 </body>
 
