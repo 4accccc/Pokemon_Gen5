@@ -519,17 +519,8 @@ EVENT_START		ev_pos_c05_sage6_01
     
     //ロット：おひきとりを
     _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_04,C05_SAGE6_01, POS_UL ) 
-    _AB_KEYWAIT_MARK()
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
-    
-    /*
-    //自機にカメラを戻す
-    _CAMERA_DEF_MOVE (32)
-    //カメラ待ち
-    _CAMERA_WAIT_MOVE()
-    _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-    _CAMERA_END()		//カメラ操作終了
-    */
   
   //はい
   ELSE
@@ -1100,19 +1091,25 @@ EVENT_START		ev_pos_c05_stopper_01
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
   
   //主人公にふりむき
   IF $LCW_POSZ == 397 THEN
     _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_u )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    IF $LWK_DIR != DIR_DOWN THEN
+      _TIME_WAIT(16)
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    ENDIF
     _OBJ_ANIME_WAIT()
   
   ELSE
   
     _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_d )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    IF $LWK_DIR != DIR_UP THEN
+      _TIME_WAIT(16)
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    ENDIF
     _OBJ_ANIME_WAIT()
     
   ENDIF
