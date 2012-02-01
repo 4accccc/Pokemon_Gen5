@@ -207,7 +207,7 @@ ev_leader6_btl:
   _BALLOONWIN_CLOSE()
   
   //タワーオブヘブンへ向かった？
-  IF $WK_SCENE_C06HAKASE == 3 THEN
+  IF $WK_SCENE_C06HAKASE == 2 THEN
     //========================================//
     //ローカルライブキャスター・アララギ通話状態を変更（T07到着まで）
     _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_CARGOSERVICE )

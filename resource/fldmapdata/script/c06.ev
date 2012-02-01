@@ -488,11 +488,6 @@ EVENT_START   ev_scene_c06_swleader6_01
     //TOHのアララギ博士を非表示
     _FLAG_SET( FV_R07R0101_HAKASE2_01 )
     //========================================//
-    //ローカルライブキャスター・アララギ通話状態を変更（T07到着まで）
-    _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_CARGOSERVICE )
-    //ローカルライブキャスター・ライバル通話状態を変更（D24R0301,D24R0901ベル連れ歩きまで）
-    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R06_2 )
-    //========================================//
     
   ELSE
     //フウロ：まだ　タワーオブヘブンを
