@@ -211,11 +211,11 @@ static const GFL_CLACTPOS P5_PokeTypePos[] =
 // ページ５の技のタイプアイコンの座標
 static const GFL_CLACTPOS P5_WazaTypePos[] =
 {
-  {  24,  80 },
-  { 152,  80 },
-  {  24, 128 },
-  { 152, 128 },
-  {  88, 176 }
+  {  28,  80 },
+  { 156,  80 },
+  {  28, 128 },
+  { 156, 128 },
+  {  92, 176 }
 };
 
 static const GFL_CLACTPOS P6_PokePos = { 24, 12 };    // ページ６のポケモンアイコンの座標
