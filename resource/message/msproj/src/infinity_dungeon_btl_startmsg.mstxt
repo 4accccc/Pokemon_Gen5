@@ -4385,10 +4385,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>だいたいデータは　とれたわね！
-あなたで　さいごと　するとするわ！▼</Text>
+あなたで　さいごと　するわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-14T09:38:56" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T08:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4397,10 +4397,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>だいたいデータは　取れたわね！
-あなたで　最後と　するとするわ！▼</Text>
+あなたで　最後と　するわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-14T09:39:00" />
+				User="matsumiya:W00224"
+				Time="2012-02-01T08:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
