@@ -2640,6 +2640,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
     p_wk->slide_length = 0;
     GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+    return;
   }
 
   // スクロール移動量でスクロール処理を行う
@@ -2651,6 +2652,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
     p_wk->slide_length = 0;
     GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+    return;
   }
 
   // ==========================
@@ -3919,6 +3921,7 @@ static BOOL CursorUpdate( MEDALBOXSYS_WORK *p_wk )
       {
         cursor_tmp+=PAGE_MEDAL_MAX;
         SetCursor( p_wk , cursor_tmp  , TRUE);
+        return TRUE;
       }
     }
 
@@ -3936,6 +3939,7 @@ static BOOL CursorUpdate( MEDALBOXSYS_WORK *p_wk )
       {
         cursor_tmp-=PAGE_MEDAL_MAX;
         SetCursor( p_wk , cursor_tmp  , TRUE);
+        return TRUE;
       }
     }
 
