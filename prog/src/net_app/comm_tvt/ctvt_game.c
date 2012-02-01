@@ -3964,7 +3964,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime, FALSE );  // タイムゲージ
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkLast, FALSE );  // ラストスパート
     // タイムバーのBMPWIN破棄
-    GFL_BMPWIN_ClearTransWindow( gameWork->bmpWinTime );
+    GFL_BMPWIN_ClearTransWindow_VBlank( gameWork->bmpWinTime );
 
     // ゲーム1だけ破棄するもの
     if( game_id == CGI_BALLOON1 )
@@ -4022,7 +4022,6 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, gameWork->heapId );
     GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_score_bg_NSCR, 
         CTVT_GAME_FRAME_M_BG,  0, 0, FALSE, gameWork->heapId );
-    GFL_BG_SetVisible( CTVT_GAME_FRAME_S_TIMEBAR, VISIBLE_OFF );
   }
 
   // 結果発表で使用するOBJ
