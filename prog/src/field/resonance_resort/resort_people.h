@@ -138,6 +138,8 @@ extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const 
 extern void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk );
 //住人だけ登録
 extern void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESORT_DATA_BUFFER_TYPE c_buffer_tbl[], u32 tbl_len );
+//チュートリアル用
+extern void RESORT_PEOPLE_SYS_AddPeopleTutorial( RESORT_PEOPLE_SYS *p_wk );
 //人物ワークのメモリを開放する
 extern void RESORT_PEOPLE_SYS_Remove( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people );
 extern void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk );

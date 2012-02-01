@@ -846,6 +846,78 @@ void RESORT_PEOPLE_SYS_AddPeopleBufferType( RESORT_PEOPLE_SYS *p_wk, const RESOR
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  チュートリアル用の人物作成
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SYS_AddPeopleTutorial( RESORT_PEOPLE_SYS *p_wk )
+{
+
+  static const RESORT_DATA_BUFFER_TYPE sc_type[] = 
+  {
+    RESORT_DATA_BUFFER_TYPE_RESIDENT,
+    RESORT_DATA_BUFFER_TYPE_PROXY_BUFF,
+  };
+
+  RESORT_PLACEID placeID = p_wk->param.placeID;
+
+  RESORT_ABSTRUCT_ITERATOR ite = RESORT_ABSTRUCT_MANAGER_BeginIterator( p_wk->param.p_abstruct, sc_type, NELEMS(sc_type) );
+
+  while(TRUE)
+  {
+    RESORT_ABSTRUCT_DATA *p_data = RESORT_ABSTRUCT_MANAGER_NextIterator( p_wk->param.p_abstruct, &ite, sc_type, NELEMS(sc_type) );
+    if( p_data == NULL )
+    {
+      break;
+    }
+
+    if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
+    {
+      BOOL is_add = FALSE;
+
+      int peopleID = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      {
+
+        if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_wk->param.p_data_manager, placeID, peopleID ) )
+        {
+          is_add = TRUE;
+        }
+      }
+
+      {
+        u16 type = RESORT_ABSTRUCT_DATA_GetData( p_data, RESORT_DATA_PARAM_TYPE, NULL );
+        RESORT_DATA_BUFFER_TYPE buff = RESORT_ABSTRUCT_DATA_GetBufferType( p_data );
+        if( buff == RESORT_DATA_BUFFER_TYPE_PROXY_BUFF )
+        {
+          if( type == RESORT_PROXY_TYPE_TUTORIAL_01
+              || type == RESORT_PROXY_TYPE_TUTORIAL_02 )
+          {
+            is_add |= TRUE;
+          }
+          else
+          {
+            is_add = FALSE;
+          }
+        }
+      }
+
+      if( is_add )
+      {
+        RESORT_PEOPLE_SYS_ADD_PARAM param;
+        GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+        param.p_data      = p_data;
+        param.placeID     = p_wk->param.placeID;
+        RESORT_PEOPLE_SYS_Add( p_wk, &param, RESORT_PEOPLE_CREATE_NEW, peopleID );
+      }
+    }
+  }
+
+
+  Resort_People_DeleteNotBideMMdl( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  人物を一人追加
  *
  *	@param	RESORT_PEOPLE_SYS *p_wk ワーク

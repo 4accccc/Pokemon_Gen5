@@ -48,6 +48,8 @@ extern void RESORT_FIELD_EndEffect( FIELDMAP_WORK *p_fieldmap, u32 id );
 
 extern void RESORT_FIELD_StartPeople( FIELDMAP_WORK *p_fieldmap );
 
+extern void RESORT_FIELD_AddCrowdTutorial( FIELDMAP_WORK *p_fieldmap );
+
 extern void RESORT_FIELD_SetParade( FIELDMAP_WORK *p_fieldmap );
 extern void RESORT_FIELD_SetNoiseReq( FIELDMAP_WORK *p_fieldmap, BOOL is_visible );
 

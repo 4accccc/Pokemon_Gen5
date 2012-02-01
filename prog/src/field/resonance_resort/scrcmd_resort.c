@@ -2543,6 +2543,14 @@ VMCMD_RESULT EvCmdResortSetPresetPoeple( VMHANDLE *p_core, void *p_wk_adrs )
   u16 preset  = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
   RESORT_UTIL_SetPresetPeople( p_sys, p_mystatus, people, preset, heapID );
+
+  if( preset == RESORT_PRESET_TUTORIAL_01
+    || preset == RESORT_PRESET_TUTORIAL_02 )
+  {
+    //åQèWÇ…í«â¡
+    RESORT_FIELD_AddCrowdTutorial(p_field);
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 

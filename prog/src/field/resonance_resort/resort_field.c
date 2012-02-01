@@ -104,6 +104,7 @@ static RESORT_FIELD_BUFF * RESORT_FIELD_BUFF_Init( HEAPID heapID, const RESORT_F
 static void RESORT_FIELD_BUFF_Exit( RESORT_FIELD_BUFF *p_wk );
 static void RESORT_FIELD_BUFF_Main( RESORT_FIELD_BUFF *p_wk );
 static void RESORT_FIELD_BUFF_ChangeCallBack( RESORT_FIELD_BUFF *p_wk, BOOL (*UpdateDataCallback)( void *, void *, u32 , RESORT_RECV_DATA_UPDATE ) );
+static void RESORT_FIELD_BUFF_RequestUpdateProxy( RESORT_FIELD_BUFF *p_wk );
 
 //=============================================================================
 /**
@@ -171,6 +172,7 @@ static void RESORT_FIELD_PEOPLE_DeleteCrowd( RESORT_FIELD_PEOPLE *p_wk, RESORT_P
 static RESORT_CROWD_PEOPLE * RESORT_FIELD_PEOPLE_GetCrowdPeople( RESORT_FIELD_PEOPLE *p_wk );
 
 static void RESORT_FIELD_PEOPLE_SetParadePeoplePos( RESORT_FIELD_PEOPLE *p_wk, RESORT_SYSTEM *p_sys, RESORT_NPC_SYS *p_npc_sys );
+static void RESORT_FIELD_PEOPLE_UpdateCrowdProxy( RESORT_FIELD_PEOPLE *p_wk );
 
 //=============================================================================
 /**
@@ -558,6 +560,18 @@ void RESORT_FIELD_StartPeople( FIELDMAP_WORK *p_fieldmap )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  群集に追加
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールド
+ */
+//-----------------------------------------------------------------------------
+void RESORT_FIELD_AddCrowdTutorial( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  RESORT_FIELD_PEOPLE_UpdateCrowdProxy( p_wk->p_people_sys );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  パレードモード設定
  *
  *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
@@ -699,6 +713,17 @@ static void RESORT_FIELD_BUFF_ChangeCallBack( RESORT_FIELD_BUFF *p_wk, BOOL (*Up
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  代理人更新
+ *
+ *	@param	RESORT_FIELD_BUFF *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_BUFF_RequestUpdateProxy( RESORT_FIELD_BUFF *p_wk )
+{
+  p_wk->is_proxy_update = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  受信バッファのアップデート
  *
  *	@param	RESORT_FIELD_BUFF *p_wk ワーク
@@ -752,7 +777,7 @@ static void Reception_Buff_UpdateProxy( RESORT_FIELD_BUFF *p_wk )
 {
   int i;
 
-  if( p_wk->is_proxy_update )
+  if( !p_wk->is_proxy_update )
   {
     return;
   }
@@ -766,7 +791,7 @@ static void Reception_Buff_UpdateProxy( RESORT_FIELD_BUFF *p_wk )
     }
   }
 
-  //p_wk->is_proxy_update = TRUE;
+  p_wk->is_proxy_update = FALSE;
 }
 
 //=============================================================================
@@ -3638,8 +3663,7 @@ void RESORT_FIELD_PEOPLE_Setup( RESORT_FIELD_PEOPLE *p_wk, BOOL is_tutorial, BOO
   {
     if( is_tutorial )
     {
-      static const RESORT_DATA_BUFFER_TYPE type = RESORT_DATA_BUFFER_TYPE_RESIDENT;
-      RESORT_PEOPLE_SYS_AddPeopleBufferType( p_wk->p_people_sys, &type, 1 );
+      RESORT_PEOPLE_SYS_AddPeopleTutorial( p_wk->p_people_sys );
     }
     else
     {
@@ -3711,13 +3735,6 @@ static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELDMAP_WORK* 
 //-----------------------------------------------------------------------------
 static void RESORT_FIELD_PEOPLE_StartAdd( RESORT_FIELD_PEOPLE *p_wk )
 {
-  static const RESORT_DATA_BUFFER_TYPE sc_type[]  =
-  {
-    RESORT_DATA_BUFFER_TYPE_RECV_SV_BUFF,
-    RESORT_DATA_BUFFER_TYPE_RECV_TMP_BUFF,
-  };
-  //RESORT_PEOPLE_SYS_AddPeopleBufferType( p_wk->p_people_sys, sc_type, NELEMS(sc_type) );
-
   RESORT_FIELD_BUFF_ChangeCallBack( p_wk->p_buff, Field_People_UpdateDataCallback );
 }
 //----------------------------------------------------------------------------
@@ -3830,9 +3847,20 @@ static void RESORT_FIELD_PEOPLE_SetParadePeoplePos( RESORT_FIELD_PEOPLE *p_wk, R
       }
     }
   }
- 
-
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人バッファ更新
+ *
+ *	@param	RESORT_FIELD_PEOPLE *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_FIELD_PEOPLE_UpdateCrowdProxy( RESORT_FIELD_PEOPLE *p_wk )
+{
+  RESORT_FIELD_BUFF_RequestUpdateProxy( p_wk->p_buff );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief 受信データ更新コールバック
