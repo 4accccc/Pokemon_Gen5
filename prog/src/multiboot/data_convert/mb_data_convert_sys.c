@@ -445,6 +445,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     if( p_wk->timeout_cnt >= MB_DATACONV_FIRST_TIMEOUT )
     {
       MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_07, 1 );
+      MB_MSG_SetDispKeyCursor( p_wk->p_msg, TRUE );
       OS_TPrintf( "初回タイムアウト\n" );
       (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
@@ -489,6 +490,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     {
       //ROM違う！
       MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_02 , p_wk->p_comm_init->msgSpeed );
+      MB_MSG_SetDispKeyCursor( p_wk->p_msg, TRUE );
 
       MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
 
@@ -531,15 +533,18 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       {
       case DES_MISS_LOAD_BACKUP:
         MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR_BACKUP_LOAD );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_10 , p_wk->p_comm_init->msgSpeed );
         break;
       case DES_ANOTHER_COUNTRY:
         MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR_ANOTHER_COUNTRY );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_06 , p_wk->p_comm_init->msgSpeed );
         break;
       default:
         MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_06 , p_wk->p_comm_init->msgSpeed );
         break;
       }
-      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_06 , p_wk->p_comm_init->msgSpeed );
+      MB_MSG_SetDispKeyCursor( p_wk->p_msg, TRUE );
       (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
     break;
@@ -581,6 +586,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_WAIT_NEXT_GAME_ERROR_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
     {
+      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05, p_wk->p_comm_init->msgSpeed );
       MB_COMM_ReqDisconnect( p_wk->p_comm );
       (*p_seq)++;
     }

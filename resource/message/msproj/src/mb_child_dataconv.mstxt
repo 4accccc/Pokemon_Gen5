@@ -51,10 +51,10 @@
 			<Text>ただしい　ソフトが　ささっていません
 でんげんをきり　ただしい　ソフトを
 さしてから　おもいでリンクを
-きどうしなおして　ください</Text>
+きどうしなおして　ください▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:25:26" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -65,10 +65,10 @@
 			<Text>正しい　ソフトが　ささっていません
 電源を切り　正しい　ソフトを
 さしてから　おもいでリンクを
-起動し直してください</Text>
+起動し直してください▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:25:36" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:34:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -139,11 +139,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>データの　よみこみに
-しっぱい　しました
-おもいでリンクを　しゅうりょうします</Text>
+しっぱい　しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:26:00" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:34:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -151,11 +150,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>データの読み込みに　失敗しました
-おもいでリンクを　終了します</Text>
+			<Text>データの読み込みに
+失敗しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:26:09" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:34:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -189,11 +188,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もう１つの　ＤＳの
-せつぞくに　しっぱい　しました
-おもいでリンクを　しゅうりょうします</Text>
+せつぞくに　しっぱい　しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:26:19" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -202,11 +200,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳの
-接続に　失敗しました
-おもいでリンクを　終了します</Text>
+接続に　失敗しました▼
+</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-04T02:26:26" />
+				User="nagihashi_toru:W00268"
+				Time="2012-02-01T11:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -286,10 +284,10 @@
 			<Text>レポートを　よみこむことが
 できませんでした
 レポートが　かかれていないか
-こわれている　かのうせいがあります</Text>
+こわれている　かのうせいがあります▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-07-19T03:44:30" />
+				Time="2012-02-01T11:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -300,10 +298,10 @@
 			<Text>レポートを　読み込むことが
 できませんでした
 レポートが　書かれていないか
-壊れている　可能性があります</Text>
+壊れている　可能性があります▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-07-19T03:44:30" />
+				Time="2012-02-01T11:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
