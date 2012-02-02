@@ -4760,21 +4760,21 @@ void RESORT_RECORD_AddID( u32 record_id )
     }
   }
   //âüÇµèoÇµ
-  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+  for( i = RESORT_DATA_RECORD_CNT-1; i >= 0; i-- )
   {
     u32 next_id = i + 1;
     if( next_id < RESORT_DATA_RECORD_CNT )
     {
-      u32 next_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, NULL );
-      RESORT_DATE next_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, NULL );
+      u32 now_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+      RESORT_DATE now_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
 
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, next_record );
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, next_date );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, now_record );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, now_date );
     }
   }
-  //å„îˆÇ…Ç¢ÇÍÇÈ
-  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+RESORT_DATA_RECORD_CNT-1, record_id );
-  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+RESORT_DATA_RECORD_CNT-1, resort_date );
+  //êÊì™Ç…Ç¢ÇÍÇÈ
+  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00, record_id );
+  RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00, resort_date );
 
 RESORT_RECORD_ADD_ID_SORT:
 
