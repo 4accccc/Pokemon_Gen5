@@ -73,7 +73,7 @@ DEFINE_LOCAL LWK_COMBO_IDX
 DEFINE_LOCAL LWK_IS_LVUP
 
 //------------------------------注意--------------------------------//
-//	住民のイベントにLOCALWORK0～7
+//	住民のイベントにLOCALWORK0～7 + 8
 //	NPCのイベントに LOCALWORK11～13 まで使用ししています。		//
 //	話しかけるたびに次の人の噂を云うために使用。        			//
 //																	//
@@ -1183,12 +1183,15 @@ sub_resident_institution:
 
   //フィーバー
   _RESORT_GET_MY_DATA( RESORT_MY_PARAM_IS_FEVER, LWK_RET )
-  IF $LWK_RET == TRUE THEN
+
+  IF $LWK_RET == TRUE && $LOCALWORK8 == FALSE THEN
 
     _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
     _RESORT_SET_WORD( RESORT_WORD_FEVER_DAY, RESORT_WORD_PARAM_NONE, 0, 1 )
     _RESORT_GET_MSGID( RESORT_RESIDENT_FEVER_MSGID, LWK_MSGID )
 	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
+    $LOCALWORK8 = TRUE
   ENDIF
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
