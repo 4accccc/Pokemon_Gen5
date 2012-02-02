@@ -451,15 +451,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふねの　なかは
-ワープパネルで　いどう　するんです▼
-ですが　おくに　すすむには
+			<Text>ふねの　おくに　すすむには
 パスワードが　ひつよう　なんですよ▼
 なので　プラズマだんいん　から
 パスワードを　ききだしてください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:04:25" />
+				Time="2012-02-02T03:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -467,15 +465,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>船内での　移動は
-ワープパネル　なんです▼
-ですが　奥に　進むには
+			<Text>船内の　奥に　進むには
 パスワードが　必要なんですよ▼
 なので　プラズマ団員から
 パスワードを　ききだしてください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:04:18" />
+				Time="2012-02-02T03:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
