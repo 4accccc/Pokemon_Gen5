@@ -74,7 +74,10 @@ EVENT_START   ev_bg_r02_board2_01
   //看板を後ろから調べた（メダル未開放）
   IF $LWK_DIR == DIR_DOWN && $LWK_MEDAL_CHC == FALSE THEN
 
+    _TALK_START_SE_PLAY()
     _PLAINWIN_MSG_DOWN( msg_r02_sign4_01 ) //看板2:かんばんの　うらに
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
 
     //========================================//
     //メダル条件達成
