@@ -7608,11 +7608,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　[Name:TrainerName ]ちゃん▼
+			<Text>あっ　[Name:TrainerName ]さん▼
 ……よかった▼
 きて　くれたんだ▼
 えっ？▼
-べっ べつに　まって　ないさ！
+べっ　べつに　まって　ないさ！
 ボクも　いま　きた　ところだから▼
 アハハ！▼
 ねぇ　よかったら
@@ -7628,10 +7628,11 @@ N</Text>
 ふたりのり　せんよう　らしいから▽
 ずっと　がまん　していたんだよね▼
 うれしくって　ドキドキしてきた▼
-さっそく　のろうよ　[Name:TrainerName ]ちゃん！▼</Text>
+さっそく　のろうよ
+[Name:TrainerName ]さん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:46:06" />
+				Time="2012-02-02T11:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7639,11 +7640,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　[Name:TrainerName ]ちゃん▼
+			<Text>あっ　[Name:TrainerName ]さん▼
 ……よかった▼
-きて　くれたんだ▼
+来て　くれたんだ▼
 えっ？▼
-べっ 別に　待ってないさ！
+べっ　別に　待ってないさ！
 ボクも　いま　来たところだから▼
 アハハ！▼
 ねぇ　よかったら
@@ -7659,10 +7660,11 @@ N</Text>
 二人乗り　専用だから▽
 あきらめて　いたんだよね▼
 うれしくって　ドキドキしてきた▼
-さっそく　乗ろうよ　[Name:TrainerName ]ちゃん！▼</Text>
+さっそく　乗ろうよ
+[Name:TrainerName ]さん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:46:12" />
+				Time="2012-02-02T11:29:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7714,19 +7716,19 @@ N</Text>
 			<Text>……　……　……
 ……　……　……▼
 アハハ……▼
-[Name:TrainerName ]ちゃんには
+[Name:TrainerName ]さんには
 ほんとうに　かんしゃ　しているんだ▼
 いま　しごとを　がんばれるのも
-[Name:TrainerName ]ちゃんの　おかげだよ▼
+[Name:TrainerName ]さんの　おかげだよ▼
 できれば　これからも
 はなし　あいてに　なってくれると▽
 うれしいな▼
 じゃあ　そろそろ　かえるよ▼
 きょうは　サイコーに　たのしかった
-またね　[Name:TrainerName ]ちゃん！</Text>
+またね　[Name:TrainerName ]さん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T02:51:08" />
+				Time="2012-02-02T11:29:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7737,19 +7739,19 @@ N</Text>
 			<Text>……　……　……
 ……　……　……▼
 アハハ……▼
-[Name:TrainerName ]ちゃんには
+[Name:TrainerName ]さんには
 本当に　感謝しているんだ▼
 いま　仕事を　がんばれるのも
-[Name:TrainerName ]ちゃんの　おかげだよ▼
+[Name:TrainerName ]さんの　おかげだよ▼
 できれば　これからも
 話し相手に　なってくれると▽
 うれしいな▼
 じゃあ　そろそろ　帰るよ▼
 今日は　サイコーに　楽しかった
-またね　[Name:TrainerName ]ちゃん！</Text>
+またね　[Name:TrainerName ]さん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T02:51:14" />
+				Time="2012-02-02T11:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7798,7 +7800,7 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　[Name:TrainerName ]ちゃん▼
+			<Text>あっ　[Name:TrainerName ]さん▼
 アハハ！▼
 まちきれなくて　いそいで　きたよ▼
 あえて　うれしいな▼
@@ -7809,10 +7811,11 @@ N</Text>
 えっ　いいの？▼
 ……よかった▼
 なんでだろ　ドキドキしてきた▼
-さっそく　のろうよ　[Name:TrainerName ]ちゃん！▼</Text>
+さっそく　のろうよ
+[Name:TrainerName ]さん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:45:34" />
+				Time="2012-02-02T11:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7820,7 +7823,7 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　[Name:TrainerName ]ちゃん▼
+			<Text>あっ　[Name:TrainerName ]さん▼
 アハハ！▼
 待ちきれなくて　急いで来たよ▼
 会えて　うれしいな▼
@@ -7831,10 +7834,11 @@ N</Text>
 えっ　いいの？▼
 ……よかった▼
 なんでだろ　ドキドキしてきた▼
-さっそく　乗ろうよ　[Name:TrainerName ]ちゃん！▼</Text>
+さっそく　乗ろうよ
+[Name:TrainerName ]さん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:45:43" />
+				Time="2012-02-02T11:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7887,17 +7891,17 @@ N</Text>
 ……　……　……▼
 きょうは　ありがとう▼
 さそって　くれて　うれしかったよ▼
-また　[Name:TrainerName ]ちゃん　から
+また　[Name:TrainerName ]さん　から
 たくさん　げんきを　もらっちゃったね▼
 アハハ！▼
 これで　しごとも　がんばれるよ▼
 よかったら　また
 さそって　ほしいな▼
 じゃあ　そろそろ　かえるよ▼
-またね　[Name:TrainerName ]ちゃん！</Text>
+またね　[Name:TrainerName ]さん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:44:12" />
+				Time="2012-02-02T11:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7909,17 +7913,17 @@ N</Text>
 ……　……　……▼
 きょうは　ありがとう▼
 誘ってくれて　うれしかったよ▼
-また　[Name:TrainerName ]ちゃん　から
+また　[Name:TrainerName ]さん　から
 たくさん　元気を　もらっちゃったね▼
 アハハ！▼
 これで　仕事も　がんばれるよ▼
 よかったら　また
 誘ってほしいな▼
 じゃあ　そろそろ　帰るよ▼
-またね　[Name:TrainerName ]ちゃん！</Text>
+またね　[Name:TrainerName ]さん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:44:08" />
+				Time="2012-02-02T11:29:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8178,18 +8182,18 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねぇ
-[Name:TrainerName ]ちゃん▼
+			<Text>ねっ！
+[Name:TrainerName ]さん▼
 こないだ　しごとで
 べつの　ちほうに　いったときに▽
 [Name:PokemonName Idx="1" ]を　つかまえたんだけど▼
-[Name:TrainerName ]ちゃんの　ポケモンと
+[Name:TrainerName ]さんの　ポケモンと
 こうかんして　くれないかな？▼
 こうかん　してくれるのは
 どんな　ポケモンでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:44:46" />
+				Time="2012-02-02T11:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8197,18 +8201,18 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねぇ
-[Name:TrainerName ]ちゃん▼
+			<Text>ねっ！
+[Name:TrainerName ]さん▼
 こないだ　仕事でさ
 別の　地方に　行ったときに▽
 [Name:PokemonName Idx="1" ]を　捕まえたんだけど▼
-[Name:TrainerName ]ちゃんの　ポケモンと
+[Name:TrainerName ]さんの　ポケモンと
 交換して　くれないかな？▼
 交換してくれるのは
 どんな　ポケモンでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:44:49" />
+				Time="2012-02-02T11:30:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8927,10 +8931,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう
-[Name:TrainerName ]ちゃん▼
+[Name:TrainerName ]さん▼
 なかなか　じかんが　とれなくて
 おそくなっちゃって　ごめん▼
-でも　[Name:TrainerName ]ちゃんと
+でも　[Name:TrainerName ]さんと
 はなすのは　たのしかった　から▽
 おそくなって　ラッキー　だったかな？▼
 アハハ！▼
@@ -8942,7 +8946,7 @@ N</Text>
 ドキドキ　だったよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:40:44" />
+				Time="2012-02-02T11:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8951,10 +8955,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとう
-[Name:TrainerName ]ちゃん▼
+[Name:TrainerName ]さん▼
 なかなか　時間が　とれなくて
 遅くなっちゃって　ごめん▼
-でも　[Name:TrainerName ]ちゃんと
+でも　[Name:TrainerName ]さんと
 はなすのは　楽しかった　から▽
 遅くなって　ラッキー　だったかな？▼
 アハハ！▼
@@ -8966,7 +8970,7 @@ N</Text>
 ドキドキ　だったよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:40:48" />
+				Time="2012-02-02T11:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9069,14 +9073,14 @@ N</Text>
 			<Text>それと　もうひとつ
 おねがいが　あるんだ！▼
 ボク　ライブキャスターを
-[Name:TrainerName ]ちゃんに　かけすぎちゃって▽
+[Name:TrainerName ]さんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 しごとばの　せんぱいに▽
 しかられちゃってさ▼
-だから　[Name:TrainerName ]ちゃん　から
+だから　[Name:TrainerName ]さん　から
 れんらくを　くれないかな？▽
 えっ　いいの？　よかった！▼
-[Name:TrainerName ]ちゃんは　やさしいね▼
+[Name:TrainerName ]さんは　やさしいね▼
 いつも　ボクは
 しごとばに　いてばかりだから▽
 でんぱが　つながり　にくいかも▽
@@ -9086,10 +9090,10 @@ N</Text>
 うれしいな▼
 アハハ！▼
 じゃあ　きょうは　これで　かえるよ
-さようなら　[Name:TrainerName ]ちゃん▼</Text>
+さようなら　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:41:23" />
+				Time="2012-02-02T11:31:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9100,14 +9104,14 @@ N</Text>
 			<Text>それと　もうひとつ
 お願いが　あるんだ！▼
 ボク　ライブキャスターを
-[Name:TrainerName ]ちゃんに　かけすぎちゃって▽
+[Name:TrainerName ]さんに　かけすぎちゃって▽
 マ……　じゃなくて▽
 仕事場の　先輩に▽
 しかられちゃってさ▼
-だから　[Name:TrainerName ]ちゃん　から
+だから　[Name:TrainerName ]さん　から
 連絡を　くれないかな？▽
 えっ　いいの？　よかった！▼
-[Name:TrainerName ]ちゃんは　やさしいね▼
+[Name:TrainerName ]さんは　やさしいね▼
 いつも　ボクは
 仕事場に　いてばかりだから▽
 電波が　つながり　にくいかも▽
@@ -9117,10 +9121,10 @@ N</Text>
 うれしいな▼
 アハハ！▼
 じゃあ　今日は　これで　帰るよ
-さようなら　[Name:TrainerName ]ちゃん▼</Text>
+さようなら　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:42:12" />
+				Time="2012-02-02T11:31:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
