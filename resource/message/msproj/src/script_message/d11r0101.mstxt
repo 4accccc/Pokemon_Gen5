@@ -80,11 +80,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……なに？
+			<Text>[Name:TrainerName Idx="1" ]『……おうッ！
 はやく　じゅんび　してくれよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T07:30:36" />
+				Time="2012-02-02T10:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -92,11 +92,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……なに？
+			<Text>[Name:TrainerName Idx="1" ]『……おうッ！
 はやく　準備してくれよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T07:30:37" />
+				Time="2012-02-02T10:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
