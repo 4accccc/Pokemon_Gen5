@@ -28452,29 +28452,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　のると
-はやく　ながれていく　けしき▽
-いつもと　ちがって　ワクワクする！</Text>
+			<Text>はしっている　ひとって
+どうしても　ちゅうもく　しちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:01:49" />
+				Time="2012-02-02T03:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:01:49" />
+				Time="2012-02-02T03:15:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　乗ると
-速く　流れていく　景色▽
-いつもと　違って　ワクワクする！</Text>
+			<Text>走っている　人って
+どうしても　注目しちゃうよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:01:49" />
+				Time="2012-02-02T03:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:01:49" />
+				Time="2012-02-02T03:15:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -74471,6 +74469,33 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="TRID_BASKET_13_TRMSG_POKE_UNDER_TWO">
+		<LanguageCell
+			Language="JPN">
+			<Text>げんきな　ポケモンが
+３びき　いれば　よかったのにな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>元気な　ポケモンが
+３匹　いれば　よかったのにな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="TRID_BASKET_13_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
@@ -74549,6 +74574,33 @@
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-14T09:51:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BASKET_14_TRMSG_POKE_UNDER_TWO">
+		<LanguageCell
+			Language="JPN">
+			<Text>げんきな　ポケモンが　３びき　いない？
+ちゃんちゃら　おかしいぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>元気な　ポケモンが　３匹　いない？
+ちゃんちゃら　おかしいぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-02T03:15:21" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
