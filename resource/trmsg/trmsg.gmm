@@ -6744,12 +6744,10 @@
 	</row>
 
 	<row id="TRID_CYCLINGW_02_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">じてんしゃに　のると
-はやく　ながれていく　けしき▽
-いつもと　ちがって　ワクワクする！</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　乗ると
-速く　流れていく　景色▽
-いつもと　違って　ワクワクする！</language>
+		<language name="JPN" width="216">はしっている　ひとって
+どうしても　ちゅうもく　しちゃうよね！</language>
+		<language name="JPN_KANJI" width="216">走っている　人って
+どうしても　注目しちゃうよね！</language>
 	</row>
 
 	<row id="TRID_SCIENTISTM_14_TRMSG_FIGHT_START">
@@ -16922,6 +16920,13 @@
 ダブルスを　組んで　テニスしたいな</language>
 	</row>
 
+	<row id="TRID_BASKET_13_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">げんきな　ポケモンが
+３びき　いれば　よかったのにな！</language>
+		<language name="JPN_KANJI" width="216">元気な　ポケモンが
+３匹　いれば　よかったのにな！</language>
+	</row>
+
 	<row id="TRID_BASKET_13_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">おっ！　きみは　なかなか
 つよそうだぞ！　ぼくと　あそんでよ！▼</language>
@@ -16941,6 +16946,13 @@
 リトルコートで　しあい　したいな</language>
 		<language name="JPN_KANJI" width="216">いつかは　ライモンシティの
 リトルコートで　試合したいな</language>
+	</row>
+
+	<row id="TRID_BASKET_14_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">げんきな　ポケモンが　３びき　いない？
+ちゃんちゃら　おかしいぜ！</language>
+		<language name="JPN_KANJI" width="216">元気な　ポケモンが　３匹　いない？
+ちゃんちゃら　おかしいぜ！</language>
 	</row>
 
 	<row id="TRID_BASKET_14_TRMSG_FIGHT_START">
