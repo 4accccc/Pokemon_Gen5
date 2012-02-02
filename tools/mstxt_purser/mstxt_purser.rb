@@ -38,16 +38,97 @@ include REXML
 class MSTXT
 end
 
+# タグデータクラス
+class MSTXT::TagData
+  # アクセサー
+  attr_accessor :index,:group,:tag_id,:param
+
+  # データ初期化
+  def initialize( index, group, id )
+    # タグには必ずこのデータが存在している必要がある
+    @index  = index
+    @group  = group
+    @tag_id = id
+    @param  = Hash.new
+  end
+
+  # パラメータを登録する
+  def add_param( id, param )
+    if @param.key?(id) then 
+      raise "パラメータを上書きすることはできません"
+    end
+    # パラメータ登録
+    @param[id] = param
+  end
+  
+end
+
 # テキストデータクラス
 class MSTXT::TextData
   # アクセサー
   attr_accessor :label,:jpn,:jpn_kanji
-
+  
+  public
   # データ初期化
   def initialize()
     @label      = ""
     @jpn        = ""
     @jpn_kanji  = ""
+    @jpn_tag_array   = nil
+    @kanji_tag_array = nil
+  end
+
+  # ひらがな文章のタグを取得
+  def jpn_tag
+    # 未取得の場合は解析して返す
+    if @jpn_tag_array == nil then
+      @jpn_tag_array = get_tag_array( @jpn )
+    end
+    return @jpn_tag_array
+  end
+
+  # 漢字文章のタグを取得
+  def kanji_tag
+    # 未取得の場合は解析して返す
+    if @kanji_tag_array == nil then
+      @kanji_tag_array = get_tag_array( @jpn_kanji )
+    end
+    return @kanji_tag_array
+  end
+
+  private
+  # タグを検索して、配列化する
+  def get_tag_array( msg )
+    tag_array = Array.new
+
+    # 正規表現メモ:*?は最短位置
+    scan_array = msg.scan(/\[.*?\]/)
+
+    # タグ全てをパースする
+    scan_array.each_with_index{|tag_str,index|
+
+      # タグを分解($1=group,$2=id)
+      if tag_str =~ /\[(\S+):(\S+).*\]/ then
+
+        # タグデータを生成
+        tag = MSTXT::TagData.new(index,$1,$2)
+
+        # パラメータ部分を取得(group,id,最後のカッコを削除し、空白区切りに変換)
+        param_list = tag_str.gsub(/\[\S+:\S+\s/,"").gsub(/\]/,"").split("\s")
+        
+        # パラメータを名前部分と値部分に分離する
+        param_list.each{|param|
+          # $1=id,$2=値
+          if param =~ /(\S+)="(.*)"/ then
+            tag.add_param($1,$2)
+          end
+        }
+        tag_array << tag
+      end
+    }
+
+    # 生成したタグ配列を返す
+    return tag_array
   end
 end
 
