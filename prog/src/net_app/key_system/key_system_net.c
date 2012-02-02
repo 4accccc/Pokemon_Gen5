@@ -595,6 +595,8 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     SEQ_CONNECT_START,
     SEQ_CONNECT_WAIT,
     SEQ_END,
+
+    SEQ_NET_TIMEOUT_END_WAIT,
   };
 
   KEYSYS_NET_WORK *p_wk = p_wk_adrs;
@@ -621,7 +623,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
     {
       GFL_NET_Exit(NULL);
-      KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+      *p_seq  = SEQ_NET_TIMEOUT_END_WAIT;
     }
     //KeySys_NetCallback_ConnectIrcWireless‚Ì’†‚ÅŽŸ‚É‚·‚·‚ß‚é
     break;
@@ -645,6 +647,12 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
 
   case SEQ_END:
     KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_WaitIrcWireless );
+    break;
+  case SEQ_NET_TIMEOUT_END_WAIT:
+    if( GFL_NET_IsExit() )
+    {
+      KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    }
     break;
   default:
     GF_ASSERT(0);
