@@ -2900,7 +2900,14 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, const RESORT_SHOP_I
   _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
 
   // •\Ž¦•¶Žš—ñ“o˜^
-  WORDSET_RegisterWord( wk->wordSet, 0, cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
+  if( cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
+  {
+    WORDSET_RegisterItemName( wk->wordSet, 0, cp_select->param1 );
+  }
+  else 
+  {
+    WORDSET_RegisterWord( wk->wordSet, 0, cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
+  }
   WORDSET_RegisterNumber( wk->wordSet, 1, cp_select->param2, 
                             2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
