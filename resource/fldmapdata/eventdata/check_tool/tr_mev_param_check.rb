@@ -16,6 +16,20 @@ require 'csv'
 PATH_TO_DIR     = "../data/"
 TARGET_FILENAME = "*.mev"
 
+RND_MOVE_CODE = [
+  "MV_RND",
+  "MV_RND_V",
+  "MV_RND_H",
+  "MV_RND_UL",
+  "MV_RND_UR",
+  "MV_RND_DL",
+  "MV_RND_DR",
+  "MV_RND_UDL",
+  "MV_RND_UDR",
+  "MV_RND_ULR",
+  "MV_RND_DLR",
+]
+
 # 結果出力先
 result_file = ARGV[0]
 
@@ -74,13 +88,13 @@ filenames.each{|filename|
      
       # ランダム移動チェック
       # ランダム移動は原則禁止
-      if event.MOVE_CODE_Number == "MV_RND" then
+      if RND_MOVE_CODE.include?(event.MOVE_CODE_Number) then
 
         # 移動可能方数チェック
         # どちらかが0以上の必要がある
         if (( event.Move_Limit_X_Number.to_i > 0 ) ||
             ( event.Move_Limit_Z_Number.to_i > 0) ) then
-          set_error_data( error_array ,filename ,event ,"ランダム移動(MV_RND)が設定されていているが、limit_xとlimit_yが0になっていない。")
+          set_error_data( error_array ,filename ,event ,"ランダム移動(%s)が設定されていているが、limit_xとlimit_yが0になっていない。"%[event.MOVE_CODE_Number])
         end
       end
 
