@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-12-14T14:43:10" source="m_hotel03_00_00_s.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-02-01T21:58:48" source="m_hotel03_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-12-14T14:43:10" source="m_hotel03_00_00_s.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2012-02-01T21:58:48" source="m_hotel03_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1369,7 +1369,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="2" name="h_mado"
-		light0="off" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="on" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -7953,7 +7953,7 @@
 		volume_max="-0.375000 0.718750 -3.058594"
 		volume_r="4.057373"
 		mtx_prim_size="1"
-		nrm_flag="off" clr_flag="on" tex_flag="on"
+		nrm_flag="on" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -7962,17 +7962,21 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 5.125000"/>
 					<clr rgb="12 12 12"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_s xyz="-0.375000 0.531250 -3.718750"/>
 					<tex st="0.000000 15.937500"/>
 					<clr rgb="16 16 16"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="-0.375000 0.135742"/>
 					<tex st="16.000000 15.937500"/>
 					<pos_xz xz="-0.375000 -3.437500"/>
 					<tex st="16.000000 5.125000"/>
 					<clr rgb="12 12 12"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="-0.375000 0.531250"/>
 					<tex st="0.000000 0.000000"/>
 					<clr rgb="6 6 6"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="0.718750 -3.718750"/>
 					<tex st="0.000000 5.125000"/>
 					<pos_xy xy="-0.375000 0.531250"/>
@@ -7982,15 +7986,18 @@
 					<pos_xy xy="-0.375000 0.718750"/>
 					<tex st="0.000000 15.937500"/>
 					<clr rgb="16 16 16"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="0.135742 -3.343750"/>
 					<tex st="16.000000 15.937500"/>
 					<pos_xz xz="-0.375000 -3.058594"/>
 					<tex st="16.000000 5.125000"/>
 					<clr rgb="12 12 12"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="-0.375000 0.531250"/>
 					<tex st="0.000000 5.125000"/>
 					<pos_xz xz="-0.375000 -3.343750"/>
 					<clr rgb="6 6 6"/>
+					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="-0.375000 0.531250"/>
 					<tex st="16.000000 5.125000"/>
 					<pos_xz xz="-0.375000 -3.058594"/>
@@ -8000,17 +8007,21 @@
 					<pos_xz xz="-0.375000 -3.343750"/>
 					<tex st="0.000000 5.125000"/>
 					<clr rgb="19 19 19"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_s xyz="-0.781250 0.531250 -3.812500"/>
 					<tex st="0.000000 15.937500"/>
 					<clr rgb="21 21 21"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.781250 0.135742"/>
 					<tex st="16.000000 15.937500"/>
 					<pos_xy xy="-0.468750 0.135742"/>
 					<tex st="16.000000 5.125000"/>
 					<clr rgb="19 19 19"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.468750 0.531250"/>
 					<tex st="0.000000 0.000000"/>
 					<clr rgb="16 16 16"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.781250 0.718750"/>
 					<tex st="0.000000 5.125000"/>
 					<pos_xy xy="-0.781250 0.531250"/>
@@ -8020,15 +8031,18 @@
 					<pos_xy xy="-0.468750 0.718750"/>
 					<tex st="0.000000 15.937500"/>
 					<clr rgb="21 21 21"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-1.187500 0.135742"/>
 					<tex st="16.000000 15.937500"/>
 					<pos_xy xy="-0.875000 0.135742"/>
 					<tex st="16.000000 5.125000"/>
 					<clr rgb="19 19 19"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.875000 0.531250"/>
 					<tex st="0.000000 5.125000"/>
 					<pos_xy xy="-1.187500 0.531250"/>
 					<clr rgb="16 16 16"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-1.187500 0.531250"/>
 					<tex st="16.000000 5.125000"/>
 					<pos_xy xy="-0.875000 0.531250"/>
