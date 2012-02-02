@@ -9293,9 +9293,9 @@
 
 	<row id="TRID_TANPAN_23_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ひたすら　はしって
-くさむら　ひとりじめ！</language>
+くさむら　ひとりじめ！▼</language>
 		<language name="JPN_KANJI" width="216">ひたすら　走って
-草むら　独り占め！</language>
+草むら　独り占め！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_23_TRMSG_FIGHT_LOSE">
