@@ -481,10 +481,10 @@
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ……▼
-きさまを　たおし　このせかいに
+きさまを　たおし　このせかいを
 あくのいろに　そめあげてくれるわ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……▼
-貴様を　倒し　この世界に
+貴様を　倒し　この世界を
 悪の色に　染め上げてくれるわ！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
