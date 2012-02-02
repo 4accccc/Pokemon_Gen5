@@ -305,15 +305,18 @@ _TALK_START_TURN_NOT()
 		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
+		_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_common_gyoe )
+		_OBJ_ANIME_WAIT()
+		
 		//主人公と向き合って
 		_PLAYER_DIR_GET( SCWK_ANSWER )
 		SWITCH $SCWK_ANSWER
 		CASE DIR_UP THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_d )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_d )
 		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_l )
 		CASE DIR_LEFT THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_r )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_r )
 		ENDSWITCH
 		_OBJ_ANIME_WAIT()
 		
@@ -328,6 +331,8 @@ _TALK_START_TURN_NOT()
 		CASE DIR_RIGHT,DIR_LEFT THEN
 			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave1_rl )
 		ENDSWITCH
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
 		_OBJ_ANIME_WAIT()
 		
 		//煙突へ移動する
@@ -345,16 +350,19 @@ _TALK_START_TURN_NOT()
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_03 )
 		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
-		
+
+		_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_common_gyoe )
+		_OBJ_ANIME_WAIT()
+
 		//主人公と向き合って
 		_PLAYER_DIR_GET( SCWK_ANSWER )
 		SWITCH $SCWK_ANSWER
 		CASE DIR_UP THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_d )
-		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_d )
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_r )
 		CASE DIR_DOWN THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_u )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_u )
 		ENDSWITCH
 		_OBJ_ANIME_WAIT()
 
@@ -371,6 +379,8 @@ _TALK_START_TURN_NOT()
 		CASE DIR_DOWN THEN
 			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave2_d )
 		ENDSWITCH
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 		_OBJ_ANIME_WAIT()
 
 		//ガスホルダーに移動する
@@ -393,9 +403,9 @@ _TALK_START_TURN_NOT()
 		_PLAYER_DIR_GET( SCWK_ANSWER )
 		SWITCH $SCWK_ANSWER
 		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_l )
 		CASE DIR_DOWN THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_u )
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_u )
 		ENDSWITCH
 		_OBJ_ANIME_WAIT()
 		
@@ -405,13 +415,31 @@ _TALK_START_TURN_NOT()
 			_AB_KEYWAIT_MARK()
 			_MSGWIN_CLOSE()
 			
-			//どうぐ入手処理：ピーピーエイド
-			_ITEM_EVENT_KEYWAIT( ITEM_PIIPIIEIDO, 1 )
+			_ADD_ITEM_CHK( ITEM_PIIPIIEIDO, 1, SCWK_ANSWER )
 			
-			//========================================/
+			IF $SCWK_ANSWER == TRUE THEN
+
+				//どうぐ入手処理：ピーピーエイド
+				_ITEM_EVENT_KEYWAIT( ITEM_PIIPIIEIDO, 1 )
+				
+				//========================================//
 			
-			//アイテム入手フラグをセット
-			_FLAG_SET(FE_D23R0101_ITEMGET_01)
+				//アイテム入手フラグをセット
+				_FLAG_SET(FE_D23R0101_ITEMGET_01)
+				
+				//========================================//
+			
+				_CALL ev_repeat
+			
+			ELSE
+			
+				//どうぐ入手処理：ピーピーエイド
+				_ITEM_EVENT_KEYWAIT( ITEM_PIIPIIEIDO, 1 )
+			
+				_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_staystep_r )
+				_OBJ_ANIME_WAIT()
+			
+			ENDIF
 		
 		ELSE
 		
@@ -419,40 +447,49 @@ _TALK_START_TURN_NOT()
 			_AB_KEYWAIT_MARK()
 			_MSGWIN_CLOSE()
 		
+			_CALL ev_repeat
+		
 		ENDIF
-		
-		SWITCH $SCWK_ANSWER
-		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_r )
-		CASE DIR_DOWN THEN
-			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_d )
-		ENDSWITCH
-		_OBJ_ANIME_WAIT()
-		
-		//蒸留塔に移動する
-		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 29, 0, 32, DIR_UP )
-		
-		//========================================/
-		
-		//ワークを変更する
-		$WK_SCENE_D23R0101_ASSISTANTM = 0
-		
-		//========================================/
 
 	ENDSWITCH
 
 EVENT_END
+
+ev_repeat:
+
+	_PLAYER_DIR_GET( SCWK_ANSWER )
+	SWITCH $SCWK_ANSWER
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_r )
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_d )
+	ENDSWITCH
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+	_OBJ_ANIME_WAIT()
+	
+	//蒸留塔に移動する
+	_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 29, 0, 32, DIR_UP )
+	
+	//========================================/
+	
+	//ワークを変更する
+	$WK_SCENE_D23R0101_ASSISTANTM = 0
+	
+	//========================================/
+
+_RET
 
 //--------------------------------------------------------------------
 //		蒸留塔：マニア退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_assistantm_leave1_u
 	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WALK_D_8F,7
+	_ANIME_DATA		AC_WALK_D_8F,8
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL	anm_assistantm_leave1_rl
-	_ANIME_DATA		AC_WALK_D_8F,7
+	_ANIME_DATA		AC_WALK_D_8F,8
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -461,18 +498,21 @@ _ANIME_LABEL	anm_assistantm_leave1_rl
 _ANIME_LABEL	anm_assistantm_leave2_u
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		AC_WALK_R_8F,6
+	_ANIME_DATA		AC_WALK_D_8F,5
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL	anm_assistantm_leave2_l
 	_ANIME_DATA		AC_WALK_D_8F,1
-	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		AC_WALK_R_8F,7
+	_ANIME_DATA		AC_WALK_D_8F,5
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL	anm_assistantm_leave2_d
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_D_8F,2
-	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		AC_WALK_R_8F,6
+	_ANIME_DATA		AC_WALK_D_8F,5
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------------
