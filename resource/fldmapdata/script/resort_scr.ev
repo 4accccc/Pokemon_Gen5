@@ -1375,6 +1375,9 @@ sub_resident_merge:
     _SYSWIN_MSG( resort_sys_24, POS_DOWN )
     _SYSWIN_CLOSE()
 
+  //建て替えた
+   _ADD_RECORD( RECID_RESORT_SHOP_MAKE_CNT, 1 )
+
     //フェードアウト
     _CALL sub_camera_ret_fade
 
