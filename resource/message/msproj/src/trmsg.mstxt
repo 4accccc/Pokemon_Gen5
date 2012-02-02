@@ -6835,28 +6835,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オレの　ちょうのうりょく
-ボールが　ゴールが　きまる▽
+ボールが　ゴールに　きまる▽
 すんぜんにしか　はたらかないよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:56:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:56:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレの　超能力
-ボールが　ゴールが　決まる▽
+ボールが　ゴールに　決まる▽
 寸前にしか　働かないよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:56:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:56:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
