@@ -248,14 +248,7 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
         p_wk->anm_flg = FALSE;
       }
 
-      // Z²‚ğ•—‘D‚æ‚è‰œ‚É‚·‚é
-      {
-        VEC_COPY( &tmp_status.scale, &p_wk->status.scale );
-        MTX_Identity33( &tmp_status.rotate );
-        VEC_COPY( &tmp_status.trans, &p_wk->status.trans );
-        tmp_status.trans.z -= 0x3000;
-      }
-      GFL_G3D_DRAW_DrawObject( obj, &tmp_status );
+      GFL_G3D_DRAW_DrawObject( obj, &p_wk->status );
     }
 
 

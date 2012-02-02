@@ -6517,7 +6517,7 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
 
     // 表示していない風船はスキップ
     // 割れている風船もスキップ
-    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
+    if( p_wk->balloon_wk[i].visible == FALSE )
     {
       continue;
     }
@@ -6526,7 +6526,7 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
     {
       // 風船同士のサイズが同じ かつ 対象の風船も表示している
       if( p_wk->balloon_wk[i].size == p_wk->balloon_wk[j].size
-          && p_wk->balloon_wk[j].visible == TRUE && p_wk->balloon_wk[j].type == BALLOON_NORMAL )
+          && p_wk->balloon_wk[j].visible == TRUE )
       {
         // 壁判定
         collision_vec( 
