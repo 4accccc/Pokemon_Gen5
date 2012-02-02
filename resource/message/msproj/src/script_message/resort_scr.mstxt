@@ -1346,10 +1346,10 @@ SWANビーコン０（基本バグ？）
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 あたらしい　まちが　あるなんて
-ビックリ　です！</Text>
+ビックリ　です！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-28T04:03:58" />
+				Time="2012-02-01T07:53:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2410,10 +2410,10 @@ SWANビーコン０♀（基本バグ？）
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 あたらしい　まちが　あるなんて
-ビックリ　です！</Text>
+ビックリ　です！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-28T04:04:46" />
+				Time="2012-02-01T07:54:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4355,10 +4355,10 @@ BW♀
 			<Text>やったー！
 がんばります▼
 [Name:ResortGreet ]！
-[Name:ResortGreet Idx="1" ]！</Text>
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:29:25" />
+				Time="2012-02-02T06:12:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4369,10 +4369,10 @@ BW♀
 			<Text>やったー！
 がんばります▼
 [Name:ResortGreet ]！
-[Name:ResortGreet Idx="1" ]！</Text>
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:29:31" />
+				Time="2012-02-02T06:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4416,10 +4416,10 @@ BW♀
 			<Text>やったー！
 がんばります▼
 [Name:ResortGreet ]！
-[Name:ResortGreet Idx="1" ]！</Text>
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:30:00" />
+				Time="2012-02-02T06:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4430,10 +4430,10 @@ BW♀
 			<Text>やったー！
 がんばります▼
 [Name:ResortGreet ]！
-[Name:ResortGreet Idx="1" ]！</Text>
+[Name:ResortGreet Idx="1" ]！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T06:30:00" />
+				Time="2012-02-02T06:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9059,14 +9059,15 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ズバリ！
+			<Text>……ズバリ！
 [Name:ResortType ]です▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　にんきに　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+きっと　おきゃくさまが　おしよせる
+にんきの　おみせに　なるでしょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T03:45:46" />
+				Time="2012-02-02T04:22:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9074,14 +9075,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ズバリ！
+			<Text>……ズバリ！
 [Name:ResortType ]です▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　人気に　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+きっと　お客さまが　おしよせる
+人気の　お店に　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T09:32:58" />
+				Time="2012-02-02T04:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9122,13 +9124,15 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortType ]！　すばらしい！▼
+			<Text>……[Name:ResortType ]！
+すばらしい！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　にんきに　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+きっと　おきゃくさまが　おしよせる
+にんきの　おみせに　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T10:30:26" />
+				Time="2012-02-02T04:23:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9136,13 +9140,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortType ]！　素晴らしい！▼
+			<Text>……[Name:ResortType ]！
+素晴らしい！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　人気に　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+きっと　お客さまが　おしよせる
+人気の　お店に　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T10:30:43" />
+				Time="2012-02-02T04:23:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9236,10 +9242,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>では　やくわりを　へんこうします▼</Text>
+			<Text>では　ひしょの　やくわりを
+こうたい　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T12:09:31" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T06:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9247,10 +9254,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　役割を　変更します▼</Text>
+			<Text>では　秘書の　役割を
+交代　します▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:42:50" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T06:59:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9283,10 +9291,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みせの　ならびを　へんこうします▼</Text>
+			<Text>では　おみせを
+ならびかえます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T12:09:58" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:00:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9294,10 +9303,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>店の　並びを　変更します▼</Text>
+			<Text>では　お店を
+並びかえます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:43:02" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10001,14 +10011,15 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうです！
-[Name:ResortType ]です▼
+			<Text>……ズバリ！！
+[Name:ResortType ]です！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　にんきに　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+この　おみせを　おめあてに
+おきゃくさまが　やってくるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:34:47" />
+				Time="2012-02-02T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10016,14 +10027,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうです！
-[Name:ResortType ]です▼
+			<Text>……ズバリ！
+[Name:ResortType ]です！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　人気に　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+この　お店を　お目当てに
+お客さまが　やってくるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:34:53" />
+				Time="2012-02-02T04:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10064,13 +10076,15 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortType ]！　すばらしい　です！▼
+			<Text>……[Name:ResortType ]！
+すばらしい　です！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　にんきに　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+この　おみせを　おめあてに
+おきゃくさまが　やってくるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T10:31:43" />
+				Time="2012-02-02T05:55:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10078,13 +10092,15 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortType ]！　素晴らしい　です！▼
+			<Text>……[Name:ResortType ]！
+素晴らしい　です！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]に　ひらいたら▽
-あっというまに　人気に　なるでしょう▼</Text>
+[Name:ResortTown Idx="1" ]に　ひらいたら▼
+きっと　お客さまが　おしよせてくる
+人気の　お店に　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-22T10:31:52" />
+				Time="2012-02-02T04:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10178,10 +10194,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>では　やくわりを　へんこうします▼</Text>
+			<Text>では　ひしょの　やくわりを
+こうたい　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T12:10:30" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10189,10 +10206,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　役割を　変更します▼</Text>
+			<Text>では　秘書の　役割を
+交代　します▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:45:00" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10225,10 +10243,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みせの　ならびを　へんこうします▼</Text>
+			<Text>では　おみせを
+ならびかえます▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T12:10:23" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10236,10 +10255,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>店の　並びを　変更します▼</Text>
+			<Text>では　お店を
+並びかえます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:45:00" />
+				User="shimoyamada:W00184"
+				Time="2012-02-01T07:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11123,10 +11143,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆめを　きく</Text>
+			<Text>じゅうにんにする</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11134,15 +11154,22 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>夢を　きく</Text>
+			<Text>住人にする</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:28:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２回目</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:27:13" />
+		</CommentCell>
 		<AttributeCell
 			Name="Importance">
 			<Text>A</Text>
@@ -16481,10 +16508,13 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-しなぞろえが　あたらしく　なった！▼</Text>
+しんそう　かいてん　した！▼
+[Name:ResortShop Idx="1" ]を
+のぞいて　みよう！▼
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-28T06:32:09" />
+				Time="2012-02-01T12:55:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16493,10 +16523,13 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]は
-品ぞろえが　新しく　なった！▼</Text>
+新装開店　した！▼
+[Name:ResortShop Idx="1" ]を
+のぞいて　みよう！▼
+</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-28T06:32:16" />
+				Time="2012-02-01T12:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36244,7 +36277,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしいみず　１２こ　セット。
+			<Text>おいしいみず　１２コ　セット。
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36252,12 +36285,12 @@ ME
 				Time="2011-12-10T07:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしいみず　１２こ　セット。
+			<Text>おいしいみず　１２コ　セット。
 ポケモン　１匹の　ＨＰを
 ５０だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36265,8 +36298,8 @@ ME
 				Time="2012-01-14T05:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36302,7 +36335,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしいみず　２４こ　セット。
+			<Text>おいしいみず　２４コ　セット。
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36310,12 +36343,12 @@ ME
 				Time="2011-12-10T07:14:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしいみず　２４こ　セット。
+			<Text>おいしいみず　２４コ　セット。
 ポケモン　１匹の　ＨＰを
 ５０だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36323,8 +36356,8 @@ ME
 				Time="2011-12-10T07:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36360,7 +36393,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしいみず　３６こ　セット。
+			<Text>おいしいみず　３６コ　セット。
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36368,12 +36401,12 @@ ME
 				Time="2011-12-10T07:14:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしいみず　３６こ　セット。
+			<Text>おいしいみず　３６コ　セット。
 ポケモン　１匹の　ＨＰを
 ５０だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36381,8 +36414,8 @@ ME
 				Time="2011-12-10T07:14:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:29" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36418,7 +36451,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしいみず　４８こ　セット。
+			<Text>おいしいみず　４８コ　セット。
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36426,12 +36459,12 @@ ME
 				Time="2011-12-10T07:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしいみず　４８こ　セット。
+			<Text>おいしいみず　４８コ　セット。
 ポケモン　１匹の　ＨＰを
 ５０だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36439,8 +36472,8 @@ ME
 				Time="2011-12-10T07:15:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36476,7 +36509,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モーモーミルク　１２こ　セット。
+			<Text>モーモーミルク　１２コ　セット。
 ポケモン　１ひきの　ＨＰを
 １００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36484,12 +36517,12 @@ ME
 				Time="2011-12-10T07:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モーモーミルク　１２こ　セット。
+			<Text>モーモーミルク　１２コ　セット。
 ポケモン　１匹の　ＨＰを
 １００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36497,8 +36530,8 @@ ME
 				Time="2012-01-14T05:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36534,7 +36567,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モーモーミルク　２４こ　セット。
+			<Text>モーモーミルク　２４コ　セット。
 ポケモン　１ひきの　ＨＰを
 １００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36542,12 +36575,12 @@ ME
 				Time="2011-12-10T07:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モーモーミルク　２４こ　セット。
+			<Text>モーモーミルク　２４コ　セット。
 ポケモン　１匹の　ＨＰを
 １００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36555,8 +36588,8 @@ ME
 				Time="2011-12-10T07:16:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36592,7 +36625,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モーモーミルク　３６こ　セット。
+			<Text>モーモーミルク　３６コ　セット。
 ポケモン　１ひきの　ＨＰを
 １００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36600,12 +36633,12 @@ ME
 				Time="2011-12-10T07:17:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モーモーミルク　３６こ　セット。
+			<Text>モーモーミルク　３６コ　セット。
 ポケモン　１匹の　ＨＰを
 １００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36613,8 +36646,8 @@ ME
 				Time="2011-12-10T07:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36650,7 +36683,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モーモーミルク　４８こ　セット。
+			<Text>モーモーミルク　４８コ　セット。
 ポケモン　１ひきの　ＨＰを
 １００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36658,12 +36691,12 @@ ME
 				Time="2011-12-10T07:17:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モーモーミルク　４８こ　セット。
+			<Text>モーモーミルク　４８コ　セット。
 ポケモン　１匹の　ＨＰを
 １００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36671,8 +36704,8 @@ ME
 				Time="2011-12-10T07:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36708,7 +36741,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フエンせんべい　２こ　セット。
+			<Text>フエンせんべい　２コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -36716,12 +36749,12 @@ ME
 				Time="2011-12-10T07:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フエンせんべい　２こ　セット。
+			<Text>フエンせんべい　２コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -36729,8 +36762,8 @@ ME
 				Time="2011-12-10T07:24:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:39" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36766,7 +36799,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もりのヨウカン　２こ　セット。
+			<Text>もりのヨウカン　２コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -36774,12 +36807,12 @@ ME
 				Time="2011-12-10T07:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もりのヨウカン　２こ　セット。
+			<Text>もりのヨウカン　２コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -36787,8 +36820,8 @@ ME
 				Time="2011-12-10T07:24:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:41" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36874,7 +36907,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかりまんじゅう　２こ　セット。
+			<Text>いかりまんじゅう　２コ　セット。
 ポケモン　１ひきの　ＨＰを
 ２０だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -36882,12 +36915,12 @@ ME
 				Time="2011-12-10T07:26:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかりまんじゅう　２こ　セット。
+			<Text>いかりまんじゅう　２コ　セット。
 ポケモン　１匹の　ＨＰを
 ２０だけ　回復する。</Text>
 			<TextModifiedBy
@@ -36895,8 +36928,8 @@ ME
 				Time="2011-12-10T07:26:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37106,7 +37139,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あまいミツ　１２こ　セット。
+			<Text>あまいミツ　１２コ　セット。
 つかうと　あまいにおいに　さそわれて
 やせいポケモンが　あらわれる。</Text>
 			<TextModifiedBy
@@ -37114,12 +37147,12 @@ ME
 				Time="2011-12-10T07:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あまいミツ　１２こ　セット。
+			<Text>あまいミツ　１２コ　セット。
 使うと　あまいにおいに　誘われて
 野生ポケモンが　あらわれる。</Text>
 			<TextModifiedBy
@@ -37127,8 +37160,8 @@ ME
 				Time="2011-12-10T07:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37164,7 +37197,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴールドスプレー　１２こ　セット。
+			<Text>ゴールドスプレー　１２コ　セット。
 ２５０ぽの　あいだ　よわい　やせいの
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37172,12 +37205,12 @@ ME
 				Time="2011-12-10T07:37:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴールドスプレー　１２こ　セット。
+			<Text>ゴールドスプレー　１２コ　セット。
 ２５０歩の　あいだ　弱い　野生の
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37185,8 +37218,8 @@ ME
 				Time="2011-12-10T07:37:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:47" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37222,7 +37255,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴールドスプレー　２４こ　セット。
+			<Text>ゴールドスプレー　２４コ　セット。
 ２５０ぽの　あいだ　よわい　やせいの
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37230,12 +37263,12 @@ ME
 				Time="2011-12-10T07:38:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴールドスプレー　２４こ　セット。
+			<Text>ゴールドスプレー　２４コ　セット。
 ２５０歩の　あいだ　弱い　野生の
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37243,8 +37276,8 @@ ME
 				Time="2011-12-10T07:38:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37280,7 +37313,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴールドスプレー　３６こ　セット。
+			<Text>ゴールドスプレー　３６コ　セット。
 ２５０ぽの　あいだ　よわい　やせいの
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37288,12 +37321,12 @@ ME
 				Time="2011-12-10T07:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴールドスプレー　３６こ　セット。
+			<Text>ゴールドスプレー　３６コ　セット。
 ２５０歩の　あいだ　弱い　野生の
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37301,8 +37334,8 @@ ME
 				Time="2011-12-10T07:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37338,7 +37371,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴールドスプレー　４８こ　セット。
+			<Text>ゴールドスプレー　４８コ　セット。
 ２５０ぽの　あいだ　よわい　やせいの
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37346,12 +37379,12 @@ ME
 				Time="2011-12-10T07:38:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴールドスプレー　４８こ　セット。
+			<Text>ゴールドスプレー　４８コ　セット。
 ２５０歩の　あいだ　弱い　野生の
 ポケモンが　でて　こなくなる。</Text>
 			<TextModifiedBy
@@ -37359,8 +37392,8 @@ ME
 				Time="2011-12-10T07:38:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:52" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37396,7 +37429,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんきのかけら　１２こ　セット。
+			<Text>げんきのかけら　１２コ　セット。
 ひんしの　ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</Text>
 			<TextModifiedBy
@@ -37404,12 +37437,12 @@ ME
 				Time="2011-12-10T07:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんきのかけら　１２こ　セット。
+			<Text>げんきのかけら　１２コ　セット。
 ひんしの　ポケモン　１匹の　ＨＰを
 半分まで　回復する。</Text>
 			<TextModifiedBy
@@ -37417,8 +37450,8 @@ ME
 				Time="2011-12-10T07:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37454,7 +37487,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんきのかけら　２４こ　セット。
+			<Text>げんきのかけら　２４コ　セット。
 ひんしの　ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</Text>
 			<TextModifiedBy
@@ -37462,12 +37495,12 @@ ME
 				Time="2011-12-10T07:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんきのかけら　２４こ　セット。
+			<Text>げんきのかけら　２４コ　セット。
 ひんしの　ポケモン　１匹の　ＨＰを
 半分まで　回復する。</Text>
 			<TextModifiedBy
@@ -37475,8 +37508,8 @@ ME
 				Time="2011-12-10T07:41:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:55" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37512,7 +37545,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんきのかけら　３６こ　セット。
+			<Text>げんきのかけら　３６コ　セット。
 ひんしの　ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</Text>
 			<TextModifiedBy
@@ -37520,12 +37553,12 @@ ME
 				Time="2011-12-10T07:41:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんきのかけら　３６こ　セット。
+			<Text>げんきのかけら　３６コ　セット。
 ひんしの　ポケモン　１匹の　ＨＰを
 半分まで　回復する。</Text>
 			<TextModifiedBy
@@ -37533,8 +37566,8 @@ ME
 				Time="2011-12-10T07:41:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37570,7 +37603,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんきのかけら　４８こ　セット。
+			<Text>げんきのかけら　４８コ　セット。
 ひんしの　ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</Text>
 			<TextModifiedBy
@@ -37578,12 +37611,12 @@ ME
 				Time="2011-12-10T07:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんきのかけら　４８こ　セット。
+			<Text>げんきのかけら　４８コ　セット。
 ひんしの　ポケモン　１匹の　ＨＰを
 半分まで　回復する。</Text>
 			<TextModifiedBy
@@ -37591,8 +37624,8 @@ ME
 				Time="2011-12-10T07:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37628,7 +37661,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんでもなおし　１２こ　セット。
+			<Text>なんでもなおし　１２コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -37636,12 +37669,12 @@ ME
 				Time="2011-12-10T07:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんでもなおし　１２こ　セット。
+			<Text>なんでもなおし　１２コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -37649,8 +37682,8 @@ ME
 				Time="2011-12-10T07:43:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:17:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37686,7 +37719,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんでもなおし　２４こ　セット。
+			<Text>なんでもなおし　２４コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -37694,12 +37727,12 @@ ME
 				Time="2011-12-10T07:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんでもなおし　２４こ　セット。
+			<Text>なんでもなおし　２４コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -37707,8 +37740,8 @@ ME
 				Time="2011-12-10T07:43:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37744,7 +37777,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんでもなおし　３６こ　セット。
+			<Text>なんでもなおし　３６コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -37752,12 +37785,12 @@ ME
 				Time="2011-12-10T07:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんでもなおし　３６こ　セット。
+			<Text>なんでもなおし　３６コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -37765,8 +37798,8 @@ ME
 				Time="2011-12-10T07:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37802,7 +37835,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんでもなおし　４８こ　セット。
+			<Text>なんでもなおし　４８コ　セット。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</Text>
 			<TextModifiedBy
@@ -37810,12 +37843,12 @@ ME
 				Time="2011-12-10T07:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんでもなおし　４８こ　セット。
+			<Text>なんでもなおし　４８コ　セット。
 ポケモン　１匹の　状態の
 異常を　すべて　回復する。</Text>
 			<TextModifiedBy
@@ -37823,8 +37856,8 @@ ME
 				Time="2011-12-10T07:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37860,7 +37893,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいキズぐすり　１２こ　セット。
+			<Text>すごいキズぐすり　１２コ　セット。
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -37868,12 +37901,12 @@ ME
 				Time="2011-12-10T07:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいキズぐすり　１２こ　セット。
+			<Text>すごいキズぐすり　１２コ　セット。
 ポケモン　１匹の　ＨＰを
 ２００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -37881,8 +37914,8 @@ ME
 				Time="2011-12-10T07:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37918,7 +37951,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいキズぐすり　２４こ　セット。
+			<Text>すごいキズぐすり　２４コ　セット。
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -37926,12 +37959,12 @@ ME
 				Time="2011-12-10T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいキズぐすり　２４こ　セット。
+			<Text>すごいキズぐすり　２４コ　セット。
 ポケモン　１匹の　ＨＰを
 ２００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -37939,8 +37972,8 @@ ME
 				Time="2011-12-10T07:58:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:09" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37976,7 +38009,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいキズぐすり　３６こ　セット。
+			<Text>すごいキズぐすり　３６コ　セット。
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -37984,12 +38017,12 @@ ME
 				Time="2011-12-10T07:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいキズぐすり　３６こ　セット。
+			<Text>すごいキズぐすり　３６コ　セット。
 ポケモン　１匹の　ＨＰを
 ２００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -37997,8 +38030,8 @@ ME
 				Time="2011-12-10T07:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38034,7 +38067,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいキズぐすり　４８こ　セット。
+			<Text>すごいキズぐすり　４８コ　セット。
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -38042,12 +38075,12 @@ ME
 				Time="2011-12-10T07:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいキズぐすり　４８こ　セット。
+			<Text>すごいキズぐすり　４８コ　セット。
 ポケモン　１匹の　ＨＰを
 ２００だけ　回復する。</Text>
 			<TextModifiedBy
@@ -38055,8 +38088,8 @@ ME
 				Time="2011-12-10T07:59:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38092,7 +38125,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マックアップ　１２こ　セット。
+			<Text>マックアップ　１２コ　セット。
 ポケモン　１ひきの　ＨＰの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38100,12 +38133,12 @@ ME
 				Time="2011-12-10T08:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マックアップ　１２こ　セット。
+			<Text>マックアップ　１２コ　セット。
 ポケモン　１匹の　ＨＰの
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38113,8 +38146,8 @@ ME
 				Time="2011-12-10T08:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38150,7 +38183,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タウリン　１２こ　セット。
+			<Text>タウリン　１２コ　セット。
 ポケモン　１ひきの　こうげきの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38158,12 +38191,12 @@ ME
 				Time="2011-12-10T08:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タウリン　１２こ　セット。
+			<Text>タウリン　１２コ　セット。
 ポケモン　１匹の　攻撃の
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38171,8 +38204,8 @@ ME
 				Time="2011-12-10T08:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38208,7 +38241,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブロムヘキシン　１２こ　セット。
+			<Text>ブロムヘキシン　１２コ　セット。
 ポケモン　１ひきの　ぼうぎょの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38216,12 +38249,12 @@ ME
 				Time="2011-12-10T08:07:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブロムヘキシン　１２こ　セット。
+			<Text>ブロムヘキシン　１２コ　セット。
 ポケモン　１匹の　防御の
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38229,8 +38262,8 @@ ME
 				Time="2011-12-10T08:07:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38266,7 +38299,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>インドメタシン　１２こ　セット。
+			<Text>インドメタシン　１２コ　セット。
 ポケモン　１ひきの　すばやさの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38274,12 +38307,12 @@ ME
 				Time="2011-12-10T08:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>インドメタシン　１２こ　セット。
+			<Text>インドメタシン　１２コ　セット。
 ポケモン　１匹の　素早さの
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38287,8 +38320,8 @@ ME
 				Time="2012-01-14T05:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38324,7 +38357,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リゾチウム　１２こ　セット。
+			<Text>リゾチウム　１２コ　セット。
 ポケモン　１ひきの　とくこうの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38332,12 +38365,12 @@ ME
 				Time="2011-12-10T08:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リゾチウム　１２こ　セット。
+			<Text>リゾチウム　１２コ　セット。
 ポケモン　１匹の　特攻の
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38345,8 +38378,8 @@ ME
 				Time="2011-12-10T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38382,7 +38415,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キトサン　１２こ　セット。
+			<Text>キトサン　１２コ　セット。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38390,12 +38423,12 @@ ME
 				Time="2011-12-10T08:09:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キトサン　１２こ　セット。
+			<Text>キトサン　１２コ　セット。
 ポケモン　１匹の　特防の
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
@@ -38403,8 +38436,8 @@ ME
 				Time="2011-12-10T08:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38440,7 +38473,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エフェクトガード　１２こ　セット。
+			<Text>エフェクトガード　１２コ　セット。
 せんとうちゅう　５ターンの　あいだ
 のうりょくを　さげられなくする。</Text>
 			<TextModifiedBy
@@ -38448,12 +38481,12 @@ ME
 				Time="2011-12-10T08:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エフェクトガード　１２こ　セット。
+			<Text>エフェクトガード　１２コ　セット。
 戦闘中　５ターンの　あいだ
 能力を　さげられなくする。</Text>
 			<TextModifiedBy
@@ -38461,8 +38494,8 @@ ME
 				Time="2011-12-10T08:12:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38498,7 +38531,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリティカット　１２こ　セット。
+			<Text>クリティカット　１２コ　セット。
 きゅうしょりつが　おおきく　あがる。
 いちどしか　つかうことが　できない。</Text>
 			<TextModifiedBy
@@ -38506,12 +38539,12 @@ ME
 				Time="2011-12-10T08:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリティカット　１２こ　セット。
+			<Text>クリティカット　１２コ　セット。
 急所率が　大きく　あがる。
 １度しか　使うことが　できない。</Text>
 			<TextModifiedBy
@@ -38519,8 +38552,8 @@ ME
 				Time="2011-12-10T08:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38556,7 +38589,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラスパワー　１２こ　セット。
+			<Text>プラスパワー　１２コ　セット。
 せんとうちゅうの　ポケモンの
 こうげきを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38564,12 +38597,12 @@ ME
 				Time="2011-12-10T08:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラスパワー　１２こ　セット。
+			<Text>プラスパワー　１２コ　セット。
 戦闘中の　ポケモンの
 攻撃を　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38577,8 +38610,8 @@ ME
 				Time="2011-12-10T08:13:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38614,7 +38647,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ディフェンダー　１２こ　セット。
+			<Text>ディフェンダー　１２コ　セット。
 せんとうちゅうの　ポケモンの
 ぼうぎょを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38622,12 +38655,12 @@ ME
 				Time="2011-12-10T08:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ディフェンダー　１２こ　セット。
+			<Text>ディフェンダー　１２コ　セット。
 戦闘中の　ポケモンの
 防御を　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38635,8 +38668,8 @@ ME
 				Time="2011-12-10T08:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38672,7 +38705,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スピーダー　１２こ　セット。
+			<Text>スピーダー　１２コ　セット。
 せんとうちゅうの　ポケモンの
 すばやさを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38680,12 +38713,12 @@ ME
 				Time="2011-12-10T08:14:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スピーダー　１２こ　セット。
+			<Text>スピーダー　１２コ　セット。
 戦闘中の　ポケモンの
 素早さを　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38693,8 +38726,8 @@ ME
 				Time="2012-01-14T05:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38730,7 +38763,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨクアタール　１２こ　セット。
+			<Text>ヨクアタール　１２コ　セット。
 せんとうちゅうの　ポケモンの
 めいちゅうを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38738,12 +38771,12 @@ ME
 				Time="2011-12-10T08:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨクアタール　１２こ　セット。
+			<Text>ヨクアタール　１２コ　セット。
 戦闘中の　ポケモンの
 命中を　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38751,8 +38784,8 @@ ME
 				Time="2011-12-10T08:15:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:30" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38788,7 +38821,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スペシャルアップ　１２こ　セット。
+			<Text>スペシャルアップ　１２コ　セット。
 せんとうちゅうの　ポケモンの
 とくこうを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38796,12 +38829,12 @@ ME
 				Time="2011-12-10T08:15:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スペシャルアップ　１２こ　セット。
+			<Text>スペシャルアップ　１２コ　セット。
 戦闘中の　ポケモンの
 特攻を　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38809,8 +38842,8 @@ ME
 				Time="2011-12-10T08:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38846,7 +38879,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スペシャルガード　１２こ　セット。
+			<Text>スペシャルガード　１２コ　セット。
 せんとうちゅうの　ポケモンの
 とくぼうを　あげる　どうぐ。</Text>
 			<TextModifiedBy
@@ -38854,12 +38887,12 @@ ME
 				Time="2011-12-10T08:15:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スペシャルガード　１２こ　セット。
+			<Text>スペシャルガード　１２コ　セット。
 戦闘中の　ポケモンの
 特防を　あげる　道具。</Text>
 			<TextModifiedBy
@@ -38867,8 +38900,8 @@ ME
 				Time="2011-12-10T08:16:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38904,29 +38937,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すくすくこやし　１こ　セット。
-なかなか　かえない　きちょうひん。
+			<Text>なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:21:59" />
+				Time="2012-02-02T11:22:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すくすくこやし　１こ　セット。
-なかなか　買えない　貴重品。
+			<Text>なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:21:51" />
+				Time="2012-02-02T11:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:43" />
+				Time="2012-02-02T11:18:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38962,29 +38993,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめじめこやし　１こ　セット。
-なかなか　かえない　きちょうひん。
+			<Text>なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:07" />
+				Time="2012-02-02T11:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:50" />
+				Time="2012-02-02T11:18:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じめじめこやし　１こ　セット。
-なかなか　買えない　貴重品。
+			<Text>なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:38" />
+				Time="2012-02-02T11:22:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:43" />
+				Time="2012-02-02T11:18:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39020,29 +39049,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ながながこやし　１こ　セット。
-なかなか　かえない　きちょうひん。
+			<Text>なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:17" />
+				Time="2012-02-02T11:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:50" />
+				Time="2012-02-02T11:18:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ながながこやし　１こ　セット。
-なかなか　買えない　貴重品。
+			<Text>なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:45" />
+				Time="2012-02-02T11:23:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:43" />
+				Time="2012-02-02T11:18:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39078,29 +39105,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねばねばこやし　１こ　セット。
-なかなか　かえない　きちょうひん。
+			<Text>なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:25" />
+				Time="2012-02-02T11:24:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:50" />
+				Time="2012-02-02T11:18:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねばねばこやし　１こ　セット。
-なかなか　買えない　貴重品。
+			<Text>なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:22:53" />
+				Time="2012-02-02T11:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:43" />
+				Time="2012-02-02T11:18:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39136,7 +39161,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すくすくこやし　２こ　セット。
+			<Text>すくすくこやし　２コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39144,12 +39169,12 @@ ME
 				Time="2011-12-10T08:24:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:38" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すくすくこやし　２こ　セット。
+			<Text>すくすくこやし　２コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39157,8 +39182,8 @@ ME
 				Time="2011-12-10T08:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39194,7 +39219,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめじめこやし　２こ　セット。
+			<Text>じめじめこやし　２コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39202,12 +39227,12 @@ ME
 				Time="2011-12-10T08:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じめじめこやし　２こ　セット。
+			<Text>じめじめこやし　２コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39215,8 +39240,8 @@ ME
 				Time="2011-12-10T08:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39252,7 +39277,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ながながこやし　２こ　セット。
+			<Text>ながながこやし　２コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39260,12 +39285,12 @@ ME
 				Time="2011-12-10T08:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ながながこやし　２こ　セット。
+			<Text>ながながこやし　２コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39273,8 +39298,8 @@ ME
 				Time="2011-12-10T08:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:41" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39310,7 +39335,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねばねばこやし　２こ　セット。
+			<Text>ねばねばこやし　２コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39318,12 +39343,12 @@ ME
 				Time="2011-12-10T08:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねばねばこやし　２こ　セット。
+			<Text>ねばねばこやし　２コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39331,8 +39356,8 @@ ME
 				Time="2011-12-10T08:23:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:43" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39368,7 +39393,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すくすくこやし　４こ　セット。
+			<Text>すくすくこやし　４コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39377,11 +39402,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:23:59" />
+				Time="2012-02-02T11:18:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すくすくこやし　４こ　セット。
+			<Text>すくすくこやし　４コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39390,7 +39415,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:19" />
+				Time="2012-02-02T11:18:44" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39426,7 +39451,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じめじめこやし　４こ　セット。
+			<Text>じめじめこやし　４コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39435,11 +39460,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:11" />
+				Time="2012-02-02T11:18:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じめじめこやし　４こ　セット。
+			<Text>じめじめこやし　４コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39448,7 +39473,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:19" />
+				Time="2012-02-02T11:18:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39484,7 +39509,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ながながこやし　４こ　セット。
+			<Text>ながながこやし　４コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39493,11 +39518,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:11" />
+				Time="2012-02-02T11:18:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ながながこやし　４こ　セット。
+			<Text>ながながこやし　４コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39506,7 +39531,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:19" />
+				Time="2012-02-02T11:18:46" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39542,7 +39567,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねばねばこやし　４こ　セット。
+			<Text>ねばねばこやし　４コ　セット。
 なかなか　かえない　きちょうひん。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39551,11 +39576,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:11" />
+				Time="2012-02-02T11:18:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねばねばこやし　４こ　セット。
+			<Text>ねばねばこやし　４コ　セット。
 なかなか　買えない　貴重品。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39564,7 +39589,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:24:19" />
+				Time="2012-02-02T11:18:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39600,7 +39625,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ズリのみ　４こ　セット。
+			<Text>ズリのみ　４コ　セット。
 とても　めずらしい　きのみ。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39608,12 +39633,12 @@ ME
 				Time="2011-12-10T08:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ズリのみ　４こ　セット。
+			<Text>ズリのみ　４コ　セット。
 とても　珍しい　きのみ。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39621,8 +39646,8 @@ ME
 				Time="2011-12-10T08:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39658,7 +39683,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブリーのみ　４こ　セット。
+			<Text>ブリーのみ　４コ　セット。
 とても　めずらしい　きのみ。
 マニアが　たかく　かってくれる。</Text>
 			<TextModifiedBy
@@ -39666,12 +39691,12 @@ ME
 				Time="2011-12-10T08:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブリーのみ　４こ　セット。
+			<Text>ブリーのみ　４コ　セット。
 とても　珍しい　きのみ。
 マニアが　高く　買ってくれる。</Text>
 			<TextModifiedBy
@@ -39679,8 +39704,8 @@ ME
 				Time="2011-12-10T08:26:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39716,7 +39741,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クラボのみ　４こ　セット。
+			<Text>クラボのみ　４コ　セット。
 ポケモンに　もたせると
 まひを　かいふくする。</Text>
 			<TextModifiedBy
@@ -39724,12 +39749,12 @@ ME
 				Time="2011-12-10T08:30:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クラボのみ　４こ　セット。
+			<Text>クラボのみ　４コ　セット。
 ポケモンに　持たせると
 まひを　回復する。</Text>
 			<TextModifiedBy
@@ -39737,8 +39762,8 @@ ME
 				Time="2011-12-10T08:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T11:18:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39774,7 +39799,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カゴのみ　４こ　セット。
+			<Text>カゴのみ　４コ　セット。
 ポケモンに　もたせると
 ねむりを　かいふくする。</Text>
 			<TextModifiedBy
@@ -39783,11 +39808,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:38" />
+				Time="2012-02-02T11:18:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カゴのみ　４こ　セット。
+			<Text>カゴのみ　４コ　セット。
 ポケモンに　持たせると
 眠りを　回復する。</Text>
 			<TextModifiedBy
@@ -39796,7 +39821,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:38" />
+				Time="2012-02-02T11:18:52" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39832,7 +39857,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モモンのみ　４こ　セット。
+			<Text>モモンのみ　４コ　セット。
 ポケモンに　もたせると
 どくを　かいふくする。</Text>
 			<TextModifiedBy
@@ -39841,11 +39866,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:30" />
+				Time="2012-02-02T11:18:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モモンのみ　４こ　セット。
+			<Text>モモンのみ　４コ　セット。
 ポケモンに　持たせると
 毒を　回復する。</Text>
 			<TextModifiedBy
@@ -39854,7 +39879,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:30" />
+				Time="2012-02-02T11:18:53" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39890,7 +39915,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チーゴのみ　４こ　セット。
+			<Text>チーゴのみ　４コ　セット。
 ポケモンに　もたせると
 やけどを　かいふくする。</Text>
 			<TextModifiedBy
@@ -39899,11 +39924,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:22" />
+				Time="2012-02-02T11:18:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チーゴのみ　４こ　セット。
+			<Text>チーゴのみ　４コ　セット。
 ポケモンに　持たせると
 やけどを　回復する。</Text>
 			<TextModifiedBy
@@ -39912,7 +39937,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:22" />
+				Time="2012-02-02T11:18:55" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -39948,7 +39973,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナナシのみ　４こ　セット。
+			<Text>ナナシのみ　４コ　セット。
 ポケモンに　もたせると
 こおりを　かいふくする。</Text>
 			<TextModifiedBy
@@ -39957,11 +39982,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:10" />
+				Time="2012-02-02T11:18:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナナシのみ　４こ　セット。
+			<Text>ナナシのみ　４コ　セット。
 ポケモンに　持たせると
 こおりを　回復する。</Text>
 			<TextModifiedBy
@@ -39970,7 +39995,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:50:10" />
+				Time="2012-02-02T11:18:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40006,29 +40031,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒメリのみ　１こ　セット。
-ポケモンに　もたせると
+			<Text>ポケモンに　もたせると
 ＰＰを　１０だけ　かいふくする。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:53" />
+				Time="2012-02-02T11:24:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:39" />
+				Time="2012-02-02T11:18:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒメリのみ　１こ　セット。
-ポケモンに　持たせると
+			<Text>ポケモンに　持たせると
 ＰＰを　１０だけ　回復する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:44" />
+				Time="2012-02-02T11:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:39" />
+				Time="2012-02-02T11:18:57" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40064,29 +40087,27 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレンのみ　４こ　セット。
-ポケモンに　もたせると
+			<Text>ポケモンに　もたせると
 ＨＰを　１０だけ　かいふくする。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:30:28" />
+				Time="2012-02-02T11:24:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:17" />
+				Time="2012-02-02T11:18:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレンのみ　４こ　セット。
-ポケモンに　持たせると
+			<Text>ポケモンに　持たせると
 ＨＰを　１０だけ　回復する。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:30:31" />
+				Time="2012-02-02T11:24:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:17" />
+				Time="2012-02-02T11:18:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40122,7 +40143,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キーのみ　４こ　セット。
+			<Text>キーのみ　４コ　セット。
 ポケモンに　もたせると
 こんらんを　かいふくする。</Text>
 			<TextModifiedBy
@@ -40131,11 +40152,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:08" />
+				Time="2012-02-02T11:18:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キーのみ　４こ　セット。
+			<Text>キーのみ　４コ　セット。
 ポケモンに　持たせると
 混乱を　回復する。</Text>
 			<TextModifiedBy
@@ -40144,7 +40165,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:08" />
+				Time="2012-02-02T11:19:00" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40180,7 +40201,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ラムのみ　４こ　セット。
+			<Text>ラムのみ　４コ　セット。
 すべての　じょうたい　いじょうを
 かいふくする。</Text>
 			<TextModifiedBy
@@ -40189,11 +40210,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:00" />
+				Time="2012-02-02T11:19:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ラムのみ　４こ　セット。
+			<Text>ラムのみ　４コ　セット。
 すべての　状態異常を
 回復する。</Text>
 			<TextModifiedBy
@@ -40202,7 +40223,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:49:00" />
+				Time="2012-02-02T11:19:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40238,7 +40259,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オボンのみ　４こ　セット。
+			<Text>オボンのみ　４コ　セット。
 ポケモンに　もたせると
 ＨＰを　すこしだけ　かいふくする。</Text>
 			<TextModifiedBy
@@ -40247,11 +40268,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:51" />
+				Time="2012-02-02T11:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オボンのみ　４こ　セット。
+			<Text>オボンのみ　４コ　セット。
 ポケモンに　持たせると
 ＨＰを　少しだけ　回復する。</Text>
 			<TextModifiedBy
@@ -40260,7 +40281,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:51" />
+				Time="2012-02-02T11:19:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40296,7 +40317,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チイラのみ　４こ　セット。
+			<Text>チイラのみ　４コ　セット。
 ポケモンに　もたせると　ピンチのとき
 じぶんの　こうげきが　あがる。</Text>
 			<TextModifiedBy
@@ -40305,11 +40326,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:42" />
+				Time="2012-02-02T11:19:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チイラのみ　４こ　セット。
+			<Text>チイラのみ　４コ　セット。
 ポケモンに　持たせると　ピンチのとき
 自分の　攻撃が　あがる。</Text>
 			<TextModifiedBy
@@ -40318,7 +40339,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:42" />
+				Time="2012-02-02T11:19:04" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40354,7 +40375,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リュガのみ　４こ　セット。
+			<Text>リュガのみ　４コ　セット。
 ポケモンに　もたせると　ピンチのとき
 じぶんの　ぼうぎょが　あがる。</Text>
 			<TextModifiedBy
@@ -40363,11 +40384,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:34" />
+				Time="2012-02-02T11:19:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リュガのみ　４こ　セット。
+			<Text>リュガのみ　４コ　セット。
 ポケモンに　持たせると　ピンチのとき
 自分の　防御が　あがる。</Text>
 			<TextModifiedBy
@@ -40376,7 +40397,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:34" />
+				Time="2012-02-02T11:19:06" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40412,7 +40433,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カムラのみ　４こ　セット。
+			<Text>カムラのみ　４コ　セット。
 ポケモンに　もたせると　ピンチのとき
 じぶんの　すばやさが　あがる。</Text>
 			<TextModifiedBy
@@ -40421,11 +40442,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:27" />
+				Time="2012-02-02T11:19:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カムラのみ　４こ　セット。
+			<Text>カムラのみ　４コ　セット。
 ポケモンに　持たせると　ピンチのとき
 自分の　素早さが　あがる。</Text>
 			<TextModifiedBy
@@ -40434,7 +40455,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:27" />
+				Time="2012-02-02T11:19:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40470,7 +40491,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤタピのみ　４こ　セット。
+			<Text>ヤタピのみ　４コ　セット。
 ポケモンに　もたせると　ピンチのとき
 じぶんの　とくこうが　あがる。</Text>
 			<TextModifiedBy
@@ -40479,11 +40500,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:18" />
+				Time="2012-02-02T11:19:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤタピのみ　４こ　セット。
+			<Text>ヤタピのみ　４コ　セット。
 ポケモンに　持たせると　ピンチのとき
 自分の　特攻が　あがる。</Text>
 			<TextModifiedBy
@@ -40492,7 +40513,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:18" />
+				Time="2012-02-02T11:19:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40528,7 +40549,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ズアのみ　４こ　セット。
+			<Text>ズアのみ　４コ　セット。
 ポケモンに　もたせると　ピンチのとき
 じぶんの　とくぼうが　あがる。</Text>
 			<TextModifiedBy
@@ -40537,11 +40558,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:10" />
+				Time="2012-02-02T11:19:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ズアのみ　４こ　セット。
+			<Text>ズアのみ　４コ　セット。
 ポケモンに　持たせると　ピンチのとき
 自分の　特防が　あがる。</Text>
 			<TextModifiedBy
@@ -40550,7 +40571,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:10" />
+				Time="2012-02-02T11:19:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40586,7 +40607,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オッカのみ　４こ　セット。
+			<Text>オッカのみ　４コ　セット。
 こうかばつぐんの　ほのお　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40595,11 +40616,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:00" />
+				Time="2012-02-02T11:19:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オッカのみ　４こ　セット。
+			<Text>オッカのみ　４コ　セット。
 効果バツグンの　ほのお技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40608,7 +40629,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:48:00" />
+				Time="2012-02-02T11:19:11" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40644,7 +40665,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イトケのみ　４こ　セット。
+			<Text>イトケのみ　４コ　セット。
 こうかばつぐんの　みず　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40653,11 +40674,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:52" />
+				Time="2012-02-02T11:19:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イトケのみ　４こ　セット
+			<Text>イトケのみ　４コ　セット
 効果バツグンの　みず技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40666,7 +40687,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:52" />
+				Time="2012-02-02T11:19:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40702,7 +40723,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソクノのみ　４こ　セット。
+			<Text>ソクノのみ　４コ　セット。
 こうかばつぐんの　でんき　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40711,11 +40732,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:43" />
+				Time="2012-02-02T11:19:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソクノのみ　４こ　セット
+			<Text>ソクノのみ　４コ　セット
 効果バツグンの　でんき技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40724,7 +40745,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:43" />
+				Time="2012-02-02T11:19:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40760,7 +40781,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リンドのみ　４こ　セット。
+			<Text>リンドのみ　４コ　セット。
 こうかばつぐんの　くさ　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40769,11 +40790,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:35" />
+				Time="2012-02-02T11:19:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リンドのみ　４こ　セット
+			<Text>リンドのみ　４コ　セット
 効果バツグンの　くさ技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40782,7 +40803,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:35" />
+				Time="2012-02-02T11:19:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40818,7 +40839,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤチェのみ　４こ　セット。
+			<Text>ヤチェのみ　４コ　セット。
 こうかばつぐんの　こおり　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40827,11 +40848,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:27" />
+				Time="2012-02-02T11:19:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤチェのみ　４こ　セット
+			<Text>ヤチェのみ　４コ　セット
 効果バツグンの　こおり技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40840,7 +40861,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:27" />
+				Time="2012-02-02T11:19:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40876,7 +40897,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨプのみ　４こ　セット。
+			<Text>ヨプのみ　４コ　セット。
 こうかばつぐんの　かくとう　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40885,11 +40906,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:15" />
+				Time="2012-02-02T11:19:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨプのみ　４こ　セット
+			<Text>ヨプのみ　４コ　セット
 効果バツグンの　かくとう技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40898,7 +40919,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:47:15" />
+				Time="2012-02-02T11:19:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40934,7 +40955,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ビアーのみ　４こ　セット。
+			<Text>ビアーのみ　４コ　セット。
 こうかばつぐんの　どく　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -40943,11 +40964,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:58" />
+				Time="2012-02-02T11:19:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ビアーのみ　４こ　セット
+			<Text>ビアーのみ　４コ　セット
 効果バツグンの　どく技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -40956,7 +40977,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:58" />
+				Time="2012-02-02T11:19:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -40992,7 +41013,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シュカのみ　４こ　セット。
+			<Text>シュカのみ　４コ　セット。
 こうかばつぐんの　じめん　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41001,11 +41022,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:49" />
+				Time="2012-02-02T11:19:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シュカのみ　４こ　セット
+			<Text>シュカのみ　４コ　セット
 効果バツグンの　じめん技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41014,7 +41035,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:49" />
+				Time="2012-02-02T11:19:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41050,7 +41071,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バコウのみ　４こ　セット。
+			<Text>バコウのみ　４コ　セット。
 こうかばつぐんの　ひこう　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41059,11 +41080,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:36" />
+				Time="2012-02-02T11:19:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バコウのみ　４こ　セット
+			<Text>バコウのみ　４コ　セット
 効果バツグンの　ひこう技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41072,7 +41093,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:36" />
+				Time="2012-02-02T11:19:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41108,7 +41129,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウタンのみ　４こ　セット。
+			<Text>ウタンのみ　４コ　セット。
 こうかばつぐんの　エスパー　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41117,11 +41138,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:28" />
+				Time="2012-02-02T11:19:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウタンのみ　４こ　セット
+			<Text>ウタンのみ　４コ　セット
 効果バツグンの　エスパー技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41130,7 +41151,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:28" />
+				Time="2012-02-02T11:19:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41166,7 +41187,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タンガのみ　４こ　セット。
+			<Text>タンガのみ　４コ　セット。
 こうかばつぐんの　むし　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41175,11 +41196,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:18" />
+				Time="2012-02-02T11:19:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タンガのみ　４こ　セット
+			<Text>タンガのみ　４コ　セット
 効果バツグンの　むし技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41188,7 +41209,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:18" />
+				Time="2012-02-02T11:19:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41224,7 +41245,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨロギのみ　４こ　セット。
+			<Text>ヨロギのみ　４コ　セット。
 こうかばつぐんの　いわ　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41233,11 +41254,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:09" />
+				Time="2012-02-02T11:19:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヨロギのみ　４こ　セット
+			<Text>ヨロギのみ　４コ　セット
 効果バツグンの　いわ技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41246,7 +41267,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:09" />
+				Time="2012-02-02T11:19:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41282,7 +41303,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カシブのみ　４こ　セット。
+			<Text>カシブのみ　４コ　セット。
 こうかばつぐんの　ゴースト　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41291,11 +41312,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:00" />
+				Time="2012-02-02T11:19:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カシブのみ　４こ　セット
+			<Text>カシブのみ　４コ　セット
 効果バツグンの　ゴースト技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41304,7 +41325,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:46:00" />
+				Time="2012-02-02T11:19:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41340,7 +41361,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハバンのみ　４こ　セット。
+			<Text>ハバンのみ　４コ　セット。
 こうかばつぐんの　ドラゴン　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41349,11 +41370,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:52" />
+				Time="2012-02-02T11:19:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハバンのみ　４こ　セット
+			<Text>ハバンのみ　４コ　セット
 効果バツグンの　ドラゴン技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41362,7 +41383,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:52" />
+				Time="2012-02-02T11:19:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41398,7 +41419,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナモのみ　４こ　セット。
+			<Text>ナモのみ　４コ　セット。
 こうかばつぐんの　あく　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41407,11 +41428,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:43" />
+				Time="2012-02-02T11:19:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナモのみ　４こ　セット
+			<Text>ナモのみ　４コ　セット
 効果バツグンの　あく技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41420,7 +41441,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:43" />
+				Time="2012-02-02T11:19:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41456,7 +41477,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リリバのみ　４こ　セット。
+			<Text>リリバのみ　４コ　セット。
 こうかばつぐんの　はがね　わざを
 うけたとき　いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41465,11 +41486,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:34" />
+				Time="2012-02-02T11:19:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リリバのみ　４こ　セット
+			<Text>リリバのみ　４コ　セット
 効果バツグンの　はがね技を
 受けたとき　威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41478,7 +41499,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:34" />
+				Time="2012-02-02T11:19:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41514,7 +41535,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホズのみ　４こ　セット。
+			<Text>ホズのみ　４コ　セット。
 ノーマル　わざを　うけたとき
 いりょくが　よわまる。</Text>
 			<TextModifiedBy
@@ -41523,11 +41544,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:26" />
+				Time="2012-02-02T11:19:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホズのみ　４こ　セット
+			<Text>ホズのみ　４コ　セット
 ノーマル技を　受けたとき
 威力が　弱まる。</Text>
 			<TextModifiedBy
@@ -41536,7 +41557,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:26" />
+				Time="2012-02-02T11:19:29" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41572,7 +41593,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ザロクのみ　４こ　セット。
+			<Text>ザロクのみ　４コ　セット。
 とても　なつき　やすくなるが
 ＨＰの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41581,11 +41602,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:17" />
+				Time="2012-02-02T11:19:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ザロクのみ　４こ　セット。
+			<Text>ザロクのみ　４コ　セット。
 とても　なつき　やすくなるが
 ＨＰの　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41594,7 +41615,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:17" />
+				Time="2012-02-02T11:19:30" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41630,7 +41651,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ネコブのみ　４こ　セット。
+			<Text>ネコブのみ　４コ　セット。
 とても　なつき　やすくなるが
 こうげきの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41639,11 +41660,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:03" />
+				Time="2012-02-02T11:19:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ネコブのみ　４こ　セット。
+			<Text>ネコブのみ　４コ　セット。
 とても　なつき　やすくなるが
 攻撃の　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41652,7 +41673,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:45:03" />
+				Time="2012-02-02T11:19:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41688,7 +41709,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タポルのみ　４こ　セット。
+			<Text>タポルのみ　４コ　セット。
 とても　なつき　やすくなるが
 ぼうぎょの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41697,11 +41718,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:48" />
+				Time="2012-02-02T11:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タポルのみ　４こ　セット。
+			<Text>タポルのみ　４コ　セット。
 とても　なつき　やすくなるが
 防御の　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41710,7 +41731,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:49" />
+				Time="2012-02-02T11:19:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41746,7 +41767,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロメのみ　４こ　セット。
+			<Text>ロメのみ　４コ　セット。
 とても　なつき　やすくなるが
 とくこうの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41755,11 +41776,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:30" />
+				Time="2012-02-02T11:19:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロメのみ　４こ　セット。
+			<Text>ロメのみ　４コ　セット。
 とても　なつき　やすくなるが
 特攻の　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41768,7 +41789,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:30" />
+				Time="2012-02-02T11:19:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41804,7 +41825,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウブのみ　４こ　セット。
+			<Text>ウブのみ　４コ　セット。
 とても　なつき　やすくなるが
 とくぼうの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41813,11 +41834,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:12" />
+				Time="2012-02-02T11:19:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウブのみ　４こ　セット。
+			<Text>ウブのみ　４コ　セット。
 とても　なつき　やすくなるが
 特防の　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41826,7 +41847,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:44:12" />
+				Time="2012-02-02T11:19:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -41862,7 +41883,7 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マトマのみ　４こ　セット。
+			<Text>マトマのみ　４コ　セット。
 とても　なつき　やすくなるが
 すばやさの　きそポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41871,11 +41892,11 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:41:09" />
+				Time="2012-02-02T11:19:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マトマのみ　４こ　セット。
+			<Text>マトマのみ　４コ　セット。
 とても　なつき　やすくなるが
 素早さの　基礎ポイントは　さがる。</Text>
 			<TextModifiedBy
@@ -41884,7 +41905,7 @@ ME
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T08:41:09" />
+				Time="2012-02-02T11:19:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -73723,10 +73744,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしんこうかんを　した　かず』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:46:00" />
+				Time="2012-02-01T03:42:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73736,10 +73757,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信交換を　した　数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:46:04" />
+				Time="2012-02-01T03:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73791,10 +73812,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしんこうかんを　した　かず』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:46:13" />
+				Time="2012-02-01T03:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73804,10 +73825,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信交換を　した　数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T14:46:17" />
+				Time="2012-02-01T03:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -118055,10 +118076,10 @@ PWT
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぜっこちょう！</Text>
+			<Text>ぜっこうちょう！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:16:03" />
+				Time="2012-02-01T03:34:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -118066,10 +118087,10 @@ PWT
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぜっこちょう！</Text>
+			<Text>ぜっこうちょう！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:16:07" />
+				Time="2012-02-01T03:34:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
