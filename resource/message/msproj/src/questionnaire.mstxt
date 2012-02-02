@@ -1225,14 +1225,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>・どんな　魔が欲しい？</Text>
+			<Text>・どんな　魔法が欲しい？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-02T09:59:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-02T09:59:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2248,15 +2248,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしも　魔が　使えたら
+			<Text>もしも　魔法が　使えたら
 どんなことを　したい？　のアンケート</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-02T09:59:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-02T09:59:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

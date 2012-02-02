@@ -457,7 +457,7 @@
         <language name="JPN_KANJI" width="256">・ポケモンの面白いところは？</language>
       </row><row id="str_question_16">
         <language name="JPN" width="256">・どんな　まほうが　ほしい？</language>
-        <language name="JPN_KANJI" width="256">・どんな　魔が欲しい？</language>
+        <language name="JPN_KANJI" width="256">・どんな　魔法が欲しい？</language>
       </row><row id="str_question_17">
         <language name="JPN" width="256">・おかねもちになったら　どうする？</language>
         <language name="JPN_KANJI" width="256">・お金持ちになったら　どうする？</language>
@@ -580,7 +580,7 @@
       </row><row id="str_question_16_caption">
         <language name="JPN" width="256">もしも　まほうが　つかえたら
 どんなことを　したい？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">もしも　魔が　使えたら
+        <language name="JPN_KANJI" width="256">もしも　魔法が　使えたら
 どんなことを　したい？　のアンケート</language>
       </row><row id="str_question_17_caption">
         <language name="JPN" width="256">もし　たくさん　おかねを　もっていたら
