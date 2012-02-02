@@ -1,6 +1,6 @@
 #[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 #
-#	@file		btl_subway_poke_waza_check.rb
+#	@file		btl_subway_poke_waza_check_main.rb
 #	@brief  バトルサブウェイポケモンデータの技をチェックする
 #	@author	Masayuki Onoue
 #	@date		2012.01.17
@@ -78,7 +78,7 @@ end
 
 
 # メッセージファイルの位置
-MSG_FILES = "C:/home/swan/resource/**/*.pdm" 
+MSG_FILES = ENV["PROJECT_ROOT"]+"resource/**/*.pdm" 
 subway_poke_file_names = Dir[ MSG_FILES ]
 
 # パーソナルデータ参照
