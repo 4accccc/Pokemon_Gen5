@@ -11165,10 +11165,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２回目</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-02T11:27:13" />
+				Time="2012-02-02T14:20:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -12543,10 +12543,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうたいする</Text>
+			<Text>じゅうにんにする</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-26T11:52:59" />
+				Time="2012-02-02T14:20:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12554,10 +12554,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>招待する</Text>
+			<Text>住人にする</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2012-02-02T14:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16437,10 +16437,10 @@ BW♀
 			<Text>……おや？▼
 オーナーが　やってきた！▼
 [Name:ResortMayor ]の
-オフィスへ　いってみよう▼</Text>
+オフィスへ　いってみよう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-24T10:57:42" />
+				Time="2012-02-02T14:43:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16451,10 +16451,10 @@ BW♀
 			<Text>……おや？▼
 オーナーが　やってきた！▼
 [Name:ResortMayor ]の
-オフィスへ　行ってみよう▼</Text>
+オフィスへ　行ってみよう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-24T10:57:47" />
+				Time="2012-02-02T14:43:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16508,13 +16508,12 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-しんそう　かいてん　した！▼
-[Name:ResortShop Idx="1" ]を
+しんそう　かいてん　したので▽　
 のぞいて　みよう！▼
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T12:55:25" />
+				Time="2012-02-02T14:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16523,13 +16522,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]は
-新装開店　した！▼
-[Name:ResortShop Idx="1" ]を
+新装開店　したので▽
 のぞいて　みよう！▼
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T12:55:30" />
+				Time="2012-02-02T14:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
