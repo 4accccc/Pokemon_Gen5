@@ -861,6 +861,7 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work );
 static  void  TCB_BagModeSet( GFL_TCB* tcb, void* work );
 static  void  TCB_SetWindowMask( GFL_TCB* tcb, void* work );
 static  void  TCB_ClearWindowMask( GFL_TCB* tcb, void* work );
+static  void  TCB_ClearObjBrightMask( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
@@ -874,6 +875,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_ClearObjBright( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_SetDrawEnablePokeIcon( BTLV_INPUT_WORK* biw, BOOL flag );
 static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw, BtlWeather btl_weather );
 static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw );
@@ -1576,6 +1578,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 #endif
       {
         BTLV_INPUT_SetDrawEnablePokeIcon( biw, FALSE );
+        // ポケモンアイコンがある場合は、
+        // 枠objに影響するのでbrightを無効
+        if( ttw->biw->pokeicon_wk[ 0 ].clwk ){
+          BTLV_INPUT_ClearObjBright( biw );
+        }
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 ), TCB_Transform_CB );
       }
       else
@@ -2611,6 +2618,12 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     if( ttw->biw->tcb_execute_count == 0 )
     {
       BTLV_INPUT_SetDrawEnablePokeIcon( ttw->biw, TRUE );
+      // 枠の処理が終わったので、
+      // ポケアイコンのbrightを戻す
+      if( ttw->biw->pokeicon_wk[ 0 ].clwk ){
+        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+      }
+      //
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
@@ -4458,6 +4471,27 @@ static  void  TCB_ClearWindowMask( GFL_TCB* tcb, void* work )
   G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
 
+  BTLV_INPUT_FreeTCB( twm->biw, tcb );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコン用bright無効
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_ClearObjBright( BTLV_INPUT_WORK* biw )
+{
+  TCB_WINDOW_MASK* twm = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_WINDOW_MASK ) );
+  twm->biw = biw;
+  BTLV_INPUT_SetTCB( biw, GFUser_VIntr_CreateTCB( TCB_ClearObjBrightMask, twm, 0 ), NULL );
+}
+
+static  void  TCB_ClearObjBrightMask( GFL_TCB* tcb, void* work )
+{
+  TCB_WINDOW_MASK* twm = ( TCB_WINDOW_MASK* )work;
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
   BTLV_INPUT_FreeTCB( twm->biw, tcb );
 }
 
