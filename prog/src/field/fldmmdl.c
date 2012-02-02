@@ -1007,6 +1007,10 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
   MMDL *mmdl;
   
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
+    
+    // 動作コード取得
+    const u16 code = MMDL_GetMoveCode( mmdl );
+
     {  //動作処理復帰
       mmdl_InitMoveWork( mmdlsys, mmdl ); //ワーク初期化
       
@@ -1015,10 +1019,14 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
         mmdl_InitMoveProc( mmdlsys, mmdl );
       }
       
-      //復元関数呼び出しが必要
-      if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
-        MMDL_CallMovePopProc( mmdl );
-        MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+      // 落ち葉なら呼び出さない BTS787
+      if( code != MV_HIDE_OCHIBA )
+      {
+        //復元関数呼び出しが必要
+        if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
+          MMDL_CallMovePopProc( mmdl );
+          MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+        }
       }
     }
     
@@ -1035,6 +1043,20 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 
     { //リカバリー
       mmdl_InitDrawEffectFlag( mmdl );
+    }
+
+    // BTS787【落ち葉に隠れているNPCトレーナーの足元に影が表示される】
+    // 
+    // 原因は上の処理のリカバリーで影非表示フラグをOFFにしているから
+    // 対処として落ち葉ならこの箇所で復帰関数を呼び出す
+    //
+    if( code == MV_HIDE_OCHIBA )
+    {
+      //復元関数呼び出し呼び出す
+      if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER) ){
+        MMDL_CallMovePopProc( mmdl );
+        MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
+      }
     }
   }
 }
