@@ -1267,6 +1267,7 @@ static BOOL sub_LogParamWordset( DMENU_LINK_FEST* wk, u8 idx, int value, BPRM_WS
     break;
   case BPRM_WSET_MEX_NPC_POKE_QUIZ:
     GFL_MSG_GetString( wk->msgman, dlf_npc_poke_quiz_01+value, wk->str_tmp );
+    OS_Printf("quiz_value=%d\n", value);
     break;
   case BPRM_WSET_MISSION_ID_NAME:
     GFL_MSG_GetString( wk->msgman, dlf_mission_id_name_01+value, wk->str_tmp );
@@ -2561,8 +2562,9 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
   
       if( evwk->update_f ){
         evwk->m_ex_param = evwk->req_fmwk.beacon.ex_param;
-      }else if( evwk->m_ex_param >= evwk->log_prm_set->max ||
+      }else if( evwk->m_ex_param > evwk->log_prm_set->max ||
                 evwk->m_ex_param < evwk->log_prm_set->min ){
+        OS_Printf("•â³‚É‚Ğ‚Á‚©‚©‚Á‚½ param=%d, min=%d, max=%d, type=%d\n", evwk->m_ex_param, evwk->log_prm_set->min, evwk->log_prm_set->max,evwk->log_prm_set->wset_type);
         evwk->m_ex_param = evwk->log_prm_set->min; //”ÍˆÍŠO‚È‚Ì‚Å•â³
       }
     }

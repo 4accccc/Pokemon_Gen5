@@ -140,7 +140,7 @@ class CPokeFilter
       
       #ínï˚Ç©ëSçëÇ©ÅH
       no = $chihou_zukanno_hash.fetch(i)
-      if no == $NO_CHIHOU_ID then
+      if no != $NO_CHIHOU_ID then
         @data[LIST_LOCAL].list << i 
       end
       @data[LIST_ZENKOKU].list << i
