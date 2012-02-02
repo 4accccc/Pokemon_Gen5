@@ -246,8 +246,13 @@ IF $SCWK_TEMP0 == 0 THEN
 	//バッジ入手前なら
 	_PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_01 )
 ELSE
-	//バッジ入手後
-    _PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_02  )
+
+	IF $WK_SCENE_C13 >= 4 THEN
+		_PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_03 )
+	ELSE
+		_PLAINWIN_MSG_DOWN( msg_c13gym0101_statue_02 )
+	ENDIF
+	
 ENDIF
 
 _LAST_KEYWAIT()
