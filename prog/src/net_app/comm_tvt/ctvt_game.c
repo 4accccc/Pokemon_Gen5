@@ -2023,6 +2023,31 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // 全ての風船の終了まで待つ
       if( balloon_end_check( gameWork ) == TRUE )
       {
+        // 終了時に親ならスコア送信
+        if( selfId == 0 )
+        {
+          CTVT_GAME_SEND_SCORE score;
+          u8  i;
+
+          ICHI_Printf("-----送信スコア-------------\n");
+          for(i=0; i<CTVT_MEMBER_NUM; i++ )
+          {
+            // デバッグ機能
+#ifdef CTVT_GAME_DEBUG_MENU
+            if( debug_on )
+            {
+              // デバッグ値
+              gameWork->score[i] = debug_score[i];
+              ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
+            }
+#endif
+            score.score[i] = gameWork->score[i];
+            ICHI_Printf("%d -> %d\n",i, score.score[i]);
+          }
+
+          CTVT_COMM_SendGameReq_Score( commWork, score );
+        }
+
         gameWork->seq = SEQ_SCORE_SYNC_INIT;
       }
     }
@@ -3432,39 +3457,10 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     {
       // 終了のホイッスル音
       PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // ホイッスル音
+      ICHI_Printf("TimeLimit が0 \n");
+      ICHI_Printf("ゲームメイン終了!\n");
+      return TRUE; // 終了
     }
-  }
-  else if( gameWork->timeLimit == 0 )
-  {
-    ICHI_Printf("TimeLimit が0 \n");
-
-    // 終了時に親ならスコア送信
-    if( selfId == 0 )
-    {
-      CTVT_GAME_SEND_SCORE score;
-      u8  i;
-
-      ICHI_Printf("-----送信スコア-------------\n");
-      for(i=0; i<CTVT_MEMBER_NUM; i++ )
-      {
-        // デバッグ機能
-#ifdef CTVT_GAME_DEBUG_MENU
-        if( debug_on )
-        {
-          // デバッグ値
-          gameWork->score[i] = debug_score[i];
-          ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
-        }
-#endif
-        score.score[i] = gameWork->score[i];
-        ICHI_Printf("%d -> %d\n",i, score.score[i]);
-      }
-
-      CTVT_COMM_SendGameReq_Score( commWork, score );
-    }
-
-    ICHI_Printf("ゲームメイン終了!\n");
-    return TRUE; // 終了
   }
 
   // プレート移動
