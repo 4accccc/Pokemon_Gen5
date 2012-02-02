@@ -1430,6 +1430,11 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
     {
       work->romInfoStr[i] = 0x000a;
     }
+    else if( work->romInfoStr[i] >= L'‚O' &&
+        work->romInfoStr[i] <= L'‚X')
+    {
+      work->romInfoStr[i] = work->romInfoStr[i]-L'‚O'+L'0';
+    }
   }
   //‘SŠp”Žš•ÏŠ·
   for( i=0;i<MB_GAME_NAME_LENGTH;i++ )
