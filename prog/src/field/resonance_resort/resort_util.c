@@ -1858,25 +1858,58 @@ u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYST
 
   //もし一定確率でお気に入り場所にいく
   {
-    static const int sc_favorite_percent[] =
-    {
-      RESORT_CONST_WANTSPOT_FAVORITE_LOW,
-      RESORT_CONST_WANTSPOT_FAVORITE_MIDDLE,
-      RESORT_CONST_WANTSPOT_FAVORITE_HIGH,
-    };
+    u32 shop_type;
+    BOOL is_build = FALSE;
 
-    int rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_FAVORITE, 100 );
-    if( rnd < sc_favorite_percent[group] )
+    //お気に入りお店タイプを取得
     {
       RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
       RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
       RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
       MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_gamedata );
-      
       u32 shopno = RESORT_OWNER_DATA_GetWantJob( p_owner, p_mystatus );
       const RESORT_BINARY_SHOP_DATA* cp_shop = RESORT_BINARY_SHOP_GetData(p_shop, shopno);
-      u32 shoptype = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
-      return RESORT_SPOT_ID_SPOT_01_LOT + shoptype;
+      shop_type = RESORT_BINARY_SHOP_DATA_GetData(cp_shop,RESORT_BINARY_SHOP_PARAM_SHOP);
+    }
+
+    //お気に入りのお店が建っているか
+    {
+      RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+      int i;
+      for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+      {
+        RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_people_all,i);
+        if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+        {
+          RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+          RESORT_BINARY_SHOP *p_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
+          const RESORT_BINARY_SHOP_DATA *cp_binary_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
+          u32 shop = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP ); 
+          if( shop == shop_type )
+          {
+            is_build = TRUE;
+            break;
+          }
+        }
+      }
+    }
+
+    //立てていれば
+    if( is_build )
+    {
+      static const int sc_favorite_percent[] =
+      {
+        RESORT_CONST_WANTSPOT_FAVORITE_LOW,
+        RESORT_CONST_WANTSPOT_FAVORITE_MIDDLE,
+        RESORT_CONST_WANTSPOT_FAVORITE_HIGH,
+      };
+
+      int rnd = RESORT_ABSTRUCT_DATA_GetRnd( cp_wk, RESORT_RND_ID_WHERESPOT_FAVORITE, 100 );
+      if( rnd < sc_favorite_percent[group] )
+      {
+
+        return RESORT_SPOT_ID_SPOT_01_LOT + shop_type;
+      }
     }
   }
 
