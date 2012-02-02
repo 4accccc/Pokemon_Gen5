@@ -81,10 +81,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……なに？
-はやく　じゅんび　してくれよッ！▼</Text>
+はやく　じゅんび　してくれよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-25T11:23:28" />
+				Time="2012-02-02T07:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -93,10 +93,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……なに？
-はやく　準備してくれよッ！▼</Text>
+はやく　準備してくれよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-25T11:23:36" />
+				Time="2012-02-02T07:30:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -106,11 +106,10 @@
 			Language="JPN">
 			<Comment>♂
 ・いいえ選択
-　押し戻される？
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:59:12" />
+				Time="2012-02-02T07:30:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -141,10 +140,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『オーケー！
-さあ　プラズマだんを　さがすぜッ！！</Text>
+さあ　プラズマだんを　さがすぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:58:50" />
+				Time="2012-02-02T07:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -153,10 +152,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『オーケー！
-さあ　プラズマ団を　探すぜッ！！</Text>
+さあ　プラズマ団を　探すぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-08T04:59:19" />
+				Time="2012-02-02T07:30:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
