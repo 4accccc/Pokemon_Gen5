@@ -1680,6 +1680,7 @@ RESORT_MERGE_RESULT RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RE
         if( cp_recv->extend_flag & (1<<i) )
         {
           GFL_STD_MemCopy( cp_extend_src, p_extend_dst, RESORT_EXTEND_DATA_SIZE );
+          p_wk->extend_flag |= (1<<i);
         }
         cp_extend_src += RESORT_EXTEND_DATA_SIZE;
         p_extend_dst += RESORT_EXTEND_DATA_SIZE;
