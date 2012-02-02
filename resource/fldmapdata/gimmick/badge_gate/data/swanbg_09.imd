@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-08-01T10:47:19" source="no_28.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-02T22:58:14" source="swanbg_09_001.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-08-01T10:47:19" source="no_28.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-02-02T22:58:14" source="swanbg_09_001.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_black00_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_black00.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_black00.tga"
 	>
 		<bitmap size="512">
 			5555 5555 5555 1555 1111 1111 1111 1111
@@ -109,7 +109,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_black01_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_black01.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_black01.tga"
 	>
 		<bitmap size="512">
 			1112 1111 1111 1111 1111 7771 4a88 0554
@@ -183,7 +183,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_black02_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_black02.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_black02.tga"
 	>
 		<bitmap size="1024">
 			1444 0896 4441 4444 9614 5428 5555 4555
@@ -321,7 +321,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_blue_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_blue.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_blue.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 2222 2222 0000 0000
@@ -339,7 +339,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_kaidan_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_kaidan.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_kaidan.tga"
 	>
 		<bitmap size="1024">
 			8899 4588 4444 4444 4444 4444 4444 4444
@@ -477,7 +477,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_red_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_red.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_red.tga"
 	>
 		<bitmap size="64">
 			5555 5555 7777 7777 4444 4444 7777 7777
@@ -495,7 +495,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="gate_white00_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_white00.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_white00.tga"
 	>
 		<bitmap size="1024">
 			0202 0202 0202 0202 0202 0202 0202 1002
@@ -633,7 +633,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_white01_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_white01.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_white01.tga"
 	>
 		<bitmap size="512">
 			7776 7777 7777 7777 7777 0007 3911 7443
@@ -707,7 +707,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gate_white02_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/gate_white02.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/gate_white02.tga"
 	>
 		<bitmap size="1024">
 			8666 7932 6668 6666 3286 1649 1111 6111
@@ -844,7 +844,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/swan_data3d/gimmick/badgecheck/old/tex/h_kage.tga"
+		path="C:/home/swan_data3d/gimmick/badgecheck/swanbg_09/tex/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -1185,9 +1185,9 @@
 					<pos_xyz xyz="-1.846924 0.250000 -0.875000"/>
 					<tex st="69.812500 -18.125000"/>
 					<pos_yz yz="0.225342 -0.437744"/>
-					<tex st="117.812500 -39.875000"/>
+					<tex st="117.875000 -39.875000"/>
 					<pos_s xyz="-1.125000 0.250000 -0.875000"/>
-					<tex st="117.812500 -18.125000"/>
+					<tex st="117.875000 -18.125000"/>
 					<pos_yz yz="0.225342 -0.437744"/>
 				</primitive>
 				<primitive index="1" type="triangle_strip" vertex_size="5">
@@ -5391,8 +5391,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="59" name="polygon59"
-		vertex_size="7" polygon_size="2"
-		triangle_size="1" quad_size="1"
+		vertex_size="10" polygon_size="3"
+		triangle_size="2" quad_size="1"
 		volume_min="-0.000732 -1.013184 0.187500"
 		volume_max="0.875000 1.013184 0.187500"
 		volume_r="1.351807"
@@ -5408,14 +5408,20 @@
 					<clr rgb="31 31 31"/>
 					<nrm xyz="0.000000 -0.011719 0.998047"/>
 					<pos_xyz xyz="-0.000732 -1.013184 0.187500"/>
-					<tex st="95.437500 95.062500"/>
-					<pos_xy xy="0.875000 -1.013184"/>
+					<tex st="95.437500 91.250000"/>
+					<pos_xy xy="0.875000 -0.950684"/>
 					<tex st="95.437500 -15.062500"/>
 					<pos_xy xy="0.875000 0.799072"/>
 					<tex st="62.875000 -24.875000"/>
 					<pos_xy xy="0.422119 0.960938"/>
 				</primitive>
-				<primitive index="1" type="triangles" vertex_size="3">
+				<primitive index="1" type="triangles" vertex_size="6">
+					<tex st="32.500000 95.062500"/>
+					<pos_xy xy="-0.000732 -1.013184"/>
+					<tex st="95.437500 95.062500"/>
+					<pos_xy xy="0.875000 -1.013184"/>
+					<tex st="95.437500 91.250000"/>
+					<pos_xy xy="0.875000 -0.950684"/>
 					<tex st="32.500000 95.062500"/>
 					<pos_xy xy="-0.000732 -1.013184"/>
 					<tex st="62.875000 -24.875000"/>
@@ -5427,9 +5433,9 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="60" name="polygon60"
-		vertex_size="7" polygon_size="2"
-		triangle_size="1" quad_size="1"
-		volume_min="-0.875000 -1.013184 0.187500"
+		vertex_size="10" polygon_size="3"
+		triangle_size="2" quad_size="1"
+		volume_min="-0.876221 -1.013184 0.187500"
 		volume_max="-0.000732 1.013184 0.187500"
 		volume_r="1.351807"
 		mtx_prim_size="1"
@@ -5448,10 +5454,16 @@
 					<pos_xy xy="-0.423340 0.960938"/>
 					<tex st="36.000000 26.125000"/>
 					<pos_xy xy="-0.875000 0.799072"/>
+					<tex st="35.875000 132.000000"/>
+					<pos_xy xy="-0.876221 -0.950684"/>
+				</primitive>
+				<primitive index="1" type="triangles" vertex_size="6">
+					<tex st="98.937500 135.812500"/>
+					<pos_xy xy="-0.000732 -1.013184"/>
+					<tex st="35.875000 132.000000"/>
+					<pos_xy xy="-0.876221 -0.950684"/>
 					<tex st="36.000000 135.812500"/>
 					<pos_xy xy="-0.875000 -1.013184"/>
-				</primitive>
-				<primitive index="1" type="triangles" vertex_size="3">
 					<tex st="68.562500 16.312500"/>
 					<pos_xy xy="-0.423340 0.960938"/>
 					<tex st="98.937500 135.812500"/>
@@ -6227,9 +6239,9 @@
 		translate="-72.000000 80.846924 -100.000000"
 		visibility="on"
 		display_size="7"
-		vertex_size="156" polygon_size="46"
-		triangle_size="16" quad_size="30"
-		volume_min="-0.875000 -1.013184 -0.250000"
+		vertex_size="162" polygon_size="48"
+		triangle_size="18" quad_size="30"
+		volume_min="-0.876221 -1.013184 -0.250000"
 		volume_max="0.875000 1.013184 0.268555"
 		volume_r="1.351807"
 	>
@@ -6328,8 +6340,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="1525" polygon_size="450"
-	triangle_size="169" quad_size="281"/>
+<output_info vertex_size="1531" polygon_size="452"
+	triangle_size="171" quad_size="281"/>
 
 </body>
 

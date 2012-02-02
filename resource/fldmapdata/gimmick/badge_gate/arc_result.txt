@@ -25,7 +25,7 @@ fileID:  byte(s) name
     21:     6940 /swanbg_08.nsbmd
     22:     5532 /swanbg_08_start.nsbmd
     23:     6004 /swanbg_08_end.nsbmd
-    24:    37020 /swanbg_09.nsbmd
+    24:    37084 /swanbg_09.nsbmd
     25:    28580 /swanbg_09_start.nsbmd
     26:    21092 /swanbg_09_end.nsbmd
     27:      984 /swanbg_01.nsbca
