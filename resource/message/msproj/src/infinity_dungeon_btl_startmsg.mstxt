@@ -11153,12 +11153,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あとちょっとで　おりかえしちてん！
-もう　いきぎれ　してるんじゃないの？▽
+			<Text>いきぎれ　してるんじゃないの？
 それで　わたしに　かてるのかい？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T10:14:18" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11166,12 +11165,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あとちょっとで　折り返し地点！
-もう　息切れ　してるんじゃないの？▽
+			<Text>息切れ　してるんじゃないの？
 それで　わたしに　勝てるのかい？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T10:14:40" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19462,13 +19460,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおおおおっ！
-なんだ　おおきな　エネルギーは！▼
+			<Text>おおおおおっ！ なんだ？
+この　おおきな　エネルギーは！▼
 このままじゃ　おれも　おまえも
 のみこまれてしまうぞ！　しょうぶ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-25T03:54:07" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -19476,13 +19474,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おおおおおっ！
-なんだ　この　大きなエネルギーは！▼
+			<Text>おおおおおっ！ なんだ？
+この　大きなエネルギーは！▼
 このままじゃ　おれも　おまえも
 飲み込まれてしまうぞ！　勝負！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-25T03:54:17" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T07:35:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
