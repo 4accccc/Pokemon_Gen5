@@ -4828,7 +4828,7 @@
 また　おあいて　してくださいね</language>
 		<language name="JPN_KANJI" width="216">あいかわらず……▼
 いえ　以前よりも
-エレガントで　エクセレントな
+エレガントで　エクセレントな▽
 トレーナーと　ポケモンね　アナタたち▼
 そんな　きらびやかな　かたと
 競いあうことで▼
@@ -10990,7 +10990,7 @@
 ２ねんかん　ずっと　きたえていた▼
 もう　だれにも　まけない！▼</language>
 		<language name="JPN_KANJI" width="216">……プラズマ団の　正義のため
-２年間　ずっと　鍛えていた
+２年間　ずっと　鍛えていた▼
 もう　だれにも　負けない！▼</language>
 	</row>
 
@@ -13635,7 +13635,7 @@
 
 	<row id="TRID_ELITEM_36_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">パソコンで　しらべて　みつけたのは
-たにんの　いけんで　あって
+たにんの　いけんで　あって▽
 ボクが　だした　こたえ　じゃなかった</language>
 		<language name="JPN_KANJI" width="216">パソコンで　調べて　みつけたのは
 他人の　意見で　あって▽
@@ -14217,7 +14217,7 @@
 
 	<row id="TRID_RANGERW_26_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">じっと　みみを　すませて
-ポケモンの　なきごえや　あしおと……
+ポケモンの　なきごえや　あしおと……▽
 きぎや　ぬまの　こきゅうを　きくのよ</language>
 		<language name="JPN_KANJI" width="216">じっと　耳を　すませて
 ポケモンの　鳴き声や　足音……▽
@@ -17692,7 +17692,7 @@
 また　おあいて　してくださいね</language>
 		<language name="JPN_KANJI" width="216">あいかわらず……▼
 いえ　以前よりも
-エレガントで　エクセレントな
+エレガントで　エクセレントな▽
 トレーナーと　ポケモンね　アナタたち▼
 そんな　きらびやかな　かたと
 競いあうことで▼
