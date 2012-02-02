@@ -119,7 +119,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！
+			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！▼
 オマエの　おかげで
 オレの　たびは　ぶじに▽
 もくてきを　はたせた▼
@@ -128,7 +128,7 @@
 これは　オレからの　おれいだッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T13:43:47" />
+				Time="2012-02-02T13:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,7 +136,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！
+			<Text>[Name:TrainerName Idx="1" ]『……[Name:TrainerName ]！▼
 オマエの　おかげで
 オレの　旅は　無事に▽
 目的を　果たせた▼
@@ -145,7 +145,7 @@
 これは　オレからの　お礼だッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T13:43:53" />
+				Time="2012-02-02T13:40:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

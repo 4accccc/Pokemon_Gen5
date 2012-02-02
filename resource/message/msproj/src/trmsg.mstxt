@@ -19854,7 +19854,7 @@
 			Language="JPN_KANJI">
 			<Text>あいかわらず……▼
 いえ　以前よりも
-エレガントで　エクセレントな
+エレガントで　エクセレントな▽
 トレーナーと　ポケモンね　アナタたち▼
 そんな　きらびやかな　かたと
 競いあうことで▼
@@ -19863,11 +19863,11 @@
 また　お相手してくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T07:02:30" />
+				Time="2012-02-02T13:54:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T07:02:30" />
+				Time="2012-02-02T13:54:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -47640,15 +47640,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……プラズマ団の　正義のため
-２年間　ずっと　鍛えていた
+２年間　ずっと　鍛えていた▼
 もう　だれにも　負けない！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T13:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T13:54:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -59539,15 +59539,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パソコンで　しらべて　みつけたのは
-たにんの　いけんで　あって
+たにんの　いけんで　あって▽
 ボクが　だした　こたえ　じゃなかった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2012-02-02T13:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2012-02-02T13:54:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -62137,15 +62137,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じっと　みみを　すませて
-ポケモンの　なきごえや　あしおと……
+ポケモンの　なきごえや　あしおと……▽
 きぎや　ぬまの　こきゅうを　きくのよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T13:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-02T13:54:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -77197,7 +77197,7 @@
 			Language="JPN_KANJI">
 			<Text>あいかわらず……▼
 いえ　以前よりも
-エレガントで　エクセレントな
+エレガントで　エクセレントな▽
 トレーナーと　ポケモンね　アナタたち▼
 そんな　きらびやかな　かたと
 競いあうことで▼
@@ -77206,11 +77206,11 @@
 また　お相手してくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-02-02T13:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2012-02-02T13:54:42" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
