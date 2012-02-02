@@ -453,6 +453,16 @@ GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   {
     // カメラモジュール作成
     CAM_Init( &p_wk->camera, p_wk->p_param->p_cam_sys, p_wk->heapID );
+
+    // カメラ キャプチャコールバック関数置き換え
+    CAMERA_SYS_SetCaptureCallBack( p_wk->p_param->p_cam_sys, cap_call_back, &p_wk->camera );
+    CAMERA_SYS_StartCapture( p_wk->p_param->p_cam_sys );
+  }
+  // NTRのみ
+  else
+  {
+    // ルーレットモジュール
+    ROU_Init( &p_wk->roulette, p_wk->heapID );
   }
 
   // VBlnak
@@ -514,11 +524,19 @@ void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk )
 {
   GFL_TCB_DeleteTask( p_wk->vBlankTcb );
 
-  // モジュール破棄
+  // TWLのみ
   if( p_wk->p_param->isTwl )
   {
+    // カメラのキャプチャはSTOP
+    CAMERA_SYS_StopCapture( p_wk->p_param->p_cam_sys );
     // カメラモジュール破棄
     CAM_Exit( &p_wk->camera );
+  }
+  // NTRのみ
+  else
+  {
+    // ルーレットモジュール破棄
+    ROU_Exit( &p_wk->roulette );
   }
 
   COMM_Exit( &p_wk->comm, p_wk->p_param->isTwl );
@@ -2154,10 +2172,6 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   // TWL時のみ表示するもの
   GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_FRAME_S ), TRUE );
   
-  // カメラ キャプチャコールバック関数置き換え
-  CAMERA_SYS_SetCaptureCallBack( p_wk->p_param->p_cam_sys, cap_call_back, &p_wk->camera );
-  CAMERA_SYS_StartCapture( p_wk->p_param->p_cam_sys );
-  
   // 最初の説明メッセージ
   // プリントストリームは3つで1セット
   PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Count, COMM_TVT_GAME_06, p_wk->heapID );
@@ -2348,10 +2362,6 @@ static void SEQFUNC_TWL_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
-
-  // カメラのキャプチャはSTOP
-  CAMERA_SYS_StopCapture( p_wk->p_param->p_cam_sys );
-
   //// StopCaptureは停止音待ち
   //if( CAMERA_SYS_IsStopCapture( p_wk->p_param->p_cam_sys ) == TRUE )
   {
@@ -2400,9 +2410,6 @@ static void cap_call_back( void *captureArea, void *userWork )
 static void SEQFUNC_NITRO_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
-
-  // ルーレットモジュール
-  ROU_Init( &p_wk->roulette, p_wk->heapID );
 
   // NITOR時のみ表示するもの
   {
@@ -2680,8 +2687,6 @@ static void SEQFUNC_NITRO_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   if( COMM_IsEnd( &p_wk->comm ) == TRUE )
   {
-    // ルーレットモジュール
-    ROU_Exit( &p_wk->roulette );
     SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
   }
   p_wk->comm.can_next = FALSE;   // NITROは常に受信なのでFALSE
