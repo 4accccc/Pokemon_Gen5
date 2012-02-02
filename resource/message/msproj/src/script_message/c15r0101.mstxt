@@ -147,7 +147,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワシは　ビックな　おおおとこ！
+			<Text>ワシは　ビッグな　おおおとこ！
 でも　しごとは　こどうぐ　だ！▼
 やくしゃが　つかう　こものや
 セットのかぐを　つくることも　あるぞ！</Text>
@@ -161,7 +161,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワシは　ビックな　大男！
+			<Text>ワシは　ビッグな　大男！
 でも　仕事は　小道具だ！▼
 役者が　使う　小物や
 セットの家具を　作ることも　あるぞ！</Text>
