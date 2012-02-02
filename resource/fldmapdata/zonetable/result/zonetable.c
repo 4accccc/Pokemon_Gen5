@@ -12787,16 +12787,16 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_r10_bin,
 		NARC_script_seq_sp_r10_bin,	//NARC_script_seq_sp_r10_bin,
 		NARC_script_message_r10_dat,
-		SEQ_BGM_R_F,
-		SEQ_BGM_R_F,
-		SEQ_BGM_R_F,
-		SEQ_BGM_R_F,
+		SEQ_BGM_R_D_SP,
+		SEQ_BGM_R_D_SU,
+		SEQ_BGM_R_D_AU,
+		SEQ_BGM_R_D_WI,
 		enc_dummy,
 		FMISSION_MAP_ATTR_NONE,
 		NARC_eventdata_r10_bin,
     ZONE_ID_R10,
 		MAPNAME_R10,
-		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
@@ -12807,9 +12807,9 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     TRUE,
-    TRUE,
+    FALSE,
 		NARC_camera_scroll_original_R10_bin, // camera_area
-		59,   // padding > placeicon
+		15,   // padding > placeicon
     4,
 		424,
 		0,
@@ -12844,7 +12844,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		MATRIX_ID_H01, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -12880,7 +12880,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0201_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -12916,7 +12916,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0301_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -12952,7 +12952,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0401_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -12988,7 +12988,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0501_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -13024,7 +13024,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0601_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -13060,7 +13060,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0701_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -13096,7 +13096,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0801_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,
@@ -13132,7 +13132,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		NARC_camera_scroll_original_R10R0901_bin, // camera_area
+		camera_area_dummy, // camera_area
 		15,   // padding > placeicon
     4,
 		16,

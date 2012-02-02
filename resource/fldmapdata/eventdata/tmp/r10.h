@@ -2,8 +2,6 @@
 #ifndef ZONE_R10_EVD_H
 #define ZONE_R10_EVD_H
 
-#define DOOR_ID_R10_C08R0601_EXIT01       0
-#define DOOR_ID_R10_R10R0101_EXIT01       1
 
 #endif //ZONE_R10_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -16,7 +14,5 @@
 #ifndef ZONE_R10_EVB_H
 #define ZONE_R10_EVB_H
 
-#define R10_BOARD_01                      0
-#define R10_BOARD_02                      1
 
 #endif //ZONE_R10_EVB_H

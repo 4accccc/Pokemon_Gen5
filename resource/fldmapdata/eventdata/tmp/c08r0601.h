@@ -2,7 +2,6 @@
 #ifndef ZONE_C08R0601_EVD_H
 #define ZONE_C08R0601_EVD_H
 
-#define DOOR_ID_C08R0601_R10_EXIT01       0
 
 #endif //ZONE_C08R0601_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -15,6 +14,5 @@
 #ifndef ZONE_C08R0601_EVB_H
 #define ZONE_C08R0601_EVB_H
 
-#define BG_C08R0601_BOARD_01              0
 
 #endif //ZONE_C08R0601_EVB_H
