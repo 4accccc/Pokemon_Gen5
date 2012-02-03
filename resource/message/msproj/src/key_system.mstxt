@@ -2578,8 +2578,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ニンテンドー３DSダウンロードソフト
-『ポケモンARサーチャー（仮）』から
+			<Text>ニンテンドー３ＤＳダウンロードソフト
+『ポケモンＡＲサーチャー（仮）』から
 ちょうさデータを　うけとります
 
 うけとった　ポケモンや　どうぐは
@@ -2587,7 +2587,7 @@
 おくられます</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:10:15" />
+				Time="2012-01-30T12:26:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2595,8 +2595,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ニンテンドー３DSダウンロードソフト
-『ポケモンARサーチャー（仮）』から
+			<Text>ニンテンドー３ＤＳダウンロードソフト
+『ポケモンＡＲサーチャー（仮）』から
 ちょうさデータを　うけとります
 
 うけとった　ポケモンや　どうぐは
@@ -2604,7 +2604,7 @@
 おくられます</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:11:03" />
+				Time="2012-01-30T12:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6871,11 +6871,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンＡＲキャッチャーに
+			<Text>ポケモンＡＲサーチャーに
 せつぞく　しています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:31:58" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:48:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6883,11 +6883,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンＡＲキャッチャーに
+			<Text>ポケモンＡＲサーチャーに
 接続しています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:33:36" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6928,11 +6928,11 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンARサーチャーから
+			<Text>ポケモンＡＲサーチャーから
 ちょうさデータを　うけとっています</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T07:51:26" />
+				Time="2012-01-30T11:48:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -6940,11 +6940,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンARサーチャーから
+			<Text>ポケモンＡＲサーチャーから
 調査データを　受け取っています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:33:43" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:48:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7166,8 +7166,8 @@ DSシステムフォントなので
 ポケモンＡＲサーチャーを　あそんで▽
 ちょうさデータを　あつめてください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:32:43" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:48:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7181,8 +7181,8 @@ DSシステムフォントなので
 ポケモンＡＲサーチャーを　遊んで▽
 調査データを　集めてください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:35:01" />
+				User="masafumi_saitou:W00225"
+				Time="2012-01-30T11:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
