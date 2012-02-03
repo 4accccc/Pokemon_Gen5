@@ -6897,7 +6897,7 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レポートが　壊れてしまったため
-キーシステムを
+キーシステムを▽
 使うことが　できません▼
 最初から　始めるを　おこない
 レポートに　書きこんでから▼
@@ -6905,7 +6905,7 @@ DSシステムフォントなので
 キーシステムを　選択してください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:25:53" />
+				Time="2012-02-03T11:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
