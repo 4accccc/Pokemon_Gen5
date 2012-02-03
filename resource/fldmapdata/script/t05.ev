@@ -523,6 +523,12 @@ EVENT_START ev_t05_itemtrader_02
       _CALL	ev_trade_msg
       //交換後メッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_05 )
+      
+      //フェスミッションが追加されていないなら
+      IF FLAG_OFF( SYS_FLAG_FES_TRADE1BW ) THEN
+        _CALL ev_fes_add_check
+      ENDIF
+      
     ENDSWITCH
 
   ELSE
@@ -597,6 +603,12 @@ EVENT_START ev_t05_itemtrader_03
       _CALL ev_trade_msg
       //交換後メッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_05 )
+      
+      //フェスミッションが追加されていないなら
+      IF FLAG_OFF( SYS_FLAG_FES_TRADE1BW ) THEN
+        _CALL ev_fes_add_check
+      ENDIF
+      
     ENDSWITCH
 
   ELSE

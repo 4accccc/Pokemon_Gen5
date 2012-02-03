@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/31 10:29:16
+#save date:2012/02/03 12:33:22
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -450,9 +450,9 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C14_FIGHTERM_02
 #OBJ CODE Number
-FIGHTERM
+OLDMAN1
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -468,9 +468,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
 #Move Limit Z Number
-2
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position

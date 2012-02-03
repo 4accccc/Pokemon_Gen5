@@ -42,6 +42,7 @@ EVENT_START   ev_d28r0301_workman2_01
     _TALK_OBJ_START()
     
     _BALLOONWIN_TALKOBJ_MSG( msg_d28r0301_mission_add_01 )
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //フェスミッション名格納
