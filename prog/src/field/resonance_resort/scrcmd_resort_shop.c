@@ -219,6 +219,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   BMPMENULIST_CURSOR_CALLBACK call_back;
   BMPMENULIST_PRINT_CALLBACK icon;
 
+  u16 shopType;
   u16 msg_start;
   u16 msg_select;
   u16 msg_decide;
@@ -413,6 +414,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.sex = RESORT_PEOPLE_GetData( sbw->wk.p_people, RESORT_DATA_PARAM_SEX, NULL );
 
   *sbw->wk.ret_service_type = FALSE;
+  sbw->wk.shopType = shop_type;
 
   // スクリプトからのパラメータで分岐
   // ここで関数分岐等も行い、実際の処理に分岐を挟まないようにしている
@@ -2900,7 +2902,8 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, const RESORT_SHOP_I
   _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
 
   // 表示文字列登録
-  if( cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
+  if( cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM
+    && wk->shopType == RESORT_LIST_TYPE_BUY )
   {
     WORDSET_RegisterItemName( wk->wordSet, 0, cp_select->param1 );
   }
