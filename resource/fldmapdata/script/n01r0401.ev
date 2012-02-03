@@ -146,7 +146,6 @@ ev_n01r0401_pairstart_01:
     _FLAG_SET(FV_N01R0401_BOSS_01)
     
     //子ども部屋イベントが未見であったらSCENE_CHANGEを有効に
-    //参照フラグを仮
     IF FLAG_OFF( FE_N01R0401_HEYA_END_01 ) THEN
       $WK_SCENE_N01R0402_BOSS = 1
     ENDIF
@@ -158,13 +157,6 @@ ev_n01r0401_pairstart_01:
     _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_07, N01R0401_BOSS_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
-    //アニメ：主人公戻す・N戻る
-    /*
-    _OBJ_ANIME_AUTO( N01R0401_BOSS_01,12,14, FORCE_TYPE_NOT, 8, DIR_LR )
-    _OBJ_ANIME_WAIT()
-    
-    _OBJ_ANIME( N01R0401_BOSS_01, anm_staystep_l )
-    */
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
     
@@ -286,9 +278,11 @@ EVENT_START		ev_scene_n01r0401_boss_03
   //連れ歩き開始
   _PAIR_TRAINER_SET( N01R0401_BOSS_01 , PAIR_ID_N01_BOSS, PAIR_TYPE_FREE_ZONE, 0, SCRID_N01R0401_BOSS )
   
+  _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
   //アニメ：主人公１歩下に行く
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
+  _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
   
   //==================================//
   //N01R0401_SCENE_CHANGE無効
