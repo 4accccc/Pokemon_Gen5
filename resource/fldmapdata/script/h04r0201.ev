@@ -109,15 +109,21 @@ ELSE
 			
 				//まあ　なんて　トレーナー！
 				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_05 )
+				_AB_KEYWAIT_MARK()
 			
 				//そんな　すてきな
 				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_06 )
-				_AB_KEYWAIT_MARK()
 
 				_CALL	ev_mitu
 
 				//みつあつめ持ちがいる？
 				IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+					_AB_KEYWAIT_MARK()
+					_MSGWIN_CLOSE()
+
+					_OBJ_ANIME( H04R0201_BAKER_01, anm_common_gyoe )
+					_OBJ_ANIME_WAIT()
 
 					//この　～～～～が　みつあつめを
 					_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_07 )
@@ -125,6 +131,11 @@ ELSE
 	
 					//ラムの実入手
 					_ITEM_EVENT_KEYWAIT( ITEM_RAMUNOMI, 3 )
+
+					//あまいミツを
+					_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_09 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
 
 					//========================================/
 		
@@ -136,6 +147,7 @@ ELSE
 				//いない
 				ELSE
 
+					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
 
 				ENDIF
@@ -165,11 +177,24 @@ ELSE
 	
 		//ゲームクリア後か
 		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-	
+			
+			//まあ　なんて　トレーナー
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_05 )
+			_AB_KEYWAIT_MARK()
+			
+			//そんな　すてきな
+			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_06 )
+			
 			_CALL	ev_mitu
 	
 			//みつあつめ持ちがいる？
 			IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+				_AB_KEYWAIT_MARK()
+				_MSGWIN_CLOSE()
+				
+				_OBJ_ANIME( H04R0201_BAKER_01, anm_common_gyoe )
+				_OBJ_ANIME_WAIT()
 
 				//この　～～～～が　みつあつめを
 				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_08 )
@@ -177,6 +202,11 @@ ELSE
 	
 				//ラムの実入手
 				_ITEM_EVENT_KEYWAIT( ITEM_RAMUNOMI, 3 )
+
+				//あまいミツを
+				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_09 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
 
 				//========================================/
 	
@@ -188,8 +218,6 @@ ELSE
 			//いない
 			ELSE
 
-				//そんな　すてきな
-				_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_06 )
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 
@@ -198,7 +226,7 @@ ELSE
 		//ゲームクリア前の場合
 		ELSE
 		
-			//そんな　すてきな
+			//まあ　なんて　トレーナー
 			_BALLOONWIN_TALKOBJ_MSG( msg_h04r0201_baker_05 )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
@@ -291,3 +319,9 @@ EVENT_START   ev_h04r0201_poke20_01
 	_EASY_TALK_POKEVOICE( MONSNO_505, msg_h04r0201_poke20_01 )
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
