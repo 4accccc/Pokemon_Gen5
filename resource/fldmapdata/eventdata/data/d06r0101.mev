@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/18 15:14:40
+#save date:2012/02/03 12:29:29
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -483,7 +483,7 @@ D06R0101_GIRL4_01
 #OBJ CODE Number
 GIRL4
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -499,13 +499,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 0 -152
+120 0 -376
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -619,7 +619,7 @@ BG_TALK_DIR_ALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 0 -376
+152 0 -376
 #event number: 8
 #Bg Event Label
 BG_D06R0101_DUMMY_FES_05
