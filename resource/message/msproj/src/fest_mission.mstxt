@@ -1007,10 +1007,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうぐ　ちょうだいな！</Text>
+			<Text>そのどうぐ　ちょうだいな！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-25T13:04:27" />
+				Time="2012-02-03T02:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1477,10 +1477,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんとうの　おねだんは……？</Text>
+			<Text>ホントの　おねだんは……？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:48:40" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-03T02:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
