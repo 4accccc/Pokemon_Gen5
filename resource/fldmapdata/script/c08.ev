@@ -427,7 +427,10 @@ EVENT_START   ev_pos_c08_guide_03
   _OBJ_ANIME( C08_SWLEADER7_01,anm_walk_u )
   _OBJ_ANIME_WAIT()
 	
+	//äKíiSEçƒê∂
+  _SE_PLAY( SEQ_SE_KAIDAN )
   _OBJ_DEL( C08_SWLEADER7_01 )
+  _SE_WAIT()
   
   //ÉhÉAï¬Ç∂ÇÈ
   _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
