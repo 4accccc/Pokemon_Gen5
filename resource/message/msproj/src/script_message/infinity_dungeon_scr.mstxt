@@ -5636,10 +5636,10 @@
 いぜん　たたかった　しょうねんも
 おなじ　つよさを　かんじたわ▼
 いつか　おしえて　ほしいわね
-キミたちが　みつけた　つよさを▼</Text>
+あなたたちが　みつけた　つよさを▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:42:08" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T11:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5653,10 +5653,10 @@
 以前　戦った　少年も
 同じ　強さを　感じたわ▼
 いつか　教えて　欲しいわね
-キミたちが　みつけた　強さを▼</Text>
+あなたたちが　みつけた　強さを▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-25T10:42:04" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T11:21:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6466,12 +6466,12 @@
 限界に　挑戦してみては▽
 いかがでしょうか？▼
 なお　施設内では　
-バッグにある　どうぐの　使用を▽
+バッグにある　道具の　使用を▽
 禁止しております▼
 あらかじめ　ご了承ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T08:50:29" />
+				Time="2012-02-03T03:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6499,10 +6499,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　またの　ごりようを
-おまちして　おります▼</Text>
+おまちして　おります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-03T03:16:00" />
+				Time="2012-02-03T11:20:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6511,10 +6511,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　またの　ご利用を
-お待ちして　おります▼</Text>
+お待ちして　おります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-03T03:16:03" />
+				Time="2012-02-03T11:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7450,10 +7450,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃ　またきてくれよ▼</Text>
+			<Text>それじゃ　またきてくれよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-03T03:15:38" />
+				Time="2012-02-03T11:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7461,10 +7461,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃ　また来てくれよ▼</Text>
+			<Text>それじゃ　また来てくれよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-03T03:15:42" />
+				Time="2012-02-03T11:20:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
