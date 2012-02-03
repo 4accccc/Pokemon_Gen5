@@ -889,11 +889,16 @@ EVENT_START   ev_t05_girl3_01
 
     //女の子：さがして　くれたんだね！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_t05_girl3_02 )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //アイテム「ひかりのこな」入手
-    _ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIKARINOKONA, 1 )
+    _ITEM_EVENT_KEYWAIT( ITEM_HIKARINOKONA, 1 )
+    
+    //女の子：この　ヤナップ　ったら　でんしゃの
+    _BALLOONWIN_TALKOBJ_MSG( msg_t05_girl3_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //========================================//
     //アイテム入手（イベントクリア）
