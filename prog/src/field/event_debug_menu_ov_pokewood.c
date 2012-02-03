@@ -701,6 +701,7 @@ static BOOL debugMenuCallProc_PokewoodEndroll( POKEWOOD_FUNC_WORK * wk )
   param->audienceNum = 10;
   param->scenario_no = 11;
 
+  PMSND_PlayBGM( SEQ_BGM_PW_SCENARIO_01_L );
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_ENDROLL_EVENT_Call, (void *)param );
 
@@ -1255,6 +1256,7 @@ static void makePokewoodBattleSetupList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDA
   FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
   GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_debug_pokewood_dat );
   
+  // 「シナリオ？？：○」or「シナリオ？？：×」を追加
   for( i = 0; i < DEBUG_POKEWOOD_BATTLE_SETUP_NUM; i++ ){
     GFL_STR_ClearBuffer( strBuf1 );
 
@@ -1266,7 +1268,7 @@ static void makePokewoodBattleSetupList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDA
     }
     FLDMENUFUNC_AddStringListData( list, strBuf1, i, heapID );
   }
-  
+
   GFL_MSG_Delete( pMsgData );
   GFL_HEAP_FreeMemory( strBuf1 );
 
@@ -1493,6 +1495,15 @@ static GMEVENT_RESULT debugMenuPokewoodScenarioFlagEvent( GMEVENT *event, int *s
     case FLDMENUFUNC_CANCEL:  // キャンセル
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
+    case 40:  //「全て反転」
+      {
+        int i;
+        for(i=0;i<40;i++){
+          int flag = POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, ending_tbl[work->ending], i );
+          POKEWOOD_SAVEDATA_ChangePokewoodFlag( ps, ending_tbl[work->ending], i, flag^1 );
+        }
+      }
+      break;
     default:
       // Aボタンを押すと項目反転
       {
@@ -1559,6 +1570,10 @@ static void makePokewoodScenarioSuccessFlagList( GAMESYS_WORK * gsys, FLDMENUFUN
     FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
   }
 
+  // 「全て反転」を追加
+  GFL_MSG_GetString( pMsgData,DEBUG_STRID_PKWD_FLAG_REVERSE, strBuf1 );
+  FLDMENUFUNC_AddStringListData( list, strBuf1, 40, heapID );
+
   WORDSET_Delete( wset );
   
   GFL_MSG_Delete( pMsgData );
@@ -1608,6 +1623,10 @@ static void makePokewoodScenarioBadFlagList( GAMESYS_WORK * gsys, FLDMENUFUNC_LI
     WORDSET_ExpandStr( wset, expandBuf, strBuf1 );
     FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
   }
+
+  // 「全て反転」を追加
+  GFL_MSG_GetString( pMsgData,DEBUG_STRID_PKWD_FLAG_REVERSE, strBuf1 );
+  FLDMENUFUNC_AddStringListData( list, strBuf1, 40, heapID );
 
   WORDSET_Delete( wset );
   
@@ -1659,6 +1678,10 @@ static void makePokewoodScenarioStrangeFlagList( GAMESYS_WORK * gsys, FLDMENUFUN
     FLDMENUFUNC_AddStringListData( list, expandBuf, i, heapID );
   }
 
+  // 「全て反転」を追加
+  GFL_MSG_GetString( pMsgData,DEBUG_STRID_PKWD_FLAG_REVERSE, strBuf1 );
+  FLDMENUFUNC_AddStringListData( list, strBuf1, 40, heapID );
+
   WORDSET_Delete( wset );
   
   GFL_MSG_Delete( pMsgData );
@@ -1680,7 +1703,7 @@ static void makePokewoodScenarioStrangeFlagList( GAMESYS_WORK * gsys, FLDMENUFUN
 //-----------------------------------------------------------------------------
 static u16 getPokewoodScenarioFlagListNum( GAMESYS_WORK* gsys, void* cb_work )
 {
-  return DEBUG_POKEWOOD_SCENARIO_FLAG_NUM;
+  return DEBUG_POKEWOOD_SCENARIO_FLAG_NUM+1;
 }
 
 
