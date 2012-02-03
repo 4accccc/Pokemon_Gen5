@@ -6499,10 +6499,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　またの　ごりようを
-おまちして　おります</Text>
+おまちして　おります▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-05T07:54:42" />
+				Time="2012-02-03T03:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6511,10 +6511,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　またの　ご利用を
-お待ちして　おります</Text>
+お待ちして　おります▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-10T07:59:48" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T03:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7450,10 +7450,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃ　またきてくれよ</Text>
+			<Text>それじゃ　またきてくれよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:12:00" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T03:15:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7461,10 +7461,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃ　また来てくれよ</Text>
+			<Text>それじゃ　また来てくれよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-14T07:12:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T03:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7537,10 +7537,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]！▼
 エリア[Digit:2digits Idx="1" ]を　クリアしたようだな▼
-これは　クリアの　きねん　だよ！▼</Text>
+これは　クリアの　きねん　だ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:53:00" />
+				Time="2012-02-03T03:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7550,10 +7550,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]！▼
 エリア[Digit:2digits Idx="1" ]を　クリアしたようだな▼
-これは　クリアの　記念だよ！▼</Text>
+これは　クリアの　記念だ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:53:01" />
+				Time="2012-02-03T03:15:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
