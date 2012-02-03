@@ -299,18 +299,14 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
   case GAMECLEAR_SEQ_SAVETYPE_BRANCH: 
     if( wk->otherSaveExist == FALSE ) {
 
-      //「初回クリア」= 「殿堂入り」をセーブ
+      //「初回クリア」のみの処理
       if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
         SaveFirstDendouiriTime( wk ); // 初「殿堂入り」の日時
         UpdateFirstClearRecord( wk ); // レコードデータ
-        // 殿堂入りセーブ
-        DendouSave_init( wk );
       }
-      //「殿堂入り」をセーブ
-      else {
-        UpdateDendouRecord( wk ); // 殿堂入り関連レコード
-        DendouSave_init( wk );
-      }
+      // 殿堂入り処理（Swanでは初回クリアも殿堂入りとして扱う）
+      UpdateDendouRecord( wk );
+      DendouSave_init( wk );
     }
     // 時間アイコン表示
     wk->TimeIconWork = TIMEICON_CreateTcbl( wk->pMsgTcbSys, wk->bmpwin, 15, 
