@@ -614,6 +614,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
   switch( *p_seq )
   {
   case SEQ_NET_INIT:
+    p_wk->timingsync  = 0;
     p_wk->is_cancel = FALSE;
     GFL_NET_Init( &sc_net_init, NULL, p_wk );
     p_wk->timeout_cnt = 0;
