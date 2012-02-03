@@ -29,9 +29,10 @@
 #define BG_C03P01_DUMMY_FES_03            5
 #define BG_C03P01_DUMMY_FES_04            6
 #define BG_C03P01_DUMMY_FES_05            7
-#define BG_C03P01_DUMMY_FES_06            8
+#define BG_C03P01_DUMMY_FES_10            8
 #define BG_C03P01_DUMMY_FES_07            9
 #define BG_C03P01_DUMMY_FES_08           10
 #define BG_C03P01_DUMMY_FES_09           11
+#define BG_C03P01_DUMMY_FES_11           12
 
 #endif //ZONE_C03P01_EVB_H
