@@ -645,12 +645,12 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 ほんたいの　でんげんが　きれたため▼
 １じかん
 たいかいや　ランダムマッチで▽
-たいせんが　できなくなくなります▼
+たいせんが　できなくなります▼
 じかんが　たちましたら
 おこしください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T12:32:23" />
+				Time="2012-02-03T11:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -662,12 +662,12 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 ランダムマッチの　参加中に▽
 本体の電源が　切れたため▼
 １時間　大会や　ランダムマッチで
-対戦が　できなくなくなります▼
+対戦が　できなくなります▼
 時間が　たちましたら
 お越しください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T12:32:20" />
+				Time="2012-02-03T11:22:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -687,10 +687,10 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN">
 			<Text>レポートに　かきこんでいます
-でんげんを　きらないください</Text>
+でんげんを　きらないでください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T05:50:50" />
+				Time="2012-02-03T11:29:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -699,10 +699,10 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レポートに　書き込んでいます
-電源を　切らないください</Text>
+電源を　切らないでください</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T11:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
