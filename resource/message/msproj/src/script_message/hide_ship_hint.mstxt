@@ -502,12 +502,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしか　でんきタイプの　ポケモンだ！
+			<Text>たしか　でんきタイプの　ポケモンだ！▼
 おまえが　どこまで　やれるか
 たのしませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:21:23" />
+				Time="2012-02-03T11:30:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -515,12 +515,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしか　でんきタイプの　ポケモンだ！
+			<Text>たしか　でんきタイプの　ポケモンだ！▼
 おまえが　どこまで　やれるか
 楽しませて　もらうと　するか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:20:55" />
+				Time="2012-02-03T11:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
