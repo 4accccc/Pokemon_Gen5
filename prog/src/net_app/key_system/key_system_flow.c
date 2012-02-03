@@ -386,6 +386,14 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         KEYSYS_STR_95,
         KEYSYS_STR_96,
       };
+      static const u16 sc_key_to_info_get[]  =
+      {
+        KEYSYS_STR_108,
+        KEYSYS_STR_109,
+        0,
+        KEYSYS_STR_110,
+        KEYSYS_STR_111,
+      };
       static const u16 sc_key_to_menu_w[]  =
       {
         KEYSYS_STR_07,
@@ -418,13 +426,17 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         p_str = GFL_MSG_CreateString( p_wk->p_msg, sc_key_to_info_w[ p_wk->p_param->get_key ] );
       }
 
+      //WFBCキーは強制取得モード
       if( p_wk->p_param->get_key == KEY_SYSTEM_TYPE_CITY_WFBC )
       {
         is_get = TRUE;
       }
-      else
+      else if( KEY_SYSTEM_SAVE_IsUse(p_wk->p_key_sv, p_wk->p_param->get_key) )
       {
-        is_get = FALSE;
+        //もし解放してたら取得モード
+        is_get = TRUE;
+        GFL_STR_DeleteBuffer( p_str );
+        p_str = GFL_MSG_CreateString( p_wk->p_msg, sc_key_to_info_get[ p_wk->p_param->get_key ] );
       }
 
       KeySys_Demo_Start( &p_wk->demo, p_wk->p_param->get_key, p_wk->p_msg, menu_msg, p_str, is_get );
@@ -1424,7 +1436,6 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
         {
           menu_msg = sc_key_to_menu_w[ p_wk->ret ];
         }
-
 
         KeySys_Demo_Start( &p_wk->demo, p_wk->ret, p_wk->p_msg, menu_msg, p_wk->p_strbuf, FALSE );
         KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_38, KEYSYS_TEXT_TYPE_STREAM_FIX );
@@ -3853,7 +3864,7 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
     {
       2,  //しろのかんたんキー
       1,  //くろのむずかしいキー
-      1,  //あとで帰る
+      1,  //あとで変更
       1,  //くろのドアキー
       2,  //しろのドアキー
     };

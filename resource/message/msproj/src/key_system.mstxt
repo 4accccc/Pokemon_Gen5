@@ -3940,6 +3940,190 @@ CYGNUS連動用</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_108"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アシストキー　を
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アシストキー　を
+入手しました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_109"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャレンジキー　を
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャレンジキー　を
+入手しました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_110"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろがねのカギ　を
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろがねのカギ　を
+入手しました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_111"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひょうざんのカギ　を
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひょうざんのカギ　を
+入手しました▼
+キーは　通信で　人に
+受け渡し　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-03T04:18:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-01-24T08:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="KEYSYS_SETTING_MES_01"
 		Style="Large">
 		<LanguageCell
