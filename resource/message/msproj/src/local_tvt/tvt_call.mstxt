@@ -6453,13 +6453,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リバースマウンテンちかくに
-ストレンジャーハウスが　あるんだよ▼
-そこで　ふしぎなはねを　みたって
-きいたことがあるけど　しってるか？▼</Text>
+			<Text>そっちは　どうだ？▼
+……　……　……
+……　……　……▼
+そうか……
+じゃあ　てつだってくれよ▼
+オマエ　うみべのどうけつを
+しらべてくれよッ！▼
+そう　２１ばんすいどうの！
+じゃあ　たのんだぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:45:23" />
+				Time="2012-02-03T02:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6467,13 +6472,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リバースマウンテン近くに
-ストレンジャーハウスが　あるんだよ▼
-そこで　不思議なはねを　みたって
-きいたことがあるけど　知ってるか？▼</Text>
+			<Text>そっちは　どうだ？▼
+……　……　……
+……　……　……▼
+そうか……
+じゃあ　手伝ってくれよ▼
+オマエ　海辺の洞穴を
+調べてくれよッ！▼
+そう　２１番水道の！
+じゃあ　頼んだぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:45:29" />
+				Time="2012-02-03T02:21:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6481,10 +6491,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>未使用</Comment>
+			<Comment>目的地メッセージ
+・２２番道路でのアクロマのイベント後から
+　２１番水道でライバルのイベント開始まで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-24T13:24:14" />
+				Time="2012-02-03T02:09:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6494,9 +6506,16 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-03T02:08:54" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
