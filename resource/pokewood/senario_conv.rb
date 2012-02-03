@@ -257,10 +257,23 @@ class POKEWOOD_SENARIO
     @show_poke_prov = hash2no( $monsno_hash, show_poke )
     @waza_prov      = hash2no( $wazano_hash, waza )
     
-    if @win_prov==-1 then
+    if ( @win_prov==-1 ) then
       printf("D2‚ÌŸ—˜ðŒ“ü—Í‚Í•K{‚Å‚·!\n")
       exit(1)
     end
+
+    if( @win_prov>=2 && @win_prov<=5) then
+      if @rec_poke_prov==-1 then 
+        printf("‚±‚ÌŸ—˜ðŒ‚Ìê‡‚Íƒ|ƒPƒ‚ƒ“‚ÌŽw’è‚ª•K{‚Å‚·\nŽB‰eƒ|ƒP=%s ‚Í‘¶Ý‚µ‚È‚¢\n", rec_poke)
+        exit(1)
+      end
+      if @show_poke_prov==-1 then
+        printf("‚±‚ÌŸ—˜ðŒ‚Ìê‡‚Íƒ|ƒPƒ‚ƒ“‚ÌŽw’è‚ª•K{‚Å‚·\nã‰fƒ|ƒP=%s ‚Í‘¶Ý‚µ‚È‚¢\n", show_poke)
+        exit(1)
+      end
+    end
+    printf("prov=%d, poke_r=%d, poke_s=%d\n", @win_prov, @rec_poke_prov, @show_poke_prov)
+    
   end
   attr_accessor :win_prov, :rec_poke, :show_poke, :waza
 
