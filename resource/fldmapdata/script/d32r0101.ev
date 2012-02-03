@@ -72,12 +72,19 @@ EVENT_START ev_pos_d32r0101_fighterm_01
     //「！」
   _OBJ_ANIME( D32R0101_FIGHTERM_01 , anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-  // 主人公は下を向く
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_dir_d )
+  {
+  DEFINE_LOCAL LWK_DIR
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  IF $LWK_DIR != DIR_DOWN THEN
+    // 主人公は下を向く
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_dir_d )
+  ENDIF
+  }
   // からておうは上を向く
   _OBJ_ANIME( D32R0101_FIGHTERM_01 , anm_dir_u )
   _OBJ_ANIME_WAIT()
-
+  
   // バトル選択呼出し
   _CALL ev_battle_start
 EVENT_END
