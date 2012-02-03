@@ -653,10 +653,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがった　あいてへの　じまんは？</Text>
+			<Text>すれちがった　あいてへの
+よろこびの　メッセージは？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:45:29" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-02T12:20:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -664,10 +665,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すれ違った　相手への　自慢は？</Text>
+			<Text>すれ違った　相手への
+喜びの　メッセージは？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-09-09T08:45:33" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-02T12:20:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
