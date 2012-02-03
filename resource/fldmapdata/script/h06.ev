@@ -13,6 +13,7 @@
   .include  "h06.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -254,7 +255,12 @@ EVENT_START   ev_h06_trainerw_01
       _MSGWIN_CLOSE()
 
       //アイテム（くろいヘドロ）入手
-      _ITEM_EVENT_NOWAIT( ITEM_KUROIHEDORO, 1 )
+      _ITEM_EVENT_KEYWAIT( ITEM_KUROIHEDORO, 1 )
+
+      //エリート♀：くろいヘドロ！　それを　もって
+      _BALLOONWIN_TALKOBJ_MSG( msg_h06_trainerw_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
 
       //========================================//
       //アイテム入手フラグON
