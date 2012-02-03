@@ -1913,27 +1913,53 @@ static POKEMON_PARAM * CYGNUS_SAVE_CreatePP( const CYGNUS_SAVE_WORK *cp_wk, u32 
 
     u32 pow = PTL_SETUP_POW_AUTO;
 
-    POKEMON_PARAM *p_pp = PP_Create( mons_no, lv, id, heapID );
+    POKEMON_PARAM *p_pp;
+
+    //バッジの数によってレベルを帰る
+    {
+      static const sc_lv[]  =
+      {
+        5,10,10,20,20,30,30,40,40,
+      };
+      int cnt = MISC_GetBadgeCount( GAMEDATA_GetMiscWork(cp_wk->p_gamedata) );
+      cnt = MATH_CLAMP( cnt, 0, NELEMS(sc_lv)-1 );
+      lv  = sc_lv[cnt];
+    }
+
+    p_pp = PP_Create( mons_no, lv, id, heapID );
 
     if( Cygnus_Save_IsStatusFixPoke( mons_no ) )
     {
       pow = PTL_SETUP_POW_PACK( 20,20,20,20,20,20 );
-      PP_Put(p_pp, ID_PARA_seikaku, PTL_SEIKAKU_GANBARIYA);
     }
 
     PP_SetupEx( p_pp, mons_no, lv, id, pow, rand );
     PP_ChangeFormNo( p_pp, form_no );
     PP_SetWazaDefault( p_pp );
 
+    if( Cygnus_Save_IsStatusFixPoke( mons_no ) )
+    {
+      PP_Put(p_pp, ID_PARA_seikaku, PTL_SEIKAKU_GANBARIYA);
+    }
+
+    //もし第３特性もってたら第３特性
+    {
+      POKEMON_PERSONAL_DATA *p_personal = POKE_PERSONAL_OpenHandle( mons_no, form_no, heapID );
+      u32 tokusei3 = POKE_PERSONAL_GetParam( p_personal, POKEPER_ID_speabi3 );
+      if( tokusei3 )
+      {
+        PP_SetTokusei3( p_pp, mons_no, form_no );
+      }
+      POKE_PERSONAL_CloseHandle( p_personal );
+    }
+
     PP_Put(p_pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(GAMEDATA_GetMyStatus(cp_wk->p_gamedata)));
     PP_Put(p_pp, ID_PARA_oyasex, MyStatus_GetMySex(GAMEDATA_GetMyStatus(cp_wk->p_gamedata)));
-    PP_Put(p_pp, ID_PARA_get_ball, BALLID_MONSUTAABOORU );
+    PP_Put(p_pp, ID_PARA_get_ball, BALLID_DORIIMUBOORU );
     PP_Put(p_pp, ID_PARA_get_cassette, CasetteVersion );
     PP_Put(p_pp, ID_PARA_country_code, CasetteLanguage ); 
-    PP_Put(p_pp, ID_PARA_get_place, 0);    //TODO
-    PP_Put(p_pp, ID_PARA_birth_place, 0); 
 
-    POKE_MEMO_SetTrainerMemoPokeShifter( PP_GetPPPPointer(p_pp) );
+    POKE_MEMO_SetTrainerMemoARSearcher( PP_GetPPPPointer(p_pp) );
 
     PP_Renew( p_pp );
 

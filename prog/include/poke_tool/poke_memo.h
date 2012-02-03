@@ -38,6 +38,7 @@
 #define POKE_MEMO_PLACE_ENRAISUI_BEFORE  (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV2_01)   //エンテイ・ライコウ・スイクン転送時
 #define POKE_MEMO_PLACE_ENRAISUI_AFTER   (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_2010HAIHU_EV2_02)   //エンテイ・ライコウ・スイクン後
 #define POKE_MEMO_PLACE_PALACE           (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_PARESUKYOUTUU)   //パレス
+#define POKE_MEMO_PLACE_AR_SEARCHER  (POKE_PLACE_START_SPECIAL_PLACE+MAPNAME_AR_SEARCHER)  //ARサーチャー
 
 //不正値用
 #define POKE_MEMO_UNKNOWN_PLACE       (MAPNAME_TOOIBASYO)
@@ -88,6 +89,9 @@ extern void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp );
 extern void POKE_MEMO_SetTrainerMemoPokeShifterAfterTrans( POKEMON_PASO_PARAM *ppp );
 //日付設定のため独立
 extern void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day );
+
+//ポケモンARサーチャー用
+extern void POKE_MEMO_SetTrainerMemoARSearcher( POKEMON_PASO_PARAM *ppp );
 
 //イベント用ポケモンチェック
 extern const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type );

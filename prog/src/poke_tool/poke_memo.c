@@ -187,6 +187,15 @@ void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u
   PPP_Put( ppp , ID_PARA_event_get_flag , 1 );
 }
 
+
+void POKE_MEMO_SetTrainerMemoARSearcher( POKEMON_PASO_PARAM *ppp )
+{
+  POKE_MEMO_ClearPlaceTime( ppp , PMDT_1 );
+  POKE_MEMO_SetPlaceTime( ppp , POKE_MEMO_PLACE_AR_SEARCHER , PMDT_2 );
+  POKE_MEMO_SetGetLevel( ppp );
+  POKE_MEMO_SetRomVersion( ppp );
+}
+
 //----------------------------------------------------------------
 /*
  *  @brief  ‚mƒ|ƒPƒ‚ƒ“•ßŠlŽž
