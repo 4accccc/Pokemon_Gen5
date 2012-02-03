@@ -651,7 +651,7 @@
 あらためて　いっておくぞ！▼
 ぜったい　ボクの　ほうが
 カッコイイに　きまってるからな！▼
-だって　ボク　おうじさま　だよ？
+だって　ボク　おうじさま　だよ？▼
 おまえとは　うまれも　そだちも
 ちがう　エリート　なんだからさ！▼
 きるもの　すむとこ　ごはん　だって
@@ -660,11 +660,11 @@
 そもそも　グレードが　ちがうのさ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:13" />
+				Time="2012-02-03T03:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:13" />
+				Time="2012-02-03T03:54:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1947,16 +1947,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『ボク……
-ずっと　戦ってるうちに
+ずっと　戦ってるうちに▽
 あなたを　好きに　なったんです……！▼
 ぬいぐるみ『はあっ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-03T03:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-03T03:54:27" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

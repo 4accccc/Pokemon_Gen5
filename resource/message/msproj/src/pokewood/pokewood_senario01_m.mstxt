@@ -1156,32 +1156,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハ　ハチクマン！
-ヒ　ヒーローは　つよく　かっこよく
+ヒ　ヒーローは　つよく　かっこよく▽
 まけないって　きまってるんだ！▼
 さ　さあ！
 いますぐ　ここから　たちさってよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハ　ハチクマン！
-ヒ　ヒーローは　強く　かっこよく
+ヒ　ヒーローは　強く　かっこよく▽
 負けないって　決まってるんだ！▼
 さ　さあ！
 今すぐ　ここから　立ち去ってよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

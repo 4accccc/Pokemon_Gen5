@@ -690,34 +690,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ちょっと！
-ハチクマンさん　わかる？
-▼
+ハチクマンさん　わかる？▼
 ここは　みんなの　りそうが
 つまった　ゆうえんち　なの！▼
 おとなしく　かえりなさいっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:52:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ちょっと！
-ハチクマンさん　わかる？
-▼
+ハチクマンさん　わかる？▼
 ここは　みんなの　理想が
 つまった　遊園地　なの！▼
 おとなしく　帰りなさいっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T10:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T10:59:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

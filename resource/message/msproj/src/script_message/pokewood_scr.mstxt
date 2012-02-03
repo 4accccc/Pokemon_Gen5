@@ -1092,7 +1092,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　[Name:TrainerName ]！！
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！
 デビュー作の　出来は　どうだった？▼
 少なくとも　ボスの　ウッドウさんは
 大満足　だったみたいだな！▼
@@ -1103,7 +1103,7 @@
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-23T12:15:56" />
+				Time="2012-02-03T06:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

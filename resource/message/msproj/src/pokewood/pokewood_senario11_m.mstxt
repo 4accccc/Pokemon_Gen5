@@ -1042,7 +1042,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『にんげんと　ポケモンだ……▼
-それらで　このほしで　いきられる
+それらで　このほしに　いきられる
 せいめいたいの　かずは▽
 もはや　げんかい　なのだ……▼
 ……よって　われわれが　ここで
@@ -1050,27 +1050,27 @@
 ほろぼす　ひつようが　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『人間と　ポケモンだ……▼
-それらで　この星で　生きられる
+それらで　この星に　生きられる
 生命の　総数は　すでに　限界……▼
 ……よって　我々が　ここで
 生きるためには　それらの生命を▽
 滅ぼす　必要が　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2236,7 +2236,7 @@
 			<Text>……人類の　未来を　かけた
 戦いは　終わった……▼
 エイリアンに　操られた
-[Name:TrainerName Idx="1" ]は　人間に
+[Name:TrainerName Idx="1" ]は　人間に▽
 襲いかかり　次々と▽
 倒していった……▼
 ＵＦＯに　挑む者は　いなくなり
@@ -2244,11 +2244,11 @@
 この星から　滅亡した……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-02-03T03:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2012-02-03T03:53:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2443,31 +2443,31 @@
 			<Text>Ｅ『[Name:TrainerName Idx="1" ]……▼
 おまえは　にんげんの　なかでは
 たいへんに　ゆうしゅうな▽
-のうりょくを　もっている……▼　
+のうりょくを　もっている……▼
 ほかの　にんげんや　ポケモンの
 ように　ほろぼすには　おしい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『[Name:TrainerName Idx="1" ]……▼
 お前は　人間としては　大変に
-秀でた能力を　持っている……▼　
+秀でた能力を　持っている……▼
 他の人間や　ポケモンの
 ように　滅ぼすには　惜しい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-25T07:13:36" />
+				Time="2012-02-03T08:53:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

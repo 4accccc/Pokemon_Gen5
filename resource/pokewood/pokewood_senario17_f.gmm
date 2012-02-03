@@ -589,14 +589,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『そ　それは……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">レディアン『むり　なんでしょ……
+		<language name="JPN" width="256">レディアン『むり　なんでしょ……▼
 そらも　とべなければ
 うでも　２ほんしか　ない▽
 よわい　ニンゲンに　とって▽
 ポケモンは　ボディガード……▽
 あるいは　つごうの　いい▽
 どうぐ　なんでしょう？</language>
-		<language name="JPN_KANJI" width="256">レディアン『無理なんでしょ……
+		<language name="JPN_KANJI" width="256">レディアン『無理なんでしょ……▼
 空も　飛べなければ
 腕も　２ほんしか　ない▽
 弱い　ニンゲンに　とって▽

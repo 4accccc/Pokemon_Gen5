@@ -1989,7 +1989,7 @@
 			<Text>こえ『この　せきぞうが
 つくられてから　すうせんねん……▼
 かぞえきれぬ　にんげんが
-このぞうに　きらめく　ほうせきを
+このぞうに　きらめく　ほうせきを▽
 うばうため　たたかいを　いどんだ……▼
 ちからなきものは　ぞうに　やぶれ
 たましい　うばわれて　きえた……▼
@@ -1998,18 +1998,18 @@
 ぞうの　なかに　とりこまれた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2012-02-03T03:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2012-02-03T03:55:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>声『この　石像が
 彫られてから　数千年……▼
 あまたの　人間が
-この像に　かがやく　宝石を
+この像に　かがやく　宝石を▽
 うばうため　戦いを　挑んだ……▼
 力なき者は　像に　敗れ
 魂　うばわれて　消えた……▼
@@ -2018,11 +2018,11 @@
 像の中に　取り込まれた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2012-02-03T03:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2012-02-03T03:55:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2516,7 +2516,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いらいぬし『こら！　バカもんが！
-あくりょうたいじの　せんもんかである
+あくりょうたいじの　せんもんかである▽
 ゴーストイレイザーを　だませれば▽
 のろいのせきぞう　として　かちも▽
 はねあがり　アホな　コレクターに▽
@@ -2524,16 +2524,16 @@
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:20" />
+				Time="2012-02-03T03:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:20" />
+				Time="2012-02-03T03:55:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>依頼主『こら！　バカもんが！
-悪霊退治の　スペシャリスト　である
+悪霊退治の　スペシャリスト　である▽
 ゴーストイレイザーに　だませれば▽
 のろいの石像　として　価値も▽
 跳ね上がり　アホな　コレクターに▽
@@ -2541,11 +2541,11 @@
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:20" />
+				Time="2012-02-03T03:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:27:20" />
+				Time="2012-02-03T03:55:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2801,7 +2801,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>依頼主『オフコース！！▼
-守り神を　倒し　封印を　解けば▽
+守り神を　倒し　封印を　解けば
 そのエネルギーは▽
 魔神の　元に　かえります▼
 そして　魔神は　恐ろしい　力を
@@ -2811,11 +2811,11 @@
 ねえ　[Name:PokemonNickname Idx="0" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:17:14" />
+				Time="2012-02-03T03:55:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:17:14" />
+				Time="2012-02-03T03:55:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

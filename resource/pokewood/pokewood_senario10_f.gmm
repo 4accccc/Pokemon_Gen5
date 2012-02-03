@@ -429,16 +429,6 @@
 		<language name="JPN" width="256">ＵＦＯ『……</language>
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……</language>
 	</row>
-	<row id="pw_turn_hero_7">
-		<language name="JPN" width="256">なく　こども『えーん！　えーん！
-ぼくの　ポケモン　かえしてよー！</language>
-		<language name="JPN_KANJI" width="256">泣く　子供『えーん！　えーん！
-僕の　ポケモン　返してよー！</language>
-	</row>
-	<row id="pw_turn_enemy_7">
-		<language name="JPN" width="256">ＵＦＯ『……</language>
-		<language name="JPN_KANJI" width="256">ＵＦＯ『……</language>
-	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
 おうとうせよ！　[1:00:トレーナー名:1]！▽
@@ -614,7 +604,7 @@
 		<language name="JPN_KANJI" width="256">通信『……当たり前だ▼
 ……宇宙に　法則という
 不変のルールが　あるように▽
-物事には　変えること　できない▽
+物事には　変えることの　できない▽
 優先順位が　ある……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">

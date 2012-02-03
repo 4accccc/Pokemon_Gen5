@@ -314,16 +314,15 @@
 			<Text>？？？『真実と　理想の　使者
 [Name:PokemonNickname Idx="0" ]キッド　参上！▼
 悪の怪人　ハチクマン！
-
-さあ！　今日こそ　二人の▽
+さあ！　今日こそ　ふたりの▽
 決着を　つけるぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T05:16:05" />
+				Time="2012-02-03T11:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T05:16:05" />
+				Time="2012-02-03T11:31:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -919,30 +918,30 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『『まあ　よい……▼
+			<Text>ハチクマン『まあ　よい……▼
 きさまが　つよいので　あれば
 わがはいが　さらに　そのうえを▽
 いけば　よいだけのこと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-02-03T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-02-03T08:56:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『『まあ　よい……▼
+			<Text>ハチクマン『まあ　よい……▼
 我輩が　さらに　強くなれば
 良いだけのこと……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-02-03T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-02-03T08:56:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1040,34 +1039,34 @@
 			<Text>ハチクマン『ファーファファファ！！
 それは　あの　ブラックホールだっ！！▼
 あらゆる　ぶっしつ……
-そしても　ひかりさえも　すいこむ▽
+そして　ひかりさえも　すいこむ▽
 あんこくの　エネルギー……▼
 ファファファ……
 じつに　わがはいに　ふさわしい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-02-03T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:52" />
+				Time="2012-02-03T08:56:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファーファファファ！！
 それは　あの　ブラックホールだっ！！▼
 あらゆる　物質……
-そしても　光さえも　吸い込む▽
+そして　光さえも　吸い込む▽
 暗黒の　エネルギー……▼
 ファファファ……
 実に　我輩に　相応しい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-02-03T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2012-02-03T08:56:57" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

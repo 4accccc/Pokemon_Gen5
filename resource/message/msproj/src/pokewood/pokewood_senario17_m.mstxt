@@ -1132,7 +1132,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『むり　なんでしょ……
+			<Text>レディアン『むり　なんでしょ……▼
 そらも　とべなければ
 うでも　２ほんしか　ない▽
 よわい　ニンゲンに　とって▽
@@ -1140,16 +1140,16 @@
 あるいは　つごうの　いい▽
 どうぐ　なんでしょう？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:39:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:53:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:39:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:53:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『無理なんでしょ……
+			<Text>レディアン『無理なんでしょ……▼
 空も　飛べなければ
 腕も　２ほんしか　ない▽
 弱い　ニンゲンに　とって▽
@@ -1157,12 +1157,12 @@
 あるいは　都合の　いい▽
 道具　なんでしょう？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:39:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:53:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:39:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-03T03:53:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

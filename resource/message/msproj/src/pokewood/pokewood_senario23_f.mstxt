@@ -3874,7 +3874,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……門番だった　ぬいぐるみと
-一緒に　魔法のオリから
+一緒に　魔法のオリから▽
 脱げ出した　[Name:TrainerName Idx="1" ]姫▼
 少しの　優しさを　おぼえ
 ひとまわり　強くなった　姫なら▽
@@ -3882,11 +3882,11 @@
 乗り越えられるはず……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:42:49" />
+				Time="2012-02-03T03:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:42:49" />
+				Time="2012-02-03T03:54:18" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

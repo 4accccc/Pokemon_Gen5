@@ -550,74 +550,6 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_turn_hero_7"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なく　こども『えーん！　えーん！
-ぼくの　ポケモン　かえしてよー！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>泣く　子供『えーん！　えーん！
-僕の　ポケモン　返してよー！</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_turn_enemy_7"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ＵＦＯ『……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ＵＦＯ『……</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="pw_event0_hero_0"
 		Style="Large">
 		<LanguageCell
@@ -1349,15 +1281,15 @@
 			<Text>通信『……当たり前だ▼
 ……宇宙に　法則という
 不変のルールが　あるように▽
-物事には　変えること　できない▽
+物事には　変えることの　できない▽
 優先順位が　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:53" />
+				Time="2012-02-03T04:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:53" />
+				Time="2012-02-03T04:12:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

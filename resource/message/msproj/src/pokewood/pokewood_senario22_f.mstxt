@@ -162,7 +162,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪しい女『あら　あら
+			<Text>怪しい女『あら　あら……▼
 私が　はった　扉の　ワナに
 弱そうな　子供が　一人▽
 迷い込んで　来たわね▼
@@ -170,11 +170,11 @@
 捕まえて　ドレイに　してやろう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-02-03T03:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:17" />
+				Time="2012-02-03T03:54:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1733,35 +1733,35 @@
 			Language="JPN">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]ひめは
 しゅぎょうの　たび……▼
-というか　おじいさんに　あうための▽
+というか　おじいさんに　あうための
 たびへ　でたのでした……▼
 まあ　けっかてきに　とびら　から
 ぶじに　でられたのだから▽
 これで　よかったのかもしれません……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-03T03:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-03T03:54:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]姫は
 修行の　旅……▼
-というか　おじいさんに　あうための▽
+というか　おじいさんに　あうための
 旅へ　出たのでした……▼
 まあ　結果的に　扉から
 無事に　出られたのだから▽
 これで　良かったのかもしれません……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-03T03:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-03T03:54:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

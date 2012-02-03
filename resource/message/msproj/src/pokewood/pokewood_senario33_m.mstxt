@@ -2461,7 +2461,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……はしゃぎすぎた　Ｆー００に
-攻撃された　私は　そのまま
+攻撃された　私は　そのまま▽
 気を　失って　しまった……▼
 ……しばらくたって　目覚めると
 Ｆー００は　助手たちに　よって▽
@@ -2474,11 +2474,11 @@
 携わることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-02-03T03:55:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2012-02-03T03:55:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
