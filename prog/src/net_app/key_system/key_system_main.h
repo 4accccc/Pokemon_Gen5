@@ -385,6 +385,7 @@ typedef struct
 
   STRBUF                  *p_strbuf;
 
+  BOOL                    is_irc_start;
   BOOL                    is_parent;
   BOOL                    is_wifi_start;
   BOOL                    is_convert;

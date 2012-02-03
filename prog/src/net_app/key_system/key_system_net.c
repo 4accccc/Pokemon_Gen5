@@ -93,6 +93,7 @@ struct _KEYSYS_NET_WORK
 
   KEYSYS_NET_ERROR        error;
   u32                     error_msg;
+  BOOL                    is_cancel;
 };
 
 //=============================================================================
@@ -108,6 +109,7 @@ static void KeySys_Net_Seq_DisConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int 
 static void KeySys_Net_Seq_WaitIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_TimingSyncIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Net_Seq_CancelConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //マルチブート
 static void KeySys_Net_Seq_MultiBoot_SendRom( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -338,6 +340,9 @@ void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, const v
   case KEYSYS_NET_REQ_DISCONNECT_IRCWIRELESS:  //引数NULL
     next = KeySys_Net_Seq_DisConnectIrcWireless;
     break;
+  case KEYSYS_NET_REQ_CANCEL_IRCWIRELESS:
+    p_wk->is_cancel = TRUE;
+    return;
   case KEYSYS_NET_REQ_SENDATA_BOTH_IRCWIRELESS://引数KEYSYS_NET_SEQ_PARAM_IW_SEND
     next = KeySys_Net_Seq_SendDataIrcWirelessBoth;
     break;
@@ -398,6 +403,10 @@ KEYSYS_NET_STATE KEYSYS_NET_GetState( const KEYSYS_NET_WORK *cp_wk )
   else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_TimingSyncIrcWirelessBoth ) )
   {
     return KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC;
+  }
+  else if(KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_CancelConnectIrcWireless ) )
+  {
+    return KEYSYS_NET_STATE_IRCWIRELESS_CANCEL;
   }
   else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_MultiBoot_SendRom) )
   {
@@ -605,12 +614,18 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
   switch( *p_seq )
   {
   case SEQ_NET_INIT:
+    p_wk->is_cancel = FALSE;
     GFL_NET_Init( &sc_net_init, NULL, p_wk );
     p_wk->timeout_cnt = 0;
     (*p_seq)++;
     break;
 
   case SEQ_NET_CHANGEOVER:
+    if( p_wk->is_cancel )
+    {
+      KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_CancelConnectIrcWireless );
+      return;
+    }
     if( GFL_NET_IsInit() )
     {
       GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
@@ -620,6 +635,11 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     break;
 
   case SEQ_NET_CHANGEOVER_WAIT:
+    if( p_wk->is_cancel )
+    {
+      KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_CancelConnectIrcWireless );
+      return;
+    }
     if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
     {
       GFL_NET_Exit(NULL);
@@ -798,6 +818,50 @@ static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, in
     break;
   default:
     GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  赤外線ワイヤレス接続キャンセル処理
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_CancelConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_EXIT_NET_START,
+    SEQ_EXIT_NET_WAIT,
+    SEQ_END,
+  };
+
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_EXIT_NET_START:
+    if( GFL_NET_IsInit() )
+    {
+      GFL_NET_Exit(NULL);
+      *p_seq  = SEQ_EXIT_NET_WAIT;
+    }
+    else
+    {
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_EXIT_NET_WAIT:
+    if( GFL_NET_IsExit() )
+    {
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    break;
   }
 }
 //----------------------------------------------------------------------------
@@ -1373,12 +1437,13 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 {
   static const u8 sc_state_enable_tbl[KEYSYS_NET_STATE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE },//KEYSYS_NET_STATE_WAIT
-    { FALSE, TRUE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_CONNECT
-    { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT
-    { FALSE, TRUE, TRUE, TRUE,},//KEYSYS_NET_STATE_IRCWIRELESS_WAIT,   
-    { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
-    { FALSE, FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC
+    { TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE },//KEYSYS_NET_STATE_WAIT
+    { FALSE, TRUE, TRUE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_CONNECT
+    { FALSE, FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT
+    { FALSE, TRUE, FALSE, TRUE, TRUE,},//KEYSYS_NET_STATE_IRCWIRELESS_WAIT,   
+    { FALSE, FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
+    { FALSE, FALSE, FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC
+    { FALSE, FALSE, TRUE, FALSE, FALSE,  }, //KEYSYS_NET_STATE_IRCWIRELESS_CANCEL
 
     //マルチブート
     {FALSE},//KEYSYS_NET_STATE_MULTIBOOT_SEND_ROM,
@@ -1391,10 +1456,10 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 
   static const u8 sc_type_enable_tbl[KEYSYS_NET_TYPE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE },//NONE
-    { TRUE,  TRUE,  TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE },//IRCWIRELESS
-    { FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  FALSE, FALSE },//WIRELESS_DLPLAY
-    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE  },//WIFI_NTTP
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE },//NONE
+    { TRUE,  TRUE,  TRUE, TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE },//IRCWIRELESS
+    { FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  FALSE, FALSE },//WIRELESS_DLPLAY
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE  },//WIFI_NTTP
   };
 
   KEYSYS_NET_STATE state = KEYSYS_NET_GetState( cp_wk );

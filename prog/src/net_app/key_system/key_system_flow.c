@@ -594,9 +594,8 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_DISPLAY_CREATE,
     SEQ_NET_START,
     SEQ_NET_START_WAIT,
+    SEQ_NET_CANCEL_WAIT,
     SEQ_NET_END_DISPLAY_DELETE,
-    SEQ_NET_EXIT_END,
-    SEQ_NET_EXIT_END_WAIT,
     SEQ_NET_SEND_NAME_START,
     SEQ_NET_SEND_NAME_WAIT,
     SEQ_NET_SEND_KEY_START,
@@ -671,6 +670,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
   case SEQ_DISPLAY_CREATE:
     p_wk->ret = FALSE;
+    p_wk->is_irc_start  = FALSE;
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrc );
 
     GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
@@ -709,12 +709,11 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       PMSND_PlaySE( KEYSYS_SE_CONNECT_OK );
       p_wk->ret = FALSE;
     }
-    else
+    else if( p_wk->is_irc_start == FALSE )
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
       {
-        PMSND_StopSE();
-        (*p_seq) = SEQ_NET_END_DISPLAY_DELETE;
+        KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_CANCEL_IRCWIRELESS, NULL );
       }
     }
     if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_WAIT )
@@ -727,23 +726,23 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       OS_TPrintf( "タイムアウトして戻ってきたから再スタートするよ\n" );
       (*p_seq)  = SEQ_NET_START;
     }
-    break;
-
-  case SEQ_NET_END_DISPLAY_DELETE:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
-    (*p_seq)++;
-    break;
-  case SEQ_NET_EXIT_END:
-    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_DISCONNECT_IRCWIRELESS, NULL );
-    (*p_seq)++;
-    break;
-  case SEQ_NET_EXIT_END_WAIT:
-    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_CANCEL )
     {
-      (*p_seq)  = SEQ_END;
+      OS_TPrintf( "キャンセルしたよ\n" );
+      PMSND_StopSE();
+      (*p_seq)  = SEQ_NET_CANCEL_WAIT;
     }
     break;
-
+  case SEQ_NET_CANCEL_WAIT:
+    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    {
+      (*p_seq)  = SEQ_NET_END_DISPLAY_DELETE;
+    }
+    break;
+  case SEQ_NET_END_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)  = SEQ_END;
+    break;
   case SEQ_NET_SEND_NAME_START:
     {
       KEYSYS_NET_SEQ_PARAM_IW_SEND param;
@@ -4384,4 +4383,5 @@ static void KeySys_NetCallBack_IrcEnd( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
   p_wk->ret = TRUE;
+  p_wk->is_irc_start  = TRUE;
 }
