@@ -16508,12 +16508,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-しんそう　かいてん　したので▽　
-のぞいて　みよう！▼
+リニューアル　オープン　した！▼
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-02T14:44:51" />
+				Time="2012-02-03T03:31:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16522,12 +16521,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]は
-新装開店　したので▽
-のぞいて　みよう！▼
+リニューアル　オープン　した！▼
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-02T14:40:02" />
+				Time="2012-02-03T03:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33373,10 +33371,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こやし×１</Text>
+			<Text>すくすくこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:46" />
+				Time="2012-02-03T03:52:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33384,10 +33382,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こやし×１</Text>
+			<Text>すくすくこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:50" />
+				Time="2012-02-03T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33427,10 +33425,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こやし×１</Text>
+			<Text>じめじめこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:46" />
+				Time="2012-02-03T03:52:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33438,10 +33436,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こやし×１</Text>
+			<Text>じめじめこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:50" />
+				Time="2012-02-03T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33481,10 +33479,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こやし×１</Text>
+			<Text>ながながこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:46" />
+				Time="2012-02-03T03:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33492,10 +33490,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こやし×１</Text>
+			<Text>ながながこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:50" />
+				Time="2012-02-03T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33535,10 +33533,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こやし×１</Text>
+			<Text>ねばねばこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:46" />
+				Time="2012-02-03T03:52:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33546,10 +33544,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こやし×１</Text>
+			<Text>ねばねばこやし</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-14T09:19:50" />
+				Time="2012-02-03T03:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -122788,11 +122786,11 @@ PWT
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほりだしもの　をさがすか
+			<Text>ほりだしものを　さがすか
 もしくは　いっかくせんきん　だな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T10:27:47" />
+				User="shimoyamada:W00184"
+				Time="2012-02-03T03:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
