@@ -11743,13 +11743,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっと　５ごうめと　いったところだな
-まだまだ　さきは　ながいぞ▼
-……どれ　これより　したに　すすむ
-ちからがあるか　みてやるわ！▼</Text>
+			<Text>……ここまで　きた　ちからが
+どれほどのものか　みてやるわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T02:49:47" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T11:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11757,13 +11755,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっと　５合目と　いった所だな
-まだまだ　先は　長いぞ▼
-……どれ　これより下に
-進む力があるか　みてやるわ！▼</Text>
+			<Text>……ここまで　来た　力が
+どれほどのものか　みてやるわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T02:49:47" />
+				User="matsumiya:W00224"
+				Time="2012-02-03T11:28:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
