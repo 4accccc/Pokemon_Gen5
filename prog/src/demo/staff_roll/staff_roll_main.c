@@ -380,8 +380,15 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	// 上画面をメインに
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	// 輝度を最低にしておく
+#if	PM_VERSION == LOCAL_VERSION
+	// 輝度を最低にしておく（ブラック）
 	GX_SetMasterBrightness( -16 );
 	GXS_SetMasterBrightness( -16 );
+#else
+	// 輝度を最高にしておく（ホワイト）
+	GX_SetMasterBrightness( 16 );
+	GXS_SetMasterBrightness( 16 );
+#endif
 
 #ifdef	PM_DEBUG
 	wk->testStartInitWait = DEBUG_LIST_START_INIT_WAIT;

@@ -289,6 +289,23 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // スクリプト呼び出し(C09P03)
   case GMCLEAR_SEQ_SCRIPT_CALL_FIRST:
     {
+      {
+        // BGモード設定と表示設定の復帰
+        {
+          int mv = GFL_DISP_GetMainVisible();
+          FIELDMAP_InitBGMode();
+          GFL_DISP_GX_SetVisibleControlDirect( mv );
+        }
+        FIELDMAP_InitBG( fieldmap );
+      }
+
+      // NOGEARに切り替え
+      {
+        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldmap);
+        FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NOGEAR );
+      }
+
+      // スクリプト呼び出し
       SCRIPT_CallScript( event, SCRID_C09P03_ENDING, NULL, NULL, HEAPID_PROC );
       NowSeqFinish( work, seq );
     }
@@ -297,6 +314,23 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // スクリプト呼び出し(C12)
   case GMCLEAR_SEQ_SCRIPT_CALL_SECOND:
     {
+      {
+        // BGモード設定と表示設定の復帰
+        {
+          int mv = GFL_DISP_GetMainVisible();
+          FIELDMAP_InitBGMode();
+          GFL_DISP_GX_SetVisibleControlDirect( mv );
+        }
+        FIELDMAP_InitBG( fieldmap );
+      }
+
+      // NOGEARに切り替え
+      {
+        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldmap);
+        FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NOGEAR );
+      }
+
+      // スクリプト呼び出し
       SCRIPT_CallScript( event, SCRID_C12_ENDING, NULL, NULL, HEAPID_PROC );
       NowSeqFinish( work, seq );
     }
