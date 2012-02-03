@@ -333,16 +333,16 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
     if( trg & PAD_KEY_UP )
     {
       SetUpButton( p_wk );
+      return;
     }
-
-    if( trg & PAD_KEY_DOWN )
+    else if( trg & PAD_KEY_DOWN )
     {
       SetDownButton( p_wk );
+      return;
     }
   }
-  
   // ƒLƒƒƒ“ƒZƒ‹
-  if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_SUB )
+  else if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_SUB )
   {
     if( trg & PAD_BUTTON_X )
     {
@@ -371,11 +371,11 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
     case UI_HIT_TABLE_TRG_R:
       SetReturnButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-      break;
+      return;
     case UI_HIT_TABLE_TRG_L:
       SetExitButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
-      break;
+      return;
     }
   }
   else if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_TOP )
@@ -386,7 +386,7 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
     case UI_HIT_TABLE_TRG_R:
       SetReturnButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-      break;
+      return;
     }
   }
   else if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_LIST )
@@ -397,13 +397,13 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
     case UI_HIT_TABLE_TRG_R:
       SetReturnButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-      break;
+      return;
     case UI_HIT_TABLE_TRG_UP:
       SetUpButton( p_wk );
-      break;
+      return;
     case UI_HIT_TABLE_TRG_DOWN:
       SetDownButton( p_wk );
-      break;
+      return;
     }
   }
   else
