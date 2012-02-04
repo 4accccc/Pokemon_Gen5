@@ -2002,7 +2002,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
         {
           wk->list_head_id--;
 
-          GF_ASSERT( wk->list_head_id >= 0 );
+          GF_ASSERT( wk->list_head_id < PMS_DATA_ENTRY_MAX );
         }
 
         LIST_BAR_SetPosFromKey( wk, FALSE );
@@ -2039,7 +2039,7 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
         {
           wk->list_head_id++;
 
-          GF_ASSERT( wk->list_head_id >= 0 );
+          GF_ASSERT( wk->list_head_id < PMS_DATA_ENTRY_MAX );
         }
 
         LIST_BAR_SetPosFromKey( wk, FALSE );
