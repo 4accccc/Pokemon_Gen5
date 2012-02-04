@@ -111,9 +111,14 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_BERU )
-
+  
+  _GET_MY_SEX( SCWK_ANSWER )
   //ベル：おうい（主人公の性別でセリフが異なる）
-  _BALLOONWIN_OBJMSG_MF( msg_c03r0601_swbell_01, msg_c03r0601_swbell_02, C03R0601_SWBELL_01, POS_DEFAULT )
+  IF $SCWK_ANSWER == PM_MALE THEN
+    _PLAINWIN_MSG_DOWN( msg_c03r0601_swbell_01 )
+  ELSE
+    _PLAINWIN_MSG_DOWN( msg_c03r0601_swbell_02 )
+  ENDIF
   _MSGWIN_CLOSE()
 
   //主人公座標取得
