@@ -19,9 +19,10 @@
 /// CYGNUSセーブデータの状態
 //----------------------------------------------------------
 typedef enum {
-  CYGSAVE_STATE_NON = 0,  ///<データがない
-  CYGSAVE_STATE_SEND,     ///<CYGNUSから書き込み可能
-  CYGSAVE_STATE_RECEIVE,  ///<SWANで受け取り可能
+  CYGSAVE_STATE_NON = 0,  ///<データがない(MAGICNUMBER/CTRLCRCの異常）
+  CYGSAVE_STATE_SEND,     ///<CYGNUSから書き込み可能(OWFlag=TRUE)
+  CYGSAVE_STATE_RECEIVE,  ///<SWANで受け取り可能(OWFlag=FALSE)
+  CYGSAVE_STATE_BREAK,    ///<セーブ失敗で壊れている(DATACRCの異常）
 
   CYGSAVE_STATE_NUM,
 }CYGSAVE_STATE;
@@ -55,8 +56,12 @@ struct _CYGNUS_SAVEDATA {
   u32 onetime_key;                    ///<swanRW  cyg RO  暗号化キー（毎回変化させること）
   u32 magic_number;                   ///<swanRW  cyg RO  マジックナンバー
   u32 flags;                          ///<swanRW  cyg RO  受け取り状況フラグ
+  u16 ctrl_crc;                       ///<swanRW  cyg RW  上記領域のためのCRC
+  u16 pad1;                           ///< 4バイトアライメントのためのパディング
 
   u32 data_area[ CYGDATA_AREA_SIZE ]; ///<swanRO  cyg WO  実データ領域
+  u16 data_crc;                       ///<swanRO  cyg WO  実データ領域のためのCRC
+  u16 pad2;                           ///< 4バイトアライメントのためのパディング
 };
 
 //----------------------------------------------------------
@@ -128,5 +133,34 @@ extern CYGSAVE_STATE CYGNUS_SAVEDATA_DEBUG_Write( CYGNUS_SAVEDATA * sv, u32 * re
 //----------------------------------------------------------
 extern u32 CYGNUS_SAVEDATA_DEBUG_GetFlags( const CYGNUS_SAVEDATA * sv );
 
+//----------------------------------------------------------
+/**
+ * @brief デバッグ用：管理領域用CRCを破壊する
+ */
+//----------------------------------------------------------
+extern void CYGNUS_SAVEDATA_DEBUG_BreakCtrlCRC( CYGNUS_SAVEDATA * sv );
+
+//----------------------------------------------------------
+/**
+ * @brief デバッグ用：データ領域用CRCを破壊する
+ */
+//----------------------------------------------------------
+extern void CYGNUS_SAVEDATA_DEBUG_BreakDataCRC( CYGNUS_SAVEDATA * sv );
+
+//----------------------------------------------------------
+/**
+ * @brief デバッグ用：管理領域用CRCのチェック
+ * @param BOOL  TRUEのとき、CRCは正しい
+ */
+//----------------------------------------------------------
+extern BOOL CYGNUS_SAVEDATA_DEBUG_CheckCtrlCRC( CYGNUS_SAVEDATA * sv );
+
+//----------------------------------------------------------
+/**
+ * @brief デバッグ用：データ域用CRCのチェック
+ * @param BOOL  TRUEのとき、CRCは正しい
+ */
+//----------------------------------------------------------
+extern BOOL CYGNUS_SAVEDATA_DEBUG_CheckDataCRC( CYGNUS_SAVEDATA * sv );
 #endif
 

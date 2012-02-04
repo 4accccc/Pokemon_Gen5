@@ -62,7 +62,10 @@ typedef enum
   MENU_ITEM_ADD_ITEM,
   MENU_ITEM_ONETIMEKEY,
   MENU_ITEM_SWANFLAGS,
+  MENU_ITEM_BREAK_CTRLCRC,
+  MENU_ITEM_BREAK_DATACRC,
   MENU_ITEM_PRINT,
+
   MENU_ITEM_EXIT,
 
   MENU_ITEM_NUM
@@ -84,11 +87,14 @@ static const STRCODE* str_menu[] =
   L"渡すものを　クリア",
   L"渡す伝説ポケ　操作",
   L"渡すポケモン　追加",
-  L"渡すどうぐ　追加",
 
+  L"渡すどうぐ　追加",
   L"SWAN側ワンタイムキー操作",
   L"SWAN側フラグ操作",
+  L"管理CRC破壊",
+  L"データCRC破壊",
   L"デバッグ表示",
+
   L"戻る",
 };
 SDK_COMPILER_ASSERT( MENU_ITEM_NUM == NELEMS(str_menu) );
@@ -240,6 +246,8 @@ static BOOL SubSeqStateCygnusPut( PROC_WORK * p_wk );
 static BOOL SubSeqClearGifts( PROC_WORK * p_wk );
 static BOOL SubSeqSpPokeControl( PROC_WORK *p_wk );
 static BOOL ControlSwanFlagValue( PROC_WORK * p_wk );
+static BOOL SubSeqBreakCtrlCrc( PROC_WORK * p_wk );
+static BOOL SubSeqBreakDataCrc( PROC_WORK * p_wk );
 static BOOL SubSeqAddItem( PROC_WORK *p_wk );
 static BOOL SubSeqAddPokemon( PROC_WORK *p_wk );
 static BOOL SubSeqControlOneTimeKey( PROC_WORK * p_wk );
@@ -347,11 +355,11 @@ const GFL_PROC_DATA DebugCygnusProcData =
 };
 
 
-//=============================================================================
-/**
+//============================================================================================
+/*
  *					static関数
 */
-//=============================================================================
+//============================================================================================
 
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
@@ -481,6 +489,21 @@ static void createU32Hex( STRBUF * strbuf, u32 value )
   strcode[8] = GFL_STR_GetEOMCode();
   GFL_STR_SetStringCode( strbuf, strcode );
 }
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void createOKNGString( STRBUF * strbuf, BOOL value )
+{
+  static const STRCODE * const crc_state_str[] = {
+    L"OK",
+    L"NG",
+  };
+  u8 index = 0;
+  if ( value == FALSE )
+  {
+    index = 1;
+  }
+  createString( strbuf, crc_state_str[index] );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -583,11 +606,14 @@ static void UpdateCygnusInfo( PROC_WORK * p_wk )
     L"ワンタイムキー",
     L"マジックナンバー",
     L"情報フラグ",
+    L"管理CRC",
+    L"データCRC",
   };
   static const STRCODE * const state_str[] = {
     L"A.未初期化状態",
     L"B.CYGNUS書込みOK",
     L"C.SWAN受取りOK",
+    L"D.データ破壊状態",
   };
   SDK_COMPILER_ASSERT( NELEMS(state_str) == CYGSAVE_STATE_NUM );
 
@@ -614,6 +640,10 @@ static void UpdateCygnusInfo( PROC_WORK * p_wk )
     PRINTSYS_PrintColor( bmp, 18 * 10, 3 * 16, p_wk->tmpBuf, p_wk->font, lsb );
     createU32Hex( p_wk->tmpBuf, CYGNUS_SAVEDATA_DEBUG_GetFlags(p_wk->cygsave) );
     PRINTSYS_PrintColor( bmp, 18 * 10, 4 * 16, p_wk->tmpBuf, p_wk->font, lsb );
+    createOKNGString( p_wk->tmpBuf, CYGNUS_SAVEDATA_DEBUG_CheckCtrlCRC( p_wk->cygsave ) );
+    PRINTSYS_PrintColor( bmp, 18 * 10, 5 * 16, p_wk->tmpBuf, p_wk->font, lsb );
+    createOKNGString( p_wk->tmpBuf, CYGNUS_SAVEDATA_DEBUG_CheckDataCRC( p_wk->cygsave ) );
+    PRINTSYS_PrintColor( bmp, 18 * 10, 6 * 16, p_wk->tmpBuf, p_wk->font, lsb );
     CygnusUnload( p_wk );
   }
 
@@ -659,6 +689,10 @@ static BOOL CallSubSeq( u32 id, PROC_WORK *p_wk )
     return SubSeqControlOneTimeKey( p_wk );
   case MENU_ITEM_SWANFLAGS:
     return ControlSwanFlagValue( p_wk );
+  case MENU_ITEM_BREAK_CTRLCRC:
+    return SubSeqBreakCtrlCrc( p_wk );
+  case MENU_ITEM_BREAK_DATACRC:
+    return SubSeqBreakDataCrc( p_wk );
   }
   return TRUE;  //対応がない場合はすぐに終了
 }
@@ -1328,6 +1362,7 @@ static BOOL SubSeqAddPokemon( PROC_WORK *p_wk )
 enum {
   ONETIME_KEY_KETA = 8,
 };
+
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 static void UpdateOnetimeKeyInfo( PROC_WORK * p_wk )
@@ -1399,6 +1434,63 @@ static BOOL SubSeqControlOneTimeKey( PROC_WORK * p_wk )
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/// サブシーケンス：管理領域用CRCを破壊する
+//----------------------------------------------------------------------------
+static BOOL SubSeqBreakCtrlCrc( PROC_WORK * p_wk )
+{
+  switch (p_wk->subSeq)
+  {
+  case 0:
+    CygnusLoad( p_wk );
+    p_wk->subSeq ++;
+    break;
+  case 1:
+    CYGNUS_SAVEDATA_DEBUG_BreakCtrlCRC( p_wk->cygsave );
+    CYGNUSSAVE_CONTROL_SaveAsyncInit( p_wk->cygsave_ctrl );
+    p_wk->subSeq ++;
+    break;
+  case 2:
+    OS_Printf("WRITING FROM CYGNUS...\n");
+    if ( CYGNUSSAVE_CONTROL_SaveAsyncMain( p_wk->cygsave_ctrl ) == TRUE )
+    {
+      CygnusUnload( p_wk );
+      p_wk->last_status = STAT_CYGNUS_WRITE_SUCCESS;
+      return TRUE;  //終了
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/// サブシーケンス：データ領域用CRCを破壊する
+//----------------------------------------------------------------------------
+static BOOL SubSeqBreakDataCrc( PROC_WORK * p_wk )
+{
+  switch (p_wk->subSeq)
+  {
+  case 0:
+    CygnusLoad( p_wk );
+    p_wk->subSeq ++;
+    break;
+  case 1:
+    CYGNUS_SAVEDATA_DEBUG_BreakDataCRC( p_wk->cygsave );
+    CYGNUSSAVE_CONTROL_SaveAsyncInit( p_wk->cygsave_ctrl );
+    p_wk->subSeq ++;
+    break;
+  case 2:
+    OS_Printf("WRITING FROM CYGNUS...\n");
+    if ( CYGNUSSAVE_CONTROL_SaveAsyncMain( p_wk->cygsave_ctrl ) == TRUE )
+    {
+      CygnusUnload( p_wk );
+      p_wk->last_status = STAT_CYGNUS_WRITE_SUCCESS;
+      return TRUE;  //終了
+    }
+  }
+  return FALSE;
+}
+
 
 #endif // PM_DEBUG
 

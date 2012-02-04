@@ -138,7 +138,8 @@ static BOOL CYGNUSSAVE_CONTROL_CheckSaveData( const CYGNUS_SAVE_CONTROL * cygsav
 
 //----------------------------------------------------------
 /**
- * @brief
+ * @brief CYGSAVE領域の存在チェック
+ * @return  BOOL  TRUEのとき、領域は存在する（壊れている場合も存在と見なしている）
  */
 //----------------------------------------------------------
 BOOL CYGNUSSAVE_CONTROL_CheckSaveDataDirect( HEAPID heapID )
