@@ -272,23 +272,23 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //プラズマ団：なんだ？おまえら
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_01, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_01, D11R0101_PLASMAM_01, POS_UL )
   _MSGWIN_CLOSE()
   
   //ライバル：プラズマ団なの？
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_13, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_13, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //プラズマ団：そうとも！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_02, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_02, D11R0101_PLASMAM_01, POS_UL )
   _MSGWIN_CLOSE()
   
   //ライバル：あきれた…！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_14, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_14, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //プラズマ団：タチワキ？
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_03, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_03, D11R0101_PLASMAM_01, POS_UL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバルと向きあう
@@ -298,7 +298,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：主人公！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_15, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_15, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
    //アニメ：プラズマ団に向き合う
@@ -340,7 +340,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   ENDIF
   
   //プラズマ団：チッ
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_04, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_04, D11R0101_PLASMAM_01, POS_UL )
   _MSGWIN_CLOSE()
   
   //アニメ：プラズマ団退場
@@ -357,7 +357,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_DEL( D11R0101_PLASMAM_02 )
   
   //ライバル：まてよ！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_16, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_16, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //？？？：そのひつようはないっぽいよ
@@ -379,23 +379,23 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：あっ　アーティ！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_17, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_17, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アーティ：奥は調べたけど
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_02, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_02, D11R0101_SWLEADER3_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //ライバル：それにしても
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_18, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_18, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アーティ：そうだねー
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_03, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_03, D11R0101_SWLEADER3_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //ライバル：…そうだね
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_19, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_19, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル主人公の方を向く
@@ -404,7 +404,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：（主人公名）！いっしょに
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_20, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_20, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル隣接
@@ -415,7 +415,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
 	_ITEM_EVENT_KEYWAIT(ITEM_HIDENMASIN04, 1)
 	
 	//ライバル：ほかにも
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_21, PAIR_TRAINER_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_21, PAIR_TRAINER_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル退場
@@ -429,7 +429,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アーティ：いっちゃった
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_04, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_04, D11R0101_SWLEADER3_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //？？？：そこのあなた！
@@ -463,7 +463,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アクロマ：すばらしくいい！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swboss_02, D11R0101_SWBOSS_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swboss_02, D11R0101_SWBOSS_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：アクロマ退場
@@ -478,7 +478,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アーティ：いまの…だれ？
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_05, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_05, D11R0101_SWLEADER3_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：アーティと主人公向き合う
@@ -488,7 +488,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME_WAIT()
   
   //アーティ：まあいいや
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_06, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_06, D11R0101_SWLEADER3_01, POS_DL )
   _MSGWIN_CLOSE()
   
   //自機にカメラを戻す
@@ -496,6 +496,8 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   
   //アニメ：アーティ・退場
   _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_swleader3_bye )
+  _TIME_WAIT( 12 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //カメラ待ち
