@@ -440,11 +440,25 @@ _TALK_OBJ_START()
     //アニメ：バンジロウ登場
     _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 6, FORCE_TYPE_NPC, 4, DIR_UD )
     _OBJ_ANIME_WAIT()
-
-    //バンジロウ：じーちゃん！▼（バージョンでセリフが異なる）
-    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_01w, msg_t06r0101_mugenboss_end_01b, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    
+    {
+    DEFINE_LOCAL  LCW_VERSION
+    //プレイヤーの向きを取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    _GET_ROM_VERSION( LCW_VERSION )
+    
+    //バンジロウ：じーちゃん！▼（バージョン・向きでセリフと表示方法が異なる）
+    IF $LWK_DIR != DIR_UP && $LCW_VERSION == VERSION_B2 THEN
+      _PLAINWIN_MSG_DOWN( msg_t06r0101_mugenboss_end_01b )
+    ELSIF $LWK_DIR != DIR_UP && $LCW_VERSION == VERSION_W2 THEN
+      _PLAINWIN_MSG_DOWN( msg_t06r0101_mugenboss_end_01w )
+    ELSE
+      _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_01w, msg_t06r0101_mugenboss_end_01b, MMDL_ID_EVENTOBJ_00, POS_DL )
+    ENDIF
     _MSGWIN_CLOSE()
-
+    
+    }
+    
     //自機座標取得
     _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
     //主人公移動
@@ -455,13 +469,24 @@ _TALK_OBJ_START()
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     ENDIF
     _OBJ_ANIME_WAIT()
-
+    
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+    
     //アデク：バンジロウでは　ないか！▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_06, T06R0101_CHAMPION_01, POS_DEFAULT )
+    IF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_06, T06R0101_CHAMPION_01, POS_UR )
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_06, T06R0101_CHAMPION_01, POS_UL )
+    ENDIF
     _MSGWIN_CLOSE()
-
+    
     //バンジロウ：おーい！▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    IF $LWK_DIR != DIR_UP THEN
+      _PLAINWIN_MSG_DOWN( msg_t06r0101_mugenboss_end_02 )
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_02, MMDL_ID_EVENTOBJ_00, POS_DL )
+    ENDIF
     _MSGWIN_CLOSE()
 
     //自機座標取得
@@ -485,7 +510,7 @@ _TALK_OBJ_START()
     _OBJ_ANIME_WAIT()
 
     //バンジロウ：で　だれ　こいつ？▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_03, MMDL_ID_EVENTOBJ_00, POS_DL )
     _MSGWIN_CLOSE()
 
     //プレイヤーネームを格納
@@ -497,38 +522,50 @@ _TALK_OBJ_START()
 
     //男性だった場合
     IF $SCWK_SEX == PM_MALE THEN
-
+      
       //アデク：かれの　なまえは
-      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_07, T06R0101_CHAMPION_01, POS_DEFAULT )
-      _MSGWIN_CLOSE()
+      IF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_07, T06R0101_CHAMPION_01, POS_UR )
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_07, T06R0101_CHAMPION_01, POS_UL )
+      ENDIF
 
     //女性だった場合
     ELSE
 
       //アデク：かのじょの　なまえは
-      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_08, T06R0101_CHAMPION_01, POS_DEFAULT )
-      _MSGWIN_CLOSE()
+      IF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_08, T06R0101_CHAMPION_01, POS_UR )
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_08, T06R0101_CHAMPION_01, POS_UL )
+      ENDIF
 
     ENDIF
+    
+    _MSGWIN_CLOSE()
 
     //バンジロウ：やっぱりか！▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_04, MMDL_ID_EVENTOBJ_00, POS_DL )
     _MSGWIN_CLOSE()
 
     //アデク：どうだ？　バンジロウ
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_09, T06R0101_CHAMPION_01, POS_DEFAULT )
+    IF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_09, T06R0101_CHAMPION_01, POS_UR )
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_09, T06R0101_CHAMPION_01, POS_UL )
+    ENDIF
     _MSGWIN_CLOSE()
 
     //バンジロウ：ダメだ！▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_05, MMDL_ID_EVENTOBJ_00, POS_DL )
 
     //バンジロウ：じぶんの　ポケモンたちと！▼（バージョンでセリフが異なる）
-    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_06w, msg_t06r0101_mugenboss_end_06b, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_06w, msg_t06r0101_mugenboss_end_06b, MMDL_ID_EVENTOBJ_00, POS_DL )
 
     //プレイヤーネームを格納
     _PLAYER_NAME( 0 )
     //バンジロウ：じゃな！▼
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_07, MMDL_ID_EVENTOBJ_00, POS_DL )
     _MSGWIN_CLOSE()
 
     //自機座標取得
@@ -562,7 +599,11 @@ _TALK_OBJ_START()
     _OBJ_ANIME_WAIT()
 
     //アデク：わが　まご　ながら
-    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_champion_end_10w, msg_t06r0101_champion_end_10b, T06R0101_CHAMPION_01, POS_DEFAULT )
+    IF $LCW_POSX == 5 && $LCW_POSZ == 3 THEN
+      _BALLOONWIN_OBJMSG_WB( msg_t06r0101_champion_end_10w, msg_t06r0101_champion_end_10b, T06R0101_CHAMPION_01, POS_UR )
+    ELSE
+      _BALLOONWIN_OBJMSG_WB( msg_t06r0101_champion_end_10w, msg_t06r0101_champion_end_10b, T06R0101_CHAMPION_01, POS_UL )
+    ENDIF
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
