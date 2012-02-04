@@ -249,6 +249,25 @@ _RET
 /*		POS：N連れ歩き（子ども部屋前ストッパー）						  */
 /**************************************************************/
 EVENT_START		ev_pos_n01r0401_boss_02
+  
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //アニメ：主人公振り向き
+  IF $LWK_DIR == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_d )
+  ELSIF $LWK_DIR == DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
+  ELSIF $LWK_DIR == DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_l )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_u )
+  ENDIF
+  _OBJ_ANIME_WAIT()
 
   //Ｎ：もうそこはいい
   _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_13, PAIR_TRAINER_01, POS_DEFAULT )
