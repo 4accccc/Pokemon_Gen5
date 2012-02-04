@@ -63,11 +63,6 @@ INIT_EVENT_END
 /*					POS：プラズマ団と元プラズマ団						*/
 /************************************************************/
 EVENT_START ev_pos_d10r0301_sage6_01
-  
-  //========================================//
-  //D27R0301追加プラズマ団員配置
-  _FLAG_RESET( FV_D10R0301_SWPLAZMAM_02 )
-  //========================================//
 
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
@@ -220,6 +215,11 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+    //========================================//
+    //D27R0301追加プラズマ団員配置
+    _FLAG_RESET( FV_D10R0301_SWPLAZMAM_02 )
+    //========================================//
   
     //追加プラズマ団員動作モデル生成
     _OBJ_ADD( D10R0301_SWPLAZMAM_03 )
@@ -323,7 +323,7 @@ EVENT_START ev_pos_d10r0301_sage6_01
   
   //ロット：たしかにあのとき
   _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_06 , D10R0301_SAGE6_01 ,POS_UL )
-  _LAST_KEYWAIT()
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //自機にカメラを戻す
