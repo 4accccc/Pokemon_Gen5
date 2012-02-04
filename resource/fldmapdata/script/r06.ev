@@ -187,24 +187,21 @@ EVENT_START   ev_pos_r06_legend_meet_01
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
   
+  //主人公向き取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //アニメ：上向きでなかった場合は上を向く
+  IF $LWK_DIR != DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
   //アニメ：主人公「！」
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_common_gyoe )
   _OBJ_ANIME_WAIT()
   
    //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  
-  /*
-  //主人公中央に移動
-  IF $LCW_POSX != 103 THEN
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 103, 365, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  
-  _TIME_WAIT( 15 )
-  */
   
   // 移動ポケモンアニメ作成
   _EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
