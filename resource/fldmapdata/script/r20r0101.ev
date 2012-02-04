@@ -44,6 +44,9 @@ EVENT_END
 /*  POS：受付嬢イベント                            */
 /**************************************************************/
 EVENT_START   ev_pos_r20r0101_informationw_01
+  
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
   //！マーク
   _OBJ_ANIME( R20R0101_INFORMATIONW_01, anm_common_gyoe )
@@ -52,11 +55,13 @@ EVENT_START   ev_pos_r20r0101_informationw_01
   _OBJ_ANIME_WAIT()
   
   //受付嬢：あれ？　あなた…▼
-  _BALLOONWIN_OBJMSG_POS( msg_r20r0101_infomationw_01, R20R0101_INFORMATIONW_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  IF $LCW_POSZ == 4 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_r20r0101_infomationw_01, R20R0101_INFORMATIONW_01, POS_DEFAULT )
+  ELSE
+    _PLAINWIN_MSG_UP( msg_r20r0101_infomationw_01 )
+  ENDIF
   
-  //プレイヤー位置取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _MSGWIN_CLOSE()
   
   IF $LCW_POSZ != 4 THEN
     //アニメ：主人公振り向き
@@ -101,7 +106,7 @@ EVENT_START   ev_pos_r20r0101_informationw_01
   //R20R0101　POS無効
   $WK_SCENE_R20R0101 = 1
   //==================================//
-  
+
 EVENT_END
 
 /**************************************************************/
