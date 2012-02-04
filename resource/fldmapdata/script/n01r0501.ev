@@ -33,6 +33,8 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_N_POSX
+DEFINE_LOCAL  LCW_N_POSZ
 /************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
@@ -58,7 +60,7 @@ INIT_EVENT_END
 /*		POS：謁見の間前						  */
 /**************************************************************/
 EVENT_START		ev_pos_n01r0501_boss_01
-    //連れ歩いている
+  //連れ歩いている
   IF FLAG_ON(SYS_FLAG_PAIR) THEN
     _CALL ev_n01r0501_pairend_01
   
@@ -72,9 +74,36 @@ EVENT_END
 /*		CALL：謁見の間イベントまでストッパー						  */
 /**************************************************************/
 ev_n01r0501_boss_stopper_01:
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  //N座標取得
+  _OBJ_POS_GET( N01R0501_BOSS_01,LCW_N_POSX,LCW_N_POSZ ) 
+  
+  IF $LCW_POSZ == 17 && $LCW_N_POSZ == 18 THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ <= 18 && $LCW_N_POSZ == 19 THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ == 19 && $LCW_N_POSZ == 18 THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ != $LCW_N_POSZ && $LCW_POSZ == 17 THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ != $LCW_N_POSZ && $LCW_POSZ == 19 THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
   //Ｎ：ここが
   _BALLOONWIN_OBJMSG_POS( msg_n01r0501_boss_02, N01R0501_BOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  IF $LCW_POSZ != $LCW_N_POSZ THEN
+    _OBJ_ANIME( N01R0501_BOSS_01, anm_staystep_l )
+  ENDIF
   
   //アニメ：主人公１歩左へ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
