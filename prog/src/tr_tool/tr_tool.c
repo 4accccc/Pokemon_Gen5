@@ -103,6 +103,14 @@ static const TRTYPE_GRP_PARAM DATA_TrTypeGrpParam[TRTYPE_GRP_IDX_MAX] = {
  { TRTYPE_BCHAMP,	  TRTYPE_GRP_BCHAMP,	BATTLE_BG_ATTR_MAX },
  { TRTYPE_BCHAMP2,  TRTYPE_GRP_BCHAMP,	BATTLE_BG_ATTR_MAX },
 };
+
+/*
+ *  @brief  トレーナータイプでBtlBgTypeを書き換えるためのテーブル
+ */
+static const u16 DATA_TrType2BgType[][2]={
+  { TRTYPE_SWSAGE1, BATTLE_BG_TYPE_KYUREMU },   //ゲーチス
+};
+
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック
 SDK_COMPILER_ASSERT(sizeof(TRTYPE_GRP_PARAM) == 3);
@@ -480,6 +488,22 @@ BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype )
     return BATTLE_BG_ATTR_MAX;
   }
   return DATA_TrTypeGrpParam[idx].btl_bg_attr;
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  トレーナータイプからBtlBgTypeを取得
+ */
+//----------------------------------------------------------
+BtlBgType TT_TrainerTeypBtlBgTypeGet( int trtype, BtlBgAttr BgType )
+{
+  int i;
+  for(i=0;i<NELEMS(DATA_TrType2BgType);i++){
+    if(trtype==DATA_TrType2BgType[i][0]){
+      return DATA_TrType2BgType[i][1];
+    }
+  }
+  return BgType;
 }
 
 //============================================================================================

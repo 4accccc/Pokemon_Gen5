@@ -213,6 +213,7 @@ extern  u16   TT_TrainerTypeEyeBGMGet( int trtype );
 extern  u8 TT_TrainerTypeGrpEntryIdxGet( int trtype );
 extern  TRTYPE_GRP_ID TT_TrainerTypeGrpGet( int trtype );
 extern  BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype );
+extern  BtlBgType TT_TrainerTeypBtlBgTypeGet( int trtype, BtlBgAttr BgType );
 
 extern void	TT_EncountTrainerPersonalDataMake( GAMEDATA* gamedata, TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID );
 extern void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );

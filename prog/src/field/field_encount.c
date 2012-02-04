@@ -708,6 +708,8 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
     if(attr != BATTLE_BG_ATTR_MAX){
       sit.bgAttr = attr;
     }
+    // トレーナータイプで変化するBgType処理（swanではゲーチス戦のみ）
+    sit.bgType = TT_TrainerTeypBtlBgTypeGet( TT_TrainerDataParaGet( tr_id0, ID_TD_tr_type ), sit.bgType );
   }
 
   switch(rule){
