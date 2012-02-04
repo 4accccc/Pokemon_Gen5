@@ -1383,11 +1383,15 @@ sub_resident_merge:
     //○○に転職した
     _SYSWIN_MSG( resort_sys_07, POS_DOWN )
     _RESORT_SET_WORD( RESORT_WORD_WANT_SHOP, RESORT_WORD_PARAM_FRONT, 0, 1 )
+
+    _ME_PLAY( SEQ_ME_AVENUE_01 )
     _SYSWIN_MSG( resort_sys_24, POS_DOWN )
+	  _ME_WAIT()
+	  _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
 
-  //建て替えた
-   _ADD_RECORD( RECID_RESORT_SHOP_MAKE_CNT, 1 )
+    //建て替えた
+    _ADD_RECORD( RECID_RESORT_SHOP_MAKE_CNT, 1 )
 
     //フェードアウト
     _CALL sub_camera_ret_fade
