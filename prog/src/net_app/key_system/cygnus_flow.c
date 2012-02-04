@@ -3015,8 +3015,18 @@ static CYGNUS_RECIVE Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
     EVENTWORK *p_ev = GAMEDATA_GetEventWork( p_wk->p_param->p_gamedata );
-    if( !(SaveData_GetExistFlag(p_sv) && EVENTWORK_CheckEventFlag(p_ev, SYS_FLAG_FIRST_POKE_GET )) )
+    if( SaveData_GetExistFlag(p_sv) )
     {
+      //セーブあるけどずかんない
+      if( !EVENTWORK_CheckEventFlag(p_ev, SYS_FLAG_FIRST_POKE_GET ) )
+      {
+        *p_error_msg  = CYGNUS_15;
+        return CYGNUS_RECIVE_NG;
+      }
+    }
+    else
+    {
+      //セーブない
       *p_error_msg  = CYGNUS_06;
       return CYGNUS_RECIVE_NG;
     }
