@@ -1355,7 +1355,12 @@ void KEYSYS_SEQ_Next( KEYSYS_SEQ_WORK *p_wk, KEYSYS_SEQ_FUNCTION seq_function )
 //-----------------------------------------------------------------------------
 void KEYSYS_SEQ_Call( KEYSYS_SEQ_WORK *p_wk, KEYSYS_SEQ_FUNCTION seq_function )
 {
-  p_wk->stack_now++;
+  KEYSYS_SEQ *p_seq =  Keysys_Seq_Get( p_wk, p_wk->stack_now );
+  if( p_seq->update != NULL )
+  {
+    //基底だったら積まずに基底を更新
+    p_wk->stack_now++;
+  }
   GF_ASSERT( p_wk->stack_now <  p_wk->stack_max );
   KEYSYS_SEQ_Next( p_wk, seq_function );
 }
@@ -1454,6 +1459,29 @@ void KEYSYS_SEQ_Clear( KEYSYS_SEQ_WORK *p_wk )
   while( p_wk->stack_now > 0 )
   {
     KEYSYS_SEQ_Return( p_wk );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定したシーケンスまでPopする。（NULLやなければ全部Popする）
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_wk ワーク
+ *	@param	seq_function  シーケンス（このシーケンスまでPopするのでこれは残る）
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_SEQ_Pop( KEYSYS_SEQ_WORK *p_wk, KEYSYS_SEQ_FUNCTION seq_function )
+{
+  while( p_wk->stack_now > 0 )
+  {
+    const KEYSYS_SEQ *cp_seq =  Keysys_Seq_Get( p_wk, p_wk->stack_now );
+    if( cp_seq->update == seq_function )
+    {
+      break;
+    }
+    else
+    {
+      KEYSYS_SEQ_Return( p_wk );
+    }
   }
 }
 //----------------------------------------------------------------------------

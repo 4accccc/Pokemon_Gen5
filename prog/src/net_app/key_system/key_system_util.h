@@ -231,6 +231,7 @@ extern void KEYSYS_SEQ_NextReservSeq( KEYSYS_SEQ_WORK *p_wk );
 extern BOOL KEYSYS_SEQ_IsCompireFunc( const KEYSYS_SEQ_WORK *cp_wk, KEYSYS_SEQ_FUNCTION seq_function );
 extern void KEYSYS_SEQ_AddLocalSeq( KEYSYS_SEQ_WORK *p_wk, int add );
 extern void KEYSYS_SEQ_Clear( KEYSYS_SEQ_WORK *p_wk );
+extern void KEYSYS_SEQ_Pop( KEYSYS_SEQ_WORK *p_wk, KEYSYS_SEQ_FUNCTION seq_function );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

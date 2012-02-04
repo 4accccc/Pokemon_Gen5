@@ -288,14 +288,14 @@ static GFL_PROC_RESULT Key_System_Proc_Main
       }
       KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
       //通信エラーが起こったら強制的にメインメニューへ
-      KEYSYS_SEQ_Clear( p_wk->p_seq );  //積んだシーケンスを全部クリア
+      KEYSYS_SEQ_Pop( p_wk->p_seq, KeySys_Seq_Main );  //積んだシーケンスを基底を残しクリア
       KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );  //どんな画面も強制クリア
       if( p_wk->p_text )
       {
         KEYSYS_TEXT_Delete( p_wk );
       }
       KEYSYS_MAP_Clear( &p_wk->select );  //今まで選んだメニュー位置クリア
-      KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Seq_MainMenu );  //新たにメインメニューへ
+      KEYSYS_SEQ_Call( p_wk->p_seq, KeySys_Seq_MainMenu );  //新たにメインメニューへ
       return GFL_PROC_RES_CONTINUE;
     }
   }
