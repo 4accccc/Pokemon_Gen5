@@ -368,6 +368,8 @@ _TIME_WAIT( 20 )
 _BLACK_OUT()
 _DISP_FADE_END_CHECK()
 
+//”wŒiƒrƒWƒ‡ƒ“‰Šú‰»
+_WBT_GMK_VISION_CHANGE_INIT(SCR_WBT_VISION_VS)
 _TIME_WAIT( 50 )
 
 //ˆÃ“]•œ‹A
@@ -609,6 +611,8 @@ _TIME_WAIT( 20 )
 _BLACK_OUT()
 _DISP_FADE_END_CHECK()
 
+//”wŒiƒrƒWƒ‡ƒ“‰Šú‰»
+_WBT_GMK_VISION_CHANGE_INIT(SCR_WBT_VISION_VS)
 _TIME_WAIT( 50 )
 
 //ˆÃ“]•œ‹A
@@ -886,6 +890,8 @@ _CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,60 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚
 //ˆÃ“]ˆ—
 _BLACK_OUT()
 _DISP_FADE_END_CHECK()
+//”wŒiƒrƒWƒ‡ƒ“‰Šú‰»
+_WBT_GMK_VISION_CHANGE_INIT(SCR_WBT_VISION_VS)
 	
 _TIME_WAIT( 60 )
 
@@ -1010,6 +1016,17 @@ _CAMERA_PURGE()		//ƒJƒƒ‰‚ÌƒoƒCƒ“ƒh‚ð‰ð‚­
 //ƒJƒƒ‰‘€ì@ƒXƒe[ƒW’†‰›‚ÉƒJƒƒ‰‚ð‡‚í‚¹‚é
 _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚©‚éƒtƒŒ[ƒ€”
 _CAMERA_WAIT_MOVE()
+
+/******************************************/ 
+// —DŸƒrƒWƒ‡ƒ“—p‚Ì‰Šú‰»‚ðˆÃ“]’†‚É‚·‚é
+IF $LWK_WIN_OR_LOSE == SCR_WBT_BATTLE_RESULT_WIN THEN
+	//ƒvƒŒƒCƒ„[‘¤‚ªŸ—˜‚Ì”wŒiƒ”ƒBƒWƒ‡ƒ“•\Ž¦
+  _WBT_GMK_VISION_CHANGE_INIT( SCR_WBT_VISION_WIN_PLAYER )
+ELSE
+	//‘Îí‘ŠŽè‘¤‚ªŸ—˜‚Ì”wŒiƒ”ƒBƒWƒ‡ƒ“•\Ž¦
+  _WBT_GMK_VISION_CHANGE_INIT( SCR_WBT_VISION_WIN_ENEMY )
+ENDIF
+/******************************************/ 
 
 _MAP_FADE_BLACK_IN_FORCE()  //’ˆÓF——p‚µ‚Ä‚¢‚¢ƒRƒ}ƒ“ƒh‚Å‚Í‚È‚¢
 _MAP_FADE_END_CHECK()

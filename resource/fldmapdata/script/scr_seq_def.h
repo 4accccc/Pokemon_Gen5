@@ -14091,6 +14091,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief   WBTギミック:背景ビジョン初期化
+ * @param[in]  type   ※script_def.hのSCR_WBT_VISION_を参照
+ *
+ * @note    暗転中に呼び出す
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_VISION_CHANGE_INIT( type )  \
+    _ASM_WBT_GMK_VISION_CHANGE_INIT type   
+
+    .macro _ASM_WBT_GMK_VISION_CHANGE_INIT type   
+    .short  EV_SEQ_WBT_GMK_VISION_CHANGE_INIT
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief   WBTギミック:背景ビジョンを変更
  * @param[in]  type   ※script_def.hのSCR_WBT_VISION_を参照
  */

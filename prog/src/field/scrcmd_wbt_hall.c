@@ -419,10 +419,10 @@ VMCMD_RESULT EvCmdWBTSetupMixParty( VMHANDLE * core, void * wk )
 //============================================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  スクリプトコマンド:WBTギミック背景ビジョン変更
+ *	@brief  スクリプトコマンド:WBTギミック背景ビジョン初期化
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTGMKVisionChangeInit( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -508,6 +508,27 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
 
   // strbuf2はプレイヤー名で作成しているかもしれないので破棄
   if( strbuf2 ){ GFL_STR_DeleteBuffer( strbuf2 ); }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック背景ビジョン変更
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA     *gdata = SCRCMD_WORK_GetGameData( work );
+  HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
+
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );    // ビジョン種類
+
+  // ギミック変更
+  WBT_GIMMICK_VisionChangeStart( fieldWork, type );
 
   return VMCMD_RESULT_CONTINUE;
 }

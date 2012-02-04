@@ -558,8 +558,8 @@ static void ANM_VS3_Play( WBT_GMK_TMP *p_wk );
 
 // 背景ビジョン
 static void VISION_Setup( WBT_GMK_TMP *p_wk );
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 );
-static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type );
+static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, GFL_FONT* fontHandle, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
 static void VISION_Tex2Trgra( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, u16 trtype );
 static void TexTransToGra( WBT_GMK_TMP *p_wk,
                            GFL_G3D_RES* p_res, 
@@ -709,6 +709,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
+      WBT_GIMMICK_VisionChangeStart( p_fieldmap, SCR_WBT_VISION_VS );
 
       // 動作モデル変更
       {
@@ -735,6 +736,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
       OS_Printf("デバッグ 優勝ビジョン\n");
       WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_wbt_trtype, 0 );
+      WBT_GIMMICK_VisionChangeStart( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER );
 
       GFL_STR_DeleteBuffer( strbuf1 );
     }
@@ -761,6 +763,66 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
+
+  // 引数を保存
+  p_wk->trtype1 = trtype1;
+  p_wk->trtype2 = trtype2;
+
+  // 既存の表示ビジョンを非表示
+  {
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, TRUE );
+    //FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_LOGO, TRUE );
+  }
+
+  // ビジョン別設定
+  {
+    BOOL ret;
+    FLDMSGBG *p_msgbg = FIELDMAP_GetFldMsgBG( p_fieldmap );
+    GFL_FONT *fontHandle = FLDMSGBG_GetFontHandle( p_msgbg );
+
+    switch( type ){
+    case SCR_WBT_VISION_VS:
+      {
+        // 名前
+        GF_ASSERT( strbuf2 );     // VSの場合は2つ名前を使用
+        ret = VISION_Font2Tex( p_wk, fontHandle, TEX_INDEX_LEFT, strbuf1, heapID );
+        GF_ASSERT(ret);
+        ret = VISION_Font2Tex( p_wk, fontHandle, TEX_INDEX_RIGHT, strbuf2, heapID );
+        GF_ASSERT(ret);
+      }
+      break;
+    case SCR_WBT_VISION_WIN_PLAYER:
+    case SCR_WBT_VISION_WIN_ENEMY:
+      // 名前張り付けのビジョンなら
+      // リソースは読み込まない
+      {
+        GF_ASSERT( strbuf1 );
+        // 名前
+        ret = VISION_Font2Tex( p_wk, fontHandle, TEX_INDEX_WIN, strbuf1, heapID );
+        GF_ASSERT(ret);
+      }
+      break;
+    }
+  }
+
+  ICHI_Printf("背景ビジョン変更 %d \n", type);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  背景ビジョンアニメ開始
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap
+ *	@param	type 
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_VisionChangeStart( FIELDMAP_WORK *p_fieldmap, u8 type )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
 
   // 既存の表示ビジョンを非表示
   {
@@ -774,21 +836,18 @@ void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbu
   // ビジョン別設定
   switch( type ){
   case SCR_WBT_VISION_VS:
-    GF_ASSERT( strbuf2 );     // VSの場合は2つ名前を使用
     /* break through */
   case SCR_WBT_VISION_WIN_PLAYER:
   case SCR_WBT_VISION_WIN_ENEMY:
-    GF_ASSERT( strbuf1 );
 
     // 名前張り付けのビジョンなら
     // リソースは読み込まない
-    VISION_SetupName( p_wk, type, strbuf1, strbuf2, trtype1, trtype2 );
+    VISION_SetupName( p_wk, type );
     break;
 
   default:
     // トーナメントロゴのビジョン
     VISION_Setup( p_wk );
-
     break;
   }
 
@@ -869,7 +928,7 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
   {
     FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT );
   }
-  FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
+  FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
   p_wk->is_unit_effect = TRUE;    // 作成した
 
   //=====================================
@@ -1345,89 +1404,43 @@ static void VISION_Setup( WBT_GMK_TMP *p_wk )
  *	@param	strbuf              対戦相手名
  */
 //-----------------------------------------------------------------------------
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 )
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
 {
-  u16   obj_idx;    // OBJインデックス
-  HEAPID heapID = GFL_HEAP_LOWID( p_wk->heapID );
-
   // 3DモデルオブジェID判定
   // 名前貼り付けビジョンは
   // VSか優勝だけ
   switch( type ){
   case SCR_WBT_VISION_WIN_PLAYER:
   case SCR_WBT_VISION_WIN_ENEMY:
-    obj_idx = OBJ_V_WIN;
     // 演出タスク作成
     VISION_WIN_TASK_Add( p_wk );
     break;
   case SCR_WBT_VISION_VS:
-    obj_idx = OBJ_V_VS;
     // 演出タスク作成
     VISION_VS_TASK_Add( p_wk );
     break;
   }
 
-  // 引数を保存
-  p_wk->trtype1 = trtype1;
-  p_wk->trtype2 = trtype2;
-
-  // 名前の設定
-  // と顔グラの設定(テクスチャ置き換え)
-  {
-    BOOL ret;
-    STRBUF  *str_player;
-
-    str_player = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, heapID );
-
-    switch( obj_idx ){
-    case OBJ_V_VS:
-      {
-        // 名前
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_LEFT, strbuf1, heapID );
-        GF_ASSERT(ret);
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIGHT, strbuf2, heapID );
-        GF_ASSERT(ret);
-        // 顔グラはtask内で。
-      }
-      break;
-
-    case OBJ_V_WIN:
-      {
-        // 名前
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, strbuf1, heapID );
-        GF_ASSERT(ret);
-        // 顔グラ
-        VISION_Tex2Trgra( p_wk, TEX_INDEX_WIN, trtype1 );
-      }
-      break;
-    }
-
-    GFL_HEAP_FreeMemory( str_player );
-  }
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  ビジョンに名前貼り付け
  *
- *	@param	const GFL_G3D_RES* g3Dtex
- *	@param	char* tex_name
- *	@param	char* plt_name
- *	@param	STRBUF* str
- *	@param	xpos
- *	@param	ypos
+ *	@param	WBT_GMK_TMP *p_wk
+ *	@param	fontHandle
+ *	@param	tex_index
+ *	@param	*strbuf
  *	@param	heapID 
  *
  *	@return
  */
 //-----------------------------------------------------------------------------
-static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID )
+static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, GFL_FONT* fontHandle, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID )
 {
   F2T_WORK      f2t_wk;
   BOOL          ret;
   PRINTSYS_LSB  lsb;
-
-  GFL_FONT*     fontHandle;
 
   GFL_G3D_OBJ   *p_obj;
   GFL_G3D_RND   *p_rnd;
@@ -1451,11 +1464,8 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *str
   // 文字幅計算
   {
     //フォントハンドル作成
-    fontHandle = GFL_FONT_Create
-      (ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID);
     len = PRINTSYS_GetStrWidth(strbuf, fontHandle, 0);
     ICHI_Printf("nameLen %d \n", len );
-    GFL_FONT_Delete(fontHandle);
   }
 
   p_obj = FLD_EXP_OBJ_GetUnitObj( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
@@ -1644,12 +1654,20 @@ static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk )
 
   // 処理シーケンス
   enum{
+    SEQ_TRANS,
     SEQ_START,
     SEQ_ANM_WAIT,
     SEQ_END,
   };
 
   switch( p_wk->seq ){
+  case SEQ_TRANS:
+    {
+      // 顔グラ
+      VISION_Tex2Trgra( p_wk->p_gmk_wk, TEX_INDEX_WIN, p_wk->p_gmk_wk->trtype1 );
+      p_wk->seq = SEQ_START;
+    }
+    break;
   case SEQ_START:
     {
       // wbt_v_win
@@ -1961,7 +1979,7 @@ static void EFFECT_ChampInit( WBT_GMK_TMP *p_wk, u8 pos )
   {
     FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT );
   }
-  FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
+  FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &setup, EXPOBJ_UNIT_IDX_EFFECT );
   p_wk->is_unit_effect = TRUE;    // 作成した
 
   //=====================================
