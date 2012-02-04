@@ -7277,6 +7277,118 @@ DSシステムフォントなので
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="CYGNUS_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンＡＲサーチャーの
+ちょうさデータが　こわれていました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:43:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T05:32:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンＡＲサーチャーの
+調査データが　壊れていました▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:45:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T05:35:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラーメッセージ１
+受け取れない状態：CYGNUSから書き込まれたデータが壊れていた</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:01:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうさデータを
+しょきか　しています</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:45:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:31:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>調査データを　初期化しています</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:46:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:45:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラーメッセージ１
+受け取れない状態：CYGNUSから書き込まれたデータが壊れていた
+
+（データ初期化中）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:01:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうさデータを　しょきか　しました▼
+ポケモンＡＲサーチャーを　きどうして
+もういちど　ちょうさデータを▽
+おくってください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:45:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:38:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>調査データを　初期化しました▼
+ポケモンＡＲサーチャーを　起動して
+もう一度　調査データを▽
+送ってください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:46:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T07:45:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラーメッセージ１
+受け取れない状態：CYGNUSから書き込まれたデータが壊れていた
+
+（データ初期化後）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:01:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="CYGNUS_06"
 		Style="Large">
 		<LanguageCell
@@ -7311,11 +7423,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーメッセージ１
+			<Comment>エラーメッセージ２A
 受け取れない状態：SWANのセーブがない</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T11:15:51" />
+				Time="2012-02-04T11:01:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7338,6 +7450,43 @@ DSシステムフォントなので
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CYGNUS_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうさデータを　うけとるには
+ポケモンずかんを　てにいれるまで▽
+ぼうけんを　すすめて　ください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:02:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:00:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>調査データを　受け取るには
+ポケモン図鑑を　手に入れるまで▽
+冒険を　進めて　ください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:07:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:00:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラーメッセージ２B
+受け取れない状態：SWANのセーブはあるが、ポケモン図鑑を入手していない</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2012-02-04T11:04:16" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="CYGNUS_07"
@@ -7374,11 +7523,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーメッセージ２
+			<Comment>エラーメッセージ３A
 受け取れない状態：報酬データがない。一度も受け取っていない</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T11:15:58" />
+				Time="2012-02-04T11:01:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7435,11 +7584,11 @@ DSシステムフォントなので
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーメッセージ３
+			<Comment>エラーメッセージ３B
 受け取れない状態：報酬データがない。受け取ったことはある</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T11:16:02" />
+				Time="2012-02-04T11:01:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -7639,117 +7788,5 @@ CYGNUS_05の後に表示</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="CYGNUS_12">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモンＡＲサーチャーの
-ちょうさデータが　こわれていました▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:43:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T05:32:46" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンＡＲサーチャーの
-調査データが　壊れていました▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:45:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T05:35:59" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>エラーメッセージ０
-受け取れない状態：CYGNUSから書き込まれたデータが壊れていた</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:38:45" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="CYGNUS_13">
-		<LanguageCell
-			Language="JPN">
-			<Text>ちょうさデータを
-しょきか　しています</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:45:35" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:31:34" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>調査データを　初期化しています</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:46:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:45:45" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>エラーメッセージ０
-受け取れない状態：CYGNUSから書き込まれたデータが壊れていた
-
-（データ初期化中）</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:38:41" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="CYGNUS_14">
-		<LanguageCell
-			Language="JPN">
-			<Text>ちょうさデータを　しょきか　しました▼
-ポケモンＡＲサーチャーを　きどうして
-もういちど　ちょうさデータを▽
-おくってください▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:45:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:38:47" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>調査データを　初期化しました▼
-ポケモンＡＲサーチャーを　起動して
-もう一度　調査データを▽
-送ってください▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:46:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:45:45" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>エラーメッセージ０
-受け取れない状態：CYGNUSから書き込まれたデータが壊れていた
-
-（データ初期化後）</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-04T07:38:41" />
-		</CommentCell>
 	</TextRow>
 </MessageStudioText>
