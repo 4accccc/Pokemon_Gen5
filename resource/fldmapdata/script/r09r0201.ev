@@ -202,7 +202,7 @@ ev_r09r0201_waitress_call_01:
       _GOLD_WIN_CLOSE()
 
       //アイテム「モンスターボール」入手
-      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MONSUTAABOORU, 1 )
+      _ITEM_EVENT_NOWAIT( ITEM_MONSUTAABOORU, 1 )
 
     ENDIF
 
@@ -280,7 +280,7 @@ ev_r09r0201_waitress_call_02:
       _GOLD_WIN_CLOSE()
 
       //アイテム「キズぐすり」入手
-      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+      _ITEM_EVENT_NOWAIT( ITEM_KIZUGUSURI, 1 )
 
     ENDIF
 
