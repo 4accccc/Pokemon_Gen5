@@ -89,6 +89,7 @@
 //=====================================
 //サブシーケンス
 static void DataConv_Seq_DisableRecive( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_BreakSave( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_ReciveData( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void DataConv_Seq_ReciveWait( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -143,8 +144,9 @@ typedef enum
   CYGNUS_SAVE_STATUS_NONE,  //一度もやってない
   CYGNUS_SAVE_STATUS_EMPTY,  //一度はやったがない
   CYGNUS_SAVE_STATUS_EXIST, //ある
+  CYGNUS_SAVE_STATUS_BREAK, //壊れている
 }CYGNUS_SAVE_STATUS;
-static CYGNUS_SAVE_STATUS CYGNUS_SAVE_IsExist( const CYGNUS_SAVE_WORK *cp_wk );
+static CYGNUS_SAVE_STATUS CYGNUS_SAVE_GetStatus( const CYGNUS_SAVE_WORK *cp_wk );
 
 static BOOL CYGNUS_SAVE_IsEffectPoke( const CYGNUS_SAVE_WORK *cp_wk );
 static u32 CYGNUS_SAVE_GetEffectPoke( const CYGNUS_SAVE_WORK *cp_wk, u32 idx );
@@ -188,7 +190,13 @@ static void Cygnus_3d_Exit( KEY_SYSTEM_WORK *p_wk );
 static void Cygnus_Demo_Graphic_Set( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
 static void Cygnus_Demo_Graphic_Reset( KEY_SYSTEM_WORK *p_wk );
 
-static BOOL Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg );
+typedef enum
+{
+  CYGNUS_RECIVE_NG,
+  CYGNUS_RECIVE_BREAK,
+  CYGNUS_RECIVE_OK,
+}CYGNUS_RECIVE;
+static CYGNUS_RECIVE Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg );
 static u32 Cygnus_GetLegPos( const POKEMON_PASO_PARAM* cp_ppp, HEAPID heapID );
 
 //=============================================================================
@@ -299,15 +307,20 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     (*p_seq)++;
     break;
   case SEQ_NEST_CALL:
-    if( Cygnus_IsReciveEnable( p_wk, NULL ) )
+    switch( Cygnus_IsReciveEnable( p_wk, NULL ) )
     {
+    case CYGNUS_RECIVE_OK:
       //受け取れる
       KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_ReciveData );
-    }
-    else
-    {
+      break;
+    case CYGNUS_RECIVE_NG:
       //受け取れない
       KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_DisableRecive );
+      break;
+    case CYGNUS_RECIVE_BREAK:
+      //壊れていた
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_BreakSave );
+      break;
     }
     (*p_seq)++;
     break;
@@ -355,13 +368,98 @@ static void DataConv_Seq_DisableRecive( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
   case SEQ_PRINT_START:
     {
       u32 error_msg;
-      BOOL ret = Cygnus_IsReciveEnable( p_wk, &error_msg );
-      GF_ASSERT( ret == FALSE );
+      CYGNUS_RECIVE ret = Cygnus_IsReciveEnable( p_wk, &error_msg );
+      GF_ASSERT( ret == CYGNUS_RECIVE_NG );
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, error_msg, KEYSYS_TEXT_TYPE_STREAM ); 
     }
     (*p_seq)++;
     break;
   case SEQ_PRINT_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  壊れている
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_BreakSave( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE,
+    SEQ_PRINT01_START,
+    SEQ_PRINT01_WAIT,
+    SEQ_PRINT02_START,
+    SEQ_PRINT02_WAIT,
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT, 
+    SEQ_PRINT03_START,
+    SEQ_PRINT03_WAIT,
+    SEQ_DISPLAY_DELETE,
+    SEQ_END,
+  };
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE:
+    //最初はメインメニュー作成フロー
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayDisableRecive );
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT01_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_12, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT01_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_PRINT02_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_13, KEYSYS_TEXT_TYPE_WAIT ); 
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT02_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_START:
+    CYGNUS_SAVE_StartSave( p_wk->p_cyg_sv );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_WAIT:
+    if( CYGNUS_SAVE_MainSave(p_wk->p_cyg_sv) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_PRINT03_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, CYGNUS_14, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT03_WAIT:
     if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
       (*p_seq)++;
@@ -1665,7 +1763,11 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
   }
 
 #ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_R|PAD_BUTTON_L) )
+  {
+    p_wk->out_state = CYGSAVE_STATE_BREAK;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
     GFL_STD_MemCopy( sc_debug_data, p_wk->reward_data, sizeof(sc_debug_data) );
     p_wk->reward_num = NELEMS( sc_debug_data );
@@ -1697,25 +1799,35 @@ static void CYGNUS_SAVE_Exit( CYGNUS_SAVE_WORK *p_wk )
  *	@return シグナスのセーブ状態取得
  */
 //-----------------------------------------------------------------------------
-static CYGNUS_SAVE_STATUS CYGNUS_SAVE_IsExist( const CYGNUS_SAVE_WORK *cp_wk )
+static CYGNUS_SAVE_STATUS CYGNUS_SAVE_GetStatus( const CYGNUS_SAVE_WORK *cp_wk )
 {
   BOOL is_played = DUMMY3DS_SAVEDATA_GetData( cp_wk->p_in_sv, DUMMY3DS_SAVEDATA_PARAM_IS_PLAYED );
   BOOL is_empty = cp_wk->reward_num == 0;
   BOOL is_access  = (cp_wk->out_state == CYGSAVE_STATE_RECEIVE);
+  BOOL is_break  = (cp_wk->out_state == CYGSAVE_STATE_NON || cp_wk->out_state == CYGSAVE_STATE_BREAK);
 
+  //壊れている
+  if( is_break )
+  {
+    return CYGNUS_SAVE_STATUS_BREAK;
+  }
 
   if( !is_empty && is_access )
   {
+    //存在していてアクセス可能
     return CYGNUS_SAVE_STATUS_EXIST;
   }
   else
   {
+    //存在してないか、アクセス不可能
     if( is_played )
     {
+      //一度でもやった
       return CYGNUS_SAVE_STATUS_EMPTY;
     }
     else
     {
+      //やったことない
       return CYGNUS_SAVE_STATUS_NONE;
     }
   }
@@ -1779,7 +1891,9 @@ static u32 CYGNUS_SAVE_GetEffectPoke( const CYGNUS_SAVE_WORK *cp_wk, u32 idx )
 static void CYGNUS_SAVE_StartSave( CYGNUS_SAVE_WORK *p_wk )
 {
   //ワンタイムパスワードを生成
-  GF_ASSERT( p_wk->out_state == CYGSAVE_STATE_RECEIVE );
+  GF_ASSERT( p_wk->out_state == CYGSAVE_STATE_RECEIVE 
+      || p_wk->out_state == CYGSAVE_STATE_NON
+      || p_wk->out_state == CYGSAVE_STATE_BREAK );
   {
     u32 onetime_key = GFUser_GetPublicRand( GFL_STD_RAND_MAX );
     DUMMY3DS_SAVEDATA_SetData( p_wk->p_in_sv, DUMMY3DS_SAVEDATA_PARAM_ONETIME_KEY, onetime_key );
@@ -2879,7 +2993,7 @@ static void Cygnus_Demo_Graphic_Reset( KEY_SYSTEM_WORK *p_wk )
  *	@return TRUE受け取れる  FALSE受け取れない
  */
 //-----------------------------------------------------------------------------
-static BOOL Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg )
+static CYGNUS_RECIVE Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg )
 {
   u32 error;
 
@@ -2889,6 +3003,14 @@ static BOOL Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg )
     p_error_msg = &error;
   }
 
+  //報酬データが壊れていた
+  {
+    if( CYGNUS_SAVE_GetStatus(p_wk->p_cyg_sv) == CYGNUS_SAVE_STATUS_BREAK )
+    {
+      return CYGNUS_RECIVE_BREAK;
+    }
+  }
+
   //SWAN本編のセーブデータ（初期３匹入手済みでないとNG）
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
@@ -2896,23 +3018,23 @@ static BOOL Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg )
     if( !(SaveData_GetExistFlag(p_sv) && EVENTWORK_CheckEventFlag(p_ev, SYS_FLAG_FIRST_POKE_GET )) )
     {
       *p_error_msg  = CYGNUS_06;
-      return FALSE;
+      return CYGNUS_RECIVE_NG;
     }
   }
 
 
   //報酬データがない
   {
-    CYGNUS_SAVE_STATUS status = CYGNUS_SAVE_IsExist( p_wk->p_cyg_sv );
+    CYGNUS_SAVE_STATUS status = CYGNUS_SAVE_GetStatus( p_wk->p_cyg_sv );
     if( status == CYGNUS_SAVE_STATUS_NONE )
     {
       *p_error_msg  = CYGNUS_07;
-      return FALSE;
+      return CYGNUS_RECIVE_NG;
     }
     if( status == CYGNUS_SAVE_STATUS_EMPTY )
     {
       *p_error_msg  = CYGNUS_08;
-      return FALSE;
+      return CYGNUS_RECIVE_NG;
     }
   }
 
@@ -2928,11 +3050,11 @@ static BOOL Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_msg )
     if( !(CYGNUS_BOX_NEED_EMPTY_NUM <= empty_num) )
     {
       *p_error_msg  = CYGNUS_09;
-      return FALSE;
+      return CYGNUS_RECIVE_NG;
     }
   }
 
-  return TRUE;
+  return CYGNUS_RECIVE_OK;
 }
 //----------------------------------------------------------------------------
 /**
