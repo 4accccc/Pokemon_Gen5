@@ -544,6 +544,7 @@ BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs )
 {
+  GF_ASSERT( cp_wk );
   return cp_wk->cp_func->GetData( cp_wk->p_data_adrs, param, p_ret_adrs );
 }
 //----------------------------------------------------------------------------
@@ -557,6 +558,7 @@ u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, 
 //-----------------------------------------------------------------------------
 void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data )
 {
+  GF_ASSERT( p_wk );
   p_wk->cp_func->SetData( p_wk->p_data_adrs, param, data );
 }
 //----------------------------------------------------------------------------
