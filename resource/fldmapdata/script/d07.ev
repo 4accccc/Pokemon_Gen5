@@ -134,7 +134,7 @@ IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 	_OBJ_ANIME_WAIT()
 	
 	//レンブ・主人公：向かい合う
-	_OBJ_ANIME( D07_BIGFOUR3_01, anm_stay_d )
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_dir_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
@@ -159,7 +159,7 @@ ELSE
 	_OBJ_ANIME_WAIT()
 	
 	//レンブ・主人公：向かい合う
-	_OBJ_ANIME( D07_BIGFOUR3_01, anm_stay_d )
+	_OBJ_ANIME( D07_BIGFOUR3_01, anm_dir_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
