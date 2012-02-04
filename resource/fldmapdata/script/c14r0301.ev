@@ -136,6 +136,11 @@ EVENT_START   ev_c14r0301_boy4_01
 
     //どうぐ入手処理：げんきのかけら
     _ITEM_EVENT_KEYWAIT( ITEM_GENKINOKAKERA, 1 )
+    
+    //お坊ちゃま：ポケモンだったら　６ひきまで
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14r0301_boy4_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
 
     //========================================//
     //イベント進行
