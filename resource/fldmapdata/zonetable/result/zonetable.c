@@ -12339,7 +12339,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     FALSE,
-    TRUE,
+    FALSE,
 		MATRIX_ID_DUN1705, // camera_area
 		15,   // padding > placeicon
     3,
