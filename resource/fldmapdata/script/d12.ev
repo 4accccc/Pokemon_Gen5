@@ -54,7 +54,7 @@ INIT_EVENT_START   ev_zone_d12
 IF $WK_SCENE_D12 == 0 THEN
 	
 	//フキヨセシティにいったことがある
-	IF FLAG_ON( SYS_FLAG_ARRIVE_C06 ) THEN
+	IF $WK_SCENE_C06HAKASE >= 1 THEN
 
 		//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
 		_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
@@ -155,8 +155,6 @@ EVENT_START   ev_scene_d12
 	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )	//博士イベントBGM開始
 	
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_hakase2_01 )
-	_TIME_WAIT( 10 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
 	_OBJ_ANIME_WAIT()
 	
 	SWITCH $LOCALWORK10
@@ -169,7 +167,7 @@ EVENT_START   ev_scene_d12
 	ENDSWITCH
 	_MSGWIN_CLOSE()
 
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_r_16f )
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT( 30 )
@@ -186,7 +184,7 @@ EVENT_START   ev_scene_d12
 	//博士退場
 	_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 298, 762, FORCE_TYPE_NOT, 8, DIR_UD )
 	_TIME_WAIT( 20 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 	_OBJ_ANIME_WAIT()
 
 	_END_EVENT_BGM()	//博士イベントBGM終了
@@ -208,7 +206,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_01
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -381,6 +379,10 @@ _ANIME_LABEL	anm_walk_u
 
 _ANIME_LABEL	anm_walk_r
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r_16f
+	_ANIME_DATA	AC_WALK_R_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_walk_l
