@@ -9,6 +9,7 @@
   .include  "r02.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -179,6 +180,11 @@ EVENT_START   ev_r02_pipe_01
         _MSGWIN_CLOSE()
         //アイテム「めざめいし」入手
         _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MEZAMEISI, 1 )
+
+        //お姉さん：なんでしょう
+        _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
 
         //イベント進行（マップチェンジするとメッセージが変わる）
         $LOCALWORK0 = 1
