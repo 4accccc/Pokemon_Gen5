@@ -57,10 +57,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c12r0302_babyboy1_01
 
-  _TALK_OBJ_START()
-
   //最初のポケモン入手後か
   IF FLAG_ON( SYS_FLAG_FIRST_POKE_GET ) THEN
+    _TALK_OBJ_START()
     //男の子：あっ！　そいつって
     _BALLOONWIN_OBJMSG_MF( msg_c12r0302_babyboy1_02, msg_c12r0302_babyboy1_03, C12R0302_BABYBOY1_01, POS_DOWN )
     _LAST_KEYWAIT()
