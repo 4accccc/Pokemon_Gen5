@@ -427,6 +427,7 @@ ELSE
 
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 		ELSE
+			_FLAG_SET(FV_C01GYM0101_SARU_01)
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
 		
