@@ -83,6 +83,11 @@ EVENT_START   ev_d23_badman_01
         _ME_PLAY( SEQ_ME_ITEM )
         _SYSWIN_MSG( msg_d23_badman1_07, POS_DEFAULT )
         _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+        
+        //スキンヘッド：いい　はなし　だったろ？
+        _BALLOONWIN_TALKOBJ_MSG( msg_d23_badman1_05 )
 
        //========================================//
         //タイムフラグをON
