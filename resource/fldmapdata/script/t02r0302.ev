@@ -9,6 +9,7 @@
   .include  "t02r0302.h"  
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -116,7 +117,7 @@ ev_t02r0302_kusa_quiz_call_01:
       
       //女性：ずかんをながめると
       _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
-      _AB_KEYWAIT_MARK()
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
       //========================================//
@@ -172,7 +173,7 @@ ev_t02r0302_honoo_quiz_call_01:
       
       //女性：ずかんをながめると
       _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
-      _AB_KEYWAIT_MARK()
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
       //========================================//
@@ -249,7 +250,7 @@ ev_t02r0302_mizu_quiz_call_01:
       
       //女性：ずかんをながめると
       _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
-      _AB_KEYWAIT_MARK()
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
       //========================================//
