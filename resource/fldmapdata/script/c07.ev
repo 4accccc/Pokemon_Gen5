@@ -269,6 +269,9 @@ EVENT_START		ev_pos_c07_ninja
 		_BALLOONWIN_OBJMSG( msg_c07_ninja1_03 , C07_NINJA_01 )
 		_MSGWIN_CLOSE()
 		
+		_OBJ_ANIME( C07_NINJA_01, anm_walk_l_4f )
+		_OBJ_ANIME_WAIT()
+		
 		//戦闘処理
 		//トレーナー戦呼び出し
 		_TRAINER_BTL_SET( TRID_NINJA_05, 0 )
@@ -279,6 +282,7 @@ EVENT_START		ev_pos_c07_ninja
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 		ELSE
+			_CALL ev_lose_flag
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
 		
@@ -329,7 +333,10 @@ EVENT_START		ev_pos_c07_ninja
 				//たたかうこと！
 				_BALLOONWIN_OBJMSG( msg_c07_ninja2_03 , C07_NINJA_02 )
 				_MSGWIN_CLOSE()
-				
+
+				_OBJ_ANIME( C07_NINJA_02, anm_walk_l_4f )
+				_OBJ_ANIME_WAIT()
+
 				//戦闘処理
 				//トレーナー戦呼び出し
 				_TRAINER_BTL_SET( TRID_NINJA_06, 0 )
@@ -340,6 +347,7 @@ EVENT_START		ev_pos_c07_ninja
 				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 					_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 				ELSE
+					_CALL ev_lose_flag
 					_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 				ENDIF
 		
@@ -387,7 +395,10 @@ EVENT_START		ev_pos_c07_ninja
 						//……！
 						_BALLOONWIN_OBJMSG( msg_c07_ninja3_03 , C07_NINJA_03 )
 						_MSGWIN_CLOSE()
-						
+
+						_OBJ_ANIME( C07_NINJA_03, anm_walk_l_4f )
+						_OBJ_ANIME_WAIT()
+
 						//戦闘処理
 						//トレーナー戦呼び出し
 						_TRAINER_BTL_SET( TRID_NINJA_07, 0 )
@@ -398,6 +409,7 @@ EVENT_START		ev_pos_c07_ninja
 						IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 							_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 						ELSE
+							_CALL ev_lose_flag
 							_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 						ENDIF
 
@@ -555,6 +567,14 @@ ENDSWITCH
 
 _RET
 
+ev_lose_flag:
+
+_FLAG_SET(FV_C07_NINJA_01)
+_FLAG_SET(FV_C07_NINJA_02)
+_FLAG_SET(FV_C07_NINJA_03)
+
+_RET
+
 //--------------------------------------------------------------------
 //	☆共通処理：歩く
 //--------------------------------------------------------------------
@@ -572,6 +592,10 @@ _ANIME_LABEL	anm_walk_r
 
 _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l_4f
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
