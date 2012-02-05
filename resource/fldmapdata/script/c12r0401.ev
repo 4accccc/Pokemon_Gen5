@@ -15,6 +15,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //鳴き声修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -71,7 +72,7 @@ EVENT_END
 /*  ヨーテリー：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c12r0401_poke_01
-  _EASY_TALK_POKEVOICE( MONSNO_546, msg_c12r0401_poke_01 ) 
+  _EASY_TALK_POKEVOICE( MONSNO_590, msg_c12r0401_poke_01 ) 
 EVENT_END
 
 
