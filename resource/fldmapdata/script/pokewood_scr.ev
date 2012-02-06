@@ -755,6 +755,11 @@ EVENT_START ev_reserve_pkwd_entrance_tutorial
   _SE_WAIT()
   //「んー！あいかわらずクール
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_rec_08, C15R0201_PWOWNER_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //「イエス！ボス！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_rec_10, C15R0201_PWSTAFF_02, POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
@@ -786,6 +791,8 @@ _ANIME_LABEL  anm_hachiku_leave
 //  チュートリアル中POSイベント：撮影所外に出さないためのストッパー
 /**************************************************************/
 EVENT_START   ev_pos_pkwd_entrance_tutorial_stopper
+  _OBJ_ANIME( C15R0201_PWSTAFF_02, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C15R0201_PWSTAFF_02, anm_dir_right )
   _OBJ_ANIME_WAIT()
   _PLAYER_NAME( 0 )
@@ -927,3 +934,9 @@ _ANIME_LABEL  anm_dir_right
   _ANIME_DATA AC_STAY_WALK_R_8F, 1
   _ANIME_DATA ACMD_END, 0
 
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

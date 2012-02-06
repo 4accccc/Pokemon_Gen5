@@ -1562,6 +1562,7 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_17, 13 )	//せいそくち・水上釣り到着フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_18, 14 )	//ライモンシティ・ライバルイベント
 		_BMPMENU_MAKE_LIST( msg_debug_01, 17 )	//C12のイベント消化済みにする
+		_BMPMENU_MAKE_LIST( msg_debug_02, 18 )	//C12のイベント消化済みにする
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -1876,6 +1877,27 @@ EVENT_START   ev_debug_suginaka
 
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_C12R0101, 14, 3, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 18 THEN
+
+
+			//チュートリアル開始
+			_FLAG_SET( SYS_FLAG_POKEWOOD_TUTORIAL )
+			_RESERVE_SCRIPT( SCRID_RESERVE_PKWD_ENTRANCE_TUTORIAL )
+			_MAP_CHANGE( ZONE_ID_C15R0201, 14, 21, DIR_UP )
+  
+			//==================================//
+			//C16誘導イベント終了
+			$WK_SCENE_C15_TUTORIAL_01 = 3
+  
+			//C13プラズマ団イベント開始
+			$WK_SCENE_C13 = 4
+			//C13プラズマ団員表示
+			_FLAG_RESET( FV_C13_SWPLAZMA )
+ 
+			//==================================//
 			
 			$SCWK_TEMP0 = 428
 
