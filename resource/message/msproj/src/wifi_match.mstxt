@@ -3848,11 +3848,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかを　かいじょすると
-おなじ　たいかいに　さんか　できません[Ctrl2:PageClear ]
+おなじ　たいかいには[Ctrl2:LineFeed ]
+さんか　できません[Ctrl2:PageClear ]
 かいじょしても　よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3861,11 +3862,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>参加を　解除すると
-同じ　大会に　参加できません[Ctrl2:PageClear ]
+同じ　大会には[Ctrl2:LineFeed ]
+参加できません[Ctrl2:PageClear ]
 解除しても　よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3873,10 +3875,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>WIFI大会</Comment>
+			<Comment>WIFI大会
+
+SWANで文言統一</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:16:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -4941,11 +4945,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかを　かいじょすると
-おなじ　たいかいに　さんか　できません[Ctrl2:PageClear ]
+おなじ　たいかいには[Ctrl2:LineFeed ]
+さんか　できません[Ctrl2:PageClear ]
 かいじょしても　よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4954,11 +4959,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>参加を　解除すると
-同じ　大会に　参加できません[Ctrl2:PageClear ]
+同じ　大会には[Ctrl2:LineFeed ]
+参加できません[Ctrl2:PageClear ]
 解除しても　よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4966,10 +4972,12 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>選手証チェック</Comment>
+			<Comment>選手証チェック
+
+SWANで文言統一</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T14:17:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
