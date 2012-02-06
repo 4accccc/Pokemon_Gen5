@@ -479,7 +479,7 @@ static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk )
     Debug_Resort_SetProxy( p_proxy, p_wk->gdata, p_wk->heapID );
     RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
     if( (RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= RESONANCE_RESORT_SV_PROXY_BUFF_NUM && !is_tutorial)
-      || (RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= 10 && is_tutorial)
+      || (RESORT_PROXY_BUFF_GetCnt( p_proxy_buff ) >= 11 && is_tutorial)
         )
     {
       break;

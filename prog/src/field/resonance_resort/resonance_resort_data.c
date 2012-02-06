@@ -2962,7 +2962,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_PROXY_BUFF) == RESORT_PROXY_BUFF_HEADER_SIZE 
 //-------------------------------------
 ///	private
 //=====================================
-static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk );
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk, BOOL is_check_tutorial );
 static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetSameOwnerData( RESORT_PROXY_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
 
 //-------------------------------------
@@ -3023,7 +3023,19 @@ RESORT_ADD_RESULT RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_P
   }
 
   //空のデータがあったら入れる
-  p_data  = Resort_Proxy_Buff_GetEmptyData( p_wk );
+  {
+    BOOL is_check = FALSE;
+    if( RESORT_CITY_DATA_GetData(sp_city_data, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL ) )
+    {
+      u32 type = RESORT_PROXY_DATA_GetData( cp_proxy, RESORT_DATA_PARAM_TYPE, NULL );
+      if( !(type == RESORT_PROXY_TYPE_TUTORIAL_01 || type == RESORT_PROXY_TYPE_TUTORIAL_02) )
+      {
+        is_check  = TRUE;
+      }
+    }
+    p_data  = Resort_Proxy_Buff_GetEmptyData( p_wk, is_check );
+  }
+
   if( p_data )
   {
     RESORT_PROXY_DATA_AddProxy( p_data, cp_proxy );
@@ -3152,16 +3164,23 @@ RESORT_MERGE_RESULT RESORT_PROXY_BUFF_MergeProxy( RESORT_PROXY_BUFF *p_wk, const
  *	@brief  空のデータを取得
  *
  *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *	@param  is_check_tutorial TRUEだとチュートリアル用バッファを飛ばす
  *
  *	@return あいているデータ  NULLならばあいていない
  */
 //-----------------------------------------------------------------------------
-static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk )
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk, BOOL is_check_tutorial )
 {
   int i;
   for( i = 0; i < p_wk->max; i++ )
   {
     RESORT_PROXY_DATA  *p_data = &p_wk->data[i];
+
+    if( is_check_tutorial && i == 0 )
+    {
+      continue;
+    }
+
     if( RESORT_PROXY_DATA_IsEmpty( p_data ) )
     {
       return p_data;

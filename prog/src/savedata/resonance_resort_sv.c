@@ -275,17 +275,6 @@ static RESORT_SETDATA Resonance_Resort_Sv_SetData_01( RESONANCE_RESORT_SV *p_wk,
   RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_wk );
 
 //DEBUG_TICK_PrintStart;
-  //もしチュートリアル中で、代理人ならば、２こ開けておく
-  if( RESORT_CITY_DATA_GetData(cp_city, RESORT_CITY_DATA_PARAM_IS_TUTORIAL, NULL ) 
-      && type == RESORT_MERGE_TYPE_PROXY 
-      && RESORT_PROXY_BUFF_GetCnt(p_proxy_buff) + 2 >= RESORT_PROXY_BUFF_GetMax(p_proxy_buff) )
-  {
-    return RESORT_SETDATA_NONE;
-  }
-//DEBUG_TICK_PrintEnd;
-
-
-//DEBUG_TICK_PrintStart;
   //不正ならば何もしない
   if( !sc_data_function_tbl[type].IsValid( cp_data_adrs ) )
   {
