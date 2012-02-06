@@ -9,6 +9,7 @@
   .include  "t02r0401.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -63,6 +64,7 @@ EVENT_START   ev_t02r0401_girl4_01
       IF $SCWK_ANSWER == SCR_YES THEN   //はい
         //お嬢様：ウフフ……
         _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_10 )
+        _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
 
         //アニメ：ピアノに向かう
@@ -238,6 +240,7 @@ ev_t02r0401_girl4_piano_01:
 
       //お嬢様：ゴニョニョの　その　なきごえ……▼
       _BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_06 )
+      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アニメ：お嬢様ピアノに向かう
