@@ -58,6 +58,7 @@ extern int BATTLE_EXAMINATION_SAVE_GetWorkSize(void);
 //  プロトタイプ宣言
 //==============================================================================
 static void _OutsideSave_SaveErase(void);
+static void _OutsideSave_SaveErasePermanent(void);
 
 //--------------------------------------------------------------
 //  オーバーレイID
@@ -84,6 +85,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	ctrl->data_exists = FALSE;			//データは存在しない
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
   ctrl->p_dataconv = GFL_HEAP_AllocClearMemory( heap_id, DATA_CONVERT_SAVE_WORK_SIZE );
+  DATA_CONVERT_SAVE_Init( ctrl->p_dataconv );
 
 #if DEBUG_ONLY_FOR_ohno
   {  //各データのサイズを得る
@@ -185,7 +187,11 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     ctrl->outside_permanent_exists = OutsideSave_GetPermanentExistFlag(outsv);
     ctrl->outside_permanent_break = OutsideSave_GetPermanentBreakFlag(outsv);
     p_outside = OutsideSave_GetPermanentPtr(outsv);
-    GFL_STD_MemCopy( OUTSIDE_PERMANENT_GetDataConvert( p_outside ), ctrl->p_dataconv, DATA_CONVERT_SAVE_WORK_SIZE );
+    //セーブがあった場合のみコピー（壊れたデータを参照させないため）
+    if( ctrl->outside_permanent_exists && ctrl->outside_permanent_break == FALSE )
+    {
+      GFL_STD_MemCopy( OUTSIDE_PERMANENT_GetDataConvert( p_outside ), ctrl->p_dataconv, DATA_CONVERT_SAVE_WORK_SIZE );
+    }
 
     OutsideSave_SystemUnload(outsv);
     
@@ -346,6 +352,14 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
     _OutsideSave_SaveErase();
     ctrl->outside_data_exists = FALSE;
     ctrl->outside_data_break = FALSE;
+    return SAVE_RESULT_CONTINUE;
+  }
+
+  if(ctrl->outside_permanent_break == TRUE)
+  {
+    _OutsideSave_SaveErasePermanent();
+    ctrl->outside_permanent_exists = FALSE;
+    ctrl->outside_permanent_break = FALSE;
     return SAVE_RESULT_CONTINUE;
   }
   
@@ -898,7 +912,15 @@ static void _OutsideSave_SaveErase(void)
   GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR, &erase_magic_number, sizeof(u32));
   OS_TPrintf("== outside Erase finish ==\n");
 }
-
+static void _OutsideSave_SaveErasePermanent(void)
+{
+  u32 erase_magic_number = 0;
+  
+  OS_TPrintf("== outside permanent Erase start  ==\n");
+  //マジックナンバーだけを消す
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_PERMANENT, &erase_magic_number, sizeof(u32));
+  OS_TPrintf("== outside permanent Erase finish ==\n");
+}
 
 
 //==============================================================================
