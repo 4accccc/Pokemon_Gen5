@@ -26,5 +26,6 @@
 #define SCRID_R05_MUSICIAN_01 (19)
 #define SCRID_R05_WOMAN1_01 (20)
 #define SCRID_R05_GIRL1_01 (21)
+#define SCRID_RECOVER_R05 (22)
 
 #endif //_R05_DEF_H_

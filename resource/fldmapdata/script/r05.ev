@@ -20,6 +20,7 @@
   //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
   //@author Mizuguchi_Mai（ベル・グッズ入手イベント修正）
   //@author suginaka_katsunori（チャールズなど、ベルイベント修正）
+  //@aithor Mizuguchi_Mai//データコンバートイベント不具合修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -49,6 +50,7 @@ _EVENT_DATA		ev_pos_r05_swbell_01
 _EVENT_DATA		ev_r05_musician_01
 _EVENT_DATA		ev_r05_woman1_01
 _EVENT_DATA		ev_r05_girl1_01
+_EVENT_DATA		ev_recover_r05
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -59,11 +61,21 @@ DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL LCW_VERSION
 DEFINE_LOCAL LWK_BADGE
 
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_r05
+
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_recover
+  
+INIT_EVENT_END
+
 /**************************************************************/
 /*			ゾーンチェンジラベル							  */
 /**************************************************************/
 INIT_EVENT_START	ev_zone_r05
-	
+{
 	DEFINE_LOCAL	LWK_CONV
 
 	//ゲームをクリアしているかチェック
@@ -86,8 +98,54 @@ INIT_EVENT_START	ev_zone_r05
 		ENDIF
 	
 	ENDIF
+}
+	//リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_zone
 
 INIT_EVENT_END
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_zone:
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 THEN
+    //========================================//
+    //チェレン非表示
+    _FLAG_SET(FV_R05_SWLEADER1_01)
+    //========================================//
+  ENDIF
+
+}
+_RET
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_recover:
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 THEN
+    
+    IF FLAG_OFF( FV_R05_SWLEADER1_01 ) THEN
+      _OBJ_DEL( R05_SWLEADER1_01 )
+    ENDIF
+    
+    //========================================//
+    //チェレン非表示
+    _FLAG_SET(FV_R05_SWLEADER1_01)
+    //========================================//
+  ENDIF
+
+}
+_RET
 
 /************************************************************/
 /*							看板							*/

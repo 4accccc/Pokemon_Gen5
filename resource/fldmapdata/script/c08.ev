@@ -99,6 +99,9 @@ INIT_EVENT_START	ev_recover_c08
 
   _CALL ev_exit_change
   
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_recover
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -137,18 +140,6 @@ INIT_EVENT_START   ev_zone_c08
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_08, LOCALWORK15 )
   
-  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
-  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_04 == 0 THEN
-    //========================================//
-    //C08シャガ表示
-    _FLAG_SET( FV_C08_SWLEADER7_01 )
-    //C08R0101シャガ非表示
-    _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
-    //POS有効
-    $WK_SCENE_C08_LINK_EVENT = 0
-    //========================================//
-  ENDIF
-  
   //ゲームクリア状態でリンクイベント起動ならシャガを表示・POSを有効に
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_04 == 0 && FLAG_OFF( FE_C08_LINKEV_ZONE ) THEN
     //========================================//
@@ -173,6 +164,9 @@ INIT_EVENT_START   ev_zone_c08
     //========================================//
   ENDIF
   
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_zone
+  
   //========================================//
   //C08R0101退室フラグを初期化
   _FLAG_RESET( FE_C08_LINKEV_ZONE )
@@ -180,6 +174,60 @@ INIT_EVENT_START   ev_zone_c08
   
   }
 INIT_EVENT_END
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_zone:
+{
+  
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_08, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_04 == 0 THEN
+    
+    //========================================//
+    //C08シャガ表示
+    _FLAG_SET( FV_C08_SWLEADER7_01 )
+    //C08R0101シャガ非表示
+    _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+    //POS有効
+    $WK_SCENE_C08_LINK_EVENT = 0
+    //========================================//
+  ENDIF
+}
+_RET
+
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_recover:
+{
+  
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_08, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_04 == 0 THEN
+    
+    //シャガが表示状態なら削除
+    IF FLAG_OFF( FV_C08_SWLEADER7_01 ) THEN
+      _OBJ_DEL( C08_SWLEADER7_01 )
+    ENDIF
+    
+    //========================================//
+    //C08シャガ表示
+    _FLAG_SET( FV_C08_SWLEADER7_01 )
+    //C08R0101シャガ非表示
+    _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+    //POS有効
+    $WK_SCENE_C08_LINK_EVENT = 0
+    //========================================//
+  ENDIF
+}
+_RET
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/

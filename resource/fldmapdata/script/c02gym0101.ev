@@ -46,6 +46,7 @@ _EVENT_DATA   ev_bg_c02gym0101_plate_07
 _EVENT_DATA   ev_pos_c02gym0101_link_event
 _EVENT_DATA   ev_reserve_c02gym0101_link_event_ret
 _EVENT_DATA   ev_scene_c02gym0101_link_event
+_EVENT_DATA   ev_recover_c02gym0101
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -61,6 +62,17 @@ DEFINE_LOCAL  LCWK_VERSION
 //  LOCALWORK15をリンクイベントで使用。
 //                                                                  //
 //------------------------------------------------------------------//
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c02gym0101
+
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_recover
+  
+INIT_EVENT_END
+
 
 /**************************************************************/
 /*  FIELD_INIT_LABEL                                          */
@@ -99,16 +111,6 @@ INIT_EVENT_START  ev_zone_c02gym0101
 {
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
-  
-  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
-  IF $LOCALWORK15 == 0 &&  $WK_SYS_LINK_EVENT_02 == 0 THEN
-    //========================================//
-    //C02GYM0101アロエを非表示
-    _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
-    //POS・SCENE_CHANGE無効
-     $WK_SCENE_C02_LINK_EVENT = 0
-    //========================================//
-  ENDIF
 
   //リンクイベント起動状態でアロエを表示
   IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_02 == 0 && FLAG_OFF( FE_C02GYM0101_LINKEV_ZONE ) THEN
@@ -130,6 +132,9 @@ INIT_EVENT_START  ev_zone_c02gym0101
     //========================================//
   ENDIF
   
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_zone
+  
   //========================================//
   //C06GYM0201退室フラグを初期化
   _FLAG_RESET( FE_C02GYM0101_LINKEV_ZONE )
@@ -148,6 +153,52 @@ INIT_EVENT_START  ev_zone_c02gym0101
 
 }
 INIT_EVENT_END
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_zone:
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 &&  $WK_SYS_LINK_EVENT_02 == 0 THEN
+    //========================================//
+    //C02GYM0101アロエを非表示
+    _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
+    //POS・SCENE_CHANGE無効
+     $WK_SCENE_C02_LINK_EVENT = 0
+    //========================================//
+  ENDIF
+}
+_RET
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_recover:
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 &&  $WK_SYS_LINK_EVENT_02 == 0 THEN
+    
+    //アロエ表示状態なら非表示に
+    IF FLAG_OFF( FV_C02GYM0101_LEADER2_01 ) THEN
+      _OBJ_DEL( C02GYM0101_LEADER2_01 )
+    ENDIF
+    
+    //========================================//
+    //C02GYM0101アロエを非表示
+    _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
+    //POS・SCENE_CHANGE無効
+     $WK_SCENE_C02_LINK_EVENT = 0
+    //========================================//
+  ENDIF
+}
+_RET
 
 /**************************************************************/
 /*  POS： リンクイベント                              */

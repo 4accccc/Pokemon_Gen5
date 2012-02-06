@@ -10,6 +10,7 @@
 
   //@author fujimura_souichirou
   //@aithor suginaka_katsunori//データコンバートイベント
+  //@aithor Mizuguchi_Mai//データコンバートイベント不具合修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,14 +27,24 @@ _EVENT_DATA   ev_r01_man1_01
 _EVENT_DATA		ev_r01_fishing_01
 _EVENT_DATA		ev_pos_r01_swbell_01
 _EVENT_DATA		ev_zone_r01
+_EVENT_DATA		ev_recover_r01
 _EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_CONV
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_r01
+
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset
+  
+INIT_EVENT_END
 
 /**************************************************************/
 /*			ゾーンチェンジラベル							  */
 /**************************************************************/
 INIT_EVENT_START	ev_zone_r01
-	
-	DEFINE_LOCAL	LWK_CONV
 	
 	//ゲームをクリアしているかチェック
 	_DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LWK_CONV )
@@ -55,7 +66,30 @@ INIT_EVENT_START	ev_zone_r01
 	
 	ENDIF
 
+	//リンクイベントの初期化をコール
+  _CALL ev_link_event_reset
+
 INIT_EVENT_END
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset:
+{
+  
+  //ゲームをクリアしているかチェック
+	_DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 THEN
+    //========================================//
+    //R01 POS無効
+    $WK_SCENE_R01_CONV = 0
+    //========================================//
+  ENDIF
+
+}
+_RET
 
 /**************************************************************/
 /*  看板01                                                    */

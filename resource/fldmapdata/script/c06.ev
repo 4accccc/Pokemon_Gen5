@@ -46,6 +46,7 @@ _EVENT_DATA	ev_c06_workman_01wb
 _EVENT_DATA	ev_c06_backpackerw_01
 _EVENT_DATA	ev_c06_woman1a_01
 _EVENT_DATA	ev_scene_c06_link_event
+_EVENT_DATA	ev_recover_c06
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -60,22 +61,22 @@ DEFINE_LOCAL  LCW_POSZ
 //------------------------------------------------------------------//
 
 /************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c06
+
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_recover
+  
+INIT_EVENT_END
+
+/************************************************************/
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_c06
 {
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
-  
-  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
-  IF $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 THEN
-    //========================================//
-    //C06 SCENE_CHANGE無効
-    $WK_SCENE_C06_LINK_EVENT = 0
-    //C06フウロ非表示
-    _FLAG_SET( FV_C06_SWLEADER6_01 )
-    //========================================//
-  ENDIF
 
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
   IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FE_C06_LINKEV_ZONE ) THEN
@@ -96,6 +97,9 @@ INIT_EVENT_START   ev_zone_c06
     //========================================//
   ENDIF
   
+  //リンクイベントの初期化をコール
+  _CALL ev_link_event_reset_zone
+  
   //========================================//
   //C06GYM0101退室フラグを初期化
   _FLAG_RESET( FE_C06_LINKEV_ZONE )
@@ -103,6 +107,55 @@ INIT_EVENT_START   ev_zone_c06
   
 }
 INIT_EVENT_END
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_zone:
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 THEN
+    //========================================//
+    //C06 SCENE_CHANGE無効
+    $WK_SCENE_C06_LINK_EVENT = 0
+    //C06フウロ非表示
+    _FLAG_SET( FV_C06_SWLEADER6_01 )
+    //========================================//
+  ENDIF
+
+}
+_RET
+
+/************************************************************/
+/*					CALL：リンクイベント初期化						*/
+/************************************************************/
+ev_link_event_reset_recover:
+{
+
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 THEN
+    
+    //フウロが表示状態なら削除
+    IF FLAG_OFF( FV_C06_SWLEADER6_01 ) THEN
+     _OBJ_DEL( C06_SWLEADER6_01 )
+    ENDIF
+  
+    //========================================//
+    //C06 SCENE_CHANGE無効
+    $WK_SCENE_C06_LINK_EVENT = 0
+    //C06フウロ非表示
+    _FLAG_SET( FV_C06_SWLEADER6_01 )
+    //========================================//
+  ENDIF
+
+}
+_RET
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
