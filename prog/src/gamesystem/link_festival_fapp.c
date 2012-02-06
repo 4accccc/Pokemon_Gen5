@@ -185,7 +185,12 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
         exp -= step;
       }
     }while( is_up );
-    
+   
+    if( up_level > FMISSION_SV_HILINK_LEVEL_UP_ONCE_MAX ){
+      //一度にあがるパレスレベルは10まで
+      up_level = FMISSION_SV_HILINK_LEVEL_UP_ONCE_MAX;
+      exp = 0;  //11以上あがる経験値を得ていた時は、繰り越し分は0リセット
+    }
     //パレスレベルを上げる
     pl->hilink_version = wk->m_beacon->version_idx;
     if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
