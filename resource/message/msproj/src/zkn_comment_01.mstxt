@@ -1112,29 +1112,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６ほんの　シッポは　そだつごとに
+			<Text>６ほんの　しっぽは　そだつごとに
 けなみが　よくなり　うつくしくなる。
 だきしめると　ほんのり　あたたかい。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６本の　シッポは　育つごとに
+			<Text>６本の　しっぽは　育つごとに
 毛並みが　よくなり　美しくなる。
 抱きしめると　ほんのり　暖かい。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1142,29 +1142,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>９ほんの　ながい　シッポ　それぞれに
+			<Text>９ほんの　ながい　しっぽ　それぞれに
 じんつうりきが　こめられており
 １０００ねん　いきることが　できる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>９本の　長い　シッポ　それぞれに
+			<Text>９本の　長い　しっぽ　それぞれに
 神通力が　こめられており
 １０００年　生きることが　できる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2852,29 +2852,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおきな　くちで　あけて
+			<Text>おおきな　くちを　あけて
 たくさんの　つちを　のみこみながら
 ながい　トンネルを　つくっていく。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大きな　口で　あけて
+			<Text>大きな　口を　あけて
 たくさんの　土を　飲みこみながら
 長い　トンネルを　つくっていく。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5374,27 +5374,27 @@
 			Language="JPN">
 			<Text>さむくなり　せいでんきが　たまると
 たいもうが　２ばいに　ふくれあがり
-シッポの　さきが　ほんのり　ひかる。</Text>
+しっぽの　さきが　ほんのり　ひかる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>寒くなり　静電気が　たまると
 体毛が　２倍に　ふくれあがり
-シッポの　先が　ほんのり　光る。</Text>
+しっぽの　先が　ほんのり　光る。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T08:54:48" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T08:54:48" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5432,29 +5432,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シッポの　さきは　まぶしく　ひかり
+			<Text>しっぽの　さきは　まぶしく　ひかり
 とおく　はなれた　がいこくまで
 とどき　うみのみちしるべ　となる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シッポの　先は　まぶしく　光り
+			<Text>しっぽの　先は　まぶしく　光り
 遠く　離れた　外国まで
 届き　海の道標　となる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5492,29 +5492,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あぶらが　つまっている　シッポが
+			<Text>あぶらが　つまっている　しっぽが
 うきぶくろの　かわりと　なるので
 ながれの　はやい　かわも　へいき。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>脂が　詰まっている　シッポが
+			<Text>脂が　詰まっている　しっぽが
 浮き袋の　代わりと　なるので
 流れの　速い　川も　平気。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6183,28 +6183,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>くらいばしょに　めいろを　つくる。
-だれかに　みられると　シッポで
+だれかに　みられると　しっぽで
 じめんを　ほって　にげようとする。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>暗い場所に　迷路を　つくる。
-だれかに　みられると　シッポで
+だれかに　みられると　しっぽで
 地面を　掘って　逃げようとする。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6214,27 +6214,27 @@
 			Language="JPN">
 			<Text>ねらった　えものに　はりついて
 おどろきとまどっている　あいだに
-シッポの　トゲを　さしこんでくる。</Text>
+しっぽの　トゲを　さしこんでくる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねらった　獲物に　はりついて
 驚き戸惑っている　あいだに
-シッポの　トゲを　刺しこんでくる。</Text>
+しっぽの　トゲを　刺しこんでくる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T08:54:48" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T08:54:48" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6754,27 +6754,27 @@
 			Language="JPN">
 			<Text>１にちじゅう　エサを　はこぶ。
 やまで　そうなんした　ひとがいると
-エサを　わけあたえ　たすけてる。</Text>
+エサを　わけあたえ　たすけている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１日中　エサを　運ぶ。
 山で　遭難した　人がいると
-エサを　わけあたえ　助けてる。</Text>
+エサを　わけあたえ　助けている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -8943,28 +8943,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>えいようが　つまった　おおきな
-シッポを　ふりまわして　じぶんより
+しっぽを　ふりまわして　じぶんより
 てごわい　あいてにも　たちむかう。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>栄養が　詰まった　大きな
-シッポを　振り回して　自分より
+しっぽを　振り回して　自分より
 手強い　相手にも　たちむかう。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -8985,16 +8985,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いつも　来たを　向いている
+			<Text>いつも　北を　向いている
 磁石の　鼻で　周りの　鉄を
 引き寄せて　守りを　固めるのだ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -9182,29 +9182,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はがねの　ツノで　かたい　がんばんを
-つきくずしながら　しょくりょうの
-てつを　さがして　トンネルを　ほる。</Text>
+			<Text>やまを　まるごと　なわばりに　する。
+キズが　おおい　ボスコドラほど
+たたかっているので　あなどれない。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>鋼の　ツノで　硬い　岩盤を
-突き崩しながら　食料の
-鉄を　探して　トンネルを　掘る。</Text>
+			<Text>山を　まるごと　縄張りに　する。
+キズが　多い　ボスコドラほど
+戦っているので　侮れない。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -12812,29 +12812,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いつも　まるめている　みみを
-いきおいよく　のばすと　おおきな
-いわも　かんたんに　こわせる。</Text>
+			<Text>まるめている　みみを　いきおいよく
+のばして　じめんを　たたくと
+じぶんでも　おどろくほど　はねるぞ。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いつも　丸めている　耳を
-勢いよく　伸ばすと　大きな
-岩も　簡単に　壊せる。</Text>
+			<Text>丸めている　耳を　勢いよく
+伸ばして　地面を　たたくと
+自分でも　驚くほど　跳ねるぞ。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15362,29 +15362,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トゲのついた　シッポを　ふりまわし
+			<Text>トゲのついた　しっぽを　ふりまわし
 たたきつけて　あいてを　こうげき。
 あたまの　はっぱは　とても　にがい。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トゲのついた　シッポを　振り回し
+			<Text>トゲのついた　しっぽを　振り回し
 たたきつけて　相手を　攻撃。
 頭の　はっぱは　とても　苦い。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15422,29 +15422,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうふんすると　あたまや　シッポから
+			<Text>こうふんすると　あたまや　しっぽから
 ひのこが　まいあがって　あつくなる。
 なぜか　あまいものが　だいこうぶつ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>興奮すると　頭や　シッポから
+			<Text>興奮すると　頭や　しっぽから
 火の粉が　舞いあがって　熱くなる。
 なぜか　甘いものが　大好物。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15453,28 +15453,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたまのふさに　ためこんだ　みずは
-えいよう　たっぷり。シッポをつかって
+えいよう　たっぷり。しっぽをつかって
 その　みずを　くさきに　かけている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>頭の房に　ためこんだ　水は
-栄養　たっぷり。シッポを使って
+栄養　たっぷり。しっぽを使って
 その　水を　草木に　かけている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15484,27 +15484,27 @@
 			Language="JPN">
 			<Text>みずが　きれいな　ばしょを　このむ。
 あたまに　ためこんだ　みずがへると
-シッポから　すいあげて　ほきゅう。</Text>
+しっぽから　すいあげて　ほきゅう。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>水が　きれいな　場所を　好む。
 頭に　ためこんだ　水が減ると
-シッポから　吸いあげて　補給。</Text>
+しっぽから　吸いあげて　補給。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15844,27 +15844,27 @@
 			Language="JPN">
 			<Text>コンクリートも　こわせるほどの
 つよい　ちょうおんぱを　だすとき
-シッポが　はげしく　ふるえる。</Text>
+しっぽが　はげしく　ふるえる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コンクリートも　壊せるほどの
 強い　超音波を　だすとき
-シッポが　激しく　震える。</Text>
+しっぽが　激しく　震える。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16292,29 +16292,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたまと　シッポの　しょっかくで
+			<Text>あたまと　しっぽの　しょっかくで
 くうきのゆれを　かんじとり　えものの
 いちや　ようすを　はあくしている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頭と　シッポの　触覚で
+			<Text>頭と　しっぽの　触覚で
 空気の揺れを　感じ取り　獲物の
 位置や　様子を　把握している。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16426,15 +16426,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>つむじかぜと　ともに　現われて
-家の　仲の　家具を　動かしたり
+家の　中の　家具を　動かしたり
 綿を　残す　いたずらをする。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -18453,28 +18453,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こおりの　けっしょうで　できた
-クサリをつかい　えものを　からめとり
+くさりをつかい　えものを　からめとり
 マイナス１００どに　こおらせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>氷の　結晶で　できた
-クサリを使い　獲物を　絡め取り
+鎖を使い　獲物を　絡め取り
 マイナス１００度に　凍らせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -18916,15 +18916,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>大空で　円を描きつつ　飛び
-獲物を　みつけると　遅いかかって
+獲物を　みつけると　襲いかかって
 巣まで　軽々と　運んでいく。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -18932,29 +18932,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シッポから　とりこんだ　くうきを
+			<Text>しっぽから　とりこんだ　くうきを
 ほのおにかえて　ベロのように　つかい
 アイアントを　とかして　たべるぞ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シッポから　取りこんだ　空気を
+			<Text>しっぽから　取りこんだ　空気を
 炎に変えて　ベロのように　使い
 アイアントを　溶かして　食べるぞ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -19185,16 +19185,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説で　語れられる　ポケモン。
+			<Text>伝説で　語られる　ポケモン。
 ポケモンを　守るため　自慢の
 パワーで　城を　壊した。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -19443,28 +19443,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メロエッタの　かなでる　せんりつは
-まわりの　ポケモンを　よこばせたり
+まわりの　ポケモンを　よろこばせたり
 かなしませるほどの　パワーがある。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メロエッタの　奏でる　旋律は
-周りの　ポケモンを　喜ばたり
+周りの　ポケモンを　喜ばせたり
 悲しませるほどの　パワーがある。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-06T11:13:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
