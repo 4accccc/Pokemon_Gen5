@@ -157,11 +157,6 @@ ev_poke6_btl_start:
 
   //ビリジオンを見たことがあるか
   IF FLAG_OFF( FE_R11_POKE6_MEET_01 ) THEN
-    
-    //==================================//
-    //POS無効
-    $WK_SCENE_R11_POKE6 = 1
-    //==================================//
 
     //戦闘開始
     {
@@ -189,6 +184,8 @@ ev_poke6_btl_start:
     _FLAG_SET( FV_R11_POKE6_01 )
     //ビリジオン発見
     _FLAG_SET( FE_R11_POKE6_MEET_01 )
+    //POS無効
+    $WK_SCENE_R11_POKE6 = 1
     //==================================//
     _OBJ_DEL( R11_POKE6_01 )   //ビリジオンを消す
 
