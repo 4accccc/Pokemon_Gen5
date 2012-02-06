@@ -28005,13 +28005,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいったわ　キミ　つよいじゃない▼
+			<Text>まいったわ……
+あなた　つよいじゃない▼
 それだけの　じつりょくが　あれば
 じゅうぶんね▼
 さあ　ゲートを　かいほうするわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:52:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T05:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -28019,13 +28020,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まいったわ　キミ　強いじゃない▼
+			<Text>まいったわ……
+あなた　強いじゃない▼
 それだけの　実力が　あれば
 十分ね▼
 さあ　ゲートを　開放するわ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:54:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T05:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
