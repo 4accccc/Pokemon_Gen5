@@ -34,3 +34,15 @@ trid_list.each do |trid|
   end
 end
 file.close
+
+out_data = String.new
+file = File.open( "multi_set_result.txt", "w" )
+trid_list.each do |trid|
+  if result.has_key( trid ) then 
+    if result.get( trid ).split("\n").size > 1 then
+      file.puts( "#{trid}\r\n" )
+      file.puts( result.get( trid ) )
+    end
+  end
+end 
+file.close
