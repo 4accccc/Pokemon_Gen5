@@ -1304,27 +1304,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ビッグスタジアムに　くるだけで
+			<Text>リトルコートに　くるだけで
 こうふん　しちゃって！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T06:11:04" />
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T06:11:04" />
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ビッグスタジアムに　来るだけで
+			<Text>リトルコートに　来るだけで
 興奮しちゃって！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T06:11:04" />
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T06:11:04" />
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2077,27 +2077,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　テニスと　バスケ！
+			<Text>ベースボールと　フットボール！
 どっちが　すき　なの？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　テニスと　バスケ！
+			<Text>ベースボールと　フットボール！
 どっちが　好きなの？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2115,28 +2115,28 @@
 			<Text>アミ『よく　わからないままに
 しあい　しゅうりょう……！▼
 ユキ『あなたと　ポケモンの
-コンビネーション　すごい！！</Text>
+コンビプレイ　すごい！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アミ『よく　わからないままに
 試合終了……！▼
 ユキ『あなたと　ポケモンの
-コンビネーション　すごい！！</Text>
+コンビプレイ　すごい！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2151,29 +2151,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テニスも　バスケも　だいすき！▼
+			<Text>どの　スポーツも　だいすき！▼
 だって　どの　ポケモンが　すき？
 そんな　しつもん　こたえられないわ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テニスも　バスケも　大好き！▼
+			<Text>どの　スポーツも　大好き！▼
 だって　どのポケモンが　好き？
 そんな質問　答えられないわ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T09:55:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
