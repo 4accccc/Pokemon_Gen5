@@ -1408,8 +1408,16 @@ void LOCAL_TVT_POKELIST_SetActive( LOCAL_TVT_POKELIST *p_wk, BOOL is_active )
   }
   else
   {
-    G2S_SetWnd0Position( 256-16, 0, 256, 16 );
-    G2S_SetWnd1Position( 256-16, 0, 256, 16 );
+    if( GFL_NET_IsInit() )
+    {
+      G2S_SetWnd0Position( 256-16, 0, 256, 16 );
+      G2S_SetWnd1Position( 256-16, 0, 256, 16 );
+    }
+    else
+    {
+      G2S_SetWnd0Position( 0, 0, 0, 0 );
+      G2S_SetWnd1Position( 0, 0, 0, 0 );
+    }
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_OBJ , 8 ); 
   }
 }
