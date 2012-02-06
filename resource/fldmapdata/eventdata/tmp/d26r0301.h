@@ -18,6 +18,7 @@
 #define TR_ELITEW_37W                      3
 #define FLD_ITEM_208                       4
 #define FLD_ITEM_210                       5
+#define TR_ELITEW_40                       6
 
 #endif //ZONE_D26R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d26r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
