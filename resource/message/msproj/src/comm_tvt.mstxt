@@ -1822,10 +1822,10 @@ Ariizumi 100506</Comment>
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]色の　風船を　タッチして
 たくさんの　風船を　キャッチしよう！
-他の色を　割ると　減点だぞ！</Text>
+他の色を　タッチすると　減点だぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-31T10:15:39" />
+				Time="2012-02-06T02:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
