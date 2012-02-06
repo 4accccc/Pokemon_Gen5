@@ -781,11 +781,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>インセクトバッジ　ヲ
+			<Text>ビートルバッジ　ヲ
 チェック　シマシタ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T07:05:06" />
+				Time="2012-02-06T05:49:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -793,11 +793,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>インセクトバッジ　ヲ
+			<Text>ビートルバッジ　ヲ
 チェック　シマシタ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T07:06:46" />
+				Time="2012-02-06T05:49:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
