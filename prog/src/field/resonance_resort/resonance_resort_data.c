@@ -4735,16 +4735,36 @@ void RESORT_RECORD_AddID( u32 record_id )
 #ifdef PM_DEBUG
 #ifdef DEBUG_RECORD_ADDID
   {
-    static const int test[] =
+    static const struct
     {
-      0,0,0,1,
+      u32 id;
+      RTCDate date;
+    }test[] =
+    {
+      {
+        1,
+        {12,2,6,0},
+      },
+      {
+        2,
+        {12,2,6,0},
+      },
+      {
+        3,
+        {12,2,6,0},
+      },
+      {
+        0,
+        {12,2,6,0},
+      }
     };
     for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
     {
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, test[i] );
-      if( test[i] != 0 )
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, test[i].id );
+      if( test[i].id != 0 )
       {
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+        RESORT_DATE test_date = RESORT_DATA_RtcToDate( &test[i].date );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, test_date );
       }
       else
       {
@@ -4768,13 +4788,12 @@ void RESORT_RECORD_AddID( u32 record_id )
     }
   }
   //空きチェック
-  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
   {
-    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00, NULL );
     if( RESORT_RECORD_ID_NONE == record )
     {
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, record_id );
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00, record_id );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00, resort_date );
       goto RESORT_RECORD_ADD_ID_SORT;
     }
   }
