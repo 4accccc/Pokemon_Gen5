@@ -334,6 +334,7 @@
 #define WK_SCENE_D32R0101_FIGHTERM_01    16722 /* 0x4152 海辺の洞穴：POS制御用ワーク */
 #define WK_SCENE_T06_ZUKAN_01            16723 /* 0x4153 サンギタウン：せいそくちリストPOS制御用ワーク */
 #define WK_SCENE_C06_LINK_EVENT          16724 /* 0x4154 フキヨセシティ：リンクイベント制御ワーク */
+#define WK_SCENE_R14R0201_BOY2_01        16725 /* 0x4155 豊穣の社：伝承イベント用SCENE_CHANGE起動ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

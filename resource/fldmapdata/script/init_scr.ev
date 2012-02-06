@@ -397,7 +397,7 @@ init_flags:
   _FLAG_SET( FV_D01R0101_ITEMBALL_01 )
   
   //予備領域・使用するならば用途をコメントで追記
-  _FLAG_SET( FV_OMUSUTAA_01 )
+  //_FLAG_SET( FV_OMUSUTAA_01 ) 豊穣の社伝承イベントで使用
   _FLAG_SET( FV_OMUSUTAA_02 )
   _FLAG_SET( FV_OMUSUTAA_03 )
   _FLAG_SET( FV_OMUSUTAA_04 )

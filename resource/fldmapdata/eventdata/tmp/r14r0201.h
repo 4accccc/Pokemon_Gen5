@@ -22,6 +22,9 @@
 #define TR_TANPAN_28                       9
 #define R14R0201_BACKPACKERW_01           10
 #define R14R0201_OLDMAN_01                11
+#define R14R0201_BOY2_01                  12
+#define R14R0201_BOY1_01                  13
+#define R14R0201_GIRL1_01                 14
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
