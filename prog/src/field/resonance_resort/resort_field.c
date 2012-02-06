@@ -671,6 +671,9 @@ static RESORT_FIELD_BUFF * RESORT_FIELD_BUFF_Init( HEAPID heapID, const RESORT_F
     GAMEBEACON_Set_ResortRecvBuffer( p_wk->p_recep_buff );
   }
 
+  //初回は必ずリクエスト
+  RESORT_FIELD_BUFF_RequestUpdateProxy( p_wk );
+
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -3735,6 +3738,7 @@ static void RESORT_FIELD_PEOPLE_Main( RESORT_FIELD_PEOPLE *p_wk, FIELDMAP_WORK* 
 //-----------------------------------------------------------------------------
 static void RESORT_FIELD_PEOPLE_StartAdd( RESORT_FIELD_PEOPLE *p_wk )
 {
+  RESORT_FIELD_BUFF_RequestUpdateProxy( p_wk->p_buff );
   RESORT_FIELD_BUFF_ChangeCallBack( p_wk->p_buff, Field_People_UpdateDataCallback );
 }
 //----------------------------------------------------------------------------
