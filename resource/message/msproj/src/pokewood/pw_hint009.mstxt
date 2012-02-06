@@ -749,10 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　ねらいを　さだめろ！</Text>
+			<Text>あいてに　ねらいを　さだめろ！
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:16:26" />
+				Time="2012-02-06T08:52:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　ねらいを　定めろ！</Text>
+			<Text>相手に　ねらいを　定めろ！
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:16:27" />
+				Time="2012-02-06T08:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,11 +793,10 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくじつに　わざを　きめろ！
-セリフの　せんたくが　じゅうよう！</Text>
+			<Text>かくじつに　わざを　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T06:10:42" />
+				Time="2012-02-06T08:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -803,11 +804,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>確実に　わざを　決めろ！
-セリフの　選択が　重要！</Text>
+			<Text>確実に　わざを　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T06:10:44" />
+				Time="2012-02-06T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

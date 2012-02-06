@@ -492,14 +492,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『アンタら　　邪魔だよ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アンタら　邪魔だよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:35:28" />
+				Time="2012-02-06T08:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:35:28" />
+				Time="2012-02-06T08:28:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1384,35 +1384,35 @@
 			Language="JPN">
 			<Text>つうしん『よくやった！　[Name:TrainerName Idx="1" ]！
 ただちに　ほんぶへ……▼
-いや……　まて　　[Name:TrainerName Idx="1" ]……▼
+いや……　まて　[Name:TrainerName Idx="1" ]……▼
 だいバンギラスの　からだから
 エネルギーはんのうが　ある……▼
 ヤツは　まだ　たおれていないっ！
 ちゅういしろっ！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T08:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T08:28:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『よくやった！　[Name:TrainerName Idx="1" ]！
 ただちに　本部へ……▼
-いや……　待て　　[Name:TrainerName Idx="1" ]……▼
+いや……　待て　[Name:TrainerName Idx="1" ]……▼
 大バンギラスの　体から
 エネルギー反応が　ある……▼
 ヤツは　まだ　倒れていないっ！
 注意しろっ！　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T08:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T08:28:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

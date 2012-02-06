@@ -776,32 +776,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『きさま……▼
-しばらく　　あわぬ　あいだに
+しばらく　あわぬ　あいだに
 ずいぶん　くちが　わるくなったな……▼
 [Name:PokemonNickname Idx="0" ]キッド……
 きさま　そろそろ　はんこうき　か……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:52:44" />
+				Time="2012-02-06T08:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:52:44" />
+				Time="2012-02-06T08:29:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『貴様……▼
-しばらく　　会わぬ間に
+しばらく　会わぬ間に
 ずいぶん　口が　悪くなったな……▼
 [Name:PokemonNickname Idx="0" ]キッド……
 貴様　そろそろ　反抗期か……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:52:44" />
+				Time="2012-02-06T08:29:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T12:52:44" />
+				Time="2012-02-06T08:29:10" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

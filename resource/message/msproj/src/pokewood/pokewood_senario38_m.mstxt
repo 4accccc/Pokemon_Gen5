@@ -2254,17 +2254,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>声『……　……　……　……
-……？▼
-我が眠りを　　さまたげる者よ
+			<Text>声『……　……　……？▼
+我が眠りを　さまたげる者よ
 なにゆえ　怖い顔を　する？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:50" />
+				Time="2012-02-06T08:29:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:50" />
+				Time="2012-02-06T08:29:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

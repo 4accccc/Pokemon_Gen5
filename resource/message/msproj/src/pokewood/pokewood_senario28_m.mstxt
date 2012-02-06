@@ -2360,7 +2360,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『当たり前でしょ！▼
-私は　　[Name:TrainerName Idx="1" ]に
+私は　[Name:TrainerName Idx="1" ]に
 可愛いね　って　ホメて　欲しくて▽
 アレ　着るまで　ダイエットも　したり▽
 すっごく　頑張ったんだよ……▼
@@ -2368,11 +2368,11 @@
 くやしいし　さびしかったんだもん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:40:40" />
+				Time="2012-02-06T08:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-26T13:40:40" />
+				Time="2012-02-06T08:28:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

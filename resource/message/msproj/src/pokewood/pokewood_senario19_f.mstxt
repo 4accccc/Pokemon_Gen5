@@ -663,16 +663,16 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『その　ドーブル……
 元気も　あって　ステキです……▼
-それに　とても　　強そうだし……
+それに　とても　強そうだし……
 大事に　育ててるんですね……
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-06T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-06T08:28:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -700,14 +700,14 @@
 あなたの　[Name:PokemonNickname Idx="0" ]
 なかなか　ステキじゃないか▼
 （ヘヘヘ！　ステキだって！！
-その言葉　ボクに　言ってよーっ！</Text>
+その言葉　ボクに　いってよーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T08:54:37" />
+				Time="2012-02-06T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T08:54:37" />
+				Time="2012-02-06T08:28:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2465,14 +2465,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『えっと……
-とても　言いにくんですけど……</Text>
+とても　いいにくんですけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T07:18:14" />
+				Time="2012-02-06T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T07:18:14" />
+				Time="2012-02-06T08:28:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2677,17 +2677,17 @@
 ああ……　何でドーブルなんだ……
 ボクは　キミに　胸キュンなのに……▽
 そのセリフは　ボクに　向けて▽
-言ってくれたら　いいのに……▼
+いってくれたら　いいのに……▼
 でも　今は　ガマンするか……▼
 ドーブルを　交換したら
 もっと　彼女と　仲良くなれるかも……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:12:47" />
+				Time="2012-02-06T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:12:47" />
+				Time="2012-02-06T08:28:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3221,15 +3221,15 @@
 			<Text>ミゲル『も　問題ないっ！▼
 さあさあ　勝負を　続けようっ！▼
 （あー　ヤベえ！　ヤベえ！
-絶対　本人には　言えないこと▽
+絶対　本人には　いえないこと▽
 ばかり　想像　しちゃったぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:11" />
+				Time="2012-02-06T08:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:11:11" />
+				Time="2012-02-06T08:28:24" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

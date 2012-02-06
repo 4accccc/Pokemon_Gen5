@@ -445,7 +445,7 @@
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アンタら　じゃまだよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アンタら　　邪魔だよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アンタら　邪魔だよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！
@@ -622,14 +622,14 @@
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">つうしん『よくやった！　[1:00:トレーナー名:1]！
 ただちに　ほんぶへ……▼
-いや……　まて　　[1:00:トレーナー名:1]……▼
+いや……　まて　[1:00:トレーナー名:1]……▼
 だいバンギラスの　からだから
 エネルギーはんのうが　ある……▼
 ヤツは　まだ　たおれていないっ！
 ちゅういしろっ！　[1:00:トレーナー名:1]！</language>
 		<language name="JPN_KANJI" width="256">通信『よくやった！　[1:00:トレーナー名:1]！
 ただちに　本部へ……▼
-いや……　待て　　[1:00:トレーナー名:1]……▼
+いや……　待て　[1:00:トレーナー名:1]……▼
 大バンギラスの　体から
 エネルギー反応が　ある……▼
 ヤツは　まだ　倒れていないっ！

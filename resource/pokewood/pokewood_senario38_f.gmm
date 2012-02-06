@@ -898,9 +898,8 @@
 		<language name="JPN" width="256">こえ『……　……　……　……？▼
 わがねむりを　さまたげるものよ
 なにゆえ　こわいかおを　する？</language>
-		<language name="JPN_KANJI" width="256">声『……　……　……　……
-……？▼
-我が眠りを　　さまたげる者よ
+		<language name="JPN_KANJI" width="256">声『……　……　……？▼
+我が眠りを　さまたげる者よ
 なにゆえ　怖い顔を　する？</language>
 	</row>
 	<row id="pw_event8_hero_1">

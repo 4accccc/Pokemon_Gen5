@@ -827,11 +827,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフのせんたくが　じゅうよう！
-あいてを　いれかえろ！</Text>
+			<Text>あいてを　いれかえろ！
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T09:26:59" />
+				Time="2012-02-06T08:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -839,11 +839,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの選択が　重要！
-相手を　入れ替えろ！</Text>
+			<Text>相手を　入れ替えろ！
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T09:27:12" />
+				Time="2012-02-06T08:56:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -1122,7 +1122,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レディアン『ハッ！
-そんなこと　　不可能……▼
+そんなこと　不可能……▼
 不可能に…………▼
 ……いや　でも　むしポケモンに
 つくることの　できなかった▽
@@ -1135,11 +1135,11 @@
 発熱　してる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:44" />
+				Time="2012-02-06T08:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:44" />
+				Time="2012-02-06T08:28:16" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

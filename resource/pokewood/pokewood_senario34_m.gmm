@@ -600,9 +600,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『大丈夫！？</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">Ｆー００『……　　……▼
+		<language name="JPN" width="256">Ｆー００『……　……ピッ▼
 ……　……ピゴググゴッ！！</language>
-		<language name="JPN_KANJI" width="256">Ｆー００『……　　……▼
+		<language name="JPN_KANJI" width="256">Ｆー００『……　……ピッ▼
 ……　……ピゴググゴッ！！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">

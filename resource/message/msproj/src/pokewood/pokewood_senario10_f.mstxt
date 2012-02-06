@@ -709,32 +709,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしん『りょうかいだ▼
-しかしな……　　[Name:TrainerName Idx="1" ]……
+しかしな……　[Name:TrainerName Idx="1" ]……
 Ｅと　なのる　あのおんな……▼
 ほんとうに　しんよう　しても
 だいじょうぶなのか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:52" />
+				Time="2012-02-06T08:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:52" />
+				Time="2012-02-06T08:28:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『了解だ▼
-しかしな……　　[Name:TrainerName Idx="1" ]……
+しかしな……　[Name:TrainerName Idx="1" ]……
 Ｅと　名乗る　あの女……▼
 本当に　信用　しても
 大丈夫なのか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:52" />
+				Time="2012-02-06T08:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:24:52" />
+				Time="2012-02-06T08:28:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
