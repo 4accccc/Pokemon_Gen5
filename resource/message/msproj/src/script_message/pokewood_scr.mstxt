@@ -207,17 +207,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワオ！　いま　こうかいちゅうの
-さくひんで　スクリーンが▽
-いっぱい　だぜ！▼
-あたらしい　さくひんを　とるには
-いま　こうかいしてる　なかから▽
-いっぽん　こうかいを▽
-しゅうりょう　しなきゃ▽
+			<Text>ワオ！　スクリーンが　いっぱいだぜ！▼
+しんさくを　こうかい　するには
+ふるい　さくひんから　いっぽん▽
+こうかいを　しゅうりょう　しなきゃ▽
 ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:31:59" />
+				Time="2012-02-06T10:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -225,16 +222,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＡＯ！　いま　公開中の
-作品で　シアターの▽
-スクリーンは　いっぱい　だぜ！▼
-新作を　撮るには
-今　公開してる　中から▽
-一本　公開を　終了しなきゃ▽
+			<Text>ＷＡＯ！　スクリーンが　いっぱいだ！▼
+新作を　公開　するには
+古い　作品から　一本▽
+公開を　終了　しなきゃ▽
 ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-13T11:56:23" />
+				Time="2012-02-06T10:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -733,11 +728,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんとに　さつえい　した　さくひんを
+			<Text>ほんとうに　さつえいした　さくひんを
 こうかい　しなくても　かまわないか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T08:20:13" />
+				Time="2012-02-06T10:12:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1601,10 +1596,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>これにて　クランクアップです！
-みなさん　ごくろうでしたね！▼</Text>
+みなさん！　ごくろうでしたね！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T09:32:57" />
+				Time="2012-02-06T09:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1613,10 +1608,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これにて　クランクアップです！
-みなさん　ご苦労でしたね！▼</Text>
+みなさん！　ご苦労でしたね！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T09:33:01" />
+				Time="2012-02-06T09:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2259,11 +2254,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　め……
+			<Text>その　目……
 共演が　楽しみだな……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:23:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T10:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2293,11 +2288,12 @@
 あいかわらず　クールねー！▼
 じゃあさ　そういう　わけ　だから！▼
 そこの　スタッフに　はなしかければ
-さつえいに　チャレンジできるしさ！▽
-ドーンと　いってみよー！</Text>
+さつえいに　チャレンジできるしさ！▼
+しっぱい　したって　だいじょうぶ！
+まずは　ドーンと　いってみよー！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:21:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T10:38:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2309,11 +2305,12 @@
 相変わらず　クールねー！▼
 じゃあさ　そういう　わけ　だから！▼
 そこの　スタッフに　話しかければ
-撮影に　チャレンジできるしさ！▽
-ドーンと　いってみよー！</Text>
+撮影に　チャレンジできるしさ！▼
+失敗　したって　大丈夫！
+まずは　ドーンと　いってみよー！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:21:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-06T10:39:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2382,13 +2379,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おねがいします！　[Name:TrainerName Idx="0" ]さん！
-まずは　さつえいに　チャレンジです！▼
-シアターで　こうかい　するための
-えいが　さくひんを　とってください！</Text>
+			<Text>さあさあ！　[Name:TrainerName Idx="0" ]さん！
+よろしく　おねがい　いたします！▼
+シアターで　こうかいする　さくひんが
+とれるまで　がんばってください！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T03:49:10" />
+				Time="2012-02-06T10:43:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2396,13 +2393,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お願いします！　[Name:TrainerName Idx="0" ]さん！
-まずは　撮影に　チャレンジです！▼
-シアターで　公開　するための
-映画作品を　撮ってください！</Text>
+			<Text>さあさあ！　[Name:TrainerName Idx="0" ]さん！
+よろしく　お願い　いたします！▼
+シアターで　公開する　作品が
+撮れるまで　がんばってください！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-11T03:49:19" />
+				Time="2012-02-06T10:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
