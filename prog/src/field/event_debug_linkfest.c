@@ -564,11 +564,11 @@ static const  D_LOG_PRM_SET DATA_EventMissionExParamSet[FMISSION_EVID_MAX] = {
 static const  D_LOG_PRM_SET DATA_NpcMissionExParamSet[FMISSION_NPC_TYPE_MAX] = {
  { -1, -1, BPRM_WSET_NONE },  //TYPE_LOST_CHILDREN
  { -1, -1, BPRM_WSET_NONE },  //TYPE_PRESENT_ITEM
- {  0, FMISSION_EXP_ITEM_TRADE_SET_MAX, BPRM_WSET_MEX_NPC_ITEM_TRADE },  //TYPE_ITEM_TRADE
+ {  0, FMISSION_EXP_ITEM_TRADE_SET_MAX-1, BPRM_WSET_MEX_NPC_ITEM_TRADE },  //TYPE_ITEM_TRADE
  {  0, FMISSION_EXP_SHOPPING_SET_MAX-1, BPRM_WSET_MEX_NPC_SHOPPING },  //TYPE_SHOPPING
  { -1, -1, BPRM_WSET_NONE },  //TYPE_RPS
  { -1, -1, BPRM_WSET_NONE },  //TYPE_MEMORY_QUIZ
- {  0, FMISSION_EXP_TRAINER_SET_MAX, BPRM_WSET_MEX_NPC_TR_BATTLE },  //TYPE_TR_BATTLE
+ {  0, FMISSION_EXP_TRAINER_SET_MAX-1, BPRM_WSET_MEX_NPC_TR_BATTLE },  //TYPE_TR_BATTLE
  {  0, FMISSION_EXP_GET_A_PRESENT_SET_MAX-1, BPRM_WSET_MEX_NPC_GET_A_PRESENT },  //TYPE_GET_A_PRESENT
  {  0, FMISSION_EXP_POKE_QUIZ_MAX-1, BPRM_WSET_MEX_NPC_POKE_QUIZ },  //TYPE_POKE_QUIZ
 };
@@ -576,10 +576,10 @@ static const  D_LOG_PRM_SET DATA_NpcMissionExParamSet[FMISSION_NPC_TYPE_MAX] = {
 //ミッションリクエスト ベースパラメータ
 static const D_MISSION_PRM_SET DATA_MissionBaseParam[MBASE_PSET_MAX] = {
  { 0, MONSNO_END, NULL }, //MBASE_PSET_MONSNO,      //ポケモン種族名
- { 0, 3, NULL  },          //MBASE_PSET_MUSHROOM,    //キノコポケモン種族名
- { 0, FMISSION_EVID_MAX, DATA_EventMissionExParamSet  }, //BPRM_MBASE_PSET_EVENT,       //イベントミッションタイプ
- { 0, FMISSION_ITEM_SET_MAX, NULL }, //MBASE_PSET_ITEM,        //アイテムミッション アイテムセット名
- { 0, FMISSION_NPC_TYPE_MAX, DATA_NpcMissionExParamSet },  //MBASE_PSET_NPC,         //NPCミッションパターン
+ { 0, 2, NULL  },          //MBASE_PSET_MUSHROOM,    //キノコポケモン種族名
+ { 0, FMISSION_EVID_END, DATA_EventMissionExParamSet  }, //BPRM_MBASE_PSET_EVENT,       //イベントミッションタイプ
+ { 0, FMISSION_ITEM_SET_MAX-1, NULL }, //MBASE_PSET_ITEM,        //アイテムミッション アイテムセット名
+ { 0, FMISSION_NPC_TYPE_END, DATA_NpcMissionExParamSet },  //MBASE_PSET_NPC,         //NPCミッションパターン
 };
 
 ////////////////////////////////////////////////
@@ -2336,7 +2336,7 @@ static void mreq_Decide( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk,  GMEVENT
     break;
   case MREQ_LINE_BASE_PARAM:
     GMEVENT_CallEvent( event, event_CreateEventNumInputRetWorkEx( wk, 0, 
-      evwk->m_prm_set->min , evwk->m_prm_set->max-1,
+      evwk->m_prm_set->min , evwk->m_prm_set->max,
       &evwk->m_base_param, &evwk->update_f, BPRM_WSET_MBASE_EFF_ENC+evwk->m_type ));
     break;
   case MREQ_LINE_EX_PARAM:
