@@ -985,10 +985,20 @@ static BOOL MDLREC_CHECK_BsubwayDoubleRenshou( MEDALREC_DATA* p_recdata, GAMEDAT
 // バトルサブウェイマルチ連勝
 static BOOL MDLREC_CHECK_BsubwayMultiRenshou( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
 {
-  u32 renshou_cnt;
+  u32 renshou_cnt,comm_renshou_cnt;
   BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( p_gamedata );
   renshou_cnt = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_MULTI );
-  return cmp_target( renshou_cnt , target_cnt );
+  comm_renshou_cnt = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_COMM_MULTI );
+
+  // 値の大きい方と比較
+  if( renshou_cnt > comm_renshou_cnt )
+  {
+    return cmp_target( renshou_cnt , target_cnt );
+  }
+  else
+  {
+    return cmp_target( comm_renshou_cnt , target_cnt );
+  }
 }
 // 友達コード登録数
 static BOOL MDLREC_CHECK_FriendCodeCnt( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
@@ -1288,18 +1298,12 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
     SYS_FLAG_ARRIVE_C01,
     SYS_FLAG_ARRIVE_T02,
     SYS_FLAG_ARRIVE_T01,
+    SYS_FLAG_ARRIVE_C10,
   };
   EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
   s32 check_cnt = EventFlagCheck( flag_tbl ,p_event_wk ,NELEMS(flag_tbl));
-  u32 target_cnt_tbl = NELEMS(flag_tbl) + 1;  // WF or BC
+  u32 target_cnt_tbl = NELEMS(flag_tbl);
   GF_ASSERT((target_cnt_tbl==target_cnt) || ( target_cnt == 0 ) );
-
-  // WF or BC はどちらかチェック
-  if( EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D31R0201 ) || 
-      EVENTWORK_CheckEventFlag( p_event_wk ,SYS_FLAG_ARRIVE_D31R0101 ))
-  {
-    check_cnt++;
-  }
 
   ONOUE_Printf("全到達チェック数:%d/%u\n",check_cnt,target_cnt_tbl);
   return cmp_target( check_cnt , target_cnt_tbl );
