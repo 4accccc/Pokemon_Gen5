@@ -216,7 +216,8 @@ EVENT_START	ev_pos_r22_poke5_01
 	$WK_SCENE_W21_01 = 1
 	//POS無効
 	$WK_SCENE_R22_POKE5 = 2
-	
+	//ローカルライブキャスター・ライバル通話状態を変更（W21まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_W21_0 )
 	//========================================//
 
 EVENT_END
