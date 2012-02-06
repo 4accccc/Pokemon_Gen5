@@ -23,6 +23,7 @@ typedef enum{
 
 #define FMISSION_SV_HILINK_LEVEL_EXP_MAX  (1000)  //経験値max値
 #define FMISSION_SV_HILINK_LEVEL_EXP_STEP (100)   //経験値いくつごとにレベルアップさせるかの閾値
+#define FMISSION_SV_HILINK_LEVEL_UP_ONCE_MAX  (10)  //一度のミッションで上がるレベル上限値
 
 //---------------------------------------------------------------------------
 /**
