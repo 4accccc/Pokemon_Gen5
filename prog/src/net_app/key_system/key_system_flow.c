@@ -721,11 +721,6 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       p_wk->is_parent = GFL_NET_IsParentMachine();
       (*p_seq)  = SEQ_NET_SEND_NAME_START;
     }
-    else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
-    {
-      OS_TPrintf( "タイムアウトして戻ってきたから再スタートするよ\n" );
-      (*p_seq)  = SEQ_NET_START;
-    }
     else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_CANCEL )
     {
       OS_TPrintf( "キャンセルしたよ\n" );

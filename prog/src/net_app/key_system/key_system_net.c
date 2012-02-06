@@ -64,6 +64,7 @@ typedef enum
 {
   KEYSYS_NET_ERROR_NONE,
   KEYSYS_NET_ERROR_USERCODE,
+  KEYSYS_NET_ERROR_TIMEOUT,
 } KEYSYS_NET_ERROR;
 
 
@@ -476,6 +477,13 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
   case KEYSYS_NET_TYPE_MULTIBOOT:
+    if( p_wk->error != KEYSYS_NET_ERROR_NONE )
+    {
+      NetErr_App_ReqErrorDispForce( dwc_error_0015 );
+      NetErr_DispCallPushPop();
+      return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
+    }
+
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
     {
       NetErr_DispCallPushPop();
@@ -487,6 +495,7 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
     if( p_wk->error != KEYSYS_NET_ERROR_NONE )
     {
       NetErr_App_ReqErrorDispForce( p_wk->error_msg );
+      NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
     }
 
@@ -643,14 +652,15 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     }
     if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
     {
-      GFL_NET_Exit(NULL);
+      p_wk->timeout_cnt = 0;
       *p_seq  = SEQ_NET_TIMEOUT_END_WAIT;
+      p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
     }
     //KeySys_NetCallback_ConnectIrcWireless‚Ì’†‚ÅŽŸ‚É‚·‚·‚ß‚é
     break;
 
   case SEQ_CONNECT_START:
-
+    p_wk->timeout_cnt = 0;
     GFL_NET_AddCommandTable(GFL_NET_CMD_KEY_SYSTEM, sc_irc_wireless_packet_tbl, NELEMS(sc_irc_wireless_packet_tbl), p_wk);
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),NET_TIMING_NO_IW_CONNECT, WB_NET_KEY_SYSTEM);
 
@@ -660,6 +670,14 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     break;
 
   case SEQ_CONNECT_WAIT:
+    if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
+    {
+      p_wk->timeout_cnt = 0;
+      p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
+      GFL_NET_DelCommandTable(GFL_NET_CMD_KEY_SYSTEM);
+      *p_seq  = SEQ_NET_TIMEOUT_END_WAIT;
+      return;
+    }
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),NET_TIMING_NO_IW_CONNECT,WB_NET_KEY_SYSTEM))
     {
       (*p_seq)++;
@@ -670,7 +688,6 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_WaitIrcWireless );
     break;
   case SEQ_NET_TIMEOUT_END_WAIT:
-    if( GFL_NET_IsExit() )
     {
       KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
     }
