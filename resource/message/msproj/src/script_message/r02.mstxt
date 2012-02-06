@@ -739,14 +739,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かんばんの　うらに
-なにか　らくがきが　ある……▼
+らくがきが　ある……▼
 じんかん
 いたるところ　せいざん　あり▼
 おなじく　
 いたるところに　メダルも　あり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T05:43:58" />
+				Time="2012-02-06T06:49:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -754,13 +754,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんばんの　うらに
-なにか　らくがきが　ある……▼
+			<Text>看板の　裏に
+落書きが　ある……▼
 人間　到る処　青山あり▼
 同じく　到る処に　メダルもあり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T05:44:32" />
+				Time="2012-02-06T06:49:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
