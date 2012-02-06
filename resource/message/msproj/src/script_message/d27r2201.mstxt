@@ -672,11 +672,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>けいこく！　けいこく！
-かんないに　　シンニュウシャ　あり！▽
+かんないに　シンニュウシャ　あり！▽
 かくいん　たいおう　してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T06:11:17" />
+				Time="2012-02-06T08:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -685,11 +685,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>警告！　警告！
-艦内に　　侵入者　あり！▽
+艦内に　侵入者　あり！▽
 各員　対応してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T06:11:17" />
+				Time="2012-02-06T08:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

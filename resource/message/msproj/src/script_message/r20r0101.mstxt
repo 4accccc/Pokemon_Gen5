@@ -76,7 +76,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つれている　ポケモンは　１ぴき！
-[Name:PokemonName ]が　　とても　すきなのね▼
+[Name:PokemonName ]が　とても　すきなのね▼
 でも　だいじょうぶ？
 [Name:PokemonName ]が　にがてな▽
 タイプが　でてきたら　くろうするわよ▼
@@ -84,7 +84,7 @@
 なかまを　ふやしたら　どうかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-06T07:28:12" />
+				Time="2012-02-06T08:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -93,7 +93,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>連れている　ポケモンは　１匹！
-[Name:PokemonName ]が　　とても　好きなのね▼
+[Name:PokemonName ]が　とても　好きなのね▼
 でも　大丈夫？
 [Name:PokemonName ]が　苦手な▽
 タイプが　でてきたら　苦労するわよ▼
@@ -101,7 +101,7 @@
 仲間を　増やしたら　どうかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T02:36:22" />
+				Time="2012-02-06T08:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
