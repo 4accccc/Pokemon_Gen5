@@ -80,6 +80,19 @@ INIT_EVENT_START ev_zone_pokecen
     $LOCALWORK15 = 0
     //========================================//
   ENDIF
+  
+  //リンクイベント初期化
+  IF $LOCALWORK15 == 0 THEN
+    
+    _DEBUG_PRINT_WK( 40 )
+    
+    //========================================//
+    //BREEDERM表示
+    _FLAG_SET( FV_PC_OMOIDELINK )
+    $LOCALWORK15 = 0
+    //========================================//
+  ENDIF
+  
   }
 INIT_EVENT_END
 
@@ -95,6 +108,94 @@ INIT_EVENT_END
 /*            特殊スクリプト：マップ構築タイミング（毎回）  　*/
 /**************************************************************/
 INIT_EVENT_START  ev_recover_pokecen
+{
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  //リンクイベント初期化
+  IF $LOCALWORK15 == 0 THEN
+    
+    _DEBUG_PRINT_WK( 30 )
+    
+    //現在のゾーンIDを格納
+    _GET_ZONE_ID( LOCALWORK12 )
+  
+    IF FLAG_OFF( FV_PC_OMOIDELINK ) THEN
+    
+      SWITCH  $LOCALWORK12
+      CASE 8 THEN
+        //C01
+        _OBJ_DEL( C01PC0101_BREEDERM_01 )
+      CASE 20 THEN
+        //C02
+        _OBJ_DEL( C02PC0101_BREEDERM_01 )
+      CASE 41 THEN
+        //C03
+        _OBJ_DEL( C03PC0101_BREEDERM_01 )
+      CASE 65 THEN
+        //C04
+        _OBJ_DEL( C04PC0101_BREEDERM_01 )
+      CASE 99 THEN
+        //C05
+        _OBJ_DEL( C05PC0101_BREEDERM_01 )
+      CASE 109 THEN
+        //C06
+        _OBJ_DEL( C06PC0101_BREEDERM_01 )
+      CASE 115 THEN
+        //C07
+        _OBJ_DEL( C07PC0101_BREEDERM_01 )
+      CASE 122 THEN
+        //C08
+        _OBJ_DEL( C08PC0101_BREEDERM_01 )
+      CASE 146 THEN
+        //C09
+        _OBJ_DEL( C09R0701_BREEDERM_01 )
+      CASE 1 THEN
+        //BC10
+        _OBJ_DEL( BC10PC0101_BREEDERM_01 )
+      CASE 425 THEN
+        //WC10
+        _OBJ_DEL( WC10PC0101_BREEDERM_01 )
+      CASE 435 THEN
+        //C12
+        _OBJ_DEL( C12PC0101_BREEDERM_01 )
+      CASE 454 THEN
+        //C13
+        _OBJ_DEL( C13PC0101_BREEDERM_01 )
+      CASE 472 THEN
+        //C14
+        _OBJ_DEL( C14PC0101_BREEDERM_01 )
+      CASE 398 THEN
+        //T02
+        _OBJ_DEL( T02PC0101_BREEDERM_01 )
+      CASE 407 THEN
+        //T03
+        _OBJ_DEL( T03PC0101_BREEDERM_01 )
+      CASE 413 THEN
+        //T04
+        _OBJ_DEL( T04PC0101_BREEDERM_01 )
+      CASE 443 THEN
+        //T06
+        _OBJ_DEL( T06PC0101_BREEDERM_01 )
+      CASE 460 THEN
+        //T07
+        _OBJ_DEL( T07PC0101_BREEDERM_01 )
+      CASE 602 THEN
+        //D26
+        _OBJ_DEL( D26PC0101_BREEDERM_01 )
+      ENDSWITCH
+    
+    ENDIF
+    
+    //========================================//
+    //BREEDERM表示
+    _FLAG_SET( FV_PC_OMOIDELINK )
+    $LOCALWORK15 = 0
+    $LOCALWORK12 = 0
+    //========================================//
+  ENDIF
+  
+}
 INIT_EVENT_END
 
 
