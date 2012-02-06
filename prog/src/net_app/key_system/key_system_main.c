@@ -964,6 +964,7 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
   CLSYS_DRAW_TYPE draw_type;
   BOOL is_auto_anm = TRUE;
   BOOL is_draw_enable = TRUE;
+  CLSYS_AFFINETYPE affine = CLSYS_AFFINETYPE_DOUBLE;
 
   GF_ASSERT( p_wk->p_clwk[ id ] == NULL );
 
@@ -994,6 +995,7 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
     clwk_data.anmseq  = 2;
     clwk_data.softpri = 0;
     clwk_data.bgpri   = 1;
+    affine = CLSYS_AFFINETYPE_NORMAL;
     break;
 
   case KEYSYS_CLWK_DS_U:
@@ -1003,6 +1005,7 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
     clwk_data.anmseq  = 3;
     clwk_data.softpri = 0;
     clwk_data.bgpri   = 1;
+    affine = CLSYS_AFFINETYPE_NORMAL;
     break;
 
   case KEYSYS_CLWK_LOCK_00:
@@ -1115,7 +1118,7 @@ GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID hea
 
   GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[ id ], is_auto_anm );
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ id ], is_draw_enable );
-  GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[ id ], CLSYS_AFFINETYPE_DOUBLE );
+  GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[ id ], affine );
 
   return p_wk->p_clwk[ id ];
 }
