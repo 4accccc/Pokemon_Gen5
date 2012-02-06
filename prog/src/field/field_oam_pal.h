@@ -36,5 +36,7 @@ typedef enum{
 
 	//おしゃべり
 	FLDOAM_PALNO_FREE_OSYABERI_POKE = FLDOAM_PALNO_FREE_START,		///<ポケモンＯＢＪ
+  //フィールドポケモングラフィックウィンドウ表示
+  FLDOAM_PALNO_FREE_SCRCMD_POKEWIN = FLDOAM_PALNO_FREE_START,
 
 }FLDOAM_PALNO;

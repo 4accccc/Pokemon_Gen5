@@ -24,6 +24,7 @@
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
+#include "field_oam_pal.h"
 
 #include "event_fieldmap_control.h"
 
@@ -152,7 +153,7 @@ static void InitPokeObj( POKE_WIN_WORK * wk,
 	wk->ChrRes = POKE2DGRA_OBJ_CGR_Register(
       ah, inMonsNo, inFormNo, inSex, inRare, POKEGRA_DIR_FRONT, FALSE, inRnd, CLSYS_DRAW_MAIN, heapID);
 	wk->PalRes = POKE2DGRA_OBJ_PLTT_Register(
-      ah, inMonsNo, inFormNo, inSex, inRare, POKEGRA_DIR_FRONT, FALSE, CLSYS_DRAW_MAIN, 0, heapID);
+      ah, inMonsNo, inFormNo, inSex, inRare, POKEGRA_DIR_FRONT, FALSE, CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_SCRCMD_POKEWIN*0x20, heapID);
 
   GFL_ARC_CloseDataHandle( ah );
 	
