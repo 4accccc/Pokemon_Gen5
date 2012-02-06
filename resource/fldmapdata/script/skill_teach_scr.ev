@@ -510,7 +510,10 @@ sub_waza_teacher_swan:
 
   // ほい　きた！　じゃあ　おしえる　わざを えらんでくれ
   _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_04 )
-  _BALLOONWIN_CLOSE()
+  // GFBTS632 教え技イベントで不要なウインドウを閉じる処理が入っている
+  // 
+  // shop_scr.ev の 191行目で _BALLOONWIN_CLOSE() を行っていた
+  //_BALLOONWIN_CLOSE()
 
 
   // 技教えの戻り値を初期化
