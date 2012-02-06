@@ -51,8 +51,8 @@
 #define AP_MSP_X    (AP_TSP_X)
 #define AP_MSP_Y    (AP_TSP_Y-AP_MSP_SY)
 #define AP_MSN_OX   (8)
-#define AP_MSN_X    (5*8+4+AP_MSP_X)
-#define AP_MSN_Y    (8+AP_MSP_Y)
+#define AP_MSN_X    (5*8+6+AP_MSP_X)
+#define AP_MSN_Y    (AP_MSP_Y)
 
 //単位パネル標準位置
 #define AP_UNIT_X   (AP_TSN_X+(AP_TSN_OX*ACT_SCOREN_PLACE_NUM)+4)
