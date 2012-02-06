@@ -3839,10 +3839,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうたいしました！▼</Text>
+			<Text>こうたい　しました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-31T10:51:04" />
+				Time="2012-02-06T02:56:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3850,10 +3850,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>交代しました！▼</Text>
+			<Text>交代　しました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-31T10:51:09" />
+				Time="2012-02-06T02:57:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
