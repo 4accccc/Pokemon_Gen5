@@ -2328,11 +2328,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キーシステムと　データコンバートの
+			<Text>キーシステムと　おもいでリンクの
 きろくが　きえてしまった！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-06T09:44:38" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T07:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2340,11 +2340,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キーシステムと　データコンバートの
+			<Text>キーシステムと　おもいでリンクの
 記録が　消えてしまった！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-06T09:44:45" />
+				User="matsumiya:W00224"
+				Time="2012-02-06T07:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
