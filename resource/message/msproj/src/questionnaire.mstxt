@@ -2528,15 +2528,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>将来　一番　力を入れて
+			<Text>将来　１番　力を入れて
 がんばりたいことは　何？　のアンケート</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-06T09:12:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:20:29" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-06T09:12:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
