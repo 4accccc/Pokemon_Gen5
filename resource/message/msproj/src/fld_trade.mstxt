@@ -246,25 +246,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ズガイトス</Text>
+			<Text>ズガイドス</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="nishino:W00221"
+				Time="2012-02-06T08:09:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="nishino:W00221"
+				Time="2012-02-06T08:09:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ズガイトス</Text>
+			<Text>ズガイドス</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="nishino:W00221"
+				Time="2012-02-06T08:09:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="nishino:W00221"
+				Time="2012-02-06T08:09:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
