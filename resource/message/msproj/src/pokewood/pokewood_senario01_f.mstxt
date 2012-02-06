@@ -89,16 +89,15 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『遊園地……
 それは　ひと時の　夢……▼
-すなわち　人々の　理想の形……
-▼
+すなわち　人々の　理想の形……▼
 理想など　破壊してくれる……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:58" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:58" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -270,17 +269,16 @@
 			Language="JPN_KANJI">
 			<Text>？？？『真実と　理想の　使者
 [Name:PokemonNickname Idx="0" ]ガール　登場！▼
-ちょっと　ハチクマンさん！
-▼
+ちょっと　ハチクマンさん！▼
 アナタの　イタズラ！
 ほっとけ　ないよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T07:52:25" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T07:52:25" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -860,15 +858,14 @@
 ゆけゆけ！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 たたかえ！
-[Name:PokemonNickname Idx="0" ]ガール！
-</Text>
+[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:05" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:05" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -883,15 +880,14 @@
 行け行け！
 [Name:PokemonNickname Idx="0" ]ガール！▼
 戦え！
-[Name:PokemonNickname Idx="0" ]ガール！
-</Text>
+[Name:PokemonNickname Idx="0" ]ガール！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:05" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:05" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T02:24:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

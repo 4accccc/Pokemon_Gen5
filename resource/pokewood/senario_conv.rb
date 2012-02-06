@@ -557,9 +557,14 @@ class MAKE_GMM
   end
   
   def write( tag, str_kana, str_kanji )
+    
     if str_kana == "" || str_kana == nil then
       return -1
     end
+
+    # 改行コードを(\n)に統一
+    str_kana.gsub!("\r","")
+    str_kanji.gsub!("\r","")
 
     if @str_check.checkFont( str_kanji ) == 0 then
       exit(1)

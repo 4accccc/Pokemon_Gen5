@@ -89,16 +89,15 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『遊園地……
 それは　ひと時の　夢……▼
-すなわち　人々の　理想の形……
-▼
+すなわち　人々の　理想の形……▼
 理想など　破壊してくれる……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -255,33 +254,31 @@
 			Language="JPN">
 			<Text>？？？『しんじつと　りそうの　ししゃ
 [Name:PokemonNickname Idx="0" ]キッド　すいさん！▼
-おい！　ハチクマン！
-▼
+おい！　ハチクマン！▼
 おまえの　あくぎょう
 ゆるすわけには　いかない！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T07:52:26" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T07:52:26" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『真実と　理想の　使者
 [Name:PokemonNickname Idx="0" ]キッド　参上！▼
-おい！　ハチクマン！
-▼
+おい！　ハチクマン！▼
 お前の　悪行
 許すわけには　いかない！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:37" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:37" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -859,15 +856,14 @@
 ゆけゆけ！
 [Name:PokemonNickname Idx="0" ]キッド！▼
 たたかえ！
-[Name:PokemonNickname Idx="0" ]キッド！
-</Text>
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:06" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:06" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -882,15 +878,14 @@
 行け行け！
 [Name:PokemonNickname Idx="0" ]キッド！▼
 戦え！
-[Name:PokemonNickname Idx="0" ]キッド！
-</Text>
+[Name:PokemonNickname Idx="0" ]キッド！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:06" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-27T03:32:06" />
+				User="onoue_masayuki:W00272"
+				Time="2012-02-03T06:06:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
