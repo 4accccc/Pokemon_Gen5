@@ -129,7 +129,15 @@ INIT_EVENT_START ev_init_c15
     //　スタッフ移動
     _OBJ_POS_CHANGE( C15_PWSTAFF_01, 45, 2, 21, DIR_UP )
     //　オーナー移動
-    _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 2, 10 ,DIR_DOWN )
+    _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 2, 9 ,DIR_UP )
+    //不要なNPC削除
+    _OBJ_DEL( C15_MIDDLEMAN1_02 )
+    IF FLAG_OFF( FV_C15_PEAPLE_LANK_03 ) THEN
+      _OBJ_DEL( C15_BABYBOY1_03 )
+    ENDIF
+    IF FLAG_OFF( FV_C15_PEAPLE_LANK_04 ) THEN
+      _OBJ_DEL( C15_ADULTW_03 )
+    ENDIF
   ENDIF
 
 INIT_EVENT_END
@@ -485,27 +493,19 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //アニメ：スタッフ「！」
   _OBJ_ANIME( C15_PWSTAFF_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
+  
+  DEFINE_LOCAL  LWK_HERO_X
+  DEFINE_LOCAL  LWK_HERO_Z
+  //自機の位置取得
+  _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+  
+  $LWK_HERO_Z += 1
+  
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, LWK_HERO_X, LWK_HERO_Z, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
 
   //タグ０にプレイヤー名
   _PLAYER_NAME( 0 )
-
-  //スタッフの前に移動
-  {
-    DEFINE_LOCAL  LWK_HERO_X
-    DEFINE_LOCAL  LWK_HERO_Z
-    //自機の位置取得
-    _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
-
-    SWITCH $LWK_HERO_X
-    CASE 44 THEN  // 下1歩 右1歩
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_01_a )
-    CASE 45 THEN  // 下1歩
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
-    CASE 46 THEN  // 下1歩 左1歩
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_01_b )
-    ENDSWITCH
-    _OBJ_ANIME_WAIT()
-  }
 
   //スタッフ：ヘイヘイ！　～！！
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_01,C15_PWSTAFF_01, POS_DEFAULT )
@@ -514,9 +514,16 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   //♀MAIDの前に移動
-  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_02_s )
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, 43, 27, FORCE_TYPE_ALL, 8, DIR_UD )
+  //_OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_02_s )
   _TIME_WAIT(4)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_02_p )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 44, 27, FORCE_TYPE_ALL, 8, DIR_UD )
+  //_OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_02_p )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_staystep_d )
+  _OBJ_ANIME( C15_BONUS_MAID_01, anm_walk_u_16f )
   _OBJ_ANIME_WAIT()
 
   //♀MAID話しかけ
@@ -529,6 +536,11 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_03 )
   _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_03 )
+  _TIME_WAIT(8)
+  _OBJ_ANIME( C15_BONUS_MAID_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( C15_BONUS_PWMOJI_01, anm_walk_u_16f )
   _OBJ_ANIME_WAIT()
   
   //♂PWMOJI話しかけ
@@ -541,6 +553,13 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_04 )
   _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_04 )
+  _TIME_WAIT(8)
+  _OBJ_ANIME( C15_BONUS_PWMOJI_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C15_BONUS_BACKPACKERM_01, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15_BONUS_BACKPACKERM_01, anm_jump_u2 )
   _OBJ_ANIME_WAIT()
 
   //♂BACKPACKERM 話しかけ
@@ -579,6 +598,9 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_07 )
   _OBJ_ANIME_WAIT()
 
+  _OBJ_ANIME( C15_BONUS_ADULTW_01, anm_walk_l )
+  _OBJ_ANIME_WAIT()
+
   //♂GENTLEMAN 話しかけ
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_07, C15_BONUS_ADULTW_01, POS_DOWN )
   _AB_KEYWAIT_MARK()
@@ -589,6 +611,8 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_08 )
   _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_08 )
+  _TIME_WAIT(4)
+  _OBJ_ANIME( C15_BONUS_ADULTW_01, anm_bonus_event_07_gentle )
   _OBJ_ANIME_WAIT()
 
   //スタッフ：ヘイ！ボス！おつれしました
@@ -598,14 +622,18 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   // 横にどける
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_09 )
-  _TIME_WAIT(4)
+  _TIME_WAIT(8)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
 
   //=================================================
+  
+  _TIME_WAIT( 30 )
+  
   // PWOWNERこちらを向く
-  _OBJ_ANIME( C15_PWOWNER_01, anm_dir_d )
-  _OBJ_ANIME( C15_BONUS_LEADER7_01, anm_dir_d )
+  _OBJ_ANIME( C15_BONUS_LEADER7_01, anm_staystep_d )
+  _TIME_WAIT( 15 )
+  _OBJ_ANIME( C15_PWOWNER_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 
   //オーナー：うむ・・・ ○○ちゃん　きょうは　きねんすべき　ひ　なんだ・・・
@@ -618,6 +646,9 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
+  _OBJ_ANIME( C15_PWOWNER_01, anm_walk_d )
+  _OBJ_ANIME_WAIT()
+
   //オーナー：○○ちゃん！！　キミこそ　ポケウッドのしんの　スターだ
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_PWOWNER_01, POS_DOWN )
   _ME_PLAY( SEQ_ME_POKEWOOD )             //ファンファーレ
@@ -629,7 +660,9 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _MSGWIN_CLOSE()
 
   //スタッフ：横向く
-  _OBJ_ANIME( C15_PWSTAFF_01, anm_dir_r )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_walk_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   //スタッフ：イエッサー！ボス！　さぁ　○○！　カモン！
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_13,C15_PWSTAFF_01, POS_DOWN )
@@ -691,7 +724,7 @@ _ANIME_LABEL  anm_bonus_event_03
 //	♂BACKPACKERM前に移動
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_04
-  _ANIME_DATA AC_WALK_L_8F, 5
+  _ANIME_DATA AC_WALK_L_8F, 4
 	_ANIME_DATA	AC_DIR_D, 1
   _ANIME_DATA ACMD_END, 0
 
@@ -717,7 +750,7 @@ _ANIME_LABEL  anm_bonus_event_05_p
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_06
   _ANIME_DATA AC_WALK_U_8F, 2
-	_ANIME_DATA	AC_DIR_R, 1
+	_ANIME_DATA	AC_DIR_L, 1
   _ANIME_DATA ACMD_END, 0
 
 //--------------------------------------------------------------
@@ -726,6 +759,11 @@ _ANIME_LABEL  anm_bonus_event_06
 _ANIME_LABEL  anm_bonus_event_07
   _ANIME_DATA AC_WALK_U_8F, 3
 	_ANIME_DATA	AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_bonus_event_07_gentle
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA ACMD_END, 0
 
 //--------------------------------------------------------------
@@ -739,10 +777,9 @@ _ANIME_LABEL  anm_bonus_event_08
 //	スタッフ横にどける
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_09
-  _ANIME_DATA AC_WALK_L_8F, 1
-	_ANIME_DATA	AC_DIR_U, 1
+  _ANIME_DATA AC_WALK_L_8F, 2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END, 0
-
 
 /**************************************************************/
 /*			一言メッセージ					  */
@@ -1183,6 +1220,22 @@ _ANIME_LABEL	anm_walk_r
 _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_d_16f
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u_16f
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r_16f
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l_16f
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 //	☆共通処理：方向転換
@@ -1225,7 +1278,11 @@ _ANIME_LABEL	anm_staystep_r
 _ANIME_LABEL	anm_stay_u_4
 	_ANIME_DATA	AC_STAY_WALK_U_4F,4
 	_ANIME_DATA	ACMD_END,0
-	
+
+_ANIME_LABEL	anm_jump_u2
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	☆共通処理：ギョエ
 //--------------------------------------------------------------------
