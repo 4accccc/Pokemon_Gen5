@@ -66,6 +66,16 @@ INIT_EVENT_START   ev_zone_c06
 {
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 THEN
+    //========================================//
+    //C06 SCENE_CHANGE無効
+    $WK_SCENE_C06_LINK_EVENT = 0
+    //C06フウロ非表示
+    _FLAG_SET( FV_C06_SWLEADER6_01 )
+    //========================================//
+  ENDIF
 
   //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
   IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_05 == 0 && $WK_SCENE_T07 >= 1 && FLAG_OFF( FE_C06_LINKEV_ZONE ) THEN

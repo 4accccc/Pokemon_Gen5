@@ -99,6 +99,16 @@ INIT_EVENT_START  ev_zone_c02gym0101
 {
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_05, LOCALWORK15 )
+  
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF $LOCALWORK15 == 0 &&  $WK_SYS_LINK_EVENT_02 == 0 THEN
+    //========================================//
+    //C02GYM0101アロエを非表示
+    _FLAG_SET( FV_C02GYM0101_LEADER2_01 )
+    //POS・SCENE_CHANGE無効
+     $WK_SCENE_C02_LINK_EVENT = 0
+    //========================================//
+  ENDIF
 
   //リンクイベント起動状態でアロエを表示
   IF $LOCALWORK15 == 1 &&  $WK_SYS_LINK_EVENT_02 == 0 && FLAG_OFF( FE_C02GYM0101_LINKEV_ZONE ) THEN

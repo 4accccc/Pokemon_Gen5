@@ -75,6 +75,14 @@ INIT_EVENT_START   ev_zone_c07gym0101
     _FLAG_RESET( FV_C07GYM0101_LEADDER7_01 )
     //========================================//
   
+  //初回会話済みでおもいでリンク起動条件を満たさない
+  ELSIF FLAG_ON( FE_C07GYM0101_LEADER7 ) && $LOCALWORK12 == 0 && $WK_SYS_LINK_EVENT_03 == 0 THEN
+    
+    //========================================//
+    //ハチクを非表示
+    _FLAG_SET( FV_C07GYM0101_LEADDER7_01 )
+    //========================================//
+    
   ENDIF
   
 INIT_EVENT_END
@@ -97,6 +105,11 @@ EVENT_START   ev_c07gym0101_leader7_01
   //リンクイベントを起動していないなら初回会話をコール
   ELSIF FLAG_OFF( FE_C07GYM0101_LEADER7 ) THEN
   
+    _CALL ev_leader7_first_tark
+  
+  //リンクイベント起動状態を満たさずにハチクのみ配置のケース（初回会話と同じ内容を繰り返す）
+  ELSIF FLAG_ON( FE_C07GYM0101_LEADER7 ) && $LOCALWORK15 == 0 THEN
+    
     _CALL ev_leader7_first_tark
   
   ENDIF

@@ -137,6 +137,18 @@ INIT_EVENT_START   ev_zone_c08
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_08, LOCALWORK15 )
   
+  //データコンバートの条件を満たしていない（リンクイベント起動条件の初期化）
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 0 && $WK_SYS_LINK_EVENT_04 == 0 THEN
+    //========================================//
+    //C08シャガ表示
+    _FLAG_SET( FV_C08_SWLEADER7_01 )
+    //C08R0101シャガ非表示
+    _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+    //POS有効
+    $WK_SCENE_C08_LINK_EVENT = 0
+    //========================================//
+  ENDIF
+  
   //ゲームクリア状態でリンクイベント起動ならシャガを表示・POSを有効に
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_04 == 0 && FLAG_OFF( FE_C08_LINKEV_ZONE ) THEN
     //========================================//
