@@ -736,9 +736,9 @@
 	</row>
 
 	<row id="TRID_FANM_02_TRMSG_FIGHT_START_1">
-		<language name="JPN" width="216">ビッグスタジアムに　くるだけで
+		<language name="JPN" width="216">リトルコートに　くるだけで
 こうふん　しちゃって！！▼</language>
-		<language name="JPN_KANJI" width="216">ビッグスタジアムに　来るだけで
+		<language name="JPN_KANJI" width="216">リトルコートに　来るだけで
 興奮しちゃって！！▼</language>
 	</row>
 
@@ -921,9 +921,9 @@
 	</row>
 
 	<row id="TRID_FANW_02_TRMSG_FIGHT_START_1">
-		<language name="JPN" width="216">あなたは　テニスと　バスケ！
+		<language name="JPN" width="216">ベースボールと　フットボール！
 どっちが　すき　なの？▼</language>
-		<language name="JPN_KANJI" width="216">あなたは　テニスと　バスケ！
+		<language name="JPN_KANJI" width="216">ベースボールと　フットボール！
 どっちが　好きなの？▼</language>
 	</row>
 
@@ -931,18 +931,18 @@
 		<language name="JPN" width="216">アミ『よく　わからないままに
 しあい　しゅうりょう……！▼
 ユキ『あなたと　ポケモンの
-コンビネーション　すごい！！</language>
+コンビプレイ　すごい！！</language>
 		<language name="JPN_KANJI" width="216">アミ『よく　わからないままに
 試合終了……！▼
 ユキ『あなたと　ポケモンの
-コンビネーション　すごい！！</language>
+コンビプレイ　すごい！！</language>
 	</row>
 
 	<row id="TRID_FANW_02_TRMSG_FIGHT_AFTER_1">
-		<language name="JPN" width="216">テニスも　バスケも　だいすき！▼
+		<language name="JPN" width="216">どの　スポーツも　だいすき！▼
 だって　どの　ポケモンが　すき？
 そんな　しつもん　こたえられないわ</language>
-		<language name="JPN_KANJI" width="216">テニスも　バスケも　大好き！▼
+		<language name="JPN_KANJI" width="216">どの　スポーツも　大好き！▼
 だって　どのポケモンが　好き？
 そんな質問　答えられないわ</language>
 	</row>
