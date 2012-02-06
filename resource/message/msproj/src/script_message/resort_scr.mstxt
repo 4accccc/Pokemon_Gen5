@@ -16508,10 +16508,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-リニューアル　オープン　した！</Text>
+おみせを　リニューアルした！▼
+</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-04T10:29:30" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T12:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16520,10 +16521,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="1" ]は
-リニューアル　オープン　した！</Text>
+お店を　リニューアルした！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-04T10:29:29" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T12:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
