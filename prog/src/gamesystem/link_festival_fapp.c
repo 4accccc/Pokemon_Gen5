@@ -86,6 +86,11 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
         MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV2 );
       }
     }
+  
+    //トップスコアを取った回数を記録する(参加者が一人の時は更新しない)
+    if( join_num > 1 && LINK_FESTIVAL_TopScoreIsMine( wk ) ){
+      FMISSION_SAVE_IncMissionTopScoreNum( f_save );
+    }
   }
  
   //残り時間
@@ -98,10 +103,6 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   FMISSION_SAVE_IncMissionClearNum( f_save ); //ミッション達成回数インクリメント
 
-  //トップスコアを取った回数を記録する
-  if( LINK_FESTIVAL_TopScoreIsMine( wk ) ){
-    FMISSION_SAVE_IncMissionTopScoreNum( f_save );
-  }
 
   if( wk->m_beacon->distribution_f == FALSE ){  //配信ミッションでは行わない処理
     //ミッションレベルアップ
