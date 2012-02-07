@@ -857,13 +857,17 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
   case 1:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
-      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );
-      btlin_startFade( BTLIN_STD_FADE_WAIT );
+      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );  //ポケモン転送
       (*seq)++;
     }
     break;
   case 2:
+    // BWでは1と2の処理が同時に行われていたが、SWANで分けた
+    BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_ENCOUNT_1 );  // 登場エフェクト登録
+    btlin_startFade( BTLIN_STD_FADE_WAIT );
+    (*seq)++;
+    break;
+  case 3:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       u16 strID = GetWildSingleEncountStrID( wk );
@@ -872,7 +876,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 3:
+  case 4:
     if( BTLV_SCU_WaitMsg(wk) )
     {
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
@@ -880,7 +884,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 4:
+  case 5:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
@@ -892,7 +896,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 5:
+  case 6:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       subwk->viewPos = BTLV_MCSS_POS_AA;
@@ -908,19 +912,19 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       (*seq)++;
     }
     break;
-  case 6:
+  case 7:
     if( BTLV_SCU_WaitMsg(wk) )
     {
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
     break;
-  case 7:
+  case 8:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
       (*seq)++;
     }
     break;
-  case 8:
+  case 9:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
