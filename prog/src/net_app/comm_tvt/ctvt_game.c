@@ -3798,11 +3798,12 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     }
 
     // アニメしていない時のみ変更
-    if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkPompHandle) == FALSE )
+    if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkTouch) == FALSE )
     {
       //↑↑↑↑↑↑↑↑↑↑↑↑
       //ここまででタッチのアニメシーケンスが決まる
       GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, gameWork->touch_anmseq );
+      GFL_CLACT_WK_StopAnm( gameWork->clwkTouch );
     }
     // 例外は↓のタッチできないときのみ
   }
