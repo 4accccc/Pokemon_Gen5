@@ -4429,8 +4429,9 @@ OL</Text>
 			<Text>ダメだ！　ダメだ　ダメだ　ダメだッ！！
 まるで　しゅうちゅう　できない！！▼
 なぜ　こうも　むなしいんだ……
-なんで　おもいだして　しまうんだ……▽
-どうして　あのなつを　わすれらない……▼
+なんで　おもいだして　しまうんだ……▼
+どうして……
+あの　なつを　わすれられない……▼
 なぜ！　なぜ　あの　ひざしを
 わすれることが　できないんだッ！！▼
 ……とりみだして　すまなかった▼
@@ -4440,8 +4441,8 @@ OL</Text>
 だから　[Name:TrainerName Idx="0" ]　よ……
 もうすこし　つきあってくれ　な？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:20:04" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4452,8 +4453,9 @@ OL</Text>
 			<Text>ダメだ！　ダメだ　ダメだ　ダメだッ！！
 まるで　集中できない！！▼
 なぜ　こうも　空しいんだ……
-なんで　思い出して　しまうんだ……▽
-どうして　あの夏を　忘れられない……▼
+なんで　思い出して　しまうんだ……▼
+どうして……
+あの夏を　忘れられない……▼
 なぜ！　なぜ　あの　日差しを
 忘れることが　できないんだッ！！▼
 ……取り乱して　すまなかった▼
@@ -4463,8 +4465,8 @@ OL</Text>
 だから　[Name:TrainerName Idx="0" ]　よ……
 もう少し　付き合ってくれ　な？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-20T06:20:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6093,7 +6095,7 @@ OL</Text>
 デビューすることに　なりそうなんです▼
 歌も　聴いて　もらったんですが
 今どき　ウケない　って……▼
-それに　言葉遣いも　上品で
+それに　言葉遣いも　上品に
 直してくれ　って　いわれてて……▼
 そんなの　私じゃ　ない……▼
 だけど　せっかくの　チャンス
@@ -6108,8 +6110,8 @@ OL</Text>
 だから　[Name:TrainerName Idx="0" ]！
 また　絶対　会いに　来てよネ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-21T08:43:30" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T11:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8117,10 +8119,10 @@ N</Text>
 			<Text>そっか……
 ざんねん　だね……▼
 また　きかいが　あったら
-こうかん　してね……　ポケモン▼</Text>
+こうかん　してね……　ポケモン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T04:50:23" />
+				Time="2012-02-07T11:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8131,10 +8133,10 @@ N</Text>
 			<Text>そっか……
 残念だね……▼
 また　機会が　あったら
-交換してね……　ポケモン▼</Text>
+交換してね……　ポケモン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T04:50:18" />
+				Time="2012-02-07T11:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8327,10 +8329,10 @@ N</Text>
 			<Text>そっかあ
 ざんねん　だな▼
 また　チャンスが　あれば
-こうかん　してよ！　ポケモン▼</Text>
+こうかん　してよ！　ポケモン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:45:11" />
+				Time="2012-02-07T11:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8341,10 +8343,10 @@ N</Text>
 			<Text>そっかあ
 残念だな▼
 また　チャンスが　あれば
-交換してよ！　ポケモン▼</Text>
+交換してよ！　ポケモン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:45:08" />
+				Time="2012-02-07T11:57:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
