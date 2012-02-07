@@ -957,9 +957,9 @@
 #define FV_N01R0502_PLAYER_01             1035 /* 0x040b N城：透明になった主人公代理 */
 #define FV_D27R0701_SWRIVAL_01            1036 /* 0x040c プラズマフリゲート：客室ライバル */
 #define FV_D01R0101_ITEMBALL_01           1037 /* 0x040d 夢の跡地：ラティアス戦後モンスターボール */
-#define FV_OMUSUTAA_01                    1038 /* 0x040e 仮フラグ */
-#define FV_OMUSUTAA_02                    1039 /* 0x040f 仮フラグ */
-#define FV_OMUSUTAA_03                    1040 /* 0x0410 仮フラグ */
+#define FV_OMUSUTAA_01                    1038 /* 0x040e 豊穣の社伝承イベントで使用 */
+#define FV_OMUSUTAA_02                    1039 /* 0x040f チャンピオンロード：トレーナー */
+#define FV_OMUSUTAA_03                    1040 /* 0x0410 チャンピオンロード：トレーナー */
 #define FV_OMUSUTAA_04                    1041 /* 0x0411 仮フラグ */
 #define FV_OMUSUTAA_05                    1042 /* 0x0412 仮フラグ */
 #define FV_OMUSUTAA_06                    1043 /* 0x0413 仮フラグ */
