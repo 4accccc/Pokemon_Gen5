@@ -656,12 +656,9 @@ sub_idol_talk:
   _SE_WAIT()
 	_SYSWIN_CLOSE()
 
-
 	//‚ ‚è‚ª‚Æ‚¤
 	_BALLOONWIN_OBJMSG_MF( msg_wheel_swidol_w_08_05, msg_wheel_swidol_m_08_05, SCWK_TARGET_OBJID, POS_DEFAULT )
-  _LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-
 
   _PLAYER_DIR_GET( SCWK_ANSWER )
 
