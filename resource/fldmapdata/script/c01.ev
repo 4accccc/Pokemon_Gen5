@@ -130,7 +130,10 @@ EVENT_END
 /*  C01 ƒWƒ€ŠÅ”Â                                              */
 /**************************************************************/
 EVENT_START   ev_bg_c01_gymsign_01
-  _EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c01_gymsign_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
