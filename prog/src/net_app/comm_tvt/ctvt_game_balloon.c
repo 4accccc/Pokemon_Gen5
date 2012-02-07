@@ -877,7 +877,12 @@ BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL CTVT_BALLOON2_GetActive( BALLOON2_WORK *p_wk )
 {
-  if( p_wk->interval > 0 )
+  // BTS1513【風船が割れた後にタッチした分が次の風船に加算される】
+  //
+  // 対処法として
+  // 割れるエフェクト中もタッチできない状態に追加
+  //
+  if( p_wk->interval > 0 || p_wk->anm_flg == TRUE || p_wk->alpha_flg == TRUE )
   {
     // 補充中なのでタッチできない
     return FALSE;
