@@ -3627,6 +3627,31 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   }
   gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
 
+  // 制限時間処理
+  if( gameWork->timeLimit > 0 )
+  {
+    if( ( gameWork->frame - gameWork->befFrameCnt ) > 60 )
+    {
+      gameWork->befFrameCnt = gameWork->frame;
+      gameWork->timeLimit--;
+
+      // タイムゲージ描画
+      draw_timebar( gameWork );
+    }
+
+    if( gameWork->timeLimit == 0 )
+    {
+      // 終了のホイッスル音
+      PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // ホイッスル音
+
+      // 風船非表示
+      for( i=0; i<CTVT_MEMBER_NUM; i++ )
+      {
+        gameWork->p_balloon2[i]->visible = FALSE;
+      }
+    }
+  }
+
   // 残り時間でタッチボタンを変更
   if( gameWork->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
   {
@@ -3652,7 +3677,9 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   }
 
   // 風船がアクティブの時のみタッチ判定
-  if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE )
+  // かつ制限時間が0以上
+  if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE &&
+      gameWork->timeLimit > 0 )
   {
     static GFL_UI_TP_HITTBL button_tbl[5] =
     {
@@ -3835,31 +3862,8 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 #endif
   }
 
-  // 制限時間処理
-  if( gameWork->timeLimit > 0 )
-  {
-    if( ( gameWork->frame - gameWork->befFrameCnt ) > 60 )
-    {
-      gameWork->befFrameCnt = gameWork->frame;
-      gameWork->timeLimit--;
-
-      // タイムゲージ描画
-      draw_timebar( gameWork );
-    }
-
-    if( gameWork->timeLimit == 0 )
-    {
-      // 終了のホイッスル音
-      PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // ホイッスル音
-
-      // 風船非表示
-      for( i=0; i<CTVT_MEMBER_NUM; i++ )
-      {
-        gameWork->p_balloon2[i]->visible = FALSE;
-      }
-    }
-  }
-  else if( gameWork->timeLimit == 0 )
+  // 制限時間 = 0
+  if( gameWork->timeLimit == 0 )
   {
     ICHI_Printf("TimeLimit が0 \n");
     gameWork->frame++;
