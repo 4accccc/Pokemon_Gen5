@@ -25992,29 +25992,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コラーッ！　てもち　１ぴきだとォ？▼
+			<Text>コラーッ！　げんきな　ポケモンが
+たったの　１ぴき　だとォ？▼
 ２ｖｓ１なんて　ふりな　しょうぶじゃ
 ワルの　なが　すたるだろうがッ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コラーッ！　手持ち　１匹だとォ？▼
+			<Text>コラーッ！　元気な　ポケモンが
+たったの　１匹だとォ？▼
 ２ｖｓ１なんて　不利な　勝負じゃ
 ワルの　名が　すたるだろうがッ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70847,26 +70849,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ずーっと　ずーっと
-なかよしで　いたいな！▼</Text>
+なかよしで　いたいな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ずーっと　ずーっと
-なかよしで　いたいな！▼</Text>
+なかよしで　いたいな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:21:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70944,26 +70946,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>２ひきの　ポケモンと　あそぶの！
-１ぴきじゃ　だめだよ！▼</Text>
+１ぴきじゃ　だめだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T13:31:39" />
+				Time="2012-02-07T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T13:31:39" />
+				Time="2012-02-07T12:21:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２ひきの　ポケモンと　あそぶの！
-１ぴきじゃ　だめだよ！▼</Text>
+１ぴきじゃ　だめだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T13:31:39" />
+				Time="2012-02-07T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T13:31:39" />
+				Time="2012-02-07T12:21:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
