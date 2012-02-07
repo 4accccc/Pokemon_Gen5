@@ -594,11 +594,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケットモンスターブラック２　か
-ポケットモンスターホワイト２　と▽
-キーの　そうじゅしんが　できます</Text>
+ポケットモンスターホワイト２　と
+キーの　そうじゅしんが　できます
+
+つうしん　することで　キーせっていで
+ロックされている　こうもくや
+マップを　かいじょ　できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T12:47:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-07T03:38:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -607,11 +611,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケットモンスターブラック２　か
-ポケットモンスターホワイト２　と▽
-キーの　送受信が　できます</Text>
+ポケットモンスターホワイト２　と
+キーの　送受信が　できます
+
+通信することで　キー設定で
+ロックされている　項目や
+マップを　解除できます</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T12:48:00" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-07T03:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -638,10 +646,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>キーによる　せっていの　へんこうを
-おこなうことが　できます</Text>
+おこなうことが　できます
+
+キーは　ぼうけんを　すすめることで
+てにいれることが　できます
+ひとと　つうしんして
+かいじょ　してもらうことも　できます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:50:57" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-07T03:41:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -650,10 +663,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キーによる　設定の　変更を
-おこなうことが　できます</Text>
+おこなうことが　できます
+
+キーは　冒険を　進めることで
+手に入れることが　できます
+人と　通信して
+解除してもらうことも　できます</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:51:07" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-07T03:42:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2115,11 +2133,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アシストキーを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>アシストキーで　ロックを
+かいじょしないと　えらべません
+</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:24" />
+				Time="2012-02-07T03:36:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2127,11 +2146,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アシストキーを　もらわないと
-この項目は　選択できません</Text>
+			<Text>アシストキーで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:30" />
+				Time="2012-02-07T03:36:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2150,11 +2169,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャレンジキーを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>チャレンジキーで　ロックを
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:36" />
+				Time="2012-02-07T03:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2162,11 +2181,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャレンジキーを　もらわないと
-この項目は　選択できません</Text>
+			<Text>チャレンジキーで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:41" />
+				Time="2012-02-07T03:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2185,11 +2204,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅどうのカギを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>じゅどうのカギで　ロックを
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:49" />
+				Time="2012-02-07T03:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2197,11 +2216,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅどうのカギを　もらわないと
-この項目は　選択できません</Text>
+			<Text>じゅどうのカギで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:40:57" />
+				Time="2012-02-07T03:37:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2220,11 +2239,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まてんろうのカギを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>まてんろうのカギで　ロックを
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:41:05" />
+				Time="2012-02-07T03:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2232,11 +2251,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まてんろうのカギを　もらわないと
-この項目は　選択できません</Text>
+			<Text>まてんろうのカギで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:41:11" />
+				Time="2012-02-07T03:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3524,11 +3543,11 @@ CYGNUS連動用</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろがねのカギを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>くろがねのカギで　ロックを
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:50:37" />
+				Time="2012-02-07T03:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3536,11 +3555,11 @@ CYGNUS連動用</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろがねのカギを　もらわないと
-この項目は　選択できません</Text>
+			<Text>くろがねのカギで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:50:44" />
+				Time="2012-02-07T03:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3566,11 +3585,11 @@ CYGNUS連動用</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひょうざんのカギを　もらわないと
-この　こうもくは　えらべません</Text>
+			<Text>ひょうざんのカギで　ロックを
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:50:51" />
+				Time="2012-02-07T03:38:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3578,11 +3597,11 @@ CYGNUS連動用</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょうざんのカギを　もらわないと
-この項目は　選択できません</Text>
+			<Text>ひょうざんのカギで　ロックを
+解除しないと　選択できません</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:51:04" />
+				Time="2012-02-07T03:38:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
