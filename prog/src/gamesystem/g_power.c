@@ -489,11 +489,14 @@ u32 GPOWER_Calc_Hatch(u32 add_count)
  * @param   natsuki		“¹‹ï‚È‚Ç‚Ì•â³‚ª“ü‚Á‚½Œã‚Ì‚È‚Â‚«“x‰ÁŽZ’l
  *
  * @retval  s32		Gƒpƒ[‰e‹¿Œã‚Ì‚È‚Â‚«“x‰ÁŽZ’l
+ *
+ * BTS825‘Îô ‚È‚Â‚«“xŒ¸ŽZ‚ÌŽž‚Íƒfƒ‹ƒpƒ[‚ð‰e‹¿‚³‚¹‚È‚¢
  */
 //==================================================================
 s32 GPOWER_Calc_Natsuki(s32 natsuki)
 {
-  if(GPowerSys.occur_power[GPOWER_TYPE_NATSUKI_UP] != GPOWER_ID_NULL){
+  if(GPowerSys.occur_power[GPOWER_TYPE_NATSUKI_UP] != GPOWER_ID_NULL &&
+     natsuki > 0 ){
     return natsuki + GPowerSys.powerdata_data[GPOWER_TYPE_NATSUKI_UP];
   }
   return natsuki;
