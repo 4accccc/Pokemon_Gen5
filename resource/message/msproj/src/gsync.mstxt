@@ -1233,13 +1233,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サーバーでエラーが　発生しました
-もう一度　おためしください
+もう一度　お試しください
 問題が　解決しない場合は
 取扱説明書を　ご覧ください
 （エラーコード：１３２０１）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T13:00:14" />
+				Time="2012-02-07T03:00:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1290,13 +1290,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サーバーでエラーが　発生しました
-もう一度　おためしください
+もう一度　お試しください
 問題が　解決しない場合は
 取扱説明書を　ご覧ください
 （エラーコード：１３２０２）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-26T13:00:16" />
+				Time="2012-02-07T03:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
