@@ -959,6 +959,7 @@ EVENT_START  ev_infinity_dungeon_comeback
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_05_00 , LWK_INFOOBJ_ID, POS_DOWN )
           _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
         ENDIF
+        _AB_KEYWAIT_MARK()
         _BALLOONWIN_CLOSE()
 
         // カメラ待ち
@@ -1610,13 +1611,14 @@ EVENT_START  ev_infinity_dungeon_area_arrival_tutorial
     _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 14, 7, FORCE_TYPE_ALL, 8, DIR_UD)
   ENDIF
   _OBJ_ANIME_WAIT()
-
+ 
+  // オブジェクト削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+   
   // 退出音再生
   _CALL play_floor_move_se
   _SE_WAIT()
-  
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-   
+ 
 }
 EVENT_END
 
@@ -1737,13 +1739,14 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_01
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_1 )
   _OBJ_ANIME_WAIT()
-   
+ 
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
   // 退出音再生
   _CALL play_floor_move_se
   _SE_WAIT()
-  
-  // OBJ削除
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+ 
 }
 EVENT_END
 
@@ -1784,13 +1787,13 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_02
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_down_3 )
   _OBJ_ANIME_WAIT()
-   
+ 
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 ) 
+
   // 退出音再生
   _CALL play_floor_move_se
   _SE_WAIT()
-  
-  // OBJ削除
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
 EVENT_END
 
@@ -1834,13 +1837,14 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_left_3 )
   _OBJ_ANIME_WAIT()
-   
+ 
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 ) 
+
   // 退出音再生
   _CALL play_floor_move_se
   _SE_WAIT()
-  
-  // OBJ削除
-  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+ 
 }
 EVENT_END
 
@@ -1903,6 +1907,13 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
   _TIME_WAIT( 5 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_boss_area3 )
   _OBJ_ANIME_WAIT()
+ 
+  // OJB削除
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _OBJ_DEL( D31R0601_MUGENBOSS )
+  ELSE
+    _OBJ_DEL( D31R0501_MUGENBOSS )
+  ENDIF
    
   // 退出音再生
   _CALL play_floor_move_se
@@ -1917,13 +1928,6 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
   // 非表示フラグセット
   _FLAG_SET( FV_D31R0601_MUGENBOSS_01 ) // リセット
   _FLAG_SET( FV_D31R0501_MUGENBOSS_01 ) // リセット
- 
-  // OJB削除
-  IF $LWK_D_VERSION == VERSION_B2 THEN
-    _OBJ_DEL( D31R0601_MUGENBOSS )
-  ELSE
-    _OBJ_DEL( D31R0501_MUGENBOSS )
-  ENDIF
 
 }
 EVENT_END
