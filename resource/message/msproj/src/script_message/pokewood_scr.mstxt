@@ -209,12 +209,12 @@
 			Language="JPN">
 			<Text>ワオ！　スクリーンが　いっぱいだぜ！▼
 しんさくを　こうかい　するには
-ふるい　さくひんから　いっぽん▽
-こうかいを　しゅうりょう　しなきゃ▽
-ならないんだ！　いいかい？</Text>
+ふるい　さくひんを　いっぽん▽
+こうかいしゅうりょう　しないと▽
+いけないぜ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-06T10:36:24" />
+				Time="2012-02-07T03:29:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -222,14 +222,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＡＯ！　スクリーンが　いっぱいだ！▼
+			<Text>ＷＡＯ！　スクリーンが　いっぱいだぜ！▼
 新作を　公開　するには
-古い　作品から　一本▽
-公開を　終了　しなきゃ▽
-ならないんだ！　いいかい？</Text>
+古い　作品を　一本▽
+公開終了　しないと▽
+いけないぜ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-06T10:36:57" />
+				Time="2012-02-07T03:29:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
