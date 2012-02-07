@@ -1106,12 +1106,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うみべのどうけつ　って　ごぞんじ？▼
-２１ばんすいどうを　くだれば
+なみのりの　ひでんわざを　つかって
+２１ばんすいどうを　くだれば▽
 みつかる　ほらあな　よ▼
 とおりぬければ　サザナミに　つくわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-12T05:31:40" />
+				Time="2012-02-07T02:33:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1120,12 +1121,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>海辺の洞穴　って　ご存知？▼
-２１番水道を　くだれば
+なみのりの　秘伝技を　使って
+２１番水道を　くだれば▽
 みつかる　洞穴　よ▼
 通り抜ければ　サザナミに　着くわ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T11:20:47" />
+				Time="2012-02-07T02:33:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

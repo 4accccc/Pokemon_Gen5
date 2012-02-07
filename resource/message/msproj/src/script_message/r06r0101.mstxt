@@ -204,11 +204,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>で　きみに　これを　わたすから
-いろんなところを　しらべて　みてよ▼</Text>
+			<Text>で　きみに　これ……▼
+ひでんマシン　なみのりを　わたすから
+いろんなところを　しらべて　みてよ▼
+ポケモンに　なみのりを　おしえると
+みずのうえも　すすめるからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:06:23" />
+				Time="2012-02-07T02:24:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -216,11 +219,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　きみに　これを　渡すから
-いろんな所を　調べてみてよ▼</Text>
+			<Text>で　きみに　これ……▼
+ひでんマシン　なみのりを　わたすから
+いろんなところを　調べて　みてよ▼
+ポケモンに　なみのりを　教えると
+水上も　進めるからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:06:24" />
+				Time="2012-02-07T02:24:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
