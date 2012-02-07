@@ -621,4 +621,7 @@
 "op_demo_w_620_LZ.bin" 
 "op_demo_w_621_LZ.bin" 
 "op_demo_w_622_LZ.bin" 
+"op_demo_w_623_LZ.bin" 
+"op_demo_w_624_LZ.bin" 
+"op_demo_w_625_LZ.bin" 
 "op_demo_end.bin" 

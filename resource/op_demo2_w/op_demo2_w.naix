@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2012-02-07T01:32:46
+	Update:2012-02-07T15:11:18
  *****************************************************************************/
 
 #ifndef NARC_OP_DEMO2_W_NAIX_
@@ -634,7 +634,10 @@ enum {
 	NARC_op_demo2_w_op_demo_w_620_LZ_bin = 620,
 	NARC_op_demo2_w_op_demo_w_621_LZ_bin = 621,
 	NARC_op_demo2_w_op_demo_w_622_LZ_bin = 622,
-	NARC_op_demo2_w_op_demo_end_bin = 623
+	NARC_op_demo2_w_op_demo_w_623_LZ_bin = 623,
+	NARC_op_demo2_w_op_demo_w_624_LZ_bin = 624,
+	NARC_op_demo2_w_op_demo_w_625_LZ_bin = 625,
+	NARC_op_demo2_w_op_demo_end_bin = 626
 };
 
 /* NARC_OP_DEMO2_W_NAIX_ */
