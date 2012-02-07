@@ -6575,12 +6575,13 @@
 			Language="JPN">
 			<Text>きもったま　ね……▼
 この　とくせいの　ポケモンは
-ゴーストタイプの　ポケモンに▽
-ノーマルタイプの　わざを▽
-あてることが　できるように　なるんだ▼</Text>
+ゴーストタイプの　ポケモンに▼
+ノーマルタイプや　かくとうタイプの
+わざを　あてることが▽
+できるように　なるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T09:58:31" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6590,12 +6591,13 @@
 			Language="JPN_KANJI">
 			<Text>きもったま　ね……▼
 この特性の　ポケモンは
-ゴーストタイプの　ポケモンに▽
-ノーマルタイプの　技を▽
-当てることが　できるように　なるんだ▼</Text>
+ゴーストタイプの　ポケモンに▼
+ノーマルタイプや　かくとうタイプの
+技を　当てることが▽
+できるように　なるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:00:23" />
+				Time="2012-02-07T12:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7105,10 +7107,12 @@
 ひざしがつよい　てんきの　ばあい▼
 すがたが　へんかして
 こうげきと　とくぼうの　のうりょくが▽
-あがるんだ▼</Text>
+あがるんだ▼
+ダブルバトルや　トリプルバトルだと
+みかたの　のうりょくも　あがるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-31T12:29:51" />
+				Time="2012-02-07T12:18:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7121,10 +7125,12 @@
 ひざしがつよい　天候の　場合▼
 姿が　変化して
 攻撃と　特防の　能力が▽
-あがるんだ▼</Text>
+あがるんだ▼
+ダブルバトルや　トリプルバトルだと
+味方の　能力も　あがるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-31T12:29:44" />
+				Time="2012-02-07T12:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
