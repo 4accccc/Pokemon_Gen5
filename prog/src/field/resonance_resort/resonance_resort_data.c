@@ -2289,7 +2289,7 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk, s64 now 
     };
     static const u32 sc_extend_num_time[RESORT_EXTEND_TYPE_MAX+1] =
     {
-      1*60,3*60,4*60,5*60,6*60,7*60,8*60,1440*60
+      10*60,20*60,30*60,40*60,50*60,60*60,70*60,1440*60
     };
 
     int extend_num  = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
