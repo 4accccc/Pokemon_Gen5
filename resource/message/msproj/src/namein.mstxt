@@ -507,7 +507,7 @@
 にゅうりょく　してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T07:11:53" />
+				Time="2012-02-07T12:10:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -519,7 +519,7 @@
 入力してください</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-26T07:11:48" />
+				Time="2012-02-07T12:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -832,11 +832,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲームシンクIDコードが
+			<Text>ゲームシンクＩＤコードが
 まちがっています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T07:25:37" />
+				Time="2012-02-07T12:11:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -844,11 +844,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲームシンクIDコードが
+			<Text>ゲームシンクＩＤコードが
 間違っています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-28T07:25:35" />
+				Time="2012-02-07T12:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
