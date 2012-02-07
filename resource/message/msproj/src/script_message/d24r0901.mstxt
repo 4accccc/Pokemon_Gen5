@@ -1217,10 +1217,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ああ……　まだ
-しらべている　とちゅう　なんだ</Text>
+しらべている　とちゅう　なんだ▼
+リバースマウンテンの　そとにも
+ポケモンが　いるもんね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T05:14:44" />
+				Time="2012-02-07T12:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1229,10 +1231,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ああ……　まだ
-調べている　途中　なんだ</Text>
+調べている　途中　なんだ▼
+リバースマウンテンの　外側にも
+ポケモンが　いるもんね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T05:14:44" />
+				Time="2012-02-07T12:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1341,10 +1345,10 @@
 かげんして　こうげきする　わざ▼
 ポケモンを　つかまえて
 せいそくちリストを　うめていくのに▽
-やくだつ　わざマシン　でしょ！▼</Text>
+やくだつ　わざマシン　でしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T09:16:56" />
+				Time="2012-02-07T11:45:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1357,10 +1361,10 @@
 加減して　攻撃する　技▼
 ポケモンを　つかまえて
 せいそくちリストを　埋めていくのに▽
-役立つ　わざマシン　でしょ！▼</Text>
+役立つ　わざマシン　でしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-19T09:17:34" />
+				Time="2012-02-07T11:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
