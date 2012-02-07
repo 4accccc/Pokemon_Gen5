@@ -3542,13 +3542,13 @@ msg_wbt_announce_07へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-これが　じつりょく　なのか？
-のこった　ポケモンは　[Digit:1digit ]ひきッ！▽
-みごとな　しょうり　ですっ！！▼</Text>
+			<Text>おおーっと
+のこった　ポケモンは　[Digit:1digit ]ひき！▼
+それでも　かったのは
+じつりょくと　いえるのかあ！？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-07T02:02:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T03:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -3556,13 +3556,13 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-これが　実力なのか？
-残った　ポケモンは　[Digit:1digit ]匹ッ！▽
-見事な　勝利ですっ！！▼</Text>
+			<Text>おおーっと
+残った　ポケモンは　[Digit:1digit ]ひき！▼
+それでも　勝ったのは
+実力と　いえるのかあ！？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-07T02:02:26" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T03:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
