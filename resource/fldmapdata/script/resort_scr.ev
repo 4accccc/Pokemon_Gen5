@@ -1385,10 +1385,6 @@ sub_resident_merge:
     _SYSWIN_MSG( resort_sys_07, POS_DOWN )
 	  _ME_WAIT()
 	  _AB_KEYWAIT_MARK()
-    _RESORT_SET_WORD( RESORT_WORD_WANT_SHOP, RESORT_WORD_PARAM_FRONT, 0, 1 )
-
-    _ME_PLAY( SEQ_ME_AVENUE_01 )
-    _SYSWIN_MSG( resort_sys_24, POS_DOWN )
     _SYSWIN_CLOSE()
 
     //Œš‚Ä‘Ö‚¦‚½
