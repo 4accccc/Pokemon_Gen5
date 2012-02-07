@@ -7443,7 +7443,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     FALSE,
-    TRUE,
+    FALSE,
 		MATRIX_ID_DUN0809, // camera_area
 		15,   // padding > placeicon
     5,
@@ -18027,7 +18027,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
 		TRUE,
     TRUE,
-    TRUE,
+    FALSE,
 		MATRIX_ID_C03_M, // camera_area
 		15,   // padding > placeicon
     2,
