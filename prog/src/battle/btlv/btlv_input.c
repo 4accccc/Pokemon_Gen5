@@ -1135,12 +1135,9 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
   GFL_TCB_Main( biw->tcbsys );
   INFOWIN_Update();
   //
-  // debug
-#ifdef PM_DEBUG
   //debug_btlv_audience( biw );
 #ifdef __AUDIENCE_PALCHG__
   btlv_main_palchg( biw );
-#endif
 #endif
 }
 
