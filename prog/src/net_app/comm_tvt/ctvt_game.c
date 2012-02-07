@@ -2350,7 +2350,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // else if文でないと、ワークがNULLの可能性がある
       //
       // 子が全員参加したかチェック
-      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == TRUE )
+      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == FALSE )
       {
         if( CTVT_GAME_IsAcceptNum( work, gameWork ) )
         {
@@ -2440,7 +2440,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // 
       // else if文でないと、ワークがNULLの可能性がある
       // 
-      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == TRUE )
+      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == FALSE )
       {
         // リトライ決定 常時送信
         CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_DECIDE_RETRY );
