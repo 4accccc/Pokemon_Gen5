@@ -598,6 +598,9 @@ sub_receipt_challenge_single_double:
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
 
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
+
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
   //フェスミッション強制終了
@@ -764,6 +767,9 @@ sub_receipt_challenge_multi_ai:
   
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
+
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
@@ -1203,6 +1209,9 @@ sub_receipt_challenge_multi_comm:
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
 
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
+
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
   //フェスミッション強制終了
@@ -1423,6 +1432,9 @@ sub_receipt_challenge_wifi:
   //バトルサブウェイ挑戦中のビーコンセット
   //100528 wifiトレイン挑戦中は出さない事になりました。
   //_BEACON_SET_REQ_SUBWAY_START()
+
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
 
   //リゾートレコード
   _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
@@ -2664,8 +2676,6 @@ _RET
 //--------------------------------------------------------------
 sub_common_map_change_train:
 {
-  // レコードを加算：バトルサブウェイに挑戦した回数
-  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()
