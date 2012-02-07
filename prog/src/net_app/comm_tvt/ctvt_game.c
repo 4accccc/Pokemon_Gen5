@@ -4307,6 +4307,10 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
         // 2種類のテクスチャをはる
+        //
+        // 通常顔と困り顔
+        // 0と2番目のキャプチャ
+        //
         for( type=0; type<2; type++ )
         {
 
@@ -4315,23 +4319,34 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
           NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
           u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
           u32 tex_size = NNS_GfdGetTexKeySize(texkey);
+          u16 cap_idx = 0;
 
           // 転送
           {
             u16 tex_offset = (128*2);
             dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
             // 貼り付ける画像選択
+            if( type == 0 )
+            {
+              cap_idx = BALLOON_NORMAL;    // 通常顔
+            }
+            else if( type == 1 )
+            {
+              cap_idx = BALLOON_BAD;    // 困り顔
+            }
+
+            // 貼り付け
             if( selfId == i )
             {
               // TWLはキャプチャ画像、NITOROはキャラ画像
-              src = (u16*)gameWork->p_cam_param->p_cap[type];
+              src = (u16*)gameWork->p_cam_param->p_cap[ cap_idx ];
             }
             else
             {
               // 他のメンバーの場合
               // 
               // TWLなら受信した画像、NITOROならキャラ画像
-              src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[type];
+              src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[ cap_idx ];
             }
             size = CAPTURE_SIZE;
             rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
