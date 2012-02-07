@@ -177,8 +177,12 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_BSubway[] = {
   { dni_record_111,  7, &DNP_Record_BSubway }, // Sダブルトレイン現在連勝数
   { dni_record_112,  8, &DNP_Record_BSubway }, // マルチトレイン最大連勝数
   { dni_record_113,  9, &DNP_Record_BSubway }, // マルチトレイン現在連勝数
+  { dni_record_136,  14, &DNP_Record_BSubway }, // 通信マルチトレイン現在連勝数
+  { dni_record_137,  15, &DNP_Record_BSubway }, // 通信マルチトレイン最大連勝数
   { dni_record_114, 10, &DNP_Record_BSubway }, // Sマルチトレイン最大連勝数
   { dni_record_115, 11, &DNP_Record_BSubway }, // Sマルチトレイン現在連勝数
+  { dni_record_138, 16, &DNP_Record_BSubway }, // S通信マルチトレイン現在連勝数
+  { dni_record_139, 17, &DNP_Record_BSubway }, // S通信マルチトレイン最高連勝数
   { dni_record_116, 12, &DNP_Record_BSubway }, // WiFiトレイン最大連勝数
   { dni_record_117, 13, &DNP_Record_BSubway }, // WiFiトレイン現在連勝数
   { dni_record_124, RECID_BSUB_CHALLENGE,     &DNP_Record_1 }, // バトルサブウェイに挑戦した回数

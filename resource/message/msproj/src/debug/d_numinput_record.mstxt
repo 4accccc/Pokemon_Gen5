@@ -5556,4 +5556,104 @@
 				Time="2011-09-04T09:26:34" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="dni_record_136">
+		<LanguageCell
+			Language="JPN">
+			<Text>通信マルチトレイン現在連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:22:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信マルチトレイン現在連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:22:58" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_137">
+		<LanguageCell
+			Language="JPN">
+			<Text>通信マルチトレイン最高連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:42:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:22:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信マルチトレイン最高連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:42:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:22:58" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_138">
+		<LanguageCell
+			Language="JPN">
+			<Text>S通信マルチトレイン現在連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>S通信マルチトレイン現在連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_139">
+		<LanguageCell
+			Language="JPN">
+			<Text>S通信マルチトレイン最高連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:42:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>S通信マルチトレイン最高連勝数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:42:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2012-02-06T08:23:49" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

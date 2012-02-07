@@ -682,6 +682,10 @@ static u32 DebugGetBSubway( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
   case 11: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_S_MULTI ); break;
   case 12: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_WIFI ); break;
   case 13: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_WIFI ); break;
+  case 14: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_COMM_MULTI ); break;
+  case 15: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_COMM_MULTI ); break;
+  case 16: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_S_COMM_MULTI ); break;
+  case 17: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_S_COMM_MULTI ); break;
   default: GF_ASSERT(0);
   }
   return value;
@@ -706,6 +710,10 @@ static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u3
   case 11: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_S_MULTI, value ); break;
   case 12: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_WIFI, value ); break;
   case 13: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_WIFI, value ); break;
+  case 14: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_COMM_MULTI, value ); break;
+  case 15: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_COMM_MULTI, value ); break;
+  case 16: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_S_COMM_MULTI, value ); break;
+  case 17: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_S_COMM_MULTI, value ); break;
   default: GF_ASSERT(0);
   }
 }
