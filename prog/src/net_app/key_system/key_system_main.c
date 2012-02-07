@@ -290,6 +290,8 @@ static GFL_PROC_RESULT Key_System_Proc_Main
       //通信エラーが起こったら強制的にメインメニューへ
       KEYSYS_SEQ_Pop( p_wk->p_seq, KeySys_Seq_Main );  //積んだシーケンスを基底を残しクリア
       KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );  //どんな画面も強制クリア
+
+      KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_FORCE, 1 );
       if( p_wk->p_text )
       {
         KEYSYS_TEXT_Delete( p_wk );
@@ -826,6 +828,10 @@ void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk )
     case KEYSYS_BG_PLTFADE_REQ_DEMO_TO_CYGNUS:
       p_start   = p_wk->cyg_demo_plt;
       p_end     = p_wk->cygnus_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_MAIN_FORCE:
+      p_start   = p_wk->main_menu_plt;
+      p_end     = p_wk->main_menu_plt;
       break;
     }
 

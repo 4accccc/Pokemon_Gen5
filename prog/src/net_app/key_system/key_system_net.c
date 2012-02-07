@@ -95,6 +95,7 @@ struct _KEYSYS_NET_WORK
   KEYSYS_NET_ERROR        error;
   u32                     error_msg;
   BOOL                    is_cancel;
+  BOOL                    is_err_through;
 };
 
 //=============================================================================
@@ -473,6 +474,11 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
     return KEYSYS_NET_ERROR_TYPE_NONE;
   }
 
+  if( p_wk->is_err_through )
+  {
+    return KEYSYS_NET_ERROR_TYPE_NONE;
+  }
+
   switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
@@ -549,7 +555,6 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
   case KEYSYS_NET_TYPE_WIFI_NTTP:
 
     NetErr_ExitNetSystem();
-    NetErr_DispCallPushPop();
     NetErr_ErrWorkInit();
     GFL_NET_StateClearWifiError();
     DWC_ClearError(); 
@@ -573,6 +578,18 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
 void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl )
 {
   p_wk->p_svl = p_svl;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラーをスルーするフラグ
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ *	@param	is_through エラースルーフラグ
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_SetErrorThrough( KEYSYS_NET_WORK *p_wk, BOOL is_through )
+{
+  p_wk->is_err_through = is_through;
 }
 
 //=============================================================================

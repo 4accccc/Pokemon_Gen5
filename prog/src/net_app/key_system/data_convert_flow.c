@@ -807,6 +807,7 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_MSG_INPUT_WAIT:
     if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
+      KEYSYS_NET_SetErrorThrough( p_wk->p_net, TRUE );
       (*p_seq)++;
     }
     break;
@@ -832,6 +833,7 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_CHECK_INPUT:
+    KEYSYS_NET_SetErrorThrough( p_wk->p_net, FALSE );
     if( p_wk->p_gamesync_id_code == NULL )
     {
       *p_seq = SEQ_MSG_CANCEL_START;

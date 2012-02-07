@@ -224,3 +224,5 @@ extern KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk );
 extern void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk );
 
 extern void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl );
+
+extern void KEYSYS_NET_SetErrorThrough( KEYSYS_NET_WORK *p_wk, BOOL is_through );

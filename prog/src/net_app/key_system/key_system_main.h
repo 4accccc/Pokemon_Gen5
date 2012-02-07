@@ -180,6 +180,8 @@ typedef enum
   KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_MAIN,
   KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_DEMO,
   KEYSYS_BG_PLTFADE_REQ_DEMO_TO_CYGNUS,
+
+  KEYSYS_BG_PLTFADE_REQ_MAIN_FORCE,
 } KEYSYS_BG_PLTFADE_REQ;
 
 //=============================================================================
