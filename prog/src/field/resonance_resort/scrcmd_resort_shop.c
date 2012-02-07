@@ -3555,8 +3555,6 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
   fx32 fever_num = is_fever ? RESORT_CONST_FEVER_EXIST_COEFFEICENT: RESORT_CONST_FEVER_NONE_COEFFEICENT;
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
 
-  fx32 v;
-
   GF_ASSERT( city_lv != 0 );
 
   city_lv = MATH_CLAMP( city_lv, 0, RESORT_CONST_LEVEL_CAP );
@@ -3570,8 +3568,18 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
     city_lv = RESORT_CONST_LEVEL_CAP;
   }
 
-  v = FX_Mul( fever_num, RESORT_CONST_PRICE_COEFFEICENT );
-  price = price - FX_Whole(price * city_lv * v );
+  {
+    fx32 v1 = FX32_CONST( price * city_lv / 100 );
+    fx32 v2 = FX_Mul(v1,fever_num );
+    OS_Printf( "price=%d 1=%f 2=%f 3=%f\n", 
+        price, 
+        FX_FX32_TO_F32(v1),
+        FX_FX32_TO_F32(v2)
+        );
+
+    price = price - FX_Whole( v2 );
+  }
+
 
   //ŽlŽÌŒÜ“ü
   if( price %10 != 0 )
