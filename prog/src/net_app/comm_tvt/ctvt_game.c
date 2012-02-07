@@ -594,6 +594,37 @@ static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
 static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work );
 
 
+//-----------------------------------------------
+///	バルーンスマッシュのタッチパネルのタッチ範囲
+//===============================================
+enum{
+  TP_PINPOINT_L = 0,
+  TP_NORMAL_L = 1,
+  TP_NORMAL_L_MAX = 3,
+  TP_PINPOINT_R = 4,
+  TP_NORMAL_R = 5,
+  TP_NORMAL_R_MAX = 7,
+  TP_END,
+
+  TP_MAX,
+};
+
+static const GFL_UI_TP_HITTBL button_tbl[TP_MAX] =
+{
+  // 左
+  {168, 172, 16, 20 }, // ピンポイント範囲
+  {142, 192, 0, 47 }, // タッチ範囲
+  {129, 141, 0, 37 }, // タッチ範囲(誤差範囲)
+  {155, 192, 48, 64 },// タッチ範囲(誤差範囲)
+
+  // 右
+  {168, 172, 232, 236 }, // ピンポイント範囲
+  {142, 192, 208, 255 }, // タッチ範囲
+  {155, 192, 192, 207 }, // タッチ範囲(誤差範囲)
+  {129, 144, 217, 255 }, // タッチ範囲(誤差範囲)
+  {GFL_UI_TP_HIT_END,0,0,0}
+};
+
 #ifdef CTVT_GAME_DEBUG_MENU
 #include "debug/debugwin_sys.h"
 //-------------------------------------
@@ -3685,21 +3716,11 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE &&
       gameWork->timeLimit > 0 )
   {
-    static GFL_UI_TP_HITTBL button_tbl[5] =
-    {
-      // 左
-      {168, 172, 16, 20 }, // ピンポイント範囲
-      {142, 192, 0, 47 }, // タッチ範囲
-
-      // 右
-      {168, 172, 232, 236 }, // ピンポイント範囲
-      {142, 192, 208, 255 }, // タッチ範囲
-      {GFL_UI_TP_HIT_END,0,0,0}
-    };
+    
     int retTrg;
     BOOL isTouch = FALSE; // TRUE:タッチした
 
-#ifdef PM_DEBUG
+#if 0 
     button_tbl[0].rect.top -= gameWork->debug_touch_ex_r;
     button_tbl[0].rect.bottom += gameWork->debug_touch_ex_r;
     button_tbl[0].rect.left -= gameWork->debug_touch_ex_r;
@@ -3715,13 +3736,13 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 左右交互にタッチする
     // 左のタッチ判定
     if( ( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == anmseq_l ) 
-        && ( retTrg==0 || retTrg==1 ) )
+        && ( retTrg >= TP_PINPOINT_L && retTrg <= TP_NORMAL_L_MAX ) )
     {
       isTouch = TRUE;
     }
     // 右のタッチ判定
     if( ( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == anmseq_r ) 
-        && ( retTrg==2 || retTrg==3 ) )
+        && ( retTrg >= TP_PINPOINT_R && retTrg <= TP_NORMAL_R_MAX ) )
     {
       isTouch = TRUE;
     }
@@ -3731,7 +3752,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     {
       CTVT_GAME_SEND_DATA data = {0};
       // 
-      if( retTrg == 0 || retTrg == 2 )
+      if( retTrg == TP_PINPOINT_L || retTrg == TP_PINPOINT_R )
       {
         // ピンポイントタッチ
         // 通信データ送信
@@ -3740,7 +3761,6 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         PMSND_PlaySystemSE( SEQ_SE_LCG_10 );
       }
       else
-      if( retTrg == 1 || retTrg == 3 )
       {
         // 通信データ送信
         CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
@@ -3780,7 +3800,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         gameWork->touch_anmseq = anmseq_l;
 
         // ピンポイントタッチならエフェクト再生
-        if( retTrg == 2 )
+        if( retTrg == TP_PINPOINT_R )
         {
           GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPinPointEffectR[gameWork->pinpoint_effect_cnt_r], TRUE );
           GFL_CLACT_WK_ResetAnm( gameWork->clwkPinPointEffectR[gameWork->pinpoint_effect_cnt_r] );
@@ -3804,7 +3824,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         gameWork->touch_anmseq = anmseq_r;
 
         // ピンポイントタッチならエフェクト再生
-        if( retTrg == 0 )
+        if( retTrg == TP_PINPOINT_L )
         {
           GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPinPointEffectL[gameWork->pinpoint_effect_cnt_l], TRUE );
           GFL_CLACT_WK_ResetAnm( gameWork->clwkPinPointEffectL[gameWork->pinpoint_effect_cnt_l] );
