@@ -3638,18 +3638,6 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       // タイムゲージ描画
       draw_timebar( gameWork );
     }
-
-    if( gameWork->timeLimit == 0 )
-    {
-      // 終了のホイッスル音
-      PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // ホイッスル音
-
-      // 風船非表示
-      for( i=0; i<CTVT_MEMBER_NUM; i++ )
-      {
-        gameWork->p_balloon2[i]->visible = FALSE;
-      }
-    }
   }
 
   // 残り時間でタッチボタンを変更
@@ -3867,6 +3855,18 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   {
     ICHI_Printf("TimeLimit が0 \n");
     gameWork->frame++;
+
+    // 終了のホイッスル音
+    PMSND_PlaySystemSE( SEQ_SE_LCG_04 );    // ホイッスル音
+
+    // 風船非表示
+    for( i=0; i<CTVT_MEMBER_NUM; i++ )
+    {
+      gameWork->p_balloon2[i]->visible = FALSE;
+    }
+    // 非表示を更新
+    GRAPHIC_Draw2( gameWork );
+
     // 終了時に親ならスコア送信
     if( selfId == 0 )
     {
