@@ -17123,3 +17123,34 @@
 	.short	\enable
 	.short	\type
 	.endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _SET_EVT_LOCK
+ * @brief イベントロックのセット
+ * @param param prog/src/field/evt_lock_def.hにある定義
+ */
+//--------------------------------------------------------------
+#define _SET_EVT_LOCK( param )  \
+    _ASM_SET_EVT_LOCK param
+
+	.macro	_ASM_SET_EVT_LOCK param
+	.short	EV_SEQ_SET_EVT_LOCK
+	.short	\param
+	.endm
+//--------------------------------------------------------------
+/**
+ * @def   _GET_EVT_LOCK
+ * @brief イベントロックの取得
+ * @param param prog/src/field/evt_lock_def.hにある定義
+ * @param retwk TRUEならばロック解除  FALSEならば解除していない
+ */
+//--------------------------------------------------------------
+#define _GET_EVT_LOCK( param, ret_wk )  \
+    _ASM_GET_EVT_LOCK param, ret_wk
+
+	.macro	_ASM_GET_EVT_LOCK param, ret_wk
+	.short	EV_SEQ_GET_EVT_LOCK
+	.short	\param
+	.short	\ret_wk
+	.endm

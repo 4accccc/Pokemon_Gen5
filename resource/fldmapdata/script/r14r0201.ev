@@ -35,37 +35,21 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START   ev_zone_r14r0201
 {
+  //ランドロスチェック付近を書き換えました12/02/7nagihashi
 
   //チェックのための変数定義
-  DEFINE_LOCAL LWK_PARTY_NUM
-  DEFINE_LOCAL LWK_COUNT_NUM
-  DEFINE_LOCAL LWK_MONS_NO
-  DEFINE_LOCAL LWK_FORM_NO
+  DEFINE_LOCAL LWK_POKE_POS
   DEFINE_LOCAL LWK_CHECK_RESULT
+  DEFINE_LOCAL LWK_EVT_LOCK
   
-  //手持ちの数をチェックする
-  _GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_TOTAL)
+  //ランドロスがいるか確認
+  _GET_EVT_POKE_POS( MONSNO_RANDOROSU, FALSE, LWK_POKE_POS, LWK_CHECK_RESULT )
   
-  //手持ち分だけランドロスのチェックを行う
-  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
-    
-    //指定POSの種族をチェック
-    _GET_PARTY_POKE_MONSNO( LWK_MONS_NO, LWK_COUNT_NUM )
-    //指定POSのFORMNOをチェック
-    _GET_PARTY_POKE_FORMNO( LWK_FORM_NO, LWK_COUNT_NUM )
-    
-    //条件
-    IF $LWK_MONS_NO == MONSNO_652 && $LWK_FORM_NO == FORMNO_652_AR THEN
-      $LWK_CHECK_RESULT += 1
-    ENDIF
+  //イベントロックが解除されているか
+  _GET_EVT_LOCK( EVT_LOCK_NO_RANDOROSU, LWK_EVT_LOCK )
   
-  //カウントアップ
-  $LWK_COUNT_NUM +=1
-  
-  ENDWHILE
-  
-  //イベントを終了しておらずランドロスが手持ちにいる
-  IF $LWK_CHECK_RESULT >= 1 && $WK_SCENE_R14R0201_RANDORUS != 2 THEN
+  //イベントを終了しておらずランドロスが手持ちにいるかつ、イベントロック解除されている
+  IF $LWK_CHECK_RESULT == TRUE && $WK_SCENE_R14R0201_RANDORUS != 2 && $LWK_EVT_LOCK == TRUE THEN
     
     //老人を表示に
     _FLAG_RESET( FV_R14R0201_OLDMAN_01 )
@@ -157,6 +141,7 @@ EVENT_START   ev_pos_r14r0201_randorus
   
   //うつしががみ入手処理
   _ITEM_EVENT_KEYWAIT(ITEM_UTUSIKAGAMI, 1)
+  _SET_EVT_LOCK( EVT_LOCK_NO_UTUSIKAGAMI )
   
   //老人：うつしかがみを　つかうと
   _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_06, R14R0201_OLDMAN_01, POS_UR )

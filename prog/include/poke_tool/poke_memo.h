@@ -8,6 +8,7 @@
  * モジュール名：POKE_MEMO
  */
 //======================================================================
+#pragma once
 #include "poke_tool/poke_tool.h"
 
 #include "msg/msg_place_name.h"
@@ -75,6 +76,8 @@ typedef enum
   POKE_MEMO_EVENT_INSEKUTA,             //配布インセクタ
   POKE_MEMO_EVENT_SHEIMI,               //配布シェイミ
 
+  POKE_MEMO_EVENT_AR_SEARCHER_RANDOROSU,   //ARサーチャーランドロス evt_lockにてEVT_LOCK_NO_BORUTOROSUも調べること！内部ではやってくれない！
+
 }POKE_MEMO_EVENT_TYPE;
 
 
@@ -94,12 +97,12 @@ extern void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , 
 extern void POKE_MEMO_SetTrainerMemoARSearcher( POKEMON_PASO_PARAM *ppp );
 
 //イベント用ポケモンチェック
-extern const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type );
-extern const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type );
+extern const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my );
+extern const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my );
 
 //イベント後の処理を行う(2010映画配布用
-extern void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type );
-extern void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type );
+extern void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my );
+extern void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my );
 
 //地名→メッセージのdatIdとmessageId
 const ARCDATID POKE_PLACE_GetMessageDatId( const u32 place );

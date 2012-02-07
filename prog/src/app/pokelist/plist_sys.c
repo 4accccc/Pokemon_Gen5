@@ -52,6 +52,7 @@
 #include "musical/musical_system.h" //ミュージカル参加チェック用
 
 #include "test/ariizumi/ari_debug.h"
+#include "field/evt_lock.h"
 
 //======================================================================
 //  define
@@ -1782,7 +1783,8 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           }
           //うつしかがみチェック
           else if( work->plData->item == ITEM_UTUSIKAGAMI &&
-                   PLIST_DEMO_CheckTorosFormChange( work , work->selectPokePara ) == TRUE )
+                   PLIST_DEMO_CheckTorosFormChange( work , work->selectPokePara ) == TRUE &&
+                   EVTLOCK_CheckEvtLock( work->plData->misc, EVT_LOCK_NO_UTUSIKAGAMI, work->plData->mystatus ) == TRUE )
           {
             PLIST_DEMO_ChangeTorosForm( work , work->selectPokePara );
             work->plData->ret_mode = PL_RET_BAG;

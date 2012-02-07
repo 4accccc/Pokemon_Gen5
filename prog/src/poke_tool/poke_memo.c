@@ -381,18 +381,20 @@ static void POKE_MEMO_SetRomVersion( POKEMON_PASO_PARAM *ppp )
 }
 
 #pragma mark [>CheckEventPoke
-const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type )
+const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my )
 {
-  return POKE_MEMO_CheckEventPokePPP(PP_GetPPPPointer(pp),type);
+  return POKE_MEMO_CheckEventPokePPP(PP_GetPPPPointer(pp),type,my);
 }
-const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type )
+const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my )
 {
   const BOOL fastFlg = PPP_FastModeOn(ppp);
 
   const u32 monsNo = PPP_Get( ppp, ID_PARA_monsno , NULL );
+  const u32 formNo = PPP_Get( ppp, ID_PARA_form_no, NULL );
   const u32 birthPlace = PPP_Get( ppp, ID_PARA_birth_place , NULL );
   const u32 isEvent = PPP_Get( ppp, ID_PARA_event_get_flag , NULL );
   const BOOL isRare = PPP_CheckRare( ppp );
+  const BOOL isOyaPlayer  = PPP_IsMatchOya( ppp, my );
   BOOL ieEggBirth = FALSE;
 
   if( PPP_Get( ppp, ID_PARA_get_year  , NULL ) != 0 ||
@@ -482,20 +484,42 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
       return TRUE;
     }
     break;
+  case POKE_MEMO_EVENT_AR_SEARCHER_RANDOROSU:
+    //ARサーチャーランドロス
+    if( monsNo == MONSNO_RANDOROSU && formNo == FORMNO_RANDOROSU_AR )
+    {
+      NAGI_Printf( "Oya%d Birth%d egg%d ev%d\n", isOyaPlayer, birthPlace, ieEggBirth, isEvent );
+      //条件１  ARサーチャー経由
+      if( isOyaPlayer == TRUE
+        && birthPlace == POKE_MEMO_PLACE_AR_SEARCHER
+        && ieEggBirth == FALSE )
+      {
+        //evt_lockにてEVT_LOCK_NO_BORUTOROSUも調べること！
+        return TRUE;
+      }
+      //条件２配信経由
+      if( ieEggBirth == FALSE
+          && isEvent == 1 )
+      {
+        //evt_lockにてEVT_LOCK_NO_BORUTOROSUも調べること！
+        return TRUE;
+      }
+    }
+    break;
   }
   return FALSE;
 }
 
 //イベント後の処理を行う(2010映画配布用
-void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type )
+void POKE_MEMO_SetEventPoke_AfterEventPP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my )
 {
-  POKE_MEMO_SetEventPoke_AfterEventPPP( PP_GetPPPPointer(pp),type);
+  POKE_MEMO_SetEventPoke_AfterEventPPP( PP_GetPPPPointer(pp),type,my);
 }
 
-void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type )
+void POKE_MEMO_SetEventPoke_AfterEventPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_EVENT_TYPE type, const MYSTATUS *my )
 {
   const BOOL fastFlg = PPP_FastModeOn(ppp);
-  const BOOL flg = POKE_MEMO_CheckEventPokePPP( ppp , type );
+  const BOOL flg = POKE_MEMO_CheckEventPokePPP( ppp , type, my );
 
   if( flg == TRUE )
   {

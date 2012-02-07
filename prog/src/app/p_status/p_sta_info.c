@@ -603,18 +603,16 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   //場所はポケシフター対応で書き換える可能性あり。
   u32 place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
   u32 place2  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
+  MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
   //映画イベント配布チェック
-  const BOOL isEveSerebixiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF );
-  const BOOL isEveSerebixiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_AFT );
-  const BOOL isEveEnRaiSuiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF );
-  const BOOL isEveEnRaiSuiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_AFT );
+  const BOOL isEveSerebixiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF, myStatus );
+  const BOOL isEveSerebixiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_AFT, myStatus );
+  const BOOL isEveEnRaiSuiBef = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF, myStatus );
+  const BOOL isEveEnRaiSuiAft = POKE_MEMO_CheckEventPokePPP( ppp , POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_AFT, myStatus );
   const BOOL isMoveiEvent = ( isEveSerebixiBef|isEveSerebixiAft|isEveEnRaiSuiBef|isEveEnRaiSuiAft );
-  
+
   //自分のポケかチェック
-  {
-    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
-    isParent = PPP_IsMatchOya( ppp , myStatus );
-  }
+  isParent = PPP_IsMatchOya( ppp , myStatus );
   
 
 #if USE_STATUS_DEBUG

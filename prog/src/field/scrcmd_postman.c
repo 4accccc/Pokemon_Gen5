@@ -42,6 +42,7 @@
 
 #include "evt_lock.h" //EVTLOCK_SetEvtLock
 #include "item/itemsym.h" //ITEM_RIBATHITIKETTO
+#include "poke_tool/poke_memo.h"
 
 #include "src/net_app/mystery/mystery_inline.h"
 //======================================================================
@@ -75,6 +76,8 @@ typedef struct {
 static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork );
 static int searchEventDataPostmanObj( GAMEDATA * gamedata );
 static BOOL isLibertyTicketCard( const GIFT_PACK_DATA * gpd, u8 gift_type );
+static BOOL isRandorosAR( SCRCMD_WORK * work, const GIFT_PACK_DATA * gpd, u8 gift_type );
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, const GIFT_PACK_DATA * gpd );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -159,6 +162,13 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
           MISC * misc = GAMEDATA_GetMiscWork( gamedata );
           MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
           EVTLOCK_SetEvtLock( misc, EVT_LOCK_NO_VICTYTICKET, mystatus );
+        }
+        if( isRandorosAR( work, gpd, gift_type ) == TRUE )
+        {
+          //ランドロスARだった場合、イベントロック解除
+          MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+          MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+          EVTLOCK_SetEvtLock( misc, EVT_LOCK_NO_RANDOROSU, mystatus );
         }
       }
     }
@@ -374,12 +384,35 @@ static BOOL isLibertyTicketCard( const GIFT_PACK_DATA * gpd, u8 gift_type )
   if ( gpd->data.item.itemNo != ITEM_RIBATHITIKETTO	) return FALSE;
   return TRUE;
 }
+//--------------------------------------------------------------
+/**
+ * @brief ランドロスAR配布の不思議カードデータかのチェック
+ */
+//--------------------------------------------------------------
+static BOOL isRandorosAR( SCRCMD_WORK * work, const GIFT_PACK_DATA * gpd, u8 gift_type )
+{
+  if ( gift_type == MYSTERYGIFT_TYPE_POKEMON )
+  {
+    POKEMON_PARAM *pp = createPokemon( work, gpd );
+    if( pp != NULL )
+    {
+      MYSTATUS * mystatus = GAMEDATA_GetMyStatus( SCRCMD_WORK_GetGameData( work ) );
+      BOOL check = POKE_MEMO_CheckEventPokePP( pp, POKE_MEMO_EVENT_AR_SEARCHER_RANDOROSU, mystatus );
+
+      GFL_HEAP_FreeMemory( pp );
+
+      return check;
+    }
+
+  }
+  return FALSE;
+}
 //======================================================================
 //  ポケモン取得用関数
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, GIFT_PACK_DATA * gpd )
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, const GIFT_PACK_DATA * gpd )
 {
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );

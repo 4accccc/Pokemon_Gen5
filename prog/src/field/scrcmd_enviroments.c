@@ -42,6 +42,7 @@
 #include "report.h" //REPORT_SAVE_TYPE_VAL
 #include "savedata/misc.h"
 #include "ev_time.h"
+#include "field/evt_lock.h"
 
 
 //======================================================================
@@ -737,6 +738,40 @@ VMCMD_RESULT EvCmdSetSoftReset( VMHANDLE * core, void *wk )
     GF_ASSERT(0);
   }
 
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief イベントロック  セット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetEvtLock( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*    gameData   = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS*    mystatus = GAMEDATA_GetMyStatus(gameData);
+  MISC*        misc     = GAMEDATA_GetMiscWork( gameData );
+  u16 param = SCRCMD_GetVMWorkValue( core, work );
+
+  EVTLOCK_SetEvtLock( misc, param, mystatus );
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief イベントロック  取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetEvtLock( VMHANDLE * core, void *wk )
+{
+
+  SCRCMD_WORK* work = wk;
+  GAMEDATA*    gameData   = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS*    mystatus = GAMEDATA_GetMyStatus(gameData);
+  MISC*        misc     = GAMEDATA_GetMiscWork( gameData );
+  u16 param = SCRCMD_GetVMWorkValue( core, work );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = EVTLOCK_CheckEvtLock( misc, param, mystatus );
   return VMCMD_RESULT_CONTINUE;
 }
 

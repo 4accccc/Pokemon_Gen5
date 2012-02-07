@@ -27,6 +27,7 @@
 #include "poke_tool/poke_memo.h"
 #include "item/itemsym.h"
 #include "poke_tool/poke_personal.h"
+#include "field/evt_lock.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -149,7 +150,7 @@ typedef enum
 static CYGNUS_SAVE_STATUS CYGNUS_SAVE_GetStatus( const CYGNUS_SAVE_WORK *cp_wk );
 
 static BOOL CYGNUS_SAVE_IsEffectPoke( const CYGNUS_SAVE_WORK *cp_wk );
-static u32 CYGNUS_SAVE_GetEffectPoke( const CYGNUS_SAVE_WORK *cp_wk, u32 idx );
+static s32 CYGNUS_SAVE_GetEffectPokeIndex( const CYGNUS_SAVE_WORK *cp_wk, u32 idx );
 
 static void CYGNUS_SAVE_StartSave( CYGNUS_SAVE_WORK *p_wk );
 static BOOL CYGNUS_SAVE_MainSave( CYGNUS_SAVE_WORK *p_wk );
@@ -626,7 +627,7 @@ static void DataConv_Seq_Demo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     (*p_seq)++;
     break;
   case SEQ_CHECK_END_SP_POKE:
-    if( CYGNUS_SAVE_GetEffectPoke(p_wk->p_cyg_sv, ++p_wk->cnt ) != 0 )
+    if( CYGNUS_SAVE_GetEffectPokeIndex(p_wk->p_cyg_sv, ++p_wk->cnt ) != -1 )
     {
       (*p_seq)  = SEQ_CALL_DEMO;
     }
@@ -678,7 +679,9 @@ static void DataConv_Seq_DemoOne( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   {
   case SEQ_DEMO_START:
     {
-      POKEMON_PARAM *p_pp = CYGNUS_SAVE_CreatePP( p_wk->p_cyg_sv, p_wk->cnt, HEAPID_KEY_SYSTEM );
+      s32 idx = CYGNUS_SAVE_GetEffectPokeIndex(p_wk->p_cyg_sv, p_wk->cnt );
+      POKEMON_PARAM *p_pp = CYGNUS_SAVE_CreatePP( p_wk->p_cyg_sv, idx, HEAPID_KEY_SYSTEM );
+      GF_ASSERT( idx != -1 && p_pp );
       CYGNUS_DEMO_Load( p_wk->p_cyg_demo, p_pp );
       GFL_HEAP_FreeMemory( p_pp );
     }
@@ -697,7 +700,16 @@ static void DataConv_Seq_DemoOne( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     PMSND_PlaySE( CYGNUS_SE_RECV_PRESENT );
     KEYSYS_TEXT_CreateEx( p_wk, KEYSYS_BG_FRAME_WND_M, HEAPID_KEY_SYSTEM );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
-    WORDSET_RegisterPokeMonsNameNo( p_wk->p_word, 0, CYGNUS_SAVE_GetEffectPoke(p_wk->p_cyg_sv,p_wk->cnt) );
+
+    {
+      s32 idx = CYGNUS_SAVE_GetEffectPokeIndex(p_wk->p_cyg_sv, p_wk->cnt);
+      u32 no;
+      CYGNUS_REWARD_TYPE type;
+      BOOL ret = CYGNUS_SAVE_GetReward( p_wk->p_cyg_sv, idx, &type, &no );
+
+      GF_ASSERT( idx != -1 && ret && type == CYGNUS_REWARD_TYPE_POKEMON );
+      WORDSET_RegisterPokeMonsNameNo( p_wk->p_word, 0, no );
+    }
     {
       STRBUF* p_str = WORDSET_TOOL_CreateExpandStr( p_wk->p_word, p_wk->p_msg, CYGNUS_04, HEAPID_KEY_SYSTEM );
       KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_str, KEYSYS_TEXT_TYPE_STREAM_WAIT );
@@ -1636,7 +1648,7 @@ static const  CYGNUS_REWARD_DATA sc_debug_data[] =
     1,
     PM_MALE,
     0,
-    TRUE
+    FALSE
   },
   {
     CYGNUS_REWARD_TYPE_POKEMON,
@@ -1652,7 +1664,7 @@ static const  CYGNUS_REWARD_DATA sc_debug_data[] =
     1,
     PM_MALE,
     0,
-    FALSE
+    TRUE
   },
   {
     CYGNUS_REWARD_TYPE_POKEMON,
@@ -1763,7 +1775,8 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
   }
 
 #ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_R|PAD_BUTTON_L) )
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)
+      && (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) )
   {
     p_wk->out_state = CYGSAVE_STATE_BREAK;
   }
@@ -1861,25 +1874,25 @@ static BOOL CYGNUS_SAVE_IsEffectPoke( const CYGNUS_SAVE_WORK *cp_wk )
  *	@param	const CYGNUS_SAVE_WORK *cp_wk ワーク
  *	@param	idx インデックス
  *
- *	@return   モンスターナンバー  いない場合は０
+ *	@return   モンスターナンバー  いない場合は-1
  */
 //-----------------------------------------------------------------------------
-static u32 CYGNUS_SAVE_GetEffectPoke( const CYGNUS_SAVE_WORK *cp_wk, u32 idx )
+static s32 CYGNUS_SAVE_GetEffectPokeIndex( const CYGNUS_SAVE_WORK *cp_wk, u32 idx )
 {
   int i;
   int cnt = 0;
   for( i = 0; i < cp_wk->reward_num; i++ )
   {
-    if( cp_wk->reward_data[i].is_demo )
+    if( cp_wk->reward_data[i].type == CYGNUS_REWARD_TYPE_POKEMON
+        && cp_wk->reward_data[i].is_demo )
     {
       if( cnt++ == idx )
       {
-        return cp_wk->reward_data[i].no;
+        return i;
       }
     }
   }
-
-  return 0;
+  return -1;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2020,7 +2033,7 @@ static POKEMON_PARAM * CYGNUS_SAVE_CreatePP( const CYGNUS_SAVE_WORK *cp_wk, u32 
     u16 mons_no = cp_wk->reward_data[idx].no;
     u8  form_no = cp_wk->reward_data[idx].form;
     u8  sex = cp_wk->reward_data[idx].sex;
-    u8  lv  = 100;
+    u8  lv  = 5;
     u32 id = MyStatus_GetID(GAMEDATA_GetMyStatus(cp_wk->p_gamedata));
 
     u32 rand = POKETOOL_CalcPersonalRandSpec( id, mons_no, form_no, sex, PTL_TOKUSEI_SPEC_BOTH, PTL_RARE_SPEC_FALSE );
@@ -2214,6 +2227,15 @@ static void CYGNUS_SAVE_SetGameDataReward( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID
       POKEMON_PARAM *p_pp = CYGNUS_SAVE_CreatePP( p_wk, i, heapID );
       if( p_pp != NULL )
       {
+        //ランドロスがいた場合イベントロック解除
+        MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( p_wk->p_gamedata );
+        if( POKE_MEMO_CheckEventPokePP( p_pp, POKE_MEMO_EVENT_AR_SEARCHER_RANDOROSU, p_mystatus ) )
+        {
+          MISC * p_misc = GAMEDATA_GetMiscWork( p_wk->p_gamedata );
+          EVTLOCK_SetEvtLock( p_misc, EVT_LOCK_NO_RANDOROSU, p_mystatus );
+        }
+
+        //ボックスに格納
         BOXDAT_PutPokemon( p_box, PP_GetPPPPointer(p_pp) );
         GFL_HEAP_FreeMemory( p_pp );
       }

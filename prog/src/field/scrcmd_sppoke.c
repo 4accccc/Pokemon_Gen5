@@ -35,7 +35,7 @@
 
 static BOOL SearchEventPoke( POKEPARTY* party,
                              const int inMonsNo, const int inSkillNo, const u8 inFormNo, const int inEventFlg,
-                             u16 *outPos );
+                             u16 *outPos, const MYSTATUS *my );
 
 //--------------------------------------------------------------
 /**
@@ -192,6 +192,7 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY* party    = GAMEDATA_GetMyPokemon( gdata );
+  MYSTATUS *my = GAMEDATA_GetMyStatus(gdata);
   u16 monsno = SCRCMD_GetVMWorkValue( core, work );
   u16 skill_flg = SCRCMD_GetVMWorkValue( core, work );
   u16 *poke_pos = SCRCMD_GetVMWork( core, work );
@@ -233,6 +234,11 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
     skill_no = WAZANO_NULL;
     form_no = EVT_POKE_FORM_NO_NULL;
     break;
+  case MONSNO_RANDOROSU:
+    evt_flg = POKE_MEMO_EVENT_AR_SEARCHER_RANDOROSU;
+    skill_no = WAZANO_NULL;
+    form_no = FORMNO_RANDOROSU_AR;
+    break;
   default:
     *ret = FALSE;
     return VMCMD_RESULT_CONTINUE;
@@ -241,7 +247,7 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   if ( skill_flg == FALSE ) skill_no = WAZANO_NULL;
 
   *ret = SearchEventPoke(
-      party, monsno, skill_no, form_no, evt_flg, poke_pos );
+      party, monsno, skill_no, form_no, evt_flg, poke_pos,my );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -266,7 +272,7 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static BOOL SearchEventPoke( POKEPARTY* party,
                              const int inMonsNo, const int inSkillNo, const u8 inFormNo, const int inEventFlg,
-                             u16 *outPos )
+                             u16 *outPos, const MYSTATUS *my )
 {
   BOOL rc;
   int i,num;
@@ -278,7 +284,7 @@ static BOOL SearchEventPoke( POKEPARTY* party,
   {
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, i);
     //配布チェック
-    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue;
+    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg,my ) ) continue;
     //モンスターナンバーチェック
     if ( PP_Get( pp, ID_PARA_monsno, NULL ) != inMonsNo ) continue;
 
@@ -319,6 +325,7 @@ VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY* party    = GAMEDATA_GetMyPokemon( gdata );
+  MYSTATUS *my  = GAMEDATA_GetMyStatus(gdata);
   u16 monsno = SCRCMD_GetVMWorkValue( core, work );
   u16 poke_pos = SCRCMD_GetVMWorkValue( core, work );
   int evt_flg;
@@ -341,14 +348,14 @@ VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk )
   {
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, poke_pos);
     //配布チェック
-    if ( !POKE_MEMO_CheckEventPokePP( pp ,evt_flg ) )
+    if ( !POKE_MEMO_CheckEventPokePP( pp ,evt_flg, my ) )
     {
       //フラグ成立していない
       return VMCMD_RESULT_CONTINUE;
     }
 
     //書き換え
-    POKE_MEMO_SetEventPoke_AfterEventPP( pp , evt_flg );
+    POKE_MEMO_SetEventPoke_AfterEventPP( pp , evt_flg, my );
   }
 
   return VMCMD_RESULT_CONTINUE;

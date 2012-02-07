@@ -1167,6 +1167,10 @@
   DEF_CMD( EvCmdIsMusicalGoodsComplete, EV_SEQ_IS_MUSICAL_GOODS_COMPLETE )
   NO_CMD()
 
+  //イベントロック
+  DEF_CMD( EvCmdSetEvtLock, EV_SEQ_SET_EVT_LOCK )
+  DEF_CMD( EvCmdGetEvtLock, EV_SEQ_GET_EVT_LOCK )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -57,6 +57,8 @@ void PLIST_DATA_Init( PLIST_DATA* plist, GAMEDATA* gdata, PL_MODE_TYPE mode, POK
   plist->rnd_map   = RANDOMMAP_SAVE_GetRandomMapSave( save );
   plist->zkn       = GAMEDATA_GetZukanSave( gdata );   // はっきんだまギラティナ用
   plist->shortcut  = SaveData_GetShortCut( save );
+  plist->misc      = GAMEDATA_GetMiscWork( gdata );
+  plist->mystatus  = GAMEDATA_GetMyStatus( gdata );
 
   plist->season    = GAMEDATA_GetSeasonID( gdata ); 
 

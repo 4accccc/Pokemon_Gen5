@@ -51,3 +51,5 @@ extern VMCMD_RESULT EvCmdChkStartMenuViewFlag( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdChkDendouData( VMHANDLE * core, void * wk ); 
 extern VMCMD_RESULT EvCmdSetZukanHabitatFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetSoftReset( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdSetEvtLock( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetEvtLock( VMHANDLE * core, void *wk );
