@@ -1812,11 +1812,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンヨウレストラン
-くさ　みず　ほのおの　コーディネート</Text>
+			<Text>よく　ていれ　されている　かだん
+くさきを　あいする　ひとがいるのかも</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:52:15" />
+				Time="2012-02-07T02:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1824,11 +1824,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンヨウレストラン
-くさ　みず　ほのおの　コーディネート</Text>
+			<Text>よく　手入れされている　かだん
+草木を　愛する　人がいるのかも</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T09:52:18" />
+				Time="2012-02-07T02:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
