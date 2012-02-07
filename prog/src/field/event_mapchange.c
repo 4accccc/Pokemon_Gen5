@@ -3197,10 +3197,9 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 { 
-
   RESORT_WORK *p_wk = GAMEDATA_GetReosrtWork(gamedata);
 
-  NAGI_Printf( "ZONEID=%d\n", zone_id );
+  NAGI_Printf( "mapchange ZONEID=%d\n", zone_id );
 
   //迎賓館のみ存在する拡張バッファをつくって登録
   if( ZONEDATA_IsResonanceResort( zone_id )
@@ -3239,6 +3238,43 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
   }
 
   RESORT_WORK_SetData( p_wk, RESORT_WORK_GET_PARAM_IS_MAPCHANGE, FALSE );
+
+  //人物の歩きフラグを落とす
+  {
+    enum
+    {
+      BUFF_CHECK_SAVE,
+      BUFF_CHECK_TEMP,
+      BUFF_CHECK_MAX,
+    };
+
+    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
+    RESORT_RECV_BUFF *p_buff[BUFF_CHECK_MAX]  = {0};
+    int i, j;
+    void **pp_temp_buff = GAMEDATA_GetResortBuffer(gamedata);
+      
+    p_buff[BUFF_CHECK_SAVE] = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+
+    if( *pp_temp_buff )
+    {
+      p_buff[BUFF_CHECK_TEMP] = *pp_temp_buff;
+    }
+
+    for( j = 0; j < BUFF_CHECK_MAX; j++ )
+    {
+      if( p_buff[j] )
+      {
+        for( i = 0; i < RESORT_RECV_BUFF_GetMax(p_buff[j]); i++ )
+        {
+          RESORT_RECV_DATA *p_resi = RESORT_RECV_BUFF_GetData( p_buff[j], i );
+          if( !RESORT_RECV_DATA_IsEmpty( p_resi ) )
+          {
+            RESORT_RECV_DATA_SetData( p_resi, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
+          }
+        }
+      }
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**

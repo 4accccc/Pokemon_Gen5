@@ -17749,4 +17749,134 @@
 				Time="2011-12-01T10:45:14" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="MERGE_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:35:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:35:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="MERGE_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>上書き</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:35:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>上書き</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:35:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="MERGE_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>初回</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>初回</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="MERGE_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>見た目</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>見た目</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="MERGE_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-07T13:36:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
