@@ -18911,14 +18911,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボウシの　トレーナー！
+			<Text>ようよう！　トレーナー！
 おめぇ　ちょうしに　のるなよ！▼
 おめぇの　ちからが　まわりが
 いうほどの　もんじゃないって▽
 おれが　しょうめい　してやる！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T03:47:20" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18926,14 +18926,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボウシの　トレーナー！
+			<Text>ようよう！　トレーナー！
 おめぇ　調子に乗るなよ！▼
 おめぇの力が
 周りが　いうほどの　もんじゃないって▽
 おれが　証明してやる！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T03:47:20" />
+				User="matsumiya:W00224"
+				Time="2012-02-07T12:12:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
