@@ -318,6 +318,10 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
         pp, POKE_MEMO_GAME_TRADE, mystatus, POKE_MEMO_PLACE_GAME_TRADE, heapID );
   }
 
+  // BTS 1477
+  // ‚È‚Â‚«“x‚ð70ŒÅ’è‚É‚·‚é
+  PP_Put( pp, ID_PARA_friend, 70 );
+
 #ifdef DEBUG_MODE
   PP_Dump( pp );
 #endif
