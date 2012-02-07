@@ -3537,4 +3537,71 @@ msg_wbt_announce_07へ</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_announce_14a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+これが　じつりょく　なのか？
+のこった　ポケモンは　[Digit:1digit ]ひきッ！▽
+みごとな　しょうり　ですっ！！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+これが　実力なのか？
+残った　ポケモンは　[Digit:1digit ]匹ッ！▽
+見事な　勝利ですっ！！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ワールド・チャンピオンズ限定アナウンス
+手持ちが０匹の場合に表示
+（ほろびのうた・てんこうダメージ）
+続けて　1回戦の場合は
+msg_wbt_announce_06へ
+2回戦の場合は
+msg_wbt_announce_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アナウンス
+シッポなしメッセージ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:06" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-02-07T02:02:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
