@@ -9734,12 +9734,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もしもし！
-[Name:TrainerName ]さん　ですか▼
+[Name:TrainerName ]さん　ですか?▼
 ……　……　……
 ……　……　……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T11:57:30" />
+				Time="2012-02-07T12:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10818,7 +10818,7 @@
 でんきタイプの　ポケモンが▽
 すき　なんですよ！▼
 カッコイイ　ポケモンが　おおくて
-いいですよね　でんきイプ▼
+いいですよね　でんきタイプ▼
 [Name:TrainerName ]さんも
 でんきタイプの▽
 ポケモンが　すきだと　いいのにな！▼
@@ -10827,7 +10827,7 @@
 そろそろ　しごとに　もどりまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T12:29:43" />
+				Time="2012-02-07T12:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10839,7 +10839,7 @@
 でんきタイプの　ポケモンが▽
 好き　なんですよ！▼
 カッコイイ　ポケモンが　おおくて
-いいですよね　でんきイプ▼
+いいですよね　でんきタイプ▼
 [Name:TrainerName ]さんも
 でんきタイプの▽
 ポケモンが　好きだと　いいのにな！▼
@@ -10848,7 +10848,7 @@
 そろそろ　仕事に　もどりまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T12:30:06" />
+				Time="2012-02-07T12:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11919,7 +11919,7 @@
 			Language="JPN">
 			<Text>まえに　いったかも　しれないけど▼
 ボクは　でんきタイプの
-ポケモンが　だいすき　なんだ！▼
+ポケモンも　だいすき　なんだ！▼
 ほとばしる　でんきを　みると
 パワーが　あふれてくる！▽
 そんな　みりょくを　かんじない？▼
@@ -11930,7 +11930,7 @@
 またね　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T12:24:10" />
+				Time="2012-02-07T12:09:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11940,7 +11940,7 @@
 			Language="JPN_KANJI">
 			<Text>前に　いったかも　しれないけど▼
 ボクは　でんきタイプの
-ポケモンが　大好き　なんだ！▼
+ポケモンも　大好き　なんだ！▼
 ほとばしる　でんきを　みると
 パワーが　あふれてくる！▽
 そんな　魅力を　感じない？▼
@@ -11951,7 +11951,7 @@
 またね　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T12:24:28" />
+				Time="2012-02-07T12:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12297,14 +12297,14 @@
 なかみが　カッコいいひと　だよ▼
 まだまだ　カッコわるいけどさ……▼
 いまの　しごとを　がんばっていれば
-いつか　なれると　おもっる！▼
+いつか　なれると　おもってる！▼
 だから　おうえん　してくれると
 うれしいな▼
 そろそろ　しごとに　もどります！
 またね　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T11:17:16" />
+				Time="2012-02-07T12:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12847,10 +12847,10 @@
 これで　いもうとに　かて……
 あっ　いや　なんでもないよ▼
 アハハ！
-サンキュ！　[[Name:TrainerName ]さん▼</Text>
+サンキュ！　[Name:TrainerName ]さん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T11:27:11" />
+				Time="2012-02-07T12:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13652,8 +13652,8 @@
 きれい　だったんだけど……▽
 [Name:TrainerName ]さんは　みた？▼
 流星も　たくさん　降ってきて
-本当にに　きれい　だったよ▼
-ボクが　流星に
+本当に　きれい　だったよ▼
+ボクが　流れ星に
 お願いを　しちゃうくらい　だからね▼
 えっ？▼
 アハハ！▼
@@ -13663,7 +13663,7 @@
 そろそろ　仕事に　もどるね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-02T11:19:30" />
+				Time="2012-02-07T12:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
