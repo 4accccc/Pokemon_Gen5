@@ -2312,16 +2312,24 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         APP_TASKMENU_CloseMenu( gameWork->cancelWork );
         gameWork->cancelWork = NULL;
       }
-
+      // BTS1532【「はい」を選んだ後に「中止」をタッチできる】
+      // 対処として中止を選ぶと中止にする
+      // よって中止ならリトライにいかない
+      // 
+      // else if文でないと、ワークがNULLの可能性がある
+      //
       // 子が全員参加したかチェック
-      if( CTVT_GAME_IsAcceptNum( work, gameWork ) )
+      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == TRUE )
       {
-        // 開始要求を送信し、確認待ちへ移行
+        if( CTVT_GAME_IsAcceptNum( work, gameWork ) )
         {
-          CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-          CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_START_RETRY );
-          gameWork->seq = SEQ_PARENT_RETRY2;
-          ICHI_Printf("子が全員リトライを選んだ\n");
+          // 開始要求を送信し、確認待ちへ移行
+          {
+            CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+            CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_START_RETRY );
+            gameWork->seq = SEQ_PARENT_RETRY2;
+            ICHI_Printf("子が全員リトライを選んだ\n");
+          }
         }
       }
     }
@@ -2395,16 +2403,24 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         APP_TASKMENU_CloseMenu( gameWork->cancelWork );
         gameWork->cancelWork = NULL;
       }
-
-      // リトライ決定 常時送信
-      CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_DECIDE_RETRY );
-
-      // 親から開始通知が来た
-      if( gameWork->isStartGame == TRUE )
+      // BTS1532【「はい」を選んだ後に「中止」をタッチできる】
+      // 対処として中止を選ぶと中止にする
+      // よって中止ならリトライにいかない
+      // 
+      // else if文でないと、ワークがNULLの可能性がある
+      // 
+      else if( APP_TASKMENU_IsDecide( gameWork->cancelWork ) == TRUE )
       {
-        gameWork->isStartGame = FALSE;
-        gameWork->seq = SEQ_CHILD_RETRY2;
-        ICHI_Printf("親から開始通知がきた\n");
+        // リトライ決定 常時送信
+        CTVT_COMM_SendGameReq_Flg( work, commWork, CCGF_DECIDE_RETRY );
+
+        // 親から開始通知が来た
+        if( gameWork->isStartGame == TRUE )
+        {
+          gameWork->isStartGame = FALSE;
+          gameWork->seq = SEQ_CHILD_RETRY2;
+          ICHI_Printf("親から開始通知がきた\n");
+        }
       }
     }
     else
