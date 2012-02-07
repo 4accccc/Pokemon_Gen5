@@ -529,6 +529,10 @@ ev_pkwd_show_watch_movie:
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
   _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
 
+  //ˆÃ“]’†‚ÉŽ©‹@‚ð‰º‚ÉŒü‚¯‚Ä‚¨‚­
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
 
