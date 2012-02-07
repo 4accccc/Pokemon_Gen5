@@ -1862,37 +1862,33 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         const POKEPARTY *party = GAMEDATA_GetMyPokemon(unisys->uniparent->game_data);
         
         UnionMsg_YesNo_Del(unisys);
-        // 「はい」なら各種チェック(チェックの結果、いいえになる事もある) swanで追加
-        if(result==TRUE){
-          //戦闘の時はレギュレーションを見て参加可能かチェック
-          if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
-              &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
-            UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
+        //戦闘の時はレギュレーションを見て参加可能かチェック
+        if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select, 
+            &situ->reg_temoti_fail_bit, &situ->reg_bbox_fail_bit) == FALSE){
+          UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
+          result = FALSE; //強制で「いいえ」を返す
+        }
+        else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_TRADE && result == TRUE){
+          GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+          if(PokeParty_GetPokeCountNotEgg(party) < 2){
+            //手持ちが2匹以上いないと交換できない
             result = FALSE; //強制で「いいえ」を返す
-          }
-          else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_TRADE && result == TRUE){
-            GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
-            if(PokeParty_GetPokeCountNotEgg(party) < 2){
-              //手持ちが2匹以上いないと交換できない
-              result = FALSE; //強制で「いいえ」を返す
-              situ->work = _RESULT_NO_TEMOTI_SHORT;
-            }
-          }
-          else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_GURUGURU && result == TRUE){
-            if(PokeParty_GetPokeCountOnlyDameEgg(party) > 0){
-              result = FALSE;
-              situ->work = _RESULT_NO_DAMETAMAGO;
-            }
-            else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){
-              result = FALSE;
-              situ->work = _RESULT_NO_EGG_SHORT;
-            }
+            situ->work = _RESULT_NO_TEMOTI_SHORT;
           }
         }
-        //「いいえ」ならチェック無しに断りが代入される
-        
-        situ->mycomm.mainmenu_yesno_result = result;
-        (*seq)++;
+        else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_GURUGURU && result == TRUE){
+          if(PokeParty_GetPokeCountOnlyDameEgg(party) > 0){
+            result = FALSE;
+            situ->work = _RESULT_NO_DAMETAMAGO;
+          }
+          else if(PokeParty_GetPokeCountOnlyEgg(party) == 0){
+            result = FALSE;
+            situ->work = _RESULT_NO_EGG_SHORT;
+          }
+        }
+      
+      situ->mycomm.mainmenu_yesno_result = result;
+      (*seq)++;
       }
     }
     break;
