@@ -718,7 +718,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 
     //名前を本体からコンバート
     {
-      UnicodeToStrcode( info.nickName, info.nickNameLength+1, namebuf, 5 + EOM_SIZE );
+      UnicodeToStrcode( info.nickName, info.nickNameLength, namebuf, 5 );
     }
 
     //性別を色からコンバート
