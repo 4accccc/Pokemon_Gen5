@@ -6204,10 +6204,12 @@
 	</row>
 
 	<row id="TRID_BADTEAM_02_TRMSG_POKE_ONE_2">
-		<language name="JPN" width="216">コラーッ！　てもち　１ぴきだとォ？▼
+		<language name="JPN" width="216">コラーッ！　げんきな　ポケモンが
+たったの　１ぴき　だとォ？▼
 ２ｖｓ１なんて　ふりな　しょうぶじゃ
 ワルの　なが　すたるだろうがッ！</language>
-		<language name="JPN_KANJI" width="216">コラーッ！　手持ち　１匹だとォ？▼
+		<language name="JPN_KANJI" width="216">コラーッ！　元気な　ポケモンが
+たったの　１匹だとォ？▼
 ２ｖｓ１なんて　不利な　勝負じゃ
 ワルの　名が　すたるだろうがッ！</language>
 	</row>
@@ -16127,9 +16129,9 @@
 
 	<row id="TRID_FUTAGO_09_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">ずーっと　ずーっと
-なかよしで　いたいな！▼</language>
+なかよしで　いたいな！</language>
 		<language name="JPN_KANJI" width="216">ずーっと　ずーっと
-なかよしで　いたいな！▼</language>
+なかよしで　いたいな！</language>
 	</row>
 
 	<row id="TRID_FUTAGO_09_TRMSG_POKE_ONE_1">
@@ -16148,9 +16150,9 @@
 
 	<row id="TRID_FUTAGO_09_TRMSG_FIGHT_AFTER_2">
 		<language name="JPN" width="216">２ひきの　ポケモンと　あそぶの！
-１ぴきじゃ　だめだよ！▼</language>
+１ぴきじゃ　だめだよ！</language>
 		<language name="JPN_KANJI" width="216">２ひきの　ポケモンと　あそぶの！
-１ぴきじゃ　だめだよ！▼</language>
+１ぴきじゃ　だめだよ！</language>
 	</row>
 
 	<row id="TRID_FUTAGO_09_TRMSG_POKE_ONE_2">
