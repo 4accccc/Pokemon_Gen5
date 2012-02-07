@@ -1352,10 +1352,14 @@ _ANIME_LABEL	anm_enemy_mix_out
 /**************************************************************/
 ev_special_result_msg:
 
-//生き残ったポケモン数を取得：０の場合はパーフェクトを示す
+//生き残ったポケモン数を取得：SCR_WBT_SURVIVAL_PERFECTの場合はパーフェクトを示す
 _WBT_GET_SURVIVAL_COUNT( SCWK_ANSWER )
-IF $SCWK_ANSWER == 0 THEN
+IF $SCWK_ANSWER == SCR_WBT_SURVIVAL_PERFECT THEN
   _GIZAPLAINWIN_MSG_POS( msg_wbt_announce_15, POS_UP )
+ELSIF $SCWK_ANSWER == 0 THEN
+  //残り0匹で勝利した場合は専用のメッセージ
+  _NUMBER( 0, SCWK_ANSWER, 1 )
+  _GIZAPLAINWIN_MSG_POS( msg_wbt_announce_14a, POS_UP )
 ELSE
   _NUMBER( 0, SCWK_ANSWER, 1 )
   _GIZAPLAINWIN_MSG_POS( msg_wbt_announce_14, POS_UP )

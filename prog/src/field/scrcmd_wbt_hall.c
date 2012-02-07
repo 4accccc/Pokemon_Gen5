@@ -235,8 +235,8 @@ VMCMD_RESULT EvCmdWBTGetSurvivalCount( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u8 count = WBTSYS_GetSurvivalCount( wbtsys, stage );
   if ( WBTSYS_GetPartyMax(wbtsys) == count )
-  { //Ÿ—˜‚Éc‚è0•C‚Í‚È‚¢B–³‚Ìê‡‚Í0‚ğ•Ô‚·‚±‚Æ‚Æ‚·‚é
-    count = 0;
+  { //  Š®‘SŸ—˜‚Ìê‡
+    count = SCR_WBT_SURVIVAL_PERFECT;
   }
   *ret_wk = count;
 

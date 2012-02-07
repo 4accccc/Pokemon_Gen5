@@ -747,8 +747,8 @@
 #define SCR_WBT_BATTLE_RESULT_LOSE      (0) ///<WBT対戦結果：敗北
 #define SCR_WBT_BATTLE_RESULT_WIN       (1) ///<WBT対戦結果：勝利
 #define SCR_WBT_BATTLE_RESULT_DRAW      (2) ///<WBT対戦結果：引き分け
-#define SCR_WBT_BATTLE_RESULT_DKO_WIN   (3) ///<WBT対戦結果：DKO -->勝利
-#define SCR_WBT_BATTLE_RESULT_DKO_LOSE  (4) ///<WBT対戦結果：DKO -->敗北
+
+#define SCR_WBT_SURVIVAL_PERFECT      (0xff)  ///<WBT勝利時の残り手持ちが完全に残っている場合
 
 #define SCR_WBT_DL_APP_WIFI           (0) ///<ダウンロードアプリ：WIFIからダウンロード
 #define SCR_WBT_DL_APP_WIRELESS       (1) ///<ダウンロードアプリ：通信でダウンロード
