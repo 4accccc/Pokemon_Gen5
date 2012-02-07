@@ -5014,8 +5014,8 @@ static void FinishInput( NAMEIN_WORK *p_wk )
     if( p_wk->p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
     {
       ConvertZenkakuStrToHankakuLargeStr( p_wk->p_param->strbuf );
-      STRINPUT_Delete( &p_wk->strinput );
-      STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_wk->p_param->strbuf) );
+      //STRINPUT_Delete( &p_wk->strinput );
+      //STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_wk->p_param->strbuf) );
     }
 
     //以前の文字列と一致したもしくはならば、キャンセルとみなす
