@@ -12,6 +12,9 @@
 #include "fmission_log_local.h"
 #include "gamesystem/link_festival_log.h"
 
+///LINK_FESTIVAL->tmap_rootメンバの初期無効値
+#define LINK_FESTIVAL_TMAP_ROOT_NONE  (0xFFFF)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================

@@ -24,8 +24,7 @@
 #include "gamesystem/link_festival.h"
 #include "gamesystem/link_festival_local.h"
 #include "savedata/fmission_save.h"
-
-#define HILINK_LEVEL_EXP_MAX  (1000)  //ハイリンク経験値のストックMax
+#include "field/zonedata.h"
 
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_item );
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_npc );
@@ -454,9 +453,11 @@ void LINK_FESTIVAL_FInfoTimeBonusReset( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 {
+  u16 old_root = wk->tmap_root;
+
   if( wk->tmap_root != new_root ){
     wk->tmap_root = new_root;
-    return TRUE;
+    return ( !ZONEDATA_IsPalace(old_root) ); //古い場所がパレスならログを生成しない
   }
   return FALSE;
 }
@@ -858,7 +859,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->finfo_my_score = 0;
   wk->finfo_bonus = 0;
   wk->now_score = 0;
-  wk->tmap_root = 0xFFFF; //無効値で初期化
+  wk->tmap_root = LINK_FESTIVAL_TMAP_ROOT_NONE; //無効値で初期化
   MI_CpuClear8( wk->m_gmk_work, sizeof(u8)*FMISSION_WORK_AREA_LEN);
 
   wk->top_score_update_f = FALSE;

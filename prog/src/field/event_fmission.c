@@ -21,6 +21,7 @@
 #include "gamesystem/fmission_log_local.h"
 #include "poke_tool/poke_tool.h"
 #include "item/itemsym.h"
+#include "app/townmap_util.h"
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
@@ -427,6 +428,8 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
             MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_LV2 );
           }
         }
+        GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, SEQ_ME_MISSION_START ));
+
       }else{  //自分で開催した場合。LINK_FESTIVAL_MissionStartはこのイベントに来る前に呼ばれている
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
       
@@ -437,22 +440,23 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
             MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HOLD_LV2 );
           }
         }
+        GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
       }
       //開催/参加しましたログセット
       FMISSION_LOG_TBL_SetLogMissionStart( LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys ), wk->gdata, wk->succeed_f );
-
       //ジョインアベニュー履歴セット
       RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINKFES );
+      //現在地情報アップデート
+      LINK_FESTIVAL_TMapRootUpdate( wk->fest_sys, TOWNMAP_UTIL_GetRootZoneID( wk->gdata, FIELDMAP_GetZoneID(wk->fieldmap)) );
     }
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
-    
+#if 0
     if( wk->succeed_f ){  //他者ミッションに参加
-      GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGM( wk->gsys, SEQ_ME_MISSION_START ));
     }else{
-      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
     }
+#endif
     (*seq)++;
     break;
   case 1:
