@@ -1372,6 +1372,7 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
     ZONE_ID_N01R0501,		//Nの城
     ZONE_ID_N01R0502,		//Nの城
     ZONE_ID_D08R0901,   //リュウラセンのとう最上階
+    ZONE_ID_C04GYM0101, //新電気ジム
   };
   eventWork = GAMEDATA_GetEventWork( gameData );
 
