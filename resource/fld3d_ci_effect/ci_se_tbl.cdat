@@ -55,7 +55,7 @@ const CI_SE_TBL Tbl6[] = {
 const CI_SE_TBL Tbl7[] = {
 	{ SEQ_SE_ROTATION_B, 10 },
 	{ SEQ_SE_SHDEMO_04, 38 },
-	{ SEQ_SE_TDEMO_003, 91 },
+	{ SEQ_SE_OCHIBA_02, 91 },
 	{ CI_SE_NONE, 0 },
 };
 
