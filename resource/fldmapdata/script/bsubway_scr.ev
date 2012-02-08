@@ -1518,7 +1518,10 @@ ev_bsw_game_continue:
 
     //バトルサブウェイ挑戦中のビーコンセット
     _BEACON_SET_REQ_SUBWAY_START()
-    
+   
+    // レコードを加算：バトルサブウェイに挑戦した回数
+    _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
+ 
     //リゾートレコード
     _RESORT_SET_RECORD( RESORT_RECORD_ID_SUBWAY )
     //フェスミッション強制終了
