@@ -65,11 +65,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そういうわけで　あなた！▼
-[Digit:3digits Idx="1" ]より　すばやい
+[Digit:3digits Idx="1" ]と　おなじか　より　すばやい
 ポケモンを　つれていないかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2012-02-08T06:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,11 +78,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そういうわけで　あなた！▼
-[Digit:3digits Idx="1" ]より　すばやい
+[Digit:3digits Idx="1" ]と　おなじか　より　すばやい
 ポケモンを　連れていないかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2012-02-08T06:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
