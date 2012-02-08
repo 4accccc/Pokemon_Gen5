@@ -487,12 +487,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はい　どうぞ
-毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T07:50:59" />
+				Time="2012-02-06T09:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -886,11 +886,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>毎度　ありがとう　ございます
+			<Text>まいど　ありがとう　ございます
 お代は　後で　いただきます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T07:51:09" />
+				Time="2012-02-06T09:16:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -942,11 +942,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>毎度　ありがとう　ございます
+			<Text>まいど　ありがとう　ございます
 お代は　後で　いただきますね▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T07:51:18" />
+				Time="2012-02-06T09:16:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3579,12 +3579,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:Item Idx="2" ]の　中身は
 [Name:Item ]でした！▼
-毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-01-19T09:17:42" />
+				User="shimoyamada:W00184"
+				Time="2012-02-06T09:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3638,12 +3638,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:Item Idx="2" ]の　中身は
 [Name:Item ]でした！▼
-毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-01T07:46:50" />
+				Time="2012-02-06T09:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
