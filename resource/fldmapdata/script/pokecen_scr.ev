@@ -77,7 +77,6 @@ INIT_EVENT_START ev_zone_pokecen
     //========================================//
     //BREEDERM•\Ž¦
     _FLAG_RESET( FV_PC_OMOIDELINK )
-    $LOCALWORK15 = 0
     //========================================//
   ENDIF
   
@@ -89,9 +88,12 @@ INIT_EVENT_START ev_zone_pokecen
     //========================================//
     //BREEDERM•\Ž¦
     _FLAG_SET( FV_PC_OMOIDELINK )
-    $LOCALWORK15 = 0
     //========================================//
   ENDIF
+  
+  //========================================//
+   $LOCALWORK15 = 0
+  //========================================//
   
   }
 INIT_EVENT_END
