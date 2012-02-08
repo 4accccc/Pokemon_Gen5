@@ -50,12 +50,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いそいで　おいかける　ぼくは
+			<Text>[Ctrl1:xcenter ]いそいで　おいかける　ボクは
 [Ctrl1:xcenter ]しんじられない　こうけいを
 [Ctrl1:xcenter ]みることに　なったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-07T06:02:34" />
+				Time="2012-02-08T06:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -63,12 +63,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]急いで　追いかける　僕は
+			<Text>[Ctrl1:xcenter ]急いで　追いかける　ボクは
 [Ctrl1:xcenter ]信じられない　光景を
 [Ctrl1:xcenter ]見ることに　なったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-07T06:02:37" />
+				Time="2012-02-08T06:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

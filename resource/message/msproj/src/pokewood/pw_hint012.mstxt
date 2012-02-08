@@ -749,10 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+たいりょくに　きをつけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T13:38:50" />
+				Time="2012-02-08T07:46:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>セリフの　選択が　重要！
+体力に　気をつけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T13:38:59" />
+				Time="2012-02-08T07:46:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

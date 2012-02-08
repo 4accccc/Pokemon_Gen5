@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ケンカの　さなか
-[Ctrl1:xcenter ]ぼくの　かってきた
+[Ctrl1:xcenter ]ボクの　かってきた
 [Ctrl1:xcenter ]あやしい　モンスターボールに
 [Ctrl1:xcenter ]すいこまれてしまった　モニカ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:05:50" />
+				Time="2012-02-08T06:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ケンカの　最中
-[Ctrl1:xcenter ]僕の　買ってきた
+[Ctrl1:xcenter ]ボクの　買ってきた
 [Ctrl1:xcenter ]怪しい　モンスターボールに
 [Ctrl1:xcenter ]吸い込まれてしまった　モニカ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:05:46" />
+				Time="2012-02-08T06:43:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,11 +52,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]あっけに　とられる　ぼくのまえに
+			<Text>[Ctrl1:xcenter ]あっけに　とられる　ボクのまえに
 [Ctrl1:xcenter ]なぞの　おとこが　あらわれたんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:55:09" />
+				Time="2012-02-08T06:43:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -64,11 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]あっけに　取られる　僕の前に
+			<Text>[Ctrl1:xcenter ]あっけに　取られる　ｃの前に
 [Ctrl1:xcenter ]なぞの　男が　現れたんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:55:13" />
+				Time="2012-02-08T06:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -81,10 +81,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ああ……
-[Ctrl1:xcenter ]ぼくは　それどころじゃ　ないのに……</Text>
+[Ctrl1:xcenter ]ボクは　それどころじゃ　ないのに……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:07:57" />
+				Time="2012-02-08T06:44:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -93,10 +93,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ああ……
-[Ctrl1:xcenter ]僕は　それどころじゃ　ないのに……</Text>
+[Ctrl1:xcenter ]ボクは　それどころじゃ　ないのに……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:08:06" />
+				Time="2012-02-08T06:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

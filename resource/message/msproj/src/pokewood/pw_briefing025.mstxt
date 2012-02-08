@@ -92,12 +92,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そんな　へいぼんな　ぼくらに　おきた
+			<Text>[Ctrl1:xcenter ]そんな　へいぼんな　ボクらに　おきた
 [Ctrl1:xcenter ]とても　きみょうな　じけんについて
 [Ctrl1:xcenter ]はなそう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:11:11" />
+				Time="2012-02-08T06:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -105,12 +105,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そんな　平凡な　僕らに　起きた
+			<Text>[Ctrl1:xcenter ]そんな　平凡な　ボクらに　起きた
 [Ctrl1:xcenter ]とても　奇妙な　事件について
 [Ctrl1:xcenter ]話そう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:12:12" />
+				Time="2012-02-08T06:43:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
