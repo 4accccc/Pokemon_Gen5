@@ -2306,7 +2306,7 @@
 わたしが　おとこ　だって▼
 いまの　しごとば　ね　じょせいしか
 さいよう　して　なかったのに▽
-むりやり　たのみこんだよね▼
+むりやり　たのみこんだんだよね▼
 そしたらさ　じょせい　として
 はたらくなら　さいよう　っていわれてさ▼
 ……　……　……そうだな
@@ -2316,8 +2316,8 @@
 ふふふ　[Name:TrainerName Idx="0" ]くんの　おかげで
 なんか　やるきでたよ！　ありがとね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T05:56:54" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T09:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7242,7 +7242,7 @@ N</Text>
 ……　……　……
 ……　……　……▼
 えっ？▼
-べっ べつに　まって　ないよ！
+べっ　べつに　まってないよ！
 わたしも　いま　きた　ところだから…▼
 あはは……▼
 ねぇ　よかったら
@@ -7263,7 +7263,7 @@ N</Text>
 さっそく　のろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T07:05:10" />
+				Time="2012-02-08T08:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7277,7 +7277,7 @@ N</Text>
 ……　……　……
 ……　……　……▼
 えっ？▼
-べっ 別に　待ってないよ！
+べっ　別に　待ってないよ！
 わたしも　今　来たところだから…▼
 あはは……▼
 ねぇ　よかったら
@@ -7298,7 +7298,7 @@ N</Text>
 さっそく　乗ろうよ　[Name:TrainerName ]くん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T07:05:00" />
+				Time="2012-02-08T08:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

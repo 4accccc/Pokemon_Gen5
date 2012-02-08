@@ -27452,10 +27452,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>強い人が　好きなの！　わたしに
-勝ったら　回復　してあげるよ！▼</Text>
+勝ったら　回復してあげるよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-14T01:57:14" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T08:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27481,11 +27481,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしや　ドクターを　たおせば
+			<Text>わたしたち　ナースを　たおせば
 いっかいだけ　かいふくできるよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-20T08:49:16" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T08:58:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27493,11 +27493,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしや　ドクターを　たおせば
+			<Text>わたしたち　ナースを　たおせば
 一回だけ　回復できるよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-20T08:49:08" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T08:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27712,10 +27712,10 @@
 			<Text>ふふっ！　わたしのことを
 みつけて　ホッとした？▼
 勝負に　勝ったら　ちゃーんと
-回復　してあげるからね！▼</Text>
+回復してあげるからね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T06:01:16" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T08:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
