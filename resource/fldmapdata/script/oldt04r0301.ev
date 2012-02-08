@@ -178,10 +178,8 @@ EVENT_START		ev_reserve_oldt04r0301_event_01
 	//ˆÃ“]
 	_CAMERA_MOVE( 9694,0,970698,425984,339968,360448,30 )
 	
-	_OBJ_ANIME_WAIT()
-	
 	//‰æ–ÊˆÃ“]ˆ—
-	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_BLACK_OUT_SLOW()
 	_MAP_FADE_END_CHECK()
 	
 	_CAMERA_WAIT_MOVE()	//ƒJƒƒ‰ˆÚ“®‘Ò‚¿
