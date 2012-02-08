@@ -282,8 +282,20 @@ static void BG_Load( ENDING_GIMMICK_TMP *p_wk )
   {
     ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ENDING_GIMMICK, GFL_HEAP_LOWID( heap_id ) );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( 
-        ah, NARC_ending_ed_back_NCLR, PALTYPE_MAIN_BG, 0, 0, heap_id );
+    if( GET_VERSION() == VERSION_B2 )
+    {
+      // çïòg
+      GFL_ARCHDL_UTIL_TransVramPalette( 
+          ah, NARC_ending_ed_back_NCLR, PALTYPE_MAIN_BG, 0, 0, heap_id );
+      ICHI_Printf("çïògì«Ç›çûÇ›\n");
+    }
+    else
+    {
+      // îíòg
+      GFL_ARCHDL_UTIL_TransVramPalette( 
+          ah, NARC_ending_ed_back_w_NCLR, PALTYPE_MAIN_BG, 0, 0, heap_id );
+      ICHI_Printf("îíògì«Ç›çûÇ›\n");
+    }
     GFL_ARCHDL_UTIL_TransVramBgCharacter(
         ah, NARC_ending_ed_back_NCGR, FLDBG_MFRM_EFF2, 0, 0, FALSE, heap_id );
     GFL_ARCHDL_UTIL_TransVramScreen(

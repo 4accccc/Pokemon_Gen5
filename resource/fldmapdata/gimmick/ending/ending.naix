@@ -16,8 +16,9 @@ enum {
 	NARC_ending_ed_hanabi01_nsbma = 2,
 	NARC_ending_ed_hanabi01_nsbta = 3,
 	NARC_ending_ed_back_NCLR = 4,
-	NARC_ending_ed_back_NCGR = 5,
-	NARC_ending_ed_back_NSCR = 6
+	NARC_ending_ed_back_w_NCLR = 5,
+	NARC_ending_ed_back_NCGR = 6,
+	NARC_ending_ed_back_NSCR = 7
 };
 
 /* NARC_ENDING_NAIX_ */
