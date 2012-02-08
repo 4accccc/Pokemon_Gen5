@@ -12,6 +12,8 @@
 #include "gamesystem/game_comm.h"
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "sound/pm_sndsys.h"
+#include "field/field_sound.h"
 
 #include "event_demo3d.h"
 #include "demo/demo3d.h"  //Demo3DProcData etc.
@@ -22,6 +24,7 @@ typedef struct _EVWK_DEMO3D{
 
   DEMO3D_PARAM  param;
   BOOL          net_off_flag;
+  u16           demo_id;
 }EVWK_DEMO3D;
 
 static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work);
@@ -45,7 +48,8 @@ GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, GMEVENT* parent, u16 demo_id, u16
   MI_CpuClear8(wk,sizeof(EVWK_DEMO3D));
   wk->gsys = gsys;
   wk->gcsp = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
- 
+  wk->demo_id = demo_id;
+
   if( use_rtc ){
     DEMO3D_PARAM_SetFromRTC( &wk->param, gsys, demo_id, scene_id );
   }else{
@@ -93,6 +97,20 @@ static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work)
       break;
     }
     GAMESYSTEM_SetNetOffEventFlag( wk->gsys, wk->net_off_flag );
+
+    /*
+     * フェスBGMが鳴っている時にデモ内でBGMを止めてしまうと、
+     * 曲が変わらないために次のマップBGM再生リクエストが無視される。
+     * この対策として、デモがBGMを止めた状態で終了していたらSilentBGMに強制書き換えすることで
+     * 次のマップBGM再生リクエストでBGMが復帰する
+     */
+    if( wk->demo_id == DEMO3D_ID_PLANE_TAKE_OFF_FUKIYOSE ||
+        wk->demo_id == DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI ){
+      GMEVENT_CallEvent( event, EVENT_FSND_PlayEventBGMSilent( wk->gsys, 0 ) );
+    }
+    (*seq) += 1;
+    break;
+  case 4:
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
