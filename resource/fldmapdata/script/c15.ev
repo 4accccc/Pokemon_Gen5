@@ -653,6 +653,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_PWOWNER_01, POS_DOWN )
   _ME_PLAY( SEQ_ME_POKEWOOD )             //ファンファーレ
   _ME_WAIT()
+  _AB_KEYWAIT_MARK()
 
   //オーナー：とういことで　○○ちゃんに　ボクから　ささやかな　プレゼントだよ
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_12, C15_PWOWNER_01, POS_DOWN )
