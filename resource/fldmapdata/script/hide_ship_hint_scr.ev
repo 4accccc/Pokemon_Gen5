@@ -71,21 +71,26 @@ EVENT_START ev_pos_d27_hint_01b
   $LCWK_MSGID = msg_hide_ship_hint1_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX -= 1
-  
   //トレーナー曲再生
   _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
+  
+  _OBJ_ANIME( D27R1001_HINT_01, anm_dir_r )
+  _OBJ_ANIME_WAIT()
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：隣接
-  _OBJ_ANIME_AUTO( D27R1001_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSX == 10 THEN
+    $LCW_POSX -= 1
+    //アニメ：隣接
+    _OBJ_ANIME_AUTO( D27R1001_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //戦闘前メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint1_start , D27R1001_HINT_01 ,POS_DEFAULT )
@@ -125,21 +130,27 @@ EVENT_START ev_pos_d27_hint_02b
   $LCWK_MSGID = msg_hide_ship_hint2_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX += 1
+  
   
   //トレーナー曲再生
   _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
+  
+  _OBJ_ANIME( D27R1001_HINT_02, anm_dir_l )
+  _OBJ_ANIME_WAIT()
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：隣接
-  _OBJ_ANIME_AUTO( D27R1001_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  IF $LCW_POSX == 3 THEN
+    $LCW_POSX += 1
+    //アニメ：隣接
+    _OBJ_ANIME_AUTO( D27R1001_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //戦闘前メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint2_start , D27R1001_HINT_02 ,POS_DEFAULT )
@@ -179,21 +190,25 @@ EVENT_START ev_pos_d27_hint_03b
   $LCWK_MSGID = msg_hide_ship_hint3_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX -= 1
-  
   //トレーナー曲再生
   _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
+  
+  _OBJ_ANIME( D27R1001_HINT_03, anm_dir_r )
+  _OBJ_ANIME_WAIT()
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：隣接
-  _OBJ_ANIME_AUTO( D27R1001_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  IF $LCW_POSX == 27 THEN
+    $LCW_POSX -= 1
+    //アニメ：隣接
+    _OBJ_ANIME_AUTO( D27R1001_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //戦闘前メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint3_start , D27R1001_HINT_03 ,POS_DEFAULT )
@@ -233,21 +248,25 @@ EVENT_START ev_pos_d27_hint_04b
   $LCWK_MSGID = msg_hide_ship_hint4_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX -= 1
-  
   //トレーナー曲再生
   _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
+  
+  _OBJ_ANIME( D27R1001_HINT_04, anm_dir_r )
+  _OBJ_ANIME_WAIT()
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：隣接
-  _OBJ_ANIME_AUTO( D27R1001_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  IF $LCW_POSX == 27 THEN 
+    $LCW_POSX -= 1
+    //アニメ：隣接
+    _OBJ_ANIME_AUTO( D27R1001_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //戦闘前メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint4_start , D27R1001_HINT_04 ,POS_DEFAULT )
@@ -288,21 +307,25 @@ EVENT_START ev_pos_d27_hint_05b
   $LCWK_MSGID = msg_hide_ship_hint6_01
   $LCWK_MSGID += $LCWK_PASSID
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX += 1
-  
   //トレーナー曲再生
   _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
+  
+  _OBJ_ANIME( D27R1001_HINT_06, anm_dir_l )
+  _OBJ_ANIME_WAIT()
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：隣接
-  _OBJ_ANIME_AUTO( D27R1001_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-  _OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  IF $LCW_POSX == 3 THEN
+    $LCW_POSX += 1
+    //アニメ：隣接
+    _OBJ_ANIME_AUTO( D27R1001_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //戦闘前メッセージ
   _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint6_start , D27R1001_HINT_06 ,POS_DEFAULT )
