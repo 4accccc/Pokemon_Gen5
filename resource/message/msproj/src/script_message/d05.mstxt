@@ -689,11 +689,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『しんじる……　ね
-ふかくていようそ　すぎますよ</Text>
+			<Text>アクロマ『しんじる……
+ふかくていようそ　すぎますよ▼
+ですが　ポケモンを　しんじることで
+プラズマだんと　むきあう　きけんも▽
+のりこえられると　いうのなら！▼
+おともだちを　たすけるなら！▼
+かれらを　おいかけ　みなみにある
+はとばに　むかいなさいっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:56:47" />
+				Time="2012-02-08T03:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -701,11 +707,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『信じる……　ね
-不確定要素　すぎますよ</Text>
+			<Text>アクロマ『信じる……
+不確定要素　すぎますよ▼
+ですが　ポケモンを　信じることで
+プラズマ団と　向き合う　危険も▽
+乗り越えられると　いうのなら！▼
+おともだちを　助けるなら！▼
+彼らを　追いかけ　南にある
+波止場に　向かいなさいっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T07:39:23" />
+				Time="2012-02-08T03:39:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
