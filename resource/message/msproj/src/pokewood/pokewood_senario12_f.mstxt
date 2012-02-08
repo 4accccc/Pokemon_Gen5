@@ -222,17 +222,17 @@
 			Language="JPN">
 			<Text>つうしん『りょうかい！　[Name:TrainerName Idx="1" ]！
 ただいまより　われわれは　そいつを▽
-だいバンギラスと　こしょう　する！▼
+だいバンギラスと　よぶ！▼
 いいか！　[Name:TrainerName Idx="1" ]！
 なんとしても　だいバンギラスが▽
 まちに　はいるのを　ふせいでくれ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:10:46" />
+				Time="2012-02-08T11:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-30T05:10:46" />
+				Time="2012-02-08T11:05:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -759,25 +759,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいバンギラス『グロツ！　グロロッ！</Text>
+			<Text>だいバンギラス『グロッ！　グロロッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T11:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T11:05:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大バンギラス『グロツ！　グロロッ！</Text>
+			<Text>大バンギラス『グロッ！　グロロッ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T11:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T11:05:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -388,7 +388,7 @@
 	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">つうしん『りょうかい！　[1:00:トレーナー名:1]！
 ただいまより　われわれは　そいつを▽
-だいバンギラスと　こしょう　する！▼
+だいバンギラスと　よぶ！▼
 いいか！　[1:00:トレーナー名:1]！
 なんとしても　だいバンギラスが▽
 まちに　はいるのを　ふせいでくれ！</language>
@@ -490,8 +490,8 @@
 イッシュ防衛隊の　クルーよ！</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">だいバンギラス『グロツ！　グロロッ！</language>
-		<language name="JPN_KANJI" width="256">大バンギラス『グロツ！　グロロッ！</language>
+		<language name="JPN" width="256">だいバンギラス『グロッ！　グロロッ！</language>
+		<language name="JPN_KANJI" width="256">大バンギラス『グロッ！　グロロッ！</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『このさきには
