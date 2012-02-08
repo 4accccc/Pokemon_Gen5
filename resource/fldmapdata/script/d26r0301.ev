@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d26r0301.h"
   .include  "d26r0301.h"
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
@@ -24,8 +26,8 @@ _EVENT_DATA_END
 /************************************************************/
 ev_exit_change:
 
-	//バージョン取得
-	DEFINE_LOCAL LCWK_VERSION
+  //バージョン取得
+  DEFINE_LOCAL LCWK_VERSION
 
   //ROMのバージョンを取得
   _GET_ROM_VERSION( LCWK_VERSION )
@@ -36,10 +38,12 @@ ev_exit_change:
   IF $LCWK_VERSION == VERSION_B2 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0301_D26R0901_EXIT01, -248, 0, 248 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0301_D26R1001_EXIT01, -248, 0, 232 )
+    _FLAG_SET( FV_OMUSUTAA_02 )
   //W2
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0301_D26R0201_EXIT01, -248, 0, 248 )
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D26R0301_D26R0401_EXIT01, -248, 0, 232 )
+    _FLAG_SET( FV_OMUSUTAA_03 )
   ENDIF
 _RET
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2012/02/06 21:57:50
+#save date:2012/02/08 11:32:47
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0301.wms
 #SECTION START:OBJ_EVENT
@@ -84,7 +84,7 @@ MV_UP
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_OMUSUTAA_02
 #Event Script Name
 SCRID_TRID_ELITEM_38
 #Direction Type Number
@@ -115,7 +115,7 @@ MV_RND_LR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_OMUSUTAA_02
 #Event Script Name
 SCRID_TRID_ELITEW_37
 #Direction Type Number
@@ -208,7 +208,7 @@ MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_OMUSUTAA_03
 #Event Script Name
 SCRID_TRID_ELITEW_40
 #Direction Type Number

@@ -398,8 +398,8 @@ init_flags:
   
   //予備領域・使用するならば用途をコメントで追記
   //_FLAG_SET( FV_OMUSUTAA_01 ) 豊穣の社伝承イベントで使用
-  _FLAG_SET( FV_OMUSUTAA_02 )
-  _FLAG_SET( FV_OMUSUTAA_03 )
+  //_FLAG_SET( FV_OMUSUTAA_02 ) チャンピオンロード・ホワイト用トレーナーに使用
+  //_FLAG_SET( FV_OMUSUTAA_03 ) チャンピオンロード・ブラック用トレーナーに使用
   _FLAG_SET( FV_OMUSUTAA_04 )
   _FLAG_SET( FV_OMUSUTAA_05 )
   _FLAG_SET( FV_OMUSUTAA_06 )
