@@ -2943,10 +2943,10 @@ BWと揃えた無効ID
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
 かなり　みつけやすく　なります
-効果は　３０分　です</Text>
+効果は　６０分　です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T07:03:50" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-08T02:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2987,10 +2987,10 @@ BWと揃えた無効ID
 			Language="JPN_KANJI">
 			<Text>隠し穴で　ポケモンと
 かなり　出会いやすく　なります
-効果は　３０分　です</Text>
+効果は　２０分　です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T07:03:59" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-08T02:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3075,10 +3075,10 @@ BWと揃えた無効ID
 			Language="JPN_KANJI">
 			<Text>めずらしい　ポケモンと
 出会いやすく　なります
-効果は　３０分　です</Text>
+効果は　１０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-08T02:28:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
