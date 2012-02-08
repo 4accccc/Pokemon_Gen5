@@ -1248,7 +1248,7 @@
 いしきを　うしなった……▼
 ……きが　ついたときには
 おとこの　すがたは　すでになく▽
-モンスターボールも　なくなっていた▼
+モンスターボールも　きえていた▼
 そのかわり　テーブルの　うえには
 みたこともないほど　たかく　つまれた▽
 さつたばの　やまが……▼
@@ -1256,11 +1256,11 @@
 どうなっちゃうんだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:41" />
+				Time="2012-02-08T03:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:41" />
+				Time="2012-02-08T03:29:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1402,15 +1402,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『まってよ！
-そのなかには　おねえちゃんが！▽
+そのなかには！　おねえちゃんが！▽
 アタシの　おねえちゃんが　いるのっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T03:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-08T03:29:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1997,7 +1997,7 @@
 			Language="JPN_KANJI">
 			<Text>……突然　現れた
 グアイと　名乗る　男……▼
-……彼は　アタシのことを
+……彼は　アタシの　言葉を
 勘違いしたまま　去っていった……▼
 ……ひとりに　なった　アタシは
 お姉ちゃんを　助けるため▽
@@ -2008,11 +2008,11 @@
 どうなってしまうのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:17" />
+				Time="2012-02-08T03:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T06:01:17" />
+				Time="2012-02-08T03:29:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

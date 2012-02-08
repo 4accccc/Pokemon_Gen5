@@ -7,11 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これは　とある　かがくしゃに
-[Ctrl1:xcenter ]おきた　できごとで　ある……
-</Text>
+[Ctrl1:xcenter ]おきた　できごとで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:52:35" />
+				Time="2012-02-07T06:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,11 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]これは　とある　科学者に
-[Ctrl1:xcenter ]起きた　出来事で　ある……
-</Text>
+[Ctrl1:xcenter ]起きた　出来事で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T12:05:55" />
+				Time="2012-02-07T06:02:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -307,11 +305,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これは　とある　かがくしゃに
-[Ctrl1:xcenter ]おきた　できごとで　ある……
-</Text>
+[Ctrl1:xcenter ]おきた　できごとで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T12:07:58" />
+				Time="2012-02-07T06:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -320,11 +317,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]これは　とある　科学者に
-[Ctrl1:xcenter ]起きた　出来事で　ある……
-</Text>
+[Ctrl1:xcenter ]起きた　出来事で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T12:08:05" />
+				Time="2012-02-07T06:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -295,11 +295,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これは　とある　かがくしゃに
-[Ctrl1:xcenter ]おきた　できごとで　ある……
-</Text>
+[Ctrl1:xcenter ]おきた　できごとで　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:48:23" />
+				Time="2012-02-07T06:01:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -308,11 +307,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]これは　とある　科学者に
-[Ctrl1:xcenter ]起きた　出来事で　ある……
-</Text>
+[Ctrl1:xcenter ]起きた　出来事で　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-19T11:51:32" />
+				Time="2012-02-07T06:01:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
