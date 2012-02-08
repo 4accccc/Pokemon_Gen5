@@ -17,6 +17,19 @@
 //======================================================================
 //  define
 //======================================================================
+typedef enum{
+ FLDENC_DATA_CHECK_ENC_EVENT,
+ FLDENC_DATA_CHECK_PROB_CALC,
+ FLDENC_DATA_CHECK_EFFENC,
+
+#ifdef PM_DEBUG
+ FLDENC_DATA_CHECK_FLDMAIN_TOP_START,
+ FLDENC_DATA_CHECK_FLDMAIN_TOP_END,
+ FLDENC_DATA_CHECK_FLDMAIN_TAIL_START,
+ FLDENC_DATA_CHECK_FLDMAIN_TAIL_END,
+#endif  //PM_DEBUG
+
+}FLDENC_DATA_CHECK_IDX;
 
 //======================================================================
 //  proto
@@ -49,6 +62,9 @@ extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 extern ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID );
 extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 
+//フィールドエンカウント BTS1042関連 万一のためのデータ破壊バグチェック
+extern BOOL FIELD_ENCOUNT_DataIsEnable( FIELD_ENCOUNT* encount, FLDENC_DATA_CHECK_IDX check_idx );
+
 extern void ENCOUNT_WORK_MapWalkStepOverUpdate( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
 extern void ENCOUNT_WORK_SpMapJumpUpdate( GAMEDATA* gdata );
 extern void ENCOUNT_WORK_MapJumpUpdate( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
@@ -76,6 +92,7 @@ extern void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc);
 #ifdef PM_DEBUG
 #define FLDENC_DNI_NPOKE_ENC_PROB (255)
 
+extern BOOL FLDENC_DEB_DataCorrectCheck( FIELD_ENCOUNT* encount );
 extern u32 FLDENC_DEB_NumInputNPokeGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
 extern void FLDENC_DEB_NumInputNPokeSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
 

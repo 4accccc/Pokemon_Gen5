@@ -162,7 +162,7 @@
 //#define DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK  //update_topでの処理負荷を見る
 //#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
 //#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
-
+#define DEBUG_FIELDMAP_ENCOUNT_ENABLE_CHECK //エンカウントデータがない場所でenable_fが立っていないかのアサートチェック
 
 // フィールドマップ描画にかかる処理時間を求める
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
@@ -1187,6 +1187,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   INIT_CHECK();
 
+#ifdef DEBUG_FIELDMAP_ENCOUNT_ENABLE_CHECK 
+  (void)FIELD_ENCOUNT_DataIsEnable( fieldWork->encount, FLDENC_DATA_CHECK_FLDMAIN_TOP_START );
+#endif
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   DEBUG_MAIN_UPDATE_TYPE = 0;
@@ -1332,6 +1335,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     OS_TFPrintf(1, "%d\n", deb_mmdl_hit_check);
   }
 #endif  //DEBUG_MMDL_HIT_CHECK_TICK
+
+#ifdef DEBUG_FIELDMAP_ENCOUNT_ENABLE_CHECK 
+  (void)FIELD_ENCOUNT_DataIsEnable( fieldWork->encount, FLDENC_DATA_CHECK_FLDMAIN_TOP_END );
+#endif
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -1371,6 +1378,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   DEBUG_MAIN_UPDATE_TYPE = 1;
+#endif
+
+#ifdef DEBUG_FIELDMAP_ENCOUNT_ENABLE_CHECK
+  (void)FIELD_ENCOUNT_DataIsEnable( fieldWork->encount, FLDENC_DATA_CHECK_FLDMAIN_TAIL_START );
 #endif
   
   if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
@@ -1442,6 +1453,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
       OS_TPrintf(" micro sec:%ld\n", OS_TicksToMicroSeconds( end_tick ) );
     }
   }
+#endif
+#ifdef DEBUG_FIELDMAP_ENCOUNT_ENABLE_CHECK
+  (void)FIELD_ENCOUNT_DataIsEnable( fieldWork->encount, FLDENC_DATA_CHECK_FLDMAIN_TAIL_END );
 #endif
 
   return MAINSEQ_RESULT_CONTINUE;

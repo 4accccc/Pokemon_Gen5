@@ -128,6 +128,33 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
   GFL_HEAP_FreeMemory( enc );
 }
 
+/*
+ *  フィールドエンカウント BTS1042関連 万一のためのデータ破壊バグチェック
+ *
+ *  エンカウントデータが有効かどうかをチェック
+ *
+ *  @retval TRUE データ有効
+ *  @retval FALSE データ無効
+ */
+BOOL FIELD_ENCOUNT_DataIsEnable( FIELD_ENCOUNT* enc, FLDENC_DATA_CHECK_IDX check_idx )
+{
+  u16 zone_id;
+  
+  //エンカウントデータチェック
+  if( enc == NULL || enc->encdata == NULL || !enc->encdata->enable_f ){
+    return FALSE; //普通にデータがない
+  }
+
+  zone_id = FIELDMAP_GetZoneID( enc->fwork );
+  //エンカウントデータが未設定のゾーンなのに、encdata->enable_fがTRUEならおかしい
+  if( ZONEDATA_GetEncountDataID( zone_id ) == ENC_DATA_INVALID_ID ){
+    GF_ASSERT_MSG(0,"EncDataUncorrect zone=%d idx=%d\n", zone_id, check_idx );
+    MI_CpuClear8( enc->encdata, sizeof(ENCOUNT_DATA));  //何かおかしいのでクリアする
+    return FALSE;
+  }
+  return TRUE;
+}
+
 //======================================================================
 //  フィールドエンカウント　チェック
 //======================================================================
@@ -141,9 +168,10 @@ void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL ev_mov
   FIELD_PLAYER *player = FIELDMAP_GetFieldPlayer( enc->fwork );
   MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
   MAPATTR attr = FIELD_PLAYER_GetMapAttr( player );
-  
+
   //エンカウントデータが有効かチェック
-  if( enc->encdata == NULL || enc->encdata->enable_f == FALSE ){
+  //BTS1024関連　万一のためのデータ破壊チェック
+  if( FIELD_ENCOUNT_DataIsEnable( enc, FLDENC_DATA_CHECK_PROB_CALC ) == FALSE ){
     return;
   }
 
@@ -188,7 +216,8 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   }
   
   //エンカウントデータが有効かチェック
-  if( enc->encdata == NULL || enc->encdata->enable_f == FALSE ){
+  //BTS1024関連　万一のためのデータ破壊チェック
+  if( FIELD_ENCOUNT_DataIsEnable( enc, FLDENC_DATA_CHECK_PROB_CALC ) == FALSE ){
     return NULL;
   }
 
@@ -920,6 +949,7 @@ static void encwork_PlayerStatusClear( ENCOUNT_WORK* ewk )
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン
 #ifdef PM_DEBUG
+
 
 /**
  *  @brief  デバッグ数値入力　Nポケエンカウント用

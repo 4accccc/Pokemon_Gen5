@@ -26,6 +26,7 @@
 #include "field_encount_local.h"
 #include "effect_encount.h"
 #include "fes_gimmick.h"
+#include "field/zonedata.h"
 
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_EFFECT_ENC_ITEM_GET
 #include "arc/fieldmap/zone_id.h"
@@ -199,13 +200,16 @@ void EFFECT_ENC_SetProb( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
  */
 void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
 {
-  EFFECT_ENCOUNT* eff_wk = enc->eff_enc;
+  EFFECT_ENCOUNT* eff_wk = NULL;
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   
-  //エンカウントデータチェック
-  if( enc == NULL || enc->encdata == NULL || !enc->encdata->enable_f ){
+  //エンカウントデータ有効無効チェック
+  //BTS1024関連　万一のためのデータ破壊チェック
+  if( FIELD_ENCOUNT_DataIsEnable( enc, FLDENC_DATA_CHECK_EFFENC ) == FALSE ){
     return;
   }
+  eff_wk = enc->eff_enc;
+
   /*
    *  GF-BTS1949対策　ゾーンチェック
    *  地続きゾーンの境目で自転車のスピードで侵入すると、
