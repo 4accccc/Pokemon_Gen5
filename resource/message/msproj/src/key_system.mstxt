@@ -7439,11 +7439,12 @@ DSシステムフォントなので
 			<Text>レポートが　ないため
 ちょうさデータを　うけとれません▼
 『さいしょから　はじめる』を　えらび
-ポケモンずかんを　てにいれるまで▽
-ぼうけんを　すすめてください▼</Text>
+ポケモンずかんを　てにいれるまで▼
+ぼうけんを　すすめて
+レポートを　かいてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:45" />
+				Time="2012-02-08T06:05:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7454,11 +7455,12 @@ DSシステムフォントなので
 			<Text>レポートが　ないため
 調査データを　受け取れません▼
 『最初から　はじめる』を　選び
-ポケモン図鑑を　手に入れるまで▽
-冒険を　進めてください▼</Text>
+ポケモン図鑑を　手に入れるまで▼
+冒険を　進めて
+レポートを　書いてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:46" />
+				Time="2012-02-08T06:06:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7499,11 +7501,12 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうさデータを　うけとるには
-ポケモンずかんを　てにいれるまで▽
-ぼうけんを　すすめてください▼</Text>
+ポケモンずかんを　てにいれるまで▼
+ぼうけんを　すすめて
+レポートを　かいてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:49" />
+				Time="2012-02-08T06:06:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -7512,11 +7515,12 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>調査データを　受け取るには
-ポケモン図鑑を　手に入れるまで▽
-冒険を　進めてください▼</Text>
+ポケモン図鑑を　手に入れるまで▼
+冒険を　進めて
+レポートを　書いてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:50" />
+				Time="2012-02-08T06:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -7661,13 +7665,13 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうさデータを　うけとるには
-ボックスに　６ひきぶんの▽
-あきが　ひつように　なります▼
-ボックスを　せいりしてから
+ボックスを　せいりして▼
+６ひきいじょう　ポケモンを
+あずけられるように　してから▽
 もういちど　やりなおしてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:57" />
+				Time="2012-02-08T06:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7676,13 +7680,13 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>調査データを　受け取るには
-ボックスに　６匹分の▽
-空きが　必要に　なります▼
-ボックスを　整理してから
+ボックスを　整理して▼
+６匹以上　ポケモンを
+預けられるように　してから▽
 もう一度　やりなおしてください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:52:58" />
+				Time="2012-02-08T06:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
