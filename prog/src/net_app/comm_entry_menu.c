@@ -1223,6 +1223,7 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
         if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_OK){
           em->seq = _SEQ_MEMBER_INIT;
           _ParentWait_ExitCnacel(em);
+          _StreamMsgSet(em, msg_connect_02_01);
         }
         else if(em->entry_parent_answer == ENTRY_PARENT_ANSWER_NG){
           em->seq = _SEQ_NG_INIT;
