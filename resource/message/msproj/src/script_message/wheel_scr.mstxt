@@ -1512,7 +1512,7 @@
 			<Text>……２年くらい　前だっけか▼
 ちょうど　この　観覧車で
 仲良くなった　子が　いたんだ……▼
-そいつ　メチャクチャ　強くさ
+そいつ　メチャクチャ　強くてさ
 オレ　全然　かなわねーの▼
 ……でもな　そいつを　みてたら
 オレも　何か　やんねーと！　って▽
@@ -1527,8 +1527,8 @@
 じゃサンキュー！　また　遊ぼーぜ！
 バイバイ！　[Name:TrainerName Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T05:35:19" />
+				User="matsumiya:W00224"
+				Time="2012-02-08T05:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6231,10 +6231,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>よし！
-いもうとに　じまん　しよっと！▼</Text>
+いもうとに　じまん　しよっと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T05:04:58" />
+				Time="2012-02-08T05:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6243,10 +6243,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よし！
-妹に　自慢しよっと！▼</Text>
+妹に　自慢しよっと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T05:38:52" />
+				Time="2012-02-08T05:45:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6362,10 +6362,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>さてと　きぶんてんかん　できたし
-とっくん　だぜ！　とっくん！！▼</Text>
+とっくん　だな！　あばよ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T05:04:44" />
+				Time="2012-02-08T05:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6374,10 +6374,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さてと　気分転換できたし
-特訓だぜ！　特訓！！▼</Text>
+特訓だな！　あばよ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T05:41:52" />
+				Time="2012-02-08T05:51:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6498,11 +6498,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだか　えがおに　なっちゃうよね！
-それじゃあねえ▼</Text>
+			<Text>えがおに　なっちゃうよね！
+それじゃあねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:13:21" />
+				Time="2012-02-08T05:44:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6510,11 +6510,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだか　笑顔に　なっちゃうよね！
-それじゃあねえ▼</Text>
+			<Text>笑顔に　なっちゃうよね！
+それじゃあねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:15:29" />
+				Time="2012-02-08T05:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6630,10 +6630,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>とっても　たのしかったよ！
-じゃあ　またねえー！！▼</Text>
+じゃあ　またねえ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:48:14" />
+				Time="2012-02-08T05:26:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6642,10 +6642,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>とっても　楽しかったよ！
-じゃあ　またねえー！！▼</Text>
+じゃあ　またねえ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:48:17" />
+				Time="2012-02-08T05:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6763,10 +6763,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……あの　ひを　おもいだした
-……すまない　しつれいする[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+……すまない　しつれいする[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:10:05" />
+				Time="2012-02-08T05:44:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6775,10 +6775,10 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……あの日を　思い出した
-……すまない　失礼する[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+……すまない　失礼する[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:10:24" />
+				Time="2012-02-08T05:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6898,11 +6898,11 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……やはり　かんらんしゃは　いい▼
-えんうんどう……　りきがく……
-うつくしい　すうしきの　あつまり……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+Ｇは　しょうめい　できない……
+ふかんぜんせいていり……　か[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:09:39" />
+				Time="2012-02-08T05:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6911,11 +6911,11 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]……やはり　観覧車は　いい▼
-円運動……　力学……
-美しい　数式の　集まり……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
+Ｇは証明できない……
+不完全性定理……　か[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:11:02" />
+				Time="2012-02-08T05:51:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7034,10 +7034,10 @@ N</Text>
 			Language="JPN">
 			<Text>なにごとも　けいけん　だね▼
 たすかったよ
-いっしょに　のってくれて▼</Text>
+いっしょに　のってくれて</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:24:32" />
+				Time="2012-02-08T05:44:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7047,10 +7047,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>なにごとも　経験だね▼
 助かったよ
-一緒に　乗ってくれて▼</Text>
+一緒に　乗ってくれて</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:26:25" />
+				Time="2012-02-08T05:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7167,12 +7167,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さまざまな　ようそが　からみあい
-かんらんしゃを　こうせいしている……▼
-それを　うまく　いいあらわしたいね▼</Text>
+			<Text>かんらんしゃが　うごくに　つれて
+みえる　けしきが　かわるけれど▽
+ぼくは　かわってないのが　いいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:26:00" />
+				Time="2012-02-08T05:50:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7180,12 +7180,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さまざまな　要素が　絡み合い
-観覧車を　構成している……▼
-それを　うまく　表現したいね▼</Text>
+			<Text>観覧車が　動くに　つれて
+みえる　景色が　変わるけれど▽
+ぼくは　変わってないのが　いいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T07:46:31" />
+				Time="2012-02-08T05:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
