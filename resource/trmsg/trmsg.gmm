@@ -6127,10 +6127,10 @@
 	<row id="TRID_TANPAN_22_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">おいら　きのうから
 ワルに　めざめたんだぜ！▽
-だから　つよいんぜ！▼</language>
+だから　つよいんだぜ！▼</language>
 		<language name="JPN_KANJI" width="216">おいら　昨日から
 ワルに　目覚めたんだぜ！▽
-だから　強いんぜ！▼</language>
+だから　強いんだぜ！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_22_TRMSG_FIGHT_LOSE">
