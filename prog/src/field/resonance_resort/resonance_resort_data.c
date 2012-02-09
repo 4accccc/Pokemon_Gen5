@@ -4783,17 +4783,7 @@ void RESORT_RECORD_AddID( u32 record_id )
 #endif
 
 
-  //重複チェック
-  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
-  {
-    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
-    if( record_id == record )
-    {
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, resort_date );
-      goto RESORT_RECORD_ADD_ID_SORT;
-    }
-  }
-  //空きチェック
+  //空きチェック  先頭が空いていれば入れて、終わり
   {
     u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00, NULL );
     if( RESORT_RECORD_ID_NONE == record )
@@ -4803,7 +4793,20 @@ void RESORT_RECORD_AddID( u32 record_id )
       goto RESORT_RECORD_ADD_ID_SORT;
     }
   }
-  //押し出し
+
+  //重複チェック  同じものがあれば消す
+  for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+  {
+    u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+    if( record_id == record )
+    {
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, 0 );
+      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
+      break;  //そのまま重複は消したので押し出しへ
+    }
+  }
+
+  //押し出し  ０～３を１つずつずらす
   for( i = RESORT_DATA_RECORD_CNT-1; i >= 0; i-- )
   {
     u32 next_id = i + 1;
