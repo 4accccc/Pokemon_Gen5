@@ -3755,10 +3755,10 @@
 			<Text>制限時間内に　迷子を
 [Digit:4digits Idx="1" ]人以上　探せ！
 街や道にいる　男の子に
-話しかて　助けてあげよう！</Text>
+話しかけて　助けてあげよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:35" />
+				Time="2012-02-09T04:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4745,7 +4745,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_15">
+		Label="msg_fm_explain_npc_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -4798,7 +4799,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_16">
+		Label="msg_fm_explain_npc_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -4850,7 +4852,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_17">
+		Label="msg_fm_explain_npc_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -4906,7 +4909,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_18">
+		Label="msg_fm_explain_npc_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -5919,7 +5923,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_09">
+		Label="msg_fm_explain_evt_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホウエンちほうの　ポケモンが
@@ -5973,7 +5978,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_10">
+		Label="msg_fm_explain_evt_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
