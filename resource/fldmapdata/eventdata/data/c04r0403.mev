@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/05 21:32:53
+#save date:2012/02/09 22:48:20
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04r0403.wms
 #SECTION START:OBJ_EVENT
@@ -266,13 +266,44 @@ C04R0403_TENNISW_01
 #OBJ CODE Number
 TENNISW
 #MOVE CODE Number
-MV_DMY
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_C04R0403_TENNISW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+6
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 40
+#event number: 9
+#type
+1
+#ID name
+C04R0403_TENNISW_02
+#OBJ CODE Number
+TENNISW
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04R0403_TENNISW_02
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -282,44 +313,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--88 0 40
-#event number: 9
-#type
 1
-#ID name
-C04R0403_TENNISW_02
-#OBJ CODE Number
-TENNISW
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_C04R0403_TENNISW_02
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
 #Move Limit Z Number
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -8
+40 0 24
 #event number: 10
 #type
 1

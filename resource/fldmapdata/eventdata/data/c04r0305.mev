@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/05 21:31:33
+#save date:2012/02/09 22:47:33
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04r0305.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ C04R0305_SOCCERM_02
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RND_UL
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -80,7 +80,7 @@ C04R0305_SOCCERM_03
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -96,7 +96,7 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
 0
 #Pos Type
@@ -111,7 +111,7 @@ C04R0305_SOCCERM_04
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -119,7 +119,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R0305_SOCCERM_04
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -129,11 +129,11 @@ DIR_RIGHT
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 0 40
+392 0 56
 #event number: 4
 #type
 1
@@ -142,7 +142,7 @@ C04R0305_SOCCERM_05
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -150,7 +150,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R0305_SOCCERM_05
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -160,11 +160,11 @@ DIR_LEFT
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 0 40
+488 0 24
 #event number: 5
 #type
 1
@@ -173,7 +173,7 @@ C04R0305_SOCCERM_06
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -181,7 +181,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R0305_SOCCERM_06
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -189,13 +189,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 0 -40
+424 0 -8
 #event number: 6
 #type
 1
@@ -669,7 +669,7 @@ C04R0305_SOCCERM_07
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number
-MV_DMY
+MV_RTUL         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -677,7 +677,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04R0305_SOCCERM_07
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -685,13 +685,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 0 -40
+456 0 -72
 #event number: 22
 #type
 1
