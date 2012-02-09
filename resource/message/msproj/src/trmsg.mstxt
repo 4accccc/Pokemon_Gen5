@@ -74828,27 +74828,27 @@
 		Label="TRID_FANW_13_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>マナ『フレッフレッ　ポケモン！
-サエ『フレッフレッ　トレーナー！</Text>
+			<Text>マミ『フレッフレッ　ポケモン！
+ミホ『フレッフレッ　トレーナー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マナ『フレッフレッ　ポケモン！
-サエ『フレッフレッ　トレーナー！</Text>
+			<Text>マミ『フレッフレッ　ポケモン！
+ミホ『フレッフレッ　トレーナー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -74938,27 +74938,27 @@
 		Label="TRID_FANW_13_TRMSG_FIGHT_AFTER_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンも　トレーナーも
+			<Text>ポケモンも　トレーナーも　そろって
 ベストでないと　かてないもんね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンも　トレーナーも
+			<Text>ポケモンも　トレーナーも　そろって
 ベストでないと　勝てないもんね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2012-02-09T06:13:32" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
