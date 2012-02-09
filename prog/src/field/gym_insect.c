@@ -517,7 +517,7 @@ static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *w
 static s16 gatemv_SePitchCalc( EVWORK_GATE_MOVE* evwk )
 {
   s16 pitch = 0;
-  u16 next_frm;
+  s16 next_frm;
   fx32 len;
   VecFx32 v1,v2,v3;
 
