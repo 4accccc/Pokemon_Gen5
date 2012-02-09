@@ -13,6 +13,7 @@
   .include  "d25r0501.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +25,8 @@
 _EVENT_DATA   ev_d25r0501_item_01
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_POSX
+DEFINE_LOCAL	LWK_POSZ
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -41,8 +44,6 @@ EVENT_START   ev_d25r0501_item_01
   //==================================//
   //モンスターボール非表示
   _FLAG_SET( FV_D25R0501_ITEM_01 )
-  //幽霊少女表示
-  _FLAG_RESET( FV_D25_GIRL2_01 )
   //==================================//
 
   //モンスターボール非表示
@@ -51,47 +52,59 @@ EVENT_START   ev_d25r0501_item_01
   //どうぐ入手：みかづきのはね
   _ITEM_EVENT_FIELD_KEYWAIT( ITEM_MIKADUKINOHANE, 1 )
 
+  _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+  _PLAYER_DIR_GET( SCWK_ANSWER )
+
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+    $LWK_POSZ += 2
+  CASE DIR_DOWN THEN
+    $LWK_POSZ -= 2
+  CASE DIR_RIGHT THEN
+    $LWK_POSX -= 2
+  CASE DIR_LEFT THEN
+    $LWK_POSX += 2
+  ENDSWITCH
+
   //女の子出現
-  _OBJ_ADD( D25R0501_GIRL2_01 )
+  _OBJ_ADD_EX( LWK_POSX, LWK_POSZ, SCWK_ANSWER, MMDL_ID_EVENTOBJ_00, GIRL2, MV_DMY )
 
-  _TIME_WAIT ( 8 )
-
-  //幽霊少女：……その　みかづきのはね
-  _BALLOONWIN_OBJMSG_POS( msg_d25r0501_girl2_01, D25R0501_GIRL2_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-
-  //アニメ：振り向き
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_girl_deru )
   _OBJ_ANIME_WAIT()
 
   _TIME_WAIT ( 16 )
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
 
+  //幽霊少女：……その　みかづきのはね
+  _BALLOONWIN_OBJMSG_POS( msg_d25r0501_girl2_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_girl_kieru )
+  _OBJ_ANIME_WAIT()
+  
   //女の子を非表示
-  _OBJ_DEL( D25R0501_GIRL2_01 )
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
   //========================================//
-  //幽霊少女非表示
-  _FLAG_SET( FV_D25_GIRL2_01 )
   //POSイベント進行
   $WK_SCENE_H05_POKE488 = 1
   //========================================//
 
 EVENT_END
-
-
-//--------------------------------------------------------------------
-//共通：ターン上                        
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_u
-  _ANIME_DATA AC_STAY_WALK_U_8F,1
-  _ANIME_DATA ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通：ターン下                         
-//--------------------------------------------------------------------
-_ANIME_LABEL  anm_common_turn_d
-  _ANIME_DATA AC_STAY_WALK_D_8F,1
-  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //主人公：アイテムゲット
@@ -100,4 +113,76 @@ _ANIME_LABEL  anm_itemget
   _ANIME_DATA AC_HERO_ITEMGET,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//共通：！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//少女：出現演出
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_girl_deru
+  _ANIME_DATA AC_ANM_PAUSE_ON,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,4
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_girl_kieru
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,4
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA ACMD_END,0

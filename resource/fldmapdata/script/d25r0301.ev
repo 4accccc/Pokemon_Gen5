@@ -13,6 +13,7 @@
   .include  "d25r0301.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -40,8 +41,6 @@ EVENT_START   ev_pos_d25r0301_girl2_01
 
   _TIME_WAIT ( 16 )
 
-  _TALK_START_SE_PLAY()
-
   //==================================//
   //幽霊少女表示
   _FLAG_RESET( FV_D25_GIRL2_01 )
@@ -50,6 +49,9 @@ EVENT_START   ev_pos_d25r0301_girl2_01
   //女の子出現
   _OBJ_ADD( D25R0301_GIRL2_01 )
 
+  _OBJ_ANIME( D25R0301_GIRL2_01, anm_girl_deru )
+  _OBJ_ANIME_WAIT()
+
   _TIME_WAIT ( 8 )
 
   //幽霊少女：いつまでも　まっくろの　ゆめ……
@@ -57,6 +59,9 @@ EVENT_START   ev_pos_d25r0301_girl2_01
   _MSGWIN_CLOSE()
 
   _TIME_WAIT ( 16 )
+
+  _OBJ_ANIME( D25R0301_GIRL2_01, anm_girl_kieru )
+  _OBJ_ANIME_WAIT()
 
   //女の子を非表示
   _OBJ_DEL( D25R0301_GIRL2_01 )
@@ -97,3 +102,50 @@ EVENT_START   ev_bg_d25r0301_picture_02
 EVENT_END
 
 
+//--------------------------------------------------------------------
+//少女：出現演出
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_girl_deru
+  _ANIME_DATA AC_ANM_PAUSE_ON,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,4
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_girl_kieru
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,4
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,3
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,2
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_ON,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA ACMD_END,0
