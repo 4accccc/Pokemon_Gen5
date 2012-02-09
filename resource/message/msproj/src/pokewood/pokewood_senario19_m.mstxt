@@ -1404,17 +1404,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ペネロペ『アアン……　すごい……
-わたし　もうダメ……▼
+私　もうダメ……▼
 （よしっ！　自然に　負けられたっ！
 さあ！！　こっからが　あたしの▽
 真剣勝負の　始まりよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:23" />
+				Time="2012-02-09T05:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:23" />
+				Time="2012-02-09T05:58:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1680,18 +1680,18 @@
 ……では　賞金の　かわりに
 私と　トレーニングいたしません？▼
 今は　負けましたが　これでも
-わたしは　エリートトレーナー……▼
+私は　エリートトレーナー……▼
 きっと　[Name:TrainerName Idx="1" ]さんの　お役に
 たてると　思いますわよ！▼
 （よっしゃ！！　この流れ……
 カンペキ！　パーフェクトでしょっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2012-02-09T05:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2012-02-09T05:58:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

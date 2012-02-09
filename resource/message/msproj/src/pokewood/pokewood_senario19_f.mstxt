@@ -729,14 +729,14 @@
 			<Text>[Name:TrainerName Idx="1" ]『あ　あの……
 ありがとうございます……▼
 [Name:PokemonNickname Idx="0" ]の　ことなのに
-なんか　わたしも　テレちゃいます……</Text>
+なんか　私も　テレちゃいます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:53" />
+				Time="2012-02-09T05:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:53" />
+				Time="2012-02-09T05:58:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1116,14 +1116,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ふう……
-わたしの　[Name:PokemonNickname Idx="0" ]じゃ　ダメね……</Text>
+私の　[Name:PokemonNickname Idx="0" ]じゃ　ダメね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:21:00" />
+				Time="2012-02-09T05:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-05T09:21:00" />
+				Time="2012-02-09T05:58:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1686,18 +1686,18 @@
 私と　一緒に▽
 トレーニングは　いかがです？▼
 今は　負けましたが　これでも
-わたしは　エリートトレーナー……▼
+私は　エリートトレーナー……▼
 きっと　[Name:TrainerName Idx="1" ]さんの　お役に
 たてると　思いますよ▼
 （よし！！　この流れ……
 カンペキ！！　パーフェクトだろっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2012-02-09T05:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2012-02-09T05:58:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1719,16 +1719,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いいんですか……▼
-わたしは　エリートの　方と
+私は　エリートの　方と
 トレーニング　できるなんて▽
 とても　光栄　ですけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T07:01:03" />
+				Time="2012-02-09T05:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T07:01:03" />
+				Time="2012-02-09T05:58:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
