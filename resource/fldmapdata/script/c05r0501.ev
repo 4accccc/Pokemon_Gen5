@@ -74,6 +74,7 @@ INIT_EVENT_START   ev_zone_c05r0501
     _FLAG_SET(FV_C05R0501_POKE22_01)
     //リンクイベントに関与しないNPC非表示に
     _FLAG_SET(FV_C05R0501_PEAPLE_01)
+    _FLAG_SET ( FV_C05R0501_SWRIVAL_01 )
     //ゾロアークを表示
     _FLAG_RESET(FV_C05R0501_POKE23_01)
     //SCENE_CHANGE起動
@@ -146,6 +147,13 @@ EVENT_START   ev_reserve_c05r0501_link_event_ret
   IF FLAG_OFF( FE_C05R0501_POKE22_GET ) THEN
     //========================================//
     _FLAG_RESET(FV_C05R0501_POKE22_01)
+    //========================================//
+  ENDIF
+  
+  //T04イベント終了後ならライバル表示
+  IF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) THEN
+    //========================================//
+    _FLAG_RESET(FV_C05R0501_SWRIVAL_01)
     //========================================//
   ENDIF
   
