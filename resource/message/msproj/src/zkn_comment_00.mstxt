@@ -16742,29 +16742,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いい　いわが　とれる　ばしょを
-テリトリーに　したがる。せなかの
-いわを　こわされると　おいだされる。</Text>
+			<Text>テリトリー　あらそいの　ときに
+せおっている　いわを　こわされると
+ふあんを　かんじて　よわっていく。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いい　岩が　採れる　場所を
-テリトリーに　したがる。背中の
-岩を　壊されると　追いだされる。</Text>
+			<Text>テリトリー　争いの　ときに
+背負っている　岩を　壊されると
+不安を　感じて　弱っていく。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16816,15 +16816,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>脱皮した　皮を　ずりあげて
-ダメージを　　減らしつつ　キック！
+ダメージを　減らしつつ　キック！
 とさかが　大きいほど　偉そうだ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16922,16 +16922,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カセキから　ふっかつした　ポケモン。
+			<Text>かせきから　ふっかつした　ポケモン。
 たっしゃに　およいで　ふかさ
 １０００メートルまで　もぐっていた。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -17133,28 +17133,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゾロアークを　とらえようとした
-ひとを　マボロシの　けしきのなかに
+ひとを　まぼろしの　けしきのなかに
 とじこめ　こらしめた　といわれる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゾロアークを　捕らえようとした
-人を　マボロシの　景色の中に
+人を　幻の　景色の中に
 閉じこめ　こらしめた　といわれる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-09T11:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-09T11:35:36" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

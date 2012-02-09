@@ -5364,12 +5364,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_558_000">
-		<language name="JPN">いい　いわが　とれる　ばしょを
-テリトリーに　したがる。せなかの
-いわを　こわされると　おいだされる。</language>
-		<language name="JPN_KANJI">いい　岩が　採れる　場所を
-テリトリーに　したがる。背中の
-岩を　壊されると　追いだされる。</language>
+		<language name="JPN">テリトリー　あらそいの　ときに
+せおっている　いわを　こわされると
+ふあんを　かんじて　よわっていく。</language>
+		<language name="JPN_KANJI">テリトリー　争いの　ときに
+背負っている　岩を　壊されると
+不安を　感じて　弱っていく。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_559_000">
@@ -5386,7 +5386,7 @@
 ダメージを　へらしつつ　キック！
 とさかが　おおきいほど　えらそうだ。</language>
 		<language name="JPN_KANJI">脱皮した　皮を　ずりあげて
-ダメージを　　減らしつつ　キック！
+ダメージを　減らしつつ　キック！
 とさかが　大きいほど　偉そうだ。</language>
 	</row>
 
@@ -5418,7 +5418,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_564_000">
-		<language name="JPN">カセキから　ふっかつした　ポケモン。
+		<language name="JPN">かせきから　ふっかつした　ポケモン。
 たっしゃに　およいで　ふかさ
 １０００メートルまで　もぐっていた。</language>
 		<language name="JPN_KANJI">化石から　復活した　ポケモン。
@@ -5482,10 +5482,10 @@
 
 	<row id="ZKN_COMMENT_01_571_000">
 		<language name="JPN">ゾロアークを　とらえようとした
-ひとを　マボロシの　けしきのなかに
+ひとを　まぼろしの　けしきのなかに
 とじこめ　こらしめた　といわれる。</language>
 		<language name="JPN_KANJI">ゾロアークを　捕らえようとした
-人を　マボロシの　景色の中に
+人を　幻の　景色の中に
 閉じこめ　こらしめた　といわれる。</language>
 	</row>
 
