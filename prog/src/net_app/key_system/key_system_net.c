@@ -1109,8 +1109,9 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
       if(NHTTP_ERROR_NONE == error)
       {
         u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+        int code = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
 
-        switch( NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp) )
+        switch( code )
         {
         case 503:
           p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
@@ -1123,6 +1124,15 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
         case 502:
           p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
           p_wk->error_msg =  WIFI_GSYNC_ERR012;
+
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
+          *p_seq = SEQ_END;
+          return;
+        }
+        if( code >= 400 )
+        {
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  WIFI_GSYNC_ERR009;
 
           p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
           *p_seq = SEQ_END;
