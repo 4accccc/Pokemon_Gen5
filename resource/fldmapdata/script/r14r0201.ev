@@ -69,6 +69,14 @@ INIT_EVENT_START   ev_zone_r14r0201
   
   ENDIF
   
+  //豊穣の社伝承イベント未見なら登場人物を表示（セーブデータ継続対処）
+  IF $WK_SCENE_R14R0201_BOY2_01 == 0 THEN
+    //==================================//
+    //伝承イベント動作モデル表示
+    _FLAG_RESET( FV_OMUSUTAA_01 )
+    //==================================//
+  ENDIF
+  
 }
 INIT_EVENT_END
 
