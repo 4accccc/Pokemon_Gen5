@@ -967,6 +967,8 @@ static GFL_PROC_RESULT BOXSEARCHProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	PrintDefautltSubDisp( wk );
 	Subseq_Start( wk, 0 );
 
+  GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
+
   WIPE_SYS_Start(
     WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
     WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
