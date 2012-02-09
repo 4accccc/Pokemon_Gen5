@@ -3792,12 +3792,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どうぐを　なくして　こまっている
-たんパンこぞうを　さがせ！
+たんぱんこぞうを　さがせ！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]にんいじょう　たすけよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T11:09:28" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T06:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3806,12 +3806,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>道具を　なくして　困っている
-たんパンこぞうを　探せ！
+たんぱんこぞうを　探せ！
 制限時間内に
 [Digit:4digits Idx="1" ]人以上　助けよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T05:22:29" />
+				Time="2012-02-09T06:01:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3858,13 +3858,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけ出しの　格闘家と　戦い
+			<Text>かけ出しの　かくとうかと　戦い
 修行の　お手伝いを　しよう！
 制限時間内に
 [Digit:4digits Idx="1" ]人以上　倒せ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:26" />
+				Time="2012-02-09T06:01:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3910,12 +3910,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけ出しの　格闘家と　戦い
+			<Text>かけ出しの　かくとうかと　戦い
 修行の　お手伝いを　しよう！
 [Digit:4digits Idx="1" ]人　倒せば　成功！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:21" />
+				Time="2012-02-09T06:01:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4018,10 +4018,10 @@
 			<Text>[Digit:4digits Idx="1" ]人以上と
 道具を　交換しよう！
 街や　道にいる
-お嬢様に　話しかけよう！</Text>
+おじょうさまに　話しかけよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:12" />
+				Time="2012-02-09T06:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
