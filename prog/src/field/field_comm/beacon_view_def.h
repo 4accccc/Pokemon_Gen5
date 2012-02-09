@@ -31,6 +31,7 @@ enum{
 #ifdef BUGFIX_AF_BTS8022_20100806
  SSEQ_THANKS_END_WAIT,
 #endif
+ SSEQ_THANKS_SCROLL_BAR,
 };
 
 ///イベントリクエストID

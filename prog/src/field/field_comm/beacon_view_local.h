@@ -157,6 +157,7 @@ typedef struct _BEACON_VIEW{
   BOOL      my_power_f;
   int       seq;
   int       sub_seq;
+  int       ret_seq;
   u16       event_id;
   u16       event_reserve_f;
 

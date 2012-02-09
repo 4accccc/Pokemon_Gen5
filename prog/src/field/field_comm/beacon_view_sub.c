@@ -241,6 +241,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   }
   ret = touchin_CheckScrollBar( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE ){
+    wk->ret_seq = SEQ_MAIN;
     return SEQ_SCROLL_BAR;
   }
 
@@ -282,8 +283,12 @@ int BeaconView_ScrollBarMain( BEACON_VIEW_PTR wk )
   }
   if( wk->ctrl.target_bar_top == wk->ctrl.view_top ){
     if( !wk->ctrl.scroll_mode ){
-      BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
-      return SEQ_MAIN;
+      if( wk->ret_seq == SEQ_MAIN ){
+        BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+      }else{
+        BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ON );
+      }
+      return wk->ret_seq;
     }
   }else{
     list_JumpReq( wk, wk->ctrl.target_bar_top );
@@ -632,6 +637,9 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     wk->sub_seq = sseq_thanks_CheckInput( wk );
     if( wk->sub_seq == SSEQ_THANKS_VIEW_UPDATE ){
       return SEQ_LIST_SCROLL_REPEAT;
+    }else if( wk->sub_seq == SSEQ_THANKS_SCROLL_BAR ){
+      wk->sub_seq = SSEQ_THANKS_MAIN;
+      return SEQ_SCROLL_BAR;
     }
     break;
   case SSEQ_THANKS_DECIDE:
@@ -714,6 +722,11 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     list_UpDownReq1st( wk, ret, SEQ_THANK_YOU );
     return SSEQ_THANKS_VIEW_UPDATE;
+  }
+  ret = touchin_CheckScrollBar( wk, &tp );
+  if(ret != GFL_UI_TP_HIT_NONE ){
+    wk->ret_seq = SEQ_THANK_YOU;
+    return SSEQ_THANKS_SCROLL_BAR;
   }
   return SSEQ_THANKS_MAIN;
 }
