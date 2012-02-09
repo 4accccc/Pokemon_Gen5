@@ -205,6 +205,42 @@ void R04D03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   NOZOMU_Printf( "GIMMICK: end\n" );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEを鳴らす必要があるかチェックしたあと、必要な場合のみSEを鳴らす
+ *
+ *	@param	*fs         フィールドサウンド
+ *	@param	*pos        プレイヤー位置
+ *	@param	*gmkobj     ギミックオブジェクト
+ *	@param	tr_x        トレイラー座標
+ *	@param	sound_idx   再生するSE
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void check_play_gmk_se( FIELD_SOUND *fs, const VecFx32 *pos,
+                                      GMK_OBJ *gmkobj, fx32 tr_x, u32 sound_idx )
+{
+  //SEを鳴らすＺバンド幅に自機がいるか？
+  if ( (SE_BAND_Z_MIN<=pos->z)&&(pos->z<=SE_BAND_Z_MAX) )      //いる場合
+  {
+    SEPLAYER_ID p_id;
+    fx32 diff;
+    diff = pos->x - tr_x;
+    //一台目のトレーラーが自機よりも左にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
+    if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!gmkobj->SeFlg) )   //YES
+    {
+      //プレーヤー空きチェック
+      p_id = PMSND_GetSE_DefaultPlayerID( sound_idx );
+      if ( !PMSND_CheckPlaySE_byPlayerID( p_id ) )
+      {
+        gmkobj->SeFlg = TRUE;
+        FSND_PlayEnvSE( fs, sound_idx );    //左から右
+      }
+    }
+  }
+}
+
 //------------------------------------------------------------------------------------------
 /**
  * @brief 動作関数
@@ -217,14 +253,21 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   int i;
   int *frame;
   VecFx32 pos;
-  fx32 tr1_x, tr2_x;
 
   GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
   GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
   GMK_WORK* work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
+  FIELD_SOUND *fs = GAMEDATA_GetFieldSound( gdata );
   GMK_OBJ *gmkobj;
+
+  //自機の位置座表を取得
+  {
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+  }
 
   gmkobj = &work->GmkObj[0];
   if (gmkobj->Wait)
@@ -249,7 +292,11 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
         //次のトレーラー抽選
         gmkobj->Obj = GFUser_GetPublicRand(TRAILER_TYPE_MAX);
       }
-      tr1_x = status->trans.x;
+      else
+      {
+        // 必要な場合はSEを再生する
+        check_play_gmk_se( fs ,&pos,gmkobj,status->trans.x,FLD_GMK_R04D03_LR_SE);
+      }
     }
     { // トレーラー1(後)左から右に移動
       GFL_G3D_OBJSTATUS* status;
@@ -281,52 +328,17 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
         //次のトレーラー抽選
         gmkobj->Obj = GFUser_GetPublicRand(TRAILER_TYPE_MAX);
       }
-      tr2_x = status->trans.x;
+      else
+      {
+        // 必要な場合はSEを再生する
+        check_play_gmk_se( fs ,&pos,gmkobj,status->trans.x,FLD_GMK_R04D03_RL_SE);
+      }
     }
     { // トレーラー2(後)右から左に移動
       GFL_G3D_OBJSTATUS* status;
       status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, obj+1 );
       status->trans.x = TRAILER_TAIL_RIGHT_X - TRAILER_SPEED * (*frame);
       if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
-    }
-  }
-
-  //自機の位置座表を取得
-  {
-    FIELD_PLAYER *fld_player;
-    fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-    FIELD_PLAYER_GetPos( fld_player, &pos );
-  }
-
-  //SEを鳴らすＺバンド幅に自機がいるか？
-  if ( (SE_BAND_Z_MIN<=pos.z)&&(pos.z<=SE_BAND_Z_MAX) )      //いる場合
-  {
-    SEPLAYER_ID p_id;
-    fx32 diff;
-    FIELD_SOUND *fs = GAMEDATA_GetFieldSound( gdata );
-    diff = pos.x - tr1_x;
-    //一台目のトレーラーが自機よりも左にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
-    if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[0].SeFlg) )   //YES
-    {
-      //プレーヤー空きチェック
-      p_id = PMSND_GetSE_DefaultPlayerID( FLD_GMK_R04D03_LR_SE );
-      if ( !PMSND_CheckPlaySE_byPlayerID( p_id ) )
-      {
-        work->GmkObj[0].SeFlg = TRUE;
-        FSND_PlayEnvSE( fs, FLD_GMK_R04D03_LR_SE );    //左から右
-      }
-    }
-    diff = tr2_x - pos.x;
-    //二台目のトレーラーが自機よりも右にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
-    if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[1].SeFlg) )   //YES
-    {
-      //プレーヤー空きチェック
-      p_id = PMSND_GetSE_DefaultPlayerID( FLD_GMK_R04D03_RL_SE );
-      if ( !PMSND_CheckPlaySE_byPlayerID( p_id ) )
-      {
-        work->GmkObj[1].SeFlg = TRUE;
-        FSND_PlayEnvSE( fs, FLD_GMK_R04D03_RL_SE );    //右から左
-      }
     }
   }
 }
