@@ -2064,10 +2064,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンレポートに　書き込んでいます
-電源を　きらないでください</Text>
+電源を　切らないでください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T13:00:19" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T05:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
