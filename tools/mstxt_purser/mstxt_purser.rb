@@ -66,7 +66,7 @@ end
 # テキストデータクラス
 class MSTXT::TextData
   # アクセサー
-  attr_accessor :label,:jpn,:jpn_kanji
+  attr_accessor :label,:jpn,:jpn_kanji ,:jpn_comment
   
   public
   # データ初期化
@@ -74,8 +74,9 @@ class MSTXT::TextData
     @label      = ""
     @jpn        = ""
     @jpn_kanji  = ""
-    @jpn_tag_array   = nil
-    @kanji_tag_array = nil
+    @jpn_tag_array    = nil
+    @kanji_tag_array  = nil
+    @jpn_comment      = ""
   end
 
   # ひらがな文章のタグを取得
@@ -189,6 +190,30 @@ class MSTXT::Document
         end
 
       }
+
+      # コメントセル
+      XPath.each(text_label,"CommentCell"){|comment_cell|
+
+        # 言語判断
+        language = comment_cell.attributes["Language"]
+
+        # テキストの存在確認
+        original_txt = XPath.first( comment_cell, "Comment" ).text
+        if original_txt == nil then
+          # messageが存在しない場合は空白を入れる
+          original_txt = ""
+        end
+
+        # テキストデータ取得
+        text = get_win31j( original_txt )
+
+        # 言語ごとに保存
+        case language
+          when "JPN"
+            txt_data.jpn_comment = text 
+        end
+      }
+
 
       # データ格納
       @txt_hash[txt_data.label] = txt_data
