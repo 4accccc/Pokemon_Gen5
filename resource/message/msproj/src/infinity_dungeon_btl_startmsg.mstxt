@@ -4831,11 +4831,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　じゃあくな　ウェイトレス♪
+			<Text>わたしは　じゃあくな　ウエートレス♪
 ちゅうもん　なんて　とらないからっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-06T05:16:50" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T08:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4843,11 +4843,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　邪悪な　ウェイトレス♪
+			<Text>わたしは　邪悪な　ウエートレス♪
 注文なんて　とらないからっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-06T05:16:54" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T08:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20149,11 +20149,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せかいで　いっちばん　つよい
-ウェイトレスに　なるために▽
+ウエートレスに　なるために▽
 わたし　たたかいつづけますっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-22T06:34:23" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T08:27:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -20162,11 +20162,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>世界で　いっちばん　強い
-ウェイトレスに　なるために▽
+ウエートレスに　なるために▽
 わたし　戦い続けますっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-22T06:34:23" />
+				User="matsumiya:W00224"
+				Time="2012-02-09T08:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24851,11 +24851,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいこうの　ウェートレスに　なる
+			<Text>さいこうの　ウエートレスに　なる
 そのために　ここで　とっくんよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-25T10:57:03" />
+				Time="2012-02-09T08:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24863,11 +24863,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>最高の　ウェートレスに　なる
+			<Text>最高の　ウエートレスに　なる
 そのために　ここで　特訓よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T05:57:26" />
+				Time="2012-02-09T08:28:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24887,12 +24887,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しっぷうじんらいの
-ウェートレスとは　わたしのこと！▼
+ウエートレスとは　わたしのこと！▼
 めにも　みえない　せっきゃくで
 おきゃくさまを　ほんろうする！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T05:50:51" />
+				Time="2012-02-09T08:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -24900,13 +24900,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>疾風迅雷の　ウェートレスとは
+			<Text>疾風迅雷の　ウエートレスとは
 わたしのこと！▼
 目にも　みえない　接客で
 お客様を　ほんろうする！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T05:50:57" />
+				Time="2012-02-09T08:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
