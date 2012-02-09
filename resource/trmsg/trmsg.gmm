@@ -17013,10 +17013,10 @@
 	</row>
 
 	<row id="TRID_FANW_13_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">マナ『フレッフレッ　ポケモン！
-サエ『フレッフレッ　トレーナー！</language>
-		<language name="JPN_KANJI" width="216">マナ『フレッフレッ　ポケモン！
-サエ『フレッフレッ　トレーナー！</language>
+		<language name="JPN" width="216">マミ『フレッフレッ　ポケモン！
+ミホ『フレッフレッ　トレーナー！</language>
+		<language name="JPN_KANJI" width="216">マミ『フレッフレッ　ポケモン！
+ミホ『フレッフレッ　トレーナー！</language>
 	</row>
 
 	<row id="TRID_FANW_13_TRMSG_FIGHT_AFTER_1">
@@ -17043,9 +17043,9 @@
 	</row>
 
 	<row id="TRID_FANW_13_TRMSG_FIGHT_AFTER_2">
-		<language name="JPN" width="216">ポケモンも　トレーナーも
+		<language name="JPN" width="216">ポケモンも　トレーナーも　そろって
 ベストでないと　かてないもんね！</language>
-		<language name="JPN_KANJI" width="216">ポケモンも　トレーナーも
+		<language name="JPN_KANJI" width="216">ポケモンも　トレーナーも　そろって
 ベストでないと　勝てないもんね！</language>
 	</row>
 
