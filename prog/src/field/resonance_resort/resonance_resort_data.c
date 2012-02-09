@@ -5370,6 +5370,13 @@ static u32 Resort_Data_UpdateSeedRand( u32 before )
   static const u64 RAND_MUL = ( (1566063981LL << 32) + 1812433273LL );
   static const u64 RAND_ADD = ( 2533011 );
 
+  if( before == 0 )
+  {
+    //‰½‚©‚ÌŒvŽZŒ‹‰Ê‚Å0‚É‚È‚Á‚½ê‡‚Ì‰ž‹}ˆ’u
+    //–{—ˆ—”ŒÅ’è‚ð‚·‚é‚ªA‚±‚Ìê‡‚¾‚¯—”‚É‚·‚é
+    return GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+  }
+
   return (u32)( (RAND_MUL * (u64)before + RAND_ADD) >> 32 );
 }
 

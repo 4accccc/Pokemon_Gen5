@@ -517,6 +517,7 @@ EVENT_END
 EVENT_START	ev_reserve_c16_tutorial
 {
 	  _OBJ_ANIME( C16_SECRETARY_01, anm_first_dir_down )
+	  _OBJ_ANIME( C16_SECRETARY_02, anm_first_dir_down )
     _OBJ_ANIME_WAIT()
 
     _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
