@@ -596,12 +596,12 @@ static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk )
   //街データ
   {
     RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
-    RESORT_CITY_DATA_UpdateDay( p_city );
+    RESORT_CITY_DATA_UpdateDay( p_city, FALSE );
   }
   //人物データ
   {
     RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-    RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people );
+    RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people, FALSE );
   }
   return FALSE;
 }

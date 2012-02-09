@@ -4501,9 +4501,10 @@ RESORT_MERGE_RESULT RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_
  *	@brief  一日一回更新
  *
  *	@param	RESORT_PEOPLE_ALL_DATA *p_wk ワーク
+ *	@param  BOOL  ペナルティ期間中かどうか
  */
 //-----------------------------------------------------------------------------
-void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
+void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk, BOOL is_penalty )
 {
   int i, j;
   //一日一回フラグを消去
@@ -5197,21 +5198,25 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
  *	@param	RESORT_CITY_DATA *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
+void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk, BOOL is_penalty )
 {
-  //ビーコントレーナーセーブを破棄
-  GFL_STD_MemFill32( p_wk->trainerID, RESORT_NG_TRAINER_ID_DEFAULT, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
-  p_wk->trainerID_cnt = 0;
-  p_wk->trainerID_max = 0;
+  if( !is_penalty )
+  {
 
-  //乱数再抽選
-  p_wk->rnd_seed      = Resort_Data_UpdateSeedRand( p_wk->rnd_seed );
+    //ビーコントレーナーセーブを破棄
+    GFL_STD_MemFill32( p_wk->trainerID, RESORT_NG_TRAINER_ID_DEFAULT, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
+    p_wk->trainerID_cnt = 0;
+    p_wk->trainerID_max = 0;
 
-  //ファンを再度出現させる
-  p_wk->fun_day_flag  = FALSE;
+    //乱数再抽選
+    p_wk->rnd_seed      = Resort_Data_UpdateSeedRand( p_wk->rnd_seed );
 
-  //セレブ抽選フラグ
-  p_wk->celeb_day_flag = FALSE;
+    //ファンを再度出現させる
+    p_wk->fun_day_flag  = FALSE;
+
+    //セレブ抽選フラグ
+    p_wk->celeb_day_flag = FALSE;
+  }
 
   //もしフェーバーフラグがたっていたら、
   if( p_wk->is_fever )

@@ -631,7 +631,7 @@ typedef enum
 }RESORT_MERGE_TYPE;
 extern RESORT_MERGE_RESULT RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_wk, const void *cp_data_adrs, RESORT_MERGE_TYPE type );
 
-extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
+extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk, BOOL is_penalty );
 
 extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *p_wk );
 
@@ -721,7 +721,7 @@ extern void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk );
 extern u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM param, u32 data );
 
-extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
+extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk, BOOL is_penalty );
 extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
 extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
 extern u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, RESORT_RND_ID id, u32 range );

@@ -318,16 +318,17 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
     PERSON_STATE_SetSecretOnceDateFlag( p_person_state, FALSE );
   }
 
+  //ジョインアベニューの更新処理
+  {
+    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork(save); 
+    RESORT_CITY_DATA *p_city  = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
+    RESORT_PEOPLE_ALL_DATA *p_all_people  = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
+    RESORT_CITY_DATA_UpdateDay( p_city, is_penalty );
+    RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people, is_penalty );
+  }
+
   if(!is_penalty){  //ペナルティタイムでないときだけ処理する
 
-
-    {
-      RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork(save); 
-      RESORT_CITY_DATA *p_city  = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
-      RESORT_PEOPLE_ALL_DATA *p_all_people  = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
-      RESORT_CITY_DATA_UpdateDay( p_city );
-      RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people );
-    }
   }
 }
 
