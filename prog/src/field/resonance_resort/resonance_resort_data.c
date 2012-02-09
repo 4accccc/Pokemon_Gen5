@@ -1134,7 +1134,8 @@ static void RESORT_EXTEND6_DATA_SetMyData( RESORT_EXTEND6_DATA *p_wk, const GAME
     RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
     RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_reso );
     RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
-    RESORT_RECV_DATA_GetData( p_own, RESORT_DATA_PARAM_PHRASE_CODE, p_wk->phrase );
+    const STRCODE *cp_phrase  = (const STRCODE*)RESORT_RECV_DATA_GetData( p_own, RESORT_DATA_PARAM_PHRASE_CODE, NULL );
+    GFL_STD_MemCopy( cp_phrase, p_wk->phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
   }
 }
 //----------------------------------------------------------------------------
@@ -1197,7 +1198,10 @@ static void RESORT_EXTEND7_DATA_SetMyData( RESORT_EXTEND7_DATA *p_wk, const GAME
     RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
     RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_reso );
     RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
-    RESORT_RECV_DATA_GetData( p_own, RESORT_DATA_PARAM_THANKS_CODE, p_wk->thanks );
+
+    const STRCODE *cp_thanks  = (const STRCODE*)RESORT_RECV_DATA_GetData( p_own, RESORT_DATA_PARAM_THANKS_CODE, NULL );
+    GFL_STD_MemCopy( cp_thanks, p_wk->thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
+
   }
 }
 //----------------------------------------------------------------------------
@@ -1400,6 +1404,8 @@ void RESORT_RECV_DATA_Exit( RESORT_RECV_DATA *p_wk )
 //-----------------------------------------------------------------------------
 void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  RESORT_RECV_DATA_InitInstance( p_wk );
+
   OS_TPrintf( "SetMyData1\n" );
   RESORT_BASIC1_DATA_SetMyData( &p_wk->basic1, cp_gamedata );
   OS_TPrintf( "SetMyData2\n" );
@@ -1973,13 +1979,20 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs,cp_wk->basic1.trainerID );
     return 0;
   case RESORT_DATA_PARAM_PHRASE_CODE:  //p_ret_adrs‚©‚çŽæ“¾
-    GFL_STD_MemCopy( cp_wk->extend6.phrase, p_ret_adrs, sizeof(STRCODE)*RESORT_PHRASE_LEN);
-    *(((STRCODE *)p_ret_adrs)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
-    return 0;
+    if( p_ret_adrs )
+    {
+      GFL_STD_MemCopy( cp_wk->extend6.phrase, p_ret_adrs, sizeof(STRCODE)*RESORT_PHRASE_LEN);
+      *(((STRCODE *)p_ret_adrs)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+    }
+    return (u32)cp_wk->extend6.phrase;
   case RESORT_DATA_PARAM_THANKS_CODE:  //p_ret_adrs‚©‚çŽæ“¾
-    GFL_STD_MemCopy( cp_wk->extend7.thanks, p_ret_adrs, sizeof(STRCODE)*RESORT_THANKS_LEN);
-    *(((STRCODE *)p_ret_adrs)+RESORT_THANKS_LEN) = GFL_STR_GetEOMCode();
-    return 0;
+    if( p_ret_adrs )
+    {
+      GFL_STD_MemCopy( cp_wk->extend7.thanks, p_ret_adrs, sizeof(STRCODE)*RESORT_THANKS_LEN);
+      *(((STRCODE *)p_ret_adrs)+RESORT_THANKS_LEN) = GFL_STR_GetEOMCode();
+    }
+    return (u32)cp_wk->extend7.thanks;
+
   default:
     GF_ASSERT_MSG(0,"%d",param);
     return 0;
