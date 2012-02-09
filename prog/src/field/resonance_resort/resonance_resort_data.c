@@ -4513,17 +4513,20 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk, BOOL is_pen
     RESORT_RESIDENT_DATA *p_resident =  RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident ) )
     {
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
-      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
+      if( !is_penalty )
       {
-        u32 rnd_seed = RESORT_RESIDENT_DATA_GetData(p_resident,RESORT_DATA_PARAM_RND_SEED, NULL );
-        //GF_ASSERT_MSG( rnd_seed != 0, "seed==0! %d\n", i );
-        rnd_seed = Resort_Data_UpdateSeedRand( rnd_seed );
-        RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, rnd_seed );
-      }
+        RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+        RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
+        RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_JOBCHANGE_DAY_FLAG, FALSE );
+        {
+          u32 rnd_seed = RESORT_RESIDENT_DATA_GetData(p_resident,RESORT_DATA_PARAM_RND_SEED, NULL );
+          //GF_ASSERT_MSG( rnd_seed != 0, "seed==0! %d\n", i );
+          rnd_seed = Resort_Data_UpdateSeedRand( rnd_seed );
+          RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_RND_SEED, rnd_seed );
+        }
 
-      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, 0 );
+        RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, 0 );
+      }
     }
   }
 }
