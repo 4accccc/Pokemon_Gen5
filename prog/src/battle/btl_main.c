@@ -2466,6 +2466,18 @@ int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk )
   return MSGSPEED_GetWaitByConfigParam( wk->msgSpeed );
 }
 
+//=============================================================================================
+/**
+ * @brief	文字出力のwait値を最速に変更する
+ *
+ * @param   wk BTL_MAIN_MODULE
+ */
+//=============================================================================================
+void BTL_MAIN_ChangePrintWait( BTL_MAIN_MODULE *wk )
+{
+  wk->msgSpeed = MSGSPEED_FAST_EX;
+  OS_Printf("メッセージスピードを最速に変更\n");
+}
 
 
 

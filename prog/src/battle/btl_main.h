@@ -155,6 +155,7 @@ extern void BTL_MAIN_SetMoneyDblUp( BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk );
 extern COMM_PLAYER_SUPPORT* BTL_MAIN_GetCommSupportHandle( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPrintWait( const BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_ChangePrintWait( BTL_MAIN_MODULE *wk );
 
 //-------------------------
 

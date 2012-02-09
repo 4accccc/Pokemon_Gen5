@@ -10721,7 +10721,8 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           ctrl->seq = SEQ_FADEOUT;
           BTLV_RecPlayer_StartQuit( wk->viewCore, ctrl->turnCount, BTLV_INPUT_BR_STOP_KEY );
           BTL_MAIN_notifyRecStop( wk->mainModule );   // 途中再生終了したことを通知
-
+          BTL_MAIN_ChangePrintWait( wk->mainModule ); // メッセージスピードＵＰ
+          
           //BGM、SE停止
           //BTS:2360
           //BTS:6700
