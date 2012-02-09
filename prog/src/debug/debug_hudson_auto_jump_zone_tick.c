@@ -333,6 +333,7 @@ static BOOL CheckValidZoneID( u16 zoneID )
 {
   static const u16 sc_valid_zoneID[] = 
   {
+    ZONE_ID_D09, //レールの外
     ZONE_ID_D24R0901,//バトルにいく
     ZONE_ID_T06R0101,
     ZONE_ID_T01R0101,
