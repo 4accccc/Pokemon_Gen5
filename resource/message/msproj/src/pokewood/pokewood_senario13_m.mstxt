@@ -328,7 +328,7 @@
 			<Text>つうしん『……きんぞく　だと！▼
 よし！　いまから　そいつを
 メカ・バンギラス　りゃくして▽
-Ｍ・Ｂと　こしょう　する！▼
+Ｍ・Ｂと　よぶ！▼
 いいか！　[Name:TrainerName Idx="1" ]！
 そこから　じゅうたくちが　ちかい！▽
 Ｍ・Ｂが　あばれれば　しみんに▽
@@ -337,11 +337,11 @@
 ちかづけては　ならない！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2012-02-09T07:43:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2012-02-09T07:43:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

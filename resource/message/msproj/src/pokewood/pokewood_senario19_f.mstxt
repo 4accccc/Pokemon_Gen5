@@ -679,33 +679,33 @@
 			Language="JPN">
 			<Text>ミゲル『フフ　それほどでも……
 エリートとして　とうぜんのこと……▼
-あなたの　[Name:PokemonNickname Idx="0" ]
+あなたの　[Name:PokemonNickname Idx="0" ]　だって
 なかなか　ステキじゃないか▼
 （ヘヘヘ！　ステキだって！！
 そのことば　ボクに　いってよーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T08:54:37" />
+				Time="2012-02-09T07:46:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T08:54:37" />
+				Time="2012-02-09T07:46:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『フフ　それほどでも……
 エリートとして　当然だが……▼
-あなたの　[Name:PokemonNickname Idx="0" ]
+あなたの　[Name:PokemonNickname Idx="0" ]　だって
 なかなか　ステキじゃないか▼
 （ヘヘヘ！　ステキだって！！
 その言葉　ボクに　いってよーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-06T08:28:24" />
+				Time="2012-02-09T07:46:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-06T08:28:24" />
+				Time="2012-02-09T07:46:10" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
