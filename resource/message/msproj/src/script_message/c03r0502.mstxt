@@ -183,13 +183,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にがそうとした　ポケモンが
-トレーナーの　もとに　もどる……▼
-きいたことは　あるが
-じっさいに　みると　むねをうたれるね</Text>
+			<Text>トレーナーを　いっしょに　いたい……
+そう　ねがう　ポケモンも　いるんだね▼
+もちろん　やせいで　いきようとする
+ポケモンも　いるだろう▼
+ちなみに　ひでんわざを　おぼえた
+ポケモンを　にがそうとしても▽
+もどってくることも　あるそうだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T09:35:11" />
+				Time="2012-02-09T07:54:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -197,13 +200,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>逃がそうとした　ポケモンが
-トレーナーの　もとに　戻る……▼
-きいたことは　あるが
-実際に　みると　胸を打たれるね</Text>
+			<Text>トレーナーを　いっしょに　いたい……
+そう　願う　ポケモンも　いるんだね▼
+もちろん　野生で　生きようとする
+ポケモンも　いるだろう▼
+ちなみに　秘伝技を　覚えた
+ポケモンを　逃がそうとしても▽
+戻ってくることも　あるそうだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T09:35:31" />
+				Time="2012-02-09T07:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
