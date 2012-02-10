@@ -283,7 +283,6 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q25[] = {
   { dni_a087, ANSWER_ID_087, &NumInputParam_todayCountOfA },//「しゅみ」
   { dni_a088, ANSWER_ID_088, &NumInputParam_todayCountOfA },//「けんこう」
   { dni_a089, ANSWER_ID_089, &NumInputParam_todayCountOfA },//「えらくなる」
-  { dni_a090, ANSWER_ID_090, &NumInputParam_todayCountOfA },//「くろ」
 }; 
 // Q26
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q26[] = {
@@ -291,7 +290,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q26[] = {
   { dni_a092, ANSWER_ID_092, &NumInputParam_todayCountOfA },//「どくしょ」
   { dni_a093, ANSWER_ID_093, &NumInputParam_todayCountOfA },//「おんがく」
   { dni_a094, ANSWER_ID_094, &NumInputParam_todayCountOfA },//「えいが」
-  { dni_a085, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「りょこう」
+  { dni_a095, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「りょこう」
   { dni_a096, ANSWER_ID_096, &NumInputParam_todayCountOfA },//「りょうり」
   { dni_a097, ANSWER_ID_097, &NumInputParam_todayCountOfA },//「つり」
   { dni_a098, ANSWER_ID_098, &NumInputParam_todayCountOfA },//「ゲーム」
