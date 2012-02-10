@@ -2785,16 +2785,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことで　知ってるなんて……
+そんなことまで　知ってるなんて……
 ドーブル……▽
 あなたは　一体……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T03:38:13" />
+				Time="2012-02-10T08:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T03:38:13" />
+				Time="2012-02-10T08:24:10" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

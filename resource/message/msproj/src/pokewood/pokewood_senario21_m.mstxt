@@ -719,14 +719,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『きみが　好きだー！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きみが　大好きだー！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-10T08:24:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-10T08:24:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -784,14 +784,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『…（ことばは　いらない）</Text>
+			<Text>[Name:TrainerName Idx="1" ]『…（言葉は　いらない）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-02-10T06:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:53" />
+				Time="2012-02-10T06:29:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2785,16 +2785,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-そんなことで　知ってるなんて……
+そんなことまで　知ってるなんて……
 ドーブル……▽
 お前は　一体……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T03:38:14" />
+				Time="2012-02-10T08:24:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T03:38:14" />
+				Time="2012-02-10T08:24:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

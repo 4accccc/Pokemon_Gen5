@@ -361,11 +361,12 @@ x31,z54辺りに配置
 ていきょうする　この　ポケウッドの▽
 みりょくを　[Name:TrainerName Idx="0" ]ちゃんに▽
 かんじちゃって　もらえるもんね！▼
-じゃあ　また　あとでね！
-[Name:TrainerName Idx="0" ]ちゃん！</Text>
+よーし！　じゃあ　ボクも
+チャチャッと　じゅんび　しないと！▽
+じゃあ　あと　よろしくー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T02:54:48" />
+				Time="2012-02-10T06:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -379,11 +380,12 @@ x31,z54辺りに配置
 提供する　この　ポケウッドの▽
 魅力を　[Name:TrainerName Idx="0" ]ちゃんに▽
 感じちゃって　もらえるもんね！▼
-じゃあ　また　後でね！
-[Name:TrainerName Idx="0" ]ちゃん！</Text>
+よーし！　じゃあ　ボクも
+チャチャッと　準備　しないと！▽
+じゃあ　あと　よろしくー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-24T02:55:24" />
+				Time="2012-02-10T06:13:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -413,11 +415,13 @@ x31,z54辺りに配置
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>では　[Name:TrainerName Idx="0" ]さん
+			<Text>さすが　ウチの　ボス！
+すばらしい　フットワークでしょ！▼
+では　[Name:TrainerName Idx="0" ]さんは
 わたくしと　まいりましょうか！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:20:10" />
+				Time="2012-02-10T11:17:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -425,11 +429,13 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　[Name:TrainerName Idx="0" ]さん
+			<Text>さすが　ウチの　ボス！
+素晴らしい　フットワークでしょ！▼
+では　[Name:TrainerName Idx="0" ]さんは
 私と　参りましょうか！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:20:14" />
+				Time="2012-02-10T11:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

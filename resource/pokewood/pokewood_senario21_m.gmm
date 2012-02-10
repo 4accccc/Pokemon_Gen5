@@ -507,7 +507,7 @@
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみが　だいすきだー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　好きだー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　大好きだー！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">マリア『……　……　……フフッ</language>
@@ -515,7 +515,7 @@
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『…（ことばは　いらない）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『…（言葉は　いらない）</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">マリア『……　……　……　……？</language>
@@ -1079,7 +1079,7 @@
 ドーブル……▽
 おまえは　いったい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……▼
-そんなことで　知ってるなんて……
+そんなことまで　知ってるなんて……
 ドーブル……▽
 お前は　一体……</language>
 	</row>
