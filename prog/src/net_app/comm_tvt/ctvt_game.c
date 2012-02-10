@@ -3708,7 +3708,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   }
 
   // 残り時間でタッチボタンを変更
-  if( gameWork->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
+  if( gameWork->timeLimit < CTVT_GAME_TIME_LASTSPURT )
   {
     anmseq_r  = CGOAM_R_BUTTON_LAST_TOUCH;
     anmseq_l  = CGOAM_L_BUTTON_LAST_TOUCH;
