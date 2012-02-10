@@ -10740,19 +10740,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おもいつきで　はなしますけど　ボク
-[Name:Hobby Idx="1" ]タイプの　ポケモンが▽
+[Name:Type Idx="1" ]タイプの　ポケモンが▽
 すき　なんですよ！▼
 カッコイイ　ポケモンが　おおくて
-いいですよね　[Name:Hobby Idx="1" ]タイプ▼
+いいですよね　[Name:Type Idx="1" ]タイプ▼
 [Name:TrainerName ]さんも
-[Name:Hobby Idx="1" ]タイプの▽
+[Name:Type Idx="1" ]タイプの▽
 ポケモンが　すきだと　いいのにな！▼
 あっ！▼
 せんぱいに　よばれたので
 そろそろ　しごとに　もどりまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-02T12:29:30" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10761,19 +10761,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>思いつきで　話しますけど　ボク
-[Name:Hobby Idx="1" ]タイプの　ポケモンが▽
+[Name:Type Idx="1" ]タイプの　ポケモンが▽
 好き　なんですよ！▼
 カッコイイ　ポケモンが　おおくて
-いいですよね　[Name:Hobby Idx="1" ]タイプ▼
+いいですよね　[Name:Type Idx="1" ]タイプ▼
 [Name:TrainerName ]さんも
-[Name:Hobby Idx="1" ]タイプの▽
+[Name:Type Idx="1" ]タイプの▽
 ポケモンが　好きだと　いいのにな！▼
 あっ！▼
 先輩に　呼ばれたので
 そろそろ　仕事に　もどりまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-02T12:29:23" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:25:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11622,15 +11622,15 @@
 ……　……　……▼
 すごいッ！！▼
 [Name:TrainerName ]さん
-ジムバッジを　[Name:Hobby Idx="1" ]つも▽
+ジムバッジを　[Digit:1digit Idx="1" ]つも▽
 もっているんですか？▼
 すごく　つよいんですね▼
 あっ！▼
 せんぱいに　よばれたので
 そろそろ　しごとに　もどりまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-02T12:51:13" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:13:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11647,15 +11647,15 @@
 ……　……　……▼
 すごいッ！！▼
 [Name:TrainerName ]さん
-ジムバッジを　[Name:Hobby Idx="1" ]つも▽
+ジムバッジを　[Digit:1digit Idx="1" ]つも▽
 持っているんですか？▼
 すごく　強いんですね▼
 あっ！▼
 先輩に　呼ばれたので
 そろそろ　仕事に　もどりまーす！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-02T12:51:08" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:14:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16182,10 +16182,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>へぇ　[Name:TrainerName ]さんて
-[Name:Hobby Idx="1" ]タイプの　ポケモンが▽
+[Name:Type Idx="1" ]タイプの　ポケモンが▽
 すき　なんですか？▼
 かわいい　ポケモンが　おおくて
-いいですよね　[Name:Hobby Idx="1" ]タイプ▼
+いいですよね　[Name:Type Idx="1" ]タイプ▼
 ……　……　……
 ……　……　……▼
 あっ！▼
@@ -16193,8 +16193,8 @@
 そろそろ　しごとに　もどりますね
 また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-03T08:59:30" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:23:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16203,10 +16203,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>へぇ　[Name:TrainerName ]さんて
-[Name:Hobby Idx="1" ]タイプの　ポケモンが▽
+[Name:Type Idx="1" ]タイプの　ポケモンが▽
 好きなんですか？▼
 可愛い　ポケモンが　多くて
-いいですよね　[Name:Hobby Idx="1" ]タイプ▼
+いいですよね　[Name:Type Idx="1" ]タイプ▼
 ……　……　……
 ……　……　……▼
 あっ！▼
@@ -16214,8 +16214,8 @@
 そろそろ　仕事に　もどりますね
 また　お話しましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-03T08:59:24" />
+				User="nishino:W00221"
+				Time="2012-02-10T07:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17067,7 +17067,7 @@
 			Language="JPN">
 			<Text>すごい！▼
 [Name:TrainerName ]さんて
-ジムバッジを　[Name:Hobby Idx="1" ]つも▽
+ジムバッジを　[Digit:1digit Idx="1" ]つも▽
 もっているんですか？▼
 すごく　つよいんですね▼
 ……　……　……
@@ -17078,7 +17078,7 @@
 また　おはなし　しましょう▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-07T03:26:34" />
+				Time="2012-02-10T07:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17088,7 +17088,7 @@
 			Language="JPN_KANJI">
 			<Text>すごい！▼
 [Name:TrainerName ]さんて
-ジムバッジを　[Name:Hobby Idx="1" ]つも▽
+ジムバッジを　[Digit:1digit Idx="1" ]つも▽
 持っているんですか？▼
 すごく　強いんですね▼
 ……　……　……
@@ -17099,7 +17099,7 @@
 また　お話しましょう▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-09-07T03:26:43" />
+				Time="2012-02-10T07:21:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
