@@ -4901,6 +4901,16 @@ static const BOOL CTVT_GAME_CheckFinishReq( COMM_TVT_WORK *work , CTVT_GAME_WORK
 {
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
 
+  // 通信エラー
+  // ⇒接続人数が変更された
+  //
+  if( COMM_TVT_GetIsCommError( work ) == TRUE )
+  {
+    OS_Printf("強制終了：接続人数に変更があった\n");
+    NetErr_App_ReqErrorDispForce( dwc_error_0015 );
+    return TRUE;
+  }
+
   if( COMM_TVT_GetConnectNum( work ) <= 1 )
   {
     //誰も居なくなった。

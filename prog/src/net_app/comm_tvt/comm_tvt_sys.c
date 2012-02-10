@@ -1241,6 +1241,16 @@ u8 COMM_TVT_GetNextMode( const COMM_TVT_WORK *work )
   return work->nextMode;
 }
 
+void COMM_TVT_SetIsCommError( COMM_TVT_WORK *work )
+{
+  work->isCommError = TRUE;
+}
+
+BOOL COMM_TVT_GetIsCommError( const COMM_TVT_WORK *work )
+{
+  return work->isCommError;
+}
+
 
 //--------------------------------------------------------------------------
 //  ÉÇÅ[ÉhÇ∆Ç©êlêî

@@ -315,6 +315,8 @@ extern PRINT_QUE* COMM_TVT_GetPrintQue( COMM_TVT_WORK *work );
 // add ichiraku
 extern u8 COMM_TVT_GetMode( const COMM_TVT_WORK *work );
 extern u8 COMM_TVT_GetNextMode( const COMM_TVT_WORK *work );
+extern void COMM_TVT_SetIsCommError( COMM_TVT_WORK *work );
+extern BOOL COMM_TVT_GetIsCommError( const COMM_TVT_WORK *work );
 
 extern const u8   COMM_TVT_GetConnectNum( const COMM_TVT_WORK *work );
 extern void   COMM_TVT_SetConnectNum( COMM_TVT_WORK *work , const u8 num);

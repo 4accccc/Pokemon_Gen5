@@ -2004,45 +2004,17 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   BOOL  isSendGameData = FALSE;
   
-#if 1   // いらないかも
   // 接続人数の更新
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
     if( commWork->connectNum != connectNum )
     {
-      u8 i;
-      u8 connectNum = 0;
-      const u8 selfIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-      const HEAPID heapId = COMM_TVT_GetHeapId( work );
-
-      for( i=0;i<CTVT_MEMBER_NUM;i++ )
-      {
-        if( GFL_NET_IsConnectMember(i) == TRUE )
-        {
-          if( commWork->member[i].isEnable == FALSE )
-          {
-            commWork->member[i].isEnable = TRUE;
-          }
-          connectNum++;
-        }
-        else
-        {
-          if( commWork->member[i].isEnable == TRUE )
-          {
-            commWork->member[i].isEnable = FALSE;
-            CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
-          }
-        }
-      }
-
-      COMM_TVT_SetConnectNum( work , connectNum );
-      commWork->connectNum = connectNum;
-      //↓ビーコンの接続人数は更新してはいけない
-      //　乱入禁止に使っているから
-      //commWork->beacon.connectNum = connectNum;
+      // ゲーム通信の場合は
+      // 接続人数が変更するとゲームが継続できないのでエラーにする
+      COMM_TVT_SetIsCommError( work );
+      return;
     }
   }
-#endif
 
   // ゲーム中の乱入がないように、接続人数をMAXにしておく
   //commWork->beacon.connectNum = CTVT_MEMBER_NUM;
