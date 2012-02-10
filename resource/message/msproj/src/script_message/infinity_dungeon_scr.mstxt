@@ -6737,9 +6737,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちらの　エレベーターには
+			<Text>こちらの　エレベータには
 おきづきでしたか？▼
-この　エレベーターに　のることで
+この　エレベータに　のることで
 エリア６いこうの　ちょうせんが▽
 かのうと　なります▼
 ただし！　エリア６いこうは
@@ -6748,7 +6748,7 @@
 はあくしていない　じょうたいです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:45:12" />
+				Time="2012-02-10T09:10:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6756,9 +6756,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちらの　エレベーターには
+			<Text>こちらの　エレベータには
 お気づきでしたか？▼
-この　エレベーターに　乗ることで
+この　エレベータに　乗ることで
 エリア６以降の　挑戦が▽
 可能となります▼
 ただし！　エリア６以降は
@@ -6767,7 +6767,7 @@
 把握していない　状態です▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:51:45" />
+				Time="2012-02-10T09:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6802,14 +6802,14 @@
 べつの　かいそうを
 さがして　みてください▼
 べつの　かいそうには
-エレベーターで　いどうしてくださいね▼
+エレベータで　いどうしてくださいね▼
 とにかく　エリア６いこうの　
 ちょうせんを　おかんがえなら▼
 ポケモンを　じゅうぶんに　そだててから
 ちょうせんを　おすすめします▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:25:05" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6824,14 +6824,14 @@
 別の　階層を
 探してみてください▼
 別の　階層には
-エレベーターで　移動してくださいね▼
+エレベータで　移動してくださいね▼
 とにかく　エリア６以降の　
 挑戦を　お考えなら▼
 ポケモンを　十分に　育ててから
 挑戦を　お勧めします▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:25:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7683,9 +7683,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こっちの　エレベーターが
+			<Text>こっちの　エレベータが
 きになって　いたんじゃないか？▼
-この　エレベーターに　のれば
+この　エレベータに　のれば
 エリア６いこうに▽
 ちょうせん　できるぜ▼
 ただし！　エリア６いこうは
@@ -7694,7 +7694,7 @@
 よく　わかってないけどな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:53:14" />
+				Time="2012-02-10T09:11:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7702,9 +7702,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こっちの　エレベーターが
+			<Text>こっちの　エレベータが
 気になって　いたんじゃないか？▼
-この　エレベーターに　乗れば
+この　エレベータに　乗れば
 エリア６以降に　挑戦できるぜ▼
 ただし！　エリア６以降は
 おれたちの　管理外の　エリアだ▼
@@ -7712,7 +7712,7 @@
 よく　わかってないけどな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:53:21" />
+				Time="2012-02-10T09:11:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7746,14 +7746,14 @@
 おめあての　トレーナーが　いないなら▽
 べつの　かいそうに　いってみな▼
 べつの　かいそうには
-エレベーターで　いどうしてくれよ▼
+エレベータで　いどうしてくれよ▼
 とにかく　エリア６いこうの　
 ちょうせんを　かんがえているなら▼
 ポケモンを　じゅうぶんに　
 そだててから　ちょうせん　するんだな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:23:21" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7767,14 +7767,14 @@
 お目当ての　トレーナーが　いないなら▽
 別の　階層に　行ってみな▼
 別の　階層には
-エレベーターで　移動してくれよ▼
+エレベータで　移動してくれよ▼
 とにかく　エリア６以降の　
 挑戦を　考えているなら▼
 ポケモンを　十分に　育ててから
 挑戦するんだな▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:23:42" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -8716,10 +8716,10 @@
 きいているわよ▼
 わたしも　しょしんしゃの
 キミに　アドバイス　してあげる▼
-ここに　エレベーターが　あるわね？▼
+ここに　エレベータが　あるわね？▼
 もし　キミが　これいじょうの
 ちょうせんは　きけんだと　おもったら▼
-エレベーターで　うけつけに
+エレベータで　うけつけに
 もどって　リタイアしなさい▼
 このエリアで　てにいれた
 しょうきんは　ぼっしゅうに　なるけど▼
@@ -8729,7 +8729,7 @@
 いいけど　むりは　しないでね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:18:03" />
+				Time="2012-02-10T09:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8743,10 +8743,10 @@
 きいているわよ▼
 わたしも　初心者の
 キミに　アドバイス　してあげる▼
-ここに　エレベーターが　あるわね？▼
+ここに　エレベータが　あるわね？▼
 もし　キミが　これ以上の
 挑戦は　危険だと　思ったら▼
-エレベーターで　受付に　戻って
+エレベータで　受付に　戻って
 リタイアしなさい▼
 この　エリアで　手に入れた
 賞金は　没収になるけど▼
@@ -8756,7 +8756,7 @@
 いいけど　無理は　しないでね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:17:54" />
+				Time="2012-02-10T09:11:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9193,10 +9193,10 @@ NPC：MUGENBOSS（バンジロウ）
 みかけに　よらず　つよいらしいね▼
 でも　まだまだ　しょしんしゃの　キミに
 いいことを　おしえて　あげよう▼
-ここに　エレベーターが　あるだろう？▼
+ここに　エレベータが　あるだろう？▼
 もし　キミが　これいじょうは
 きけんだと　おもったら▼
-エレベーターで　うけつけに
+エレベータで　うけつけに
 もどって　リタイアするんだ▼
 このエリアで　てにいれた
 しょうきんは　ぼっしゅうに　なるけど▼
@@ -9205,7 +9205,7 @@ NPC：MUGENBOSS（バンジロウ）
 いいが　むりは　するなよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:24:45" />
+				Time="2012-02-10T09:11:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9218,10 +9218,10 @@ NPC：MUGENBOSS（バンジロウ）
 みかけに　よらず　強いらしいね▼
 でも　まだまだ　初心者の　キミに
 いいことを　教えて　あげよう▼
-ここに　エレベーターが　あるだろう？▼
+ここに　エレベータが　あるだろう？▼
 もし　キミが　これ以上は
 危険だと　思ったらら▼
-エレベーターで　受付に　戻って
+エレベータで　受付に　戻って
 リタイアするんだ▼
 このエリアで　手に入れた
 賞金は　没収に　なるけど▼
@@ -9230,7 +9230,7 @@ NPC：MUGENBOSS（バンジロウ）
 いいが　無理は　するなよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:24:48" />
+				Time="2012-02-10T09:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
