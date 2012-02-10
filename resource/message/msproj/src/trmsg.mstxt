@@ -79188,42 +79188,15 @@
 		Label="TRID_ELITEW_41_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>せかいの　かべは
-そう　かんたんには　こえられないな！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>世界の　壁は
-そう　簡単には　越えられないな！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="TRID_ELITEM_42_TRMSG_FIGHT_LOSE">
-		<LanguageCell
-			Language="JPN">
 			<Text>そんな　ポケモンと　やれたら
 まったかいが　あったってものよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
+				Time="2012-02-10T02:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
+				Time="2012-02-10T02:11:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -79231,11 +79204,38 @@
 待ったかいが　あったってものよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
+				Time="2012-02-10T02:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T03:57:14" />
+				Time="2012-02-10T02:11:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEM_42_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せかいの　かべは
+そう　かんたんには　こえられないな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-10T02:11:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-10T02:11:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>世界の　壁は
+そう　簡単には　越えられないな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-10T02:11:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-10T02:11:33" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
