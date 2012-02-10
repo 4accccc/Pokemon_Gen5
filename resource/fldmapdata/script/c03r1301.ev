@@ -116,6 +116,7 @@ EVENT_START   ev_c03r1301_sunglasses_01
 
         //サングラス：よし！　とおって　いいぞ
         _BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_04, C03R1301_SUNGLASSES_01 )
+        _AB_KEYWAIT_MARK()
         _BALLOONWIN_CLOSE()
 
         //階段わきにどく
@@ -231,6 +232,7 @@ EVENT_START   ev_pos_c03r1301_sunglasses_02
 
       //サングラス：よし！　とおって　いいぞ
       _BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_04, C03R1301_SUNGLASSES_01 )
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
 
       //階段わきにどく
