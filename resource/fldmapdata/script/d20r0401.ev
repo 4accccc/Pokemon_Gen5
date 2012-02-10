@@ -34,6 +34,11 @@ INIT_EVENT_START	ev_init_d20r0401
   // 光の反射
   _SEATEMPLE_START()
 
+  //海底遺跡の到達フラグがセットされていない場合はセットする
+  IF FLAG_OFF( SYS_FLAG_ARRIVE_D20R0501) THEN
+    _FLAG_SET( SYS_FLAG_ARRIVE_D20R0501 )
+  ENDIF
+
 INIT_EVENT_END
 
 
