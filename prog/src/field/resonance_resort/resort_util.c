@@ -209,6 +209,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_MSGID_RECENT_01:
   case RESORT_MSGID_RECENT_02:
   case RESORT_MSGID_RECENT_03:
+    GF_ASSERT( p_abstruct );
     {
       u32 idx = param - RESORT_MSGID_RECENT_00;
       u32 msg = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_EXT5_RECORD_00+idx, NULL );
@@ -224,6 +225,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_MSGID_WHERETOGO:
+    GF_ASSERT( p_abstruct );
     if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
     {
       return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_WANTSPOT );
@@ -260,6 +262,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_MSGID_APPEAL:
+    GF_ASSERT( p_abstruct );
     {
       u16 src_want_job = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_WANT_JOB, NULL );
       u16 trainerID = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TRAINER_ID, NULL );
@@ -276,6 +279,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_MSGID_SHOP_INFO:
+    GF_ASSERT( p_abstruct );
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
     {
       RESORT_RESIDENT_DATA *p_resi = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
@@ -301,6 +305,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_history_00_m, resort_history_00_f );
     break;
   case RESORT_TOURIST_GREET_MSGID:
+    GF_ASSERT( p_abstruct );
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
       RESORT_COMM_TYPE  comm  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_COMM_ID, NULL );
@@ -396,6 +401,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_TOURIST_CITY_MSGID:
+    GF_ASSERT( p_abstruct );
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_TOURIST || people_type == RESORT_PEOPLE_TYPE_PROXY );
     {
       u32 nation  = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_NATION, NULL );
@@ -431,6 +437,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_tourist_scout_04_m, resort_tourist_scout_04_f );
     break;
   case RESORT_TOURIST_SPOT_GOING:
+    GF_ASSERT( p_abstruct );
     if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
     {
       return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_GOOUT );
@@ -444,6 +451,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_tourist_item_00_m, resort_tourist_item_00_f );
     break;
   case RESORT_TOURIST_BYE_MSGID:
+    GF_ASSERT( p_abstruct );
     if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
     {
       return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_BYE );
@@ -457,6 +465,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_tourist_joy_00_m, resort_tourist_joy_00_f );
     break;
   case RESORT_TOURIST_SHOP_GREET_MSGID:
+    GF_ASSERT( p_abstruct );
     if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
     {
       return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_GREET );
@@ -564,6 +573,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_secretary_talk_16_m, resort_secretary_talk_16_f );
     break;
   case RESORT_RESIDENT_LV_MSGID:
+    GF_ASSERT( p_abstruct );
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
     {
       RESORT_RESIDENT_DATA *p_resi = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
@@ -646,16 +656,22 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_SHOP_NURSERY_HATCH_04_MSGID:
     return SexGetMsgID( sex, resort_nursery_06_m, resort_nursery_06_f );
   case RESORT_CELEB_GREET_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_GREET );
   case RESORT_CELEB_TRADE_GREET_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE_GREET );
   case RESORT_CELEB_TRADE_BYE_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE_BYE );
   case RESORT_CELEB_TRADE_SELECT_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE_SELECT );
   case RESORT_CELEB_TRADE_NG_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE_NG );
   case RESORT_CELEB_TRADE_OK_MSGID:
+    GF_ASSERT( p_abstruct );
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_TRADE_OK );
   case RESORT_MSGID_BOARD_00:
   case RESORT_MSGID_BOARD_01:
@@ -683,6 +699,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     }
     break;
   case RESORT_RESIDENT_RANK_MSGID:
+    GF_ASSERT( p_abstruct );
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
     {
       //ÇPà Ç™ï°êîÇ†Ç¡ÇΩèÍçáÇÕÉâÉìÉ_ÉÄÇ≈åæÇ§
@@ -749,6 +766,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_RESIDENT_COMBO_EFF_MSGID_RARE:
     return SexGetMsgID( sex, resort_resident_combo_06_m, resort_resident_combo_06_f );
   case RESORT_RESIDENT_COMBO_RND_MSGID:
+    GF_ASSERT( p_abstruct );
     {
       u32 rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
       if( !RESORT_UTIL_IsEnableCombo(p_sys) )
