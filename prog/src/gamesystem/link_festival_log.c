@@ -60,18 +60,27 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
     log = &wk->log[i];
 
     if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
-      u16 root = log->score.tmap_root;
-      u32 value = log->score.value;
+      BOOL score_up = FALSE;
 
-      log->score = src->prm.score;  //構造体コピー
+
+      /* スコア更新
+       * 新しく届いたスコアが保存されているものより小さければ更新しない
+       * 参加→リタイア→別ミッション→再参加、でスコアが巻き戻る対策
+       */
+      if( src->prm.score.value > log->score.value ){
+        log->score.value = src->prm.score.value;  //より高いスコアに更新
+        score_up = TRUE;
+      }
 //    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
 
       *log_score = log->score.value;  //今のスコアを返す
 
-      if( root != src->prm.score.tmap_root ){
-        return LINKFEST_SCORELOG_SET_MAP_CHANGE;
+      //現在地を更新
+      if( log->score.tmap_root != src->prm.score.tmap_root ){ //場所が変わっていたら移動ログ更新
+        log->score.tmap_root = src->prm.score.tmap_root;
+        return LINKFEST_SCORELOG_SET_MAP_CHANGE+score_up;
       }
-      return LINKFEST_SCORELOG_SET_UPDATE;
+      return LINKFEST_SCORELOG_SET_UPDATE+score_up;
     }
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){

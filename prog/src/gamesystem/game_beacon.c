@@ -759,16 +759,19 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, &log_score );
 
   if( ret != LINKFEST_SCORELOG_SET_FAILED ){
-    FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
-
     //ミッションログ収集
-    if( ret != LINKFEST_SCORELOG_SET_UPDATE ){
+    if( ret < LINKFEST_SCORELOG_SET_UPDATE ){
       if( ret == LINKFEST_SCORELOG_SET_NEW_ENTRY ){
-        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_NEW, FALSE );
+        FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, info, log_score, FMISSION_LOG_SET_NEW, FALSE );
       }
-      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_MAP, FALSE );
+      FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, info, log_score, FMISSION_LOG_SET_MAP, FALSE );
     }
-    FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, log_score, FMISSION_LOG_SET_NORMAL, FALSE );
+    if( ret == LINKFEST_SCORELOG_SET_MAP_CHANGE_SUP ||
+        ret == LINKFEST_SCORELOG_SET_UPDATE_SUP ){
+      FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, info, log_score, FMISSION_LOG_SET_SCORE_UP, FALSE );
+    }else{
+      FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, info, log_score, FMISSION_LOG_SET_NORMAL, FALSE );
+    }
     
     //トップスコア更新
     GFL_STR_SetStringCodeOrderLength( bsys->sbuf_person_name, info->name, PERSON_NAME_SIZE+EOM_SIZE );
@@ -1445,8 +1448,7 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
 
   //生成したパラメータで、自分用のミッションログを生成
   if( action != GAMEBEACON_ACTION_FMISSION ){
-    FMISSION_LOG_TBL_SetLogFromBeacon(
-      LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, LINK_FESTIVAL_GetMyScore( fest_sys ), FMISSION_LOG_SET_NORMAL, TRUE );
+    FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, &tmp.info, LINK_FESTIVAL_GetMyScore( fest_sys ), FMISSION_LOG_SET_NORMAL, TRUE );
   }
   
   if(GAMEBEACON_SUB_CheckPriority( action ) == TRUE){
@@ -2297,8 +2299,7 @@ void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAME
   if( LINK_FESTIVAL_TMapRootUpdate( fest_sys, info->townmap_root_zone_id ))
   {
     //自分用のミッションログを生成
-    FMISSION_LOG_TBL_SetLogFromBeacon(
-      LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), info, LINK_FESTIVAL_GetMyScore(fest_sys), FMISSION_LOG_SET_MAP, TRUE );
+    FMISSION_LOG_TBL_SetLogFromBeacon( fest_sys, info, LINK_FESTIVAL_GetMyScore(fest_sys), FMISSION_LOG_SET_MAP, TRUE );
   }
 }
 

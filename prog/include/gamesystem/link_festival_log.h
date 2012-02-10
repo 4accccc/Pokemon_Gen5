@@ -10,10 +10,12 @@
 #pragma once
 
 typedef enum{
-  LINKFEST_SCORELOG_SET_FAILED,     ///<ログストア失敗
-  LINKFEST_SCORELOG_SET_NEW_ENTRY,  ///<新規
-  LINKFEST_SCORELOG_SET_UPDATE,     ///<上書き&マップチェンジ無し
-  LINKFEST_SCORELOG_SET_MAP_CHANGE, ///<上書き&マップチェンジ
+  LINKFEST_SCORELOG_SET_FAILED,         ///<ログストア失敗
+  LINKFEST_SCORELOG_SET_NEW_ENTRY,      ///<新規
+  LINKFEST_SCORELOG_SET_MAP_CHANGE,     ///<上書き&マップチェンジ
+  LINKFEST_SCORELOG_SET_MAP_CHANGE_SUP, ///<上書き&マップチェンジ&スコアアップ
+  LINKFEST_SCORELOG_SET_UPDATE,         ///<上書き&マップチェンジ無し
+  LINKFEST_SCORELOG_SET_UPDATE_SUP,     ///<上書き&マップチェンジ無し&スコアアップ
 }LINKFEST_SCORELOG_SET_CODE;
 
 //フェスログデータ構造体

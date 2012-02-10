@@ -50,7 +50,7 @@ typedef enum{
 typedef BOOL (*FMISSION_BEACON_CHECK_FUNC)( const FEST_BEACON* beacon );
 
 static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode );
-static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+static BOOL log_MakeLogFromBeacon( LINK_FESTIVAL* fest_sys, FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
 
 static BOOL sub_BeaconCheckEffectEnc( const FEST_BEACON*  beacon );
@@ -222,21 +222,21 @@ int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p_log )
 /*
  *  ビーコンからミッションログパラメータを取得してスタックにセット
  *
- *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
- *  @param  info    セットするビーコン情報
- *  @param  score   ログに保存するスコア
- *  @param  mode    ログのセットモード enum FMISSION_LOG_SET_MODE
- *  @param  mine_f  自分の行動ログならTRUE
+ *  @param  fest_sys  LINK_FESTIVAL型構造体へのポインタ
+ *  @param  info      セットするビーコン情報
+ *  @param  score     ログに保存するスコア
+ *  @param  mode      ログのセットモード enum FMISSION_LOG_SET_MODE
+ *  @param  mine_f    自分の行動ログならTRUE
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
+void FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
 {
   FMISSION_LOG  log;
 
-  if( log_MakeLogFromBeacon( &log, info, score,mode, mine_f )){
-    FMISSION_LOG_TBL_SetLog( tbl, &log );
+  if( log_MakeLogFromBeacon( fest_sys, &log, info, score,mode, mine_f )){
+    FMISSION_LOG_TBL_SetLog( &fest_sys->mlog_stack_tbl, &log );
   }
 }
 
@@ -780,7 +780,7 @@ static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *in
  *  @param  new_f 新規エントリーならTRUE
  */
 //------------------------------------------------------------------
-static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
+static BOOL log_MakeLogFromBeacon( LINK_FESTIVAL* fest_sys, FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f )
 {
   FMISSION_LOG_ACTION action = log_GetLogActionFromBeacon( info, mode );
 
@@ -788,17 +788,8 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
     return FALSE;
   }
   FMISSION_LOG_Clear(p_log); 
-
-  p_log->action = action;
-  p_log->mine_f = mine_f;
-  p_log->tr_id = info->trainer_id;
-  p_log->sex = info->sex;
-  p_log->tr_view = info->trainer_view;
-  p_log->score = score;
-
-  //名前(info->nameはEOM抜き)
-  GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE*sizeof(STRCODE));
-
+  
+  //アクションパラメータ取得
   switch( action ){
   case FMISSION_LOG_ACT_FREEWORD:
     //EOM込み
@@ -810,8 +801,26 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
     break;
   default:
     p_log->param = info->action.fest_beacon.act_param;
+  
+    //参加→リタイア→別ミッション→再参加によるスコアの巻き戻り対策
+    if( !mine_f && mode == FMISSION_LOG_SET_NORMAL ){
+      //スコアアップしていないが、スコアアップの赤ログデータだったらログを生成しない
+      if( FEST_MISSION_IsScoreUp( &fest_sys->mission, action, p_log->param )){
+        return FALSE;
+      }
+    }
     break;
   }
+  p_log->action = action;
+  p_log->mine_f = mine_f;
+  p_log->tr_id = info->trainer_id;
+  p_log->sex = info->sex;
+  p_log->tr_view = info->trainer_view;
+  p_log->score = score;
+
+  //名前(info->nameはEOM抜き)
+  GFL_STD_MemCopy16( info->name, p_log->name, PERSON_NAME_SIZE*sizeof(STRCODE));
+
   return TRUE;
 }
 

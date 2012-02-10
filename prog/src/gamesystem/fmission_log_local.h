@@ -10,9 +10,10 @@
 #pragma once
 
 typedef enum{
-  FMISSION_LOG_SET_NORMAL,  ///<通常モード
   FMISSION_LOG_SET_NEW,     ///<Newエントリーモード
   FMISSION_LOG_SET_MAP,     ///<マップチェンジモード
+  FMISSION_LOG_SET_NORMAL,  ///<通常モード
+  FMISSION_LOG_SET_SCORE_UP,   ///<通常&&スコアアップモード
   FMISSION_LOG_SET_MAX,
 }FMISSION_LOG_SET_MODE;
 
@@ -107,9 +108,9 @@ extern void FMISSION_LOG_TBL_Clear( FMISSION_LOG_TBL* tbl );
 /*
  *  ログスタック データセット
  *
- *  @param  tbl   FMISSION_LOG_TBL型構造体へのポインタ
- *  @param  info  セットするビーコン情報
- *  @param  new_f 新規エントリーならTRUE
+ *  @param  fest_sys  FMISSION_LOG_TBL型構造体へのポインタ
+ *  @param  info      セットするビーコン情報
+ *  @param  new_f     新規エントリーならTRUE
  *  @return データをセットした配列の参照index
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
@@ -122,7 +123,7 @@ extern int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p
 /*
  *  ビーコンからミッションログパラメータを取得してスタックにセット
  *
- *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
+ *  @param  tbl     LINK_FESTIVAL型構造体へのポインタ
  *  @param  info    セットするビーコン情報
  *  @param  score   ログに保存するスコア
  *  @param  mode    ログのセットモード enum FMISSION_LOG_SET_MODE
@@ -131,7 +132,7 @@ extern int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-extern void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+extern void FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 
 //------------------------------------------------------------------
 /*
