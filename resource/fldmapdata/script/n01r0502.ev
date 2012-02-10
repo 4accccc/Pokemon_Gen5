@@ -214,6 +214,7 @@ EVENT_START	ev_pos_n01r0502_boss_01
   _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_03, N01R0502_BOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
   //カメラ操作・ダミー主人公を中心に
@@ -223,9 +224,11 @@ EVENT_START	ev_pos_n01r0502_boss_01
   SWITCH $LCW_POSX
   CASE 14 THEN
     _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x14 )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x14 )
   CASE 15 THEN
     _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x15 )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x15 )
   CASE 16 THEN
     _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x16 )
@@ -237,6 +240,7 @@ EVENT_START	ev_pos_n01r0502_boss_01
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x17 )
   CASE 18 THEN
     _OBJ_ANIME( N01R0502_BOSS_01,anm_boss_go_center_x16 )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_center_x18 )
   ENDSWITCH
   _OBJ_ANIME_WAIT()

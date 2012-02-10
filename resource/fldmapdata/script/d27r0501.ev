@@ -98,14 +98,6 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-
-  //アニメ：主人公はじへ移動
-  IF $LCW_POSX == 11 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x11)
-  ELSIF $LCW_POSX == 13 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x13)
-  ENDIF
-  _OBJ_ANIME_WAIT()
   
   //イベント曲再生
   _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
@@ -117,6 +109,14 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   //ヴィオ：ここまで
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_01 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
+  
+  //アニメ：主人公はじへ移動
+  IF $LCW_POSX == 11 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x11)
+  ELSIF $LCW_POSX == 13 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x13)
+  ENDIF
+  _OBJ_ANIME_WAIT()
   
   //アニメ：ヴィオ振り向き
   _OBJ_ANIME( D27R0501_SWSAGE7_01 , anm_staystep_d)
@@ -303,7 +303,7 @@ EVENT_START	ev_pos_d27r0501_swsage7_01
   _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
   //W21マップチェンジ1
   _MAP_CHANGE_NO_FADE( ZONE_ID_W21, 798, -5, 242, DIR_RIGHT )
-  
+
 EVENT_END
 
 /************************************************************/
