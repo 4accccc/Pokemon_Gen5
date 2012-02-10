@@ -61,7 +61,7 @@ GROUP,1,Name,単語,Name,,,,,,,,,,,,,,,
 1,64,FesMissionName,フェスミッション名,FesMissionName,ハイリンクフェスミッション名（日本15文字、海外30文字）,Pixel,195,UInt8,Idx,0,番号,Index,,,
 1,65,ResortType,リゾート種類名,ResortType,ジョインアベニュー（旧レゾナンスリゾート）種類名（日本８文字、海外16文字）,Pixel,104,UInt8,Idx,0,番号,Index,,,
 1,66,ResortTitle,リゾート肩書き,ResortTitle,ジョインアベニュー（旧レゾナンスリゾート）の肩書き（日本16文字、海外32文字）,Pixel,208,UInt8,Idx,0,番号,Index,,,
-
+1,67,TreeLevelType,ハイルツリーレベル種別,TreeLevelType,ハイルツリーの複数あるレベルのどちらであるかを示す名前,Pixel,65,UInt8,Idx,0,番号,Index,,,
 
 GROUP,2,Digit,数値,Digit,,,,,,,,,,,
 2,0,1digit,１桁,1digit,,Pixel,8,UInt8,Idx,0,番号,Index,,,
