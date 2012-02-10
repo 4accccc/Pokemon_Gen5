@@ -3261,11 +3261,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれー？　おおきいキノコを　もってる
+			<Text>あれー？　おおきなキノコを　もってる
 [Name:PokemonName Idx="1" ]を　あててくれないの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T09:51:36" />
+				Time="2012-02-10T03:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -3273,11 +3273,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれー？　おおきいキノコを　持ってる
+			<Text>あれー？　おおきなキノコを　持ってる
 [Name:PokemonName Idx="1" ]を　当ててくれないの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-18T09:51:45" />
+				Time="2012-02-10T03:26:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
