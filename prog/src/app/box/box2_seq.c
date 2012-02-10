@@ -2533,6 +2533,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
+				syswk->app->old_cur_pos = syswk->get_pos;		// 旧位置も更新しておく
 			// いない（範囲選択不成立）
 			}else{
 				MultiSelectCancel( syswk );
@@ -2863,6 +2864,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
+				syswk->app->old_cur_pos = syswk->get_pos;		// 旧位置も更新しておく
 				return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 			}else{
 				MultiSelectCancel( syswk );
@@ -3416,6 +3418,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
+				syswk->app->old_cur_pos = syswk->get_pos;		// 旧位置も更新しておく
 			// いない（範囲選択不成立）
 			}else{
 				MultiSelectCancel( syswk );
@@ -3461,6 +3464,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
+				syswk->app->old_cur_pos = syswk->get_pos;		// 旧位置も更新しておく
 			// いない（範囲選択不成立）
 			}else{
 				MultiSelectCancel( syswk );
@@ -3626,12 +3630,10 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       syswk->get_tray = syswk->tray;
       syswk->get_pos  = pos;
       syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
-    }else{
-      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY_GET;
-      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-    }
-    PMSND_PlaySE( SE_BOX2_DECIDE );
-    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+	    PMSND_PlaySE( SE_BOX2_DECIDE );
+	    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+		break;
 
   case CURSORMOVE_CANCEL:         // キャンセル
 		if( syswk->poke_get_key == 1 ){
@@ -3747,6 +3749,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 					BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 					BOX2BMP_WriteMultiSelectNum( syswk );
 					syswk->poke_get_key = 2;
+					syswk->app->old_cur_pos = syswk->get_pos;		// 旧位置も更新しておく
 					return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 				}else{
 					MultiSelectCancel( syswk );
