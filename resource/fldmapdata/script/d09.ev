@@ -39,7 +39,7 @@ EVENT_START	ev_pos_d09_lfront_connect
 	
 	//ブラックアウト
 	_MAP_FADE_BLACK_OUT_SLOW()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち

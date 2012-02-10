@@ -38,7 +38,7 @@ EVENT_START   ev_reserve_d35r0101_end
 
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 
 	//地名表示
 	_PLACE_NAME_DISPLAY()
@@ -123,7 +123,7 @@ EVENT_START   ev_d35r0101_swleader6_01
     _MSGWIN_CLOSE()
 
     _MAP_FADE_BLACK_OUT()
-    _DISP_FADE_END_CHECK()
+    _MAP_FADE_END_CHECK()
     
     //リザーブスクリプト
     _RESERVE_SCRIPT( SCRID_RESERVE_C06R0201_END )

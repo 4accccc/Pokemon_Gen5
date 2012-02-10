@@ -383,7 +383,7 @@ bell_secondtalk:
 	DEFINE_LOCAL	lwk_poke_num
 	
 	_MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	
 	_CALL_FIRST_POKE_SELECT( lwk_ret_num )
 	
@@ -510,11 +510,11 @@ ev_name_input:
 
 		//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
 		_MAP_FADE_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_END_CHECK()
 		_PARTY_POKE_NAME_INPUT( SCWK_ANSWER, 0, FALSE )
 		
 		_MAP_FADE_BLACK_IN()
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_END_CHECK()
 
 		//ニックネームフラグチェック
 		_GET_PARTY_POKE_PARAM( lwk_nick_name, 0, SCR_POKEPARA_NICKNAME_FLAG )

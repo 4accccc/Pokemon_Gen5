@@ -251,7 +251,7 @@ EVENT_START   ev_d12_pilot_01
     //マップジャンプ
     {
       _MAP_FADE_BLACK_OUT()
-		  _DISP_FADE_END_CHECK()
+		  _MAP_FADE_END_CHECK()
 		  _SE_PLAY( SEQ_SE_VDEMO_02 )
       _RAIL_MAP_CHANGE_NO_FADE( ZONE_ID_C03P13, 0, 2, 11, DIR_RIGHT )
       _SE_WAIT()

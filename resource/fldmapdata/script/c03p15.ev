@@ -77,7 +77,7 @@ EVENT_START   ev_scene_c03p15_first_01
 
   //暗転復帰
   _MAP_FADE_BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
 
   //地名表示
   _PLACE_NAME_DISPLAY()
@@ -193,7 +193,7 @@ EVENT_START   ev_c03p15_pilot_01
     _MSGWIN_CLOSE()
     
     _MAP_FADE_BLACK_OUT()
-    _DISP_FADE_END_CHECK()
+    _MAP_FADE_END_CHECK()
     
     //リザーブスクリプト
     _RESERVE_SCRIPT( SCRID_RESERVE_C13R0401_END )
@@ -290,7 +290,7 @@ EVENT_START	ev_reserve_c03p15_end
 
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	
 	IF $WK_SCENE_C03P15 != 1 THEN
 	

@@ -48,7 +48,7 @@ EVENT_START	ev_reserve_t07_end
 
 	//ˆÃ“]•œ‹A
 	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	
 	IF $WK_SCENE_T07 != 1 THEN
 

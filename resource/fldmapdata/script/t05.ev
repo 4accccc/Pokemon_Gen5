@@ -852,8 +852,8 @@ EVENT_START ev_t05_recept_01
     _RESERVE_SCRIPT( SCRID_BSW_TTOWN_DEMO_TRAIN_ARRIVAL )
 
     _MAP_FADE_BLACK_OUT()
-    _DISP_FADE_END_CHECK()
-
+    _MAP_FADE_END_CHECK()
+    
     //SEçƒê∂
     _TIME_WAIT( 15 )            //ÇøÇÂÇ¡Ç∆ë“Ç¬
     _SE_PLAY( SEQ_SE_BDEMO_02 ) //ìdé‘î≠éÀâπ

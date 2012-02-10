@@ -165,7 +165,7 @@ _ANIME_LABEL	anm_recept_ply_move_01r
 EVENT_START	ev_reserve_c03p14_recept_end
 	//暗転復帰
 	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	
 	_PLACE_NAME_DISPLAY()	//地名表示演出
 	
