@@ -3957,7 +3957,9 @@
 					Type="UInt8"
 					Default="0"
 					LimitType="None">
-					<MultilingualName />
+					<MultilingualName>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
 					<ListItem
 						Name="NewItem">
 						<MultilingualName />
