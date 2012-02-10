@@ -1875,6 +1875,10 @@ sub_resident_service_hatch:
       IF $LWK_RET == 0 THEN
 
         _ADD_RECORD( RECID_TAMAGO_HATCHING, 1 )
+
+        //ÉäÉ]Å[Égópç∑ÇµçûÇ›
+        _RESORT_SET_RECORD( RESORT_RECORD_ID_EGG )
+
         //ê∂Ç‹ÇÍÇÈ
         _PARTY_POKE_EGG_BIRTH( LWK_RET )
 
