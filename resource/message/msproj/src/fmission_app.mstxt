@@ -5098,10 +5098,10 @@
 			<Text>[Name:TrainerName ]の　おもいが
 ハイルツリーと　きょうめいした！▼
 ハイリンクの
-[Name:TrainerName Idx="1" ]ＬＶが　[Digit:2digits Idx="2" ]あがった！</Text>
+[Name:TreeLevelType Idx="1" ]ＬＶが　[Digit:2digits Idx="2" ]あがった！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:59:31" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:08:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5112,10 +5112,10 @@
 			<Text>[Name:TrainerName ]の　おもいが
 ハイルツリーと　きょうめいした！▼
 ハイリンクの
-[Name:TrainerName Idx="1" ]ＬＶが　[Digit:2digits Idx="2" ]あがった！</Text>
+[Name:TreeLevelType Idx="1" ]ＬＶが　[Digit:2digits Idx="2" ]あがった！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:59:47" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5144,10 +5144,10 @@
 			<Text>みんなの　おもいが
 ハイルツリーと　きょうめいした！▼
 ハイリンクの
-[Name:TrainerName ]ＬＶが　[Digit:2digits Idx="1" ]あがった！</Text>
+[Name:TreeLevelType ]ＬＶが　[Digit:2digits Idx="1" ]あがった！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T09:00:56" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5158,10 +5158,10 @@
 			<Text>みんなの　想いが
 ハイルツリーと　共鳴した！▼
 ハイリンクの
-[Name:TrainerName ]ＬＶが　[Digit:2digits Idx="1" ]あがった！</Text>
+[Name:TreeLevelType ]ＬＶが　[Digit:2digits Idx="1" ]あがった！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T08:03:03" />
+				Time="2012-02-10T07:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
