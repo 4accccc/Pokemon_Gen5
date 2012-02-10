@@ -388,7 +388,7 @@ bell_secondtalk:
 	_CALL_FIRST_POKE_SELECT( lwk_ret_num )
 	
 	_MAP_FADE_WHITE_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_END_CHECK()
 	
 	IF $lwk_ret_num == 0 THEN
 		//草タイプを選んだ
