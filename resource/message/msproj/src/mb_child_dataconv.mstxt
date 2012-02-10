@@ -200,11 +200,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もう１つの　ＤＳの
-接続に　失敗しました▼
-</Text>
+接続に　失敗しました▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-01T11:33:58" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

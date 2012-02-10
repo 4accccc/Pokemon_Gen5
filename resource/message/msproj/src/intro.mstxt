@@ -2046,13 +2046,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>注意！
-別の　ポケモンレポートが　　書かれていますので
+別の　ポケモンレポートが　書かれていますので
 これから　始める　冒険は
 途中で　レポートを　書くことができません
 それでも　よろしいですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:53:47" />
+				Time="2012-02-10T12:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

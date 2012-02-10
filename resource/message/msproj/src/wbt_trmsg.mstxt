@@ -9975,11 +9975,11 @@
 			Language="JPN">
 			<Text>あたしも　すきかも
 ここの　ふんいき……▼
-たたかおうと　する　ひとが 
+たたかおうと　する　ひとが
 どんな　ひとか　つたわってくる……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T04:55:30" />
+				Time="2012-02-10T12:40:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9989,11 +9989,11 @@
 			Language="JPN_KANJI">
 			<Text>あたしも　好きかも
 ここの　雰囲気……▼
-戦おうと　する　人が 
+戦おうと　する　人が
 どんな　人か　伝わってくる……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T04:55:30" />
+				Time="2012-02-10T12:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14592,10 +14592,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぐ　ぐーッ！
-この　おれが　まける　なんて！ ▼</Text>
+この　おれが　まける　なんて！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14604,10 +14604,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぐ　ぐーッ！
-この　おれが　負ける　なんて！ ▼</Text>
+この　おれが　負ける　なんて！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20771,13 +20771,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウキ『キミの さいのうは
+			<Text>トウキ『キミの　さいのうは
 いつのひか　おおきな　なみと　なって▼
 ポケモン　トレーナーたちの　あいだに
 おどろきの　あらしを　まきおこす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20785,13 +20785,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウキ『キミの 才能は
+			<Text>トウキ『キミの　才能は
 いつの日か　大きな　波と　なって▼
 ポケモン　トレーナーたちの　あいだに
 驚きの　あらしを　巻き起こす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21454,11 +21454,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっかるい　でんげき　オヤジ！ 
+			<Text>あっかるい　でんげき　オヤジ！
 テッセン！　わっはははははははーッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21466,11 +21466,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっかるい　でんげき　オヤジ！ 
+			<Text>あっかるい　でんげき　オヤジ！
 テッセン！　わっはははははははーッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23662,11 +23662,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんぴの　コンビネーション！！ 
+			<Text>しんぴの　コンビネーション！！
 フウ！　ポケモンとの　れんけいだッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23674,11 +23674,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>神秘の　コンビネーション！！ 
+			<Text>神秘の　コンビネーション！！
 フウ！　ポケモンとの　連携だッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24216,11 +24216,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんぴの　コンビネーション！！ 
+			<Text>しんぴの　コンビネーション！！
 ラン！　ポケモンとの　れんけいだッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:40:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24228,11 +24228,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>神秘の　コンビネーション！！ 
+			<Text>神秘の　コンビネーション！！
 ラン！　ポケモンとの　連携だッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53560,10 +53560,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぐ　ぐーッ！
-この　おれが　まける　なんて！ ▼</Text>
+この　おれが　まける　なんて！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53572,10 +53572,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぐ　ぐーッ！
-この　おれが　負ける　なんて！ ▼</Text>
+この　おれが　負ける　なんて！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:42:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -59703,13 +59703,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウキ『キミの さいのうは
+			<Text>トウキ『キミの　さいのうは
 いつのひか　おおきな　なみと　なって▼
 ポケモン　トレーナーたちの　あいだに
 おどろきの　あらしを　まきおこす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -59717,13 +59717,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウキ『キミの 才能は
+			<Text>トウキ『キミの　才能は
 いつの日か　大きな　波と　なって▼
 ポケモン　トレーナーたちの　あいだに
 驚きの　あらしを　巻き起こす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

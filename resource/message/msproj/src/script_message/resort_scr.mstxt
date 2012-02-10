@@ -16508,11 +16508,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-おみせを　リニューアルした！▼
-</Text>
+おみせを　リニューアルした！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2012-02-06T12:30:02" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:32:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36962,10 +36961,10 @@ ME
 			Language="JPN">
 			<Text>なかなか　かえない　きちょうひん。
 ひんしに　なった　ポケモンの
-ＨＰを　すべて　かいふくする。　　</Text>
+ＨＰを　すべて　かいふくする。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:30:43" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36975,10 +36974,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>なかなか　買えない　貴重品。
 ひんしに　なった　ポケモンの
-ＨＰを　すべて　回復する。　　</Text>
+ＨＰを　すべて　回復する。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:31:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37020,10 +37019,10 @@ ME
 			Language="JPN">
 			<Text>なかなか　かえない　きちょうひん。
 ポケモンの　１つの　わざの　ＰＰを
-１０だけ　かいふくする。　　</Text>
+１０だけ　かいふくする。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:32:19" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37033,10 +37032,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>なかなか　買えない　貴重品。
 ポケモンの　１つの　技の　ＰＰを
-１０だけ　回復する。　　</Text>
+１０だけ　回復する。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:32:37" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37078,10 +37077,10 @@ ME
 			Language="JPN">
 			<Text>なかなか　かえない　きちょうひん。
 ポケモンの　１つの　わざの　ＰＰの
-さいだいちを　すこし　あげる。　　</Text>
+さいだいちを　すこし　あげる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:33:24" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37091,10 +37090,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>なかなか　買えない　貴重品。
 ポケモンの　１つの　技の　ＰＰの
-最大値を　少し　あげる。　　</Text>
+最大値を　少し　あげる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T07:33:51" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

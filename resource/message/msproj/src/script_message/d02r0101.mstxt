@@ -1061,7 +1061,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あやまちて　あらためざる
-これを あやまちと いう▼
+これを　あやまちと　いう▼
 わかるか？
 あやまちは　いたしかた　ないが▼
 あやまりを　おかしても　あらためない
@@ -1072,7 +1072,7 @@
 ポケモンと　たっしゃで　くらせよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:21:53" />
+				Time="2012-02-10T12:27:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1080,8 +1080,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>過ちて 改めざる
-是を 過ちと いう▼
+			<Text>過ちて　改めざる
+是を　過ちと　いう▼
 わかるか？
 過ちは　致し方　ないが▼
 誤りを　おかしても　改めない
@@ -1092,7 +1092,7 @@
 ポケモンと　達者で　暮らせよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:21:56" />
+				Time="2012-02-10T12:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

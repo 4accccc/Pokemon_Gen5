@@ -3794,11 +3794,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>おや？
-とおれそうな すきまが　ある！▼
+とおれそうな　すきまが　ある！▼
 はいってみますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T06:45:44" />
+				Time="2012-02-10T12:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3807,11 +3807,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おや？
-通れそうな すきまが　ある！▼
+通れそうな　すきまが　ある！▼
 入ってみますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T06:45:44" />
+				Time="2012-02-10T12:32:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

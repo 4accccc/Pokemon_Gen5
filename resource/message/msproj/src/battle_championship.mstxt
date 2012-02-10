@@ -658,7 +658,7 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｗｉ－Ｆｉ大会 または
+			<Text>Ｗｉ－Ｆｉ大会　または
 ランダムマッチの　参加中に▽
 本体の電源が　切れたため▼
 １時間　大会や　ランダムマッチで
@@ -667,7 +667,7 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 お越しください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-03T11:22:55" />
+				Time="2012-02-10T12:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"

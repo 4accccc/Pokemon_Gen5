@@ -775,12 +775,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モードを　変えることが　できます
-ただいま アシストモード　です
+ただいま　アシストモード　です
 トレーナーとの　ポケモン勝負が
 やさしく　なっています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:12:35" />
+				Time="2012-02-10T12:03:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

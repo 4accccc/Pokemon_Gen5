@@ -1067,7 +1067,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シロナ『あいてが　トレーナーなら 
+			<Text>シロナ『あいてが　トレーナーなら
 しょうぶすれば　どんなひとか　わかる▼
 どんな　ポケモンに
 どんな　わざを　おぼえさせているのか▽
@@ -1078,7 +1078,7 @@
 ぜひ　シンオウちほうに　きてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2012-02-10T12:36:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1086,7 +1086,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シロナ『相手が　トレーナーなら 
+			<Text>シロナ『相手が　トレーナーなら
 勝負すれば　どんなひとか　わかる▼
 どんな　ポケモンに
 どんな　技を　覚えさせているのか▽
@@ -1097,7 +1097,7 @@
 ぜひ　シンオウ地方に　来てね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2012-02-10T12:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1703,13 +1703,13 @@
 			Language="JPN">
 			<Text>シロナ『いまよりも
 つよくなるために　ひつようなこと？▼
-それは　ずっとずっと 
+それは　ずっとずっと
 ポケモンを　すきで　いることかな▼
 じぶんが　そうだったから
 こんなことしか　いえないけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2012-02-10T12:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1719,13 +1719,13 @@
 			Language="JPN_KANJI">
 			<Text>シロナ『今よりも
 強くなるために　必要なこと？▼
-それは　ずっとずっと 
+それは　ずっとずっと
 ポケモンを　好きで　いることかな▼
 自分が　そうだったから
 こんなことしか　いえないけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T11:31:43" />
+				Time="2012-02-10T12:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

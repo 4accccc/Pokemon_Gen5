@@ -2423,11 +2423,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この カードを　すてても
+			<Text>この　カードを　すてても
 よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2435,11 +2435,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この カードを　捨てても
+			<Text>この　カードを　捨てても
 よろしいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8703,12 +8703,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみせに　きてくれて　ありがとう！ 
+			<Text>おみせに　きてくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8716,12 +8716,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お店に　来てくれて　ありがとう！ 
+			<Text>お店に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
 配達員から　受け取ってね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:15:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23754,12 +23754,12 @@ PBR等。</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみせに　きてくれて　ありがとう！ 
+			<Text>おみせに　きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:15:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23767,12 +23767,12 @@ PBR等。</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お店に　来てくれて　ありがとう！ 
+			<Text>お店に　来てくれて　ありがとう！
 この　おくりものは　配達員が
 お渡ししました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T12:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
