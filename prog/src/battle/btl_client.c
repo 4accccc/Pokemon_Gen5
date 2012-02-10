@@ -10922,6 +10922,7 @@ static void _leave_audience( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int au
     i = GFUser_GetPublicRand( count );
     if(flag_tbl[i]>=0){
       BTLV_CORE_SetAudienceCondition( viewCore, TRUE, flag_tbl[i], POKEWOOD_AUDIENCE_LEAVE );  //離席
+      psw->Audience.timer[i] = 0;   // それまでのリアクションをキャンセルするためにtimer値は0に
       psw->Audience.on_off ^= 1<<flag_tbl[i];
       left++;
       OS_Printf("delete=%d, left=%d\n", flag_tbl[i], left);
