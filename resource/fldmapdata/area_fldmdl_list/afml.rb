@@ -1,3 +1,5 @@
+require 'csv'
+
 $KCODE = "SJIS"
 
 $CHECK_TYPE = 3     # 2:エリア別 3:MOVIE_MODEL別
@@ -57,20 +59,23 @@ while line = zone_csv.gets
 end
 
 #MEVファイルを開いて、ＯＢＪコードをエリア別に格納していく
-
-AreaHash.each{|key,val|
-  str = key + ".txt"
-  text = open(str,"w")
-  vec = Array.new
-  vec.clear
-  val.each{|zone|  
-    pass = "../eventdata/data/" + zone + ".mev"
-    mev = open(pass,"r")
-    MakeObjCodeVec( mev, vec )
+# データ出力
+CSV.open("result.csv", 'w') do |writer|
+  AreaHash.each{|key,val|
+    str = key + ".txt"
+    text = open(str,"w")
+    vec = Array.new
+    vec.clear
+    val.each{|zone|  
+      pass = "../eventdata/data/" + zone + ".mev"
+      mev = open(pass,"r")
+      MakeObjCodeVec( mev, vec )
+    }
+    #重複削除
+    vec.uniq!
+    vec.each_with_index{|code,index|
+      text.printf("%s\n", code)
+      writer << [ key,index+1,code ]
+    }
   }
-  #重複削除
-  vec.uniq!
-  vec.each{|code|
-    text.printf("%s\n", code)
-  }
-}
+end
