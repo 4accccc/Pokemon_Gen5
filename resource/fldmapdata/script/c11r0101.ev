@@ -98,8 +98,6 @@ EVENT_START ev_c11r0101_reception01
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ELSE
-      //フェスミッション強制終了
-      _FMISSION_END_FORCE()
 
       //データセット
       _UN_SET_COUNTRY_INFO( Country, Floor )
