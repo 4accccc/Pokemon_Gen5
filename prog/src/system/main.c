@@ -30,6 +30,7 @@
 #include "gamesystem/g_power.h"
 #include "savedata/config.h"
 #include "field/resonance_resort_data.h"
+#include "system/mem_priority.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -53,6 +54,8 @@
 #endif
 // サウンド読み込みスレッド
 extern OSThread soundLoadThread;
+
+BOOL isARM9disable;     // サウンドのARM9優先設定フラグ
 
 static BOOL isARM9preference(void);
 static  void  SkeltonHBlankFunc(void);
@@ -255,6 +258,19 @@ void NitroMain(void)
   GameExit();
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ARM9優先を無効にするか
+ *
+ *	@param	const BOOL flag   TRUEで無効
+ *
+ *	@note   使う箇所は現状スタッフロールのみ
+ */
+//-----------------------------------------------------------------------------
+void MEM_PRIORITY_SetARM9Disable( const BOOL flag )
+{
+  isARM9disable = flag;
+}
 
 //------------------------------------------------------------------
 /**
@@ -273,6 +289,9 @@ static BOOL isARM9preference(void)
     return FALSE;
   }
   if(SND_STRM_IsActive()){  // ストリーミング
+    return FALSE;
+  }
+  if(isARM9disable){  // ARM9優先が無効にされているか
     return FALSE;
   }
   return TRUE;
@@ -346,6 +365,8 @@ static  void  GameInit(void)
   /* 文字描画システム初期化 */
   PRINTSYS_Init( GFL_HEAPID_SYSTEM );
 
+  // ARM9優先設定初期化
+  isARM9disable = FALSE;
 
 
   // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ

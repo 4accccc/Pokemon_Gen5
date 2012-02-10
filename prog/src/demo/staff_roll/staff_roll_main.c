@@ -14,6 +14,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/gfl_use.h"
+#include "system/mem_priority.h"
 #include "sound/pm_sndsys.h"
 
 #include "font/font.naix"
@@ -412,6 +413,10 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
+  // サウンドのARM9優先を無効にする
+  // =>サウンドでノイズが発生していた為の処置
+  MEM_PRIORITY_SetARM9Disable( TRUE );
+
 	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	return MAINSEQ_START_WAIT;
@@ -445,6 +450,8 @@ static int MainSeq_Wipe( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Release( SRMAIN_WORK * wk )
 {
+  // サウンドのARM9優先を無効を元に戻す
+  MEM_PRIORITY_SetARM9Disable( FALSE );
 
 	ExitVBlank( wk );
 
