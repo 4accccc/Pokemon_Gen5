@@ -226,3 +226,6 @@ extern void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk );
 extern void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl );
 
 extern void KEYSYS_NET_SetErrorThrough( KEYSYS_NET_WORK *p_wk, BOOL is_through );
+
+typedef void(*KEYSYS_NET_NETERROR_CALLBACK)(void* p_wk_adrs);
+extern void KEYSYS_NET_SetNetErrCallback( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_NETERROR_CALLBACK callback, void *p_wk_adrs );

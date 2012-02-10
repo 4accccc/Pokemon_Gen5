@@ -127,6 +127,8 @@ static void DataConv_Display_CreateExplain( void *p_wk_adrs, HEAPID heapID );
 static BOOL DataConv_Display_IsEndCreateExplain( void *p_wk_adrs );
 static void DataConv_Display_DeleteExplain( void *p_wk_adrs );
 
+static void DataConv_NetErr_Callback( void *p_wk_adrs );
+
 //=============================================================================
 /**
  *					外部公開
@@ -856,6 +858,8 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         param.buffer_size = 0x80000+sizeof(gs_response);
       }
       KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_PGL_GETBW, &param );
+
+      KEYSYS_NET_SetNetErrCallback( p_wk->p_net, DataConv_NetErr_Callback, p_wk );
     }
     (*p_seq)++;
     break;
@@ -2351,6 +2355,20 @@ static void DataConv_Display_DeleteExplain( void *p_wk_adrs )
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コールバック
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_NetErr_Callback( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_TEXT_ClearScreen( p_wk->p_text );
+  GFL_BG_LoadScreenReq( KEYSYS_BG_FRAME_TEXT_M );
+}
 
 //----------------------------------------------------------------------------
 /**

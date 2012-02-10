@@ -96,6 +96,9 @@ struct _KEYSYS_NET_WORK
   u32                     error_msg;
   BOOL                    is_cancel;
   BOOL                    is_err_through;
+
+  KEYSYS_NET_NETERROR_CALLBACK callback;
+  void *p_callback_wk;
 };
 
 //=============================================================================
@@ -140,6 +143,7 @@ static void KeySys_NetRecv_IrcWireless_CommonData( const int netID, const int si
 static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET_REQ request );
 static void Kesys_Net_DisconnectCallback(void* p_wk_adrs, int code, int type, int ret);
 void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk );
+static void KeySys_Net_CallNetErrDispCallback( KEYSYS_NET_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -486,12 +490,14 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
     if( p_wk->error != KEYSYS_NET_ERROR_NONE )
     {
       NetErr_App_ReqErrorDispForce( dwc_error_0015 );
+      KeySys_Net_CallNetErrDispCallback( p_wk );
       NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
     }
 
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
     {
+      KeySys_Net_CallNetErrDispCallback( p_wk );
       NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
     }
@@ -501,6 +507,7 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
     if( p_wk->error != KEYSYS_NET_ERROR_NONE )
     {
       NetErr_App_ReqErrorDispForce( p_wk->error_msg );
+      KeySys_Net_CallNetErrDispCallback( p_wk );
       NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
     }
@@ -517,6 +524,7 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
       case DWC_ETYPE_SHUTDOWN_GHTTP:
       case DWC_ETYPE_SHUTDOWN_ND:
       case DWC_ETYPE_DISCONNECT:
+        KeySys_Net_CallNetErrDispCallback( p_wk );
         NetErr_DispCallPushPop();
         return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
 
@@ -590,6 +598,20 @@ void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl )
 void KEYSYS_NET_SetErrorThrough( KEYSYS_NET_WORK *p_wk, BOOL is_through )
 {
   p_wk->is_err_through = is_through;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信エラー画面のときのコールバック設定
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ *	@param	callback  コールバック
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_SetNetErrCallback( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_NETERROR_CALLBACK callback, void *p_wk_adrs )
+{
+  p_wk->callback      = callback;
+  p_wk->p_callback_wk = p_wk_adrs;
 }
 
 //=============================================================================
@@ -1528,6 +1550,8 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk )
 {
+  KEYSYS_NET_SetNetErrCallback( p_wk, NULL, NULL );
+
   switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_MULTIBOOT:
@@ -1551,10 +1575,24 @@ void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk )
     break;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信画面エラーコールバック  一度エラーがおこったらきえる
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_CallNetErrDispCallback( KEYSYS_NET_WORK *p_wk )
+{
+  if( p_wk->callback )
+  {
+    p_wk->callback( p_wk->p_callback_wk );
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  通信が切断されたときに呼ばれるコールバック
+ *	@brief  通信が切断されたときに呼ばれるコールバック  
  *
  *	@param	p_wk_adrs ワークアドレス
  *	@param	code  エラーコード
