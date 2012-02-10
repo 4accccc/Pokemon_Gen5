@@ -109,6 +109,8 @@ typedef enum {
   STAT_CYGNUS_FLAGS_FAILURE,
   STAT_CYGNUS_EMPTY_FAILURE,
   STAT_CYGNUS_CLEAR_GIFTS,
+  STAT_CYGNUS_BREAK_CTRLCRC,
+  STAT_CYGNUS_BREAK_DATACRC,
 
   STAT_NUM,
 }LAST_STATUS;
@@ -124,6 +126,8 @@ static const STRCODE * const str_state[] =
   L"FLAG指定により渡せない",
   L"渡すものがない",
   L"渡すものをクリア",
+  L"管理CRCを破壊",
+  L"データCRCを破壊",
 };
 
 SDK_COMPILER_ASSERT( STAT_NUM == NELEMS(str_state) );
@@ -1452,11 +1456,10 @@ static BOOL SubSeqBreakCtrlCrc( PROC_WORK * p_wk )
     p_wk->subSeq ++;
     break;
   case 2:
-    OS_Printf("WRITING FROM CYGNUS...\n");
     if ( CYGNUSSAVE_CONTROL_SaveAsyncMain( p_wk->cygsave_ctrl ) == TRUE )
     {
       CygnusUnload( p_wk );
-      p_wk->last_status = STAT_CYGNUS_WRITE_SUCCESS;
+      p_wk->last_status = STAT_CYGNUS_BREAK_CTRLCRC;
       return TRUE;  //終了
     }
   }
@@ -1480,11 +1483,10 @@ static BOOL SubSeqBreakDataCrc( PROC_WORK * p_wk )
     p_wk->subSeq ++;
     break;
   case 2:
-    OS_Printf("WRITING FROM CYGNUS...\n");
     if ( CYGNUSSAVE_CONTROL_SaveAsyncMain( p_wk->cygsave_ctrl ) == TRUE )
     {
       CygnusUnload( p_wk );
-      p_wk->last_status = STAT_CYGNUS_WRITE_SUCCESS;
+      p_wk->last_status = STAT_CYGNUS_BREAK_DATACRC;
       return TRUE;  //終了
     }
   }
