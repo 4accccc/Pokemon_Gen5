@@ -4968,13 +4968,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆれる　くさむらにいる
-ポケモンを　さがしてみよう！
-[Digit:4digits Idx="1" ]ひきいじょう　たおすか
-つかまえれば　クリア！</Text>
+			<Text>ゆれる　くさむらや
+つちけむりの　なかに　いる
+ポケモンを　さがしてみよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-28T13:02:16" />
+				Time="2012-02-10T02:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4982,13 +4981,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>揺れる　草むらにいる
-ポケモンを　探してみよう！
-制限時間内に
-[Digit:4digits Idx="1" ]匹以上　倒せ！</Text>
+			<Text>揺れる　草むらや
+土煙の　中にいる
+ポケモンを　探してみよう！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:46:20" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T03:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5199,10 +5197,10 @@
 			<Text>揺れる　草むらにいる
 [Name:PokemonName ]を　探してみよう！
 どこかに　いるのか　いないのか……
-デルパワーの　力　借りるべきか</Text>
+デルパワーの　力を　借りるべきか</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-29T03:46:06" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T02:49:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
