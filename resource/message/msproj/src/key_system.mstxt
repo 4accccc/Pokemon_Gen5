@@ -2651,11 +2651,11 @@ CYGNUS連動用</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル　メニューに
+			<Text>タイトル　に
 もどります</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T08:19:47" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-10T03:07:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2663,11 +2663,11 @@ CYGNUS連動用</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル　メニューに
+			<Text>タイトル　に
 戻ります</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-29T04:58:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-10T03:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
