@@ -1656,10 +1656,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<Text>[Name:PokemonName ]</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-26T11:09:55" />
+				User="shimoyamada:W00184"
+				Time="2012-02-10T02:13:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1667,10 +1667,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<Text>[Name:PokemonName ]</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-26T11:10:14" />
+				User="shimoyamada:W00184"
+				Time="2012-02-10T02:13:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
