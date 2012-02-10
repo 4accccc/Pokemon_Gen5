@@ -1297,6 +1297,12 @@ static void pwc_init_obj( PKWD_COUNT_MAIN_WORK* wk )
 	//
 	// 半透明の設定(カウントダウンの上マーク)
 	GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk[CLWK_ROLE], GX_OAM_MODE_XLU );
+	//
+	// サブ画面に通信アイコン表示
+	// 通信アイコンセット(下画面)
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
+	// 表示
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //-----------------------------------------------------------------------------

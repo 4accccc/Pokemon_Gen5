@@ -46,5 +46,8 @@ extern void TdSave_exit_timeicon( T_DOWNLOAD_MAIN_WORK* wk );
 
 extern s32  TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk );
 extern BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
+//
+extern s32  TdSave_get_slotpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
+extern s32  TdSave_get_flag_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 curpos );
 
 

@@ -124,6 +124,7 @@ enum{
 	FLG_MW_JOIN_UPDATE	= (1<<20),		// 更新
 	FLG_MW_SAVE_UPDATE	= (1<<21),		// 更新
 	FLG_MW_PAGE_MIN		= (1<<22),		// ページ最小(1ページのみ)
+	FLG_MW_INFO_CHG		= (1<<23),		// 詳細切り替え
 	//
 	FLG_MW_FRAME_STAT	= (1<<24),		// フレームの状態(初期化済みかどうか)
 };
@@ -509,6 +510,7 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 		wk->PageMaxNum[i] 		= 0;
 		wk->CurrentPageNum[i] 	= 0;
 	}
+	wk->SlotLast	= -1;
 	wk->PCount		= 0;
 	wk->InfoCurPos	= 0;
 	wk->RetMode		= -1;
@@ -534,6 +536,9 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	
 	// セーブデータの読み込み(全モード必ず)
 	wk->SaveMaxNum = TdSave_init_data( wk );
+	// はじめてデータのある場所をセット
+	wk->JoinCurPos = TdSave_get_slotpos( wk, 0 );
+	
 #ifdef __DOWNLOAD_CHECK__	// debug用
 	wk->ListMaxNum = 0;
 	// 選択画面からの場合だけデバッグを発動(暫定処理)
@@ -775,7 +780,9 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	GFL_BG_SetScroll( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	
 	// ここまでで表示数(DispMaxNum)を決めておくこと
-	wk->DispMaxNum = wk->SaveMaxNum;
+//	wk->DispMaxNum = wk->SaveMaxNum;
+	// セーブ格納されているスロットの個数(0,1-3)
+	wk->DispMaxNum = wk->SlotLast+1;
 	//
 	// 本来こないはず(念のため)
 	wk->Flag &= ~FLG_MW_NOITEM;
@@ -784,7 +791,9 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// パネル表示
 	for(i=0;i<wk->DispMaxNum;i++){
-		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+		if(wk->SaveFlag & (1<<(4+i))){
+			TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+		}
 	}
 	// バー非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
@@ -812,7 +821,9 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	// 文字列初期化
 	TdCmn_init_string2( wk, wk->Mode );
 	for(i=0;i<wk->DispMaxNum;i++){
-		TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
+		if(wk->SaveFlag & (1<<(4+i))){
+			TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
+		}
 	}
 	// 項目なしの場合
 	if(wk->Flag & FLG_MW_NOITEM){
@@ -901,10 +912,17 @@ static BOOL td_chk_tp_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		case T_DOWNLOAD_AREA_JOIN_TP_PANEL_02:
 			// 範囲内にあるか
 			num = ret - T_DOWNLOAD_AREA_JOIN_TP_PANEL_00;
+#if 1
+			if(wk->SaveFlag & (1<<(4+num))){
+				mflg = 1;
+				wk->JoinCurPos = num;
+			}
+#else
 			if(num <= (wk->DispMaxNum-1)){
 				mflg = 1;
 				wk->JoinCurPos = num;
 			}
+#endif
 			break;
 	}
 	// 判定
@@ -958,6 +976,7 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	s16		sflg=0;
 	s16		mflg=0;
 	BOOL	bflg=FALSE;
+	s32		cpos;
 	
 	// タッチモード => キーモードにしてskip
 	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
@@ -974,6 +993,16 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+#if 1
+			// カーソル
+			cpos = TdSave_get_flag_curpos( wk, 0, wk->JoinCurPos );
+			if(cpos != wk->JoinCurPos){
+				sflg = 1;
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+			}
+			wk->JoinCurPos = cpos;
+#else
 			if(wk->JoinCurPos != 0){
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
@@ -984,9 +1013,20 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 				}
 				sflg = 1;
 			}
+#endif
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+#if 1
+			// カーソル
+			cpos = TdSave_get_flag_curpos( wk, 1, wk->JoinCurPos );
+			if(cpos != wk->JoinCurPos){
+				sflg = 1;
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+			}
+			wk->JoinCurPos = cpos;
+#else
 			if(wk->JoinCurPos != (wk->DispMaxNum-1)){
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
@@ -997,6 +1037,7 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 				}
 				sflg = 1;
 			}
+#endif
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -1302,6 +1343,8 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 	// 初期カーソル位置
 	wk->InfoCurPos = 0;
 	wk->Flag |= FLG_MW_INFO_UPDATE;
+	wk->Flag |= FLG_MW_INFO_CHG;
+	wk->PCount = 0x8000;
 	
 	// リスト画面から来た
 	if(wk->RetMode == T_DOWNLOAD_MODE_SELECT){
@@ -1374,8 +1417,11 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 			// 情報表示
 			TdCmn_disp_info_mode( wk, T_DOWNLOAD_DATA_SAVE, wk->SaveCurPos, wk->InfoCurPos );
 		}
-		// カーソル位置
-		TdCmn_chg_info_curpos( wk, wk->InfoCurPos );
+		// カーソル位置更新
+		if(wk->Flag & FLG_MW_INFO_CHG){
+			TdCmn_chg_info_curpos( wk, wk->InfoCurPos );
+			wk->Flag &= ~FLG_MW_INFO_CHG;
+		}
 		// スクロールバー表示チェック
 		TdCmn_chk_info_disp_scrollbar( wk, wk->InfoCurPos );
 		// 最小チェック
@@ -1459,6 +1505,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		sflg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+		wk->Flag |= FLG_MW_INFO_CHG;
 	}
 	// 道具
 	else if(ret == T_DOWNLOAD_AREA_TD_TP_ICON_01){
@@ -1466,6 +1513,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		sflg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+		wk->Flag |= FLG_MW_INFO_CHG;
 	}
 	// 技
 	else if(ret == T_DOWNLOAD_AREA_TD_TP_ICON_02){
@@ -1473,6 +1521,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		sflg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+		wk->Flag |= FLG_MW_INFO_CHG;
 	}
 	//
 	else{
@@ -1569,6 +1618,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		sflg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+		wk->Flag |= FLG_MW_INFO_CHG;
 	}
 	// 右
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
@@ -1579,6 +1629,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		sflg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+		wk->Flag |= FLG_MW_INFO_CHG;
 	}
 	// 上
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
@@ -2462,7 +2513,9 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	GFL_BG_SetScroll( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, 0 );
 	
 	// 表示数セット
-	wk->DispMaxNum = wk->SaveMaxNum;
+//	wk->DispMaxNum = wk->SaveMaxNum;
+	// セーブ格納されているスロットの個数(0,1-3)
+	wk->DispMaxNum = wk->SlotLast+1;
 	//
 	// アイテムがない
 	wk->Flag &= ~FLG_MW_NOITEM;
@@ -2481,9 +2534,11 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	// 文字列初期化
 	TdCmn_init_string2( wk, wk->Mode );
 	for(i=0;i<wk->DispMaxNum;i++){
-		TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
-		// パネル表示
-		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+		if(wk->SaveFlag & (1<<(4+i))){
+			TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
+			// パネル表示
+			TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+		}
 	}
 	// 項目がある
 	if(!(wk->Flag & FLG_MW_NOITEM)){
@@ -2600,10 +2655,17 @@ static BOOL td_chk_tp_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		case T_DOWNLOAD_AREA_SAVE_TP_PANEL_02:
 			// 範囲内にあるか
 			num = ret - T_DOWNLOAD_AREA_SAVE_TP_PANEL_00;
+#if 1
+			if(wk->SaveFlag & (1<<(4+num))){
+				mflg = 1;
+				wk->SaveCurPos = num;
+			}
+#else
 			if(num <= (wk->DispMaxNum-1)){
 				mflg = 1;
 				wk->SaveCurPos = num;
 			}
+#endif
 			break;
 	}
 	if(mflg == 0){
@@ -2660,6 +2722,7 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 	s16		sflg=0;
 	s16		mflg=0;
 	BOOL	bflg=FALSE;
+	s32		cpos;
 	
 	// タッチモード => キーモードにしてskip
 	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
@@ -2676,6 +2739,16 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+#if 1
+			// カーソル
+			cpos = TdSave_get_flag_curpos( wk, 0, wk->SaveCurPos );
+			if(cpos != wk->SaveCurPos){
+				sflg = 1;
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+			}
+			wk->SaveCurPos = cpos;
+#else
 			if(wk->SaveCurPos != 0){
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
@@ -2686,9 +2759,20 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 				}
 				sflg = 1;
 			}
+#endif
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+#if 1
+			// カーソル
+			cpos = TdSave_get_flag_curpos( wk, 1, wk->SaveCurPos );
+			if(cpos != wk->SaveCurPos){
+				sflg = 1;
+				// SE
+				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+			}
+			wk->SaveCurPos = cpos;
+#else
 			if(wk->SaveCurPos != (wk->DispMaxNum-1)){
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
@@ -2699,6 +2783,7 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 				}
 				sflg = 1;
 			}
+#endif
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -3189,7 +3274,9 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 			bflg = TdSave_main_save( wk );
 			if(bflg == FALSE){
 				// 後処理
-				wk->DispMaxNum = wk->SaveMaxNum;
+//				wk->DispMaxNum = wk->SaveMaxNum;
+				// セーブ格納されているスロットの個数(0,1-3)
+				wk->DispMaxNum = wk->SlotLast+1;
 				wk->SaveCurPos = wk->SaveDest;
 				// 終了
 				TdSave_exit_timeicon( wk );
@@ -3204,9 +3291,11 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				TdCmn_set_del_save( wk, FALSE, wk->SaveCurPos );
 				//
 				for(i=0;i<wk->DispMaxNum;i++){
-					TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
-					// パネル表示
-					TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+					if(wk->SaveFlag & (1<<(4+i))){
+						TdCmn_disp_panel_string( wk, T_DOWNLOAD_DATA_SAVE, i );
+						// パネル表示
+						TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_PANEL_00+i, TRUE );
+					}
 				}
 				// カーソル
 				TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_3, wk->SaveCurPos );

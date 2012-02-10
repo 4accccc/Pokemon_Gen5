@@ -106,6 +106,8 @@ s32 TdSave_init_data( T_DOWNLOAD_MAIN_WORK* wk )
 		bflg = td_load_init_data( wk, i );
 		if(bflg == TRUE){
 			wk->SaveFlag |= (1<<(4+i));
+			// セットした最後のスロット番号
+			wk->SlotLast = i;
 			cnt++;
 		}
 	}
@@ -148,6 +150,7 @@ static BOOL td_load_init_data( T_DOWNLOAD_MAIN_WORK* wk, const s32 num )
 		// save_p => WbtSaveData[]へ
 		GFL_STD_MemCopy32( save_p, wk->WbtSaveData[num], sizeof(WBTDL_DATA) );
 		bflg = TRUE;
+		OS_Printf("ok :%d\n",num);
 	}
 	// 外部データを開放
 	SaveControl_Extra_Unload( save, td_save_id_tbl[2*num] );
@@ -530,6 +533,13 @@ void TdSave_exit_timeicon( T_DOWNLOAD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 s32 TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk )
 {
+#if 1
+	s32		cpos;
+	
+	// 空き位置を探す
+	cpos = TdSave_get_slotpos( wk, 1 );
+	return( cpos );
+#else
 	s32		num;
 	
 	num = wk->SaveMaxNum;
@@ -538,6 +548,7 @@ s32 TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	//
 	return( num );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -552,6 +563,29 @@ s32 TdSave_get_save_pos( T_DOWNLOAD_MAIN_WORK* wk )
 //--------------------------------------------------------------------------------------------
 BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 {
+#if 1
+	s16		i;
+	u16		tid[2];
+	BOOL	bflg=FALSE;
+	//
+	// リストの情報のtournamentidと
+	// セーブの情報のtournamentidが一致しているかチェック
+	// フレーム情報
+//	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
+	tid[0] = WBTDL_DATA_GetTournamentId( wk->CheckBuffer[num] );
+	// セーブ情報
+	for(i=0;i<wk->SlotLast+1;i++){
+		if(wk->SaveFlag & (1<<(4+i))){
+			tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
+			if(tid[0] == tid[1]){
+				bflg = TRUE;
+				break;
+			}
+		}
+	}
+	// 結果
+	return( bflg );
+#else
 	s16		i;
 	u16		tid[2];
 	BOOL	bflg=FALSE;
@@ -571,6 +605,7 @@ BOOL TdSave_chk_save_list( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 	}
 	// 結果
 	return( bflg );
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -600,6 +635,8 @@ static void td_set_save_after( T_DOWNLOAD_MAIN_WORK * wk )
 	cnt = 0;
 	for(i=0;i<3;i++){
 		if(wk->SaveFlag & (1<<(4+i))){
+			// セットした最後のスロット番号
+			wk->SlotLast = i;
 			cnt++;
 		}
 	}
@@ -665,5 +702,100 @@ static s32 td_chk_download_data( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	OS_Printf("total data ok :%d\n",j);
 	return( j );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  実際のセーブデータ位置
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32	mode	(0:はじめて見つかった位置、1:空き位置)
+ *
+ *	@retval s32					正しく読み込まれた先頭の位置(なし:-1)
+ */
+//-----------------------------------------------------------------------------
+s32 TdSave_get_slotpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	s32		i;
+	
+	// はじめて見つかった位置
+	if(mode == 0){
+		for(i=0;i<3;i++){
+			if(wk->SaveFlag & (1<<(4+i))){
+				return(i);
+			}
+		}
+	}
+	// はじめからの空き位置
+	else{
+		for(i=0;i<3;i++){
+			if(!(wk->SaveFlag & (1<<(4+i)))){
+				return(i);
+			}
+		}
+	}
+	return(-1);
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー操作
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk 
+ *	@param	const s32			(0:上、1:下)
+ *	@param	const s32			(src pos)
+ *
+ *	@retval s32					(dest pos)
+ */
+//-----------------------------------------------------------------------------
+s32 TdSave_get_flag_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 curpos )
+{
+	s32		ret=curpos;
+	
+	//
+	// 上に移動
+	if(mode == 0){
+		// 1の場合
+		if(curpos == 1){
+			// 0のデータを調べる
+			if(wk->SaveFlag & (1<<4)){
+				ret = 0;
+			}
+		}
+		// 2の場合
+		else if(curpos == 2){
+			// 1をチェック
+			if(wk->SaveFlag & (1<<(4+1))){
+				ret = 1;
+			}
+			// 0をチェック
+			else if(wk->SaveFlag & (1<<4)){
+				ret = 0;
+			}
+		}
+	}
+	// 下に移動
+	else{
+		// 1の場合
+		if(curpos == 1){
+			// 2のデータを調べる
+			if(wk->SaveFlag & (1<<(4+2))){
+				ret = 2;
+			}
+		}
+		// 0の場合
+		else if(curpos == 0){
+			// 1をチェック
+			if(wk->SaveFlag & (1<<(4+1))){
+				ret = 1;
+			}
+			// 2をチェック
+			else if(wk->SaveFlag & (1<<(4+2))){
+				ret = 2;
+			}
+		}
+	}
+	return( ret );
 }
 

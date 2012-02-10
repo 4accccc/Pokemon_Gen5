@@ -329,6 +329,7 @@ typedef struct
 	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
 	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
 	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
+	s32						SlotLast;							///< 最後のスロット番号
 	// 詳細画面用(3アイコン用)
 	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		// 項目数
 	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	// ページ最大数
