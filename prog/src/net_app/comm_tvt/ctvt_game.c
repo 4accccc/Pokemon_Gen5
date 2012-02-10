@@ -556,6 +556,8 @@ static void collision_vec( fx32* x1, fx32* y1, fx32* x2, fx32* y2, fx32 dir, u8 
 // レイと球の交差判定
 static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32 *cp_rayWay, const GFL_COLLISION3D_CIRCLE *cp_circle );
 
+// 結果発表中の風船の更新
+static void score_balloon_update( CTVT_GAME_WORK *p_wk );
 
 //-------------------------------------
 /// PLATE
@@ -2553,6 +2555,15 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       gameWork->seq = 0;    // 次モードの為、初期化
       return TRUE;
     }
+  }
+
+
+  // BTS1735 【リザルト画面で、背景は動いているのに風船だけ止まる】
+  //
+  if( gameWork->seq >= SEQ_SCORE_MAIN && gameWork->seq <= SEQ_EXIT_SYNC_WAIT )
+  {
+    // GRAPHIC
+    score_balloon_update( gameWork );
   }
 
   return FALSE;
@@ -4621,30 +4632,6 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     break;
   case SUB_SEQ_END:          // 終了
     return TRUE;
-  }
-
-  // GRAPHIC
-  {
-    // 3D描画
-    GFL_G3D_DRAW_Start();
-
-    // カメラ更新
-    GFL_G3D_CAMERA_Switching( gameWork->p_camera );
-    GFL_G3D_DRAW_SetLookAt();
-
-    // アニメーション更新
-    for( i=0; i<CTVT_MEMBER_NUM; i++ )
-    {
-      u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( gameWork->g3dUtil, gameWork->unit_idx[i] );
-      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( gameWork->g3dUtil, head_obj_idx );
-      GFL_G3D_OBJECT_LoopAnimeFrame( obj, 0, FX32_ONE );  // ica
-      GFL_G3D_OBJECT_LoopAnimeFrame( obj, 1, FX32_ONE );  // itp
-    }
-
-    // 風船タスクメイン
-    GFL_TCB_Main( gameWork->task );
-
-    GFL_G3D_DRAW_End();
   }
 
   // プレート更新
@@ -6749,6 +6736,41 @@ static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32
   if( disc < 0 ) return FALSE;
 
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  結果発表画面での風船更新
+ *
+ *	@param	CTVT_GAME_WORK *p_wk 
+ *
+ *  @note   複数のシーケンスで呼ばれるので関数にしました
+ */
+//-----------------------------------------------------------------------------
+static void score_balloon_update( CTVT_GAME_WORK *p_wk )
+{
+  int i;
+
+  // 3D描画
+  GFL_G3D_DRAW_Start();
+
+  // カメラ更新
+  GFL_G3D_CAMERA_Switching( p_wk->p_camera );
+  GFL_G3D_DRAW_SetLookAt();
+
+  // アニメーション更新
+  for( i=0; i<CTVT_MEMBER_NUM; i++ )
+  {
+    u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->g3dUtil, p_wk->unit_idx[i] );
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, head_obj_idx );
+    GFL_G3D_OBJECT_LoopAnimeFrame( obj, 0, FX32_ONE );  // ica
+    GFL_G3D_OBJECT_LoopAnimeFrame( obj, 1, FX32_ONE );  // itp
+  }
+
+  // 風船タスクメイン
+  GFL_TCB_Main( p_wk->task );
+
+  GFL_G3D_DRAW_End();
 }
 
 //=============================================================================
