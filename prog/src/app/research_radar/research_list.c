@@ -2271,6 +2271,7 @@ static int CalcDisplayTopOfTopicButton( const RRL_WORK* work, u8 topicID )
 
   // BGスクロールの分を考慮する
   top -= GetScrollValue();
+  ONOUE_Printf("スクロール値:%d,top=%d\n",GetScrollValue(),top);
 
   return top;
 }
@@ -3040,14 +3041,39 @@ static void UpdateTopicTouchArea( RRL_WORK* work )
   for( idx=TOPIC_TOUCH_AREA_TOPIC_0; idx <= TOPIC_TOUCH_AREA_TOPIC_9; idx++ )
   {
     int left, top;
+    int ret_left,rec_right,rec_top,rec_bottom;
 
     left = CalcDisplayLeftOfTopicButton( work, idx );
     top  = CalcDisplayTopOfTopicButton( work, idx );
 
-    work->topicTouchHitTable[ idx ].rect.left   = left;
-    work->topicTouchHitTable[ idx ].rect.right  = left + TOPIC_BUTTON_TOUCH_AREA_WIDTH;
-    work->topicTouchHitTable[ idx ].rect.top    = top; 
-    work->topicTouchHitTable[ idx ].rect.bottom = top + TOPIC_BUTTON_TOUCH_AREA_HEIGHT;
+    ret_left = left;
+    if( ret_left < 0 )
+    {
+      ret_left = 0;
+    }
+
+    rec_right = left + TOPIC_BUTTON_TOUCH_AREA_WIDTH;
+    if( rec_right < 0 )
+    {
+      rec_right = 0;
+    }
+
+    rec_top = top;
+    if( rec_top < 0 )
+    {
+      rec_top = 0;
+    }
+
+    rec_bottom = top + TOPIC_BUTTON_TOUCH_AREA_HEIGHT;
+    if( rec_bottom < 0 )
+    {
+      rec_bottom = 0;
+    }
+
+    work->topicTouchHitTable[ idx ].rect.left   = ret_left;
+    work->topicTouchHitTable[ idx ].rect.right  = rec_right;
+    work->topicTouchHitTable[ idx ].rect.top    = rec_top; 
+    work->topicTouchHitTable[ idx ].rect.bottom = rec_bottom;
   }
 }
 
