@@ -33,7 +33,7 @@ _EVENT_DATA_END
 EVENT_START   ev_reserve_c03p16_cabinguide_01
 
   _MAP_FADE_BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
 
   //â∫ëDÉAÉjÉÅ
   _OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_out )
