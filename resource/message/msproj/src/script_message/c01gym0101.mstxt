@@ -255,7 +255,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポッド『オレも　つよかったけど
+			<Text>オレも　つよかったけど
 オマエも　なかなか　やるな！▼
 どーだ！
 デントに　コーン！▼
@@ -263,7 +263,7 @@
 ポケモントレーナーは　オレだろ！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T06:46:48" />
+				Time="2012-02-10T09:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -271,7 +271,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポッド『オレも　強かったけど
+			<Text>オレも　強かったけど
 オマエも　なかなか　やるな！▼
 どーだ！
 デントに　コーン！▼
@@ -279,7 +279,7 @@
 ポケモントレーナーは　オレだろ！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T06:46:51" />
+				Time="2012-02-10T09:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -693,14 +693,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そう！みずタイプを　あいする
+			<Text>そう！　みずタイプを　あいする
 この　コーンが　おあいてします▼
 では　はじめましょう▼
 くさポケモンつかいの　デントに
 ほのおポケモンつかいの　ポッド！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:05:41" />
+				Time="2012-02-10T09:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -708,14 +708,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そう！みずタイプを　愛する
+			<Text>そう！　みずタイプを　愛する
 この　コーンが　お相手します▼
 では　はじめましょう▼
 くさポケモン使いの　デントに
 ほのおポケモン使いの　ポッド！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:07:15" />
+				Time="2012-02-10T09:05:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
