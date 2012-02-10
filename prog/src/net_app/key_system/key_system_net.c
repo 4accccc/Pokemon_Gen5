@@ -1105,12 +1105,10 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
 
   case SEQ_WAIT_CONNECT:
     {
-      NHTTPError error = NHTTP_RAP_Process(p_wk->p_nhttp);
-      if(NHTTP_ERROR_NONE == error)
-      {
-        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
-        int code = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
 
+      NHTTPError error;
+      {
+        int code = NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp);
         switch( code )
         {
         case 503:
@@ -1138,7 +1136,12 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
           *p_seq = SEQ_END;
           return;
         }
-
+      }
+      error = NHTTP_RAP_Process(p_wk->p_nhttp);
+      if(NHTTP_ERROR_NONE == error)
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+    
         NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
         OS_Printf("GPFサーバーへの書き込み終了\n");
 
