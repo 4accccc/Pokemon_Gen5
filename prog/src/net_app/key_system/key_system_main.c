@@ -289,6 +289,12 @@ static GFL_PROC_RESULT Key_System_Proc_Main
       KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
       //通信エラーが起こったら強制的にメインメニューへ
       KEYSYS_SEQ_Pop( p_wk->p_seq, KeySys_Seq_Main );  //積んだシーケンスを基底を残しクリア
+
+      //はいいいえは、Displayで作成してないので、えらーが起こったら消しに行く
+      if( p_wk->p_list )
+      {
+        KEYSYS_LIST_Delete( p_wk );
+      }
       KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );  //どんな画面も強制クリア
 
       KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_FORCE, 1 );
