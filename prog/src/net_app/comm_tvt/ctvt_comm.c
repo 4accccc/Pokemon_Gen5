@@ -2372,7 +2372,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
 
   case CCGDT_BURST2:     // 風船が大きくなるor破裂
     // 親からのデータのみ更新
-    if( netID == 0 )
+    if( netID == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
     {
       CTVT_GAME_CommBalloonBurst( gameWork, p_recv->burst_netID );
     }
