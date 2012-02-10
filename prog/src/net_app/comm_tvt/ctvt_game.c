@@ -881,11 +881,20 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     {
       if( CTVT_GAME_CheckFinishReq( work, gameWork ) == FALSE )
       {
-        BOOL ret;
+        CTVT_GAME_CAM_RET ret;
         ret = CTVT_GAME_CAM_Main( gameWork->p_cam_wk );
-        if( ret == TRUE )
-        {
+        switch( ret ){
+        case CTVT_GAME_CAM_RET_MAIN:
+          /* メイン実行中 */
+          break;
+        case CTVT_GAME_CAM_RET_EXIT:
+          // 終了
           gameWork->state = CGS_CAMERA_EXIT;
+          break;
+        case CTVT_GAME_CAM_RET_ERROR:
+          // エラー
+          return CTM_ERROR;
+        default: GF_ASSERT(0);
         }
       }
       else

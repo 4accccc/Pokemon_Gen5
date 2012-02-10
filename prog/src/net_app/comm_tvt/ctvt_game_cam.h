@@ -28,6 +28,16 @@
 #define CAPTURE_TRIMMING_H  (128)   // トリミング高さ
 #define TRIMMING_SIZE   (CAPTURE_TRIMMING_W * CAPTURE_TRIMMING_H * 2) // 128x128xu16
 
+//-------------------------------------
+///	メインの戻り値
+//=====================================
+typedef enum {
+  CTVT_GAME_CAM_RET_MAIN,   // メイン実行中
+  CTVT_GAME_CAM_RET_EXIT,   // 終了
+  CTVT_GAME_CAM_RET_ERROR,  // エラー
+} CTVT_GAME_CAM_RET;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -68,7 +78,7 @@ typedef struct {
 //=============================================================================
 
 CTVT_GAME_CAM_WORK* CTVT_GAME_CAM_Init( CTVT_GAME_CAM_PARAM *p_param, HEAPID heapID );
-BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk );
+CTVT_GAME_CAM_RET CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk );
 void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk );
 
 // パラメータ生成

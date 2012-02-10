@@ -232,6 +232,7 @@ typedef struct {
   u8      seq;
   BOOL    is_end;         // すべて受信完了したか
   BOOL    is_init;        // 初期化が完了したか(カメラ同期をとる)
+  int     connect_num;    // 接続人数（エラー用）
 } COMM_WORK;
 
 //-------------------------------------
@@ -357,6 +358,7 @@ static BOOL COMM_CanNext( COMM_WORK *p_wk );
 static void* COMM_GetSendBuf( const COMM_WORK *p_wk );
 static BOOL COMM_IsEnd( const COMM_WORK *p_wk );
 static void COMM_CaptureSave( COMM_WORK *p_wk, void* dst );
+static BOOL COMM_ErrorCheck( COMM_WORK *p_wk );
 
 //-------------------------------------
 /// SEQ
@@ -488,8 +490,15 @@ GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
  *	@return 終了時:TRUE
  */
 //-----------------------------------------------------------------------------
-BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
+CTVT_GAME_CAM_RET CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
 {
+  // エラーチェック
+  if( COMM_ErrorCheck( &p_wk->comm ) == TRUE )
+  {
+    // エラー返す
+    return CTVT_GAME_CAM_RET_ERROR;
+  }
+
 	// シーケンス
 	SEQ_Main( &p_wk->seq );
 
@@ -506,9 +515,9 @@ BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
   // 終了
   if( SEQ_IsEnd( &p_wk->seq ) && COMM_IsEnd(&p_wk->comm) )
   {
-    return TRUE;
+    return CTVT_GAME_CAM_RET_EXIT;
   }
-  return FALSE;
+  return CTVT_GAME_CAM_RET_MAIN;
 }
 
 //----------------------------------------------------------------------------
@@ -1605,6 +1614,10 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     }
   }
 
+  // 初期の接続人数を保存
+  p_wk->connect_num = GFL_NET_GetConnectNum();
+  ICHI_Printf("初期接続人数 %d \n", p_wk->connect_num);
+
   p_wk->wait_frame = 0;
   p_wk->can_next = TRUE;   // 
   p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
@@ -1657,6 +1670,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
     // 初期化完了していない
     return;
   }
+
 
   switch( p_wk->seq ){
   case SEQ_POST:       // 受信中
@@ -1840,6 +1854,30 @@ static BOOL COMM_IsEnd( const COMM_WORK *p_wk )
 static void COMM_CaptureSave( COMM_WORK *p_wk, void* dst )
 {
   GFL_STD_MemCopy32( p_wk->cap_buf, dst, CAPTURE_SIZE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信エラーチェック
+ *
+ *	@param	COMM_WORK *p_wk 
+ *
+ *	@retval TRUE    エラー
+ *	@retval FALSE   何もなし
+ */
+//-----------------------------------------------------------------------------
+static BOOL COMM_ErrorCheck( COMM_WORK *p_wk )
+{
+  // 
+  // 接続人数が違うとエラー
+  //
+  if( p_wk->connect_num != GFL_NET_GetConnectNum() )
+  {
+    OS_Printf("接続人数が変更されたのでエラー\n");
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 //=============================================================================
