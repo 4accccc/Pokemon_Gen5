@@ -115,7 +115,7 @@ BOOL DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_
  *	@param	const DATA_CONVERT_SAVE *cp_wk  ワーク
  *	@param	void *cp_data_adrs  コンバート元データ
  *
- *	@return TRUE同じ人  FALSE違う人
+ *	@return TRUE同じ人もしくは自分のデータが空    FALSE違う人
  */
 //-----------------------------------------------------------------------------
 BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv )
@@ -131,6 +131,25 @@ BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAV
   OS_TPrintf( "性別=%d\n", cp_all_data->owner.sex );
   OS_TPrintf( "バージョン=%d\n", cp_all_data->owner.version );
 
+  //データ空チェック
+  {
+    int i;
+    int cnt = 0;
+    for( i = 0; i < DATA_CONVERT_OWNER_MAX; i++ )
+    {
+      const WB_SAVE_CONV_OWNER *cp_owner  = &cp_wk->owner[i];
+      if( cp_owner->is_exist == FALSE )
+      {
+        cnt++;
+      }
+    }
+    if( cnt == DATA_CONVERT_OWNER_MAX )
+    {
+      return TRUE;
+    }
+  }
+
+  //持ち主同じチェック
   for( i = 0; i < DATA_CONVERT_OWNER_MAX; i++ )
   {
     if( bit & (1<<i) )
