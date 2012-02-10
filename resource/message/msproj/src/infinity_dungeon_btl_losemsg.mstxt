@@ -10660,10 +10660,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かんぜんに　うごきを　とらえられてた！
-うえには　うえが　あるものね！▼</Text>
+うえには　うえが　いるものね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-11T02:21:18" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10672,10 +10672,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>完全に　動きを　とらえられてた！
-上には　上が　あるものね！▼</Text>
+上には　上が　いるものね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-11T02:21:45" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11709,11 +11709,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……かえりの　エレベーターでも
+			<Text>……かえりの　エレベータでも
 ジャンプして　ふわふわしますよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-11T09:43:11" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:09:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11721,11 +11721,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……帰りの　エレベーターでも
+			<Text>……帰りの　エレベータでも
 ジャンプして　ふわふわしますよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-11T09:43:15" />
+				User="matsumiya:W00224"
+				Time="2012-02-10T09:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17547,11 +17547,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんだけ　ひろいと　エレベーターに
+			<Text>こんだけ　ひろいと　エレベータに
 もどるのだって　ひとくろうだね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T07:39:52" />
+				Time="2012-02-10T09:09:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17559,11 +17559,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんだけ　広いと　エレベーターに
+			<Text>こんだけ　広いと　エレベータに
 もどるのだって　一苦労だね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T07:39:49" />
+				Time="2012-02-10T09:10:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
