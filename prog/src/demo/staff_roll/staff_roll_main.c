@@ -26,6 +26,7 @@
 
 #include "staff_roll_main.h"
 #include "staff_roll.naix"
+#include "corp.naix"
 
 
 //============================================================================================
@@ -49,6 +50,7 @@ enum {
 
 	MAINSEQ_START_WAIT,
 	MAINSEQ_MAIN,
+  MAINSEQ_CORP_PUT,   // (c)表記表示
 
 	MAINSEQ_END,
 };
@@ -95,6 +97,8 @@ enum{
 #define	LIST_START_END_WAIT		( 180 )				// 初期処理のロゴ表示終了後のウェイト
 #define	LOGO_PUT_WAIT					( 200 )			// 初期処理のロゴ表示中ウェイト
 #endif	// PM_DEBUG
+
+#define CORP_PUT_WAIT         ( 200 )     // 著作表示中ウェイト
 
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
@@ -200,6 +204,7 @@ static int MainSeq_Wipe( SRMAIN_WORK * wk );
 static int MainSeq_Release( SRMAIN_WORK * wk );
 static int MainSeq_StartWait( SRMAIN_WORK * wk );
 static int MainSeq_Main( SRMAIN_WORK * wk );
+static int MainSeq_CorpPut( SRMAIN_WORK * wk );
 
 static void InitVram(void);
 static void InitBg(void);
@@ -279,6 +284,7 @@ static const pSRMAIN_FUNC	MainSeq[] = {
 
 	MainSeq_StartWait,
 	MainSeq_Main,
+  MainSeq_CorpPut,      // (c)表記表示
 };
 
 // VRAM割り振り
@@ -625,7 +631,9 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		break;
 
 	case SUBSEQ_END:
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
+    wk->wait = 0;
+    wk->subSeq = 0;
+		return SetFadeOut( wk, MAINSEQ_CORP_PUT );
 	}
 
 	ListScroll( wk );
@@ -641,6 +649,72 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：(c)表記を表示
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int MainSeq_CorpPut( SRMAIN_WORK * wk )
+{
+
+  switch( wk->subSeq ){
+  case 0:
+
+    // 読み込み
+    {
+      ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_CORP, HEAPID_STAFF_ROLL_L );
+
+      GFL_ARCHDL_UTIL_TransVramPalette( ah, NARC_corp_corp_NCLR,
+          PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, NARC_corp_credit_u_NCGR,
+          GFL_BG_FRAME1_M, 0, 0x8000, FALSE, HEAPID_STAFF_ROLL );
+      GFL_ARCHDL_UTIL_TransVramScreen( ah, NARC_corp_credit_u_NSCR,
+          GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+
+      GFL_ARC_CloseDataHandle( ah );
+    }
+
+#if	PM_VERSION == LOCAL_VERSION
+    // 黒背景 白文字
+    GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M, 0, 0, 32, 24, 1 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, 0 );
+#else
+    // 白背景 黒文字
+    GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M, 0, 0, 32, 24, 2 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, 0xffff );
+#endif
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+
+    wk->subSeq++;
+
+    // フェードイン
+    // 終わるとこの関数に戻ってきて次のシーケンスにいく
+    //
+		return SetFadeIn( wk, MAINSEQ_CORP_PUT );
+
+  case 1:
+		if( wk->wait >= CORP_PUT_WAIT ){
+			wk->wait = 0;
+			wk->subSeq = 0;
+      return SetFadeOut( wk, MAINSEQ_RELEASE );
+    }
+    else
+    {
+			if( wk->skipFlag == 1 ){
+				wk->wait += SKIP_SPEED;
+			}else{
+				wk->wait++;
+			}
+    }
+    break;
+  }
+
+  return MAINSEQ_CORP_PUT;
+}
 
 //============================================================================================
 //	初期化
@@ -1274,9 +1348,15 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int SetFadeIn( SRMAIN_WORK * wk, int next )
 {
+#if	PM_VERSION == LOCAL_VERSION
 	WIPE_SYS_Start(
 		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STAFF_ROLL );
+#else
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+		WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_STAFF_ROLL );
+#endif
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
 }
