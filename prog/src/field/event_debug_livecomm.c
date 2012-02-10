@@ -397,7 +397,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_NORMAL_MAX] 
   ///<CRITICAL_DAMAGE ‹}Š‚ÉUŒ‚‚ðŽó‚¯‚½ 29
   { GAMEBEACON_Set_CriticalDamage,        BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<ESCAPE í“¬‚©‚ç“¦‚°o‚µ‚½ 30
-  { GAMEBEACON_Set_Escape,                BEACON_PSET_MONSNO,	    BEACON_ARG_ESCAPE,	},
+  { GAMEBEACON_Set_Escape,                BEACON_PSET_MONSNO,	    BEACON_ARG_U16,	},
   ///<HP_LITTLE HP‚ªŽc‚è­‚È‚¢ 31
   { GAMEBEACON_Set_HPLittle,              BEACON_PSET_MONSNO_NICKNAME,	  BEACON_ARG_U16_STR,	},
   ///<PP_LITTLE PP‚ªŽc‚è­‚È‚¢ 32

@@ -290,7 +290,7 @@ extern void GAMEBEACON_Set_DistributionGPower(GPOWER_ID gpower_id);
 #endif
 extern void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname);
 extern void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname);
-extern void GAMEBEACON_Set_Escape( u16 monsno, BOOL run_enemy_f );
+extern void GAMEBEACON_Set_Escape( u16 monsno );
 extern void GAMEBEACON_Set_HPLittle(const u16 monsno, const STRBUF *nickname);
 extern void GAMEBEACON_Set_PPLittle(const u16 monsno, const STRBUF *nickname);
 extern void GAMEBEACON_Set_Dying(const u16 monsno, const STRBUF *nickname);

@@ -607,20 +607,16 @@ void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
 }
 //==================================================================
 /**
- * 送信ビーコンセット：野生戦闘から逃げ出したor逃げられた
+ * 送信ビーコンセット：野生戦闘から逃げ出した
  *
  * @param monsno
- * @param run_enemy_f 相手に逃げられた時TRUE, 自分から離脱した場合FALSE
  */
 //==================================================================
-void GAMEBEACON_Set_Escape( u16 monsno, BOOL run_enemy_f )
+void GAMEBEACON_Set_Escape( u16 monsno )
 {
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_ESCAPE, monsno ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE, monsno );
     return;
-  }
-  if( run_enemy_f ){
-    return; //フェスミッション以外では、逃げられた時は送らない
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_ESCAPE) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);

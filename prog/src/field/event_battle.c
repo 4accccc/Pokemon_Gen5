@@ -1016,8 +1016,7 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
     GAMEBEACON_Set_BattlePokeVictory( monsno );
     break;
   case BTL_BEACON_ST_ESCAPE:
-  case BTL_BEACON_ST_ESCAPE_ENEMY:
-    GAMEBEACON_Set_Escape( monsno, state==BTL_BEACON_ST_ESCAPE_ENEMY );
+    GAMEBEACON_Set_Escape( monsno );
     break;
   }
 }
