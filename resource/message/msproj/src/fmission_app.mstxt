@@ -4971,11 +4971,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]は　[Name:MusicalGoods Idx="1" ]を
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]を
 [Digit:2digits Idx="2" ]こ　てにいれた！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:53:10" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -4983,11 +4983,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]は　[Name:MusicalGoods Idx="1" ]を
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]を
 [Digit:2digits Idx="2" ]個　手に入れた！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-28T10:28:56" />
+				Time="2012-02-10T07:38:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5013,11 +5013,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん！　[Name:TrainerName ]は
+			<Text>ざんねん！　[Name:Item ]は
 これいじょう　もてない！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-09-07T08:54:22" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:38:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -5025,11 +5025,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残念！　[Name:TrainerName ]は
+			<Text>残念！　[Name:Item ]は
 これ以上　持てない！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-24T08:03:37" />
+				Time="2012-02-10T07:38:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"

@@ -382,10 +382,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]「[Name:PMS ]」</Text>
+			<Text>[Ctrl1:xcenter ]「[Name:FesMissionName ]」</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-11-17T07:44:45" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -393,10 +393,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]「[Name:PMS ]」</Text>
+			<Text>[Ctrl1:xcenter ]「[Name:FesMissionName ]」</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-11-17T07:44:51" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-10T07:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
