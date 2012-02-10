@@ -1266,8 +1266,8 @@ static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
 {
   enum
   {
-    SEQ_SAVE_OUTER,
     SEQ_SAVE_INNER,
+    SEQ_SAVE_OUTER,
     SEQ_END,
   };
 
@@ -1275,14 +1275,14 @@ static void DataConv_Seq_SaveInAndOut( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
 
   switch( *p_seq )
   {
-  case SEQ_SAVE_OUTER:
-    //管理外をセーブする
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveOuter );
-    (*p_seq)++;
-    break;
   case SEQ_SAVE_INNER:
     //内部をセーブする
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveInner );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_OUTER:
+    //管理外をセーブする
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SaveOuter );
     (*p_seq)++;
     break;
   case SEQ_END:
