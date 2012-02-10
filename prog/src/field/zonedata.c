@@ -328,7 +328,7 @@ u16 ZONEDATA_ControlZoneID( const u16 zone_id )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static ZONEDATA * loadZoneData( u16 zoneID )
+static ZONEDATA * loadZoneDataEx( u16 zoneID, BOOL isControl )
 {
   // ハンドルがオープンされていない
   if( data_handle == NULL )
@@ -338,7 +338,10 @@ static ZONEDATA * loadZoneData( u16 zoneID )
   }
 
   // ZONEIDのすり替え
-  zoneID = ControlZoneID(zoneID);
+  if( isControl )
+  {
+    zoneID = ControlZoneID(zoneID);
+  }
 
   // 読み込み済み
   if( zoneID == data_handle->zoneDataID ){ return &( data_handle->zoneData ); }  
@@ -350,6 +353,11 @@ static ZONEDATA * loadZoneData( u16 zoneID )
   data_handle->zoneDataID = zoneID;
 
   return &( data_handle->zoneData );
+}
+
+static ZONEDATA * loadZoneData( u16 zoneID )
+{
+  return loadZoneDataEx( zoneID, TRUE );
 }
 
 //------------------------------------------------------------------
@@ -1148,6 +1156,35 @@ u16 ZONEDATA_GetPlaceNameID(u16 zone_id)
       (zoneData->placename_id == MAPNAME_GATE_BC10) )
   {
     if( GET_VERSION() == VERSION_W2 ) {
+      return MAPNAME_GATE_WF10;
+    }
+    else {
+      return MAPNAME_GATE_BC10;
+    }
+  }
+
+  return zoneData->placename_id;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  地名メッセージのIDを取得（自分のデータで判定しない版）
+ * @param  zoneid ゾーン指定ID
+ * @param  version　バージョン
+ * @return 地名メッセージID
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetPlaceNameIDOther(u16 zone_id, u16 version)
+{
+  ZONEDATA* zoneData; 
+
+  zoneData = loadZoneDataEx( zone_id, FALSE );
+
+  // ホワイトゲート・ブラックゲートは同じゾーンIDなので個別処理
+  if( (zoneData->placename_id == MAPNAME_GATE_WF10) || 
+      (zoneData->placename_id == MAPNAME_GATE_BC10) )
+  {
+    if( version == VERSION_W2 ) {
       return MAPNAME_GATE_WF10;
     }
     else {

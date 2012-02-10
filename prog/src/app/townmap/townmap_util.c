@@ -95,7 +95,7 @@ u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
 
     return ZONEDATA_GetGroupID( zoneID );
   }
-  else if( zoneID == ZONE_ID_D31R0101 ) //ZONEDATA_IsInfinityDungeon関数に無限ダンジョンのゾーングループが入ってないので検知できない
+  else if( zoneID == ZONE_ID_D31R0101 || ZONEDATA_IsWfbc(zoneID) ) //ZONEDATA_IsInfinityDungeon関数に無限ダンジョンのゾーングループが入ってないので検知できない
   {
     KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( GAMEDATA_GetSaveControlWork((GAMEDATA *)cp_gamedata) );
     KEY_SYSTEM_WFBC wfbc_type = KEY_SYSTEM_SAVE_GetWfbc( p_key );

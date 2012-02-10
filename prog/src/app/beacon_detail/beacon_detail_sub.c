@@ -331,11 +331,12 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
   default:
     {
       u16 place_id;
+      u16 version = GAMEBEACON_Get_PmVersion(info);
       u16 zone_id = GAMEBEACON_Get_ZoneID( info );
       if( zone_id >= ZONE_ID_MAX){
         zone_id = ZONE_ID_R01;
       }
-      place_id = ZONEDATA_GetPlaceNameID(zone_id);
+      place_id = ZONEDATA_GetPlaceNameIDOther(zone_id,version);
       GF_ASSERT_MSG(place_id,"zone = %d\n",zone_id);
       WORDSET_RegisterPlaceName( wordset, 0, place_id );
     }
