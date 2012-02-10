@@ -3942,6 +3942,35 @@
 					</WidthCalcInfo>
 				</Default>
 			</Tag>
+			<Tag
+				TagName="TreeLevelType"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<Japanese>ハイルツリーレベル種別</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ハイルツリーの複数あるレベルのどちらであるかを示す名前</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName />
+					<ListItem
+						Name="NewItem">
+						<MultilingualName />
+					</ListItem>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
+						<Pixels>65</Pixels>
+						<AffectedMagnification>True</AffectedMagnification>
+					</WidthCalcInfo>
+				</Default>
+			</Tag>
 		</TagGroup>
 		<TagGroup
 			GroupName="Digit">
