@@ -18253,17 +18253,17 @@
 	</row>
 
 	<row id="TRID_ELITEW_41_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せかいの　かべは
-そう　かんたんには　こえられないな！</language>
-		<language name="JPN_KANJI" width="216">世界の　壁は
-そう　簡単には　越えられないな！</language>
-	</row>
-
-	<row id="TRID_ELITEM_42_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">そんな　ポケモンと　やれたら
 まったかいが　あったってものよ！</language>
 		<language name="JPN_KANJI" width="216">そんな　ポケモンと　やれたら
 待ったかいが　あったってものよ！</language>
+	</row>
+
+	<row id="TRID_ELITEM_42_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せかいの　かべは
+そう　かんたんには　こえられないな！</language>
+		<language name="JPN_KANJI" width="216">世界の　壁は
+そう　簡単には　越えられないな！</language>
 	</row>
 
 	<row id="TRID_MINI_23_TRMSG_FIGHT_LOSE">
