@@ -228,6 +228,7 @@ struct _CTVT_TALK_WORK
 
   BOOL  isConnectVersion; // SWAN以外のバージョンが接続しているとTRUE
   BOOL  isChangeMember;   // BTS214用
+  s8    accept_connect_num; // BTS1717用
   // >>
 };
 
@@ -765,6 +766,15 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
             ICHI_Printf("%d: %d\n", i, char_id[i]);
           }
         }
+
+        // BTS1717
+        // 【最後の子機とマッチングしたと同時にミニゲームを開始したときアサートが表示されることがある】
+        //
+        // 対処方として、参加受付の次のシーケンスに移行したら
+        // 子機の接続をしない
+        //
+        CTVT_COMM_Exit_GoGame( work, commWork );
+        ICHI_Printf("接続コールバック全切断\n");
 
         // 開始要求を送信し、確認待ちへ移行
         {
@@ -2292,6 +2302,7 @@ static void CTVT_TALK_GameEnter_Init( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
 
   talkWork->acceptBit   = 0;
   talkWork->acceptBit2  = 0;
+  talkWork->accept_connect_num  = 0;
 
   // メッセージとメニュー以外を暗くする
   // SubBG1はαを使っているので、輝度と一緒に出来ないから非表示
@@ -2526,7 +2537,7 @@ void CTVT_TALK_SetAcceptBit( CTVT_TALK_WORK *talkWork, const u8 NetId )
 //-----------------------------------------------------------------------------
 const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork )
 {
-  const u8 connectNum = COMM_TVT_GetConnectNum( work );
+  u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  i;
 
   // BTS230【ライブキャスターを3人及び4人で繋いだ後子機が抜けた場合、残っているメンバーにてミニゲームを開始することが出来ません】
@@ -2540,7 +2551,15 @@ const BOOL CTVT_TALK_IsAcceptNum( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork 
   //
   u8  acceptNum = 0;
 
-  ICHI_Printf("connectNum %d acceptBit %x \n", connectNum, talkWork->acceptBit );
+
+  ICHI_Printf("connectNum %d acceptBit %x num %d \n", connectNum, talkWork->acceptBit, talkWork->accept_connect_num );
+
+  // BTS1717
+  //
+  // ネゴシエーション中に接続された場合は
+  // その人数分プラス
+  //
+  connectNum += talkWork->accept_connect_num;
 
   // 0番目は自分(親)なので無視する
   for( i=1; i<CTVT_MEMBER_NUM; i++ )
@@ -2647,5 +2666,33 @@ const BOOL CTVT_TALK_GetIsConnectVersion( CTVT_TALK_WORK *talkWork )
 void CTVT_TALK_SetIsChangeMember( CTVT_TALK_WORK *talkWork, const BOOL flg )
 {
   talkWork->isChangeMember = flg;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受付開始用の接続人数を追加
+ *
+ *	@param	CTVT_TALK_WORK *talkWork 
+ *
+ *  @note   ネゴシエーション中の仮想的な接続人数
+ */
+//-----------------------------------------------------------------------------
+void CTVT_TALK_Add_AcceptConnectNum( CTVT_TALK_WORK *talkWork )
+{
+  talkWork->accept_connect_num++;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受付開始用の接続人数をリセット
+ *
+ *	@param	CTVT_TALK_WORK *talkWork 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+void CTVT_TALK_Reset_AcceptConnectNum( CTVT_TALK_WORK *talkWork )
+{
+  talkWork->accept_connect_num = 0;
 }
 

@@ -863,6 +863,17 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
     }
   }
 
+  // BTS1717
+  //
+  //  対処その２
+  //  タイミングによっては接続コールバックの全切断が設定される前に
+  //  ここにくることがありえるので その場合は接続させる。
+  //
+  {
+    CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+    ICHI_Printf("接続NetID %d \n", cbWork->aid );
+    CTVT_TALK_Add_AcceptConnectNum( talkWork );
+  }
 #if 0
   // 通常の接続チェック
   if( commWork->beacon.isCalling == 0 )
@@ -1224,6 +1235,14 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
           }
           commWork->reqCheckBit |= (1<<i);
           commWork->member[i].state = CCSU_REQ_PHOTO;
+
+          // 正式に接続されたので
+          // ミニゲーム受付用の仮想接続人数リセット
+          {
+            CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
+            CTVT_TALK_Reset_AcceptConnectNum( talkWork );
+          }
+
           CTVT_TPrintf("Join user[%d] postBuf[%d]\n",i,j);
         }
         CTVT_CAMERA_SetNewMember( work , camWork , i );
