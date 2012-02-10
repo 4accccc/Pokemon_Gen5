@@ -83,6 +83,8 @@ typedef struct
   int deb_pos_num;
   const BG_TALK_DATA *deb_pos;
   const FIELD_RAIL_MAN* deb_railman;
+  FLDMAPPER* deb_mapper;
+
 #endif  //PM_DEBUG
 }TASKHEADER_FES_KIRA;
 
@@ -302,12 +304,13 @@ FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl )
     GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldMapWork );
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( gdata );
-    const FLDNOGRID_MAPPER* cp_mapper = FIELDMAP_GetFldNoGridMapper( fieldMapWork );
+    const FLDNOGRID_MAPPER* cp_rail_mapper = FIELDMAP_GetFldNoGridMapper( fieldMapWork );
 
     head.deb_pos = EVENTDATA_GetTalkBGEventTbl( evdata, &head.deb_pos_num ); 
-    if( cp_mapper != NULL ){
-      head.deb_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+    if( cp_rail_mapper != NULL ){
+      head.deb_railman = FLDNOGRID_MAPPER_GetRailMan( cp_rail_mapper );
     }
+    head.deb_mapper = FIELDMAP_GetFieldG3Dmapper( fieldMapWork );
   }
 #endif  //PM_DEBUG
 
@@ -502,8 +505,31 @@ static void fldeffFesKiraTask_Draw( FLDEFF_TASK *task, void *wk )
       if( d_num++ >= 20 ){
         break;  //上限超えたのでこれ以上サーチしない
       }
+      status.scale.y = FX32_CONST(1.0);
       if( target->pos_type == EVENTDATA_POSTYPE_GRID ){
         EVENTDATA_GetBGTalkCenterPos( target, &status.trans);
+      
+        {
+          FLDMAPPER_GRIDINFODATA gridData;
+          VecFx32 gpos = status.trans;
+
+          if( FLDMAPPER_GetGridData( work->head.deb_mapper , &status.trans, &gridData) ){
+            gpos.y = gridData.height;
+            
+            if( BGTalkData_GPOS_IsHit( target, &gpos ) == FALSE ){
+              //取れないものを縦に拡大表示
+              status.scale.y = FX32_CONST(3.0);
+              status.trans.y += FX32_CONST(-16);
+              if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+                OS_Printf("NG No=%d, ev=(%d,%d,%d) grid=(%d,%d,%d)\n", i,
+                    FX_Whole(status.trans.x)/16, FX_Whole(status.trans.y), FX_Whole( status.trans.z )/16,
+                    FX_Whole(gpos.x)/16, FX_Whole(gpos.y), FX_Whole(gpos.z )/16);
+              }
+            }
+          }else{
+            continue;
+          }
+        }
       }
       else{
         RAIL_LOCATION loc;
