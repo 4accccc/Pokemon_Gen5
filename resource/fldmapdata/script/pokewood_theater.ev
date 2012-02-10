@@ -249,9 +249,6 @@ _ANIME_LABEL anm_tutorial_pwdaddy_disappear
   _ANIME_DATA ACMD_END, 0
 
 ev_pkwd_tutorial_watch_movie:
-  //フェスミッション強制終了処理
-  _FMISSION_END_FORCE()
-  
   //受付にいく
   _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_pwdaddy_go_theater )
   _OBJ_ANIME_WAIT()
