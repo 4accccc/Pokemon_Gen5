@@ -68,6 +68,11 @@ INIT_EVENT_START   ev_zone_d05
   
   _CALL ev_exit_change
   
+  //元プラズマ団イベント後・アクロマ配置
+   IF $WK_SCENE_D05 == 3 THEN
+    _SXY_MOVE_NPC_POS( D05_SWBOSS_01, DIR_DOWN , 197, 0, 468 )
+   ENDIF
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -87,9 +92,6 @@ INIT_EVENT_START ev_init_d05
   //WBT誘導前
   IF $WK_SCENE_D05 == 0 THEN
     _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, 0, 468, DIR_UP )
-  //元プラズマ団イベント後
-  ELSIF $WK_SCENE_D05 == 3 THEN
-    _OBJ_POS_CHANGE( D05_SWBOSS_01, 197, 0, 469, DIR_DOWN )
   //アジト船イベント後
   ELSIF $WK_SCENE_D05 == 4 THEN
     _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, -1, 490, DIR_RIGHT )
