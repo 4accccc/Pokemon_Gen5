@@ -926,7 +926,15 @@ void CTVT_BALLOON2_SetSwing( BALLOON2_WORK *p_wk )
 //-----------------------------------------------------------------------------
 extern BOOL CTVT_BALLOON2_IsEffect( BALLOON2_WORK *p_wk )
 {
-  if( p_wk->ang_flg == TRUE ||
+  // BTS1716 【ラストスパート後、余分にタッチしなければ風船が膨らまない】
+  // 
+  // 原因はタッチしたときに揺れる処理を待ってから
+  // 膨らむ処理にいっていたから。
+  //
+  // そもそも揺れる処理は同じなのでそのまま
+  // 膨らむ処理にいくようにした
+  //
+  if( //p_wk->ang_flg == TRUE ||
       p_wk->scale_flg == TRUE || 
       p_wk->alpha_flg == TRUE || 
       p_wk->effect_ica == TRUE ||
