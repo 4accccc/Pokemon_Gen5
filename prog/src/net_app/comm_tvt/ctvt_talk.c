@@ -735,6 +735,15 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
         APP_TASKMENU_CloseMenu( talkWork->cancelWork );
         talkWork->cancelWork = NULL;
       }
+      else if( APP_TASKMENU_IsDecide( talkWork->cancelWork ) == TRUE )
+      {
+        // BTS1685 
+        // 一応親のほうも対処しておく
+        //
+        // 中止ボタンが押されていたら以降の処理をSKIP
+        //
+        break;
+      }
 
       // 子が全員参加したかチェック
       if( CTVT_TALK_IsAcceptNum( work, talkWork ) )
@@ -936,16 +945,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     if( CTVT_TALK_GameEnter_CheckFinishReq( work , talkWork ) == FALSE )
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      // 参加通知
-      // 常時終了チェックで中止の処理をしている
-      CTVT_COMM_SendFlg_Repeat( work, commWork, CCFT_DECIDE_GAME, 0 );
-
-      // 親からの開始通知がきた
-      if( talkWork->isStartGame == TRUE )
-      {
-        talkWork->isStartGame = FALSE;
-        talkWork->state = CTS_START_WAIT2;
-      }
 
       // キャンセルボタン処理
       APP_TASKMENU_UpdateMenu( talkWork->cancelWork );
@@ -962,6 +961,24 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
         
         APP_TASKMENU_CloseMenu( talkWork->cancelWork );
         talkWork->cancelWork = NULL;
+      }
+      //
+      // BTS1685 「はい」の後に「中止」を押してもミニゲームが開始される
+      //
+      //  原因はBTS1532を同じ
+      //
+      else if( APP_TASKMENU_IsDecide( talkWork->cancelWork ) == FALSE )
+      {
+        // 参加通知
+        // 常時終了チェックで中止の処理をしている
+        CTVT_COMM_SendFlg_Repeat( work, commWork, CCFT_DECIDE_GAME, 0 );
+
+        // 親からの開始通知がきた
+        if( talkWork->isStartGame == TRUE )
+        {
+          talkWork->isStartGame = FALSE;
+          talkWork->state = CTS_START_WAIT2;
+        }
       }
     }
     break;
