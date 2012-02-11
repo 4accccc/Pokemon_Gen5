@@ -1053,31 +1053,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいぶつ『ブフー…… 
+			<Text>かいぶつ『ブフー……
 クラヤミノ　ソコ▽
 アンコクセイウン　カラ……▽
 ブヒュー　バファッ　ブルル……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:00:40" />
+				Time="2012-02-11T07:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:00:40" />
+				Time="2012-02-11T07:50:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪物『ブフー…… 
+			<Text>怪物『ブフー……
 事象ノ　地平面ノ　奥底▽
 暗黒星雲　ヨリ　来タル……▽
 ブヒュー　バファッ　ブルル……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:40:45" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-11T07:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:40:45" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-11T07:50:44" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -622,14 +622,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『何で　こんな……
-何で 　私が　こんなことに！！</Text>
+何で　私が　こんなことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:19:31" />
+				Time="2012-02-11T07:50:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:19:31" />
+				Time="2012-02-11T07:50:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -255,12 +255,12 @@ x31,z54辺りに配置
 ちょうど　キミのはなしを　してたのよ！▼
 で　さっそく　ポケウッドに　ついて
 せつめいしたい　ところ　なんだけどね▽
-ちょっと　じゅんびが　ひつようなの▼
+ちょっと　じゅんびが　ひつようなのー▼
 もうしわけないけどさ　もうすこしだけ
 まってて　もらえるかなー？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:50:59" />
+				Time="2012-02-10T12:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -274,12 +274,12 @@ x31,z54辺りに配置
 ちょうど　キミのはなしを　してたのよ！▼
 で　早速　ポケウッドに　ついて
 説明したい　ところ　なんだけどね▽
-ちょっと　準備が　必要なの▼
+ちょっと　準備が　必要なのー▼
 申し訳ないけどさ　もう少しだけ
 待ってて　もらえるかなー？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-19T14:06:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-10T12:17:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -430,12 +430,12 @@ x31,z54辺りに配置
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さすが　ウチの　ボス！
-素晴らしい　フットワークでしょ！▼
+軽快な　フットワークでしょ！▼
 では　[Name:TrainerName Idx="0" ]さんは
 私と　参りましょうか！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-10T11:17:14" />
+				Time="2012-02-10T12:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2319,7 +2319,7 @@ are way beyond yours, rookie!</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>アタシ　かのじょの　マネージャー▼
-かのじょ はね……▼
+かのじょ　はね……▼
 あたしは　てんさいこやくと
 よばれている　スターなのよ！▽
 かけだしの　アンタなんかに▽
@@ -2328,7 +2328,7 @@ are way beyond yours, rookie!</Text>
 って　いってますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T02:46:21" />
+				Time="2012-02-11T07:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2346,7 +2346,7 @@ are way beyond yours, rookie!</Text>
 って　いってますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:48:12" />
+				Time="2012-02-11T07:48:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

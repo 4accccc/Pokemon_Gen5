@@ -555,11 +555,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『一体　何なの？</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">かいぶつ『ブフー…… 
+		<language name="JPN" width="256">かいぶつ『ブフー……
 クラヤミノ　ソコ▽
 アンコクセイウン　カラ……▽
 ブヒュー　バファッ　ブルル……</language>
-		<language name="JPN_KANJI" width="256">怪物『ブフー…… 
+		<language name="JPN_KANJI" width="256">怪物『ブフー……
 事象ノ　地平面ノ　奥底▽
 暗黒星雲　ヨリ　来タル……▽
 ブヒュー　バファッ　ブルル……</language>
