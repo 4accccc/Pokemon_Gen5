@@ -397,6 +397,16 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_
       idx_log[i] = wk->idx[i];  //抽選ナンバーの結果を取っておく
     }
   }
+#if 0 
+#ifdef PM_DEBUG
+  {
+    int i;
+    for(i = 0;i < 10000;i++){
+      sub_LotParam( wk, fmwk, 0, rnd_c, NULL );
+    }
+  }
+#endif
+#endif
   return TRUE;
 }
 
@@ -439,6 +449,8 @@ static void sub_LotParamPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmw
   u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NITEM_PRESENT_DATA_MAX, NULL, 0 );
 
   wk->param[idx][NITEM_PRESENT_PARAM_ITEM] = DATA_NpcItemPresent[rnd];
+
+  OS_Printf("fes_npc idx=%d, rnd=%d\n", idx, rnd);
 }
 
 //----------------------------------------------------------------------
@@ -470,10 +482,11 @@ static void sub_LotParamTradeItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk,
   }
   //5%の確率でレアテーブルに片方を差し替え
   rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100, NULL, 0 );
-  if( rnd >= 5 ){
-    return;
+  if( rnd < 5 ){
+    wk->param[idx][FES_GIMMICK_SUB_RndGet( rnd_c, 2, NULL, 0 )] = range;
   }
-  wk->param[idx][FES_GIMMICK_SUB_RndGet( rnd_c, 2, NULL, 0 )] = range;
+  OS_Printf("fes_npc idx=%d, tbl=%d, c_my=%d, c_npc=%d\n", idx,
+    tbl_no, wk->param[idx][NITEM_TRADE_PARAM_MY_CATEGORY], wk->param[idx][NITEM_TRADE_PARAM_NPC_CATEGORY]);
 }
 
 //----------------------------------------------------------------------
@@ -501,6 +514,8 @@ static void sub_LotParamShoppingItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fm
   }
   wk->param[idx][NITEM_SHOPPING_PARAM_ITEM] = DATA_NpcItemShopping[tbl_no].list[no].item;
   wk->param[idx][NITEM_SHOPPING_PARAM_PRICE] = DATA_NpcItemShopping[tbl_no].list[no].price;
+  
+  OS_Printf("fes_npc idx=%d, no=%d\n", idx, no );
 }
 
 //----------------------------------------------------------------------
@@ -519,7 +534,13 @@ static void sub_LotParamTrBattle( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, 
   }
   rnd = FES_GIMMICK_SUB_RndGet( rnd_c, FES_NPC_TRAINER_SET_NUM, log, idx );
   wk->param[idx][NPC_TRAINER_PARAM_TRID] = DATA_NpcTrainer[tbl_no][rnd];
+
+#if 0
+  if( log != NULL ) log[idx] = rnd;
+#else
   log[idx] = rnd;
+#endif
+  OS_Printf("fes_npc idx=%d, no=%d\n", idx, rnd );
 }
 
 //----------------------------------------------------------------------
@@ -543,6 +564,8 @@ static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION*
     } 
   }
   wk->param[idx][NITEM_GPRESENT_PARAM_ITEM] = tbl[no].item;
+  
+  OS_Printf("fes_npc idx=%d, no=%d\n", idx, no );
 }
 
 //----------------------------------------------------------------------
@@ -556,7 +579,12 @@ static void sub_LotParamPokeQuiz( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, 
 
   u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, wk->tmp_data_size/sizeof(u16), log, idx );
   wk->param[idx][NPC_POKE_QUIZ_PARAM_MONSNO] = list[rnd];
+#if 0
+  if( log != NULL ) log[idx] = rnd;
+#else
   log[idx] = rnd;
+#endif
+  OS_Printf("fes_npc idx=%d, no=%d\n", idx, rnd );
 }
 
 //----------------------------------------------------------------------

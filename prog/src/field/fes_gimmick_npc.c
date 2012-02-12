@@ -175,7 +175,7 @@ void FES_GIMMICK_NPC_TradeItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16 my_rank,
   if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_ITEM_TRADE ){
     GF_ASSERT(0);
     *my_item = ITEM_KIZUGUSURI;
-    *npc_item = ITEM_KIZUGUSURI;
+    *npc_item = ITEM_IIKIZUGUSURI;
     return;
   }
 
@@ -189,11 +189,11 @@ void FES_GIMMICK_NPC_TradeItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16 my_rank,
  *  @brief  ƒtƒFƒX@NPCƒ~ƒbƒVƒ‡ƒ“ƒMƒ~ƒbƒN ”Ì”„ƒAƒCƒeƒ€‚Æ’l’i‚ðŽæ“¾
  */
 //----------------------------------------------------------------------
-#define PRICE_RANGE_NUM (50-8)  //0.1‚Ý‚Å0.8`5.0
+#define PRICE_RANGE_NUM (50-8)  //0.1‚Ý‚Å0.8`4.9
 
 void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item, u16* price )
 {
-  u32 value;
+  int value;
   u8 type = FES_GIMMICK_NPC_SUB_GetObjType( sys_wk->fmwk );
   
   if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_SHOPPING ){
@@ -206,10 +206,12 @@ void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item
   *item  = MMDL_GetParam( mmdl, NITEM_SHOPPING_PARAM_ITEM);
   value  = MMDL_GetParam( mmdl, NITEM_SHOPPING_PARAM_PRICE);
 
-  if(type){ //‰¿Ši‚ÉU‚ê•‚ªo‚é(0.8`5.0)
-    int range = ( GFUser_GetPublicRand( PRICE_RANGE_NUM )+8 ); //‚Ü‚¸10”{‚ÅŒvŽZ
+  OS_Printf("value=%d, ",value);
+  if(type){ //‰¿Ši‚ÉU‚ê•‚ªo‚é(0.8`4.9)
+    int range = ( GFUser_GetPublicRand( PRICE_RANGE_NUM )+8 ); //‚Ü‚¸10”{‚ÅŒvŽZ 8-49‚Ì—”‚ðŽæ“¾
     fx32 f_value = FX_Div( FX32_CONST( value*range ), FX32_CONST(10));  //1/10
     value = FX_Whole( f_value );  //¬”“_ØŽÌ‚Ä
+    OS_Printf("range=%d, price=%d\n", range, value );
   }
   if( value > FES_SHOPPING_PRICE_MAX ){
     value = FES_SHOPPING_PRICE_MAX;
