@@ -125,7 +125,7 @@ class CPokeFilter
       #幻ポケモンか？
       idx = $monsname_maboroshi_tbl.index(name)
       if idx != nil then
-        print("pass->#{name}")
+        print("pass->#{name}\n")
         next #幻ポケモンは無視
       end
 
@@ -157,7 +157,7 @@ class CPokeFilter
     buf = Array.new
     for i in 0..LIST_END do
       dat = @data[i]
-      print("#{dat.list.size()}\n")
+      print("\n#data_type=#{i} -> #{dat.list.size()}\n")
       
       fpath = "%s%02d.bin" % [@fpath_base, i]
       
@@ -166,6 +166,8 @@ class CPokeFilter
       for n in dat.list do
         buf[0] = n
         fp.write( buf.pack("S1") ) 
+
+        print("#{$monsname[n]}\n")
       end
       fp.close()
     end
