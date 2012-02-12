@@ -4818,11 +4818,11 @@ msg_fm_npc_trade01_02へ</Comment>
 			<Text>私の　修行相手は
 難しかった　ようですね▼
 でも　良いのです
-あなたも　いずれ　強くなる！▼
-また　戦おう！　さらば！</Text>
+あなたも　いずれ　強くなる！▽
+また　戦おう！　さらば！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-26T10:41:00" />
+				Time="2012-02-12T04:11:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
