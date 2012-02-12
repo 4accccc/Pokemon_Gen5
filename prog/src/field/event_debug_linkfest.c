@@ -2541,6 +2541,7 @@ static void mreq_GetMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ* evwk 
     FMISSION_DATA_GetMissionParam( wk->fm_data_man, evwk->m_id, evwk->m_level, &evwk->req_fmwk );
     evwk->tmp_fmwk = evwk->req_fmwk;  //デフォルトパラメータコピー
     evwk->m_base_param = evwk->req_fmwk.beacon.base_param;
+    evwk->m_ex_param = evwk->req_fmwk.beacon.ex_param;
     evwk->m_title = evwk->req_fmwk.beacon.m_title_id;
     evwk->m_exp = evwk->req_fmwk.beacon.m_exp_id;
     evwk->m_distribution_f = evwk->req_fmwk.beacon.distribution_f;
