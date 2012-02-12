@@ -1411,9 +1411,9 @@
 
 	<row id="TRID_MINI_06_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">チッ……
-マジかよ </language>
+マジかよ</language>
 		<language name="JPN_KANJI" width="216">チッ……
-マジかよ </language>
+マジかよ</language>
 	</row>
 
 	<row id="TRID_OL_04_TRMSG_FIGHT_LOSE">
@@ -9981,7 +9981,7 @@
 
 	<row id="TRID_TANPAN_24_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">たぎる　たましい！
-オレの ミネズミ　すっげーぜ！！▼</language>
+オレの　ミネズミ　すっげーぜ！！▼</language>
 		<language name="JPN_KANJI" width="216">たぎる　魂！
 オレの　ミネズミ　すっげーぜ！！▼</language>
 	</row>
