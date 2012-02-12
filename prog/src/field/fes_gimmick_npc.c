@@ -53,6 +53,8 @@
 #include "field/fes_gimmick_npc_dat.h"
 #include "field/fes_gimmick_local.h"
 
+#define FES_SHOPPING_PRICE_MAX  (59800)  //買い物ミッションの値段最高額
+
 static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u8 id );
 static BOOL sub_CheckMMdlPos( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 static BOOL sub_CheckHitAnotherEventForGrid( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, int data_idx, const VecFx32* ev_pos );
@@ -197,7 +199,7 @@ void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item
   if( sys_wk->fmwk->beacon.base_param != FMISSION_NPC_TYPE_SHOPPING ){
     GF_ASSERT(0);
     *item = ITEM_KIZUGUSURI;
-    *price = 0;
+    *price = 300; //きずぐすりの基本値段
     return;
   }
 
@@ -208,6 +210,9 @@ void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item
     int range = ( GFUser_GetPublicRand( PRICE_RANGE_NUM )+8 ); //まず10倍で計算
     fx32 f_value = FX_Div( FX32_CONST( value*range ), FX32_CONST(10));  //1/10
     value = FX_Whole( f_value );  //小数点切捨て
+  }
+  if( value > FES_SHOPPING_PRICE_MAX ){
+    value = FES_SHOPPING_PRICE_MAX;
   }
   *price = value;
 }
