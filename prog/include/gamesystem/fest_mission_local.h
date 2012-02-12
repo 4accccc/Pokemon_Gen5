@@ -105,4 +105,4 @@ struct _FEST_MISSION{
 #define FMISSION_GOAL_NULL  (0x3FFF)  //ミッション目標無効値
 #define FMISSION_SCORE_MAX  (9999)    //ミッションスコア最大値
 #define FMISSION_TIME_MAX   (((59*60)+59)) //ミッション制限時間Max(59分59秒)
-#define FMISSION_RTC_NULL   (0xFFFFFFFF) //ミッションスタート時RTC無効値
+#define FMISSION_RTC_NULL   (-1) //ミッションスタート時RTC無効値

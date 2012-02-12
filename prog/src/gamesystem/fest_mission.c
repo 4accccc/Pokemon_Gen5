@@ -153,6 +153,9 @@ u32 FEST_MISSION_GetLife( const FEST_MISSION* fmwk )
   s64 now_sec = GFL_RTC_GetDateTimeBySecond();
   s64 diff = 0;
 
+  if( now_sec == FMISSION_RTC_NULL ){
+    return 0; //エラー値(= -1)が返ってきたら終了
+  }
   if( fmwk->start_rtc == FMISSION_RTC_NULL ){
     return  fmwk->beacon.time;  //スタート時間が未登録の場合制限時間をそのまま返す
   }

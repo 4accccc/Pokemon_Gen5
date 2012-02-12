@@ -344,9 +344,10 @@ void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk, BOOL succeed_f  )
     GF_ASSERT(0); //ミッション開始してないのに呼び出しちゃダメ
     return;
   }
-  if( !succeed_f ){
-    //継承ミッションでなければ残り時間カウントの基準となるRTCをセット
+  if( wk->mission.start_rtc == FMISSION_RTC_NULL ){
+    //残り時間カウントの基準となるRTCをセット
     FEST_MISSION_PlayStart( &wk->mission );
+    GF_ASSERT(!succeed_f);  //←継承ミッションなのにstart_rtcが無効値のままはおかしい
   }
   
   //ライブ状態セット
