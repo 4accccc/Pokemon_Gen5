@@ -712,8 +712,16 @@ EVENT_END
 EVENT_START   ev_bg_d27r0601_monitor_01
 
   _TALK_START_SE_PLAY()
-  //ＢＧ：イッシュちほうの
-  _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_01 )
+  //クリア前
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    //ＢＧ：イッシュちほうの
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_01 )
+    
+  ELSE
+    //ＢＧ：スノーノイズ　じょうたい　だ……
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_04 )
+  ENDIF
+  
   _LAST_KEYWAIT()
   _PLAINWIN_CLOSE()
 
@@ -725,8 +733,15 @@ EVENT_END
 EVENT_START   ev_bg_d27r0601_monitor_02
 
   _TALK_START_SE_PLAY()
-  //ＢＧ：ふねに　かんする　データが
-  _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_02 )
+  //クリア前
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    //ＢＧ：ふねに　かんする　データが
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_02 )
+  ELSE
+    //ＢＧ：スノーノイズ　じょうたい　だ……
+    _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_04 )
+  ENDIF
+  
   _LAST_KEYWAIT()
   _PLAINWIN_CLOSE()
 
@@ -738,23 +753,18 @@ EVENT_END
 EVENT_START   ev_bg_d27r0601_monitor_03
 
   _TALK_START_SE_PLAY()
-
   //クリア前
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-
     //ＢＧ：だんいんの　こえが　きこえる……！？
     _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_03 )
-    _LAST_KEYWAIT()
-    _PLAINWIN_CLOSE()
-
   ELSE
 
     //ＢＧ：スノーノイズ　じょうたい　だ……
     _PLAINWIN_MSG_DOWN( msg_d27r0601_monitor_04 )
-    _LAST_KEYWAIT()
-    _PLAINWIN_CLOSE()
-
   ENDIF
+  
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
 
 EVENT_END
 
