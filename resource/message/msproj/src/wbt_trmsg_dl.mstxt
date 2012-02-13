@@ -193,10 +193,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>すごいや！　どこで
-そのポケモン　つかまえたの！？▼</Text>
+その　ポケモン　つかまえたの！？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:32:16" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -204,11 +204,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいや！
-どこで　そのポケモン　捕まえたの！？▼</Text>
+			<Text>すごいや！　どこで
+その　ポケモン　捕まえたの！？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T05:56:08" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -252,11 +252,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そのポケモンなら　しってるよ
+			<Text>その　ポケモンなら　しってるよ
 めずらしいのが　みたかったなぁ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:00:42" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -264,11 +264,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そのポケモンなら　知ってるよ
+			<Text>その　ポケモンなら　知ってるよ
 珍しいのが　みたかったなぁ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:00:35" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -545,12 +545,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ただものじゃ　なさそうだな！
-だけど　おれだって　かんたんに▽
+			<Text>ただものじゃ　なさそうだな！▼
+だけど　おれだって　かんたんに
 まけたりしないぞ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:46:20" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -558,12 +558,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ただものじゃ　なさそうだな！
-だけど　おれだって　簡単に▽
+			<Text>ただものじゃ　なさそうだな！▼
+だけど　おれだって　簡単に
 負けたりしないぞ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:46:33" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -684,10 +684,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>くっそー！　おれの　負けだ！
-手も足も　出なかったぞ！▼</Text>
+手も足も　でなかったぞ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-28T08:48:24" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -798,11 +798,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんなに　すごいトレーナーが
-出てきちゃったら▽
+でてきちゃったら▽
 おれに　勝ち目なんて　ないぜ……▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:56:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:05:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1445,11 +1445,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいかずの　かんきゃくだね！
+			<Text>すごい　かずの　かんきゃくだね！
 もえてきた！　いくよ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T08:10:13" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1703,11 +1703,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……もっと　白熱した勝負が
-したかったなぁ▼</Text>
+			<Text>……もっと　白熱した
+勝負が　したかったなぁ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T08:10:02" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:06:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4470,12 +4470,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいめを　しているな！
-きみとなら　フェアな　たたかいが▽
-できそうだよ！▼</Text>
+			<Text>いいめを　しているな！▼
+きみとなら　フェアな
+たたかいが　できそうだよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T05:36:30" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4483,12 +4483,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いい目を　しているな！
-きみとなら　フェアな　戦いが▽
-できそうだよ！▼</Text>
+			<Text>いい目を　しているな！▼
+きみとなら　フェアな
+戦いが　できそうだよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T05:36:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:11:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -5935,11 +5935,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしの　ポケモンが　一番！▼
-どんな　ポケモンを　出してきても
+どんな　ポケモンを　だしてきても
 ぜーったいに　負けないもん！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T07:34:53" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6879,12 +6879,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっとうてきな　ちからで
-かってみせるわ！▼
+			<Text>ふふっ！　あっとうてきな
+ちからで　かってみせるわ！▼
 にげだすなら　いまのうちよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T09:48:06" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6892,12 +6892,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふふっ！
-圧倒的な　力で　勝ってみせるわ！▼
+			<Text>ふふっ！　圧倒的な
+力で　勝ってみせるわ！▼
 逃げ出すなら　いまのうちよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T09:48:45" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7118,11 +7118,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]……こんなトレーナーが
-さんかしてたなんて……▼</Text>
+			<Text>[Name:TrainerName ]……　こんなトレーナーが
+さんか　してたなんて……▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T09:58:05" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7130,11 +7130,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]……こんなトレーナーが
+			<Text>[Name:TrainerName ]……　こんなトレーナーが
 参加してたなんて……▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T09:58:15" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7298,11 +7298,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うーん……あなたは　どんな
+			<Text>うーん……　あなたは　どんな
 たたかいかたを　してくるのかな？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T10:36:32" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7310,11 +7310,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーん……あなたは　どんな
+			<Text>うーん……　あなたは　どんな
 戦い方を　してくるのかな？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-26T10:36:51" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7372,11 +7372,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>見知らぬ人との　対戦は
-何が起こるか　分からないから▽
+なにが起こるか　わからないから▽
 面白いよねっ！　行くよ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-08T09:23:26" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -10459,10 +10459,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンは　わるくない……！
-ぼくの　つかいかたが　ダメだったんだ▼</Text>
+ぼくが　ダメだったんだ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-26T09:20:51" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:16:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -10471,10 +10471,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンは　悪くない……！
-ぼくの　使い方が　ダメだったんだ▼</Text>
+ぼくが　ダメだったんだ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-26T09:20:59" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:16:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -14391,10 +14391,10 @@
 			<Text>トーナメントで　ゆうしょうするため
 ポケモンと　いっしょに▽
 せかいじゅうを　たびしてまわった！▼
-そのすべてを　ぶつけるわよ！▼</Text>
+その　すべてを　ぶつけるわよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-28T07:34:56" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:17:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -14405,10 +14405,10 @@
 			<Text>トーナメントで　優勝するため
 ポケモンと　一緒に▽
 世界中を　旅してまわった！▼
-そのすべてを　ぶつけるわよ！▼</Text>
+その　すべてを　ぶつけるわよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-28T07:41:41" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:17:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -14577,11 +14577,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　修行の　旅に出るわ……
+			<Text>また　修行の　旅にでるわ……
 次こそ　負けないからね！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-28T10:11:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T07:17:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -14697,11 +14697,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>放浪の旅の　果てェェ！！
+			<Text>放浪の　旅の　果てェェ！！
 彼女が　みつけた　ものとはッ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:23:30" />
+				Time="2012-02-13T07:17:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
