@@ -829,9 +829,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sage6.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
 #sage7.imd
-./mmdl_res/sage7.imd: ./mmdl_nchara/sage7.ncg ./mmdl_nchara/sage7.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/sage7.imd: ./mmdl_nchara/sage7.ncg ./mmdl_nchara/sage7.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd sage7
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sage7.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sage7.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #goddess2.imd
 ./mmdl_res/goddess2.imd: ./mmdl_nchara/goddess2.ncg ./mmdl_nchara/goddess2.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
