@@ -485,58 +485,6 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  u16単位の一致
- *
- *	@param	STRCODE *s1 比較１
- *	@param	STRCODE *s2 比較２
- *	@param	u32 size    バイトサイズ
- *
- *	@return ０なら同じ  それ以外なら違う
- */
-//-----------------------------------------------------------------------------
-static int Resort_Basic1_Data_CompareU16(const u16 *s1, const u16 *s2, const u32 size)
-{
-    const u16  *p1 = (const u16 *)s1;
-    const u16  *p2 = (const u16 *)s2;
-    u32 n = size/2;
-
-    while (n-- > 0) {
-        if (*p1 != *p2)
-            return (*p1 - *p2);
-        p1++;
-        p2++;
-    }
-    return (0);
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  同じ所有者かチェック
- *
- *	@param	const RESORT_BASIC1_DATA *cp_a  比較１
- *	@param	RESORT_BASIC1_DATA *cp_b      比較２
- *
- *	@return TRUEで同じ所有者  FALSEで異なる所有者
- */
-//-----------------------------------------------------------------------------
-static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, const RESORT_BASIC1_DATA *cp_b )
-{
-  BOOL is_name  = FALSE;
-  BOOL is_sex = FALSE;
-  BOOL is_trainerID = (cp_a->trainerID == cp_b->trainerID);
-
-  //トレーナーIDが一致しないとチェックしない
-  if( is_trainerID )
-  {
-    is_name  = STRTOOL_Comp( cp_a->name, cp_b->name );
-    is_sex   = (cp_a->sex == cp_b->sex);
-  }
-
-  return is_trainerID && is_name && is_sex;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  空かチェック
  *
  *	@param	const RESORT_BASIC1_DATA *cp_data データ
@@ -562,7 +510,36 @@ static void RESORT_BASIC1_DATA_GetName( const RESORT_BASIC1_DATA *cp_data, STRCO
   GFL_STD_MemCopy( cp_data->name, p_str, sizeof(STRCODE)*PERSON_NAME_SIZE);
   *((p_str)+PERSON_NAME_SIZE) = GFL_STR_GetEOMCode();
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者かチェック
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_a  比較１
+ *	@param	RESORT_BASIC1_DATA *cp_b      比較２
+ *
+ *	@return TRUEで同じ所有者  FALSEで異なる所有者
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, const RESORT_BASIC1_DATA *cp_b )
+{
+  BOOL is_name  = FALSE;
+  BOOL is_sex = FALSE;
+  BOOL is_trainerID = (cp_a->trainerID == cp_b->trainerID);
 
+  //トレーナーIDが一致しないとチェックしない
+  if( is_trainerID )
+  {
+    STRCODE name1[PERSON_NAME_SIZE+EOM_SIZE];
+    STRCODE name2[PERSON_NAME_SIZE+EOM_SIZE];
+    RESORT_BASIC1_DATA_GetName( cp_a, name1 );
+    RESORT_BASIC1_DATA_GetName( cp_b, name2 );
+
+    is_name  = STRTOOL_Comp( name1, name2 );
+    is_sex   = (cp_a->sex == cp_b->sex);
+  }
+
+  return is_trainerID && is_name && is_sex;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief 挨拶をEOM付きで取得
