@@ -373,7 +373,9 @@ ev_leader1_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_11 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-	
+	//================================================//
+	//電光掲示板フラグセット
+	_FLAG_SET( SYS_FLAG_ELBOARD_C12GYMWIN )
 	 //========================================/
    //ジムクリアC12のSCENECHANGE起動
     $WK_SCENE_C12GYM_OPEN = 2

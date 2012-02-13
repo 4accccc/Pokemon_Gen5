@@ -14,6 +14,7 @@
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（ストッパー・演出調整）
+  //@author suginaka_katsunori //電光掲示板のフラグセット忘れを修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -174,7 +175,7 @@ ev_leader8_btl:
 
   //================================================//
   //電光掲示板フラグセット
-  _FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
+  _FLAG_SET( SYS_FLAG_ELBOARD_C14GYMWIN )
   //================================================//
   //POSイベント進行
   $WK_SCENE_C14_SWLEADER8_01 = 1    //ジムの外に出た時のライバルイベント用
