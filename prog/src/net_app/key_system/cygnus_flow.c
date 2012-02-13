@@ -2028,6 +2028,8 @@ static BOOL CYGNUS_SAVE_GetReward( const CYGNUS_SAVE_WORK *cp_wk, u32 idx, CYGNU
 //-----------------------------------------------------------------------------
 static POKEMON_PARAM * CYGNUS_SAVE_CreatePP( const CYGNUS_SAVE_WORK *cp_wk, u32 idx, HEAPID heapID )
 {
+  //#define DENSETU_FIX
+
   if( cp_wk->reward_data[idx].type == CYGNUS_REWARD_TYPE_POKEMON )
   {
     u16 mons_no = cp_wk->reward_data[idx].no;
@@ -2055,19 +2057,23 @@ static POKEMON_PARAM * CYGNUS_SAVE_CreatePP( const CYGNUS_SAVE_WORK *cp_wk, u32 
 
     p_pp = PP_Create( mons_no, lv, id, heapID );
 
+#ifdef DENSETU_FIX
     if( Cygnus_Save_IsStatusFixPoke( mons_no ) )
     {
       pow = PTL_SETUP_POW_PACK( 20,20,20,20,20,20 );
     }
+#endif
 
     PP_SetupEx( p_pp, mons_no, lv, id, pow, rand );
     PP_ChangeFormNo( p_pp, form_no );
     PP_SetWazaDefault( p_pp );
 
+#ifdef DENSETU_FIX
     if( Cygnus_Save_IsStatusFixPoke( mons_no ) )
     {
       PP_Put(p_pp, ID_PARA_seikaku, PTL_SEIKAKU_GANBARIYA);
     }
+#endif
 
     //Ç‡ÇµëÊÇRì¡ê´Ç‡Ç¡ÇƒÇΩÇÁëÊÇRì¡ê´
     {
