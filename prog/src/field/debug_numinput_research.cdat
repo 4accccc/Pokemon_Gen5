@@ -525,9 +525,9 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q25[] = {
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q26[] = {
   { dni_a091, ANSWER_ID_091, &NumInputParam_totalCountOfA },//「うんどう」
   { dni_a092, ANSWER_ID_092, &NumInputParam_totalCountOfA },//「どくしょ」
-  { dni_a093, ANSWER_ID_093, &NumInputParam_todayCountOfA },//「おんがく」
-  { dni_a094, ANSWER_ID_094, &NumInputParam_todayCountOfA },//「えいが」
-  { dni_a085, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「りょこう」
+  { dni_a093, ANSWER_ID_093, &NumInputParam_totalCountOfA },//「おんがく」
+  { dni_a094, ANSWER_ID_094, &NumInputParam_totalCountOfA },//「えいが」
+  { dni_a085, ANSWER_ID_085, &NumInputParam_totalCountOfA },//「りょこう」
   { dni_a096, ANSWER_ID_096, &NumInputParam_totalCountOfA },//「りょうり」
   { dni_a097, ANSWER_ID_097, &NumInputParam_totalCountOfA },//「つり」
   { dni_a098, ANSWER_ID_098, &NumInputParam_totalCountOfA },//「ゲーム」
