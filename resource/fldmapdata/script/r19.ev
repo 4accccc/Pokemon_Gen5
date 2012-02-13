@@ -281,7 +281,7 @@ _RET
 EVENT_START   ev_pos_r19_champion_01
   
   //メッセージ：そこのトレーナー！
-  _PLAINWIN_MSG_DOWN( msg_r19_champion_01 )
+  _PLAINWIN_MSG_UP( msg_r19_champion_01 )
   _MSGWIN_CLOSE()
   
   //カメラ操作　アデク追従
