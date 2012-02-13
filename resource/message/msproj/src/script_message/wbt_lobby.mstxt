@@ -4324,10 +4324,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>なお　タマゴは
-さんか　させることは　できません！▼</Text>
+さんか　できません！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-28T14:46:11" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T08:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4336,10 +4336,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　タマゴは
-参加させることは　できません！▼</Text>
+参加は　できません！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-28T14:46:16" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T08:43:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
