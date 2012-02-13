@@ -13,6 +13,7 @@
   .include  "r07r0102.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //不要な文字送りを削除
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -123,7 +124,6 @@ EVENT_START   ev_r07r0102_girl3_01
 
     //女の子：ヒトモシちゃんの　あかりに　たよれば
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_girl3_01 )
-    _AB_KEYWAIT_MARK()
     _BALLOONWIN_CLOSE()
 
     //トレーナー戦呼び出し
