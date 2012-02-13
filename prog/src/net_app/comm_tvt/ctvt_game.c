@@ -3602,7 +3602,7 @@ static BOOL game_update_seq_tutorial_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK 
     if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkPenAnm) == FALSE )
     {
       // タッチボタン変更
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_L_BUTTON_TOUCH );
+      //GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_L_BUTTON_TOUCH );
 
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPenAnm, FALSE );  // 非表示
       // シーケンス終了
