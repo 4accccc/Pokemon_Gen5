@@ -522,12 +522,12 @@ class WBT_CHARACTER_SINGLE
     # セット
     @msg_win_id = cstr.to_i;
     #
-    # 範囲チェック(0 - 255)(u8)
-    flg = chk_num_range( @msg_win_id, 0, 255 )
+    # 範囲チェック(1 - 255)(u8)
+    flg = chk_num_range( @msg_win_id, 1, 255 )
     if(flg == -1)
       # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[7], TRAINER_START_ROW+@char_id,
-                                    $trainer_str[7], @msg_win_id, 0, 255 );
+                                    $trainer_str[7], @msg_win_id, 1, 255 );
     end
     #
     if(@local_debug == 1)
@@ -551,12 +551,12 @@ class WBT_CHARACTER_SINGLE
     # セット
     @msg_lose_id = cstr.to_i;
     #
-    # 範囲チェック(0 - 255)(u8)
-    flg = chk_num_range( @msg_lose_id, 0, 255 )
+    # 範囲チェック(1 - 255)(u8)
+    flg = chk_num_range( @msg_lose_id, 1, 255 )
     if(flg == -1)
       # 範囲エラー
       $wbt_error.print_range_error( $current_xls_name, 4, TRAINER_START_COL+$tr_col[8], TRAINER_START_ROW+@char_id,
-                                    $trainer_str[8], @msg_lose_id, 0, 255 );
+                                    $trainer_str[8], @msg_lose_id, 1, 255 );
     end
     #
     if(@local_debug == 1)

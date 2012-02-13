@@ -55,6 +55,14 @@ $reg_col = [ 0,		# 参加ポケモン数下限
             10,		# BGMフラグ
 ]
 
+# バトル方法によるポケモン下限
+$poke_under_limit = [
+            3,		# シングル
+            4,		# ダブル
+            6,		# トリプル
+            4,		# ローテーション
+]
+
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 class WBT_RULE
@@ -104,8 +112,17 @@ class WBT_RULE
   # パラメータセット
   #----------------
   def set_parameter()
+    # バトルルール(はじめに処理)
+    chk_battle_rule();
+    # 下限
+    chk_join_under();
+    # 上限
+    chk_join_over();
+    # 参加レベル
+    chk_join_level();
     # 参加条件(下限、上限、レベル)
-    chk_join_info();
+    #=>分けた
+#    chk_join_info();
     # レベル範囲
     chk_level_range();
     # レベル合計
@@ -116,8 +133,6 @@ class WBT_RULE
     chk_pokemon();
     # 禁止アイテム
     chk_item();
-    # バトルルール
-    chk_battle_rule();
     # 禁止技
     chk_skill();
     # タイプ
@@ -126,6 +141,7 @@ class WBT_RULE
     chk_bgm();
   end
   
+=begin
   #----------------
   # 参加いろいろ
   #----------------
@@ -166,6 +182,104 @@ class WBT_RULE
         p sprintf("%s :%d",$reg_str[i], @join_info[i])
       end
     }
+  end
+=end
+  
+  #----------------
+  # 下限
+  #----------------
+  def chk_join_under()
+    #
+    cstr = @conv.get_cell(1, REG_UP_START_COL+$reg_col[0], REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[0] )
+    if(ret == -1)
+      # 空白エラー
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[0], REG_UP_START_ROW,
+                                    $reg_str[0]);
+      return;
+    end
+    # セット
+    @join_info[0] = cstr.to_i;
+    #
+    # バトルルールに応じた最小数
+    mnum = $poke_under_limit[@btl_rule]
+    #
+    # 範囲チェック
+    flg = chk_num_range( @join_info[0], mnum, 6 )
+    if(flg == -1)
+      # 範囲エラー
+      $wbt_error.print_range_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[0], REG_UP_START_ROW,
+				    $reg_str[0], @join_info[0], mnum, 6 );
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@join_info[0], $reg_str[0])
+    end
+  end
+  
+  #----------------
+  # 上限
+  #----------------
+  def chk_join_over()
+    #
+    cstr = @conv.get_cell(1, REG_UP_START_COL+$reg_col[1], REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[1] )
+    if(ret == -1)
+      # 空白エラー
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[1], REG_UP_START_ROW,
+                                    $reg_str[1]);
+      return;
+    end
+    # セット
+    @join_info[1] = cstr.to_i;
+    #
+    # バトルルールに応じた最小数
+    mnum = $poke_under_limit[@btl_rule]
+    if(mnum < @join_info[0])
+      # 最小より下限が大きい時は下限と比較
+      mnum = @join_info[0]
+    end
+    #
+    # 範囲チェック
+    flg = chk_num_range( @join_info[1], mnum, 6 )
+    if(flg == -1)
+      # 範囲エラー
+      $wbt_error.print_range_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[1], REG_UP_START_ROW,
+				    $reg_str[1], @join_info[1], mnum, 6 );
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@join_info[1], $reg_str[1])
+    end
+  end
+  
+  #----------------
+  # 参加レベル(new)
+  #----------------
+  def chk_join_level()
+    #
+    cstr = @conv.get_cell(1, REG_UP_START_COL+$reg_col[2], REG_UP_START_ROW)
+    ret = chkblank( cstr, $reg_str[2] )
+    if(ret == -1)
+      # 空白エラー
+      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[2], REG_UP_START_ROW,
+                                    $reg_str[2]);
+      return;
+    end
+    # セット
+    @join_info[2] = cstr.to_i;
+    #
+    # 範囲チェック
+    flg = chk_num_range( @join_info[2], 0, 100 )
+    if(flg == -1)
+      # 範囲エラー
+      $wbt_error.print_range_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[2], REG_UP_START_ROW,
+				    $reg_str[2], @join_info[2], 0, 100 );
+    end
+    #
+    if(@local_debug == 1)
+      p sprintf("%d :%s",@join_info[2], $reg_str[2])
+    end
   end
   
   #----------------
