@@ -10893,13 +10893,13 @@ static const u8 audience_leave_tbl[][4]={
 //----------------------------------------------------------------------------------
 static void _leave_audience( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int audience_num )
 {
-  s8  flag_tbl[POKEWOOD_AUDIENCE_MAX];
+  s8  member_tbl[POKEWOOD_AUDIENCE_MAX];    // 着席している観客だけをリストアップするためのバッファ
   int count=0, i,index=0,leave_num, left=0;
 
   // 着席している観客をテーブルに並べ直す
   for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
     if((psw->Audience.on_off>>i)&1){
-      flag_tbl[count] = i;
+      member_tbl[count] = i;
       count++;
       OS_Printf("tbl[%d]=%d\n", count, i);
     }
@@ -10920,13 +10920,13 @@ static void _leave_audience( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw, int au
   OS_Printf("leave_num=%d\n", leave_num);
   while(left!=leave_num){
     i = GFUser_GetPublicRand( count );
-    if(flag_tbl[i]>=0){
-      BTLV_CORE_SetAudienceCondition( viewCore, TRUE, flag_tbl[i], POKEWOOD_AUDIENCE_LEAVE );  //離席
-      psw->Audience.timer[i] = 0;   // それまでのリアクションをキャンセルするためにtimer値は0に
-      psw->Audience.on_off ^= 1<<flag_tbl[i];
+    if(member_tbl[i]>=0){
+      BTLV_CORE_SetAudienceCondition( viewCore, TRUE, member_tbl[i], POKEWOOD_AUDIENCE_LEAVE );  //離席
+      psw->Audience.timer[member_tbl[i]] = 0;   // それまでのリアクションをキャンセルするためにtimer値は0に
+      psw->Audience.on_off ^= 1<<member_tbl[i];
       left++;
-      OS_Printf("delete=%d, left=%d\n", flag_tbl[i], left);
-      flag_tbl[i]=-1;
+      OS_Printf("delete=%d, left=%d\n", member_tbl[i], left);
+      member_tbl[i]=-1;
     }
   }
 
