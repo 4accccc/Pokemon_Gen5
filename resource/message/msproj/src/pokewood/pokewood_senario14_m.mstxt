@@ -1814,16 +1814,16 @@
 			Language="JPN_KANJI">
 			<Text>？？？『……ワシは　その者の
 企みを　止めることの　できる▽
-強き者　探していた……▼
+強き者を　探していた……▼
 そして　見つけたのじゃ……▼
 [Name:TrainerName Idx="1" ]……　お主じゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-02-13T06:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2012-02-13T06:40:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
