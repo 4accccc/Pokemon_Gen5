@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2012-01-26T20:51:23" source="m_gym0901_00_02.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-02-13T18:47:33" source="m_gym0901_00_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2012-01-26T20:51:23" source="m_gym0901_00_02.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2012-02-13T18:47:33" source="m_gym0901_00_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -396,10 +396,10 @@
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 9999 999b 99b9 b999
-			aaaa aaaa aaaa aaaa cacc cccc cccc cccc
-			9bbc cca9 ccaa cccc 598a 9665 ab99 ccca
-			0175 4710 9633 bbb9 0000 0000 1100 2447
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1000 3324 0142 0000 b015 ccca 0bac 5451
+			9bba cca9 998a cabb 898a 9635 9b99 cca8
+			1175 7100 9634 bbb9 0000 0000 1100 2447
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -693,8 +693,8 @@
 		7318 7339 775a 7b7b 777b 7fbd 7b9c 7fde
 	</tex_palette>
 	<tex_palette index="16" name="in82_mi_a_3_pl" color_size="16">
-		6651 772c 72e5 7706 6ec3 7308 7f6a 6f0b
-		7f8e 7fb2 7fd8 7fd5 7ffa 7680 7fff 7fff
+		69d7 772c 72e5 7706 6ec3 7308 7f6a 6f0b
+		7f8e 7fb2 7fd8 7fd5 7ffa 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="17" name="in82_mizu1_pl" color_size="16">
 		4a00 5220 5a60 5e80 62a0 66c0 7300 7325
@@ -1376,13 +1376,13 @@
 					<clr rgb="0 0 0"/>
 					<pos_s xyz="-3.625000 -1.062500 -2.750000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-3.352539 -1.062500"/>
+					<pos_xy xy="-3.336914 -1.062500"/>
 					<tex st="8.000000 3.250000"/>
-					<pos_xy xy="-3.625000 0.125000"/>
+					<pos_s xyz="-3.625000 0.125000 -2.734375"/>
 					<tex st="0.000000 3.250000"/>
-					<pos_xy xy="-3.352539 0.125000"/>
+					<pos_xy xy="-3.336914 0.125000"/>
 					<tex st="8.000000 8.000000"/>
-					<pos_xy xy="-3.625000 2.000000"/>
+					<pos_s xyz="-3.625000 2.000000 -2.750000"/>
 					<tex st="0.000000 8.000000"/>
 					<pos_xy xy="-3.352539 2.000000"/>
 				</primitive>
@@ -6110,7 +6110,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="polySurface280" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
