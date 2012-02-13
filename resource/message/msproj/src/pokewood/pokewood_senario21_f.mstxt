@@ -2568,15 +2568,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『たしかに　あなたが
-いなくなって　落ち込んだ……▼
+いなくなって　落ち込んだけど……▼
 そんなに　ひどい姿　だった……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-02-13T08:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2012-02-13T08:35:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2826,7 +2826,7 @@
 			<Text>ドーブル『オレは　アントニオに
 頼まれて　さまよってる▽
 アンタを　助けに　来たんす！▼
-……で　一緒に来た　マリアさん
+……で　一緒に来た　アントニオ
 変わり果てた　アンタを　見たら▽
 ショックで　記憶　失って……▼
 んで　記憶　なくしてた　アンタは
@@ -2837,11 +2837,11 @@
 相性バッチリって　ことすかねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-02-13T08:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T03:02:51" />
+				Time="2012-02-13T08:35:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

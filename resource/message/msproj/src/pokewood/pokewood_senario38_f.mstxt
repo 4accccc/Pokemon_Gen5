@@ -2514,7 +2514,7 @@
 		Label="pw_event8_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『こら！　バカもんが！
+			<Text>いらいぬし『この！　バカもんが！
 あくりょうたいじの　せんもんかである▽
 ゴーストイレイザーを　だませれば▽
 のろいのせきぞう　として　かちも▽
@@ -2523,15 +2523,15 @@
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:55:28" />
+				Time="2012-02-13T07:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:55:28" />
+				Time="2012-02-13T07:20:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>依頼主『こら！　バカもんが！
+			<Text>依頼主『この！　バカもんが！
 悪霊退治の　スペシャリスト　である▽
 ゴーストイレイザーに　だませれば▽
 のろいの石像　として　価値も▽
@@ -2540,11 +2540,11 @@
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:55:28" />
+				Time="2012-02-13T07:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:55:28" />
+				Time="2012-02-13T07:20:29" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

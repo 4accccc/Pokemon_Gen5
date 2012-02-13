@@ -385,7 +385,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]！『あっ！！
 あの　ひかりは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]！『あっ！！
-あの　ひかりは……</language>
+あの　光は……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">？？？『……　……</language>
