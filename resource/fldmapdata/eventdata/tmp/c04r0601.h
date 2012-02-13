@@ -8,14 +8,11 @@
 #ifndef ZONE_C04R0601_EVC_H
 #define ZONE_C04R0601_EVC_H
 
-#define C04R0601_INFORMATIONW_01           0
-#define C04R0601_OLDMAN_01                 1
 
 #endif //ZONE_C04R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C04R0601_EVB_H
 #define ZONE_C04R0601_EVB_H
 
-#define BG_C04R0601_BOARD_01              0
 
 #endif //ZONE_C04R0601_EVB_H

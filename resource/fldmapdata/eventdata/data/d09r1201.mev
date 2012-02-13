@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/13 11:47:09
+#save date:2012/02/13 21:22:24
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d09r1201.wms
 #SECTION START:OBJ_EVENT
@@ -70,91 +70,6 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
-#event number: 0
-#Door Event Label
-DOOR_ID_D09R1201_D09_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_D09R1201_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 0 -104
-#size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_D09R1201_D09_EXIT02
-#Next Zone ID Name
-ZONE_ID_D09
-#Next Door ID Name
-DOOR_ID_D09_D09R1201_EXIT02
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 -104
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_D09R1201_D09R1101_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1101
-#Next Door ID Name
-DOOR_ID_D09R1101_D09R1201_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_STAIRS
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 0 -8
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_D09R1201_D09R1501_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1501
-#Next Door ID Name
-DOOR_ID_D09R1501_D09R1201_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 0 72
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_D09R1201_D09R1401_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1401
-#Next Door ID Name
-DOOR_ID_D09R1401_D09R1201_EXIT01
-#Door Direction
-EXIT_DIR_LEFT
-#Door Type
-EXIT_TYPE_STAIRS
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 168
-#size
-1 1
+0
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
