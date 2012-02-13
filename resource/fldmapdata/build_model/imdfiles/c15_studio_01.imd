@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2012-02-02T12:33:01" source="c15_studio_01.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2012-02-13T19:50:39" source="c15_studio_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2012-02-02T12:33:01" source="c15_studio_01.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2012-02-13T19:50:39" source="c15_studio_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -3179,7 +3179,7 @@
 		vertex_size="82" polygon_size="25"
 		triangle_size="6" quad_size="19"
 		volume_min="-1.089600 0.093750 0.375000"
-		volume_max="1.589600 1.718750 1.532471"
+		volume_max="1.589600 1.718750 1.469971"
 		volume_r="2.741943"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
@@ -3255,13 +3255,13 @@
 					<pos_xy xy="1.100098 0.093750"/>
 					<tex st="9.875000 22.500000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xz xz="-0.625000 1.468750"/>
+					<pos_xz xz="-0.625000 1.375000"/>
 					<tex st="6.250000 22.500000"/>
 					<pos_xz xz="-0.600098 0.375000"/>
 					<tex st="6.250000 0.437500"/>
 					<pos_xy xy="-0.687500 1.718750"/>
 					<tex st="9.875000 0.437500"/>
-					<pos_xz xz="-0.687500 1.468750"/>
+					<pos_xz xz="-0.687500 1.375000"/>
 					<tex st="9.875000 22.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xy xy="1.125000 0.093750"/>
@@ -3315,22 +3315,22 @@
 					<tex st="4.187500 26.875000"/>
 					<pos_xyz xyz="1.470947 0.093750 1.435547"/>
 					<nrm xyz="-0.962891 0.033203 0.269531"/>
-					<pos_xz xz="1.120850 1.520996"/>
+					<pos_xz xz="1.120850 1.458496"/>
 					<tex st="4.187500 0.187500"/>
-					<pos_xyz xyz="1.180176 1.718750 1.532471"/>
+					<pos_xyz xyz="1.180176 1.718750 1.469971"/>
 					<tex st="5.812500 0.187500"/>
-					<pos_xz xz="1.153076 1.435547"/>
+					<pos_xz xz="1.153076 1.373047"/>
 					<tex st="5.812500 26.875000"/>
-					<pos_xyz xyz="1.093750 0.093750 1.424072"/>
+					<pos_xyz xyz="1.093750 0.093750 1.361572"/>
 					<tex st="-3.875000 26.875000"/>
-					<nrm xyz="0.244141 -0.013672 0.970703"/>
+					<nrm xyz="0.085938 -0.005859 0.996094"/>
 					<pos_xz xz="1.470947 1.435547"/>
 					<tex st="-3.875000 0.187500"/>
 					<pos_xyz xyz="1.589600 1.718750 1.427246"/>
 					<tex st="3.875000 0.187500"/>
-					<pos_xz xz="1.180176 1.532471"/>
+					<pos_xz xz="1.180176 1.469971"/>
 					<tex st="3.875000 26.875000"/>
-					<pos_xyz xyz="1.120850 0.093750 1.520996"/>
+					<pos_xyz xyz="1.120850 0.093750 1.458496"/>
 					<tex st="5.812500 26.875000"/>
 					<nrm xyz="-0.960938 -0.072266 -0.269531"/>
 					<pos_xz xz="-0.943848 1.338623"/>
@@ -3342,20 +3342,20 @@
 					<pos_xz xz="-1.062500 1.330322"/>
 					<tex st="4.187500 26.875000"/>
 					<nrm xyz="0.962891 0.033203 0.269531"/>
-					<pos_xyz xyz="-0.620850 0.093750 1.520996"/>
+					<pos_xyz xyz="-0.620850 0.093750 1.458496"/>
 					<tex st="5.812500 26.875000"/>
-					<pos_xz xz="-0.593750 1.424072"/>
+					<pos_xz xz="-0.593750 1.361572"/>
 					<tex st="5.812500 0.187500"/>
-					<pos_xyz xyz="-0.653076 1.718750 1.435547"/>
+					<pos_xyz xyz="-0.653076 1.718750 1.373047"/>
 					<tex st="4.187500 0.187500"/>
-					<pos_xz xz="-0.680176 1.532471"/>
+					<pos_xz xz="-0.680176 1.469971"/>
 					<tex st="-3.875000 26.875000"/>
-					<nrm xyz="-0.244141 -0.013672 0.970703"/>
+					<nrm xyz="-0.085938 -0.005859 0.996094"/>
 					<pos_xyz xyz="-0.970947 0.093750 1.435547"/>
 					<tex st="3.875000 26.875000"/>
-					<pos_xz xz="-0.620850 1.520996"/>
+					<pos_xz xz="-0.620850 1.458496"/>
 					<tex st="3.875000 0.187500"/>
-					<pos_xyz xyz="-0.680176 1.718750 1.532471"/>
+					<pos_xyz xyz="-0.680176 1.718750 1.469971"/>
 					<tex st="-3.875000 0.187500"/>
 					<pos_xz xz="-1.089600 1.427246"/>
 				</primitive>
@@ -3812,7 +3812,7 @@
 	>
 		<display index="0" material="4" polygon="0" priority="0"/>
 	</node>
-	<node index="2" name="polySurface24" kind="mesh"
+	<node index="2" name="polySurface1" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
