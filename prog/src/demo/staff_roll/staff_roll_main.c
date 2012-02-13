@@ -90,11 +90,11 @@ enum{
 #define	LIST_START_END_WAIT		( wk->testStartEndWait )
 #define	LOGO_PUT_WAIT					( wk->testLogoWait )
 #define	DEBUG_LIST_START_INIT_WAIT	( 20 )
-#define	DEBUG_LIST_START_END_WAIT		( 180 )
+#define	DEBUG_LIST_START_END_WAIT		( 130 )
 #define	DEBUG_LOGO_PUT_WAIT					( 200 )
 #else
 #define	LIST_START_INIT_WAIT	( 20 )			// 初期処理のロゴ表示開始までのウェイト
-#define	LIST_START_END_WAIT		( 180 )				// 初期処理のロゴ表示終了後のウェイト
+#define	LIST_START_END_WAIT		( 130 )				// 初期処理のロゴ表示終了後のウェイト
 #define	LOGO_PUT_WAIT					( 200 )			// 初期処理のロゴ表示中ウェイト
 #endif	// PM_DEBUG
 
