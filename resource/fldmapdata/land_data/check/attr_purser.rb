@@ -39,7 +39,7 @@ class ATTR_DATA
     
     # ビット配列を作成
     @attr_bit = Array.new
-    (@attr >> 16).to_s(2).split(//).each{|i|
+    (@attr >> 16).to_s(2).split(//).reverse_each{|i|
       @attr_bit << i.to_i
     }
 
