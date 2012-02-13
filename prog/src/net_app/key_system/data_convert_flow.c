@@ -2422,7 +2422,8 @@ static BOOL DataConv_InfoList_GetVisible( const KEY_SYSTEM_WORK *cp_wk, u32 inde
     return TRUE;
   }
 #endif
-  return DATA_CONVERT_SAVE_IsEventOpen( cp_wk->p_data_sv, index );
+  return DATA_CONVERT_SAVE_IsEventOpen( cp_wk->p_data_sv, index )
+    || DataConv_InfoList_GetMark( cp_wk, index );
 }
 
 //----------------------------------------------------------------------------
