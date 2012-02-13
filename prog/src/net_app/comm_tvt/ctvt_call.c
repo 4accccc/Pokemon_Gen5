@@ -187,6 +187,9 @@ struct _CTVT_CALL_WORK
 
   GFL_CLWK *clwkReturn;
   GFL_CLWK *clwkScrollBar;
+
+  // BTS1775 
+  int   msgWait;  // メッセージウェイト
 };
 
 //======================================================================
@@ -374,6 +377,7 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   callWork->barMenuWork = NULL;
   callWork->state = CCS_FADEIN;
   callWork->connectTimeOutCnt = 0;
+  callWork->msgWait = 0;
 
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
   
@@ -701,6 +705,11 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     }
     callWork->state = CCS_DISP_WARN;
 
+    // BTS1775【子機が写真データの送受信を制限している場合、その警告文表示中にミニゲームの誘いがあった時の不具合】
+    // 
+    // 対処としてメッセージウェイトを入れる
+    callWork->msgWait = 300;  // 5秒
+
     break;
   case CCS_DISP_WARN:
     if( COMM_TVT_GetConnectNum( work ) >= 2 )
@@ -712,8 +721,13 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
       }
     }
+    if( callWork->msgWait > 0 )
+    {
+      callWork->msgWait--;
+    }
     if( GFL_UI_TP_GetTrg() == TRUE ||
-        COMM_TVT_GetFinishReq( work ) == TRUE )
+        COMM_TVT_GetFinishReq( work ) == TRUE ||
+        callWork->msgWait <= 0 )
     {
       PMSND_PlaySystemSE( CTVT_SND_DECIDE );
       BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
