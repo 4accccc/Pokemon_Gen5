@@ -843,6 +843,7 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   // バージョン条件を追加しただけ
   //
   CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
+  BOOL ret;
 
   ICHI_Printf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
                         ,cbWork->macAddress[0],cbWork->macAddress[1]
@@ -869,6 +870,9 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   //  タイミングによっては接続コールバックの全切断が設定される前に
   //  ここにくることがありえるので その場合は接続させる。
   //
+  ret = CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
+
+  if( ret == TRUE )
   {
     CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
     ICHI_Printf("接続NetID %d \n", cbWork->aid );
@@ -882,7 +886,7 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   }
 #endif
 
-  return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
+  return ret;
 }
 
 //--------------------------------------------------------------
