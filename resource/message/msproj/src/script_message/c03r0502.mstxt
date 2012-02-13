@@ -183,7 +183,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーを　いっしょに　いたい……
+			<Text>トレーナーと　いっしょに　いたい……
 そう　ねがう　ポケモンも　いるんだね▼
 もちろん　やせいで　いきようとする
 ポケモンも　いるだろう▼
@@ -192,7 +192,7 @@
 もどってくることも　あるそうだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T07:54:41" />
+				Time="2012-02-13T02:44:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,7 +200,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーを　いっしょに　いたい……
+			<Text>トレーナーと　いっしょに　いたい……
 そう　願う　ポケモンも　いるんだね▼
 もちろん　野生で　生きようとする
 ポケモンも　いるだろう▼
@@ -209,7 +209,7 @@
 戻ってくることも　あるそうだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T07:55:07" />
+				Time="2012-02-13T02:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
