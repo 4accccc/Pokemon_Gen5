@@ -4167,6 +4167,55 @@ CYGNUS連動用</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="KEYSYS_STR_112"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんする　DSが　みつかりません
+もういちど　せつぞく　しますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信する　DSが　みつかりません
+もういちど　接続　しますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Importance">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-13T07:41:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="KEYSYS_SETTING_MES_01"
 		Style="Large">
 		<LanguageCell

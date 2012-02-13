@@ -591,10 +591,14 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_YESNO_DRAW,
     SEQ_YESNO_WAIT,
 
+    SEQ_REINIT,
+    SEQ_REMSG_START,
+
     SEQ_DISPLAY_CREATE,
     SEQ_NET_START,
     SEQ_NET_START_WAIT,
     SEQ_NET_CANCEL_WAIT,
+    SEQ_NET_TIMEOUT_WAIT,
     SEQ_NET_END_DISPLAY_DELETE,
     SEQ_NET_SEND_NAME_START,
     SEQ_NET_SEND_NAME_WAIT,
@@ -668,6 +672,17 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
 
+
+  case SEQ_REINIT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrcYesno );
+    (*p_seq)++;
+    break;
+
+  case SEQ_REMSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_112, KEYSYS_TEXT_TYPE_STREAM ); 
+    *p_seq  = SEQ_YESNO_START;
+    break;
+
   case SEQ_DISPLAY_CREATE:
     p_wk->ret = FALSE;
     p_wk->is_irc_start  = FALSE;
@@ -721,6 +736,12 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       p_wk->is_parent = GFL_NET_IsParentMachine();
       (*p_seq)  = SEQ_NET_SEND_NAME_START;
     }
+    else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    {
+      OS_TPrintf( "タイムアウト\n" );
+      PMSND_StopSE();
+      (*p_seq)  = SEQ_NET_TIMEOUT_WAIT;
+    }
     else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_CANCEL )
     {
       OS_TPrintf( "キャンセルしたよ\n" );
@@ -733,6 +754,10 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     {
       (*p_seq)  = SEQ_NET_END_DISPLAY_DELETE;
     }
+    break;
+  case SEQ_NET_TIMEOUT_WAIT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)  = SEQ_REINIT;
     break;
   case SEQ_NET_END_DISPLAY_DELETE:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );

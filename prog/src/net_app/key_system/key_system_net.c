@@ -692,8 +692,9 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
     {
       p_wk->timeout_cnt = 0;
+      GFL_NET_IRCWIRELESS_ResetSystemError();
+      GFL_NET_Exit(NULL);
       *p_seq  = SEQ_NET_TIMEOUT_END_WAIT;
-      p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
     }
     //KeySys_NetCallback_ConnectIrcWirelessÇÃíÜÇ≈éüÇ…Ç∑Ç∑ÇﬂÇÈ
     break;
@@ -712,8 +713,11 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
     {
       p_wk->timeout_cnt = 0;
-      p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
+      //p_wk->error = KEYSYS_NET_ERROR_TIMEOUT; ÉGÉâÅ[Ç…ÇµÇ»Ç≠Ç»Ç¡ÇΩ
       GFL_NET_DelCommandTable(GFL_NET_CMD_KEY_SYSTEM);
+
+      GFL_NET_IRCWIRELESS_ResetSystemError();
+      GFL_NET_Exit(NULL);
       *p_seq  = SEQ_NET_TIMEOUT_END_WAIT;
       return;
     }
@@ -727,6 +731,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_WaitIrcWireless );
     break;
   case SEQ_NET_TIMEOUT_END_WAIT:
+    if( GFL_NET_IsExit() )
     {
       KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
     }
