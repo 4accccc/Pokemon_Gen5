@@ -1471,10 +1471,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいてに
-じゅどうのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　おくった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-06T07:43:25" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-13T05:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1483,10 +1483,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手に
-じゅどうのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
+ひょうざんのカギを　送った[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:34:31" />
+				Time="2012-02-13T05:24:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
