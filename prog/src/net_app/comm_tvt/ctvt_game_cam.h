@@ -52,6 +52,7 @@ typedef struct _CTVT_GAME_CAM_WORK CTVT_GAME_CAM_WORK;
 //=====================================
 typedef struct {
   BOOL      isTwl;
+  BOOL      isRestricPhotoExchange;
   u8        netID;
   void      *p_cap_buf[CAPTURE_NUM];
 }CTVT_GAME_CAM_MEMBER_WORK;

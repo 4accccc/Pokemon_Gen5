@@ -18,6 +18,7 @@
 #include "system/wipe.h"
 #include "system/camera_system.h"
 #include "system/net_err.h"
+#include "system/ds_system.h"
 #include "net/network_define.h"
 #include "net/wih_dwc.h"
 #include "net/ctvt_beacon_local.h"
@@ -394,6 +395,7 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
     MyStatus_Copy( myStatus , (MYSTATUS*)&commWork->selfData.myStatusBuff );
     
     commWork->selfData.canUseCamera = COMM_TVT_CanUseCamera();
+    commWork->selfData.isRestrictPhotoExchange = DS_SYSTEM_IsRestrictPhotoExchange();
     
     
   }
@@ -2611,6 +2613,10 @@ const BOOL CTVT_COMM_IsEnableMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commW
 const BOOL CTVT_COMM_CanUseCameraMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
 {
   return commWork->member[idx].data.canUseCamera;
+}
+const BOOL CTVT_COMM_IsRestrictPhotoExchangeMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx )
+{
+  return commWork->member[idx].data.isRestrictPhotoExchange;
 }
 
 //‚¨ŠG•`‚«ƒoƒbƒtƒ@Žæ“¾

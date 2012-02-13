@@ -17,6 +17,7 @@
 #include "system/gfl_use.h"
 #include "gamesystem/msgspeed.h"
 #include "sound/pm_sndsys.h"
+#include "system/ds_system.h"
 
 // archive
 #include "arc_def.h"
@@ -1586,21 +1587,33 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
         continue;
       }
 
-      // TWLのみ受信設定
-      if( member[mem_cnt].isTwl == TRUE )
+      // 受信設定
+      //
+      // カメラ機能がある
+      // かつ
+      // TWLでペアレンタルコントロールを制限していない
+      if( member[mem_cnt].isTwl == TRUE && DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
       {
         // バッファ設定
         GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
         p_wk->cap_buf_bit |= 1<<netID;
 
-        ICHI_Printf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[mem_cnt] );
+        ICHI_Printf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[0] );
 
       }
-      mem_cnt++;
 
-      // 送信するNetIDBitをたてる
-      p_wk->cap_send_bit |= 1<<netID;
+      // 送信設定
+      //
+      // ペアレンタルコントロールを制限している人は送信しない
+      if( member[mem_cnt].isRestricPhotoExchange == FALSE )
+      {
+        // 送信するNetIDBitをたてる
+        p_wk->cap_send_bit |= 1<<netID;
+      }
+
+      mem_cnt++;
     }
+
     ICHI_Printf("camera capture 通信設定完了 ");
     ICHI_Printf("UserBit %x \n", p_wk->cap_buf_bit);
   }
@@ -1680,44 +1693,47 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       u8    ret_bit = 0;
       const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-      // 送信してくる人数分のみまわす
-      for( i=0; i<CTVT_MEMBER_NUM; i++ )
+      if( DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
       {
-        // 送信してくるNetIDのみチェック
-        if( p_wk->cap_buf_bit & (1<<i) )
+        // 送信してくる人数分のみまわす
+        for( i=0; i<CTVT_MEMBER_NUM; i++ )
         {
-          // 受け取った枚数目ならスキップ
-          if( p_wk->cap_cnt_base != p_wk->cap_cnt[mem_cnt] )
+          // 送信してくるNetIDのみチェック
+          if( p_wk->cap_buf_bit & (1<<i) )
           {
-            // 既に受信した
-            ret_bit |= 1<<i;
-          }
-          // 受信チェック
-          else if( GFL_NET_LDATA_IsFinishPost(i) == TRUE )
-          {
-            // 次の受信のためにバッファを設定し直す
-            void *p_tmp;
-
-            ICHI_Printf("%d からデータ来た\n", i );
-            ICHI_Printf("member[%d].netID = %d \n", mem_cnt, member[mem_cnt].netID);
-            ICHI_Printf("size %x \n", GFL_NET_LDATA_GetPostDataSize(i));
-
-            // バッファ設定
-            GFL_NET_LDATA_DeletePostBuffer(i);
-            p_wk->cap_cnt[mem_cnt]++;
-            if( p_wk->cap_cnt[mem_cnt] < CAPTURE_NUM )
+            // 受け取った枚数目ならスキップ
+            if( p_wk->cap_cnt_base != p_wk->cap_cnt[mem_cnt] )
             {
-              GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
-              ICHI_Printf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
+              // 既に受信した
+              ret_bit |= 1<<i;
             }
+            // 受信チェック
+            else if( GFL_NET_LDATA_IsFinishPost(i) == TRUE )
+            {
+              // 次の受信のためにバッファを設定し直す
+              void *p_tmp;
 
-            ICHI_Printf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
+              ICHI_Printf("%d からデータ来た\n", i );
+              ICHI_Printf("member[%d].netID = %d \n", mem_cnt, member[mem_cnt].netID);
+              ICHI_Printf("size %x \n", GFL_NET_LDATA_GetPostDataSize(i));
+
+              // バッファ設定
+              GFL_NET_LDATA_DeletePostBuffer(i);
+              p_wk->cap_cnt[mem_cnt]++;
+              if( p_wk->cap_cnt[mem_cnt] < CAPTURE_NUM )
+              {
+                GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
+                ICHI_Printf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[0] ] );
+              }
+
+              ICHI_Printf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
+            }
           }
-        }
-        // メンバーカウント
-        if( selfId != i )
-        {
-          mem_cnt++;
+          // メンバーカウント
+          if( selfId != i )
+          {
+            mem_cnt++;
+          }
         }
       }
 
@@ -2311,10 +2327,8 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
           WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
 
-#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
       // シャッター音再生
       CAM_PlayShutterSe( &p_wk->camera );
-#endif
 
       *p_seq = SEQ_SE_WAIT;
     }

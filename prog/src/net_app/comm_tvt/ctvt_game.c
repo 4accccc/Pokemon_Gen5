@@ -17,6 +17,7 @@
 #include "system/wipe.h"
 #include "system/camera_system.h"
 #include "system/bmp_winframe.h"
+#include "system/ds_system.h"
 #include "net/network_define.h"
 #include "app/app_menu_common.h"
 
@@ -731,11 +732,16 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       }
 
       gameWork->cam_member[mem].isTwl = CTVT_COMM_CanUseCameraMember( work, commWork, netId );
+      gameWork->cam_member[mem].isRestricPhotoExchange = CTVT_COMM_IsRestrictPhotoExchangeMember( work, commWork, netId );
       gameWork->cam_member[mem].netID = netId;
 
       // 接続している人がTWL起動のみ受信用メモリを確保する
       // NITROの場合かNPCだとキャラBMPを読み込む
-      if( gameWork->cam_member[mem].isTwl == TRUE )
+      //
+      // 追加 ペアレンタルコントロールを制限している人は強制でキャラ
+      //
+      if( gameWork->cam_member[mem].isTwl == TRUE &&
+          DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
       {
         u8 j;
         for( j=0; j<CAPTURE_NUM; j++ )
@@ -808,7 +814,8 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
   {
     u8 j;
-    if( gameWork->cam_member[i].isTwl == TRUE )
+    if( gameWork->cam_member[i].isTwl == TRUE &&
+        DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
     {
       for( j=0; j<CAPTURE_NUM; j++ )
       {

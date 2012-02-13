@@ -90,6 +90,7 @@ typedef struct
 {
   u8  myStatusBuff[MYSTATUS_SAVE_SIZE];
   u8  canUseCamera;
+  u8  isRestrictPhotoExchange;
 }CTVT_COMM_MEMBER_DATA;
 
 //======================================================================
@@ -133,6 +134,7 @@ extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetMemberData( COMM_TVT_WORK *work , CTV
 extern CTVT_COMM_MEMBER_DATA* CTVT_COMM_GetSelfMemberData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern const BOOL CTVT_COMM_IsEnableMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 extern const BOOL CTVT_COMM_CanUseCameraMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
+extern const BOOL CTVT_COMM_IsRestrictPhotoExchangeMember( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork , const u8 idx );
 
 extern CTVT_COMM_BEACON* CTVT_COMM_GetCtvtBeaconData( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 extern void* CTVT_COMM_GetPlayWaveBuffer( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
