@@ -76,6 +76,23 @@ struct _TAG_EFFECT_ENCOUNT{
   u16 get_item; //スクリプトに取得アイテムNoを受け渡すワーク
 };
 
+enum{
+ DATA_TYPE_GROUND = 0x01,
+ DATA_TYPE_WATER = 0x02,
+};
+
+static const u8 DATA_EffEncDataTypeTbl[] = {
+ DATA_TYPE_GROUND,  //EFFENC_TYPE_SGRASS_NORMAL,  ///<短い草(ノーマル)
+ DATA_TYPE_GROUND, //EFFENC_TYPE_SGRASS_SNOW,  ///<短い草(豪雪地帯)
+ DATA_TYPE_GROUND, //EFFENC_TYPE_SGRASS_WARM,  ///<短い草(常春)
+ DATA_TYPE_GROUND, //EFFENC_TYPE_LGRASS,  ///<長い草
+ DATA_TYPE_GROUND, //EFFENC_TYPE_CAVE,    ///<洞窟
+ DATA_TYPE_WATER, //EFFENC_TYPE_WATER,   ///<淡水
+ DATA_TYPE_WATER, //EFFENC_TYPE_SEA,     ///<海
+ DATA_TYPE_GROUND, //EFFENC_TYPE_BRIDGE,  ///<橋
+ 0, //EFFENC_TYPE_MAX,  ///<無効値
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 //プロトタイプ
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +103,7 @@ static BOOL effenc_CheckWalkCt( ENCOUNT_WORK* ewk, EFFECT_ENCOUNT* eff_wk );
 static void effenc_WalkCtClear( ENCOUNT_WORK* ewk );
 
 
-static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
+static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, u8 data_flags );
 static void effect_EffectSetUp( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk );
 static BOOL effect_CheckMMdlHit( FIELD_ENCOUNT* enc, s16 x,s16 y, s16 z, BOOL player_egnore_f );
 static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc );
@@ -201,6 +218,7 @@ void EFFECT_ENC_SetProb( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
 void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
 {
   EFFECT_ENCOUNT* eff_wk = NULL;
+  u8 data_flags = 0;
   ENCOUNT_WORK* ewk = GAMEDATA_GetEncountWork(enc->gdata);
   
   //エンカウントデータ有効無効チェック
@@ -261,6 +279,19 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   if( FIELDMAP_GetBaseSystemType( enc->fwork ) != FLDMAP_BASESYS_GRID ){
     return;
   }
+  //現ゾーンがエフェクトエンカウントデータを持っているか？
+  if( enc->encdata->probGroundSp ){
+    data_flags |= DATA_TYPE_GROUND;
+  }
+  GF_ASSERT_MSG( enc->encdata->probWaterSp == enc->encdata->probFishingSp, "0");
+  if( enc->encdata->probWaterSp || enc->encdata->probFishingSp ){
+    data_flags |= DATA_TYPE_WATER;
+  }
+  if( data_flags == 0){
+    GF_ASSERT(0);
+    return; //エフェクトエンカウントデータがない
+  }
+  
   //起動中チェック
   if( ewk->effect_encount.param.valid_f ){
     return;
@@ -287,7 +318,7 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
   }
 
   //アトリビュートサーチ
-  effect_AttributeSearch( enc, eff_wk );
+  effect_AttributeSearch( enc, eff_wk, data_flags );
 
   //抽選
   if( eff_wk->attr_map.count == 0){
@@ -649,7 +680,7 @@ static void effect_SearchAreaGet( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, EF
 /*
  *  @brief  エフェクトアトリビュートサーチ
  */
-static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
+static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, u8 data_flags )
 {
   int blockIdx;
   s16 i,j;
@@ -681,7 +712,8 @@ static void effect_AttributeSearch( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk )
       FLDMAPPER_GetGridDataForEffectEncount( g3dMapper, blockIdx, &vec, &gridData );
       
       id = MAPATTR_GetEffectEncountType( gridData.attr );
-      if(id != EFFENC_TYPE_MAX ){
+      if( DATA_EffEncDataTypeTbl[id]&data_flags )
+      {
         eff_wk->attr_map.attr[eff_wk->attr_map.count].type = id;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gx = j;
         eff_wk->attr_map.attr[eff_wk->attr_map.count].gz = i;
