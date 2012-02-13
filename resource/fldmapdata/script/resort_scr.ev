@@ -768,7 +768,7 @@ sub_come_shop:
         _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
-        _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
+        //_SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
         _SYSWIN_MSG( resort_sys_24, POS_DOWN )
 
       CASE RESORT_SET_SPOT_SHOP_CHANGE THEN
@@ -777,7 +777,7 @@ sub_come_shop:
         _SYSWIN_MSG( resort_sys_13_me, POS_DOWN )
         _ME_WAIT()
         _AB_KEYWAIT_MARK()
-        _SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
+        //_SYSWIN_MSG( resort_sys_13_01, POS_DOWN )
 
         _SYSWIN_CLOSE()
         //変化した店を見せるためにフィールド開き直し
@@ -912,7 +912,7 @@ sub_city_app_exp:
       _SYSWIN_MSG( resort_sys_18_me, POS_DOWN )
 	    _ME_WAIT()
 	    _AB_KEYWAIT_MARK()
-      _SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
+      //_SYSWIN_MSG( resort_sys_18_01, POS_DOWN )
 
       //肩書き
       IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
