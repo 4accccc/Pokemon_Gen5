@@ -654,14 +654,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲームシンクの　エネルギーぎれです
-じゅうでんまで　１にち　かかります
-
-おつかいの　ＤＳほんたいを　
-かえずに　１にち　たってから
+じゅうでんまで　１にち　かかります▼
+おつかいの　ＤＳほんたいを　かえずに▼
+１にち　たってから
 もういちど　ゲームシンクをしてください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T12:24:05" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-10T07:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -670,14 +669,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲームシンクの　エネルギー切れです
-充電まで　１日かかります
-
-お使いの　ＤＳ本体を　
-変えずに　１日　経ってから
+充電まで　１日かかります▼
+お使いの　ＤＳ本体を　変えずに▼
+１日　経ってから
 もう一度　ゲームシンクをしてください</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-26T12:24:48" />
+				User="mizuguchi_mai:W00293"
+				Time="2012-02-10T07:47:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
