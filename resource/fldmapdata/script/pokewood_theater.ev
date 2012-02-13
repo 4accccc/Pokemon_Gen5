@@ -686,7 +686,7 @@ ev_pkwd_show_owner_judge:
 
   //「いやあーちょっと！！～ちゃん！
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_UP )
   _MSGWIN_CLOSE()
 
   //プレイヤーの位置によりアニメ分岐
