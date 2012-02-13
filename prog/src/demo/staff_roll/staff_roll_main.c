@@ -928,9 +928,9 @@ static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk )
 #endif
 
     wk->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
-        arc_cgx, FALSE, CLSYS_DRAW_SUB, heapID );
+        arc_cgx, FALSE, CLSYS_DRAW_MAIN, heapID );
     wk->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
-        arc_pal, CLSYS_DRAW_SUB, 0, heapID );
+        arc_pal, CLSYS_DRAW_MAIN, 0, heapID );
     wk->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
         arc_cel, arc_anm, heapID );
   }
@@ -947,7 +947,7 @@ static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk )
         wk->clres[OBJ_RES_CHR],
         wk->clres[OBJ_RES_PAL],
         wk->clres[OBJ_RES_CEL],
-        &add, CLSYS_DEFREND_SUB, heapID );
+        &add, CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk, TRUE );
     // 表示フラグOFF
     GFL_CLACT_WK_SetDrawEnable( wk->clwk, FALSE );
@@ -956,7 +956,7 @@ static void InitObj( ARCHANDLE *handle, OBJ_WORK * wk )
   }
 
   //OBJ表示ON
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //----------------------------------------------------------------------------
@@ -1883,10 +1883,10 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
       // OBJとBGを同時にアルファは出来ないので輝度で代用する
 #if	PM_VERSION == LOCAL_VERSION
         // 黒
-        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, -16 );
+        G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, -16 );
 #else
         // 白
-        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 16 );
+        G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, 16 );
 #endif
 
       // OBJの表示
@@ -2102,7 +2102,7 @@ static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag )
     alpha2 *= -1;   // マイナスにする
 #endif
 
-    G2S_ChangeBlendBrightness( alpha2 );
+    G2_ChangeBlendBrightness( alpha2 );
   }
   else
   {
@@ -2469,7 +2469,7 @@ static BOOL Comm_LabelNAnime( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   wk->cut.wait = item->wait;
   wk->cut.is_n_anime = TRUE;
 
-  wk->cut.disp_type = CUT_DISP_SUB;
+  wk->cut.disp_type = CUT_DISP_MAIN;
 
   // 読み込み
   wk->cut.seq = SEQ_CUT_LOAD_N;

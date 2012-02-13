@@ -14,6 +14,9 @@
 
 #include "staff_roll_main.h"
 
+#ifdef PM_DEBUG
+#include "test/performance.h"
+#endif
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -62,6 +65,10 @@ static GFL_PROC_RESULT StaffRollProc_Init( GFL_PROC * proc, int * seq, void * pw
 	GFL_STD_MemClear( wk, sizeof(SRMAIN_WORK) );
 
 	wk->dat = pwk;
+
+#ifdef PM_DEBUG
+  DEBUG_PerformanceSetActive(FALSE); //デバッグ：パフォーマンスメーター無効
+#endif
 
 	return GFL_PROC_RES_FINISH;
 }
