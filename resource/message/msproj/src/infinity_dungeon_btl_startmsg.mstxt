@@ -17624,13 +17624,11 @@
 			Language="JPN">
 			<Text>なんか　さいきん　ちょうつよい
 トレーナーが　でてきたんだって！▼
-あかと　しろの　ボウシが
-トレードマークらしいんだけど……▼
-……って！　まさか　あなた！？
+もしかして　あなた！？　だったら
 おねがい　しょうぶしてよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-24T02:19:58" />
+				User="matsumiya:W00224"
+				Time="2012-02-13T03:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -17640,13 +17638,11 @@
 			Language="JPN_KANJI">
 			<Text>なんか　最近　超強い
 トレーナーが　でてきたんだって！▼
-赤と　白の　ボウシが
-トレードマークらしいんだけど……▼
-……って！　まさか　あなた！？
+もしかして　あなた！？　だったら
 お願い　勝負してよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T02:24:02" />
+				Time="2012-02-13T03:50:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
