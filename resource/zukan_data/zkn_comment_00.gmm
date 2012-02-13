@@ -895,7 +895,7 @@
 うねっているので　みつめていると
 だんだん　ねむくなってしまう。</language>
 		<language name="JPN_KANJI">お腹の　渦巻きは　微妙に
-うねっているので　見つめていると
+うねっているので　みつめていると
 だんだん　眠くなってしまう。</language>
 	</row>
 
@@ -921,7 +921,7 @@
 		<language name="JPN">ぎんのスプーンを　みつめて
 せいしんを　とういつ　していると
 はっさんする　アルファは　がふえる。</language>
-		<language name="JPN_KANJI">銀のスプーンを　見つめて
+		<language name="JPN_KANJI">銀のスプーンを　みつめて
 精神を　統一　していると
 発散する　アルファ波　が増える。</language>
 	</row>
@@ -2451,7 +2451,7 @@
 		<language name="JPN">ツノを　みつめていると　わっかの
 ちゅうしんに　すいこまれそうな
 ふしぎな　きぶんに　なってしまう。</language>
-		<language name="JPN_KANJI">ツノを　見つめていると　輪っかの
+		<language name="JPN_KANJI">ツノを　みつめていると　輪っかの
 中心に　吸い込まれそうな
 不思議な　気分に　なってしまう。</language>
 	</row>
@@ -3042,10 +3042,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_300_000">
-		<language name="JPN">じぶんの　シッポを　おいかけて
+		<language name="JPN">じぶんの　しっぽを　おいかけて
 あそんでいると　めを　まわすといった
 かわいらしい　いちめんを　みせる。</language>
-		<language name="JPN_KANJI">自分の　シッポを　追いかけて
+		<language name="JPN_KANJI">自分の　しっぽを　追いかけて
 遊んでいると　目を　回すといった
 可愛らしい　一面を　みせる。</language>
 	</row>
@@ -3267,10 +3267,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_325_000">
-		<language name="JPN">シッポを　バネがわりに　して
+		<language name="JPN">しっぽを　バネがわりに　して
 とびはねることで　しんぞうを
 うごかしているので　とまると　しぬ。</language>
-		<language name="JPN_KANJI">シッポを　バネがわりに　して
+		<language name="JPN_KANJI">しっぽを　バネがわりに　して
 飛び跳ねることで　心臓を
 動かしているので　止まると　死ぬ。</language>
 	</row>
@@ -3366,10 +3366,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_336_000">
-		<language name="JPN">シッポの　かたなは　いつも　いわで
+		<language name="JPN">しっぽの　かたなは　いつも　いわで
 といでいるので　きれあじ　ばつぐん。
 ザングースとは　いんねんの　あいだ。</language>
-		<language name="JPN_KANJI">シッポの　刀は　いつも　岩で
+		<language name="JPN_KANJI">しっぽの　刀は　いつも　岩で
 研いでいるので　切れ味　ばつぐん。
 ザングースとは　因縁の　あいだ。</language>
 	</row>
@@ -4536,10 +4536,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_466_000">
-		<language name="JPN">あいてに　シッポのさきを　おしつけ
+		<language name="JPN">あいてに　しっぽのさきを　おしつけ
 しゅんじに　２まんボルト　いじょうの
 こうあつ　でんりゅうを　おくりこむ。</language>
-		<language name="JPN_KANJI">相手に　シッポの先を　押しつけ
+		<language name="JPN_KANJI">相手に　しっぽの先を　押しつけ
 瞬時に　２万ボルト　以上の
 高圧　電流を　送りこむ。</language>
 	</row>
@@ -4963,7 +4963,7 @@
 やいてから　たべる　しゅうせい。
 ひとの　てつだいを　このんでいる。</language>
 		<language name="JPN_KANJI">知能が　高く　きのみは
-焼いてから　食べる　しゅうせい。
+焼いてから　食べる　習性。
 人の　手伝いを　好んでいる。</language>
 	</row>
 
@@ -5072,7 +5072,7 @@
 ぜんごさゆうに　すばやく　うごける。</language>
 		<language name="JPN_KANJI">元気だと　コアが　飛びだしてくる。
 体の　向きを　変えることなく
-戦後左右に　すばやく　動ける。</language>
+前後左右に　すばやく　動ける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_526_000">
@@ -5153,7 +5153,7 @@
 ふりまわす　わざを　つかいこなせる。</language>
 		<language name="JPN_KANJI">力に　頼らず　遠心力を
 うまく　活かして　コンクリートを
-振り回せ　技を　使いこなせる。</language>
+振り回す　技を　使いこなせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_535_000">
@@ -5490,10 +5490,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_572_000">
-		<language name="JPN">おたがいの　シッポで　あいてを
+		<language name="JPN">おたがいの　しっぽで　あいてを
 とことん　きれいに　してあげるのが
 チラーミィどうしの　あいさつ。</language>
-		<language name="JPN_KANJI">お互いの　シッポで　相手を
+		<language name="JPN_KANJI">お互いの　しっぽで　相手を
 とことん　きれいに　してあげるのが
 チラーミィ同士の　あいさつ。</language>
 	</row>

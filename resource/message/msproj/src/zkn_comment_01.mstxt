@@ -1846,15 +1846,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お腹の　渦巻きは　微妙に
-うねっているので　見つめていると
+うねっているので　みつめていると
 だんだん　眠くなってしまう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1935,16 +1935,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>銀のスプーンを　見つめて
+			<Text>銀のスプーンを　みつめて
 精神を　統一　していると
 発散する　アルファ波　が増える。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -7035,16 +7035,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ツノを　見つめていると　輪っかの
+			<Text>ツノを　みつめていると　輪っかの
 中心に　吸い込まれそうな
 不思議な　気分に　なってしまう。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -9002,29 +9002,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じぶんの　シッポを　おいかけて
+			<Text>じぶんの　しっぽを　おいかけて
 あそんでいると　めを　まわすといった
 かわいらしい　いちめんを　みせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分の　シッポを　追いかけて
+			<Text>自分の　しっぽを　追いかけて
 遊んでいると　目を　回すといった
 可愛らしい　一面を　みせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -9752,29 +9752,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シッポを　バネがわりに　して
+			<Text>しっぽを　バネがわりに　して
 とびはねることで　しんぞうを
 うごかしているので　とまると　しぬ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シッポを　バネがわりに　して
+			<Text>しっぽを　バネがわりに　して
 飛び跳ねることで　心臓を
 動かしているので　止まると　死ぬ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -10082,29 +10082,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シッポの　かたなは　いつも　いわで
+			<Text>しっぽの　かたなは　いつも　いわで
 といでいるので　きれあじ　ばつぐん。
 ザングースとは　いんねんの　あいだ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シッポの　刀は　いつも　岩で
+			<Text>しっぽの　刀は　いつも　岩で
 研いでいるので　切れ味　ばつぐん。
 ザングースとは　因縁の　あいだ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -13982,29 +13982,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてに　シッポのさきを　おしつけ
+			<Text>あいてに　しっぽのさきを　おしつけ
 しゅんじに　２まんボルト　いじょうの
 こうあつ　でんりゅうを　おくりこむ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手に　シッポの先を　押しつけ
+			<Text>相手に　しっぽの先を　押しつけ
 瞬時に　２万ボルト　以上の
 高圧　電流を　送りこむ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15406,15 +15406,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>知能が　高く　きのみは
-焼いてから　食べる　しゅうせい。
+焼いてから　食べる　習性。
 人の　手伝いを　好んでいる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -15767,14 +15767,14 @@
 			Language="JPN_KANJI">
 			<Text>元気だと　コアが　飛びだしてくる。
 体の　向きを　変えることなく
-戦後左右に　すばやく　動ける。</Text>
+前後左右に　すばやく　動ける。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16037,14 +16037,14 @@
 			Language="JPN_KANJI">
 			<Text>力に　頼らず　遠心力を
 うまく　活かして　コンクリートを
-振り回せ　技を　使いこなせる。</Text>
+振り回す　技を　使いこなせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -17162,29 +17162,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おたがいの　シッポで　あいてを
+			<Text>おたがいの　しっぽで　あいてを
 とことん　きれいに　してあげるのが
 チラーミィどうしの　あいさつ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お互いの　シッポで　相手を
+			<Text>お互いの　しっぽで　相手を
 とことん　きれいに　してあげるのが
 チラーミィ同士の　あいさつ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-02-13T09:20:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
