@@ -46723,6 +46723,33 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="TRID_VETERANW_11_TRMSG_POKE_UNDER_TWO">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや？　げんきな　ポケモンが
+３びき　そろってないようだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-13T03:51:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-13T03:51:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おや？　元気な　ポケモンが
+３匹　そろってないようだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-13T03:51:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2012-02-13T03:51:20" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="TRID_VETERANW_11_TRMSG_FIGHT_START"
 		Style="Large">
 		<LanguageCell
@@ -56914,26 +56941,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>トリプルバトルは　ポケモン
-３びきでの　あたらしい　しょうぶだ！▼</Text>
+３びきでの　あたらしい　しょうぶだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2012-02-13T03:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2012-02-13T03:51:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トリプルバトルは　ポケモン
-３匹での　新しい　勝負だ！▼</Text>
+３匹での　新しい　勝負だ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2012-02-13T03:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2012-02-13T03:51:20" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
