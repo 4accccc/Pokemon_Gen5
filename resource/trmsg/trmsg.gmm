@@ -10563,15 +10563,11 @@
 	</row>
 
 	<row id="TRID_FISHING_25_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">だれかと　きそえば
-かちまけが　きまっちゃう▼
-つりを　すれば
+		<language name="JPN" width="216">つりを　すれば
 せいこう　しっぱいが　ある▼
 まっ　しっぱいは
 せいこうの　マザーだけどよ</language>
-		<language name="JPN_KANJI" width="216">だれかと　競えば
-勝ち負けが　決まっちゃう▼
-釣りを　すれば
+		<language name="JPN_KANJI" width="216">釣りを　すれば
 成功　失敗が　ある▼
 まっ　失敗は
 成功の　マザーだけどよ</language>
@@ -12300,10 +12296,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_31_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">なななんだと！？
-プププラーズマー！！</language>
-		<language name="JPN_KANJI" width="216">なななんだと！？
-プププラーズマー！！</language>
+		<language name="JPN" width="216">なななななななななななななんだと！？
+プププププププププププラーズマー！！</language>
+		<language name="JPN_KANJI" width="216">なななななななななななななんだと！？
+プププププププププププラーズマー！！</language>
 	</row>
 
 	<row id="TRID_SWSAGE3_01_TRMSG_FIGHT_LOSE">
@@ -12575,7 +12571,7 @@
 		<language name="JPN" width="216">やまは　しんせいな　ばしょ
 こころを　きよめる　つもりです</language>
 		<language name="JPN_KANJI" width="216">山は　神聖な　場所
-心を　清める　つもりです</language>
+心を　清めるつもりです</language>
 	</row>
 
 	<row id="TRID_KARATE_21_TRMSG_POKE_UNDER_TWO">
@@ -13461,12 +13457,10 @@
 	</row>
 
 	<row id="TRID_MOUNT_25_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ほらあなの　なか……
-じめんが　もりあがった　ところには▽
-ポケモンが　いるんだよ！</language>
-		<language name="JPN_KANJI" width="216">洞穴の　中……
-地面が　盛りあがった　ところには▽
-ポケモンが　いるんだよ！</language>
+		<language name="JPN" width="216">すなけむりの　なかには
+ポケモンが　いることもある！</language>
+		<language name="JPN_KANJI" width="216">砂煙の　中には
+ポケモンが　いることもある！</language>
 	</row>
 
 	<row id="TRID_MOUNT_26_TRMSG_FIGHT_START">
@@ -13740,7 +13734,7 @@
 
 	<row id="TRID_DAISUKIW_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……そうでした
-あのこは　もう　いないのね</language>
+あのコは　もう　いないのね</language>
 		<language name="JPN_KANJI" width="216">……そうでした
 あの子は　もう　いないのね</language>
 	</row>
@@ -14246,9 +14240,9 @@
 
 	<row id="TRID_FISHING_27_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">そんな　つよい　トレーナー
-みたことがない！</language>
-		<language name="JPN_KANJI" width="216">そんな　つよい　トレーナー
-みたことがない！</language>
+みたことも　きいたことも　ない！</language>
+		<language name="JPN_KANJI" width="216">そんな　強い　トレーナー
+みたことも　きいたことも　ない！</language>
 	</row>
 
 	<row id="TRID_FISHING_27_TRMSG_FIGHT_AFTER">
@@ -14484,7 +14478,7 @@
 とても　ありがたいと　おもってる</language>
 		<language name="JPN_KANJI" width="216">あたしの　ポケモン
 プラズマ団に　奪われていたの……▼
-今　そばに　いてくれること
+いま　そばに　いてくれること
 とても　ありがたいと　思ってる</language>
 	</row>
 
@@ -14717,9 +14711,9 @@
 	</row>
 
 	<row id="TRID_BATTLEG_21_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">じんせいは　やまを　こえるもの
+		<language name="JPN" width="216">じんせいは　やまを　こえるもの！
 あなたは　やまに　なれるかしら？▼</language>
-		<language name="JPN_KANJI" width="216">人生は　山を　越えるもの
+		<language name="JPN_KANJI" width="216">人生は　山を　越えるもの！
 あなたは　山に　なれるかしら？▼</language>
 	</row>
 
@@ -17788,11 +17782,11 @@
 	<row id="TRID_MOUNT_18_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ポケモンが　いなければ
 つよい　よわいは　きにならないが▼
-おまえさんと　であうこと
+おまえさんと　であうことも
 あいてを　することも　なかったか</language>
 		<language name="JPN_KANJI" width="216">ポケモンが　いなければ
 強い　弱いは　気にならないが▼
-おまえさんと　出会うこと
+おまえさんと　出会うことも
 相手を　することも　なかったか</language>
 	</row>
 
