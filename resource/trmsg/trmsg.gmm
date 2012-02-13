@@ -10786,6 +10786,13 @@
 ドラゴンポケモンの　ようだわ</language>
 	</row>
 
+	<row id="TRID_VETERANW_11_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">おや？　げんきな　ポケモンが
+３びき　そろってないようだね</language>
+		<language name="JPN_KANJI" width="216">おや？　元気な　ポケモンが
+３匹　そろってないようだね</language>
+	</row>
+
 	<row id="TRID_VETERANW_11_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ながねん　トレーナー　してても
 うでまえは　サビつかないよ！▼</language>
@@ -13054,9 +13061,9 @@
 
 	<row id="TRID_VETERANM_16_TRMSG_POKE_UNDER_TWO">
 		<language name="JPN" width="216">トリプルバトルは　ポケモン
-３びきでの　あたらしい　しょうぶだ！▼</language>
+３びきでの　あたらしい　しょうぶだ！</language>
 		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
-３匹での　新しい　勝負だ！▼</language>
+３匹での　新しい　勝負だ！</language>
 	</row>
 
 	<row id="TRID_VETERANM_16_TRMSG_FIGHT_START">
