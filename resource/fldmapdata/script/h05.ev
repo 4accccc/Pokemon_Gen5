@@ -13,6 +13,7 @@
   .include  "h05.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -444,6 +445,7 @@ EVENT_START   ev_h05_poke488_01
 
   //========================================//
   _FLAG_SET( FE_H05_POKE488_BTL_01 )
+  $LOCALWORK10 = 1
   //========================================//
 
   _TALK_OBJ_START()
@@ -613,7 +615,7 @@ _ANIME_LABEL	anm_man3_look
 EVENT_START	ev_h05_man3_02
 
   //クレセリアと戦闘後か？
-  IF FLAG_ON( FE_H05_POKE488_BTL_01 ) THEN
+  IF FLAG_ON( FE_H05_POKE488_BTL_01 ) && $LOCALWORK10 == 0 THEN
   
   	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_oldwoman1_01 )
   
