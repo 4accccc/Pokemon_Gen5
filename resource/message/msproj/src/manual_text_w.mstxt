@@ -1948,18 +1948,17 @@
 バトルたいかいへの　さんかのしかた
 ルールのかくにんなど
 バトルたいかいについて　くわしいことは
-
 インターネットこうしきサイト
 「ポケモングローバルリンク」か
 「ポケットモンスターオフィシャルサイト」で
 かくにん　してください。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2030,17 +2029,17 @@
 たいかいさんかを　かいじょ　するか
 しゅうりょうする　ひつようが　あります。
 
-くわしくは、インターネットこうしきサイト
-ポケモングローバルリンク　か
-ポケットモンスターオフィシャルサイト　で
+くわしくは　インターネットこうしきサイト
+「ポケモングローバルリンク」か
+「ポケットモンスターオフィシャルサイト」で
 かくにん　してください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2049,17 +2048,17 @@
 大会参加を　解除　するか
 終了する　必要があります。
 
-詳しくは、インターネット公式サイト
-ポケモングローバルリンク　か
-ポケットモンスターオフィシャルサイト　で
-ご確認ください。</Text>
+詳しくは　インターネット公式サイト
+「ポケモングローバルリンク」か
+「ポケットモンスターオフィシャルサイト」で
+確認してください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2453,16 +2452,18 @@
 「いどうする」を　タッチすると
 みぎがわに　ボックスが　ひょうじされます。
 
-タッチして　えらんだ　ポケモンを
-すきな　ボックスまで　スライドして
-いどうさせることが　できます。</Text>
+グレーの　やじるしを　じょうげに
+スライドして　いどう　させたい
+ボックスを　えらんだあと
+もういちど　ポケモンに　タッチすると
+ボックスに　いどうします。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2470,16 +2471,18 @@
 「移動する」をタッチすると
 右側に　ボックスが　表示されます。
 
-タッチして　選んだ　ポケモンを
-好きな　ボックスまで　スライドして
-移動させることが　できます。</Text>
+グレーの　矢印を　上下すに
+スライドして　移動させたい
+ボックスを　選んだあと
+もう一度　ポケモンに　タッチすると
+ボックスに　移動します。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3667,7 +3670,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｃギアの　まんなかに　ひょうじされる
-しかくのマークが　すれちがいログ　です。
+しかくいマークが　すれちがいログ　です。
 タッチすると　ちかくで　Ｃギアを
 つかっている　ひとがいるか　わかります。
 ちかくの　ひとの　ゲームでの　ようすや
@@ -3677,11 +3680,11 @@
 てんめつして　しらせてくれます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -4792,17 +4795,17 @@
 用意されています。
 
 まず　ポケットの　道具を　選びます。
-次に　「フリーズペースへ」を
+次に　「フリースペースへ」を
 選ぶことで　好きな　道具を
 フリースペースに
 移動させることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-30T02:22:01" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-30T02:22:01" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5055,17 +5058,17 @@
 かたがきや　せいかくは　がめんを
 タッチすると　きりかわりますので
 すきなものを　えらんでください。
-したの　しろいわくを　タッチすると
+したの　あいさつらんを　タッチすると
 メッセージが　へんしゅう　できます。
 あいている　ところに　すきな　たんごを
 えらんで　かんせいさせて　ください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -5074,17 +5077,17 @@
 肩書きや　性格は　画面を
 タッチすると　切り替わりますので
 好きなものを　選んでください。
-下の　白い枠を　タッチすると
+下の　挨拶欄を　タッチすると
 メッセージが　編集できます。
 空スペースに　好きな　単語を
 選んで　完成させてください。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-19T04:51:54" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -5111,7 +5114,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カードの　裏には　タッチペンを使って
-サインを　かくことが　できます。
+サインを　書くことが　できます。
 ペンの　マークや　けしゴムの　マークを
 タッチで　切り替えます。
 プラスの　マークを　タッチすると
@@ -5120,12 +5123,12 @@
 サインエリアを　半分に　分割した
 アニメが　再生できます。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6587,37 +6590,38 @@
 			<Text>Ｘボタンを　おして　メニューを　ひらくと
 したのがめんに　しかくい　マークが
 ひょうじされている　ことが　あります。
-このマークを　タッチすると
+このマークを　タッチするか
+Ｙボタンを　おすと
 あかい　チェックマークが　つきます。
 
-チェックマークを　つけた
-きのうや　どうぐが
+チェックを　つけた　きのうや　どうぐが
 べんりボタンに　とうろくされます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｘボタンを　押して　メニューを　開くと
-下画面に　四角の　マークが
+下画面に　四角い　マークが
 表示されている　ことが　あります。
-このマークを　タッチすると
+このマークを　タッチするか
+Ｙボタンを　押すと
 赤い　チェックマークが　つきます。
 
-チェックマークを　つけた　機能や
-道具が　便利ボタンに　登録されます。</Text>
+チェックを　つけた　機能や　道具が
+便利ボタンに　登録されます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6628,31 +6632,33 @@
 どうぐの　よこにも
 しかくい　マークが　あります。
 
+カーソルを　あわせて　Ｙボタンを　おすか
 タッチして　チェックしておくと　
 べんりボタンに　とうろくして　おけます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>大切なもの　ポケットに　入っている
 道具の　横にも
-四角の　マークが　あります。
+四角い　マークが　あります。
 
+カーソルを　合せて　Ｙボタンを　押すか
 タッチして　チェックしておくと　
 便利ボタンに　登録しておけます。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6662,7 +6668,7 @@
 			<Text>べんりボタンには　３４こ　まで
 どうぐや　きのうを　とうろく　できます。
 とうろくを　かいじょ　したい　ばあいは
-しかくの　マークを　タッチするか
+しかくい　マークを　タッチするか
 Ｙボタンを　おして
 チェックを　はずして　ください。
 ２つ　いじょう　とうろく　していると
@@ -6670,18 +6676,18 @@
 こうもくを　ならびかえることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-04T07:49:11" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>便利ボタンには　３４こ　まで
 道具や　機能を　登録できます。
 登録を　解除したい　場合は
-四角の　マークを　タッチするか
+四角い　マークを　タッチするか
 Ｙボタンを　押して
 チェックを　はずして　ください。
 ２つ以上　登録していると
@@ -6689,11 +6695,11 @@
 項目を　並び替えられます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-30T02:22:01" />
+				Time="2012-02-13T05:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-30T02:22:01" />
+				Time="2012-02-13T05:18:49" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
