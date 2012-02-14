@@ -2353,6 +2353,9 @@ static void _updateSave(G_SYNC_WORK* pWork)
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
     RECORD_Inc(pRec, RECID_PDW_SLEEP_POKEMON);
   }
+
+  RESORT_RECORD_AddID( RESORT_RECORD_ID_GAMESYNC );
+
   pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   
