@@ -105225,10 +105225,10 @@ PWT
 			Language="JPN">
 			<Text>[Name:TrainerName ]は……▼
 [Name:Hobby Idx="1" ]が
-いきがい　らしいです▼</Text>
+たのしみ　らしいです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T09:12:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T03:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105238,10 +105238,10 @@ PWT
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は……▼
 [Name:Hobby Idx="1" ]が
-いきがい　らしいです▼</Text>
+楽しみ　らしいです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T10:39:44" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T03:48:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105291,11 +105291,11 @@ PWT
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は……▼
-なにを　いきがいに　しているのかは
+なにを　たのしみに　しているのかは
 さだかで　ありません……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T09:12:28" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T03:56:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105304,11 +105304,11 @@ PWT
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は……▼
-何を　いきがいに　しているのかは
-わかりません……▼</Text>
+何を　楽しみに　しているのかは
+さだかで　ありません……▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-14T08:32:58" />
+				Time="2012-02-14T03:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
