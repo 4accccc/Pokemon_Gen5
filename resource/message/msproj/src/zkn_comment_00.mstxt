@@ -3932,29 +3932,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にんげんの　ことばを　りかいする
-たかい　ちのうを　もっているため
-ぜつめつの　きけんに　ひんしている。</Text>
+			<Text>ひとの　ことばを　りかいする　たかい
+ちのうをもち　せなかに　ひとをのせて
+うみをおよぐのが　すきな　ポケモン。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人間の　言葉を　理解する
-高い　知能を　持っているため
-絶滅の　危険に　ひんしている。</Text>
+			<Text>人の　言葉を　理解する　高い
+知能を持ち　背中に　人を乗せて
+海を泳ぐのが　好きな　ポケモン。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -9183,28 +9183,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やまを　まるごと　なわばりに　する。
-キズが　おおい　ボスコドラほど
+キズが　おおい　ボスゴドラほど
 たたかっているので　あなどれない。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-02-06T11:13:03" />
+				Time="2012-02-14T06:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-02-06T11:13:03" />
+				Time="2012-02-14T06:24:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>山を　まるごと　縄張りに　する。
-キズが　多い　ボスコドラほど
+キズが　多い　ボスゴドラほど
 戦っているので　侮れない。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-02-06T11:13:03" />
+				Time="2012-02-14T06:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-02-06T11:13:03" />
+				Time="2012-02-14T06:24:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -13593,28 +13593,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どくぶくろを　ふくらませて　ならし
-あたりに　ぶきみな　おとが　ひびかせ
+あたりに　ぶきみな　おとを　ひびかせ
 あいてが　ひるむと　どくづきをする。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>毒袋を　ふくらませて　鳴らし
-辺りに　不気味な　音が　響かせ
+辺りに　不気味な　音を　響かせ
 相手が　ひるむと　どくづきをする。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -13892,29 +13892,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だえきには　どんな　ものを　とかす
+			<Text>だえきには　どんな　ものも　とかす
 せいぶんが　たっぷり　ふくまれており
 なめられると　いつまでも　しびれる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だえきには　どんな　物を　溶かす
+			<Text>だえきには　どんな　物も　溶かす
 成分が　たっぷり　含まれており
 なめられると　いつまでも　しびれる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:58" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -14193,28 +14193,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひょうがきの　おわりに　きおんが
-たかくなると　おおくの　マンムーが
+たかくなって　おおくの　マンムーが
 すがたを　けしたと　いわれている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>氷河期の　終わりに　気温が
-高くなると　多くの　マンムーが
+高くなって　多くの　マンムーが
 姿を　消したと　いわれている。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:15" />
+				Time="2012-02-14T06:24:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

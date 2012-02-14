@@ -1521,12 +1521,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_131_000">
-		<language name="JPN">にんげんの　ことばを　りかいする
-たかい　ちのうを　もっているため
-ぜつめつの　きけんに　ひんしている。</language>
-		<language name="JPN_KANJI">人間の　言葉を　理解する
-高い　知能を　持っているため
-絶滅の　危険に　ひんしている。</language>
+		<language name="JPN">ひとの　ことばを　りかいする　たかい
+ちのうをもち　せなかに　ひとをのせて
+うみをおよぐのが　すきな　ポケモン。</language>
+		<language name="JPN_KANJI">人の　言葉を　理解する　高い
+知能を持ち　背中に　人を乗せて
+海を泳ぐのが　好きな　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_132_000">
@@ -3097,10 +3097,10 @@
 
 	<row id="ZKN_COMMENT_00_306_000">
 		<language name="JPN">やまを　まるごと　なわばりに　する。
-キズが　おおい　ボスコドラほど
+キズが　おおい　ボスゴドラほど
 たたかっているので　あなどれない。</language>
 		<language name="JPN_KANJI">山を　まるごと　縄張りに　する。
-キズが　多い　ボスコドラほど
+キズが　多い　ボスゴドラほど
 戦っているので　侮れない。</language>
 	</row>
 
@@ -4420,10 +4420,10 @@
 
 	<row id="ZKN_COMMENT_00_453_000">
 		<language name="JPN">どくぶくろを　ふくらませて　ならし
-あたりに　ぶきみな　おとが　ひびかせ
+あたりに　ぶきみな　おとを　ひびかせ
 あいてが　ひるむと　どくづきをする。</language>
 		<language name="JPN_KANJI">毒袋を　ふくらませて　鳴らし
-辺りに　不気味な　音が　響かせ
+辺りに　不気味な　音を　響かせ
 相手が　ひるむと　どくづきをする。</language>
 	</row>
 
@@ -4509,10 +4509,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_463_000">
-		<language name="JPN">だえきには　どんな　ものを　とかす
+		<language name="JPN">だえきには　どんな　ものも　とかす
 せいぶんが　たっぷり　ふくまれており
 なめられると　いつまでも　しびれる。</language>
-		<language name="JPN_KANJI">だえきには　どんな　物を　溶かす
+		<language name="JPN_KANJI">だえきには　どんな　物も　溶かす
 成分が　たっぷり　含まれており
 なめられると　いつまでも　しびれる。</language>
 	</row>
@@ -4600,10 +4600,10 @@
 
 	<row id="ZKN_COMMENT_00_473_000">
 		<language name="JPN">ひょうがきの　おわりに　きおんが
-たかくなると　おおくの　マンムーが
+たかくなって　おおくの　マンムーが
 すがたを　けしたと　いわれている。</language>
 		<language name="JPN_KANJI">氷河期の　終わりに　気温が
-高くなると　多くの　マンムーが
+高くなって　多くの　マンムーが
 姿を　消したと　いわれている。</language>
 	</row>
 
