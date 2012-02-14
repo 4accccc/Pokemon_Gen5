@@ -687,7 +687,7 @@ CTVT_GAME_WORK* CTVT_GAME_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 //--------------------------------------------------------------
 void CTVT_GAME_TermSystem( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 {
-  ICHI_Printf("----CTVT_GAME_TermSystem----\n");
+  CTVT_TPrintf("----CTVT_GAME_TermSystem----\n");
 
   GFL_HEAP_FreeMemory( gameWork );
 }
@@ -701,7 +701,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   u8 i;
 
-  ICHI_Printf("----CTVT_GAME_InitMode----\n");
+  CTVT_TPrintf("----CTVT_GAME_InitMode----\n");
 
 
   // カメラ撮影用のメンバー情報作成
@@ -720,8 +720,8 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     {
       GFL_STD_MemClear( &gameWork->cam_member[i], sizeof(CTVT_GAME_CAM_MEMBER_WORK) );
     }
-    ICHI_Printf("接続人数 %d\n", connectNum);
-    ICHI_Printf("メンバーのバッファアドレス\n");
+    CTVT_TPrintf("接続人数 %d\n", connectNum);
+    CTVT_TPrintf("メンバーのバッファアドレス\n");
     for( netId=0;netId<CTVT_MEMBER_NUM;netId++ )
     {
       GF_ASSERT( selfId < 4 );
@@ -747,9 +747,9 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         for( j=0; j<CAPTURE_NUM; j++ )
         {
           gameWork->cam_member[mem].p_cap_buf[j] = GFL_NET_Align32Alloc( heapID, CAPTURE_SIZE);
-          ICHI_Printf("mem[%d] %d adrs %x \n", mem,j,gameWork->cam_member[mem].p_cap_buf[j]);
+          CTVT_TPrintf("mem[%d] %d adrs %x \n", mem,j,gameWork->cam_member[mem].p_cap_buf[j]);
         }
-        ICHI_Printf("netId %d mem %d \n", netId, mem);
+        CTVT_TPrintf("netId %d mem %d \n", netId, mem);
       }
       else
       {
@@ -766,7 +766,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 #if 1
     for( i=0; i<CTVT_MEMBER_NUM; i++ )
     {
-      ICHI_Printf("%d: %d\n", i, CTVT_COMM_GetCharId( work, commWork, i ) );
+      CTVT_TPrintf("%d: %d\n", i, CTVT_COMM_GetCharId( work, commWork, i ) );
     }
 #endif
   }
@@ -794,7 +794,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   GFL_NET_ReloadIconTopOrBottom(TRUE , heapID );
 
-  ICHI_Printf("----CTVT_GAME_InitMode END----\n");
+  CTVT_TPrintf("----CTVT_GAME_InitMode END----\n");
 }
 
 //--------------------------------------------------------------
@@ -805,7 +805,7 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   u8 i;
   const HEAPID heapId = gameWork->heapId;
 
-  ICHI_Printf("----CTVT_GAME_TermMode----\n");
+  CTVT_TPrintf("----CTVT_GAME_TermMode----\n");
 
   // カメラ撮影用パラメータ破棄
   CTVT_GAME_CAM_FreeParam( gameWork->p_cam_param );
@@ -834,7 +834,7 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   // エラー落ちの解放
   if( COMM_TVT_GetNextMode( work ) == CTM_ERROR )
   {
-    ICHI_Printf("エラー処理\n");
+    CTVT_TPrintf("エラー処理\n");
     exit_error( work, gameWork );
   }
 }
@@ -1193,8 +1193,8 @@ void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 t
         size = CAPTURE_SIZE;
         rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
         GF_ASSERT(rc);
-        ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
-        ICHI_Printf("netID %d texIDX %d mem_cnt %d", netID, tex_idx, mem_cnt);
+        CTVT_TPrintf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
+        CTVT_TPrintf("netID %d texIDX %d mem_cnt %d", netID, tex_idx, mem_cnt);
       }
     }
 
@@ -1260,7 +1260,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk, const u8 balloon_wk_idx )
 
       // 風船出現
       balloon_set( p_wk, &p_wk->balloon_wk[balloon_wk_idx], p_wk->unit_idx[idx] );
-      ICHI_Printf("balloon_wk_idx %d idx %d \n", balloon_wk_idx, idx );
+      CTVT_TPrintf("balloon_wk_idx %d idx %d \n", balloon_wk_idx, idx );
       p_wk->balloon_wk[balloon_wk_idx].parent_g3dUtil = p_wk->g3dUtil;
       // 通常風船
       p_wk->balloon_wk[balloon_wk_idx].type = BALLOON_NORMAL;
@@ -1587,7 +1587,7 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
       BOOL ret;
       // 風船大きくor破裂
       ret = CTVT_BALLOON2_Burst( p_wk->p_balloon2[i] );
-      ICHI_Printf("風船BURST netID %d stage %d \n", i, p_wk->p_balloon2[i]->stage);
+      CTVT_TPrintf("風船BURST netID %d stage %d \n", i, p_wk->p_balloon2[i]->stage);
 
       // 破裂したなら得点加算
       if( ret == TRUE )
@@ -1875,7 +1875,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_GAME_TITLE_SYNC, WB_NET_COMM_TVT );
       gameWork->seq = SEQ_INIT_SYNC_WAIT;
 
-      ICHI_Printf("初期化開始同期待ち\n");
+      CTVT_TPrintf("初期化開始同期待ち\n");
     }
     break;
   case SEQ_INIT_SYNC_WAIT:   // ゲーム開始同期待ち
@@ -1884,7 +1884,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_GAME_TITLE_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         gameWork->seq = SEQ_INIT;
-        ICHI_Printf("初期化開始同期完了\n");
+        CTVT_TPrintf("初期化開始同期完了\n");
       }
     }
     break;
@@ -1983,7 +1983,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       }
       gameWork->seq = SEQ_MAIN_SYNC_WAIT;
 
-      ICHI_Printf("ゲーム開始同期待ち\n");
+      CTVT_TPrintf("ゲーム開始同期待ち\n");
     }
     break;
 
@@ -2001,7 +2001,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
         WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN , 
             WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, gameWork->heapId );
-        ICHI_Printf("ゲーム開始同期完了\n");
+        CTVT_TPrintf("ゲーム開始同期完了\n");
       }
     }
     break;
@@ -2078,7 +2078,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
           CTVT_GAME_SEND_SCORE score;
           u8  i;
 
-          ICHI_Printf("-----送信スコア-------------\n");
+          CTVT_TPrintf("-----送信スコア-------------\n");
           for(i=0; i<CTVT_MEMBER_NUM; i++ )
           {
             // デバッグ機能
@@ -2087,11 +2087,11 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
             {
               // デバッグ値
               gameWork->score[i] = debug_score[i];
-              ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
+              CTVT_TPrintf("デバッグスコア %d \n", debug_score[i]);
             }
 #endif
             score.score[i] = gameWork->score[i];
-            ICHI_Printf("%d -> %d\n",i, score.score[i]);
+            CTVT_TPrintf("%d -> %d\n",i, score.score[i]);
           }
 
           CTVT_COMM_SendGameReq_Score( commWork, score );
@@ -2128,7 +2128,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       gameWork->oya_frame = 0;    // 0以上だと通信メインで自動送信してしまう
       gameWork->seq = SEQ_SCORE_SYNC_WAIT;
 
-      ICHI_Printf("スコア同期待ち\n");
+      CTVT_TPrintf("スコア同期待ち\n");
     }
     break;
   case SEQ_SCORE_SYNC_WAIT:  // スコア同期待ち
@@ -2137,7 +2137,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_GAME_SCORE_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         gameWork->seq = SEQ_SCORE_FADEOUT;
-        ICHI_Printf("スコア同期完了\n");
+        CTVT_TPrintf("スコア同期完了\n");
       }
     }
     break;
@@ -2531,7 +2531,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_GAME_END_SYNC, WB_NET_COMM_TVT );
       gameWork->seq = SEQ_EXIT_SYNC_WAIT;
 
-      ICHI_Printf("ゲーム終了同期待ち\n");
+      CTVT_TPrintf("ゲーム終了同期待ち\n");
     }
     break;
   case SEQ_EXIT_SYNC_WAIT:   // ゲーム終了同期待ち
@@ -2540,7 +2540,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_GAME_END_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
         gameWork->seq = SEQ_EXIT;
-        ICHI_Printf("ゲーム終了同期完了\n");
+        CTVT_TPrintf("ゲーム終了同期完了\n");
       }
     }
     break;
@@ -3936,7 +3936,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       CTVT_GAME_SEND_SCORE score;
       u8  i;
 
-      ICHI_Printf("-----送信スコア-------------\n");
+      CTVT_TPrintf("-----送信スコア-------------\n");
       for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
         // デバッグ機能
@@ -3945,11 +3945,11 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         {
           // デバッグ値
           gameWork->score[i] = debug_score[i];
-          ICHI_Printf("デバッグスコア %d \n", debug_score[i]);
+          CTVT_TPrintf("デバッグスコア %d \n", debug_score[i]);
         }
 #endif
         score.score[i] = gameWork->score[i];
-        ICHI_Printf("%d -> %d\n",i, score.score[i]);
+        CTVT_TPrintf("%d -> %d\n",i, score.score[i]);
       }
 
       CTVT_COMM_SendGameReq_Score( commWork, score );
@@ -4418,7 +4418,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
             size = CAPTURE_SIZE;
             rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
             GF_ASSERT(rc);
-            ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
+            CTVT_TPrintf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
           }
         }
 
@@ -4435,10 +4435,10 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   gameWork->score_cnt = 0;
 
 #ifdef PM_DEBUG
-  ICHI_Printf("風船個数 プレイヤー0 %d \n", gameWork->debug_b_cnt[ 0 ]);
-  ICHI_Printf("風船個数 プレイヤー1 %d \n", gameWork->debug_b_cnt[ 1 ]);
-  ICHI_Printf("風船個数 プレイヤー2 %d \n", gameWork->debug_b_cnt[ 2 ]);
-  ICHI_Printf("風船個数 プレイヤー3 %d \n", gameWork->debug_b_cnt[ 3 ]);
+  CTVT_TPrintf("風船個数 プレイヤー0 %d \n", gameWork->debug_b_cnt[ 0 ]);
+  CTVT_TPrintf("風船個数 プレイヤー1 %d \n", gameWork->debug_b_cnt[ 1 ]);
+  CTVT_TPrintf("風船個数 プレイヤー2 %d \n", gameWork->debug_b_cnt[ 2 ]);
+  CTVT_TPrintf("風船個数 プレイヤー3 %d \n", gameWork->debug_b_cnt[ 3 ]);
 #endif
 
 }
@@ -6248,7 +6248,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 
 
   //ICHI_Printf("風船出現 %d unit %d ", p_wk->tcb, unit_idx);
-  ICHI_Printf("風船出現 %d \n", p_game_wk->frame );
+  CTVT_TPrintf("風船出現 %d \n", p_game_wk->frame );
 
   {
     // 風船の初期位置
@@ -7117,7 +7117,7 @@ static void GAME_PLATE_SetPoint( CTVT_GAME_WORK *gameWork, const u8 netID, const
       p_wk->is_update_score = TRUE;
     }
 
-    ICHI_Printf("NetId %d %d 得点更新 %d \n", p_wk->netID, netID, point );
+    CTVT_TPrintf("NetId %d %d 得点更新 %d \n", p_wk->netID, netID, point );
   }
 }
 
@@ -7206,7 +7206,7 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
       // 順位は最後に入れる
       p_wk->rank      = rank[i];
 
-      ICHI_Printf("%d rank %d wait %d \n", i, p_wk->rank, p_wk->move_wait);
+      CTVT_TPrintf("%d rank %d wait %d \n", i, p_wk->rank, p_wk->move_wait);
     }
   }
 }

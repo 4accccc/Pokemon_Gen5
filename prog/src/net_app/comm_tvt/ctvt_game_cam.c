@@ -1598,7 +1598,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
         GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
         p_wk->cap_buf_bit |= 1<<netID;
 
-        ICHI_Printf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[0] );
+        CTVT_TPrintf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[0] );
 
       }
 
@@ -1614,8 +1614,8 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
       mem_cnt++;
     }
 
-    ICHI_Printf("camera capture 通信設定完了 ");
-    ICHI_Printf("UserBit %x \n", p_wk->cap_buf_bit);
+    CTVT_TPrintf("camera capture 通信設定完了 ");
+    CTVT_TPrintf("UserBit %x \n", p_wk->cap_buf_bit);
   }
 
   // カウンタクリア
@@ -1713,9 +1713,9 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
               // 次の受信のためにバッファを設定し直す
               void *p_tmp;
 
-              ICHI_Printf("%d からデータ来た\n", i );
-              ICHI_Printf("member[%d].netID = %d \n", mem_cnt, member[mem_cnt].netID);
-              ICHI_Printf("size %x \n", GFL_NET_LDATA_GetPostDataSize(i));
+              CTVT_TPrintf("%d からデータ来た\n", i );
+              CTVT_TPrintf("member[%d].netID = %d \n", mem_cnt, member[mem_cnt].netID);
+              CTVT_TPrintf("size %x \n", GFL_NET_LDATA_GetPostDataSize(i));
 
               // バッファ設定
               GFL_NET_LDATA_DeletePostBuffer(i);
@@ -1723,10 +1723,10 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
               if( p_wk->cap_cnt[mem_cnt] < CAPTURE_NUM )
               {
                 GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
-                ICHI_Printf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[0] ] );
+                CTVT_TPrintf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[0] ] );
               }
 
-              ICHI_Printf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
+              CTVT_TPrintf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
             }
           }
           // メンバーカウント
@@ -1741,7 +1741,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       if( ret_bit == p_wk->cap_buf_bit )
       {
         p_wk->seq = SEQ_SYNC;
-        ICHI_Printf("全員分受信完了\n");
+        CTVT_TPrintf("全員分受信完了\n");
       }
     }
     break;
@@ -1752,7 +1752,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_HANDLE_TimeSyncStart( pNet, CAMERA_SEND_SYNC1+p_wk->cap_cnt_base, WB_NET_COMM_TVT );
       p_wk->seq = SEQ_SYNC_WAIT;
-      ICHI_Printf("送信同期待ち %d\n",p_wk->cap_cnt_base );
+      CTVT_TPrintf("送信同期待ち %d\n",p_wk->cap_cnt_base );
     }
     break;
   case SEQ_SYNC_WAIT:  // 同期待ち
@@ -1764,12 +1764,12 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
         p_wk->can_next = TRUE;
 
         p_wk->cap_cnt_base++;
-        ICHI_Printf("送信同期完了 %d\n",p_wk->cap_cnt_base );
+        CTVT_TPrintf("送信同期完了 %d\n",p_wk->cap_cnt_base );
         if( p_wk->cap_cnt_base == CAPTURE_NUM )
         {
           p_wk->is_end = TRUE;
           p_wk->seq = SEQ_END;
-          ICHI_Printf("全員分受信終わり\n");
+          CTVT_TPrintf("全員分受信終わり\n");
         }
       }
     }
@@ -1796,7 +1796,7 @@ static void COMM_SendCapture( COMM_WORK *p_wk )
   {
     // 低優先度送信で一気に送る
     GFL_NET_LDATA_SetSendData( p_wk->cap_buf, CAPTURE_SIZE, p_wk->cap_send_bit, FALSE );
-    ICHI_Printf("Send CamCapture addr %x bit %x \n", p_wk->cap_buf, p_wk->cap_send_bit);
+    CTVT_TPrintf("Send CamCapture addr %x bit %x \n", p_wk->cap_buf, p_wk->cap_send_bit);
 
     p_wk->can_next = FALSE;    // フラグリセット
   }
@@ -2041,7 +2041,7 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_HANDLE_TimeSyncStart( pNet, CAMERA_INIT_SYNC, WB_NET_COMM_TVT );
       *p_seq = SEQ_SYNC_WAIT;
-      ICHI_Printf("カメラ開始同期待ち\n");
+      CTVT_TPrintf("カメラ開始同期待ち\n");
     }
     break;
   case SEQ_SYNC_WAIT: // 同期待ち
@@ -2051,7 +2051,7 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       {
         p_wk->comm.is_init = TRUE;
         *p_seq = SEQ_END;
-        ICHI_Printf("カメラ開始同期完了\n");
+        CTVT_TPrintf("カメラ開始同期完了\n");
       }
     }
     break;
@@ -2110,7 +2110,7 @@ static void SEQFUNC_SYNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_HANDLE_TimeSyncStart( pNet, CAMERA_END_SYNC, WB_NET_COMM_TVT );
       *p_seq = SEQ_SYNC_WAIT;
-      ICHI_Printf("カメラ終了同期待ち\n");
+      CTVT_TPrintf("カメラ終了同期待ち\n");
     }
     break;
   case SEQ_SYNC_WAIT: // 同期待ち
@@ -2119,7 +2119,7 @@ static void SEQFUNC_SYNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CAMERA_END_SYNC, WB_NET_COMM_TVT ) == TRUE )
       {
         *p_seq = SEQ_END;
-        ICHI_Printf("カメラ終了同期完了\n");
+        CTVT_TPrintf("カメラ終了同期完了\n");
       }
     }
     break;
@@ -2662,7 +2662,7 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       }
       else
       {
-        ICHI_Printf("rou.select %d param.select %d move_frame %d \n", p_wk->roulette.select, p_wk->p_param->select_chara, ROU_GetStopFlg( &p_wk->roulette ));
+        CTVT_TPrintf("rou.select %d param.select %d move_frame %d \n", p_wk->roulette.select, p_wk->p_param->select_chara, ROU_GetStopFlg( &p_wk->roulette ));
         p_wk->roulette.move_frame = FALSE;
 
         // 点滅に使用するため初期化

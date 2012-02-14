@@ -823,11 +823,11 @@ static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID 
 static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork)
 {
   CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
-  ICHI_Printf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
+  CTVT_TPrintf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
                         ,cbWork->macAddress[0],cbWork->macAddress[1]
                         ,cbWork->macAddress[2],cbWork->macAddress[3]
                         ,cbWork->macAddress[4],cbWork->macAddress[5]); 
-  ICHI_Printf("接続時接続コールバック\n");
+  CTVT_TPrintf("接続時接続コールバック\n");
   if( commWork->beacon.isCalling == 0 )
   {
     return TRUE;
@@ -847,12 +847,12 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   CTVT_COMM_WORK *commWork = (CTVT_COMM_WORK*)pWork;
   BOOL ret;
 
-  ICHI_Printf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
+  CTVT_TPrintf("ConnectMacAddress[%02x:%02x:%02x:%02x:%02x:%02x]\n"
                         ,cbWork->macAddress[0],cbWork->macAddress[1]
                         ,cbWork->macAddress[2],cbWork->macAddress[3]
                         ,cbWork->macAddress[4],cbWork->macAddress[5]); 
-  ICHI_Printf("ゲーム開始待ち中接続コールバック\n");
-  ICHI_Printf("===============================\n");
+  CTVT_TPrintf("ゲーム開始待ち中接続コールバック\n");
+  CTVT_TPrintf("===============================\n");
 
   // WBかどうかチェック
   {
@@ -861,7 +861,7 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
     {
       // SWAN以外のバージョンがきた
       // =ありえないので接続きる
-      OS_Printf("SWAN以外なので接続しない\n");
+      CTVT_TPrintf("SWAN以外なので接続しない\n");
       return FALSE;
     }
   }
@@ -877,7 +877,7 @@ static BOOL CTVT_COMM_ConnectCheckCallBack_ReqGame(WMStartParentCallback *cbWork
   if( ret == TRUE )
   {
     CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
-    ICHI_Printf("接続NetID %d \n", cbWork->aid );
+    CTVT_TPrintf("接続NetID %d \n", cbWork->aid );
     CTVT_TALK_Add_AcceptConnectNum( talkWork );
   }
 #if 0
@@ -2327,7 +2327,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   // 親からのフレーム かつ プレイ中のみ更新
   if( netID == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
   {
-    //ICHI_Printf("受信フレーム %d ", p_recv->frame);
+    //CTVT_TPrintf("受信フレーム %d ", p_recv->frame);
     // フレーム更新
     CTVT_GAME_CommFrameSet( gameWork, p_recv->frame );
   }
