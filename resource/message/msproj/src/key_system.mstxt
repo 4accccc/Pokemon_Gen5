@@ -2598,7 +2598,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ニンテンドー３ＤＳダウンロードソフト
-『ポケモンＡＲサーチャー（仮）』から
+『ポケモンＡＲサーチャー』から
 ちょうさデータを　うけとります
 
 うけとった　ポケモンや　どうぐは
@@ -2606,7 +2606,7 @@
 おくられます</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T12:26:59" />
+				Time="2012-02-14T03:34:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2615,7 +2615,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ニンテンドー３ＤＳダウンロードソフト
-『ポケモンＡＲサーチャー（仮）』から
+『ポケモンＡＲサーチャー』から
 ちょうさデータを　うけとります
 
 うけとった　ポケモンや　どうぐは
@@ -2623,7 +2623,7 @@
 おくられます</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-01-30T12:27:09" />
+				Time="2012-02-14T03:34:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
