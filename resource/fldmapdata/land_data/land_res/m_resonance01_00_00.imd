@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-08-03T18:41:29" source="m_resonance01_00_00-010_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-02-14T21:27:41" source="m_resonance01_00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-08-03T18:41:29" source="m_resonance01_00_00-010_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2012-02-14T21:27:41" source="m_resonance01_00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/h_kage.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -48,7 +48,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_chair1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_chair1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_chair1.tga"
 	>
 		<bitmap size="64">
 			4000 4444 4444 4444 5000 5555 5555 5555
@@ -66,7 +66,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_chair2_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_chair2.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_chair2.tga"
 	>
 		<bitmap size="256">
 			ccba cccc cccc 9abc bba9 bbbb bbbb 49ab
@@ -108,7 +108,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_dai1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_dai1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_dai1.tga"
 	>
 		<bitmap size="128">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -134,7 +134,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_desk1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_desk1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_desk1.tga"
 	>
 		<bitmap size="256">
 			6666 6666 6666 6666 6666 6666 6666 6666
@@ -176,7 +176,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_desk2_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_desk2.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_desk2.tga"
 	>
 		<bitmap size="64">
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
@@ -193,7 +193,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="in72_glow1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_glow1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_glow1.tga"
 	>
 		<bitmap size="128">
 			0000 0000 1000 1010 1010 0010 0000 0000
@@ -219,7 +219,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_kabe1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_kabe1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_kabe1.tga"
 	>
 		<bitmap size="128">
 			3876 1033 5564 5555 3876 1033 5564 5555
@@ -245,7 +245,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_kabe2_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_kabe2.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_kabe2.tga"
 	>
 		<bitmap size="128">
 			1111 1111 1111 1111 2222 2222 2222 2222
@@ -271,7 +271,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in72_kabin1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_kabin1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_kabin1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 9900 0870 0000
@@ -289,7 +289,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_lgt1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_lgt1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_lgt1.tga"
 	>
 		<bitmap size="64">
 			5555 5555 5555 5555 5555 5555 5555 5555
@@ -307,7 +307,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_mat1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_mat1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_mat1.tga"
 	>
 		<bitmap size="64">
 			6500 0235 2211 1111 6500 0235 2110 1111
@@ -325,7 +325,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_mat2_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_mat2.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_mat2.tga"
 	>
 		<bitmap size="64">
 			2222 2222 2222 2222 1111 1111 1111 2000
@@ -343,7 +343,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_pc1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_pc1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_pc1.tga"
 	>
 		<bitmap size="64">
 			5755 5555 5555 5555 6755 7565 6756 5675
@@ -361,7 +361,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in72_plants1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_plants1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_plants1.tga"
 	>
 		<bitmap size="256">
 			4000 0044 0000 0000 0000 0000 0000 0000
@@ -403,7 +403,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in72_table1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_table1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_table1.tga"
 	>
 		<bitmap size="64">
 			3356 3365 0000 0000 1111 1111 1111 0111
@@ -421,7 +421,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in72_ueki1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_ueki1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_ueki1.tga"
 	>
 		<bitmap size="64">
 			6666 6626 6662 2666 6666 6662 6262 2666
@@ -439,7 +439,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in72_yuka1_pl"
-		path="C:/home/swan_data3d/field/in72/chip/tex/in72_yuka1.tga"
+		path="C:/home/swan_data3d/field/in72/chip/tex_00/in72_yuka1.tga"
 	>
 		<bitmap size="256">
 			3111 7886 7777 7777 7777 7777 6887 1113
@@ -1417,7 +1417,7 @@
 	<polygon index="3" name="polygon3"
 		vertex_size="219" polygon_size="80"
 		triangle_size="51" quad_size="29"
-		volume_min="-3.812500 0.015625 -3.937500"
+		volume_min="-3.812500 0.031250 -3.937500"
 		volume_max="0.109863 0.219971 -0.750000"
 		volume_r="5.394775"
 		mtx_prim_size="1"
@@ -1652,35 +1652,35 @@
 					<pos_xz xz="-0.315430 -2.386963"/>
 					<tex st="4.000000 1.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-3.015625 0.015625 -2.820313"/>
+					<pos_xyz xyz="-3.015625 0.031250 -2.820313"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xy xy="-3.109375 0.015625"/>
+					<pos_xy xy="-3.109375 0.031250"/>
 					<pos_xz xz="-3.109375 -2.664063"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xy xy="-3.015625 0.015625"/>
+					<pos_xy xy="-3.015625 0.031250"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xy xy="-3.109375 0.015625"/>
-					<pos_xy xy="-3.632813 0.015625"/>
+					<pos_xy xy="-3.109375 0.031250"/>
+					<pos_xy xy="-3.632813 0.031250"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-3.632813 -2.570313"/>
-					<pos_xy xy="-3.109375 0.015625"/>
+					<pos_xy xy="-3.109375 0.031250"/>
 					<tex st="4.000000 8.000000"/>
 					<pos_xz xz="-3.632813 -2.820313"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xy xy="-3.742188 0.015625"/>
+					<pos_xy xy="-3.742188 0.031250"/>
 					<pos_xz xz="-3.742188 -2.664063"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xy xy="-3.632813 0.015625"/>
+					<pos_xy xy="-3.632813 0.031250"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-3.632813 -2.914063"/>
 					<tex st="4.000000 8.000000"/>
 					<pos_xz xz="-3.632813 -2.820313"/>
-					<pos_xy xy="-3.109375 0.015625"/>
+					<pos_xy xy="-3.109375 0.031250"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-3.109375 -2.914063"/>
 				</primitive>
 				<primitive index="20" type="triangles" vertex_size="81">
-					<pos_s xyz="-3.687500 0.031250 -3.000000"/>
+					<pos_xz xz="-3.687500 -3.000000"/>
 					<tex st="4.000000 8.000000"/>
 					<pos_xz xz="-3.562500 -3.109375"/>
 					<tex st="4.000000 1.000000"/>
@@ -1719,11 +1719,11 @@
 					<tex st="8.000000 8.000000"/>
 					<pos_xz xz="-3.343750 -2.748779"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xyz xyz="-3.109375 0.015625 -2.914063"/>
+					<pos_xyz xyz="-3.109375 0.031250 -2.914063"/>
 					<tex st="4.000000 8.000000"/>
 					<pos_xz xz="-3.109375 -2.820313"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xy xy="-3.015625 0.015625"/>
+					<pos_xy xy="-3.015625 0.031250"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xyz xyz="-3.385498 0.219971 -2.811523"/>
 					<tex st="8.000000 0.000000"/>
@@ -1731,13 +1731,13 @@
 					<tex st="8.000000 8.000000"/>
 					<pos_xy xy="-3.343750 0.219971"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xyz xyz="-3.742188 0.015625 -2.820313"/>
+					<pos_xyz xyz="-3.742188 0.031250 -2.820313"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xy xy="-3.632813 0.015625"/>
+					<pos_xy xy="-3.632813 0.031250"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-3.632813 -2.914063"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xyz xyz="-0.109863 0.031250 -3.750000"/>
+					<pos_xz xz="-0.109863 -3.750000"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-0.015137 -3.562500"/>
 					<pos_xz xz="0.109863 -3.687500"/>
@@ -1776,15 +1776,15 @@
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-0.218750 -2.281250"/>
 					<pos_xz xz="-0.218750 -2.562500"/>
-					<pos_xyz xyz="-3.015625 0.015625 -2.664063"/>
+					<pos_xz xz="-3.015625 -2.664063"/>
 					<tex st="4.000000 8.000000"/>
-					<pos_xy xy="-3.109375 0.015625"/>
+					<pos_xy xy="-3.109375 0.031250"/>
 					<tex st="4.000000 1.000000"/>
 					<pos_xz xz="-3.109375 -2.570313"/>
 					<tex st="4.000000 8.000000"/>
 					<pos_xz xz="-3.632813 -2.664063"/>
 					<tex st="4.000000 1.000000"/>
-					<pos_xy xy="-3.742188 0.015625"/>
+					<pos_xy xy="-3.742188 0.031250"/>
 					<pos_xz xz="-3.632813 -2.570313"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xyz xyz="-3.302002 0.219971 -2.811523"/>
