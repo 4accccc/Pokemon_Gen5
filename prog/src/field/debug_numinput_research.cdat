@@ -236,7 +236,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q19[] = {
 }; 
 // Q20
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q20[] = {
-  { dni_a058, ANSWER_ID_060, &NumInputParam_todayCountOfA },//「そとであそぶ」
+  { dni_a058, ANSWER_ID_058, &NumInputParam_todayCountOfA },//「そとであそぶ」
   { dni_a059, ANSWER_ID_059, &NumInputParam_todayCountOfA },//「かいもの」
   { dni_a060, ANSWER_ID_060, &NumInputParam_todayCountOfA },//「どくしょ」
   { dni_a061, ANSWER_ID_061, &NumInputParam_todayCountOfA },//「ゲーム」
@@ -290,14 +290,14 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q26[] = {
   { dni_a092, ANSWER_ID_092, &NumInputParam_todayCountOfA },//「どくしょ」
   { dni_a093, ANSWER_ID_093, &NumInputParam_todayCountOfA },//「おんがく」
   { dni_a094, ANSWER_ID_094, &NumInputParam_todayCountOfA },//「えいが」
-  { dni_a095, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「りょこう」
+  { dni_a095, ANSWER_ID_095, &NumInputParam_todayCountOfA },//「りょこう」
   { dni_a096, ANSWER_ID_096, &NumInputParam_todayCountOfA },//「りょうり」
   { dni_a097, ANSWER_ID_097, &NumInputParam_todayCountOfA },//「つり」
   { dni_a098, ANSWER_ID_098, &NumInputParam_todayCountOfA },//「ゲーム」
 }; 
 // Q27
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q27[] = {
-  { dni_a099,  ANSWER_ID_099, &NumInputParam_todayCountOfA },//「がくせい」
+  { dni_a099, ANSWER_ID_099, &NumInputParam_todayCountOfA },//「がくせい」
   { dni_a100, ANSWER_ID_100, &NumInputParam_todayCountOfA },//「サラリーマン」
   { dni_a101, ANSWER_ID_101, &NumInputParam_todayCountOfA },//「クリエーター」
   { dni_a102, ANSWER_ID_102, &NumInputParam_todayCountOfA },//「じえいぎょう」
@@ -473,7 +473,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q19[] = {
 }; 
 // Q20
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q20[] = {
-  { dni_a058, ANSWER_ID_060, &NumInputParam_totalCountOfA },//「そとであそぶ」
+  { dni_a058, ANSWER_ID_058, &NumInputParam_totalCountOfA },//「そとであそぶ」
   { dni_a059, ANSWER_ID_059, &NumInputParam_totalCountOfA },//「かいもの」
   { dni_a060, ANSWER_ID_060, &NumInputParam_totalCountOfA },//「どくしょ」
   { dni_a061, ANSWER_ID_061, &NumInputParam_totalCountOfA },//「ゲーム」
@@ -527,7 +527,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q26[] = {
   { dni_a092, ANSWER_ID_092, &NumInputParam_totalCountOfA },//「どくしょ」
   { dni_a093, ANSWER_ID_093, &NumInputParam_totalCountOfA },//「おんがく」
   { dni_a094, ANSWER_ID_094, &NumInputParam_totalCountOfA },//「えいが」
-  { dni_a085, ANSWER_ID_085, &NumInputParam_totalCountOfA },//「りょこう」
+  { dni_a095, ANSWER_ID_095, &NumInputParam_totalCountOfA },//「りょこう」
   { dni_a096, ANSWER_ID_096, &NumInputParam_totalCountOfA },//「りょうり」
   { dni_a097, ANSWER_ID_097, &NumInputParam_totalCountOfA },//「つり」
   { dni_a098, ANSWER_ID_098, &NumInputParam_totalCountOfA },//「ゲーム」
