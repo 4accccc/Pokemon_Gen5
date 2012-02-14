@@ -260,11 +260,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんが　はつどうした
-[Name:GPower ]を
+[Name:GPower Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-02-10T07:35:02" />
+				Time="2012-02-14T01:39:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -273,11 +273,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんが　発動した
-[Name:GPower ]を
+[Name:GPower Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-02-10T07:35:04" />
+				Time="2012-02-14T01:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
