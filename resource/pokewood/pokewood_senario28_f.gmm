@@ -1009,7 +1009,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうなの……？
 ぜんぜん　おぼえてないや……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうなの……？
-全然　覚えてないや</language>
+全然　覚えてないや……</language>
 	</row>
 	<row id="pw_event8_enemy_6">
 		<language name="JPN" width="256">モニカ『……わたし　あわてて
