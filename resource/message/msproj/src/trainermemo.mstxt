@@ -2722,12 +2722,10 @@
 [System:Color name="2" ]とくべつな　ばしょ[/System:Color]で
 うんめいてきな
 であいをした
-まぼろしの　ポケモン。
-[System:Color name="2" ]ヒウンシティ[/System:Color]に
-つれていってみよう。</Text>
+まぼろしの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2739,12 +2737,10 @@
 [System:Color name="2" ]特別な　場所[/System:Color]で
 運命的な
 出会いをした
-まぼろしの　ポケモン。
-[System:Color name="2" ]ヒウンシティ[/System:Color]に
-連れて行ってみよう。</Text>
+まぼろしの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:10:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2753,7 +2749,7 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>2010映画配信用
-
+※swan修正：ゲーム内のイベント告知部分を削除.2012.2.14
 セレビィのイベント発動前
 
 0：エンカウントした西暦下２桁
@@ -2763,8 +2759,8 @@
 
 </Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:14:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -2787,15 +2783,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ]とくべつな　ばしょ[/System:Color]で
 うんめいてきな
-であいをした。
-[System:Color name="2" ]ヒウンシティ[/System:Color]で
-ともだちの　ゾロアと
-ぶじに　さいかいすることが
-できた。</Text>
+であいをした
+まぼろしの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:10:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2804,15 +2798,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２０[Digit:2digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日
+[System:Color name="2" ]特別な　場所[/System:Color]で
 運命的な
-出会いをした。[System:Color name="2" ]
-ヒウンシティ[/System:Color]で
-ともだちの　ゾロアと
-無事に　再会することが
-できた。</Text>
+出会いをした
+まぼろしの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2820,7 +2812,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>2010映画配信用
+			<Comment>※swan修正：ゲーム内のイベント告知部分を削除.2012.2.14
+2010映画配信用
 
 セレビィのイベント発動後
 
@@ -2829,8 +2822,8 @@
 2：エンカウント日
 3：エンカウントしたレベル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:14:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -2863,12 +2856,10 @@
 [System:Color name="2" ]とくべつな　ばしょ[/System:Color]で
 うんめいてきな
 であいをした
-でんせつの　ポケモン。
-[System:Color name="2" ]まよいのもり[/System:Color]に
-つれていってみよう。</Text>
+でんせつの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2880,12 +2871,10 @@
 [System:Color name="2" ]特別な　場所[/System:Color]で
 運命的な
 出会いをした
-伝説の　ポケモン。
-[System:Color name="2" ]迷いの森[/System:Color]に
-連れて行ってみよう。</Text>
+伝説の　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2893,7 +2882,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>2010映画配信用
+			<Comment>※swan修正：ゲーム内のイベント告知部分を削除.2012.2.14
+2010映画配信用
 
 エンテイ・スイクン・ライコウのイベント発動前
 
@@ -2902,8 +2892,8 @@
 2：エンカウント日
 3：エンカウントしたレベル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:14:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
@@ -2926,15 +2916,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ]とくべつな　ばしょ[/System:Color]で
 うんめいてきな
-であいをした。[System:Color name="2" ]
-まよいのもり[/System:Color]で
-ゾロアークの
-イリュージョンを
-うちやぶった。</Text>
+であいをした
+でんせつの　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:11:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2943,15 +2931,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２０[Digit:2digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日
+[System:Color name="2" ]特別な　場所[/System:Color]で
 運命的な
-出会いをした。[System:Color name="2" ]
-迷いの森[/System:Color]で
-ゾロアークの
-イリュージョンを
-打ち破った。</Text>
+出会いをした
+伝説の　ポケモン。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:11:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2959,7 +2945,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>2010映画配信用
+			<Comment>※swan修正：ゲーム内のイベント告知部分を削除.2012.2.14
+2010映画配信用
 
 エンテイ・スイクン・ライコウのイベント発動後
 0：エンカウントした西暦下２桁
@@ -2967,8 +2954,8 @@
 2：エンカウント日
 3：エンカウントしたレベル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2012-02-14T02:14:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Importance">
