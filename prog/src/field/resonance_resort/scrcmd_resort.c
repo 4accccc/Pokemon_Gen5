@@ -2076,8 +2076,32 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
     break;
 	case RESORT_OFFRECO_CITYLV_MSGID:
     {
+      BOOL is_exist = FALSE;
       u16 lv = RESORT_RECV_DATA_GetData(p_resident,RESORT_DATA_PARAM_CITYLV,NULL);
+
       if( lv == 0 )
+      {
+        is_exist  = FALSE;
+      }
+      else if( lv == 1 )
+      {
+        RESORT_DATA_PARAM i;
+        is_exist  = FALSE;
+        for( i = RESORT_DATA_PARAM_EXT1_SHOP_LOT; i <= RESORT_DATA_PARAM_EXT1_SHOP_CAFE; i++ )
+        {
+          if( RESORT_RECV_DATA_GetData(p_resident,i,NULL) > 0 )
+          {
+            is_exist  = TRUE;
+            break;
+          }
+        }
+      }
+      else
+      {
+        is_exist  = TRUE;
+      }
+
+      if( is_exist == FALSE )
       {
         *p_ret_wk = resort_offreco_sys_12_02;
       }
