@@ -1481,7 +1481,13 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
   }else{
-    CursorObjMove( syswk, now_pos );
+	  if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE &&
+				( now_pos >= BOX2UI_ARRANGE_MAIN_GET && now_pos <= BOX2UI_ARRANGE_MAIN_CLOSE ) ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+			now_pos = syswk->app->old_cur_pos;
+		}else{
+	    CursorObjMove( syswk, now_pos );
+		}
   }
 
 	syswk->app->old_cur_pos = now_pos;
@@ -1739,7 +1745,13 @@ static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
   }else{
-    CursorObjMove( syswk, now_pos );
+		if( BOX2BGWFRM_PokeMenuPutCheck( syswk->app->wfrm ) == FALSE &&
+				( now_pos >= BOX2UI_ARRANGE_PARTY_GET && now_pos <= BOX2UI_ARRANGE_PARTY_CLOSE ) ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+			now_pos = syswk->app->old_cur_pos;
+		}else{
+			CursorObjMove( syswk, now_pos );
+		}
   }
 
 	syswk->app->old_cur_pos = now_pos;
@@ -2322,7 +2334,13 @@ static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos )
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
   }else{
-    CursorObjMove( syswk, now_pos );
+		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE &&
+				( now_pos >= BOX2UI_BATTLEBOX_MAIN_GET && now_pos <= BOX2UI_BATTLEBOX_MAIN_CLOSE ) ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+			now_pos = syswk->app->old_cur_pos;
+		}else{
+			CursorObjMove( syswk, now_pos );
+		}
   }
 
 	syswk->app->old_cur_pos = now_pos;
@@ -2428,7 +2446,13 @@ static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
   }else{
-    CursorObjMove( syswk, now_pos );
+		if( BOX2BGWFRM_PokeMenuPutCheck( syswk->app->wfrm ) == FALSE &&
+				( now_pos >= BOX2UI_BATTLEBOX_PARTY_GET && now_pos <= BOX2UI_BATTLEBOX_PARTY_CLOSE ) ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+			now_pos = syswk->app->old_cur_pos;
+		}else{
+			CursorObjMove( syswk, now_pos );
+		}
   }
 
 	syswk->app->old_cur_pos = now_pos;
