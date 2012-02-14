@@ -1426,14 +1426,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『サヨナラ　[Name:TrainerName Idx="1" ]……
-もう　二度と　合うことは　ないわ……</Text>
+もう　二度と　会うことは　ないわ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2012-02-14T03:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2012-02-14T03:39:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2004,14 +2004,14 @@
 			Language="JPN">
 			<Text>モニカ『そもそも　[Name:TrainerName Idx="1" ]！！
 わたしに　むかって　ポケモンを▽
-けしかるって　どういう　つもり！？</Text>
+けしかけるって　どういう　つもり！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-02-14T03:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:58:10" />
+				Time="2012-02-14T03:39:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

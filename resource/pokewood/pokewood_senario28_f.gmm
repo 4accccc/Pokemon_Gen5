@@ -733,7 +733,7 @@
 		<language name="JPN" width="256">モニカ『サヨナラ　[1:00:トレーナー名:1]……
 もう　にどと　あうことは　ないわ……</language>
 		<language name="JPN_KANJI" width="256">モニカ『サヨナラ　[1:00:トレーナー名:1]……
-もう　二度と　合うことは　ないわ……</language>
+もう　二度と　会うことは　ないわ……</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……
@@ -922,7 +922,7 @@
 	<row id="pw_event8_enemy_0">
 		<language name="JPN" width="256">モニカ『そもそも　[1:00:トレーナー名:1]！！
 わたしに　むかって　ポケモンを▽
-けしかるって　どういう　つもり！？</language>
+けしかけるって　どういう　つもり！？</language>
 		<language name="JPN_KANJI" width="256">モニカ『そもそも　[1:00:トレーナー名:1]！！
 私に　向かって　ポケモンを▽
 けしかけるって　どういう　つもり！？</language>
