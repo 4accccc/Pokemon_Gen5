@@ -674,7 +674,10 @@ sub_challenge_continue_comm_multi_ok:
     _CALL sub_challenge_continue_comm_error_retmap
     _RET
   ENDIF
-  
+   
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
+ 
   //電車発車デモ
   _CALL sub_demo_train_starting
   
