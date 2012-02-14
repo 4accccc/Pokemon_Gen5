@@ -532,10 +532,10 @@
 ３かい　スクワットしたら
 ひどい　きんにくつうになった！▼
 こんな　ひよわな
-からておうと　たたかってみないかッ！▼</Text>
+カラテおうと　たたかってみないかッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T03:53:00" />
+				Time="2012-02-14T11:00:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -547,10 +547,10 @@
 ３回　スクワットしたら
 ひどい　筋肉痛になった！▼
 こんな　ひよわな
-からておうと　戦ってみないかッ！▼</Text>
+カラテおうと　戦ってみないかッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T03:53:05" />
+				Time="2012-02-14T11:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3117,14 +3117,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はるかしたの　エリアには
-でんせつの　からておうが　いるという▼
+でんせつの　カラテおうが　いるという▼
 そのこぶしは　いわをも　くだき
 かぜのように　すばやく　かける！▼
 そんな　おとこに　おれはなりたい！
 よしっ！　ポケモンしょうぶだ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-05T03:15:01" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3133,14 +3133,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はるか下の　エリアには
-伝説の　からておうが　いるという▼
+伝説の　カラテおうが　いるという▼
 そのこぶしは　岩をも　砕き
 風のように　素早く　駆ける！▼
 そんな男に　おれはなりたい！
 よしっ！　ポケモン勝負だ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T02:53:05" />
+				Time="2012-02-14T11:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14034,13 +14034,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　からておう　に
+			<Text>でんせつの　カラテおう　に
 あうために　おれは　したをめざす！▼
 だれにも　じゃまは　させんぞ！
 そこを　どけぇええええっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T02:39:06" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:00:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14048,13 +14048,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　からておうに
+			<Text>伝説の　カラテおうに
 会うために　おれは　下を目指す！▼
 だれにも　邪魔は　させんぞ！
 そこを　どけぇええええっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T02:39:06" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16394,15 +16394,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　からておう……▼
+			<Text>でんせつの　カラテおう……▼
 そいつの　まえでは　どんな
 どうもうな　ポケモンも　おびえた▽
 ミネズミのように　なっちまうんだと▼
 ……まっ　おれの　ゆうきある
 ポケモンなら　やれるさ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-23T03:06:16" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16410,15 +16410,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　からておう……▼
+			<Text>伝説の　カラテおう……▼
 そいつの　前では　どんな
 どうもうな　ポケモンも　おびえた▽
 ミネズミのように　なっちまうんだと▼
 ……まっ　おれの　勇気ある
 ポケモンなら　やれるさ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-23T03:03:12" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18677,15 +18677,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　からておうが
+			<Text>でんせつの　カラテおうが
 したの　エリアに　いくのをみたぜ▼
 あの　まがまがしい　けはい……
 ちかづいただけでも　ブルっちまった▼
 ……なさけないって？
 おれだって　そこそこ　つよいんだぜ？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T03:40:48" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:01:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -18693,7 +18693,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　からておうが
+			<Text>伝説の　カラテおうが
 下のエリアに　行くのを　みたぜ▼
 あの　禍々しい　気配……
 近づいただけでも　ブルっちまった▼
@@ -18701,7 +18701,7 @@
 おれだって　そこそこ　強いんだぜ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T04:09:51" />
+				Time="2012-02-14T11:01:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23443,11 +23443,11 @@
 			Language="JPN">
 			<Text>……かずかずの　トレーナーが
 われに　ちょうせんし　たおれていった▼
-ひとよんで　でんせつの　からておう！
+ひとよんで　でんせつの　カラテおう！
 たたかうことだけが　わが　じんせい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-07T03:15:49" />
+				Time="2012-02-14T11:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23457,11 +23457,11 @@
 			Language="JPN_KANJI">
 			<Text>……数々の　トレーナーが
 我に　挑戦し　倒れていった▼
-人呼んで　伝説の　からておう！
+人呼んで　伝説の　カラテおう！
 戦いの中にのみ　生きる存在！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-07T03:15:57" />
+				Time="2012-02-14T11:01:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
