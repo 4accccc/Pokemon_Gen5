@@ -878,6 +878,12 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         *p_seq = SEQ_SAVE_CONVERT;
         break;
       case KEYSYS_NET_RESULT_PGL_GETBW_SWANDATA:
+
+        if( p_wk->p_download_data )
+        {
+          GFL_HEAP_FreeMemory( p_wk->p_download_data );
+          p_wk->p_download_data = NULL;
+        }
         *p_seq = SEQ_MSG_NOSWAN_START;
         break;
       case KEYSYS_NET_RESULT_PGL_GETBW_NO_REGIST:
@@ -1020,7 +1026,7 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_MSG_NOSWAN_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_19, KEYSYS_TEXT_TYPE_STREAM ); 
-    (*p_seq)  = SEQ_MSG_END_WAIT;
+    (*p_seq)  = SEQ_MSG_RETRY_WAIT;
     break;
 
   case SEQ_MSG_NODATA_START:
