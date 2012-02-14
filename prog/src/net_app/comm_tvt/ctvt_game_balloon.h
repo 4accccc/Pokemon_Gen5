@@ -121,8 +121,8 @@ typedef struct {
   BOOL              scale_flg;        // 拡大ON/OFFフラグ
 
   BOOL              anm_flg;          // エフェクトON/OFFフラグ
-  BOOL              effect_ica;       // icaアニメ再生フラグ
-  BOOL              effect_ima;       // imaアニメ再生フラグ
+  BOOL              effect_flg;       // ica・imaアニメ再生フラグ
+  fx32              anm_frm;          // アニメフレームカウンタ
 
   s8                alpha;            // α値(0～31)
   BOOL              alpha_flg;        // αONフラグ
