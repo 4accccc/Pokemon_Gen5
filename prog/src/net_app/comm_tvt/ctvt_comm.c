@@ -2324,6 +2324,19 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   // 受信データ出力
   //ICHI_Printf("Post GameData type%d\n", p_recv->data_type);
 
+  // BTS1774 【子機一人が通信エラーによって抜けたとき親機側の画面が暗転したままはまってしまう】
+  //
+  // 原因はエラーになった時に
+  // ゲームワークが破棄された後に通信コマンドが破棄されるので
+  // その間に通信コマンドとんでくることでした。
+  //
+  // 対処としてエラーなら何もしない
+  if( COMM_TVT_GetIsCommError(commWork->parentWork) == TRUE )
+  {
+    CTVT_Printf("強制切断なので受信コマンドを無視\n");
+    return;
+  }
+
   // 親からのフレーム かつ プレイ中のみ更新
   if( netID == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
   {
