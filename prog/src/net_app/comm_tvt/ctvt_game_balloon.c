@@ -105,6 +105,7 @@ void CTVT_BALLOON_Init( BALLOON_WORK* p_wk )
   p_wk->scale   = 0;
   p_wk->point_type = BALLOON_POINT_OK_2PT;
   p_wk->effect_wait = 0;
+  p_wk->is_hit_check_disable = 0;
 
   // タスクは必ずNULL
   p_wk->tcb = NULL;

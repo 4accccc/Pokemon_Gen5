@@ -90,6 +90,9 @@ typedef struct {
 
   s8                effect_wait;      // 失敗のエフェクトの空ループ用
 
+  // BTS1849
+  u8                is_hit_check_disable;     // 当たり判定除外フラグ
+
 } BALLOON_WORK;
 
 //-------------------------------------

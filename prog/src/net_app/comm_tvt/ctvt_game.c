@@ -1373,6 +1373,18 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
     send_data.burst_idx = ret_idx;
     send_data.burst_netID = netID;
     CTVT_COMM_SendGameReq( commWork, send_data, CCGDT_BURST );
+
+    // BTS1849 【複数のプレイヤーが同時に風船をタッチした場合、表示と得点が食い違うことがある】 
+    //
+    //
+    // 原因はここで風船当たりのコマンドを送信しているが、
+    // そのコマンドを受信して初めて当たり判定からその風船が除外されるから。
+    // 受信までの間に同じ風船を割ることが出来てしまっていた。
+    //
+    // 対処として
+    // 当たり判定除外用フラグを追加する
+    //
+    p_wk->balloon_wk[ ret_idx ].is_hit_check_disable = 1;
   }
 }
 
@@ -1579,6 +1591,8 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   u8  i;
 
+  CTVT_Printf("受信のNetID %d \n", netIdBit );
+
   for( i=0; i<CTVT_MEMBER_NUM; i++ )
   {
     // 処理する風船(=netID)をチェック
@@ -1587,7 +1601,7 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
       BOOL ret;
       // 風船大きくor破裂
       ret = CTVT_BALLOON2_Burst( p_wk->p_balloon2[i] );
-      CTVT_TPrintf("風船BURST netID %d stage %d \n", i, p_wk->p_balloon2[i]->stage);
+      CTVT_TPrintf("風船BURST netID %d stage %d adrs %d \n", i, p_wk->p_balloon2[i]->stage, p_wk->p_balloon2[i]);
 
       // 破裂したなら得点加算
       if( ret == TRUE )
@@ -6515,6 +6529,13 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy
     if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
     {
       // 表示されていないならスキップ
+      continue;
+    }
+
+    if( p_wk->balloon_wk[i].is_hit_check_disable == 1 )
+    {
+      // 当たり判定除外フラグが立っているとSKIP
+      CTVT_Printf("当たり判定除外フラグ がたっている\n");
       continue;
     }
 
