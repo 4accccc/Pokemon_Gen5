@@ -1065,6 +1065,9 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
       if(wk->subseq==SUBSEQ_SEARCHEXIT){
         *seq = SEQ_FADEOUT;;
       }
+#ifdef BOX_SEARCH_TOUCHBAR
+			BOXSEARCH_TOUCHBAR_Main( wk->touchbar );		//タッチバーメイン処理
+#endif //BOX_SEARCH_TOUCHBAR
     }
     break;
   case SEQ_FADEOUT:
@@ -1079,11 +1082,6 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     }
     break;
   }
-
-#ifdef BOX_SEARCH_TOUCHBAR
-  //タッチバーメイン処理
-  BOXSEARCH_TOUCHBAR_Main( wk->touchbar );
-#endif //BOX_SEARCH_TOUCHBAR
 
   //PRINT_QUE
   PRINTSYS_QUE_Main( wk->print_que );
