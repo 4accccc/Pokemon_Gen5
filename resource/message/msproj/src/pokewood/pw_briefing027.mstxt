@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]グアイって　なぞのおとこは
+			<Text>[Ctrl1:xcenter ]グアイって　なぞの　おとこは
 [Ctrl1:xcenter ]モニカの　はいった　ボールを
 [Ctrl1:xcenter ]うばって　にげた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:19:40" />
+				Time="2012-02-13T12:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]グアイって　なぞの男は
+			<Text>[Ctrl1:xcenter ]グアイって　なぞの　男は
 [Ctrl1:xcenter ]モニカの　入った　ボールを
-[Ctrl1:xcenter ]うばって　逃げた……</Text>
+[Ctrl1:xcenter ]奪って　逃げた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:19:42" />
+				Time="2012-02-13T12:40:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50,12 +50,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いそいで　おいかける　ボクは
+			<Text>[Ctrl1:xcenter ]いそいで　おいかける　ぼくは
 [Ctrl1:xcenter ]しんじられない　こうけいを
 [Ctrl1:xcenter ]みることに　なったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-08T06:44:21" />
+				Time="2012-02-13T12:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -63,12 +63,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]急いで　追いかける　ボクは
+			<Text>[Ctrl1:xcenter ]急いで　追いかける　僕は
 [Ctrl1:xcenter ]信じられない　光景を
 [Ctrl1:xcenter ]見ることに　なったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-08T06:44:24" />
+				Time="2012-02-13T12:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -288,12 +288,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]グアイって　ヘンなおとこは
+			<Text>[Ctrl1:xcenter ]グアイって　ヘンな　おとこは
 [Ctrl1:xcenter ]おねえちゃんの　はいった　ボールを
 [Ctrl1:xcenter ]うばって　にげた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:19:47" />
+				Time="2012-02-13T12:40:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -301,12 +301,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]グアイって　ヘンな男は
+			<Text>[Ctrl1:xcenter ]グアイって　ヘンな　男は
 [Ctrl1:xcenter ]お姉ちゃんの　入った　ボールを
-[Ctrl1:xcenter ]うばって　逃げた……</Text>
+[Ctrl1:xcenter ]奪って　逃げた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:19:49" />
+				Time="2012-02-13T12:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
