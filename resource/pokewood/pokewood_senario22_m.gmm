@@ -556,10 +556,12 @@
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『さあ！
 ここ　まで　おいついたわ！▼
-かくごは　いいでしょうね？</language>
+かくごは　いいでしょうね？　　
+とっつかまえて　やる！</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『さあ！
 ここまで　追いついたわ！▼
-覚悟は　いいでしょうね？</language>
+覚悟は　いいでしょうね？
+とっつかまえて　やる！</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そうは　いくか！</language>
