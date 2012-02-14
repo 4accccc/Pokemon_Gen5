@@ -579,7 +579,10 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
         work->cursorPos--;
       }
       work->transAnmCnt = 0;
-      PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
+      if( work->initWork.itemNum > 1 )
+      {
+        PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
+      }
     }
     else
     if( repeat & PAD_KEY_DOWN )
@@ -593,7 +596,10 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
         work->cursorPos++;
       }
       work->transAnmCnt = 0;
-      PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
+      if( work->initWork.itemNum > 1 )
+      {
+        PMSND_PlaySystemSE( APP_TASKMENU_SND_CURSOR );
+      }
     }
     else
     if( trg & PAD_BUTTON_A )
