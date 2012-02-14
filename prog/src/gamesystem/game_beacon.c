@@ -701,7 +701,12 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TY
         QuestionnaireAnswer_WriteBit( &info->question_answer, i, 0);
       }
     }
-//    GFL_STD_MemClear( &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
+    //BTS1833対策 詳細情報Noがトレーナー戦関連だったら移動中に上書き
+    if( info->details.details_no >= GAMEBEACON_DETAILS_NO_BATTLE_TRAINER &&
+        info->details.details_no <= GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER ){
+      BEACONINFO_Set_Details_Walk( info );
+      info->details.battle_trainer = 0;
+    }
   }
 }
 
