@@ -5340,13 +5340,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]の　おもいが
-ハイルツリーと　きょうめいした！▼
+			<Text>[Name:TrainerName ]の　想いが
+ハイルツリーと　共鳴した！▼
 ハイリンクの
 [Name:TreeLevelType Idx="1" ]ＬＶが　[Digit:2digits Idx="2" ]あがった！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2012-02-10T07:08:20" />
+				Time="2012-02-14T01:36:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
