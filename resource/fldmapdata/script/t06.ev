@@ -283,8 +283,11 @@ champion_guide_04:
   _OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
   //アデクモデル非表示に
   _OBJ_DEL( T06_CHAMPION_01 )
+  _SE_WAIT()
   
   //ドア閉じる
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
