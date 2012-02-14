@@ -3635,10 +3635,10 @@ CYGNUS連動用</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひみつのドア</Text>
+			<Text>ふしぎなとびら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:06:43" />
+				Time="2012-02-14T11:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3646,10 +3646,10 @@ CYGNUS連動用</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひみつのドア</Text>
+			<Text>ふしぎなとびら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:06:44" />
+				Time="2012-02-14T11:03:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3797,14 +3797,14 @@ CYGNUS連動用</Comment>
 			Language="JPN">
 			<Text>くろがねのカギを
 てに　いれました！▼
-ひみつのドア「くろがねのま」が
+ふしぎなとびら「くろがねのま」が
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
 マップを　かいじょ　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:36" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3814,14 +3814,14 @@ CYGNUS連動用</Comment>
 			Language="JPN_KANJI">
 			<Text>くろがねのカギを
 手に入れました！▼
-ひみつのドア「くろがねのま」が
+ふしぎなとびら「くろがねのま」が
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
 マップを　解除できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:42" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:03:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3849,14 +3849,14 @@ CYGNUS連動用</Comment>
 			Language="JPN">
 			<Text>ひょうざんのカギを
 てに　いれました！▼
-ひみつのドア「ひょうざんのま」が
+ふしぎなとびら「ひょうざんのま」が
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
 マップを　かいじょ　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:48" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:03:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3866,14 +3866,14 @@ CYGNUS連動用</Comment>
 			Language="JPN_KANJI">
 			<Text>ひょうざんのカギを
 手に入れました！▼
-ひみつのドア「ひょうざんのま」が
+ふしぎなとびら「ひょうざんのま」が
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
 マップを　解除できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:37:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T11:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4449,11 +4449,11 @@ CYGNUS連動用</Comment>
 			Language="JPN">
 			<Text>いわやまのま　に
 せっていを　へんこう　しました▼
-ちていいせきの　ひみつのドアを　ぬけ
+ちていいせきの　ふしぎなとびらを　ぬけ
 いわやまのまに　いきましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:16" />
+				Time="2012-02-14T11:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4463,11 +4463,11 @@ CYGNUS連動用</Comment>
 			Language="JPN_KANJI">
 			<Text>岩山の間　に
 設定を　変更しました▼
-地底遺跡の　ひみつのドアを　ぬけ
+地底遺跡の　ふしぎなとびらを　ぬけ
 岩山の間に　行きましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:19" />
+				Time="2012-02-14T11:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4496,11 +4496,11 @@ CYGNUS連動用</Comment>
 			Language="JPN">
 			<Text>くろがねのま　に
 せっていを　へんこう　しました▼
-ちていいせきの　ひみつのドアを　ぬけ
+ちていいせきの　ふしぎなとびらを　ぬけ
 くろがねのまに　いきましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:22" />
+				Time="2012-02-14T11:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4510,11 +4510,11 @@ CYGNUS連動用</Comment>
 			Language="JPN_KANJI">
 			<Text>鉄の間　に
 設定を　変更しました▼
-地底遺跡の　ひみつのドアを　ぬけ
+地底遺跡の　ふしぎなとびらを　ぬけ
 鉄の間に　行きましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:22" />
+				Time="2012-02-14T11:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4543,11 +4543,11 @@ CYGNUS連動用</Comment>
 			Language="JPN">
 			<Text>ひょうざんのま　に
 せっていを　へんこう　しました▼
-ちていいせきの　ひみつのドアを　ぬけ
+ちていいせきの　ふしぎなとびらを　ぬけ
 ひょうざんのまに　いきましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:25" />
+				Time="2012-02-14T11:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4557,11 +4557,11 @@ CYGNUS連動用</Comment>
 			Language="JPN_KANJI">
 			<Text>氷山の間　に
 設定を　変更しました▼
-地底遺跡の　ひみつのドアを　ぬけ
+地底遺跡の　ふしぎなとびらを　ぬけ
 氷山の間に　行きましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:28:26" />
+				Time="2012-02-14T11:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
