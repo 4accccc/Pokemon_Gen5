@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2012-02-09T11:41:34
+	Update:2012-02-14T15:06:15
  *****************************************************************************/
 
 #ifndef NARC_CORP_NAIX_
@@ -15,7 +15,11 @@ enum {
 	NARC_corp_credit_u_NCGR = 1,
 	NARC_corp_credit_u_NSCR = 2,
 	NARC_corp_logo_d_NCGR = 3,
-	NARC_corp_logo_d_NSCR = 4
+	NARC_corp_logo_d_NSCR = 4,
+	NARC_corp_reserve_j_NCGR = 5,
+	NARC_corp_reserve_j_NSCR = 6,
+	NARC_corp_reserve_u_NCGR = 7,
+	NARC_corp_reserve_u_NSCR = 8
 };
 
 /* NARC_CORP_NAIX_ */

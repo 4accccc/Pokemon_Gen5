@@ -660,16 +660,87 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CorpPut( SRMAIN_WORK * wk )
 {
+  enum{
+    SEQ_CORP_WRITING_LOAD,  // 製作・著作
+    SEQ_CORP_WRITING_WAIT,
+    SEQ_CORP_CORP_LOAD,     // マルシー
+    SEQ_CORP_CORP_WAIT,
+  };
 
   switch( wk->subSeq ){
-  case 0:
+  // 製作･著作
+  case SEQ_CORP_WRITING_LOAD:
 
     // 読み込み
     {
       ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_CORP, HEAPID_STAFF_ROLL_L );
 
+      // パレットは共通
       GFL_ARCHDL_UTIL_TransVramPalette( ah, NARC_corp_corp_NCLR,
           PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
+
+      // 文字モード別
+      if( wk->dat->mojiMode == MOJIMODE_HIRAGANA ){
+        GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, NARC_corp_reserve_j_NCGR,
+            GFL_BG_FRAME1_M, 0, 0x8000, FALSE, HEAPID_STAFF_ROLL );
+        GFL_ARCHDL_UTIL_TransVramScreen( ah, NARC_corp_reserve_j_NSCR,
+            GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+      }else{
+        GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, NARC_corp_reserve_u_NCGR,
+            GFL_BG_FRAME1_M, 0, 0x8000, FALSE, HEAPID_STAFF_ROLL );
+        GFL_ARCHDL_UTIL_TransVramScreen( ah, NARC_corp_reserve_u_NSCR,
+            GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+      }
+
+      GFL_ARC_CloseDataHandle( ah );
+    }
+
+#if	PM_VERSION == LOCAL_VERSION
+    // 黒背景 白文字
+    GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M, 0, 0, 32, 24, 1 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, 0 );
+#else
+    // 白背景 黒文字
+    GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M, 0, 0, 32, 24, 2 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, 0xffff );
+#endif
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+
+    wk->subSeq = SEQ_CORP_WRITING_WAIT;
+
+    // フェードイン
+    // 終わるとこの関数に戻ってきて次のシーケンスにいく
+    //
+		return SetFadeIn( wk, MAINSEQ_CORP_PUT );
+
+  // 表示待ち
+  case SEQ_CORP_WRITING_WAIT:
+
+    if( wk->wait >= CORP_PUT_WAIT ){
+      wk->subSeq = SEQ_CORP_CORP_LOAD;
+			wk->wait = 0;
+      return SetFadeOut( wk, MAINSEQ_CORP_PUT );
+    }
+    else
+    {
+			if( wk->skipFlag == 1 ){
+				wk->wait += SKIP_SPEED;
+			}else{
+				wk->wait++;
+			}
+    }
+    break;
+
+  // マルシー
+  case SEQ_CORP_CORP_LOAD:
+    // 読み込み
+    {
+      ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_CORP, HEAPID_STAFF_ROLL_L );
+
+      // パレットは共通
+      GFL_ARCHDL_UTIL_TransVramPalette( ah, NARC_corp_corp_NCLR,
+          PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
+
       GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, NARC_corp_credit_u_NCGR,
           GFL_BG_FRAME1_M, 0, 0x8000, FALSE, HEAPID_STAFF_ROLL );
       GFL_ARCHDL_UTIL_TransVramScreen( ah, NARC_corp_credit_u_NSCR,
@@ -689,14 +760,15 @@ static int MainSeq_CorpPut( SRMAIN_WORK * wk )
 #endif
     GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 
-    wk->subSeq++;
+    wk->subSeq = SEQ_CORP_CORP_WAIT;
 
     // フェードイン
     // 終わるとこの関数に戻ってきて次のシーケンスにいく
     //
 		return SetFadeIn( wk, MAINSEQ_CORP_PUT );
 
-  case 1:
+  // 表示待ち
+  case SEQ_CORP_CORP_WAIT:
 		if( wk->wait >= CORP_PUT_WAIT ){
 			wk->wait = 0;
 			wk->subSeq = 0;
