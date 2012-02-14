@@ -4721,6 +4721,7 @@ void RESORT_RECORD_AddID( u32 record_id )
   RESORT_DATE temp_date;
   RTCDate date;
   RESORT_DATE resort_date;
+  BOOL is_erase = FALSE;
 
   GF_ASSERT_MSG( record_id < RESORT_RECORD_ID_MAX, "%d<MAX", record_id );
 
@@ -4746,11 +4747,11 @@ void RESORT_RECORD_AddID( u32 record_id )
         {12,2,6,0},
       },
       {
-        3,
+        11,
         {12,2,6,0},
       },
       {
-        0,
+        5,
         {12,2,6,0},
       }
     };
@@ -4792,23 +4793,54 @@ void RESORT_RECORD_AddID( u32 record_id )
     {
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, 0 );
       RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
-      break;  //ÇªÇÃÇ‹Ç‹èdï°ÇÕè¡ÇµÇΩÇÃÇ≈âüÇµèoÇµÇ÷
+      is_erase  = TRUE;
+      break;
     }
   }
 
-  //âüÇµèoÇµ  ÇOÅ`ÇRÇÇPÇ¬Ç∏Ç¬Ç∏ÇÁÇ∑
-  for( i = RESORT_DATA_RECORD_CNT-1; i >= 0; i-- )
-  {
-    u32 next_id = i + 1;
-    if( next_id < RESORT_DATA_RECORD_CNT )
+  if( is_erase )
+  { 
+    //Ç‡Çµè¡ÇµÇΩÇÃÇ≈Ç†ÇÍÇŒ1,2,0,4ÇÃÇÊÇ§Ç…ìríÜÇ…ÇOÇ™Ç†ÇÈÇÃÇ≈ÅA
+    //ÇOÇàÍî‘è„Ç…éùÇ¡ÇƒÇ≠ÇÈ
+    //âüÇµèoÇµ ÇOÇàÍî‘è„Ç÷
+    for( i = RESORT_DATA_RECORD_CNT-1; i >= 1; i-- )
     {
       u32 now_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
       RESORT_DATE now_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
 
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, now_record );
-      RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, now_date );
+      u32 next_id = i - 1;
+
+      if( now_record == RESORT_RECORD_ID_NONE )
+      {
+        u32 next_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, NULL );
+        RESORT_DATE next_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, NULL );
+
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, next_record );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, next_date );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, now_record );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, now_date );
+      }
     }
   }
+  else
+  {
+    //ì¡Ç…è¡ÇµÇƒÇ¢Ç»Ç¢èÍçáÅA1,2,3,0ÇÃÉpÉ^Å[ÉìÇ©,1,2,3,4ÇÃÉpÉ^Å[Éì
+
+    //âüÇµèoÇµ  ÇOÅ`ÇRÇÇPÇ¬Ç∏Ç¬Ç∏ÇÁÇ∑
+    for( i = RESORT_DATA_RECORD_CNT-1; i >= 0; i-- )
+    {
+      u32 next_id = i + 1;
+      if( next_id < RESORT_DATA_RECORD_CNT )
+      {
+        u32 now_record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+        RESORT_DATE now_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
+
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+next_id, now_record );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+next_id, now_date );
+      }
+    }
+  }
+
   //êÊì™Ç…Ç¢ÇÍÇÈ
   RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00, record_id );
   RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00, resort_date );
@@ -4828,6 +4860,28 @@ RESORT_RECORD_ADD_ID_SORT:
       }
 #endif
 #endif
+
+  //ñ¢óàÇÃóöóÇè¡Ç∑
+  {
+    s32 now_days = RTC_ConvertDateToDay( &date );
+    for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+    {
+      RTCDate rec_date;
+      u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+      RESORT_DATE reso_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
+      s32 rec_days;
+      RESORT_DATA_DateToRtc( reso_date, &rec_date );
+      rec_days = RTC_ConvertDateToDay( &rec_date );
+
+      rec_days = (record == RESORT_RECORD_ID_NONE)? 0: rec_days;
+
+      if( rec_days > now_days )
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, RESORT_RECORD_ID_NONE );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
+      }
+    }
+  }
 
 
   //É\Å[Ég
