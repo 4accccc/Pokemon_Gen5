@@ -146,7 +146,7 @@ void KEYSYS_TEXT_Exit( KEYSYS_TEXT_WORK* p_wk )
 
   GFL_TCBL_Exit( p_wk->p_tcbl );
 
-  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_OFF );
+  KEYSYS_TEXT_ClearScreen( p_wk );
   GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
@@ -459,7 +459,15 @@ void KEYSYS_TEXT_ClearCharacter( KEYSYS_TEXT_WORK* p_wk )
 //-----------------------------------------------------------------------------
 void KEYSYS_TEXT_ClearScreen( KEYSYS_TEXT_WORK* p_wk )
 {
-  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_OFF );
+  if( p_wk->is_frame )
+  {
+    BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_OFF );
+    p_wk->is_frame  = FALSE;
+  }
+  else
+  {
+    GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
+  }
 }
 //----------------------------------------------------------------------------
 /**

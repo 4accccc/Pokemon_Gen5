@@ -427,6 +427,7 @@ typedef enum
   KEYSYS_BG_SCR_HAVEKEY_M,  //タイトル＋所持キー
   KEYSYS_BG_SCR_HAVEKEY_S,  //所持キーだけ
   KEYSYS_BG_SCR_TRAY_M,     //タイトル＋土台
+  KEYSYS_BG_SCR_TITLE_CYG_M,     //シグナス要タイトル
 }KEYSYS_BG_SCR;
 extern void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr );
 
@@ -466,6 +467,14 @@ extern void KEYSYS_TEXT_Delete( KEY_SYSTEM_WORK *p_wk );
 
 extern void KEYSYS_TEXT_CreateEx( KEY_SYSTEM_WORK *p_wk, u16 frame, HEAPID heapID );
 extern void KEYSYS_TEXT_DeleteEx( KEY_SYSTEM_WORK *p_wk, u16 frame );
+
+//-------------------------------------
+/// TITLE
+//=====================================
+extern void KEYSYS_TITLE_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_TITLE_Delete( KEY_SYSTEM_WORK *p_wk );
+
+extern void KEYSYS_TITLE_CreateEx( KEY_SYSTEM_WORK *p_wk, u16 w, HEAPID heapID );
 
 //-------------------------------------
 /// INFO

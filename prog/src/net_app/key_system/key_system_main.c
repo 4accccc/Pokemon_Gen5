@@ -889,6 +889,9 @@ void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr )
   case KEYSYS_BG_SCR_TRAY_M:
     datID = NARC_key_system_gra_back04_NSCR;
     break;
+  case KEYSYS_BG_SCR_TITLE_CYG_M:
+    datID = NARC_key_system_gra_back05_NSCR;
+    break;
   case KEYSYS_BG_SCR_HAVEKEY_M:
     datID = NARC_key_system_gra_back03_NSCR;
     break;
@@ -1393,9 +1396,7 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   KEYSYS_CYGNUSFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
 
   //上画面タイトル作成
-  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
-  KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
-  KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
+  KEYSYS_TITLE_Create( p_wk, heapID );
 
   if( p_wk->p_snd_preset == NULL )
   {
@@ -1448,8 +1449,7 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk, BOOL continue_bgm )
   //タイトル破棄
   if( p_wk->p_title )
   {
-    KEYSYS_TEXT_Exit( p_wk->p_title );
-    p_wk->p_title = NULL;
+    KEYSYS_TITLE_Delete( p_wk );
   }
 
   //説明破棄
@@ -1555,6 +1555,54 @@ void KEYSYS_TEXT_DeleteEx( KEY_SYSTEM_WORK *p_wk, u16 frm )
   p_wk->p_text = NULL;
 
   GFL_BG_LoadScreenV_Req( frm );
+}
+
+//-------------------------------------
+/// TITLE
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TITLE_Create( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
+{
+  KEYSYS_TITLE_CreateEx( p_wk, 14, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  破棄
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TITLE_Delete( KEY_SYSTEM_WORK *p_wk )
+{
+  GF_ASSERT( p_wk->p_title );
+  KEYSYS_TEXT_ClearCharacter( p_wk->p_title );
+  KEYSYS_TEXT_Exit( p_wk->p_title );
+  p_wk->p_title = NULL;
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  作成
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk  ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TITLE_CreateEx( KEY_SYSTEM_WORK *p_wk, u16 w, HEAPID heapID )
+{
+  GF_ASSERT( p_wk->p_title == NULL );
+  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, w, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+  KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
 }
 
 //-------------------------------------

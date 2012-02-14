@@ -260,6 +260,8 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   {
   case SEQ_DISPLAY_CREATE:
     //最初はメインメニュー作成フロー
+    KEYSYS_TITLE_Delete( p_wk );
+    KEYSYS_TITLE_CreateEx( p_wk, 21, HEAPID_KEY_SYSTEM );
     KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayStart );
     (*p_seq)++;
@@ -331,6 +333,8 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   case SEQ_END:
     KEYSYS_TEXT_Delete( p_wk );
+    KEYSYS_TITLE_Delete( p_wk );
+    KEYSYS_TITLE_Create( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_MAIN, 30 );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
@@ -1051,6 +1055,9 @@ static void Cygnus_Display_CreateStart( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  //BGスクリーン
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_CYG_M );
+
   //タイトル
   KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, CYGNUS_00, KEYSYS_TEXT_TYPE_QUE );
 
@@ -1075,6 +1082,7 @@ static BOOL Cygnus_Display_IsEndCreateStart( void *p_wk_adrs )
   if( is_end_title && is_end_text )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
     return TRUE;
   }
   return FALSE;
