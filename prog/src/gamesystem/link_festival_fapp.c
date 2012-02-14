@@ -31,6 +31,19 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 #include "field/script_def.h"
 
+typedef struct BONUS_CALC_COEFFICIENT{
+  int   num; //閾値
+  fx32  coe;  //係数
+}BONUS_CALC_COEFFICIENT;
+
+static const BONUS_CALC_COEFFICIENT DATA_BonusCalcCoefficient[] = {
+  { 100, FX32_CONST(0.05) },   //101以上は0.05
+  { 30,  FX32_CONST(0.1) },   //31-100は0.1
+  { 20,  FX32_CONST(0.2) },   //21-30は0.2
+  { 10,  FX32_CONST(0.5) },   //11-20は0.5
+  { 0,   FX32_CONST(1.0) },  //0-10は1.0
+};
+
 static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, MEDALBOX* medalbox, FMISSION_SAVE* f_save );
 
 
@@ -124,22 +137,39 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     pl->item_num = wk->m_beacon->pay;
 
     switch( wk->m_beacon->pay_bonus ){
-     case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
-       {  //(残り秒/10)*MissionLevel*(MyScore/TotalScore)
-         fx32 life = FX_Div( FX32_CONST(pl->life), FX32_CONST(10));
-         fx32 per = FX_Div( FX32_CONST(my_score), FX32_CONST(pl->score) );  //マイスコアとトータルスコアの比率
-         per = FX_Mul( FX32_CONST( wk->m_beacon->m_level+1 ), per ); //ミッションレベルを掛ける レベルは0オリジンなので+1
-         pl->bonus_num = FX_Whole( FX_Mul( life, per ) ); //最後に小数点切捨て
-       }
+    case FMISSION_PAY_BONUS_TIME: //タイムボーナス(残り時間に依存するボーナス)
+      {  //MyScore + { (残り秒/15)*MissionLevel/3 }
+        fx32 life = FX_Div( FX32_CONST(pl->life), FX32_CONST(15));
+        fx32 val = FX_Mul( life, FX32_CONST(wk->m_beacon->m_level+1) );  //残り時間にミッションレベルを掛ける
+        pl->bonus_num = FX_Whole( FX_Div( val, FX32_CONST(3)) ); //固定値3で割って小数点を切捨て
+        pl->bonus_num += my_score; //最後にマイスコア分足す
+      }
       break;
-     case FMISSION_PAY_BONUS_SCORE: //スコアボーナス(トータルスコアに依存するボーナス)
-       { //MyScore + ( (TotalScore-MyScore)/(参加人数*2) )
-          fx32 value = FX_Div( FX32_CONST(pl->score-my_score), FX32_CONST(join_num*2));
-          pl->bonus_num = FX_Whole( FX32_CONST(my_score)+value );
-       }
-       //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
-       sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
-       break;
+    case FMISSION_PAY_BONUS_SCORE: //スコアボーナス(トータルスコアに依存するボーナス)
+      { //【 MyScore + { (TotalScore-MyScore)の係数特殊計算} 】 * MissionLevel / 3 
+        int i, other;
+        fx32 total = FX32_CONST(my_score);
+        
+        other = pl->score-my_score; //自分以外の人が稼いだスコア
+        
+        for( i = 0; i < NELEMS(DATA_BonusCalcCoefficient);i++ ){
+          int diff;
+          const BONUS_CALC_COEFFICIENT* p_coe = &DATA_BonusCalcCoefficient[i];
+
+          if( other <= p_coe->num ){
+            continue;
+          }
+          diff = other - p_coe->num; 
+          total += FX_Mul( FX32_CONST(diff), p_coe->coe );
+          other -= diff;  //消費した分のスコアを減算
+        }
+        total = FX_Mul( total, FX32_CONST( wk->m_beacon->m_level+1)); //ミッションレベルを掛ける
+        pl->bonus_num = FX_Whole( FX_Div( total, FX32_CONST(3) ) );  //最後に固定値3で割って小数点切捨て
+      }
+
+      //スペシャル報酬 level3ミッション以上&&スコアが目標値の倍以上なら
+      sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
+      break;
     }
     if( pl->bonus_num > FMISSION_PAY_NUM_BONUS_MAX ){
       pl->bonus_num = FMISSION_PAY_NUM_BONUS_MAX;  //ボーナスには上限がある
@@ -173,10 +203,10 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     IWASAWA_Printf("FMResult exp = %d, n_level = %d\n", exp, now_level );
     up_level = 0;
     do{
-      //閾値は現Lv*10(上限100) ミッション未クリア時のレベルは0～なので+1
-      step = (now_level+1)*10;
-      if( step > 100 ){
-        step = 100;
+      //閾値は現Lv*5(上限50) ミッション未クリア時のレベルは0～なので+1
+      step = (now_level+1)*5;
+      if( step > 50 ){
+        step = 50;
       }
       is_up = exp/step;
       
