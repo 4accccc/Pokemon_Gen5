@@ -476,8 +476,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_006">
-		<language name="JPN" width="256"> ART  DIRECTOR</language>
-		<language name="JPN_KANJI" width="256"> ART  DIRECTOR</language>
+		<language name="JPN" width="256">ART  DIRECTOR</language>
+		<language name="JPN_KANJI" width="256">ART  DIRECTOR</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_007">
@@ -501,8 +501,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_011">
-		<language name="JPN" width="256"> Lead</language>
-		<language name="JPN_KANJI" width="256"> Lead</language>
+		<language name="JPN" width="256">Lead</language>
+		<language name="JPN_KANJI" width="256">Lead</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_012">
@@ -871,8 +871,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_085">
-		<language name="JPN" width="256">POKÉMON  BW   GRAPHICS  DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  BW   GRAPHICS  DESIGN</language>
+		<language name="JPN" width="256">POKÉMON  BW  GRAPHICS  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKÉMON  BW  GRAPHICS  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_086">
@@ -951,8 +951,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_101">
-		<language name="JPN" width="256">TERUO TANIGUCHI</language>
-		<language name="JPN_KANJI" width="256">TERUO TANIGUCHI</language>
+		<language name="JPN" width="256">TERUO  TANIGUCHI</language>
+		<language name="JPN_KANJI" width="256">TERUO  TANIGUCHI</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_102">
@@ -976,13 +976,13 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_106">
-		<language name="JPN" width="256">AND MORE MUSIC</language>
-		<language name="JPN_KANJI" width="256">AND MORE MUSIC</language>
+		<language name="JPN" width="256">AND  MORE  MUSIC</language>
+		<language name="JPN_KANJI" width="256">AND  MORE  MUSIC</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_107">
-		<language name="JPN" width="256">AND MORE MUSIC</language>
-		<language name="JPN_KANJI" width="256">AND MORE MUSIC</language>
+		<language name="JPN" width="256">AND  MORE  MUSIC</language>
+		<language name="JPN_KANJI" width="256">AND  MORE  MUSIC</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_108">
@@ -1106,8 +1106,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_132">
-		<language name="JPN" width="256">ACTION  SCRIPT </language>
-		<language name="JPN_KANJI" width="256">ACTION  SCRIPT </language>
+		<language name="JPN" width="256">ACTION  SCRIPT</language>
+		<language name="JPN_KANJI" width="256">ACTION  SCRIPT</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_133">
@@ -1176,8 +1176,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_146">
-		<language name="JPN" width="256">POKÉWOOD DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉWOOD DESIGN</language>
+		<language name="JPN" width="256">POKÉWOOD  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKÉWOOD  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_147">
@@ -1186,8 +1186,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_148">
-		<language name="JPN" width="256">POKÉMON  WORLD TOURNAMENT DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  WORLD TOURNAMENT DESIGN</language>
+		<language name="JPN" width="256">POKÉMON  WORLD  TOURNAMENT  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKÉMON  WORLD  TOURNAMENT  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_149">
@@ -1201,8 +1201,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_151">
-		<language name="JPN" width="256">HILINK FES  DESIGN</language>
-		<language name="JPN_KANJI" width="256">HILINK FES  DESIGN</language>
+		<language name="JPN" width="256">HILINK  FES  DESIGN</language>
+		<language name="JPN_KANJI" width="256">HILINK  FES  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_152">
@@ -1211,8 +1211,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_153">
-		<language name="JPN" width="256">JOIN AVENUE DESIGN</language>
-		<language name="JPN_KANJI" width="256">JOIN AVENUE DESIGN</language>
+		<language name="JPN" width="256">JOIN  AVENUE  DESIGN</language>
+		<language name="JPN_KANJI" width="256">JOIN  AVENUE  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_154">
@@ -1221,8 +1221,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_155">
-		<language name="JPN" width="256">POKÉMON  BW  GAME DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  BW  GAME DESIGN</language>
+		<language name="JPN" width="256">POKÉMON  BW  GAME  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKÉMON  BW  GAME  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_156">
@@ -1271,8 +1271,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_165">
-		<language name="JPN" width="256">3DS LINK　DESIGN</language>
-		<language name="JPN_KANJI" width="256">3DS LINK　DESIGN</language>
+		<language name="JPN" width="256">3DS  LINK  DESIGN</language>
+		<language name="JPN_KANJI" width="256">3DS  LINK  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_166">
@@ -1286,8 +1286,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_168">
-		<language name="JPN" width="256">3DS LINK PROGRAMMING</language>
-		<language name="JPN_KANJI" width="256">3DS LINK PROGRAMMING</language>
+		<language name="JPN" width="256">3DS  LINK  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">3DS  LINK  PROGRAMMING</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_169">
@@ -1296,8 +1296,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_170">
-		<language name="JPN" width="256">  POKÉMON  BW  Wi-Fi  SERVER  DEVELOPMENT</language>
-		<language name="JPN_KANJI" width="256">  POKÉMON  BW  Wi-Fi  SERVER  DEVELOPMENT</language>
+		<language name="JPN" width="256">POKÉMON  BW  Wi-Fi  SERVER  DEVELOPMENT</language>
+		<language name="JPN_KANJI" width="256">POKÉMON  BW  Wi-Fi  SERVER  DEVELOPMENT</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_171">
@@ -1326,8 +1326,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_176">
-		<language name="JPN" width="256">POKÉMON GLOBAL LINK DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON GLOBAL LINK DESIGN</language>
+		<language name="JPN" width="256">POKÉMON  GLOBAL  LINK  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKÉMON  GLOBAL  LINK  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_177">
@@ -1516,8 +1516,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_214">
-		<language name="JPN" width="256">SHO  FURUTANI </language>
-		<language name="JPN_KANJI" width="256">SHO  FURUTANI </language>
+		<language name="JPN" width="256">SHO  FURUTANI</language>
+		<language name="JPN_KANJI" width="256">SHO  FURUTANI</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_215">
@@ -1666,8 +1666,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_244">
-		<language name="JPN" width="256">AYAKO KAJIWARA</language>
-		<language name="JPN_KANJI" width="256">AYAKO KAJIWARA</language>
+		<language name="JPN" width="256">AYAKO  KAJIWARA</language>
+		<language name="JPN_KANJI" width="256">AYAKO  KAJIWARA</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_245">
@@ -1726,8 +1726,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_256">
-		<language name="JPN" width="256">DEVELOPED BY</language>
-		<language name="JPN_KANJI" width="256">DEVELOPED BY</language>
+		<language name="JPN" width="256">DEVELOPED  BY</language>
+		<language name="JPN_KANJI" width="256">DEVELOPED  BY</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_257">
