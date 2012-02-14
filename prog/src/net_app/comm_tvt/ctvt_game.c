@@ -2204,7 +2204,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
                                                gameWork->heapId );
       // ‚Í‚¢E‚¢‚¢‚¦‘I‘ð•\Ž¦
       gameWork->yesNoWork = retry_open_yesno_menu( work, gameWork );
-      APP_TASKMENU_SetDisableKey( gameWork->yesNoWork, TRUE );
+      //APP_TASKMENU_SetDisableKey( gameWork->yesNoWork, TRUE );
 
       // ‚»‚Ì‘¼‰Šú‰»
       gameWork->isRetry  = FALSE;
