@@ -100,6 +100,7 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type );
+static void BeaconInfo_BeaconDetailOverwrite( GAMEBEACON_INFO *info, BOOL recv_f );
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no, GAMEBEACON_RECV_CLOCK* clock);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
@@ -634,6 +635,10 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
     setlog->clock.hour = recv_time.hour;
     setlog->clock.min = recv_time.minute;
     setlog->clock.research_f = BeaconInfo_SetQuestionnaire( bsys, info );
+    
+    //BTS1833対策 BWから送られてきた詳細情報Noがトレーナー戦関連だったら移動中に上書き
+    BeaconInfo_BeaconDetailOverwrite( &(setlog->info), TRUE );
+    
     bsys->update_log |= 1 << bsys->end_log;
     if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
       bsys->log_num++;
@@ -672,7 +677,7 @@ static BOOL BeaconInfo_BeaconSwanOnlyCheck( GAMEBEACON_INFO *info, GAMEBEACON_TY
 
 //--------------------------------------------------------------
 /**
- * 受信ビーコンのタイプを切り替えるために、ビーコン情報を上書きする
+ * 送信ビーコンのタイプを切り替えるために、ビーコン情報を上書きする
  *
  * @param   info		
  * @param   type  GAMEBEACON_TYPE(GAMEBEACON_TYPE_COMMONならBW互換、TYPE_SWAN_ONLYならSwan専用)
@@ -702,11 +707,32 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TY
       }
     }
     //BTS1833対策 詳細情報Noがトレーナー戦関連だったら移動中に上書き
-    if( info->details.details_no >= GAMEBEACON_DETAILS_NO_BATTLE_TRAINER &&
-        info->details.details_no <= GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER ){
+    BeaconInfo_BeaconDetailOverwrite( info, FALSE );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * Swan⇔BW間でビーコンを受信した際に、受け取ってはいけない詳細情報パラメータを上書きする
+ *
+ * @param   info		
+ * 
+ * BTS1833対策
+ */
+//--------------------------------------------------------------
+static void BeaconInfo_BeaconDetailOverwrite( GAMEBEACON_INFO *info, BOOL recv_f )
+{
+  //受信モード時はBWから送られてきたビーコンかチェック。Swanからなら何もしない
+  if( recv_f ){
+    if( info->pm_version == VERSION_W2 || info->pm_version == VERSION_B2 ){
+      return;
+    }  
+  }
+  //詳細情報Noがトレーナー戦関連だったら移動中に上書き
+  if( info->details.details_no >= GAMEBEACON_DETAILS_NO_BATTLE_TRAINER &&
+      info->details.details_no <= GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER ){
       BEACONINFO_Set_Details_Walk( info );
       info->details.battle_trainer = 0;
-    }
   }
 }
 
@@ -1006,6 +1032,9 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     bsys->log[i].time = 0;  //タイムカウントリセット
     bsys->log[i].clock.hour = recv_time.hour;
     bsys->log[i].clock.min = recv_time.minute;
+    
+    //BTS1833対策 BWから送られてきた詳細情報Noがトレーナー戦関連だったら移動中に上書き
+    BeaconInfo_BeaconDetailOverwrite( &bsys->log[i].info, TRUE );
 
     if( bsys->log[i].clock.research_f == FALSE ){
       //アンケートがまだ未収集
