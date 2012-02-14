@@ -3858,13 +3858,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけ出しの　かくとうかと　戦い
+			<Text>かけ出しの　格闘家と　戦い
 修行の　お手伝いを　しよう！
 制限時間内に
 [Digit:4digits Idx="1" ]人以上　倒せ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-09T06:01:37" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-14T01:45:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3910,12 +3910,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけ出しの　かくとうかと　戦い
+			<Text>かけ出しの　格闘家と　戦い
 修行の　お手伝いを　しよう！
 [Digit:4digits Idx="1" ]人　倒せば　成功！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-09T06:01:43" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-14T01:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
