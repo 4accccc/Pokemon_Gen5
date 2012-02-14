@@ -6166,7 +6166,7 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒュウ『この　かんらんしゃ
+			<Text>この　かんらんしゃ
 ふたりのり　なんだってよ▼
 いもうとに　どれだけ　すごいか
 おしえたかったのにな……▼
@@ -6174,7 +6174,7 @@ OL</Text>
 オマエ　つきあえよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:47:54" />
+				Time="2012-02-14T02:29:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6182,7 +6182,7 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒュウ『この　観覧車
+			<Text>この　観覧車
 二人乗り専用　なんだってよ▼
 妹に　どれだけ　すごいか
 教えたかったのにな……▼
@@ -6190,7 +6190,7 @@ OL</Text>
 オマエ　つきあえよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T03:48:00" />
+				Time="2012-02-14T02:29:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6436,14 +6436,14 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おおきいよねえ……！▼
+			<Text>おおきいよねえ……！▼
 のったら　はるか　かなたまで
 みわたせるよねえ▼
 カノコタウン　みえるかなあ？
 ねえねえ　のろうよお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:19:22" />
+				Time="2012-02-14T02:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6451,14 +6451,14 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『おおきいよねえ……！▼
+			<Text>おおきいよねえ……！▼
 乗ったら　はるか　彼方まで
 みわたせるよねえ▼
 カノコタウン　みえるかなあ？
 ねえねえ　乗ろうよお！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:19:27" />
+				Time="2012-02-14T02:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6704,12 +6704,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]なつかしいな……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]なつかしいな……▼
 キミ！　ボクと　この
 かんらんしゃに　のりたまえ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:19:39" />
+				Time="2012-02-14T02:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6717,12 +6717,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]懐かしいな……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]懐かしいな……▼
 キミ！　ボクと　この
 観覧車に　乗りたまえ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:20:04" />
+				Time="2012-02-14T02:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6974,12 +6974,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……そういえば　ライモンには
+			<Text>……そういえば　ライモンには
 なんども　きているけれど▽
 のったことが　ないんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:24:08" />
+				Time="2012-02-14T02:29:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6987,12 +6987,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……そういえば　ライモンには
+			<Text>……そういえば　ライモンには
 何度も　来ているけれど▽
 乗ったことが　ないんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-03T06:26:12" />
+				Time="2012-02-14T02:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
