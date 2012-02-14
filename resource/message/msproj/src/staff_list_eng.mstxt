@@ -8392,25 +8392,25 @@
 		Label="STAFF_ROLL_STR_259">
 		<LanguageCell
 			Language="JPN">
-			<Text>POCKET MONSTERS WHITE  VERSION 2</Text>
+			<Text>POCKET MONSTERS WHITE VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T06:16:46" />
+				Time="2012-02-14T08:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T06:16:46" />
+				Time="2012-02-14T08:13:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>POCKET MONSTERS WHITE  VERSION 2</Text>
+			<Text>POCKET MONSTERS WHITE VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T06:16:46" />
+				Time="2012-02-14T08:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T06:16:46" />
+				Time="2012-02-14T08:13:56" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

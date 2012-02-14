@@ -1741,8 +1741,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_259">
-		<language name="JPN" width="256">POCKET MONSTERS WHITE  VERSION 2</language>
-		<language name="JPN_KANJI" width="256">POCKET MONSTERS WHITE  VERSION 2</language>
+		<language name="JPN" width="256">POCKET MONSTERS WHITE VERSION 2</language>
+		<language name="JPN_KANJI" width="256">POCKET MONSTERS WHITE VERSION 2</language>
 	</row>
 
 	<flowchart-group-list>
