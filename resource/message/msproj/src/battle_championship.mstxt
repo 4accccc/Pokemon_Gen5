@@ -759,10 +759,10 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は　バトルポイントを
-[Digit:2digits Idx="1" ]　てにいれた！▼</Text>
+[Digit:2digits Idx="1" ]ＢＰ　てにいれた！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T05:52:56" />
+				Time="2012-02-14T06:11:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -771,10 +771,10 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は　バトルポイントを
-[Digit:2digits Idx="1" ]　手に入れた！▼</Text>
+[Digit:2digits Idx="1" ]ＢＰ　手に入れた！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T05:51:18" />
+				Time="2012-02-14T06:12:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
