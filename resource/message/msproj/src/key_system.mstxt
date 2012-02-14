@@ -7037,10 +7037,10 @@ DSシステムフォントなので
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３ＤＳリンク</Text>
+			<Text>ニンテンドー３ＤＳリンク</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:31:33" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-13T02:22:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -7048,10 +7048,10 @@ DSシステムフォントなので
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３ＤＳリンク</Text>
+			<Text>ニンテンドー３ＤＳリンク</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-01-30T11:31:37" />
+				User="masafumi_saitou:W00225"
+				Time="2012-02-13T02:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
