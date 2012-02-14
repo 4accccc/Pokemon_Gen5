@@ -64,7 +64,7 @@
 #define NEWS_INTERVAL (3)
 
 // 一度に表示するジム情報の最大数
-#define GYM_NEWS_MAX_NUM (4)
+#define GYM_NEWS_MAX_NUM (3)
 
 // ギミックワークのアサインID
 #define GIMMICK_WORK_ASSIGN_ID (0)
@@ -347,7 +347,6 @@ u32 str_id_weather[ WEATHER_NO_NUM ] =
 // ジム情報の登録場所
 static const NEWS_INDEX gym_news_idx[ GYM_NEWS_MAX_NUM ] = 
 { 
-  NEWS_INDEX_PROPAGATION, 
   NEWS_INDEX_INFO_A, 
   NEWS_INDEX_INFO_B, 
   NEWS_INDEX_INFO_C
@@ -1494,10 +1493,10 @@ static void SetupElboardNews_Special( GATEWORK* work )
   if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
+  AddNews_SPECIAL( work );     // 臨時ニュース
   AddNews_PROPAGATION( work ); // 大量発生
   AddNews_DATE( work );        // 日付
   AddNews_WEATHER( work );     // 天気
-  AddNews_SPECIAL( work );     // 臨時ニュース
   AddNews_CM( work );          // 一言CM
 }
 
