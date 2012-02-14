@@ -205,10 +205,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よし！　とおって　いいぞ▼</Text>
+			<Text>よし！　とおって　いいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T05:43:21" />
+				Time="2012-02-14T10:54:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -216,10 +216,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よし！　通って　いいぞ▼</Text>
+			<Text>よし！　通って　いいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T05:43:28" />
+				Time="2012-02-14T10:55:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
