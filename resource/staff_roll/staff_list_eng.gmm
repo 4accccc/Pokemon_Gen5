@@ -1736,46 +1736,11 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_258">
-		<language name="JPN" width="256">Nintendo</language>
-		<language name="JPN_KANJI" width="256">Nintendo</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_259">
-		<language name="JPN" width="256">The Pokemon Company</language>
-		<language name="JPN_KANJI" width="256">The Pokemon Company</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_260">
-		<language name="JPN" width="256">and GAME GREAK inc.</language>
-		<language name="JPN_KANJI" width="256">and GAME GREAK inc.</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_261">
-		<language name="JPN" width="256">are the authors of </language>
-		<language name="JPN_KANJI" width="256">are the authors of </language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_262">
-		<language name="JPN" width="256">this software for </language>
-		<language name="JPN_KANJI" width="256">this software for </language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_263">
-		<language name="JPN" width="256">the purpose of copyright.</language>
-		<language name="JPN_KANJI" width="256">the purpose of copyright.</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_264">
-		<language name="JPN" width="256">All rights reserved.</language>
-		<language name="JPN_KANJI" width="256">All rights reserved.</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_265">
 		<language name="JPN" width="256">POCKET MONSTERS BLACK VERSION 2</language>
 		<language name="JPN_KANJI" width="256">POCKET MONSTERS BLACK VERSION 2</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_266">
+	<row id="STAFF_ROLL_STR_259">
 		<language name="JPN" width="256">POCKET MONSTERS WHITE  VERSION 2</language>
 		<language name="JPN_KANJI" width="256">POCKET MONSTERS WHITE  VERSION 2</language>
 	</row>

@@ -8487,150 +8487,50 @@
 		Label="STAFF_ROLL_STR_258">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいさく・ちょさく</Text>
+			<Text>ポケットモンスターブラック２</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいさく・ちょさく</Text>
+			<Text>ポケットモンスターブラック２</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="STAFF_ROLL_STR_259">
 		<LanguageCell
 			Language="JPN">
-			<Text>にんてんどうかぶしきがいしゃ</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>にんてんどうかぶしきがいしゃ</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_260">
-		<LanguageCell
-			Language="JPN">
-			<Text>かぶしきがいしゃポケモン</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>かぶしきがいしゃポケモン</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_261">
-		<LanguageCell
-			Language="JPN">
-			<Text>かぶしきがいしゃゲームフリーク</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>かぶしきがいしゃゲームフリーク</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_262">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケットモンスターブラック２</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケットモンスターブラック２</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_263">
-		<LanguageCell
-			Language="JPN">
 			<Text>ポケットモンスターホワイト２</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケットモンスターホワイト２</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:08" />
+				Time="2012-02-14T06:16:45" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

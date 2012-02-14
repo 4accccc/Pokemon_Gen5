@@ -1736,31 +1736,11 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_258">
-		<language name="JPN" width="256">せいさく・ちょさく</language>
-		<language name="JPN_KANJI" width="256">せいさく・ちょさく</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_259">
-		<language name="JPN" width="256">にんてんどうかぶしきがいしゃ</language>
-		<language name="JPN_KANJI" width="256">にんてんどうかぶしきがいしゃ</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_260">
-		<language name="JPN" width="256">かぶしきがいしゃポケモン</language>
-		<language name="JPN_KANJI" width="256">かぶしきがいしゃポケモン</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_261">
-		<language name="JPN" width="256">かぶしきがいしゃゲームフリーク</language>
-		<language name="JPN_KANJI" width="256">かぶしきがいしゃゲームフリーク</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_262">
 		<language name="JPN" width="256">ポケットモンスターブラック２</language>
 		<language name="JPN_KANJI" width="256">ポケットモンスターブラック２</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_263">
+	<row id="STAFF_ROLL_STR_259">
 		<language name="JPN" width="256">ポケットモンスターホワイト２</language>
 		<language name="JPN_KANJI" width="256">ポケットモンスターホワイト２</language>
 	</row>

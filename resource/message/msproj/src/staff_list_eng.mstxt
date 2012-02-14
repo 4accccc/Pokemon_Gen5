@@ -8367,225 +8367,50 @@
 		Label="STAFF_ROLL_STR_258">
 		<LanguageCell
 			Language="JPN">
-			<Text>Nintendo</Text>
+			<Text>POCKET MONSTERS BLACK VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Nintendo</Text>
+			<Text>POCKET MONSTERS BLACK VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="STAFF_ROLL_STR_259">
 		<LanguageCell
 			Language="JPN">
-			<Text>The Pokemon Company</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T03:06:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T03:06:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>The Pokemon Company</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T03:06:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-14T03:06:19" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_260">
-		<LanguageCell
-			Language="JPN">
-			<Text>and GAME GREAK inc.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>and GAME GREAK inc.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_261">
-		<LanguageCell
-			Language="JPN">
-			<Text>are the authors of </Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>are the authors of </Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_262">
-		<LanguageCell
-			Language="JPN">
-			<Text>this software for </Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>this software for </Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_263">
-		<LanguageCell
-			Language="JPN">
-			<Text>the purpose of copyright.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>the purpose of copyright.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_264">
-		<LanguageCell
-			Language="JPN">
-			<Text>All rights reserved.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>All rights reserved.</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_265">
-		<LanguageCell
-			Language="JPN">
-			<Text>POCKET MONSTERS BLACK VERSION 2</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>POCKET MONSTERS BLACK VERSION 2</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="STAFF_ROLL_STR_266">
-		<LanguageCell
-			Language="JPN">
 			<Text>POCKET MONSTERS WHITE  VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>POCKET MONSTERS WHITE  VERSION 2</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-10T05:36:09" />
+				Time="2012-02-14T06:16:46" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
