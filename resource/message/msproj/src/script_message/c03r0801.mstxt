@@ -590,12 +590,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>波の　動きに　わせて
+			<Text>波の　動きに　あわせて
 走ってるんだけどさ▽
 なかなか　難しいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2012-02-14T10:55:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -841,10 +841,10 @@
 ……　……　……
 ……　……　……▼
 ……いやー　ひさしぶりに　ひとと
-たくさん　はなせたよ　ありがとうな！</Text>
+たくさん　はなせたよ　ありがとうな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:42:03" />
+				Time="2012-02-14T10:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -872,10 +872,10 @@
 ……　……　……
 ……　……　……▼
 ……いやぁ　久しぶりに　人と
-たくさん　話せたよ　ありがとうな！</Text>
+たくさん　話せたよ　ありがとうな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:10:38" />
+				Time="2012-02-14T10:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2061,10 +2061,10 @@
 ……　……　……
 ……　……　……▼
 ……しつれい　しちゃうわ　まったく！
-どこか　おしゃべり　なのよ！</Text>
+どこか　おしゃべり　なのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:55:03" />
+				Time="2012-02-14T10:56:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2086,10 +2086,10 @@
 ……　……　……
 ……　……　……▼
 ……失礼しちゃうわ　まったく！
-どこか　おしゃべり　なのよ！</Text>
+どこか　おしゃべり　なのよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:55:22" />
+				Time="2012-02-14T10:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2998,10 +2998,10 @@
 ……　……　……　
 ……　……　……▼
 ……ふふっ　たのしかったよ
-また　おいで</Text>
+また　おいで▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:33:49" />
+				Time="2012-02-14T10:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3023,10 +3023,10 @@
 ……　……　……　
 ……　……　……▼
 ……ふふっ　楽しかったよ
-また　おいで</Text>
+また　おいで▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:34:21" />
+				Time="2012-02-14T10:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3370,10 +3370,10 @@
 ……　……　……　
 ……　……　……▼
 ……うん　かんどうてきな　ポエムね！
-ふふっ　ないても　いいのよ？</Text>
+ふふっ　ないても　いいのよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:49:17" />
+				Time="2012-02-14T10:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3400,10 +3400,10 @@
 ……　……　……　
 ……　……　……▼
 ……う～ん　感動的な　ポエムね！
-ふふっ　泣いても　いいのよ？</Text>
+ふふっ　泣いても　いいのよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T05:43:37" />
+				Time="2012-02-14T10:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3740,10 +3740,10 @@
 ……　……　……　
 ……　……　……▼
 ……あれ！
-なにを　はなそうと　していたっけ？</Text>
+なにを　はなそうと　していたっけ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:22:50" />
+				Time="2012-02-14T10:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3765,10 +3765,10 @@
 ……　……　……　
 ……　……　……▼
 ……あれ！
-なにを　話そうと　していたっけ？</Text>
+なにを　話そうと　していたっけ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:22:59" />
+				Time="2012-02-14T10:59:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
