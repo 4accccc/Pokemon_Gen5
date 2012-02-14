@@ -433,8 +433,8 @@ EVENT_START ev_c12r0101_swmama_01
 
   //クリア後
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_end_06 )
-  
+    //ママの回復イベントへ
+    _CALL		ev_everyday
   ELSIF FLAG_ON( SYS_FLAG_PAIR ) THEN
   
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_rival_01 )
@@ -455,6 +455,7 @@ EVENT_END
 ev_everyday:
 
   _TALK_OBJ_START()
+  
   //回復済みなら一言メッセージ
   IF $LOCALWORK15 == 999 THEN
     _PLAYER_NAME( 0 )
