@@ -3341,13 +3341,11 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       syswk->get_tray = syswk->tray;
       syswk->get_pos  = pos;
       syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
-    }else{
-      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY_GET;
-      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-    }
-    PMSND_PlaySE( SE_BOX2_DECIDE );
-		BOX2MAIN_ChgCursorButton( syswk );
-    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+	    PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+	    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	  return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
 	}
 
 	// ポケモンドラッグチェック
