@@ -599,10 +599,10 @@
 
 つうしん　することで　キーせっていで
 ロックされている　こうもくや
-マップを　かいじょ　できます</Text>
+マップを　かいほう　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:38:52" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -616,10 +616,10 @@
 
 通信することで　キー設定で
 ロックされている　項目や
-マップを　解除できます</Text>
+マップを　開放できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:41:51" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -651,10 +651,10 @@
 キーは　ぼうけんを　すすめることで
 てにいれることが　できます
 ひとと　つうしんして
-かいじょ　してもらうことも　できます</Text>
+かいほう　してもらうことも　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:41:57" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -668,10 +668,10 @@
 キーは　冒険を　進めることで
 手に入れることが　できます
 人と　通信して
-解除してもらうことも　できます</Text>
+開放してもらうことも　できます</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:42:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1539,10 +1539,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さんの　アシストキーで
-アシストモードを　かいじょした！[Ctrl2:WaitOne frame="60" ]</Text>
+アシストモードを　かいほうした！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:44:52" />
+				Time="2012-02-15T04:59:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1551,10 +1551,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　アシストキーで
-アシストモードを　解除した！[Ctrl2:WaitOne frame="60" ]</Text>
+アシストモードを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:44:59" />
+				Time="2012-02-15T04:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1574,10 +1574,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さんの　チャレンジキーで
-チャレンジモードを　かいじょした！[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジモードを　かいほうした！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:45:08" />
+				Time="2012-02-15T04:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1586,10 +1586,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　チャレンジキーで
-チャレンジモードを　解除した！[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジモードを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:45:14" />
+				Time="2012-02-15T04:54:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1621,10 +1621,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　じゅどうのカギで
-ホワイトフォレストを　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+ホワイトフォレストを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:45:48" />
+				Time="2012-02-15T04:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1656,10 +1656,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　まてんろうのカギで
-ブラックシティを　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+ブラックシティを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:46:15" />
+				Time="2012-02-15T04:54:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1691,10 +1691,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　くろがねのカギで
-鉄の間を　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+鉄の間を　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:46:50" />
+				Time="2012-02-15T04:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1726,10 +1726,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さんの　ひょうざんのカギで
-氷山の間を　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+氷山の間を　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:47:20" />
+				Time="2012-02-15T04:54:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1749,10 +1749,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいての　アシストキーで
-アシストモードを　かいじょした！[Ctrl2:WaitOne frame="60" ]</Text>
+アシストモードを　かいほうした！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:47:39" />
+				Time="2012-02-15T04:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1761,10 +1761,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　アシストキーで
-アシストモードを　解除した！[Ctrl2:WaitOne frame="60" ]</Text>
+アシストモードを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:47:52" />
+				Time="2012-02-15T04:54:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1784,10 +1784,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんあいての　チャレンジキーで
-チャレンジモードを　かいじょした！[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジモードを　かいほうした！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:48:07" />
+				Time="2012-02-15T04:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1796,10 +1796,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　チャレンジキーで
-チャレンジモードを　解除した！[Ctrl2:WaitOne frame="60" ]</Text>
+チャレンジモードを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:48:10" />
+				Time="2012-02-15T04:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1831,10 +1831,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　じゅどうのカギで
-ホワイトフォレストを　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+ホワイトフォレストを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:48:56" />
+				Time="2012-02-15T04:54:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1866,10 +1866,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　まてんろうのカギで
-ブラックシティを　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+ブラックシティを　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:49:03" />
+				Time="2012-02-15T04:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1901,10 +1901,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　くろがねのカギで
-鉄の間を　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+鉄の間を　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:49:06" />
+				Time="2012-02-15T04:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1936,10 +1936,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信相手の　ひょうざんのカギで
-氷山の間を　解放した！[Ctrl2:WaitOne frame="60" ]</Text>
+氷山の間を　開放した！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-06T07:49:09" />
+				Time="2012-02-15T04:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2134,10 +2134,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アシストキーで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-15T01:52:09" />
+				Time="2012-02-15T04:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2146,10 +2146,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アシストキーで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:36:34" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2169,10 +2169,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チャレンジキーで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:36:48" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:59:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2181,10 +2181,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チャレンジキーで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:36:56" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2204,10 +2204,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じゅどうのカギで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2216,10 +2216,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じゅどうのカギで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2239,10 +2239,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まてんろうのカギで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:22" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2251,10 +2251,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まてんろうのカギで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:30" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:55:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2615,14 +2615,14 @@
 			Language="JPN_KANJI">
 			<Text>ニンテンドー３ＤＳダウンロードソフト
 『ポケモンＡＲサーチャー』から
-ちょうさデータを　うけとります
+調査データを　受け取ります
 
-うけとった　ポケモンや　どうぐは
-ちょくせつ　ボックスや　バッグに
-おくられます</Text>
+受け取った　ポケモンや　道具は
+直接　ボックスや　バッグに
+送られます</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2012-02-14T03:34:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:03:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3010,12 +3010,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>アシストキー　で
-ロックを　かいじょ　しました▼
+ロックを　かいほう　しました▼
 モードへんこう「アシストモード」が
 えらべるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:15:53" />
+				Time="2012-02-15T05:00:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3024,12 +3024,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アシストキー　で
-ロックを　解除しました▼
+ロックを　開放しました▼
 モード変更「アシストモード」が
 選択できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:15:27" />
+				Time="2012-02-15T04:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3049,12 +3049,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>チャレンジキー　で
-ロックを　かいじょ　しました▼
+ロックを　かいほう　しました▼
 モードへんこう「チャレンジモード」が
 えらべるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:15:57" />
+				Time="2012-02-15T05:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3063,12 +3063,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チャレンジキー　で
-ロックを　解除しました▼
+ロックを　開放しました▼
 モード変更「チャレンジモード」が
 選択できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:15:32" />
+				Time="2012-02-15T04:56:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3088,12 +3088,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>じゅどうのカギ　で
-ロックを　かいじょ　しました▼
+ロックを　かいほう　しました▼
 まちのへんこう「ホワイトフォレスト」が
 えらべるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:16:00" />
+				Time="2012-02-15T05:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3102,12 +3102,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じゅどうのカギ　で
-ロックを　解除しました▼
+ロックを　開放しました▼
 街の変更「ホワイトフォレスト」が
 選択できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:15:40" />
+				Time="2012-02-15T04:56:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3127,12 +3127,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>まてんろうのカギ　で
-ロックを　かいじょ　しました▼
+ロックを　かいほう　しました▼
 まちのへんこう「ブラックシティ」が
 えらべるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:16:04" />
+				Time="2012-02-15T05:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3141,12 +3141,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まてんろうのカギ　で
-ロックを　解除しました▼
+ロックを　開放しました▼
 街の変更「ブラックシティ」が
 選択できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:16:11" />
+				Time="2012-02-15T04:56:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3178,10 +3178,10 @@ CYGNUS連動用</Comment>
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:35:21" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3195,10 +3195,10 @@ CYGNUS連動用</Comment>
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:35:30" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3230,10 +3230,10 @@ CYGNUS連動用</Comment>
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:35:38" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3247,10 +3247,10 @@ CYGNUS連動用</Comment>
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:35:46" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3280,10 +3280,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:35:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3295,10 +3295,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:01" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3328,10 +3328,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:08" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3343,10 +3343,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:36:18" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3551,10 +3551,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>くろがねのカギで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:50" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3563,10 +3563,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>くろがねのカギで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:37:57" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3593,10 +3593,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ひょうざんのカギで　ロックを
-かいじょしないと　えらべません</Text>
+かいほう　しないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:38:03" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3605,10 +3605,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ひょうざんのカギで　ロックを
-解除しないと　選択できません</Text>
+開放しないと　選択できません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:38:11" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3800,10 +3800,10 @@ CYGNUS連動用</Comment>
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-14T11:03:12" />
+				Time="2012-02-15T05:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3817,10 +3817,10 @@ CYGNUS連動用</Comment>
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-14T11:03:15" />
+				Time="2012-02-15T04:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3852,10 +3852,10 @@ CYGNUS連動用</Comment>
 えらべるように　なりました▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-14T11:03:20" />
+				Time="2012-02-15T05:00:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3869,10 +3869,10 @@ CYGNUS連動用</Comment>
 選べるように　なりました▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-14T11:03:23" />
+				Time="2012-02-15T04:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3982,10 +3982,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:39:46" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3997,10 +3997,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:39:52" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:57:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4030,10 +4030,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:40:00" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4045,10 +4045,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:41:06" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4078,10 +4078,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:40:15" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4093,10 +4093,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:40:59" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:57:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4126,10 +4126,10 @@ CYGNUS連動用</Comment>
 てに　いれました！▼
 キーは　つうしん　することで
 ひとの　ロックされている　こうもくや▽
-マップを　かいじょ　できます▼</Text>
+マップを　かいほう　できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:40:39" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4141,10 +4141,10 @@ CYGNUS連動用</Comment>
 手に入れました！▼
 キーは　通信することで
 人の　ロックされている　項目や▽
-マップを　解除できます▼</Text>
+マップを　開放できます▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-08T03:40:50" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4170,11 +4170,11 @@ CYGNUS連動用</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんする　DSが　みつかりません
+			<Text>つうしんする　ＤＳが　みつかりません
 もういちど　せつぞく　しますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-13T07:41:05" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4182,11 +4182,11 @@ CYGNUS連動用</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信する　DSが　みつかりません
-もういちど　接続　しますか？</Text>
+			<Text>通信する　ＤＳが　みつかりません
+もういちど　接続しますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-13T07:41:05" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T04:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4220,12 +4220,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>アシストモードに
-せっていを　へんこうしました▼
+せっていを　へんこう　しました▼
 トレーナーの　くりだす　ポケモンは
 いつもより　ひくいレベルに　なります▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:35:24" />
+				Time="2012-02-15T05:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4267,12 +4267,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ノーマルモードに
-せっていを　へんこうしました▼
+せっていを　へんこう　しました▼
 トレーナーの　くりだす　ポケモンは
 いつもの　レベルに　なります▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:34:42" />
+				Time="2012-02-15T05:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4314,12 +4314,12 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>チャレンジモードに
-せっていを　へんこうしました▼
+せっていを　へんこう　しました▼
 トレーナーの　くりだす　ポケモンは
 いつもより　たかいレベルに　なります▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:35:48" />
+				Time="2012-02-15T05:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4361,10 +4361,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ブラックシティに
-せっていを　へんこうしました▼</Text>
+せっていを　へんこう　しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:54" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -4404,10 +4404,10 @@ CYGNUS連動用</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ホワイトフォレストに
-せっていを　へんこうしました▼</Text>
+せっていを　へんこう　しました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:28:37" />
+				Time="2012-02-15T05:02:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
