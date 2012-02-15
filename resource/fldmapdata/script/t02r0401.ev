@@ -86,8 +86,8 @@ EVENT_START   ev_t02r0401_girl4_01
     ELSE
 
       _TALK_START_TURN_NOT()
-      //システム：えんそうに　むちゅうだ！！
-      _SYSWIN_MSG( msg_t02r0401_girl4_12, POS_DOWN )
+      //えんそうに　むちゅうだ！！
+      _PLAINWIN_MSG_DOWN( msg_t02r0401_girl4_12 )
       _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
@@ -342,8 +342,8 @@ EVENT_START   ev_t02r0401_man2_01
   ELSE
 
     _TALK_START_TURN_NOT()
-    //システム：えんそうに　むちゅうだ！
-    _SYSWIN_MSG( msg_t02r0401_man2_04, POS_DOWN )
+    //えんそうに　むちゅうだ！
+    _PLAINWIN_MSG_DOWN( msg_t02r0401_man2_04 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
