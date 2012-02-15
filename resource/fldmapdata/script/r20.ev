@@ -434,6 +434,8 @@ EVENT_START   ev_r20_swplazmaw_01
   //ライバル位置移動
   _OBJ_POS_CHANGE( R20_SWRIVAL_01, 146, 2, 663, DIR_RIGHT )
   
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_13 )
   
   //PLAZMAW：しつこい！
   _BALLOONWIN_OBJMSG_POS( msg_r20_swplazmaw_01, R20_SWPLAZMAW_01, POS_DEFAULT )
