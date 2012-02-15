@@ -1185,7 +1185,6 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
           break;
 
         case DREAM_WORLD_SERVER_NO_ACCOUNT:
-        case DREAM_WORLD_SERVER_ERROR_ETC:
           *p_seq  = SEQ_END;
           p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NO_REGIST;
           break;
