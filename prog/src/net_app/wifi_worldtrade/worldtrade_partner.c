@@ -1197,8 +1197,21 @@ static void WantPokeInfoPrint( GFL_BMPWIN * win[], GFL_MSGDATA *gtcmsg, GFL_MSGD
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[0]), 0x0000 );
 	WorldTrade_PokeNamePrintNoPut( win[0], monsname, dtsd->characterNo,  0, PRINTSYS_LSB_Make(1,2,0),print );
 
-	// «•Ê
-	WorldTrade_SexPrintNoPut( win[0], gtcmsg, dtsd->gender, 0, 3+13*5+5, 0, PRINTSYS_LSB_Make(1,2,0),print );
+
+  {
+    BOOL is_ok  = TRUE;
+
+    if( dtsd->characterNo == MONSNO_NIDORAN_M || dtsd->characterNo == MONSNO_NIDORAN_F )
+    {
+      is_ok = FALSE;
+    }
+
+    // «•Ê
+    if( is_ok )
+    {
+      WorldTrade_SexPrintNoPut( win[0], gtcmsg, dtsd->gender, 0, 3+13*5+5, 0, PRINTSYS_LSB_Make(1,2,0),print );
+    }
+  }
 
 
 	// ƒŒƒxƒ‹Žw’è
