@@ -1665,10 +1665,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サンヨウレストラン　名物
-[Name:PokemonName Idx="1" ]ショー　みていかない？</Text>
+[Name:PokemonName Idx="1" ]ショー　観ていかない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-11T14:13:42" />
+				Time="2012-02-15T05:30:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
