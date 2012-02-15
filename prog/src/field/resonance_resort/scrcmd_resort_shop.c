@@ -1303,7 +1303,7 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     else
     {
       //その他のサービスは選んだら終了。あとでスクリプト側から料金とフラグを建てる
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );
+      //PMSND_PlaySE( SEQ_SE_DECIDE1 );
       ShopPrintMsg( wk, mes_shop_02_07_03_m + wk->sex );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_END;
