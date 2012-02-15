@@ -807,6 +807,12 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   CTVT_TPrintf("----CTVT_GAME_TermMode----\n");
 
+  {
+    // 一応キューをクリアしておく
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+    PRINTSYS_QUE_Clear( printQue );
+  }
+
   // カメラ撮影用パラメータ破棄
   CTVT_GAME_CAM_FreeParam( gameWork->p_cam_param );
 

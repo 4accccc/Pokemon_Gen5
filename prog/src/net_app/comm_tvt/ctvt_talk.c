@@ -507,6 +507,13 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 //--------------------------------------------------------------
 void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
+  CTVT_Printf("******************************\n");
+  {
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+
+    CTVT_Printf("ˆ—Š®—¹‚µ‚Ä‚¢‚é‚© %d \n", PRINTSYS_QUE_IsFinished( printQue ) );
+    PRINTSYS_QUE_Clear( printQue );
+  }
 
   if( talkWork->yesNoWork != NULL )
   {
