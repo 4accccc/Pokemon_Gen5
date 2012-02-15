@@ -15,6 +15,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
 #include "src\field\field_sound.h"
+#include "field/resonance_resort_data.h"
 
 //自分のモジュール
 #include "br_graphic.h"
@@ -412,6 +413,15 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     BR_SIDEBAR_SetShakePos( p_wk->p_sidebar );
     BR_SIDEBAR_StartShake( p_wk->p_sidebar );
     BR_FADE_ALPHA_SetAlpha( p_wk->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
+  }
+
+  //リゾート用履歴差し込み
+  if( p_wk->p_param->p_param->mode == BR_MODE_GLOBAL_BV )
+  { 
+    if( p_wk->p_param->mode == BR_CORE_MODE_INIT )
+    { 
+      RESORT_RECORD_AddID( RESORT_RECORD_ID_VIDEO );
+    }
   }
 
 	return GFL_PROC_RES_FINISH;

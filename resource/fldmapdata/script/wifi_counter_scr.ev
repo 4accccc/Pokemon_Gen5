@@ -504,8 +504,6 @@ sub_rndmatch_try:
     _RET
   ENDIF
 
-  //リゾートレコード
-  _RESORT_SET_RECORD( RESORT_RECORD_ID_RNDMATCH )
   //フェスミッション強制終了
   _FMISSION_END_FORCE()
 
@@ -1084,8 +1082,6 @@ sub_btl_recorder_call:
     _RET
   ENDIF
 
-  //リゾートレコード
-  _RESORT_SET_RECORD( RESORT_RECORD_ID_VIDEO )  
   //フェスミッション強制終了
   _FMISSION_END_FORCE()
 
