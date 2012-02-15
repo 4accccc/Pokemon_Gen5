@@ -86,7 +86,7 @@ const static char BTL_UP_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle
 
 const static char POKECHK_URL[] ="https://pkvldtprod.nintendo.co.jp/pokemon/validate"; //POST
 
-const static char SAVE_GETBW[] = "https://dev-ds.pokemon-gl.com/dsio/gw?p=savedata.getbw&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";
+const static char SAVE_GETBW[] = "https://ds.pokemon-gl.com/dsio/gw?p=savedata.getbw&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";
 
 #ifdef BUGFIX_GFBTS2030_20101025
 const static char CREATEUPLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=account.create.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
