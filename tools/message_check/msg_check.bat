@@ -16,7 +16,7 @@ goto end
 :EX
 @echo off
 echo メッセージチェック中
-ruby ./last_input_check.rb
+ruby ./msg_check.rb
 echo メッセージチェック完了
 @echo on
 
