@@ -2362,7 +2362,7 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
     {
       u16 mons_no = CYGNUS_DATA_GET_POKE_NO( cp_row_data[i] );
       u8  form_no = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
-      u8  sex = CYGNUS_DATA_GET_FORM_NO( cp_row_data[i] );
+      u8  sex = CYGNUS_DATA_GET_SEX( cp_row_data[i] );
 
       if( Cygnus_Save_IsValidPokemon( mons_no, form_no, sex, heapID ) )
       {
