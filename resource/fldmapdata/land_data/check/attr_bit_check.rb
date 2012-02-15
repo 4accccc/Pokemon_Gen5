@@ -7,13 +7,14 @@ class ATTR_USE_DATA
 
   def initialize( file_name, attr_id_list ,attr_bit_index_list )
     @file_name = file_name
-    @attr_id_list = attr_id_list.uniq
-    @attr_bit_index_list = attr_bit_index_list.uniq
+    @attr_id_list = attr_id_list
+    @attr_bit_index_list = attr_bit_index_list
   end
 end
 
 # 結果出力先
 result_name = ARGV[0]
+result_num_name = ARGV[1]
 
 # ビット名
 ATTR_BIN_NAME=[
@@ -79,7 +80,7 @@ bin_ary.each{ | file_name |
   }
 
   # 出力形式データに整形
-  output_data << ATTR_USE_DATA.new( file_name,attr_id_list ,attr_bit_index_list.uniq )
+  output_data << ATTR_USE_DATA.new( file_name,attr_id_list ,attr_bit_index_list )
 }
 
 # 全データ出力
@@ -122,6 +123,57 @@ CSV.open(result_name,"w"){|writeer|
         else
           line << "×"
         end
+      end
+    }
+
+    writeer << line
+  }
+}
+
+# 全データ出力(数出力)
+CSV.open(result_num_name,"w"){|writeer|
+  
+  # ヘッダーデータ作成
+  header = Array.new
+  header <<  "ファイル名"
+  # ビット名登録
+  ATTR_BIN_NAME.each{|bit_name|
+      header << bit_name
+  }
+  # アトリビュート名登録
+  attr_type_name.each{|attr_name|
+    unless attr_name.include?("non") then
+      header << attr_name
+    end
+  }
+
+  writeer << header
+  # 全データ出力
+  output_data.each{|data|
+    line = Array.new
+    line << "%s(%d)"%[File.basename(data.file_name),data.attr_id_list.size]
+
+    # ビットデータ出力
+    ATTR_BIN_NAME.each_with_index{|bit_name,index|
+      include_cnt = 0
+      data.attr_bit_index_list.each{|idx|
+        if idx == index then
+          include_cnt += 1
+        end
+      }
+      line << include_cnt
+    }
+
+    # アトリビュートID出力
+    attr_type_name.size.times{|i|
+      unless attr_type_name[i].include?("non") then
+        include_cnt = 0
+        data.attr_id_list.each{|idx|
+          if idx == i then
+            include_cnt += 1
+          end
+        }
+        line << include_cnt
       end
     }
 

@@ -15,7 +15,7 @@ goto end
 :: =====================================================
 :EX
 @echo on
-ruby attr_bit_check.rb attr_use_list.csv
+ruby attr_bit_check.rb attr_use_list.csv attr_use_list_num.csv
 @echo off
 
 :end
