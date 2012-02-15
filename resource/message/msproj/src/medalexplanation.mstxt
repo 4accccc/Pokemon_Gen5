@@ -4097,29 +4097,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろちがいの　ポケモンと
-であった　ことのある
-こううんを　たたえる　メダル。</Text>
+			<Text>いろちがいの　ポケモンを
+なかまにした　こううんな
+トレーナーを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>色違いの　ポケモンと
-出会った　ことのある
-幸運を　称える　メダル。</Text>
+			<Text>色違いの　ポケモンを
+仲間にした　幸運な
+トレーナーを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -4318,28 +4318,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セイガイハシティの
-かおだしかんばんから　かおを　だした
-たびの　おもいでの　メダル。</Text>
+かおだしかんばんで　きねんしゃしんを
+さつえいした　おもいでの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-21T15:41:09" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セイガイハシティの
-顔出し看板から　顔を　出した
-旅の　思い出の　メダル。</Text>
+顔出し看板で　記念写真を
+撮影した　思い出の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2012-01-12T03:07:16" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">
@@ -10201,27 +10201,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクを　おこなった
+			<Text>おもいでリンクを　おこない
+はじめて　リンクイベントを　みた
 あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクを　行った
+			<Text>おもいでリンクを　行い
+初めて　リンクイベントを　見た
 証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-02-14T07:12:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2012-02-14T07:12:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Importance">

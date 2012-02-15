@@ -1282,12 +1282,12 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_087">
-		<language name="JPN" width="216">いろちがいの　ポケモンと
-であった　ことのある
-こううんを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">色違いの　ポケモンと
-出会った　ことのある
-幸運を　称える　メダル。</language>
+		<language name="JPN" width="216">いろちがいの　ポケモンを
+なかまにした　こううんな
+トレーナーを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">色違いの　ポケモンを
+仲間にした　幸運な
+トレーナーを　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_088">
@@ -1328,11 +1328,11 @@
 
 	<row id="MDL_EXP_FIELD_092">
 		<language name="JPN" width="216">セイガイハシティの
-かおだしかんばんから　かおを　だした
-たびの　おもいでの　メダル。</language>
+かおだしかんばんで　きねんしゃしんを
+さつえいした　おもいでの　メダル。</language>
 		<language name="JPN_KANJI" width="216">セイガイハシティの
-顔出し看板から　顔を　出した
-旅の　思い出の　メダル。</language>
+顔出し看板で　記念写真を
+撮影した　思い出の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_093">
@@ -2535,9 +2535,11 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_073">
-		<language name="JPN" width="216">おもいでリンクを　おこなった
+		<language name="JPN" width="216">おもいでリンクを　おこない
+はじめて　リンクイベントを　みた
 あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">おもいでリンクを　行った
+		<language name="JPN_KANJI" width="216">おもいでリンクを　行い
+初めて　リンクイベントを　見た
 証しの　メダル。</language>
 	</row>
 
