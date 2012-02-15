@@ -2256,10 +2256,15 @@ void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, 
   commWork->reqSendGameData = TRUE;
 
   // ゲーム2の場合はNetIDの送り方がビットで送る
-  //if( data_type == CCGDT_BURST2 )
-  //{
-  //  data.burst_netID |= commWork->sendGameData.burst_netID;
-  //}
+  if( data_type == CCGDT_BURST2 )
+  {
+    // 同フレームのみ
+    if( data.frame == commWork->sendGameData.frame )
+    {
+      data.burst_netID |= commWork->sendGameData.burst_netID;
+      CTVT_Printf("風船が同フレームで複数われた %d\n", data.burst_netID);
+    }
+  }
 
   // ゲームデータ更新
   commWork->sendGameData = data;

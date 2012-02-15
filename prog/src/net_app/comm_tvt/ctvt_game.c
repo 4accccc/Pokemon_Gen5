@@ -1536,6 +1536,8 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
 
   GF_ASSERT( netID < CTVT_MEMBER_NUM );
 
+  CTVT_Printf("タッチ数計測 NetId %d \n", netID);
+
   // タッチ数を計測しておく
   {
     u8  add = 1;
@@ -1560,6 +1562,7 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
 
       if( tbl_idx < 3 )
       {
+        CTVT_Printf("touch_cnt %d touch_tbl %d \n", p_wk->touch_cnt[ netID ], touch_tbl[ tbl_idx ] );
         if( p_wk->touch_cnt[ netID ] >= touch_tbl[ tbl_idx ] &&
             CTVT_BALLOON2_IsEffect( p_wk->p_balloon2[netID] ) == FALSE )
         {
@@ -1573,6 +1576,7 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
         // 順位によって追加タッチポイント
         const u8 touch_cnt_max = TOUCH_CNT_3;
 
+        CTVT_Printf("touch_cnt %d touch_max %d \n", p_wk->touch_cnt[ netID ], touch_cnt_max );
         if( p_wk->touch_cnt[ netID ] >= touch_cnt_max &&
             CTVT_BALLOON2_IsEffect( p_wk->p_balloon2[netID] ) == FALSE )
         {
@@ -1588,8 +1592,9 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
   if( send == TRUE )
   {
     CTVT_GAME_SEND_DATA data ={0};
-    //data.burst_netID = 1<<netID;
-    data.burst_netID = netID;
+    data.burst_netID = 1<<netID;
+    //data.burst_netID = netID;
+    CTVT_Printf("割れデータ送信 netId %d frame %d \n", netID, p_wk->frame );
     CTVT_COMM_SendGameReq( commWork, data, CCGDT_BURST2 );
   }
 }
@@ -1612,7 +1617,8 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
   for( i=0; i<CTVT_MEMBER_NUM; i++ )
   {
     // 処理する風船(=netID)をチェック
-    if( netIdBit == i )
+    //if( netIdBit == i )
+    if( netIdBit & (1<<i) )
     {
       BOOL ret;
       // 風船大きくor破裂
