@@ -1095,18 +1095,26 @@ const BOOL CTVT_GAME_IsAcceptNum( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 {
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  i;
+  u8  acceptNum = 0;
 
   // 0番目は自分(親)なので無視する
-  for( i=1; i<connectNum; i++ )
+  for( i=1; i<CTVT_MEMBER_NUM; i++ )
   {
-    // NetIdのビットがたっていなければFALSE
-    if( !(gameWork->acceptBit & (1<<i)) )
+    // NetIdのビットがたっていれば参加人数を追加
+    if( gameWork->acceptBit & (1<<i) )
     {
-      return FALSE;
+      acceptNum++;
     }
   }
+  acceptNum++;  // 自分(親)は参加なので参加
 
-  return TRUE;
+  // 接続人数 == 参加人数 
+  if( connectNum == acceptNum )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 // 接続している人が全員リトライするか 確認用
@@ -1114,18 +1122,26 @@ const BOOL CTVT_GAME_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
 {
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
   u8  i;
+  u8  acceptNum = 0;
 
   // 0番目は自分(親)なので無視する
-  for( i=1; i<connectNum; i++ )
+  for( i=1; i<CTVT_MEMBER_NUM; i++ )
   {
-    // NetIdのビットがたっていなければFALSE
-    if( !(gameWork->acceptBit2 & (1<<i)) )
+    // NetIdのビットがたっていれば参加人数を追加
+    if( gameWork->acceptBit2 & (1<<i) )
     {
-      return FALSE;
+      acceptNum++;
     }
   }
+  acceptNum++;  // 自分(親)は参加なので参加
 
-  return TRUE;
+  // 接続人数 == 参加人数 
+  if( connectNum == acceptNum )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
