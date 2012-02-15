@@ -139,6 +139,7 @@ static void Cygnus_Demo_EffectMain( CYGNUS_DEMO_WORK *p_wk );
 
 static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID );
 static void CYGNUS_SAVE_Exit( CYGNUS_SAVE_WORK *p_wk );
+static void CYGNUS_SAVE_Load( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID );
 
 typedef enum
 {
@@ -259,6 +260,9 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   {
   case SEQ_DISPLAY_CREATE:
+    //読込
+    CYGNUS_SAVE_Load( p_wk->p_cyg_sv, HEAPID_KEY_SYSTEM );
+
     //最初はメインメニュー作成フロー
     KEYSYS_TITLE_Delete( p_wk );
     KEYSYS_TITLE_CreateEx( p_wk, 21, HEAPID_KEY_SYSTEM );
@@ -869,7 +873,6 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   case SEQ_END:
     CYGNUS_RESULT_Release( p_wk->p_cyg_result );
-
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
@@ -1763,9 +1766,33 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
   CYGNUS_SAVE_WORK *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(CYGNUS_SAVE_WORK) );
   p_wk->p_gamedata  = p_gamedata;
   p_wk->p_cyg_sv_ctrl = CYGNUSSAVE_CONTROL_Create( heapID );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シグナスセーブ破棄
+ *
+ *	@param	CYGNUS_SAVE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CYGNUS_SAVE_Exit( CYGNUS_SAVE_WORK *p_wk )
+{
+  CYGNUSSAVE_CONTROL_Delete( p_wk->p_cyg_sv_ctrl );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  読込
+ *
+ *	@param	CYGNUS_SAVE_WORK *p_wkワーク
+ */
+//-----------------------------------------------------------------------------
+static void CYGNUS_SAVE_Load( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID )
+{
   CYGNUSSAVE_CONTROL_Load( p_wk->p_cyg_sv_ctrl );
   p_wk->p_out_sv = CYGNUSSAVE_CONTROL_GetPtr( p_wk->p_cyg_sv_ctrl );
-  p_wk->p_in_sv = SaveData_GetDummy3ds( GAMEDATA_GetSaveControlWork(p_gamedata) );
+  p_wk->p_in_sv = SaveData_GetDummy3ds( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
   p_wk->flag  = DUMMY3DS_SAVEDATA_GetData( p_wk->p_in_sv, DUMMY3DS_SAVEDATA_PARAM_FLAG );
 
   {
@@ -1795,20 +1822,6 @@ static CYGNUS_SAVE_WORK * CYGNUS_SAVE_Init( GAMEDATA *p_gamedata, HEAPID heapID 
     p_wk->out_state = CYGSAVE_STATE_RECEIVE;
   }
 #endif
-
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  シグナスセーブ破棄
- *
- *	@param	CYGNUS_SAVE_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void CYGNUS_SAVE_Exit( CYGNUS_SAVE_WORK *p_wk )
-{
-  CYGNUSSAVE_CONTROL_Delete( p_wk->p_cyg_sv_ctrl );
-  GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
