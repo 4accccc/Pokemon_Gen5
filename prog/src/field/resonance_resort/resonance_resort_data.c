@@ -4773,6 +4773,28 @@ void RESORT_RECORD_AddID( u32 record_id )
 #endif
 #endif
 
+  //未来の履歴を消す
+  {
+    s32 now_days = RTC_ConvertDateToDay( &date );
+    for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
+    {
+      RTCDate rec_date;
+      u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
+      RESORT_DATE reso_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
+      s32 rec_days;
+      RESORT_DATA_DateToRtc( reso_date, &rec_date );
+      rec_days = RTC_ConvertDateToDay( &rec_date );
+
+      rec_days = (record == RESORT_RECORD_ID_NONE)? 0: rec_days;
+
+      if( rec_days > now_days )
+      {
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, RESORT_RECORD_ID_NONE );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
+      }
+    }
+  }
+
 
   //空きチェック  先頭が空いていれば入れて、終わり
   {
@@ -4860,29 +4882,6 @@ RESORT_RECORD_ADD_ID_SORT:
       }
 #endif
 #endif
-
-  //未来の履歴を消す
-  {
-    s32 now_days = RTC_ConvertDateToDay( &date );
-    for( i = 0; i < RESORT_DATA_RECORD_CNT; i++ )
-    {
-      RTCDate rec_date;
-      u32 record = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, NULL );
-      RESORT_DATE reso_date = RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
-      s32 rec_days;
-      RESORT_DATA_DateToRtc( reso_date, &rec_date );
-      rec_days = RTC_ConvertDateToDay( &rec_date );
-
-      rec_days = (record == RESORT_RECORD_ID_NONE)? 0: rec_days;
-
-      if( rec_days > now_days )
-      {
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_00+i, RESORT_RECORD_ID_NONE );
-        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, 0 );
-      }
-    }
-  }
-
 
   //ソート
   for( i = 0; i < RESORT_DATA_RECORD_CNT-1; i++ )
