@@ -3342,7 +3342,6 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
       && ZONEDATA_IsPalace(zone_id) == FALSE){ //ÉpÉåÉXìáÇ≈ÇÕîíçïÇ…ÇµÇ»Ç¢
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
-    RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINK );
   }
   else{
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_NORMAL );
