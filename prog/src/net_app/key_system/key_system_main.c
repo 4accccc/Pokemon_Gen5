@@ -2012,6 +2012,11 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  //なかったら作る。cygnusの戻りとか
+  if( p_wk->p_title == NULL )
+  {
+    KEYSYS_TITLE_Create( p_wk, heapID );
+  }
   //タイトル
   //KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, KEYSYS_STR_00, KEYSYS_TEXT_TYPE_QUE );
 

@@ -337,8 +337,11 @@ void KEYSYS_CYGNUSFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   case SEQ_END:
     KEYSYS_TEXT_Delete( p_wk );
-    KEYSYS_TITLE_Delete( p_wk );
-    KEYSYS_TITLE_Create( p_wk, HEAPID_KEY_SYSTEM );
+    if( p_wk->p_title )
+    {
+      KEYSYS_TEXT_Exit( p_wk->p_title );
+      p_wk->p_title = NULL;
+    }
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_CYGNUS_TO_MAIN, 30 );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
