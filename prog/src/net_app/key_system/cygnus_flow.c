@@ -1844,7 +1844,7 @@ static CYGNUS_SAVE_STATUS CYGNUS_SAVE_GetStatus( const CYGNUS_SAVE_WORK *cp_wk )
   BOOL is_break  = (cp_wk->out_state == CYGSAVE_STATE_NON || cp_wk->out_state == CYGSAVE_STATE_BREAK);
 
   //‰ó‚ê‚Ä‚¢‚é
-  if( is_break )
+  if( is_break || (is_empty&&is_access) )
   {
     return CYGNUS_SAVE_STATUS_BREAK;
   }
