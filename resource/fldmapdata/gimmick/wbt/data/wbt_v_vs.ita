@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-12-28T12:11:59" source="wbt_v_vs.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-02-15T16:56:09" source="wbt_v_vs.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -55,14 +55,14 @@
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="wbt_v_vs1b">
+	<tex_srt_anm index="1" material_name="wbt_v_vs1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="60" data_head="61"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="wbt_v_vs1">
+	<tex_srt_anm index="2" material_name="wbt_v_vs1b">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
