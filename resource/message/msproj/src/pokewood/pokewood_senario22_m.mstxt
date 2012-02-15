@@ -1411,16 +1411,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『フハハハ！
-貧しい　庶民の　チミ店…▽
+貧しい　庶民の　チミ……▽
 王家の　子息である　ボク……▽
 格の差は　あって　当然ですな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:37" />
+				Time="2012-02-15T05:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:37" />
+				Time="2012-02-15T05:08:30" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

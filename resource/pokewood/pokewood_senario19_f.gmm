@@ -668,14 +668,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やれるかな……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">ペネロペ『できるよっ！！
+		<language name="JPN" width="256">ミゲル『できるよっ！！
 [1:00:トレーナー名:1]さんなら　できる！▽
 ぜったいに　できるっ！▽
 あきらめたら　そこで　まけなんだ！▼
 （オイオイ！？　ドーブル！！
 オマエ　かってに　わざの▽
 じゅんび　してんじゃないよっ！！</language>
-		<language name="JPN_KANJI" width="256">ペネロペ『出来るよっ！！
+		<language name="JPN_KANJI" width="256">ミゲル『出来るよっ！！
 [1:00:トレーナー名:1]さんなら　出来る！▽
 絶対に　出来るっ！▽
 あきらめたら　そこで　負けなんだ！▼
@@ -1063,7 +1063,7 @@
 一目ぼれ　しちゃったんです……▼
 だから……▼
 お願いしますっ！！
-わたしと　交換してくださいっ！！</language>
+私と　交換してくださいっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_6">
 		<language name="JPN" width="256">ミゲル『ええーっ？▼
@@ -1079,7 +1079,7 @@
 ずーっと　たいせつに　しますから！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お願いですっ！！▼
 ミゲルさんの　ドーブルを
-わたしに　くださいっ！！▼
+私に　くださいっ！！▼
 いつでも　仲良くしますし
 ずーっと　大切に　しますから！</language>
 	</row>

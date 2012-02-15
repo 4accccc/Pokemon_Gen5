@@ -1281,7 +1281,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ペネロペ『できるよっ！！
+			<Text>ミゲル『できるよっ！！
 [Name:TrainerName Idx="1" ]さんなら　できる！▽
 ぜったいに　できるっ！▽
 あきらめたら　そこで　まけなんだ！▼
@@ -1290,15 +1290,15 @@
 じゅんび　してんじゃないよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:01:27" />
+				Time="2012-02-15T05:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:01:27" />
+				Time="2012-02-15T05:08:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ペネロペ『出来るよっ！！
+			<Text>ミゲル『出来るよっ！！
 [Name:TrainerName Idx="1" ]さんなら　出来る！▽
 絶対に　出来るっ！▽
 あきらめたら　そこで　負けなんだ！▼
@@ -1307,11 +1307,11 @@
 準備　してんじゃないよっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:01:27" />
+				Time="2012-02-15T05:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T11:01:27" />
+				Time="2012-02-15T05:08:23" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2581,14 +2581,14 @@
 一目ぼれ　しちゃったんです……▼
 だから……▼
 お願いしますっ！！
-わたしと　交換してくださいっ！！</Text>
+私と　交換してくださいっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-15T04:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-15T04:49:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2639,16 +2639,16 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『お願いですっ！！▼
 ミゲルさんの　ドーブルを
-わたしに　くださいっ！！▼
+私に　くださいっ！！▼
 いつでも　仲良くしますし
 ずーっと　大切に　しますから！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-15T04:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2012-02-15T04:49:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -930,7 +930,9 @@
 		<language name="JPN" width="256">こえ『……　……　……　……
 すっ！　すみません　でした！▽
 かんべんして　くだせえ！</language>
-		<language name="JPN_KANJI" width="256">あくりょうたいじの　せんもんかである</language>
+		<language name="JPN_KANJI" width="256">声『……　……　……　……
+すみません　でした！▽
+勘弁して　くだせえ！</language>
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『やれやれ……
