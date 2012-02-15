@@ -4336,10 +4336,10 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　タマゴは
-参加は　できません！▼</Text>
+参加できません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-13T08:43:15" />
+				Time="2012-02-15T07:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

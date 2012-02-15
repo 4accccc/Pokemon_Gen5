@@ -822,13 +822,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なお　タマゴは
+			<Text>なお　タマゴを
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -836,13 +836,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なお　タマゴは
+			<Text>なお　タマゴを
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -882,13 +882,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]は
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -896,13 +896,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]は
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -942,13 +942,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]は
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,13 +956,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]は
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1003,13 +1003,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]は▽
+[Name:PokemonName Idx="2" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1018,13 +1018,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]は▽
+[Name:PokemonName Idx="2" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:34:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1065,13 +1065,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]は▽
+[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1080,13 +1080,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]は▽
+[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1127,13 +1127,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]は▽
+[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1142,13 +1142,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
-[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]は▽
+[Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1190,13 +1190,13 @@
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]は
+[Name:PokemonName Idx="5" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1206,13 +1206,13 @@
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]は
+[Name:PokemonName Idx="5" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1254,13 +1254,13 @@
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]は
+[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1270,13 +1270,13 @@
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]は
+[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1318,13 +1318,13 @@
 			Language="JPN">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]は
+[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:31:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1334,13 +1334,13 @@
 			Language="JPN_KANJI">
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
-[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]は
+[Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1383,13 +1383,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]は▽
+[Name:PokemonName Idx="8" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1400,13 +1400,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]は▽
+[Name:PokemonName Idx="8" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1449,13 +1449,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]は▽
+[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1466,13 +1466,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]は▽
+[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1515,13 +1515,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]は▽
+[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1532,13 +1532,13 @@
 			<Text>なお　タマゴ　[Name:PokemonName Idx="0" ]　[Name:PokemonName Idx="1" ]
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
-[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]は▽
+[Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1582,13 +1582,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]は
+[Name:PokemonName Idx="11" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1600,13 +1600,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]は
+[Name:PokemonName Idx="11" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1650,13 +1650,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]は
+[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1668,13 +1668,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]は
+[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1718,13 +1718,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]は
+[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1736,13 +1736,13 @@
 [Name:PokemonName Idx="2" ]　[Name:PokemonName Idx="3" ]　[Name:PokemonName Idx="4" ]▼
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
-[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]は
+[Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1787,13 +1787,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]は▽
+[Name:PokemonName Idx="14" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1806,13 +1806,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]は▽
+[Name:PokemonName Idx="14" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1857,13 +1857,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]は▽
+[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1876,13 +1876,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]は▽
+[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1927,13 +1927,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]は▽
+[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1946,13 +1946,13 @@
 [Name:PokemonName Idx="5" ]　[Name:PokemonName Idx="6" ]　[Name:PokemonName Idx="7" ]
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
-[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]は▽
+[Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1998,13 +1998,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]は
+[Name:PokemonName Idx="17" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2018,13 +2018,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]は
+[Name:PokemonName Idx="17" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2070,13 +2070,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]は
+[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:07:36" />
+				Time="2012-02-15T07:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2090,13 +2090,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]は
+[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:07:40" />
+				Time="2012-02-15T07:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2142,13 +2142,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]は
+[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2162,13 +2162,13 @@
 [Name:PokemonName Idx="8" ]　[Name:PokemonName Idx="9" ]　[Name:PokemonName Idx="10" ]▼
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
-[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]は
+[Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2215,13 +2215,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]は▽
+[Name:PokemonName Idx="20" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:56:49" />
+				Time="2012-02-15T07:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2236,13 +2236,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]は▽
+[Name:PokemonName Idx="20" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T12:56:52" />
+				Time="2012-02-15T07:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2289,13 +2289,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]は▽
+[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2310,13 +2310,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]は▽
+[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2363,13 +2363,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]は▽
+[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2384,13 +2384,13 @@
 [Name:PokemonName Idx="11" ]　[Name:PokemonName Idx="12" ]　[Name:PokemonName Idx="13" ]
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
-[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]は▽
+[Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2438,13 +2438,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]は
+[Name:PokemonName Idx="23" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2460,13 +2460,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]は
+[Name:PokemonName Idx="23" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2514,13 +2514,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]は
+[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2536,13 +2536,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]は
+[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:35:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2590,13 +2590,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]は
+[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]を
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2612,13 +2612,13 @@
 [Name:PokemonName Idx="14" ]　[Name:PokemonName Idx="15" ]　[Name:PokemonName Idx="16" ]▼
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
-[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]は
+[Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]を
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:36:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2667,13 +2667,13 @@
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
 [Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]
-[Name:PokemonName Idx="26" ]は▽
+[Name:PokemonName Idx="26" ]を▽
 さんか　させることは　できません！▼
 「こころのしずく」を　もたせて
 さんか　させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:33:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2690,13 +2690,13 @@
 [Name:PokemonName Idx="17" ]　[Name:PokemonName Idx="18" ]　[Name:PokemonName Idx="19" ]
 [Name:PokemonName Idx="20" ]　[Name:PokemonName Idx="21" ]　[Name:PokemonName Idx="22" ]▼
 [Name:PokemonName Idx="23" ]　[Name:PokemonName Idx="24" ]　[Name:PokemonName Idx="25" ]
-[Name:PokemonName Idx="26" ]は▽
+[Name:PokemonName Idx="26" ]を▽
 参加させることは　できません！▼
 「こころのしずく」を　持たせて
 参加させることも　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T07:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
