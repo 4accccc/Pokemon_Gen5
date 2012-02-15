@@ -42,6 +42,9 @@
 // 後方確保用ヒープＩＤ
 #define	HEAPID_STAFF_ROLL_L		( GFL_HEAP_LOWID(HEAPID_STAFF_ROLL) )
 
+// 入力トリガマスク
+#define SKIP_BUTTON_MASK      ( PAD_BUTTON_START )
+
 // メインシーケンス
 enum {
 	MAINSEQ_INIT = 0,
@@ -353,7 +356,9 @@ static const pCOMM_FUNC CommFunc[] = {
 //--------------------------------------------------------------------------------------------
 BOOL SRMAIN_Main( SRMAIN_WORK * wk )
 {
+#ifdef PM_DEBUG
 	CheckSkip( wk );
+#endif
 
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
 	if( wk->mainSeq == MAINSEQ_END ){
@@ -584,6 +589,14 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		}
 	}
 #endif
+  
+  // ディレクター要望で２回目以降のみSkipあり
+  if( wk->dat->fastMode == STAFFROLL_MODE_FAST ){
+    if( GFL_UI_KEY_GetTrg() & SKIP_BUTTON_MASK ){
+      // 終了
+      return SetFadeOut( wk, MAINSEQ_RELEASE );
+    }
+  }
 
 	if( wk->subSeq == SUBSEQ_INIT ){
 		while( 1 ){
@@ -1471,7 +1484,7 @@ static int SetFadeOut( SRMAIN_WORK * wk, int next )
 //--------------------------------------------------------------------------------------------
 static void CheckSkip( SRMAIN_WORK * wk )
 {
-	if( wk->dat->fastMode != STAFFROLL_MODE_NORMAL ){
+	if( wk->dat->fastMode == STAFFROLL_MODE_DEBUG ){
 		if( wk->skipCount == 0 ){
 			if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
 				wk->skipFlag = 1;
