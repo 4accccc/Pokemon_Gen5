@@ -131,6 +131,8 @@ static void effReq_PopupMsg( BEACON_DETAIL_WORK* wk );
 static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir );
 static void printReq_BmpwinPrint( BEACON_DETAIL_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color );
 
+static BOOL sub_CheckBwBeaconZoneID( const GAMEBEACON_INFO *info );
+
 /*
  *  @brief  ビーコン詳細画面初期描画
  */
@@ -614,8 +616,11 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
   {
 	  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( wk->tmap, GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ) );
     
+    BOOL is_visible_off = sub_CheckBwBeaconZoneID( wk->tmpInfo );
+
 	  //タウンマップ上の座標取得
     if( (dataIndex == TOWNMAP_DATA_ERROR) ||
+        is_visible_off || 
         (TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_HIDE_FLAG ) != TOWNMAP_DATA_ERROR ) ||
         (zone >= ZONE_ID_MAX)){
       wk->icon_enable_f = FALSE;
@@ -1064,3 +1069,38 @@ static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* tcb_wk)
 }
 
  
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BWのビーコンで、特定ゾーンにいるとき表示しないチェック
+ *
+ *	@param	const GAMEBEACON_INFO *info インフォ
+ *
+ *	@return TRUE 表示しない FALSE 表示する
+ */
+//-----------------------------------------------------------------------------
+static BOOL sub_CheckBwBeaconZoneID( const GAMEBEACON_INFO *info )
+{
+  int version = GAMEBEACON_Get_PmVersion(info);
+
+  if( version == VERSION_BLACK || version == VERSION_WHITE )
+  {
+    //タウンマップルートIDを使うと、Nの城はC09に置き換わっているので、
+    //ZoneIDからグループを引き直してチェックする
+    u16 zoneID = ZONEDATA_GetGroupID( GAMEBEACON_Get_ZoneID( info ) );
+    static const u16 sc_visible_off_zoneID[]  =
+    {
+      ZONE_ID_D05,  //冷凍コンテナ
+      ZONE_ID_N01R0101, //Nの城
+    };
+    int i;
+    for( i = 0; i < NELEMS(sc_visible_off_zoneID); i++ )
+    {
+      if( zoneID == sc_visible_off_zoneID[i] )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
