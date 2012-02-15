@@ -6,14 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！
-いま　どこだッ？▼
-エッ　ソウリュウ！？▼
-そっちに　へんな　ふねが
+			<Text>[Name:TrainerName ]！▼
+ソウリュウに　へんな　ふねが
 とんでいったろッ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T06:12:43" />
+				Time="2012-02-15T10:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -21,14 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！
-いま　どこだッ？▼
-エッ　ソウリュウ！？▼
-そっちに　変な　船が
+			<Text>[Name:TrainerName ]！▼
+ソウリュウに　変な　船が
 飛んでいったろッ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-01-17T06:12:55" />
+				Time="2012-02-15T10:51:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
