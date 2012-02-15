@@ -3039,14 +3039,6 @@ static CYGNUS_RECIVE Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_
     p_error_msg = &error;
   }
 
-  //報酬データが壊れていた
-  {
-    if( CYGNUS_SAVE_GetStatus(p_wk->p_cyg_sv) == CYGNUS_SAVE_STATUS_BREAK )
-    {
-      return CYGNUS_RECIVE_BREAK;
-    }
-  }
-
   //SWAN本編のセーブデータ（初期３匹入手済みでないとNG）
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
@@ -3068,6 +3060,13 @@ static CYGNUS_RECIVE Cygnus_IsReciveEnable( KEY_SYSTEM_WORK *p_wk, u32 *p_error_
     }
   }
 
+  //報酬データが壊れていた
+  {
+    if( CYGNUS_SAVE_GetStatus(p_wk->p_cyg_sv) == CYGNUS_SAVE_STATUS_BREAK )
+    {
+      return CYGNUS_RECIVE_BREAK;
+    }
+  }
 
   //報酬データがない
   {
