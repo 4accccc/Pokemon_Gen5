@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-10-11T17:09:08" source="c03_m00_00_s.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2012-02-15T15:28:22" source="c03_m00_00_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-10-11T17:09:08" source="c03_m00_00_s.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2012-02-15T15:28:22" source="c03_m00_00_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -206,27 +206,20 @@
 	</tex_image>
 	<tex_image index="7" name="c3_buil4"
 		width="16" height="16" original_width="16" original_height="16"
-		format="a3i5"
+		format="palette16"
+		color0_mode="transparency"
 		palette_name="c3_buil4_pl"
 		path="C:/home/swan_data3d/field/out47/map/tex/1sp/c3_buil4.tga"
 	>
-		<bitmap size="128">
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e3e3 e3e3 e2e2 e2e2 e2e2 e1e2 e3e3 e3e3
-			e4e4 e4e4 e2e2 e2e2 e2e2 e1e2 e4e4 e4e4
-			e3e3 e3e3 a1e2 a1a1 a1a1 e1e2 e3e3 e3e3
-			e4e4 e4e4 a1e2 4040 4040 e1e2 e4e4 e4e4
-			e3e3 e3e3 a1e2 0540 0505 e1e2 e3e3 e3e3
-			e4e4 e4e4 a1e2 0540 0505 e1e2 e4e4 e4e4
-			e3e3 e3e3 a1e2 0540 0505 e1e2 e3e3 e3e3
-			e4e4 e4e4 a1e2 0540 0505 e1e2 e4e4 e4e4
-			e3e3 e3e3 a1e2 0540 0505 e1e2 e3e3 e3e3
-			e4e4 e4e4 e2e2 e2e2 e2e2 e1e2 e4e4 e4e4
-			e3e3 e3e3 e1e1 e1e1 e1e1 e1e1 e3e3 e3e3
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3
+		<bitmap size="64">
+			2222 2222 2222 2222 1111 1111 1111 1111
+			2222 2222 2222 2222 1111 3333 5333 1111
+			2222 3333 5333 2222 1111 5553 5355 1111
+			2222 4453 5344 2222 1111 0453 5300 1111
+			2222 0453 5300 2222 1111 0453 5300 1111
+			2222 0453 5300 2222 1111 0453 5300 1111
+			2222 3333 5333 2222 1111 5555 5555 1111
+			2222 2222 2222 2222 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
 	<tex_image index="8" name="c3_buil5"
@@ -1134,7 +1127,7 @@
 		7fff 6f7b 6b5a 6739 5ad6 4e73 294a 7fff
 	</tex_palette>
 	<tex_palette index="7" name="c3_buil4_pl" color_size="8">
-		214d 256f 2db1 3a13 4276 7fff 7fff 7fff
+		7fff 3a13 4276 2db1 214d 256f 7fff 7fff
 	</tex_palette>
 	<tex_palette index="8" name="c3_buil5_pl" color_size="16">
 		7fff 3a13 4256 2dd1 214d 256f 212b 7fff
@@ -3520,16 +3513,16 @@
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xz xz="-0.218750 -2.125000"/>
 					<pos_xy xy="1.531250 1.953125"/>
-					<tex st="-33.500000 -128.000000"/>
-					<pos_xy xy="1.531250 4.578125"/>
-					<pos_xy xy="-0.218750 4.578125"/>
+					<tex st="-33.500000 -16.562500"/>
+					<pos_xy xy="1.531250 2.750000"/>
+					<pos_xy xy="-0.218750 2.750000"/>
 					<tex st="-33.500000 32.000000"/>
 					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_s xyz="1.531250 1.953125 -3.937500"/>
 					<pos_xy xy="-0.218750 1.953125"/>
-					<tex st="-33.500000 -128.000000"/>
-					<pos_xy xy="-0.218750 4.578125"/>
-					<pos_xy xy="1.531250 4.578125"/>
+					<tex st="-33.500000 -16.562500"/>
+					<pos_xy xy="-0.218750 2.750000"/>
+					<pos_xy xy="1.531250 2.750000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xz xz="-0.218750 -2.125000"/>
 					<pos_xz xz="-0.218750 -3.937500"/>
