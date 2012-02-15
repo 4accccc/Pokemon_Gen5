@@ -2247,6 +2247,7 @@ static void CYGNUS_SAVE_SetGameDataReward( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID
   //É|ÉPÉÇÉìäiî[
   {
     BOX_MANAGER *p_box  = GAMEDATA_GetBoxManager( p_wk->p_gamedata );
+    ZUKAN_SAVEDATA *p_zkn = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
     int i;
 
     for( i = 0; i < p_wk->reward_num; i++ )
@@ -2261,6 +2262,9 @@ static void CYGNUS_SAVE_SetGameDataReward( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID
           MISC * p_misc = GAMEDATA_GetMiscWork( p_wk->p_gamedata );
           EVTLOCK_SetEvtLock( p_misc, EVT_LOCK_NO_RANDOROSU, p_mystatus );
         }
+        //ê}ä”ìoò^
+        ZUKANSAVE_SetPokeGet( p_zkn, p_pp );
+
 
         //É{ÉbÉNÉXÇ…äiî[
         BOXDAT_PutPokemon( p_box, PP_GetPPPPointer(p_pp) );
