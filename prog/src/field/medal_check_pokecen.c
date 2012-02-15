@@ -36,6 +36,7 @@
 #include "savedata/sodateya_work.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/habitat_list_save.h"
+#include "savedata/battle_box_save.h"
 
 //=============================================================================
 /**
@@ -147,6 +148,7 @@ static BOOL MDLREC_CHECK_AllArrivalCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_
 static BOOL MDLREC_CHECK_DataConvertFlgCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_GetExp( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_CaptureCnt( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static void SetBoxParamFlag( POKEMON_PASO_PARAM *p_ppp ,MEDALREC_DATA *p_recdata );
 
 // 判定用関数テーブル読み込み
 typedef BOOL (*MDLACHIEVEPROC)( MEDALREC_DATA* ,GAMEDATA* ,u32 ,HEAPID );
@@ -562,47 +564,46 @@ static BOOL CheckBoxData( MEDALREC_DATA *p_recdata, GAMEDATA* p_gamedata, HEAPID
 
   if( p_recdata->is_set_boxdata == FALSE )
   {
+    u32 btl_box_num;
+    u32 btl_box_idx;
     u32 tray_num;
     u32 pos;
-    BOX_MANAGER *p_box = GAMEDATA_GetBoxManager(p_gamedata);
+    SAVE_CONTROL_WORK* p_svc    = GAMEDATA_GetSaveControlWork( p_gamedata );
+    BOX_MANAGER *p_box          = GAMEDATA_GetBoxManager(p_gamedata);
+    BATTLE_BOX_SAVE *p_btl_box  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_svc );
+
+    // 通常ボックスを調べる
     for( tray_num = 0; tray_num < BOX_MAX_TRAY; tray_num++)
     {
       for( pos = 0; pos < BOX_MAX_POS; pos++)
       {
         if( BOXDAT_PokeParaGet( p_box ,tray_num ,pos ,ID_PARA_poke_exist, NULL ) )
         {
-          BOOL flag;
           POKEMON_PASO_PARAM *p_ppp;
           p_ppp = BOXDAT_GetPokeDataAddress( p_box ,tray_num ,pos );
 
-          // ボックスポケモンパラメータ構造体へのアクセスを高速化モードへ
-          flag = PPP_FastModeOn( p_ppp );
-
-          // ポケルスチェック
-          if( p_recdata->is_get_pokerus == FALSE )
-          {
-            if( PPP_Get( p_ppp, ID_PARA_pokerus, NULL ) != 0 )
-            {
-              p_recdata->is_get_pokerus = TRUE;
-            }
-          }
-
-          // Nポケ
-          if( p_recdata->is_get_n_poke == FALSE )
-          {
-            p_recdata->is_get_n_poke = PPP_Get( p_ppp, ID_PARA_n_poke_flag, NULL );
-          }
-
-          // レア
-          if( p_recdata->is_get_rare == FALSE ){
-            p_recdata->is_get_rare = PPP_CheckRare( p_ppp );
-          }
-          
-          // ボックスポケモンパラメータ構造体へのアクセスを高速化モード終了
-          PPP_FastModeOff( p_ppp, flag );
+          // ボックス関連フラグをチェック
+          SetBoxParamFlag( p_ppp ,p_recdata );
         }
       }
     }
+
+    // バトルボックスの中を調べる
+    if( BATTLE_BOX_SAVE_IsIn(p_btl_box) == TRUE )
+    {
+      for(btl_box_num=0;btl_box_num<BATTLE_BOX_PARTY_NUM;btl_box_num++)
+      {
+        // 通常ボックスを調べる
+        for( btl_box_idx = 0; btl_box_idx < BATTLE_BOX_PARTY_MEMBER; btl_box_idx++)
+        {
+          POKEMON_PASO_PARAM* p_ppp = BATTLE_BOX_SAVE_GetPPP( p_btl_box , btl_box_num, btl_box_idx );
+          
+          // ボックス関連フラグをチェック
+          SetBoxParamFlag( p_ppp ,p_recdata );
+        }
+      }
+    }
+
     p_recdata->is_set_boxdata = TRUE;
   }
 
@@ -614,6 +615,52 @@ static BOOL CheckBoxData( MEDALREC_DATA *p_recdata, GAMEDATA* p_gamedata, HEAPID
 #endif
 #endif
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボックス関連パラメータをチェック
+ *
+ *	@param	*p_ppp 
+ *	@param	*p_recdata 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetBoxParamFlag( POKEMON_PASO_PARAM *p_ppp ,MEDALREC_DATA *p_recdata )
+{
+  BOOL flag;
+
+  // ポケモンが存在するか
+  if( PPP_Get( p_ppp, ID_PARA_poke_exist, NULL ) == 0 ){
+    return;
+  }
+
+  // ボックスポケモンパラメータ構造体へのアクセスを高速化モードへ
+  flag = PPP_FastModeOn( p_ppp );
+
+  // ポケルスチェック
+  if( p_recdata->is_get_pokerus == FALSE )
+  {
+    if( PPP_Get( p_ppp, ID_PARA_pokerus, NULL ) != 0 )
+    {
+      p_recdata->is_get_pokerus = TRUE;
+    }
+  }
+
+  // Nポケ
+  if( p_recdata->is_get_n_poke == FALSE )
+  {
+    p_recdata->is_get_n_poke = PPP_Get( p_ppp, ID_PARA_n_poke_flag, NULL );
+  }
+
+  // レア
+  if( p_recdata->is_get_rare == FALSE ){
+    p_recdata->is_get_rare = PPP_CheckRare( p_ppp );
+  }
+
+  // ボックスポケモンパラメータ構造体へのアクセスを高速化モード終了
+  PPP_FastModeOff( p_ppp, flag );
 }
 
 //----------------------------------------------------------------------------
@@ -701,6 +748,11 @@ static BOOL CheckSodateyaData( MEDALREC_DATA *p_recdata, GAMEDATA* p_gamedata, H
 //-----------------------------------------------------------------------------
 static void CheckPPFlagCheck( MEDALREC_DATA *p_recdata, const POKEMON_PARAM *p_pp )
 {
+  // ポケモンが存在するか
+  if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) == 0 ){
+    return;
+  }
+
   if( !PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) )
   {
     // ポケルスチェック
