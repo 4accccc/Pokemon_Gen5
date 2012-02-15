@@ -53,7 +53,7 @@ EVENT_START   ev_c03p07_sunglasses_01
     _OBJ_ADD_EX( 20, 56, DIR_UP, MMDL_ID_EVENTOBJ_00, SWIRIS, MV_DMY )
     
     //？？？：あれ？
-    _PLAINWIN_MSG_UP( msg_c03p07_swchampion_01 )
+    _PLAINWIN_MSG_DOWN( msg_c03p07_swchampion_01 )
     _MSGWIN_CLOSE()
     
     //アニメ：アイリス隣接
