@@ -2134,11 +2134,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アシストキーで　ロックを
-かいじょしないと　えらべません
-</Text>
+かいじょしないと　えらべません</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2012-02-07T03:36:20" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T01:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5370,11 +5369,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>おもいでリンクを
-キャンセル　しました▽
+キャンセル　しました
 しゅうりょう　します▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:57:05" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T02:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5383,11 +5382,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おもいでリンクを
-キャンセル　しました▽
+キャンセル　しました
 終了します▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-02T06:57:15" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T02:01:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
