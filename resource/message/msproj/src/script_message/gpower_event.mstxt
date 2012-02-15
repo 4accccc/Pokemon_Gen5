@@ -1085,10 +1085,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　揺れる　草むらや
-土煙を　見つけやすく　なった</Text>
+土煙を　見つけやすく　なった！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:07:09" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1183,10 +1183,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　めずらしい
-ポケモンと　出会いやすく　なった</Text>
+ポケモンと　出会いやすく　なった！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-28T06:08:01" />
+				User="matsumiya:W00224"
+				Time="2012-02-15T05:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
