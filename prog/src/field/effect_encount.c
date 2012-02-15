@@ -288,7 +288,6 @@ void EFFECT_ENC_CheckEffectEncountStart( FIELD_ENCOUNT* enc )
     data_flags |= DATA_TYPE_WATER;
   }
   if( data_flags == 0){
-    GF_ASSERT(0);
     return; //エフェクトエンカウントデータがない
   }
   
