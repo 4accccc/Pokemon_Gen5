@@ -1261,6 +1261,12 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
     info->zone_id = loc->zone_id;
   }
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(gamedata, info->zone_id);
+  //「～を移動中です」はrootではなく下記zone_idを使っている。
+  //BTS1875の対処のため、WFBCを受信側で識別できるようにする。
+  if( ZONEDATA_IsWfbc( info->zone_id ) )
+  {
+    info->zone_id = info->townmap_root_zone_id;
+  }
   info->g_power_id = GPOWER_ID_NULL;
   info->trainer_id = MyStatus_GetID_Low(myst);
   info->favorite_color_index = owner_info.favoriteColor;
@@ -2320,7 +2326,16 @@ void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAME
 {
   LINK_FESTIVAL*  fest_sys;
 
-  info->zone_id = zone_id;
+  //「～を移動中です」はrootではなく下記zone_idを使っている。
+  //BTS1875の対処のため、WFBCを受信側で識別できるようにする。
+  if( ZONEDATA_IsWfbc( zone_id ) )
+  {
+    info->zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
+  }
+  else
+  {
+    info->zone_id = zone_id;
+  }
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   BEACONINFO_Set_Details_Walk(info);
