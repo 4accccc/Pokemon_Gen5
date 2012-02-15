@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-02T21:59:13" source="map05_14.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T00:06:18" source="map05_14.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2012-02-02T21:59:13" source="map05_14.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T00:06:18" source="map05_14.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -5005,11 +5005,11 @@
 					<tex st="-63.375000 176.125000"/>
 					<pos_xy xy="-0.875000 0.031250"/>
 					<tex st="25.312500 50.125000"/>
-					<pos_xyz xyz="-0.294922 0.343750 -1.879639"/>
+					<pos_xyz xyz="-0.294922 0.335938 -1.879639"/>
 					<tex st="30.625000 50.125000"/>
 					<pos_xz xz="-0.294922 -1.932373"/>
 					<tex st="30.625000 51.500000"/>
-					<pos_xy xy="-0.906250 0.343750"/>
+					<pos_xy xy="-0.906250 0.335938"/>
 					<tex st="25.312500 51.375000"/>
 					<pos_xz xz="-0.853516 -1.879639"/>
 					<tex st="-63.375000 -210.375000"/>
@@ -5037,11 +5037,11 @@
 					<tex st="-63.375000 -185.000000"/>
 					<pos_xy xy="3.703125 0.031250"/>
 					<tex st="25.375000 97.750000"/>
-					<pos_xyz xyz="3.724121 0.343750 -1.900391"/>
+					<pos_xyz xyz="3.724121 0.335938 -1.900391"/>
 					<tex st="30.687500 97.750000"/>
 					<pos_xz xz="3.671875 -1.953125"/>
 					<tex st="30.687500 105.937500"/>
-					<pos_xy xy="1.046875 0.343750"/>
+					<pos_xy xy="1.046875 0.335938"/>
 					<tex st="25.375000 106.062500"/>
 					<pos_xz xz="1.046875 -1.900391"/>
 					<tex st="-63.375000 29.500000"/>
@@ -5057,7 +5057,7 @@
 					<tex st="25.625000 73.875000"/>
 					<pos_xz xz="3.671875 -3.456299"/>
 					<tex st="25.625000 77.625000"/>
-					<pos_xz xz="3.671875 -1.953125"/>
+					<pos_yz yz="0.335938 -1.953125"/>
 					<tex st="30.375000 77.625000"/>
 					<pos_xz xz="3.724121 -1.900391"/>
 					<tex st="-63.375000 -16.187500"/>
