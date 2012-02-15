@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/25 21:07:16
+#save date:2012/02/14 14:11:19
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05r0501.wms
 #SECTION START:OBJ_EVENT
@@ -274,7 +274,7 @@ FV_C05R0501_PEAPLE_01
 #Event Script Name
 SCRID_C05R0501_HAKAIM_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 -8
+-216 0 -24
 #event number: 9
 #type
 1
@@ -336,7 +336,7 @@ FV_C05R0501_PEAPLE_01
 #Event Script Name
 SCRID_C05R0501_POKE41_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -350,7 +350,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 -24
+-200 0 -24
 #event number: 11
 #type
 1
