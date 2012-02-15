@@ -2377,11 +2377,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＰＷＴの　ダウンロートデータが
-きえてしまった！</Text>
+			<Text>きえて　しまった　ＰＷＴの
+きろくが　あります！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-15T06:13:39" />
+				User="shimoyamada:W00184"
+				Time="2012-02-15T11:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2389,11 +2389,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＰＷＴの　ダウンロートデータが
-消えてしまった！</Text>
+			<Text>消えてしまった　ＰＷＴの
+記録が　あります！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-15T06:13:37" />
+				User="shimoyamada:W00184"
+				Time="2012-02-15T11:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
