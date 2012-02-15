@@ -2656,9 +2656,9 @@ s32 TdCmn_chk_tp( T_DOWNLOAD_MAIN_WORK *wk, const s32 tpmode, const s32 mode )
 		id = GFL_UI_TP_HitCont( td_rect_tbl[mode] );
 	}
 	// äYìñÇ∑ÇÈâ”èäÇ™Ç†Ç¡ÇΩ=>ÉÇÅ[Éhêÿë÷
-	if(id != GFL_UI_TP_HIT_NONE){
-		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
-	}
+//	if(id != GFL_UI_TP_HIT_NONE){
+//		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+//	}
 	return( id );
 }
 

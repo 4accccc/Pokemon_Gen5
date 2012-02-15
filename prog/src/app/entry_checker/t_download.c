@@ -912,17 +912,12 @@ static BOOL td_chk_tp_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		case T_DOWNLOAD_AREA_JOIN_TP_PANEL_02:
 			// 範囲内にあるか
 			num = ret - T_DOWNLOAD_AREA_JOIN_TP_PANEL_00;
-#if 1
+			// 歯抜けでも大丈夫な対策
 			if(wk->SaveFlag & (1<<(4+num))){
 				mflg = 1;
 				wk->JoinCurPos = num;
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 			}
-#else
-			if(num <= (wk->DispMaxNum-1)){
-				mflg = 1;
-				wk->JoinCurPos = num;
-			}
-#endif
 			break;
 	}
 	// 判定
@@ -931,6 +926,7 @@ static BOOL td_chk_tp_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		if(ret == T_DOWNLOAD_AREA_JOIN_TP_RETURN){
 			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN, 0 );
 			flg = 2;
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 		}
 	}
 	// 決定
@@ -993,8 +989,7 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-#if 1
-			// カーソル
+			// カーソル(歯抜けでも大丈夫な対策)
 			cpos = TdSave_get_flag_curpos( wk, 0, wk->JoinCurPos );
 			if(cpos != wk->JoinCurPos){
 				sflg = 1;
@@ -1002,23 +997,10 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 			}
 			wk->JoinCurPos = cpos;
-#else
-			if(wk->JoinCurPos != 0){
-				// SE
-				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
-				//
-				wk->JoinCurPos--;
-				if(wk->JoinCurPos <= 0){
-					wk->JoinCurPos = 0;
-				}
-				sflg = 1;
-			}
-#endif
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-#if 1
-			// カーソル
+			// カーソル(歯抜けでも大丈夫な対策)
 			cpos = TdSave_get_flag_curpos( wk, 1, wk->JoinCurPos );
 			if(cpos != wk->JoinCurPos){
 				sflg = 1;
@@ -1026,18 +1008,6 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 			}
 			wk->JoinCurPos = cpos;
-#else
-			if(wk->JoinCurPos != (wk->DispMaxNum-1)){
-				// SE
-				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
-				//
-				wk->JoinCurPos++;
-				if(wk->JoinCurPos >= (wk->DispMaxNum-1)){
-					wk->JoinCurPos = (wk->DispMaxNum-1);
-				}
-				sflg = 1;
-			}
-#endif
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -1464,6 +1434,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		flg = 1;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_CANCEL );
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	// UP
 	else if(ret == T_DOWNLOAD_AREA_TD_TP_UP){
@@ -1479,6 +1450,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 				sflg = 1;
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 			}
 		}
 	}
@@ -1496,6 +1468,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 				sflg = 1;
 				// SE
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 			}
 		}
 	}
@@ -1506,6 +1479,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		wk->Flag |= FLG_MW_INFO_CHG;
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	// 道具
 	else if(ret == T_DOWNLOAD_AREA_TD_TP_ICON_01){
@@ -1514,6 +1488,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		wk->Flag |= FLG_MW_INFO_CHG;
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	// 技
 	else if(ret == T_DOWNLOAD_AREA_TD_TP_ICON_02){
@@ -1522,6 +1497,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 		wk->Flag |= FLG_MW_INFO_CHG;
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	else{
@@ -1530,6 +1506,7 @@ static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 			// 1ページよりある時のみ対応
 			if(wk->PageMaxNum[wk->InfoCurPos] > 1){
 				sflg = 2;
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 			}
 		}
 	}
@@ -2056,6 +2033,7 @@ static BOOL td_chk_tp_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	if(ret == T_DOWNLOAD_AREA_TD_TP_RETURN){
 		TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN, 0 );
 		flg = 1;
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	// 更新
@@ -2655,17 +2633,12 @@ static BOOL td_chk_tp_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		case T_DOWNLOAD_AREA_SAVE_TP_PANEL_02:
 			// 範囲内にあるか
 			num = ret - T_DOWNLOAD_AREA_SAVE_TP_PANEL_00;
-#if 1
+			// 歯抜けでも大丈夫な対応
 			if(wk->SaveFlag & (1<<(4+num))){
 				mflg = 1;
 				wk->SaveCurPos = num;
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 			}
-#else
-			if(num <= (wk->DispMaxNum-1)){
-				mflg = 1;
-				wk->SaveCurPos = num;
-			}
-#endif
 			break;
 	}
 	if(mflg == 0){
@@ -2673,6 +2646,7 @@ static BOOL td_chk_tp_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		if(ret == T_DOWNLOAD_AREA_SAVE_TP_RETURN){
 			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN, 0 );
 			flg = 2;
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 		}
 	}
 	// 更新
@@ -2739,8 +2713,7 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 	if(mflg == 0){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-#if 1
-			// カーソル
+			// カーソル(歯抜けでも大丈夫な対策)
 			cpos = TdSave_get_flag_curpos( wk, 0, wk->SaveCurPos );
 			if(cpos != wk->SaveCurPos){
 				sflg = 1;
@@ -2748,23 +2721,10 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 			}
 			wk->SaveCurPos = cpos;
-#else
-			if(wk->SaveCurPos != 0){
-				// SE
-				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
-				//
-				wk->SaveCurPos--;
-				if(wk->SaveCurPos <= 0){
-					wk->SaveCurPos = 0;
-				}
-				sflg = 1;
-			}
-#endif
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-#if 1
-			// カーソル
+			// カーソル(歯抜けでも大丈夫な対策)
 			cpos = TdSave_get_flag_curpos( wk, 1, wk->SaveCurPos );
 			if(cpos != wk->SaveCurPos){
 				sflg = 1;
@@ -2772,18 +2732,6 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
 			}
 			wk->SaveCurPos = cpos;
-#else
-			if(wk->SaveCurPos != (wk->DispMaxNum-1)){
-				// SE
-				PMSND_PlaySE( SND_T_DOWNLOAD_SELECT );
-				//
-				wk->SaveCurPos++;
-				if(wk->SaveCurPos >= (wk->DispMaxNum-1)){
-					wk->SaveCurPos = (wk->DispMaxNum-1);
-				}
-				sflg = 1;
-			}
-#endif
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
