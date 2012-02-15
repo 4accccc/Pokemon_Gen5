@@ -1714,13 +1714,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニタは
+			<Text>モニターは
 スノーノイズ　じょうたい　だ……▼
 せんないに　いるだろう
 だんいんの　こえが　きこえる……！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:06:46" />
+				Time="2012-02-15T10:55:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1728,13 +1728,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニタは
+			<Text>モニターは
 スノーノイズ状態だ……▼
 船内に　いるだろう
 団員の　話し声が　きこえる……！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:06:35" />
+				Time="2012-02-15T10:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1779,11 +1779,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニタは
+			<Text>モニターは
 スノーノイズ　じょうたい　だ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:06:00" />
+				Time="2012-02-15T10:55:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1791,11 +1791,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニタは
+			<Text>モニターは
 スノーノイズ状態だ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:06:08" />
+				Time="2012-02-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
