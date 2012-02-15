@@ -3093,32 +3093,32 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event7_hero_7">
+		Label="pw_event7_hero_6">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T07:22:48" />
+				Time="2012-02-15T11:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T07:22:48" />
+				Time="2012-02-15T11:05:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『Ｆー００！！ </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T07:22:48" />
+				Time="2012-02-15T11:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-22T07:22:48" />
+				Time="2012-02-15T11:05:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event7_hero_8">
+		Label="pw_event7_hero_7">
 		<LanguageCell
 			Language="JPN">
 			<Text>……Ｆー００は　わたしを　つかむと
@@ -3134,11 +3134,11 @@
 はたして……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-02-15T11:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-02-15T11:05:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3155,11 +3155,11 @@
 果たして……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-02-15T11:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-03T07:47:51" />
+				Time="2012-02-15T11:05:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

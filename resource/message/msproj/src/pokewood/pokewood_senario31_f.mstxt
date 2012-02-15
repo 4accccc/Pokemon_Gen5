@@ -821,16 +821,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いまの　人型……
-はじめから　わたしの　ポケモンを▽
+			<Text>[Name:TrainerName Idx="1" ]『今の　人型……
+初めから　わたしの　ポケモンを▽
 まきぞえに　する　つもりで……？</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:40:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2012-02-01T02:40:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2093,14 +2093,14 @@
 まさしく　さいきょうの
 せいめいたい　である　わたしが▽
 せかいを　しはいし　いずれ▽
-うちゅうの　はけんを　にぎる！</Text>
+うちゅうの　クイーンに　なる！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2136,14 +2136,14 @@
 げきたいした　[Name:TrainerName Idx="1" ]▼
 かのじょは　もはや
 にんげんでは　ないのか……？▽
-そして　うちゅうの　はけん　とは？</Text>
+そして　うちゅうの　クイーン　とは？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-15T09:23:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

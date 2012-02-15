@@ -793,10 +793,10 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんこうを　りようしろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:19:08" />
+				Time="2012-02-15T08:00:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -804,10 +804,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんこうを　利用しろ！</Text>
+			<Text>セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:19:16" />
+				Time="2012-02-15T08:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -828,10 +828,10 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>てんこうを　りようしろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:19:38" />
+				Time="2012-02-15T08:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -839,10 +839,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>てんこうを　利用しろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:19:55" />
+				Time="2012-02-15T08:01:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1006,7 +1006,7 @@
 			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:20:51" />
+				Time="2012-02-15T08:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1017,7 +1017,7 @@
 			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-30T07:21:10" />
+				Time="2012-02-15T08:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1025,13 +1025,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>movie01のシーン８
+			<Comment>movie01のシーン8
 
 ヒントテキスト
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:13:10" />
+				Time="2012-02-15T08:01:19" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
