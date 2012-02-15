@@ -700,8 +700,8 @@ _TALK_OBJ_START()
 
 		IF $LWK_ITEM == 0 THEN
 		
-			//‚È‚ñ‚É‚à‚É‚¨‚¢‚ª‚µ‚È‚¢
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_k_08 )
+			//‚º‚Ð‚Ý‚Â‚¯‚½‚ç
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_k_07 )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 		
