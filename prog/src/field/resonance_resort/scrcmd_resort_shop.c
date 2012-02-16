@@ -422,7 +422,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   default:
     GF_ASSERT(0);
   case RESORT_LIST_TYPE_BUY:    //販売
-    GAMEBEACON_Set_Shoping();
+    GAMEBEACON_Set_JoinAvenueShopping();
     sbw->shopType = shop_type;
     sbw->shopParam   = 0;    //人物から取得する
     sbw->wk.ShopCallFunc  = ShopCallFunc_Buy;
@@ -513,8 +513,6 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     }
     break;
   } 
-
-  GAMEBEACON_Set_JoinAvenueShopping();
 
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
