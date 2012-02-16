@@ -158,6 +158,10 @@ static void Local_WarningDispInit(u32 msg_id)
 	G2_SetBG1Offset(0, 0);
 
 	G2_BlendNone();
+
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  GXS_DispOn();
+  *((u16 *)HW_DB_BG_PLTT)  = 0x7eea;
 	
 	//エラー画面描画
 	Local_WarningDispDraw();
@@ -165,7 +169,7 @@ static void Local_WarningDispInit(u32 msg_id)
 	
 	//表示ON
 	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(16);	//サブ画面は真っ白
+	GXS_SetMasterBrightness(0);
 }
 
 //--------------------------------------------------------------
