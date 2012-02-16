@@ -41542,14 +41542,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そりゃ　勘違い　するか
-たしかに　なかなか　やるやがる！</Text>
+たしかに　なかなか　やりやがる！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-16T03:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-16T03:24:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -52305,17 +52305,17 @@
 		Label="TRID_RANGERM_21_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<LanguageCell
 			Language="JPN">
-			<Text>あちている　どうぐの　ちかくで
+			<Text>おちている　どうぐの　ちかくで
 まちぶせ　していたのさ▼
 モロバレルの　ぎたい　よりは
 うまく　かくれていた……　よね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T05:07:47" />
+				Time="2012-02-16T03:38:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T05:07:47" />
+				Time="2012-02-16T03:38:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
