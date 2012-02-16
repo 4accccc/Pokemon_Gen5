@@ -219,9 +219,14 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       WORDSET_RegisterNumber( p_wordset, 0, RESORT_DATE_GET_YEAR(date), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
       WORDSET_RegisterNumber( p_wordset, 2, RESORT_DATE_GET_MONTH(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       WORDSET_RegisterNumber( p_wordset, 3, RESORT_DATE_GET_DAY(date), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      GF_ASSERT( msg != 0 );
-
-      return SexGetMsgID( sex, resort_history_00_m, resort_history_00_f ) + msg;
+      if( msg == 0 )
+      {
+        return RESORT_MSGID_NONE;
+      }
+      else
+      {
+        return SexGetMsgID( sex, resort_history_00_m, resort_history_00_f ) + msg;
+      }
     }
     break;
   case RESORT_MSGID_WHERETOGO:
