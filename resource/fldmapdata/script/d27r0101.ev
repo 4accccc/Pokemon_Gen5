@@ -955,7 +955,7 @@ EVENT_END
 /*					話しかけ：プラズマ団員06  						*/
 /************************************************************/
 EVENT_START	ev_d27r0101_swplazmaw_01
-
+  //GFBTS 869対処で動作モデルはSWPLAZMAMです。（2010.02.16 Mizuguchi）
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw1_01 )
 
 EVENT_END
