@@ -41,6 +41,7 @@ FS_EXTERN_OVERLAY(zukan_toroku);
 /*--------------------------------------------------------------------------*/
 enum {
   STRBUF_SIZE = 32,   ///< プレイヤー名を一時的に格納するためのバッファサイズ
+  POKENAME_STRBUF_SIZE = 32,   ///< ポケモン名を一時的に格納するためのバッファサイズ
 };
 
 /*--------------------------------------------------------------------------*/
@@ -323,14 +324,18 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     if( local_proc_status != GFL_PROC_MAIN_VALID )
     {
       if( !NAMEIN_IsCancel(wk->nameinParam) ){
+        STRBUF* strbuf_default = GFL_STR_CreateBuffer( POKENAME_STRBUF_SIZE, wk->heapID );
         NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
+        PP_Get( param->pp, ID_PARA_nickname, strbuf_default );
         PP_Put( param->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
 
         // ポケモンにニックネームを付けた回数
+        if( !NAMEIN_IsSameStr( wk->nameinParam ,strbuf_default ) )
         {
           RECORD* rec = GAMEDATA_GetRecordPtr(param->gameData); 
           RECORD_Inc(rec, RECID_NICKNAME);
         }
+        GFL_STR_DeleteBuffer( strbuf_default );
       }
       NAMEIN_FreeParam( wk->nameinParam );
       wk->nameinParam = NULL;

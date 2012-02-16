@@ -313,7 +313,17 @@ extern STRBUF* NAMEIN_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID );
  */
 //-----------------------------------------------------------------------------
 extern BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param );
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ì¸óÕÇ≥ÇÍÇΩï∂éöóÒÇ∆ìØÇ∂Ç©í≤Ç◊ÇÈ
+ *
+ *	@param	*param 
+ *	@param	*strbuf_default 
+ *
+ *	@retval TRUEÇ»ÇÁÇŒÅAìØÇ∂ï∂éöóÒ
+ */
+//-----------------------------------------------------------------------------
+extern BOOL NAMEIN_IsSameStr( const NAMEIN_PARAM *param ,const STRBUF* strbuf_default );
 
 //=============================================================================
 /**

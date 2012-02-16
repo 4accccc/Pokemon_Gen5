@@ -198,4 +198,19 @@ BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param )
   return param->cancel;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  “ü—Í‚³‚ê‚½•¶Žš—ñ‚Æ“¯‚¶‚©’²‚×‚é
+ *
+ *	@param	*param 
+ *	@param	*strbuf_default 
+ *
+ *	@retval TRUE‚È‚ç‚ÎA“¯‚¶•¶Žš—ñ
+ */
+//-----------------------------------------------------------------------------
+BOOL NAMEIN_IsSameStr( const NAMEIN_PARAM *param ,const STRBUF* strbuf_default )
+{ 
+  return GFL_STR_CompareBuffer( param->strbuf,strbuf_default );
+}
+
 

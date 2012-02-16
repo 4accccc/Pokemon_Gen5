@@ -771,15 +771,22 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         if( !NAMEIN_IsCancel( work->namein_param ) )
         {
           STRBUF* strbuf = GFL_STR_CreateBuffer( NAMEIN_STRBUF_LENGTH, work->heap_id );
+          STRBUF* strbuf_default = GFL_STR_CreateBuffer( NAMEIN_STRBUF_LENGTH, work->heap_id );
           NAMEIN_CopyStr( work->namein_param, strbuf );
+          PP_Get( param->pp, ID_PARA_nickname, strbuf_default );
           PP_Put( param->pp, ID_PARA_nickname, (u32)strbuf );
-          GFL_STR_DeleteBuffer( strbuf );
 
           // ポケモンにニックネームを付けた回数
+          // (入力後の文字列がニックネームと一致していた場合はインクリメントしない)
+          if( !NAMEIN_IsSameStr( work->namein_param ,strbuf_default ) )
           {
             RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
             RECORD_Inc(rec, RECID_NICKNAME);
           }
+
+          GFL_STR_DeleteBuffer( strbuf_default );
+          GFL_STR_DeleteBuffer( strbuf );
+
         }
         NAMEIN_FreeParam( work->namein_param );
 
