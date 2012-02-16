@@ -1377,12 +1377,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『ほら　ほら！▼
-あたしたち　こんなに　いるんだから
-さっさと　こうさん　しちゃいなさい！！</Text>
+			<Text>プラズマだん『ほら　ほらー！▼
+オイラたち　こんなに　いるんだから
+さっさと　こうさん　しちゃいな！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:05:36" />
+				Time="2012-02-16T09:45:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1390,12 +1390,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『ほら　ほら！▼
-あたしたち　こんなに　いるんだから
-さっさと　降参しちゃいなさい！！</Text>
+			<Text>プラズマ団『ほら　ほらー！▼
+オイラたち　こんなに　いるんだから
+さっさと　降参しちゃいな！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:05:39" />
+				Time="2012-02-16T09:45:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1403,13 +1403,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂←♀
 ・アジト船：1回目
 ・ライバルに話しかける前
 ・ライバルと戦っている感じ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2012-02-16T09:44:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
