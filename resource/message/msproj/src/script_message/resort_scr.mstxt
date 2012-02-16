@@ -16509,11 +16509,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortShop Idx="1" ]は
-おみせを　リニューアルした！▼
-</Text>
+おみせを　リニューアルした！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-02-11T06:00:49" />
+				Time="2012-02-16T10:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20960,10 +20959,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひんしの　ポケモンですよ！▼</Text>
+			<Text>その　ポケモン　げんきが
+ないみたいですよ！▼
+げんきに　なってから
+ごりよう　ください！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-16T03:06:21" />
+				User="shimoyamada:W00184"
+				Time="2012-02-16T14:29:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -20971,10 +20973,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひんしの　ポケモンですよ！▼</Text>
+			<Text>その　ポケモン　元気が
+ないみたいですよ！▼
+元気に　なってから
+ご利用　ください！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-16T03:06:24" />
+				User="shimoyamada:W00184"
+				Time="2012-02-16T14:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -21007,10 +21012,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひんしの　ポケモンですよ！▼</Text>
+			<Text>その　ポケモン　げんきが
+ないみたいですよ！▼
+げんきに　なってから
+ごりよう　ください！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-16T03:06:34" />
+				User="shimoyamada:W00184"
+				Time="2012-02-16T14:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -21018,10 +21026,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひんしの　ポケモンですよ！▼</Text>
+			<Text>その　ポケモン　元気が
+ないみたいですよ！▼
+元気に　なってから
+ご利用　ください！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2012-02-16T03:06:34" />
+				User="shimoyamada:W00184"
+				Time="2012-02-16T14:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
