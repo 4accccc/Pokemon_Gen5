@@ -279,6 +279,7 @@
 #define RESORT_SHOP_DORYOKU_D_NG_MSGID        (167) //努力値さがらない
 #define RESORT_SHOP_NATUKI_NG_MSGID           (168) //なつきあがらない
 #define RESORT_SHOP_LV_NG_MSGID               (169) //LVあがらない
+#define RESORT_SHOP_HP_NG_MSGID            (176) //ひんしはダメ
 
   //セレブ
 #define RESORT_CELEB_GREET_MSGID              (170)

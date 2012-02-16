@@ -629,6 +629,8 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_shop_natuki_ng_00_m, resort_shop_natuki_ng_00_f );
   case RESORT_SHOP_LV_NG_MSGID:
     return SexGetMsgID( sex, resort_shop_lv_ng_00_m, resort_shop_lv_ng_00_f );
+  case RESORT_SHOP_HP_NG_MSGID:
+    return SexGetMsgID( sex, resort_shop_hp_ng_00_m, resort_shop_hp_ng_00_f );
   case RESORT_SHOP_PARLOR_OK_MSGID:
     return SexGetMsgID( sex, resort_parlor_01_m, resort_parlor_01_f );
   case RESORT_SHOP_PARLOR_POKESEL_MSGID:
