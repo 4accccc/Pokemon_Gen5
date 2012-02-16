@@ -1017,7 +1017,7 @@ EVENT_START ev_d27_hint_07
      //結果チェック
      _CALL ev_battle_check
      
-     _BALLOONWIN_TALKOBJ_MSG( LCWK_MSGID )
+     _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint7_01 )
      _MSGWIN_CLOSE()
      
      //キーカード入手処理
