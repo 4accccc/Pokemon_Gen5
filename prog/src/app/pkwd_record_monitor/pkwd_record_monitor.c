@@ -879,6 +879,7 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 static void pwm_exit_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
 static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 mode );
+static void pwm_chk_mark_anim( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mmin, const s32 mmax, const s32 nnum );
 //
 // ポケモン詳細
 static void pwm_disp_poke_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
@@ -1258,6 +1259,9 @@ static void pwm_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	// リスト処理
 	//------------
 	pwm_init_framelist( wk );
+	
+	// カーソル後処理
+	pwm_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 	
 	//--------------------
 	// スクロール切り替え
@@ -2529,9 +2533,37 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 				// 再計算
 				pwm_calc_framelist( wk );
 				wk->Flag |= FLG_UPDATE;
-				wk->SubMode = STEP_LV1;
+//				wk->SubMode = STEP_LV1;
+				wk->SubMode = STEP_LV3+5;
 				// アニメフラグoff
-				wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+//				wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+			}
+			break;
+		//
+		// 矢印アニメ終了待ち
+		case STEP_LV3+5:
+			if(wk->Flag & FLG_LEFT_ANIM){
+				bflg = pwm_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+				if(bflg == FALSE){
+					wk->SubMode = STEP_LV1;
+					wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+					// カーソル後処理
+					pwm_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
+				}
+			}
+			else if(wk->Flag & FLG_RIGHT_ANIM){
+				bflg = pwm_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+				if(bflg == FALSE){
+					wk->SubMode = STEP_LV1;
+					wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+					// カーソル後処理
+					pwm_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
+				}
+			}else{
+				// アニメなしの場合
+				wk->SubMode = STEP_LV1;
+				// カーソル後処理
+				pwm_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 			}
 			break;
 		//
@@ -2820,6 +2852,45 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 	pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, namebuf, 1, TEXT_COL_MAIN );
 	GFL_STR_DeleteBuffer( namebuf );
   }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  マークの判定(後処理)
+ *
+ *	@param	PKWD_RECORD_MONITOR_MAIN_WORK* 	wk
+ *	@param	const s32 mmin		最小
+ *	@param	const s32 mmin		最大
+ *	@param	const s32 mmin		現在
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwm_chk_mark_anim( PKWD_RECORD_MONITOR_MAIN_WORK* wk, const s32 mmin, const s32 mmax, const s32 nnum )
+{
+	// ないはずだが念のため
+	if(mmax < 0){
+		OS_Printf("max error :%d\n",mmax);
+		return;
+	}
+	//
+	// 最小チェック
+	if((mmin >= nnum)){
+		// off
+		pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_OFF );
+	}else{
+		// on
+		pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT );
+	}
+	//
+	// 最大チェック
+	if((nnum >= mmax)){
+		// off
+		pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_OFF );
+	}else{
+		// on
+		pwm_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT );
+	}
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -3430,6 +3501,8 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		if( wk->first_anime_flag == TRUE){
 			wk->Flag |= FLG_TP_NUMBER;
 		}
+		// カーソル後処理
+		pwm_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 	}
 	//
 	// ここでなくてもいいはず

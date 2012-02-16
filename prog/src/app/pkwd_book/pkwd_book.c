@@ -1254,6 +1254,8 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
+static void pwb_chk_mark_anim( PKWD_BOOK_MAIN_WORK* wk, const s32 mmin, const s32 mmax, const s32 nnum );
+
 //
 // トレーナー
 static void pwb_init_trainer( PKWD_BOOK_MAIN_WORK * wk );
@@ -1726,6 +1728,9 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// リスト処理
 	//------------
 	pwb_init_framelist( wk );
+	
+	// カーソル後処理
+	pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 	
 	//--------------------
 	// スクロール切り替え
@@ -3240,6 +3245,8 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 		wk->Flag |= FLG_CHG_TITLE;
 		// 矢印位置
 		pwb_chg_cmn_cursor( wk, 0 );
+		// カーソル後処理
+		pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 		// frame再セット
 		pwb_set_init_framelist( wk );
 		// ちらつき防止
@@ -3341,9 +3348,38 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 				// 再計算
 				pwb_calc_framelist( wk );
 				wk->Flag |= FLG_UPDATE;
-				wk->SubMode = STEP_LV1;
+//				wk->SubMode = STEP_LV1;
+				// 矢印アニメの終了待ちを行う
+				wk->SubMode = STEP_LV3+5;
 				// アニメフラグoff
-				wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+//				wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+			}
+			break;
+		//
+		// 矢印アニメ終了待ち
+		case STEP_LV3+5:
+			if(wk->Flag & FLG_LEFT_ANIM){
+				bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+				if(bflg == FALSE){
+					wk->SubMode = STEP_LV1;
+					wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+					// カーソル後処理
+					pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
+				}
+			}
+			else if(wk->Flag & FLG_RIGHT_ANIM){
+				bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+				if(bflg == FALSE){
+					wk->SubMode = STEP_LV1;
+					wk->Flag &= ~(FLG_LEFT_ANIM|FLG_RIGHT_ANIM);
+					// カーソル後処理
+					pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
+				}
+			}else{
+				// アニメなしの場合
+				wk->SubMode = STEP_LV1;
+				// カーソル後処理
+				pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 			}
 			break;
 		//
@@ -3602,6 +3638,45 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  マークの判定(後処理)
+ *
+ *	@param	PKWD_MAIN_WORK* 	wk
+ *	@param	const s32 mmin		最小
+ *	@param	const s32 mmin		最大
+ *	@param	const s32 mmin		現在
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_chk_mark_anim( PKWD_BOOK_MAIN_WORK* wk, const s32 mmin, const s32 mmax, const s32 nnum )
+{
+	// ないはずだが念のため
+	if(mmax < 0){
+		OS_Printf("max error :%d\n",mmax);
+		return;
+	}
+	//
+	// 最小チェック
+	if((mmin >= nnum)){
+		// off
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_OFF );
+	}else{
+		// on
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT );
+	}
+	//
+	// 最大チェック
+	if((nnum >= mmax)){
+		// off
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_OFF );
+	}else{
+		// on
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT );
+	}
+}
+
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -3631,6 +3706,9 @@ static void pwb_init_trainer( PKWD_BOOK_MAIN_WORK * wk )
 	pwb_disp_trainer_obj( wk, 0 );
 	// 矢印位置
 	pwb_chg_cmn_cursor( wk, 1 );
+	//
+	pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT,  SEQ_CMN_LEFT );
+	pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT );
 	//
 	wk->Flag |= FLG_CHG_TITLE;
 }
@@ -4957,6 +5035,8 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		//
 		// 点滅させる
 		FRAMELIST_ChangePosPalette( wk->frame_list_work, wk->ListCurPos, 1 );
+		// カーソル後処理
+		pwb_chk_mark_anim( wk, 0, wk->ScenarioMax-1, wk->ScenarioCurPos );
 	}
 	//
 	// ここでなくてもいいはず
