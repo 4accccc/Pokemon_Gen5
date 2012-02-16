@@ -26,6 +26,27 @@
 #define SCALE_ADD   ( 0x4A )      // 1フレームの拡大率加算値
 #define SCALE_MAX   ( 0x310 )     // 風船の拡大率MAX
 
+//-------------------------------------
+///	画面外判定用構造体
+//=====================================
+typedef struct {
+  fx32      top;    // 高さ
+  fx32      left;   // 左端
+  fx32      right;  // 右端
+} HIT_OUT_SCREEN;
+
+// 画面外判定用テーブル
+static const HIT_OUT_SCREEN hit_out_screen_tbl[3] =
+{
+  //    高さ上限        左端上限          右端上限
+  // 小
+  { FX32_CONST(270), FX32_CONST(-254), FX32_CONST(254) },
+  // 中
+  { FX32_CONST(260), FX32_CONST(-233), FX32_CONST(233) },
+  // 大
+  { FX32_CONST(250), FX32_CONST(-200), FX32_CONST(200) },
+};
+
 // ゲーム2
 #define SCALE_SELF          ( 0x900 )     // 自分の風船の拡大値
 #define SCALE_OTHER         ( 0x500 )     // 相手の風船の拡大値
@@ -198,13 +219,19 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
   }
 
   // 画面外判定
-  // 3D画面外判定　(曖昧)
-  if( p_wk->status.trans.y > FX32_CONST(240)
-      || p_wk->status.trans.x > FX32_CONST(220)
-      || p_wk->status.trans.x < FX32_CONST(-220))
+  // 3D画面外判定　サイズ別
   {
-    CTVT_BALLOON_Destroy( p_wk );
-    return;
+    int   idx = p_wk->size - 1;   // サイズは1オリジンなので-1
+
+    GF_ASSERT_MSG( idx<3, "風船のサイズが上限をこえている\n" ); 
+
+    if( p_wk->status.trans.y > hit_out_screen_tbl[ idx ].top
+        || p_wk->status.trans.x > hit_out_screen_tbl[ idx ].right
+        || p_wk->status.trans.x < hit_out_screen_tbl[ idx ].left )
+    {
+      CTVT_BALLOON_Destroy( p_wk );
+      return;
+    }
   }
 }
 
