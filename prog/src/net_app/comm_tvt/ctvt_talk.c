@@ -2205,11 +2205,36 @@ static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK
     // 子しか通らないはず
     if( COMM_TVT_GetSelfIdx(work) != 0 )
     {
+      // BTS1942 
+      //
+      // トランシーバーを使用中は、ミニゲームのお誘いのテキストが表示されませんが、
+      // ミニゲームが中止された際の「中止しました」というテキストは、
+      // トランシーバーボタンを押している最中でも表示されます。
+      //
+      // 対処として中止メッセージを表示しないように修正
+      //
+      switch( talkWork->state ){
+      case CTS_REQ_TALK:        // 会話要求
+      case CTS_REQ_TALK_WAIT:   // 会話開始待ち
+      case CTS_TALKING:         // 会話中
+        // 波形をクリアする
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
+        GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
+        /* メッセージは何も表示しない */
+        break;
+      default:
+        // 中止されましたメッセージ表示 
+        CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
+        break;
+      }
+
       talkWork->isExitGame = FALSE;
       talkWork->state = CTS_RETURN;
-      // 中止されましたメッセージ表示 
-      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
+
       ICHI_Printf("通常状態でのミニゲーム終了通知がきた\n");
+
+      // TRUEで返すことによりstateの変更がされないようになる
+      return TRUE;
     }
   }
 
