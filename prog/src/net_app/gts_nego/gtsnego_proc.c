@@ -379,6 +379,14 @@ static void _recvResort(const int netID, const int size, const void* pData, void
   OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
 
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_GTSNEGO );
+
+  //不正チェックにかけた名前を設定する
+  {
+    MYSTATUS* pMy = pEv->pStatus[1];
+    const STRCODE *cp_str = MyStatus_GetMyName(pMy);
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)cp_str );
+  }
+
   RESONANCE_RESORT_SV_SetData( p_resort_sv, pEv->gamedata, p_recv, RESORT_MERGE_TYPE_RECV );
 }
 //------------------------------------------------------------------------------
@@ -661,6 +669,37 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
   _CHANGE_STATE(pWork,_messagePMS);
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SWANからの追加  リゾートデータ受け取り
+ */
+//-----------------------------------------------------------------------------
+static void _resortWait( GTSNEGO_WORK *pWork )
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO)){
+    return;
+  }
+
+  _CHANGE_STATE(pWork,_timingCheck2);
+}
+
+static void _resortStart( GTSNEGO_WORK *pWork )
+{
+
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)pWork->resort_send_buffer, pEv->gamedata );
+
+  if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, _NETCMD_RESORT, RESORT_RECV_DATA_SIZE, pWork->resort_send_buffer, TRUE, FALSE, TRUE ) )
+  {
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO);
+    _CHANGE_STATE(pWork,_resortWait);
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	不正文字検査
@@ -687,7 +726,18 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
       int no = MyStatus_GetID(pMy);
       EtcSave_SetAcquaintance( SaveData_GetEtc( pWork->pSave ), no);
     }
-    _CHANGE_STATE(pWork,_timingCheck2);
+
+    if( MyStatus_GetRomCode(pMy) == VERSION_W2
+        || MyStatus_GetRomCode(pMy) == VERSION_B2 )
+    {
+      OS_TPrintf( "相手がSWAN！リゾート送信\n" );
+      _CHANGE_STATE(pWork,_resortStart);
+    }
+    else
+    {
+      OS_TPrintf( "相手が前VER！\n" );
+      _CHANGE_STATE(pWork,_timingCheck2);
+    }
   }
 }
 
@@ -712,36 +762,6 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
   _CHANGE_STATE(pWork,_timingCheck4);
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	SWANからの追加  リゾートデータ受け取り
- */
-//-----------------------------------------------------------------------------
-static void _resortWait( GTSNEGO_WORK *pWork )
-{
-  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO)){
-    return;
-  }
-
-  _CHANGE_STATE(pWork,_timingCheck5);
-}
-
-static void _resortStart( GTSNEGO_WORK *pWork )
-{
-
-  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-  NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-  netID = netID == 0? 1: 0;
-
-  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)pWork->resort_send_buffer, pEv->gamedata );
-
-  if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, _NETCMD_RESORT, RESORT_RECV_DATA_SIZE, pWork->resort_send_buffer, TRUE, FALSE, TRUE ) )
-  {
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO);
-    _CHANGE_STATE(pWork,_resortWait);
-  }
-}
-
 static void _statussendCheckEnd( GTSNEGO_WORK *pWork )
 {
   if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
@@ -749,20 +769,7 @@ static void _statussendCheckEnd( GTSNEGO_WORK *pWork )
   }
   else
   {
-    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-    MYSTATUS* pMy = pEv->pStatus[1];
-
-    if( MyStatus_GetRomCode(pMy) == VERSION_W2
-        || MyStatus_GetRomCode(pMy) == VERSION_B2 )
-    {
-      OS_TPrintf( "相手がSWAN！リゾート送信\n" );
-      _CHANGE_STATE(pWork,_resortStart);
-    }
-    else
-    {
-      OS_TPrintf( "相手が前VER！\n" );
-      _CHANGE_STATE(pWork,_timingCheck5);
-    }
+    _CHANGE_STATE(pWork,_timingCheck5);
   }
 }
 
