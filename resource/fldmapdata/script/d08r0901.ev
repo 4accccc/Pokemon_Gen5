@@ -90,7 +90,9 @@ EVENT_START   ev_pos_d08r0901_stone_01
           _OBJ_ANIME_WAIT()
       
       ENDIF
-
+      
+      _SUB_ITEM( ITEM_DAAKUSUTOON,1,SCWK_ANSWER )
+      
       _CAMERA_START()		//カメラ操作開始
       _CAMERA_PURGE()		//カメラパージ
       _CAMERA_MOVE(9688,0,970752,1081344,0,688128,30)
@@ -161,6 +163,8 @@ EVENT_START   ev_pos_d08r0901_stone_01
           _OBJ_ANIME_WAIT()
       
       ENDIF
+
+      _SUB_ITEM( ITEM_RAITOSUTOON,1,SCWK_ANSWER )
 
       _CAMERA_START()		//カメラ操作開始
       _CAMERA_PURGE()		//カメラパージ
