@@ -94,13 +94,15 @@ EVENT_START   ev_pos_r09r0101_man3_01
   //主人公の位置で振り向き分岐
   IF $LCW_POSZ == 7 THEN
     //アニメ：主人公とストッパー向かい合う
-    _OBJ_ANIME( R09R0101_MAN3_01, anm_common_turn_u )
+    _OBJ_ANIME( R09R0101_MAN3_01, anm_stopper_gyoe_up )
+    _TIME_WAIT( 40 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
     _OBJ_ANIME_WAIT()
 
   ELSIF $LCW_POSZ == 9 THEN
     //アニメ：主人公とストッパー向かい合う
-    _OBJ_ANIME( R09R0101_MAN3_01, anm_common_turn_d )
+    _OBJ_ANIME( R09R0101_MAN3_01, anm_stopper_gyoe_down )
+    _TIME_WAIT( 40 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
     _OBJ_ANIME_WAIT()
 
@@ -117,6 +119,22 @@ EVENT_START   ev_pos_r09r0101_man3_01
   _OBJ_ANIME_WAIT()
 
 EVENT_END
+
+//--------------------------------------------------------------------
+//	ストッパー隣接：z7
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_gyoe_up
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	ストッパー隣接：z7
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_gyoe_down
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------
