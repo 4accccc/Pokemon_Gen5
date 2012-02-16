@@ -74,7 +74,7 @@ EVENT_START   ev_c07r0301_trainerm_01
         
         //========================================//
         //ＢＧＭ変更フラグをセット
-        _FLAG_SET( SYS_FLAG_BGM_C03R0402 )
+        _FLAG_SET( SYS_FLAG_BGM_C07R0301_R10 )
       
         //BGMチェンジでの環境SEポーズ状態をCLEAR
         _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
