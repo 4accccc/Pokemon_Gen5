@@ -2061,7 +2061,7 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
       u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
       if( work->get_flag )
       {
-#if 1  // スワンでは、フォルム違いでテキストを変更するので
+#if 0  // 海外版のメッセージは用意されていないので、使用できません！
         disp_id = 0 + monsno_formno_pos;  // テキスト判明
 #else  // 必ず0番フォルムのテキストを表示する処理をコメントに変更
         disp_id = 0 + work->monsno;
