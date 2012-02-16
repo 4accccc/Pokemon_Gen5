@@ -2117,7 +2117,8 @@ static s32 _GetTouchListNo(MONOLITH_FMSELECT_WORK *mfw, u32 tp_y)
   s32 list_no;
   
   list_no = ((mfw->list_y >> 8) + tp_y) / POWER_LIST_SPACE;
-  if(list_no >= mfw->power_list_num){
+  // (BTS1928)‰º‚É‚à–¢Žg—p‚Ì—Ìˆæ‚ª1‚Â‚ ‚é‚½‚ßA‚»‚Ì•ª‚ðŒ¸‚ç‚·
+  if(list_no >= (mfw->power_list_num-1)){
     return _LIST_NO_NONE;
   }
   return list_no;
