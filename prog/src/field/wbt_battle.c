@@ -592,7 +592,8 @@ static void setDLPokeParty( POKEPARTY * party,
   int i;
   POKEMON_PARAM * entry_pp;
   const WBTDL_POKEMON * dl_array[ TEMOTI_POKEMAX ];
-
+  int mnum = wbtdl_data->wbtdl_rule.num_hi;	// エクセルで指定でのレギュレーションの場合
+  
   GFL_STD_MemClear32( dl_array, sizeof(dl_array) );
   {
     int total;
@@ -606,8 +607,10 @@ static void setDLPokeParty( POKEPARTY * party,
         total ++;
       }
     }
-    GF_ASSERT( total >= num );
-
+    // 実在するデータ数と指定の上限の小さいほうを選択
+    if(total < mnum){
+      mnum = total;
+    }
     //shuffle;
     i = total;
     while ( i )
@@ -627,7 +630,9 @@ static void setDLPokeParty( POKEPARTY * party,
 
   entry_pp = GFL_HEAP_AllocMemoryLo( tempHeapID, POKETOOL_GetWorkSize() );
 
-  for ( i = 0; i < num; i ++ )
+  OS_Printf("num :%d\n",mnum);
+
+  for ( i = 0; i < mnum; i ++ )
   {
     const WBTDL_POKEMON * dl_poke = dl_array[ i ];
     //const WBTDL_POKEMON * dl_poke = WBTDL_DATA_GetPokemon( wbtdl_data, dl_tr_id, i );

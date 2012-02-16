@@ -473,6 +473,19 @@ void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   max = 1;
 #else
   max = WBTSYS_GetPartyMax( wbtsys );
+  //
+  // ダウンロードの場合
+  if( WBTTOOL_GetRegulationID( wbtsys->wbtcup ) == WBTREG_DOWNLOAD ){
+    s32 j=0;
+    // 選択した個数をmaxにセット
+    for(cnt=0;cnt<6;cnt++){
+      if( wbtsys->pokelist_select_num[cnt] != 0){
+        j++;
+      }
+    }
+    //
+    max = j;
+  }
 #endif
   for ( cnt = 0; cnt < max; cnt ++ )
   {
