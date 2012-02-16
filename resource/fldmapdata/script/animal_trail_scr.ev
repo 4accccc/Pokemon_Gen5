@@ -50,6 +50,9 @@ DEFINE_LOCAL  LWK_ANIMAL_TRAIL_ID
 //--------------------------------------------------------------------
 animal_trail_call:
 {
+  // 話しかけ音再生
+  _TALK_START_SE_PLAY()
+
   // 進入確認メッセージ
   _SYSWIN_MSG( msg_animal_trail_01, POS_DOWN )
 
