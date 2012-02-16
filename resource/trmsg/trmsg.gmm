@@ -9612,7 +9612,7 @@
 		<language name="JPN" width="216">そりゃ　かんちがい　するか
 たしかに　なかなか　やりやがる！</language>
 		<language name="JPN_KANJI" width="216">そりゃ　勘違い　するか
-たしかに　なかなか　やるやがる！</language>
+たしかに　なかなか　やりやがる！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_12_TRMSG_FIGHT_LOSE">
@@ -12042,7 +12042,7 @@
 	</row>
 
 	<row id="TRID_RANGERM_21_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
-		<language name="JPN" width="216">あちている　どうぐの　ちかくで
+		<language name="JPN" width="216">おちている　どうぐの　ちかくで
 まちぶせ　していたのさ▼
 モロバレルの　ぎたい　よりは
 うまく　かくれていた……　よね</language>
