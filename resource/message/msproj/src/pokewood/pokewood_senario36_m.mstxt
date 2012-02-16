@@ -1510,34 +1510,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
-ファイル№００１への　ついき』▼
-ファイル№００１を　さいごに
+ファイルＮｏ．００１への　ついき』▼
+ファイルＮｏ．００１を　さいごに
 コードネーム　[Name:PokemonNickname Idx="0" ]　からの▽
 れんらくが　とだえる▼
 しょうそくは　いぜん　ふめい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
-ファイル№００１への　追記』▼
-ファイル№００１を　最後に
+ファイルＮｏ．００１への　追記』▼
+ファイルＮｏ．００１を　最後に
 コードネーム　[Name:PokemonNickname Idx="0" ]からの▽
 連絡が　途絶える▼
 消息は　依然　不明……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:54:01" />
+				Time="2012-02-16T08:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:54:01" />
+				Time="2012-02-16T08:36:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1689,7 +1689,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
-ファイル№００１への　ついき』▼
+ファイルＮｏ．００１への　ついき』▼
 ゆうれい　そうどう　デタラメ　なり
 さいきん　ニセ　じょうほう　おおし▽
 ちゅうい　されたし▼
@@ -1697,16 +1697,16 @@
 かいてきで　けしきは　すばらしく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
-ファイル№００１への　追記』▼
+ファイルＮｏ．００１への　追記』▼
 幽霊騒動　デタラメ　なり
 最近　ニセ情報　多し▽
 注意　されたし▼
@@ -1714,11 +1714,11 @@
 快適で　景色は　素晴らしく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2012-02-16T08:36:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

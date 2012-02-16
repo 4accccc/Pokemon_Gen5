@@ -379,19 +379,13 @@
 		<language name="JPN_KANJI" width="256">ストレンジ『そこが　良いんです！
 こだわりですよ　こだわり！</language>
 	</row>
-	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
-ここが　しょうねんばです！</language>
-		<language name="JPN_KANJI" width="256">ストレンジ『[1:00:トレーナー名:1]博士！
-ここが　正念場です！</language>
-	</row>
-	<row id="pw_turn_hero_4">
+	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『クッ……
 まずいわね……！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『クッ……
 まずいわね……！</language>
 	</row>
-	<row id="pw_turn_enemy_4">
+	<row id="pw_turn_enemy_3">
 		<language name="JPN" width="256">ストレンジ『[1:00:トレーナー名:1]はかせ！
 このままでは　じかん　てんそうきが▽
 ばくはつ　してしまいます……！</language>
