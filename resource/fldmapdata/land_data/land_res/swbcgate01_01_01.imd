@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-25T21:10:28" source="swbcgate01_01_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T11:29:08" source="swbcgate01_01_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-25T21:10:28" source="swbcgate01_01_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T11:29:08" source="swbcgate01_01_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1509,7 +1509,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="o38_yuka6"
+	<material index="17" name="o38_yuka8"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1533,7 +1533,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="o38_yuka7"
+	<material index="18" name="o38_yuka9"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -3155,7 +3155,7 @@
 		vertex_size="221" polygon_size="75"
 		triangle_size="33" quad_size="42"
 		volume_min="-1.560791 1.281250 -3.522705"
-		volume_max="4.000000 1.281250 -0.459717"
+		volume_max="4.000000 1.281250 -0.522217"
 		volume_r="4.689453"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
@@ -3436,15 +3436,15 @@
 					<tex st="5.250000 5.125000"/>
 					<pos_xy xy="-0.927246 1.281250"/>
 					<tex st="4.000000 1.812500"/>
-					<pos_xz xz="-1.156250 -0.459717"/>
+					<pos_xz xz="-1.156250 -0.522217"/>
 					<tex st="7.750000 1.812500"/>
-					<pos_xz xz="4.000000 -0.459961"/>
+					<pos_xz xz="4.000000 -0.522461"/>
 					<tex st="7.750000 3.437500"/>
 					<pos_xz xz="4.000000 -0.968750"/>
 					<tex st="4.000000 3.437500"/>
 					<pos_xy xy="-1.156250 1.281250"/>
 					<tex st="3.125000 1.312500"/>
-					<pos_xz xz="-1.218750 -0.459717"/>
+					<pos_xz xz="-1.218750 -0.522217"/>
 					<tex st="4.875000 1.312500"/>
 					<pos_xy xy="-1.156250 1.281250"/>
 					<tex st="4.875000 0.875000"/>
@@ -3693,7 +3693,7 @@
 		vertex_size="48" polygon_size="12"
 		triangle_size="0" quad_size="12"
 		volume_min="-1.125000 1.281250 -0.937500"
-		volume_max="3.906250 2.227539 -0.562500"
+		volume_max="3.906250 2.227539 -0.625000"
 		volume_r="4.532227"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
@@ -3708,20 +3708,20 @@
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_s xyz="1.375000 1.281250 -0.937500"/>
 					<tex st="254.937500 31.625000"/>
-					<pos_xz xz="1.375000 -0.562500"/>
+					<pos_xz xz="1.375000 -0.625000"/>
 					<tex st="254.937500 5.000000"/>
 					<pos_xy xy="1.375000 2.227539"/>
 					<tex st="255.687500 5.000000"/>
 					<pos_xz xz="1.375000 -0.937500"/>
 					<tex st="254.937500 31.625000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="1.625000 1.281250 -0.562500"/>
+					<pos_s xyz="1.625000 1.281250 -0.625000"/>
 					<tex st="255.687500 31.625000"/>
 					<pos_xz xz="1.625000 -0.937500"/>
 					<tex st="255.687500 5.000000"/>
 					<pos_xy xy="1.625000 2.227539"/>
 					<tex st="254.937500 5.000000"/>
-					<pos_xz xz="1.625000 -0.562500"/>
+					<pos_xz xz="1.625000 -0.625000"/>
 					<tex st="185.187500 5.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="1.375000 2.227539"/>
@@ -3733,7 +3733,7 @@
 					<pos_xy xy="1.375000 2.227539"/>
 					<tex st="185.187500 31.750000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="1.281250 -0.562500"/>
+					<pos_yz yz="1.281250 -0.625000"/>
 					<tex st="190.812500 31.750000"/>
 					<pos_xy xy="1.625000 1.281250"/>
 					<tex st="190.812500 5.000000"/>
@@ -3741,7 +3741,7 @@
 					<tex st="185.187500 5.000000"/>
 					<pos_xy xy="1.375000 2.227539"/>
 					<tex st="128.437500 31.750000"/>
-					<pos_s xyz="-0.906250 1.281250 -0.625000"/>
+					<pos_s xyz="-0.906250 1.281250 -0.687500"/>
 					<tex st="184.500000 31.750000"/>
 					<pos_xy xy="1.406250 1.281250"/>
 					<tex st="184.500000 5.312500"/>
@@ -3759,7 +3759,7 @@
 					<pos_xy xy="-0.906250 2.125000"/>
 					<tex st="128.437500 31.750000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="1.593750 1.281250 -0.625000"/>
+					<pos_s xyz="1.593750 1.281250 -0.687500"/>
 					<tex st="184.500000 31.750000"/>
 					<pos_xy xy="3.906250 1.281250"/>
 					<tex st="184.500000 5.312500"/>
@@ -3779,20 +3779,20 @@
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_s xyz="-1.125000 1.281250 -0.937500"/>
 					<tex st="254.937500 31.625000"/>
-					<pos_xz xz="-1.125000 -0.562500"/>
+					<pos_xz xz="-1.125000 -0.625000"/>
 					<tex st="254.937500 5.000000"/>
 					<pos_xy xy="-1.125000 2.227539"/>
 					<tex st="255.687500 5.000000"/>
 					<pos_xz xz="-1.125000 -0.937500"/>
 					<tex st="254.937500 31.625000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="-0.875000 1.281250 -0.562500"/>
+					<pos_s xyz="-0.875000 1.281250 -0.625000"/>
 					<tex st="255.687500 31.625000"/>
 					<pos_xz xz="-0.875000 -0.937500"/>
 					<tex st="255.687500 5.000000"/>
 					<pos_xy xy="-0.875000 2.227539"/>
 					<tex st="254.937500 5.000000"/>
-					<pos_xz xz="-0.875000 -0.562500"/>
+					<pos_xz xz="-0.875000 -0.625000"/>
 					<tex st="185.187500 5.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xy xy="-1.125000 2.227539"/>
@@ -3804,7 +3804,7 @@
 					<pos_xy xy="-1.125000 2.227539"/>
 					<tex st="185.187500 31.750000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="1.281250 -0.562500"/>
+					<pos_yz yz="1.281250 -0.625000"/>
 					<tex st="190.812500 31.750000"/>
 					<pos_xy xy="-0.875000 1.281250"/>
 					<tex st="190.812500 5.000000"/>
@@ -4806,7 +4806,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1087" kind="mesh"
+	<node index="0" name="polySurface1098" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"

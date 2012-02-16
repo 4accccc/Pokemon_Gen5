@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00301" date="2011-10-16T13:26:16" source="swanbg_all.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T15:30:41" source="swanbg_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 2011 NNS_Export" version="1.6.0.20110413"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00301" date="2011-10-16T13:26:16" source="swanbg_all.mb"/>
-<original_generator name="Maya 2011 NNS_Export" version="1.6.0.20110413"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2012-02-16T15:30:41" source="swanbg_all.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="6"
@@ -1303,8 +1303,8 @@
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-0.109619 -0.018555 -0.066406"
-		volume_max="0.109619 0.083740 0.123291"
-		volume_r="0.153076"
+		volume_max="0.109619 0.077393 0.123291"
+		volume_r="0.149658"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
 	>
@@ -1319,36 +1319,36 @@
 					<pos_xyz xyz="0.109619 -0.018555 0.060059"/>
 					<tex st="7.312500 15.625000"/>
 					<pos_xz xz="0.109619 -0.066406"/>
-					<tex st="7.312500 15.312500"/>
-					<pos_xy xy="0.109619 0.083740"/>
-					<tex st="5.812500 15.312500"/>
+					<tex st="7.312500 15.375000"/>
+					<pos_xy xy="0.109619 0.077393"/>
+					<tex st="5.812500 15.375000"/>
 					<pos_xz xz="0.109619 0.060059"/>
 					<tex st="4.312500 15.625000"/>
 					<nrm xyz="0.500000 0.000000 0.865234"/>
-					<pos_diff xyz="-0.109619 -0.102295 0.063232"/>
+					<pos_diff xyz="-0.109619 -0.095947 0.063232"/>
 					<tex st="5.812500 15.625000"/>
 					<pos_xz xz="0.109619 0.060059"/>
-					<tex st="5.812500 15.312500"/>
-					<pos_xy xy="0.109619 0.083740"/>
-					<tex st="4.312500 15.312500"/>
+					<tex st="5.812500 15.375000"/>
+					<pos_xy xy="0.109619 0.077393"/>
+					<tex st="4.312500 15.375000"/>
 					<pos_xz xz="0.000000 0.123291"/>
 					<tex st="2.812500 15.625000"/>
 					<nrm xyz="-0.500000 0.000000 0.865234"/>
-					<pos_diff xyz="-0.109619 -0.102295 -0.063232"/>
+					<pos_diff xyz="-0.109619 -0.095947 -0.063232"/>
 					<tex st="4.312500 15.625000"/>
 					<pos_xz xz="0.000000 0.123291"/>
-					<tex st="4.312500 15.312500"/>
-					<pos_xy xy="0.000000 0.083740"/>
-					<tex st="2.812500 15.312500"/>
+					<tex st="4.312500 15.375000"/>
+					<pos_xy xy="0.000000 0.077393"/>
+					<tex st="2.812500 15.375000"/>
 					<pos_xz xz="-0.109619 0.060059"/>
 					<tex st="1.312500 15.625000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="-0.018555 -0.066406"/>
 					<tex st="2.812500 15.625000"/>
 					<pos_xz xz="-0.109619 0.060059"/>
-					<tex st="2.812500 15.312500"/>
-					<pos_xy xy="-0.109619 0.083740"/>
-					<tex st="1.312500 15.312500"/>
+					<tex st="2.812500 15.375000"/>
+					<pos_xy xy="-0.109619 0.077393"/>
+					<tex st="1.312500 15.375000"/>
 					<pos_xz xz="-0.109619 -0.066406"/>
 				</primitive>
 			</primitive_array>
@@ -1452,8 +1452,8 @@
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-0.109619 -0.018555 -0.066406"
-		volume_max="0.109619 0.083740 0.123291"
-		volume_r="0.153076"
+		volume_max="0.109619 0.077393 0.123291"
+		volume_r="0.149658"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
 	>
@@ -1468,36 +1468,36 @@
 					<pos_xyz xyz="0.109619 -0.018555 0.060059"/>
 					<tex st="7.312500 15.625000"/>
 					<pos_xz xz="0.109619 -0.066406"/>
-					<tex st="7.312500 15.312500"/>
-					<pos_xy xy="0.109619 0.083740"/>
-					<tex st="5.812500 15.312500"/>
+					<tex st="7.312500 15.375000"/>
+					<pos_xy xy="0.109619 0.077393"/>
+					<tex st="5.812500 15.375000"/>
 					<pos_xz xz="0.109619 0.060059"/>
 					<tex st="4.312500 15.625000"/>
 					<nrm xyz="0.500000 0.000000 0.865234"/>
-					<pos_diff xyz="-0.109619 -0.102295 0.063232"/>
+					<pos_diff xyz="-0.109619 -0.095947 0.063232"/>
 					<tex st="5.812500 15.625000"/>
 					<pos_xz xz="0.109619 0.060059"/>
-					<tex st="5.812500 15.312500"/>
-					<pos_xy xy="0.109619 0.083740"/>
-					<tex st="4.312500 15.312500"/>
+					<tex st="5.812500 15.375000"/>
+					<pos_xy xy="0.109619 0.077393"/>
+					<tex st="4.312500 15.375000"/>
 					<pos_xz xz="0.000000 0.123291"/>
 					<tex st="2.812500 15.625000"/>
 					<nrm xyz="-0.500000 0.000000 0.865234"/>
-					<pos_diff xyz="-0.109619 -0.102295 -0.063232"/>
+					<pos_diff xyz="-0.109619 -0.095947 -0.063232"/>
 					<tex st="4.312500 15.625000"/>
 					<pos_xz xz="0.000000 0.123291"/>
-					<tex st="4.312500 15.312500"/>
-					<pos_xy xy="0.000000 0.083740"/>
-					<tex st="2.812500 15.312500"/>
+					<tex st="4.312500 15.375000"/>
+					<pos_xy xy="0.000000 0.077393"/>
+					<tex st="2.812500 15.375000"/>
 					<pos_xz xz="-0.109619 0.060059"/>
 					<tex st="1.312500 15.625000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_yz yz="-0.018555 -0.066406"/>
 					<tex st="2.812500 15.625000"/>
 					<pos_xz xz="-0.109619 0.060059"/>
-					<tex st="2.812500 15.312500"/>
-					<pos_xy xy="-0.109619 0.083740"/>
-					<tex st="1.312500 15.312500"/>
+					<tex st="2.812500 15.375000"/>
+					<pos_xy xy="-0.109619 0.077393"/>
+					<tex st="1.312500 15.375000"/>
 					<pos_xz xz="-0.109619 -0.066406"/>
 				</primitive>
 			</primitive_array>
@@ -1619,7 +1619,7 @@
 		vertex_size="50" polygon_size="14"
 		triangle_size="6" quad_size="8"
 		volume_min="-0.138672 -0.083740 -0.160156"
-		volume_max="0.138672 0.083740 0.160156"
+		volume_max="0.138672 0.077393 0.160156"
 		volume_r="0.180664"
 	>
 		<display index="0" material="0" polygon="10" priority="0"/>
@@ -1640,7 +1640,7 @@
 		vertex_size="50" polygon_size="14"
 		triangle_size="6" quad_size="8"
 		volume_min="-0.138672 -0.083740 -0.160156"
-		volume_max="0.138672 0.083740 0.160156"
+		volume_max="0.138672 0.077393 0.160156"
 		volume_r="0.180664"
 	>
 		<display index="0" material="1" polygon="12" priority="0"/>
