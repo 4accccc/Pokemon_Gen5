@@ -712,6 +712,10 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
           
         }
       }
+      else if( place2 == POKE_MEMO_PLACE_AR_SEARCHER )
+      {
+        memoId  = trmemo_02_09_01;
+      }
       else if( place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && 
                place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER  &&
                isMoveiEvent == TRUE )
