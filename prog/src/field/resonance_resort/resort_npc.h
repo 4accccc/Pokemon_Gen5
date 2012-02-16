@@ -65,3 +65,5 @@ extern u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk );
 extern u32 RESORT_NPC_SYS_GetOffrecoIndexByType( const RESORT_NPC_SYS *cp_wk, u32 type );
 
 extern BOOL RESORT_NPC_TOOL_IsObjID( int objid );
+
+extern void RESORT_NPC_SYS_RequestPause( RESORT_NPC_SYS *p_wk, BOOL is_pause );
