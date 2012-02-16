@@ -47,6 +47,8 @@ FS_EXTERN_OVERLAY( multiboot );
 
 #define KEYSYS_NET_TIMEOUT_CNT      (60*60)  //1分タイムアウト
 
+#define KEYSYS_NET_TIMEOUT_TEN_CNT  (60*60*10)  //10分タイムアウト
+
 enum
 {
   NET_TIMING_NO_IW_CONNECT = 10,
@@ -1116,6 +1118,7 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
     {
       *p_seq  = SEQ_START_CONNECT;
     }
+    p_wk->timeout_cnt = 0;
     break;
 
   case SEQ_START_CONNECT:
@@ -1125,6 +1128,7 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
     }
     else
     {
+      GF_ASSERT_HEAVY( 0 );
       p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NHTTP_ERROR;
       *p_seq = SEQ_END;
     }
@@ -1210,6 +1214,12 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
       else if( NHTTP_ERROR_BUSY != error )
       { 
         p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NHTTP_ERROR;
+        *p_seq = SEQ_END;
+      }
+
+      if( p_wk->timeout_cnt++ > KEYSYS_NET_TIMEOUT_TEN_CNT  )
+      {
+        p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
         *p_seq = SEQ_END;
       }
     }
