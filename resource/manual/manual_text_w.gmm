@@ -411,7 +411,7 @@
 	</row>
 
 	<row id="man_txt_title_no_001_007">
-		<language name="JPN">Ｗｉ－Ｆｉ せってい</language>
+		<language name="JPN">Ｗｉ－Ｆｉせってい</language>
 		<language name="JPN_KANJI">Ｗｉ－Ｆｉ設定</language>
 	</row>
 
@@ -481,8 +481,8 @@
 	</row>
 
 	<row id="man_txt_title_no_002_013">
-		<language name="JPN">Ｗｉ－Ｆｉ クラブ</language>
-		<language name="JPN_KANJI">Ｗｉ－Ｆｉ クラブ</language>
+		<language name="JPN">Ｗｉ－Ｆｉクラブ</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉクラブ</language>
 	</row>
 
 	<row id="man_txt_title_no_002_014">
@@ -496,7 +496,7 @@
 	</row>
 
 	<row id="man_txt_title_no_003_001">
-		<language name="JPN">Ｃギア (シー ギア)</language>
+		<language name="JPN">Ｃギア（シーギア）</language>
 		<language name="JPN_KANJI">Ｃ－ＧＥＡＲ</language>
 	</row>
 
@@ -506,7 +506,7 @@
 	</row>
 
 	<row id="man_txt_title_no_003_003">
-		<language name="JPN">すれちがいちょうさ とは</language>
+		<language name="JPN">すれちがいちょうさ　とは</language>
 		<language name="JPN_KANJI">すれ違い調査とは</language>
 	</row>
 
@@ -1062,7 +1062,7 @@
 「移動する」をタッチすると
 右側に　ボックスが　表示されます。
 
-グレーの　矢印を　上下すに
+グレーの　矢印を　上下に
 スライドして　移動させたい
 ボックスを　選んだあと
 もう一度　ポケモンに　タッチすると
@@ -1483,7 +1483,7 @@
 「ともだちコード」の　せつめいを
 ごらんください。</language>
 		<language name="JPN_KANJI">ポケモンセンターの　２階にある
-ポケモン Ｗｉ－Ｆｉ クラブでは
+ポケモン Ｗｉ－Ｆｉクラブでは
 ともだちてちょうに　登録した人同士で
 通信交換や　対戦
 ボイスチャット　ライブキャスターを
@@ -1835,7 +1835,7 @@
 	</row>
 
 	<row id="man_txt_page_no_003_007_001">
-		<language name="JPN">Ｃギアの　「ＩＲ (アイアール）」と
+		<language name="JPN">Ｃギアの　「ＩＲ（アイアール）」と
 かかれた　まるい　わくを　タッチすると
 ちかくのひとに　つうしんこうかんや
 たいせんを　もうしこむことが　できます。

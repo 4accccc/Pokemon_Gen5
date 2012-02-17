@@ -330,14 +330,14 @@
 		Label="man_txt_title_no_001_007">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｗｉ－Ｆｉ せってい</Text>
+			<Text>Ｗｉ－Ｆｉせってい</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -680,25 +680,25 @@
 		Label="man_txt_title_no_002_013">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<Text>Ｗｉ－Ｆｉクラブ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<Text>Ｗｉ－Ｆｉクラブ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -755,14 +755,14 @@
 		Label="man_txt_title_no_003_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギア (シー ギア)</Text>
+			<Text>Ｃギア（シーギア）</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -805,14 +805,14 @@
 		Label="man_txt_title_no_003_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがいちょうさ とは</Text>
+			<Text>すれちがいちょうさ　とは</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2471,18 +2471,18 @@
 「移動する」をタッチすると
 右側に　ボックスが　表示されます。
 
-グレーの　矢印を　上下すに
+グレーの　矢印を　上下に
 スライドして　移動させたい
 ボックスを　選んだあと
 もう一度　ポケモンに　タッチすると
 ボックスに　移動します。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:49" />
+				Time="2012-02-17T06:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:49" />
+				Time="2012-02-17T06:41:21" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3332,7 +3332,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターの　２階にある
-ポケモン Ｗｉ－Ｆｉ クラブでは
+ポケモン Ｗｉ－Ｆｉクラブでは
 ともだちてちょうに　登録した人同士で
 通信交換や　対戦
 ボイスチャット　ライブキャスターを
@@ -3341,12 +3341,12 @@
 「ともだちコード」の
 説明を　ご覧ください。</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2012-01-12T08:00:27" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -4074,7 +4074,7 @@
 		Label="man_txt_page_no_003_007_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアの　「ＩＲ (アイアール）」と
+			<Text>Ｃギアの　「ＩＲ（アイアール）」と
 かかれた　まるい　わくを　タッチすると
 ちかくのひとに　つうしんこうかんや
 たいせんを　もうしこむことが　できます。
@@ -4083,11 +4083,11 @@
 チェックすることも　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-02-17T06:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-01-17T11:42:55" />
+				Time="2012-02-17T06:06:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
