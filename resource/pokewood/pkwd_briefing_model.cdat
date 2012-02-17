@@ -128,8 +128,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl21[] = {
 };
 //ïÊínÅ[ÇT
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl22[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09d_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09d_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09e_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09e_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 //å§ãÜé{ê›Å[ÇS
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl23[] = {
