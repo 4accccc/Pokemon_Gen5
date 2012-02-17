@@ -14,6 +14,7 @@
 
   //@author fujimura_souichirou（Ｎイベント）
   //@author	suginaka_katsunori
+  //@author Mizuguchi_Mai（Ｎイベント不具合修正）
 
 //------------------------------注意--------------------------------//
 // シーンワークをプログラム側で参照しています。
@@ -497,6 +498,7 @@ ev_n_poke_call_01:
 DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
 DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
 DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
+DEFINE_LOCAL LWK_N_POKE_RET       //Ｎポケモン有無の返り値
 DEFINE_LOCAL LWK_N_POKE       //Ｎポケモンの有無
 
 //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
@@ -504,18 +506,18 @@ _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
 
 //手持ちのポケモンの中にＮポケモンがいるか確認（繰り返し処理）
 WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
-
+  
 	//Ｎポケモンかどうかチェック
-	_GET_PARTY_POKE_PARAM( LWK_N_POKE, LWK_COUNT_NUM, SCR_POKEPARA_N_POKE )
+	_GET_PARTY_POKE_PARAM( LWK_N_POKE_RET, LWK_COUNT_NUM, SCR_POKEPARA_N_POKE )
 	
 	//Ｎポケだった場合
-	IF $LWK_N_POKE == TRUE THEN
+	IF $LWK_N_POKE_RET == TRUE THEN
 	
 		//指定POSのポケモンのNOを取得
 		_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
 	
 		_MONS_NAME( 0, LWK_RET_MONSNO )
-	
+	  
 		//========================================/
 		
 		$LWK_N_POKE = 1
@@ -527,17 +529,32 @@ WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
     //カウント
     $LWK_COUNT_NUM += 1
 
-  ENDWHILE
+ENDWHILE
 
 //手持ちに条件を満たしたポケモンがいた場合
 IF $LWK_N_POKE == 1 THEN
-
+  
+  _MSGWIN_CLOSE()
+  
+  //アニメ：N「！」
+  _OBJ_ANIME( D26R0101_BOSS_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
 	//Ｎ：キミは……▼
 	_BALLOONWIN_OBJMSG_POS( msg_d26r0101_boss_06, D26R0101_BOSS_01, POS_DEFAULT )
-
+  _MSGWIN_CLOSE()
+  
+  
 ENDIF
 
 _RET
+
+//--------------------------------------------------------------------
+//	「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------
