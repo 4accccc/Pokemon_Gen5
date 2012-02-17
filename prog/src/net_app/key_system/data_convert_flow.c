@@ -502,18 +502,18 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
         }
         break;
       case MB_PARENT_DATACONV_RESULT_TIMEOUT: //タイムアウト
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_02, KEYSYS_TEXT_TYPE_WAIT );
+        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_02, KEYSYS_TEXT_TYPE_STREAM );
         *p_seq = SEQ_ERR_MESSAGE_END;
         break;
       case MB_PARENT_DATACONV_RESULT_BACKUP_ERROR: //CRCが違う
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_05, KEYSYS_TEXT_TYPE_WAIT );
+        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_05, KEYSYS_TEXT_TYPE_STREAM );
         *p_seq = SEQ_ERR_MESSAGE_END;
         break;
       default:
         GF_ASSERT(0);
       case MB_PARENT_DATACONV_RESULT_CONTRY_ERROR: //国が違う
       case MB_PARENT_DATACONV_RESULT_GAME_ERROR: //ROMが違う
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_04, KEYSYS_TEXT_TYPE_WAIT );
+        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_04, KEYSYS_TEXT_TYPE_STREAM );
         *p_seq = SEQ_ERR_MESSAGE_END;
         break;
       }
