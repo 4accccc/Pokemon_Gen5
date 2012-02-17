@@ -1939,6 +1939,8 @@ static void CYGNUS_SAVE_StartSave( CYGNUS_SAVE_WORK *p_wk )
     CYGNUS_SAVEDATA_SetSend( p_wk->p_out_sv, onetime_key, p_wk->flag );
     DUMMY3DS_SAVEDATA_SetData( p_wk->p_in_sv, DUMMY3DS_SAVEDATA_PARAM_FLAG, p_wk->flag );
 
+    GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
+
     p_wk->sv_seq  = 0;
   }
 }
@@ -2010,6 +2012,8 @@ static BOOL CYGNUS_SAVE_MainSave( CYGNUS_SAVE_WORK *p_wk )
       }
     }
   case SEQ_END:
+
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_USER);
     return TRUE;
   }
 
