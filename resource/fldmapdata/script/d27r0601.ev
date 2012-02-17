@@ -454,8 +454,13 @@ ev_d27r0601_ninjabtl_end:
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   _PLAYER_DIR_GET( LWK_DIR )
-  IF $LWK_DIR != DIR_UP THEN
+  
+  IF $LCW_POSX >= 13 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
+  ELSE
     _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
   ENDIF
   
@@ -497,8 +502,12 @@ ev_d27r0601_ninjabtl_end:
   _OBJ_DEL( D27R0601_NINJA_02 )
   _OBJ_DEL( D27R0601_NINJA_03 )
   
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
-  _OBJ_ANIME_WAIT()
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  IF $LWK_DIR != DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //ライバル：なあ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_04 , D27R0601_SWRIVAL_01 ,POS_DEFAULT )
@@ -796,7 +805,18 @@ ev_battle_check:
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-
+    
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //3人目と戦闘後であったならば（主人公右にいるバージョン）
+    IF $WK_SCENE_D27R0601_SWSAGE1_01 == 3  && $LCW_POSX >= 13 THEN
+      _OBJ_POS_CHANGE(D27R0601_NINJA_01,11,0,6,DIR_RIGHT)
+    //3人目と戦闘後であったならば（それ以外）
+    ELSIF $WK_SCENE_D27R0601_SWSAGE1_01 == 3 THEN
+      _OBJ_POS_CHANGE(D27R0601_NINJA_01,11,0,6,DIR_DOWN)
+    ENDIF
+    
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
