@@ -320,6 +320,15 @@ _TALK_START_SE_PLAY()
     _FLAG_SET( FV_D08R0901_PACKAGE_POKE )
     //========================================/
 
+    //自機にカメラを戻す
+    _CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//カメラのバインドを解く
+    _CAMERA_DEF_MOVE (1)
+    //カメラ待ち
+    _CAMERA_WAIT_MOVE()
+    _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+    _CAMERA_END()		//カメラ操作終了
+
     _WILD_WIN()   //勝ち(1)ならトレーナー勝利処理へ
   ELSE
     _WILD_LOSE()  //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -337,7 +346,7 @@ _TALK_START_SE_PLAY()
     //========================================/
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN    //勝利した場合、あるいは逃げた場合
-
+  
     _GET_ROM_VERSION( LWK_VERSION )
     IF $LWK_VERSION == VERSION_B2 THEN
       //システム：ゼクロムは　どこかに
