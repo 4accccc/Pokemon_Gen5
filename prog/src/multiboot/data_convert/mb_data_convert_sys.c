@@ -586,7 +586,14 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_WAIT_NEXT_GAME_ERROR_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
     {
-      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05, p_wk->p_comm_init->msgSpeed );
+      if( p_wk->p_comm_init )
+      {
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05, p_wk->p_comm_init->msgSpeed );
+      }
+      else
+      {
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05, 1 );
+      }
       MB_COMM_ReqDisconnect( p_wk->p_comm );
       (*p_seq)++;
     }
