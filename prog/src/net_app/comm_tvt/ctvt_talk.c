@@ -2288,6 +2288,11 @@ static void CTVT_TALK_UpdateDrawWave( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
       isUpdate = TRUE;
       //OS_TFPrintf(3,"size[%5d][%3d][%3d]\n",vol,talkWork->wavePosX,posY);
       //OS_TFPrintf(3,"size[%5d][%3d][%3d]\n",nowSize,waveLen,posY);
+
+      // BTS 219
+      // ‚©‚­‚Â‚«‚ðŒyŒ¸‚·‚é‚½‚ß‚É1‰ñ‚µ‚©•`‚©‚È‚¢‚±‚Æ‚É‚µ‚Ü‚µ‚½
+      //
+      break;
     }
     if( isUpdate == TRUE )
     {
