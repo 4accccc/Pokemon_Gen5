@@ -1361,16 +1361,16 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
 {
   int i;
   EVENTWORK* eventWork;
-
-  static const u16 fes_bgm_ng[] = { //フェスBGMを鳴らさないゾーン
+  
+  static const u16 fes_bgm_ng_zone_group[] = { //フェスBGMを鳴らさないゾーングループ
+    ZONE_ID_N01R0101,		//Nの城 ゾーングループ
+    ZONE_ID_D27R0101,   //プラズマフリゲート ゾーングループ
+  };
+  static const u16 fes_bgm_ng_zone[] = { //フェスBGMを鳴らさないゾーン
     ZONE_ID_C13GYM0101, //毒ジム
     ZONE_ID_C13GYM0102, //毒ジム
     ZONE_ID_D10R0401,		//ジャイアントホール（昔キュレムがいた場所）
     ZONE_ID_D10R0501,		//ジャイアントホール（クライマックス部屋）
-    ZONE_ID_N01R0401,		//Nの城
-    ZONE_ID_N01R0402,		//Nの城
-    ZONE_ID_N01R0501,		//Nの城
-    ZONE_ID_N01R0502,		//Nの城
     ZONE_ID_D08R0901,   //リュウラセンのとう最上階
     ZONE_ID_C04GYM0101, //新電気ジム
   };
@@ -1387,8 +1387,14 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
     }
   }
   { //フェスBGMにしないゾーンチェック
-    for( i = 0;i < NELEMS(fes_bgm_ng);i++){
-      if( zoneID == fes_bgm_ng[i]){
+    u16 zone_group = ZONEDATA_GetGroupID( zoneID );
+    for( i = 0;i < NELEMS(fes_bgm_ng_zone_group);i++){
+      if( zoneID == fes_bgm_ng_zone_group[i]){
+        return SPECIAL_BGM_NONE;
+      }
+    }
+    for( i = 0;i < NELEMS(fes_bgm_ng_zone);i++){
+      if( zoneID == fes_bgm_ng_zone[i]){
         return SPECIAL_BGM_NONE;
       }
     }
