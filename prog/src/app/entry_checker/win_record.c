@@ -650,9 +650,7 @@ static const s16 wr_cmn_btn_tbl[] = {
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 {
-  // スライドの数は上からのパネル分(7)にしないどだめらしい
-  // (リストの処理で問題が起こるようだ...)
-  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00:(ダミー)
+//  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00:(ダミー)
   { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
   { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
   { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
@@ -671,8 +669,8 @@ static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp2_tbl[] =
 {
-#if 1	// なしでよい
-  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  // 実際にはタッチ処理をしないので、なしでよいはず(念のため)
+//  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
   { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
   { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
   { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
@@ -682,7 +680,7 @@ static const FRAMELIST_TOUCH_DATA wr_list_tp2_tbl[] =
   //
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
-#endif
+  //
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
