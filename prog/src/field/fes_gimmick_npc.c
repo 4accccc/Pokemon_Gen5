@@ -209,9 +209,7 @@ void FES_GIMMICK_NPC_ShoppingItemGet( FES_GIMMICK* sys_wk, MMDL* mmdl, u16* item
   OS_Printf("value=%d, ",value);
   if(type){ //‰¿Ši‚ÉU‚ê•‚ªo‚é(0.8`4.9)
     int range = ( GFUser_GetPublicRand( PRICE_RANGE_NUM )+8 ); //‚Ü‚¸10”{‚ÅŒvŽZ 8-49‚Ì—”‚ðŽæ“¾
-    f32 f_range = FX_Div( FX32_CONST(range), FX32_CONST(10) );  //Š„10‚µ‚Ä0.8`4.9‚Ì—”‚É•ÏŠ·
-    fx32 f_value = FX_Mul( FX32_CONST( value ), f_range );
-    value = FX_Whole( f_value );  //¬”“_ØŽÌ‚Ä
+    value = (value/10) * range; //range‚ª10”{‚³‚ê‚Ä‚¢‚é‚Ì‚ÅAŒ³’l‚Í1/10‚µ‚ÄŒvŽZ
     OS_Printf("range=%d, price=%d\n", range, value );
   }
   if( value > FES_SHOPPING_PRICE_MAX ){
