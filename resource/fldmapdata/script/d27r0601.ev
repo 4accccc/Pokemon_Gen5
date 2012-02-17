@@ -458,9 +458,9 @@ ev_d27r0601_ninjabtl_end:
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   _PLAYER_DIR_GET( LWK_DIR )
   
-  IF $LCW_POSX >= 13 THEN
+  IF $LCW_POSX >= 13 && $LWK_DIR != DIR_LEFT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l)
-  ELSE
+  ELSIF $LWK_DIR != DIR_LEFT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
   ENDIF
   
