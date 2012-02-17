@@ -2754,7 +2754,7 @@
 			<Text>……わずかな　はんだんミスで
 しみんの　ポケモンを　きずつけた▽
 [Name:TrainerName Idx="1" ]……▼
-……ショックを　うける　かれの
+……ショックを　うける　かのじょの
 いっしゅんの　スキを　ついて▽
 おそいかかる　ＵＦＯの　むれ……▼
 ……[Name:TrainerName Idx="1" ]は　たおれ
@@ -2763,18 +2763,18 @@
 みらいは　おわりを　つげた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:56:00" />
+				Time="2012-02-17T06:38:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:56:00" />
+				Time="2012-02-17T06:38:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……わずかな　判断ミスで
 市民の　ポケモンを　傷つけた▽
 [Name:TrainerName Idx="1" ]……▼
-……ショックを　受ける　彼の
+……ショックを　受ける　彼女の
 一瞬の　スキを　ついて▽
 襲いかかる　ＵＦＯの大群……▼
 ……[Name:TrainerName Idx="1" ]は　倒れ
@@ -2783,11 +2783,11 @@
 未来は　終わりを　告げた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:56:00" />
+				Time="2012-02-17T06:38:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T10:56:00" />
+				Time="2012-02-17T06:38:23" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
