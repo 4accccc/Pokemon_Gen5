@@ -2398,6 +2398,7 @@ static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk )
   {
     EVENTWORK *p_ev = SaveData_GetEventWork(p_sv);
 
+#if 0
     //Nポケ起動条件を見て、フラグを立てる
     if( EVENTWORK_CheckEventFlag( p_ev, FE_C05R0501_POKE22_GET )
       && DATA_CONVERT_SAVE_GetFlag(p_wk->p_data_sv, WB_SAVE_CONV_FLAG_GAME_CLEAR) )
@@ -2405,6 +2406,7 @@ static BOOL DataConv_Seq_ConvComplete( KEY_SYSTEM_WORK *p_wk )
       EVENTWORK_SetEventFlag( p_ev, SYS_FLAG_NPOKE_OPEN );
       change = TRUE;
     }
+#endif
     return change;
   }
   
