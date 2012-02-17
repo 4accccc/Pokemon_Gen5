@@ -404,7 +404,7 @@
 話しかけてきた……？）</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おまえを　しまつする！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おまえ　しまつする！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『お前　始末する！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
@@ -415,7 +415,7 @@
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おまえを　とむらう！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『お前　とむらう！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『お前を　とむらう！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">カダス『ウググ……</language>
@@ -858,7 +858,7 @@
 ゆうれいそうどうで　おきゃくさんを▽
 ぎょうさん　よぶんや！　ってねえ▼
 そりゃ　えらく　コーフンして
-いいだして　きかんよう　なりまして▼
+いいだして　きかんよう　なりまして▽
 もう　ワシも　ことわれんで……▼
 ホンマ　すいませんでした！
 かんにんして　ください！！</language>
@@ -885,13 +885,13 @@
 ウチの　事務所　来てもらおう！▽
 お説教だけじゃ　すまないぜ……</language>
 	</row>
-	<row id="pw_event6_enemy_5">
+	<row id="pw_event6_enemy_6">
 		<language name="JPN" width="256">カダス『うおおおおーん！
 マイワイフよ！　すまーん！</language>
 		<language name="JPN_KANJI" width="256">カダス『うおおおおーん！
 マイワイフよ！　すまーん！</language>
 	</row>
-	<row id="pw_event6_hero_6">
+	<row id="pw_event6_hero_7">
 		<language name="JPN" width="256">……　……　……　……　……　……
 ……　……　……　……　……　……▼
 『ゴーストイレイザー　ほうこくしょ

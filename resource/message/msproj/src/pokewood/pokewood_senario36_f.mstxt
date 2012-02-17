@@ -2000,17 +2000,17 @@
 ゆうれいそうどうで　おきゃくさんを▽
 ぎょうさん　よぶんや！　ってねえ▼
 そりゃ　えらく　コーフンして
-いいだして　きかんよう　なりまして▼
+いいだして　きかんよう　なりまして▽
 もう　ワシも　ことわれんで……▼
 ホンマ　すいませんでした！
 かんにんして　ください！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:51" />
+				Time="2012-02-17T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:51" />
+				Time="2012-02-17T02:36:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2067,18 +2067,18 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event6_enemy_5">
+		Label="pw_event6_enemy_6">
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『うおおおおーん！
 マイワイフよ！　すまーん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:26:40" />
+				Time="2012-02-17T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:26:40" />
+				Time="2012-02-17T02:36:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2086,15 +2086,15 @@
 マイワイフよ！　すまーん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:26:40" />
+				Time="2012-02-17T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:26:40" />
+				Time="2012-02-17T02:36:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event6_hero_6">
+		Label="pw_event6_hero_7">
 		<LanguageCell
 			Language="JPN">
 			<Text>……　……　……　……　……　……
@@ -2107,11 +2107,11 @@
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:37:40" />
+				Time="2012-02-17T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:37:40" />
+				Time="2012-02-17T02:36:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2125,11 +2125,11 @@
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:37:40" />
+				Time="2012-02-17T02:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T11:37:40" />
+				Time="2012-02-17T02:36:01" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

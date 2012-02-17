@@ -863,7 +863,7 @@
 ゆうれいそうどうで　おきゃくさんを▽
 ぎょうさん　よぶんや！　ってねえ▼
 そりゃ　えらく　コーフンして
-いいだして　きかんよう　なりまして▼
+いいだして　きかんよう　なりまして▽
 もう　ワシも　ことわれんで……▼
 ホンマ　すいませんでした！
 かんにんして　ください！！</language>
@@ -890,13 +890,13 @@
 ウチの　事務所　来てもらうわ▽
 お説教だけじゃ　すまないよ……</language>
 	</row>
-	<row id="pw_event6_enemy_5">
+	<row id="pw_event6_enemy_6">
 		<language name="JPN" width="256">カダス『うおおおおーん！
 マイワイフよ！　すまーん！</language>
 		<language name="JPN_KANJI" width="256">カダス『うおおおおーん！
 マイワイフよ！　すまーん！</language>
 	</row>
-	<row id="pw_event6_hero_6">
+	<row id="pw_event6_hero_7">
 		<language name="JPN" width="256">……　……　……　……　……　……
 ……　……　……　……　……　……▼
 『ゴーストイレイザー　ほうこくしょ

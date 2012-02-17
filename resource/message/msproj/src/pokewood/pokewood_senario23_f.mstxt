@@ -152,15 +152,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『門が　開かない！
+			<Text>[Name:TrainerName Idx="1" ]姫『扉が　開かない！
 だれか　ここから　出しなさいよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2012-02-17T02:53:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2012-02-17T02:53:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

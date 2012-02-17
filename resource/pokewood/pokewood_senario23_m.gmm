@@ -374,7 +374,7 @@
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『もんが　あかない！
 だれか！　ここから　だせよー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『門が　開かない！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『扉が　開かない！
 だれか！　ここから　出せよー！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
