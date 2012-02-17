@@ -876,7 +876,6 @@ static void DataConv_Seq_Result( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
   case SEQ_END:
     CYGNUS_RESULT_Release( p_wk->p_cyg_result );
-    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
@@ -3010,6 +3009,8 @@ static void Cygnus_Demo_Graphic_Set( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
   GFL_BG_ClearScreen(KEYSYS_BG_FRAME_WND_M);
 
+  KEYSYS_TITLE_Delete( p_wk );
+
   KEYSYS_TEXT_Delete( p_wk );
 
   //0–Ê‚Í3D‚ÅŽg‚¤‚Ì‚ÅA”jŠüB
@@ -3031,9 +3032,11 @@ static void Cygnus_Demo_Graphic_Reset( KEY_SYSTEM_WORK *p_wk )
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_KEY_SYSTEM, NARC_key_system_gra_back00_NCGR, 
       KEYSYS_BG_FRAME_WND_M, 0, 0, FALSE, HEAPID_KEY_SYSTEM );
 
-  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_CYG_M );
 
   KEYSYS_TEXT_Create(p_wk,HEAPID_KEY_SYSTEM);
+
+  KEYSYS_TITLE_CreateEx( p_wk, 21, HEAPID_KEY_SYSTEM );
 
   KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, CYGNUS_00, KEYSYS_TEXT_TYPE_QUE );
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_000, KEYSYS_TEXT_TYPE_QUE );
