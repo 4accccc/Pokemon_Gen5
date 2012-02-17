@@ -4431,7 +4431,7 @@ RESORT_MERGE_RESULT RESORT_PEOPLE_ALL_DATA_MergeData( RESORT_PEOPLE_ALL_DATA *p_
       (IS_SAME_OWNER)RESORT_RECV_DATA_IsSameOwnerProxy,
       (MERGE_DATA)RESORT_RECV_DATA_MergeProxy,
       (IS_SAME_OWNER)RESORT_SECRETARY_DATA_IsSameOwnerProxy,
-      (MERGE_DATA)RESORT_SECRETARY_DATA_MergeRecv,
+      (MERGE_DATA)RESORT_SECRETARY_DATA_MergeProxy,
     },
   };
 
@@ -5352,6 +5352,119 @@ u32* RESORT_CITY_DATA_GetTrainerIDAdrs( RESORT_CITY_DATA *p_wk, int index )
 
   return &p_wk->trainerID[index];
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  乱数チェック
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Debug_CheckRandom( void )
+{
+  #define PRINT_NUM  1
+
+  static const u32 sc_table[] = 
+  {4, 100, 800, 1200, 1400, 1600, 2600, 4000, 6000, 47831 };
+  const u16 max = 65535;
+  u32 seed = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+
+  u32 table_ok[NELEMS(sc_table)] = {0};
+
+  u8  flag[ (max+7)/8 ] = {0};
+
+  u32 rnd_save  = 0;
+  u32 rnd_save_loop  = 0;
+  u32 table_ok_num  = 0;
+  u32 loop_num  = 0;
+  BOOL is_init  = TRUE;
+  
+  while(TRUE)
+  {
+    u32 rnd;
+    seed = Resort_Data_UpdateSeedRand( seed );
+
+    rnd = RESORT_DATA_GetRnd( seed, 0, max );
+
+    if( is_init )
+    {
+      rnd_save  = rnd;
+      is_init = FALSE;
+    }
+    else
+    {
+      if( rnd_save == rnd )
+      {
+        rnd_save_loop = loop_num;
+      }
+    }
+
+
+    //乱数の保存
+    {
+      const u32 bit_idx = rnd%8;
+      const u32 arr_idx = rnd/8;
+      flag[arr_idx] |= 1<<bit_idx;
+    }
+
+    //テーブルを引けるかチェック
+    {
+      int i;
+      u32 percent = 0;
+      for( i = 0; i < NELEMS(sc_table); i++ )
+      {
+        percent += sc_table[i];
+        if( rnd < percent )
+        {
+          table_ok[i]++;
+          break;
+        }
+      }
+    }
+
+    //テーブルの当たり
+    {
+      int i;
+      u32 num = 0;
+      OS_TFPrintf( PRINT_NUM, "loop=%d tbl", loop_num );
+      for( i = 0; i < NELEMS(sc_table); i++ )
+      {
+        OS_TFPrintf( PRINT_NUM, "[%d]=%d ", i, table_ok[i] );
+
+        if( table_ok[i] > 0 )
+        {
+          num++;
+        }
+      }
+      if( num == NELEMS(sc_table) && table_ok_num == 0 )
+      {
+        table_ok_num  = loop_num;
+      }
+    }
+
+    //個数のチェック
+    {
+      int i;
+      u32 cnt = 0;
+      for( i = 0; i < max; i++ )
+      {
+        const u32 bit_idx = i%8;
+        const u32 arr_idx = i/8;
+        if( flag[arr_idx] & 1<<bit_idx )
+        {
+          cnt++;
+        }
+      }
+      OS_TFPrintf( PRINT_NUM, "num=%d/max%d ok%d loop%d\n", cnt, max, table_ok_num, rnd_save_loop );
+
+      if( cnt == max )
+      {
+      OS_TFPrintf( PRINT_NUM, "!!!!FINISH!!!!!\n" );
+        break;
+      }
+    }
+
+    loop_num++;
+  }
+}
 #endif
 
 //=============================================================================
@@ -5367,6 +5480,12 @@ void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
 
 #ifdef PM_DEBUG
   RESORT_DEBUG_FLAGWORK_Init();
+#endif
+
+#ifdef PM_DEBUG 
+#if 0
+  Resort_Debug_CheckRandom();
+#endif
 #endif
 }
 
