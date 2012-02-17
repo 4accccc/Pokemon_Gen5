@@ -2345,10 +2345,10 @@
 もうちょっと　頑張ってみないと▽
 ダメって　いうか　もったいないね……▼
 ふふふ　[Name:TrainerName Idx="0" ]くんの　おかげで
-何か　やる気でたよ！　ありがとね！</Text>
+なんか　やる気でたよ！　ありがとね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-12-14T07:29:06" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T05:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6837,13 +6837,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは かんらんしゃが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　かんらんしゃが
 だいすき　なんだ▼
 だから　キミ！
 ボクに　つきあいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T07:03:22" />
+				Time="2012-02-17T05:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6851,13 +6851,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは 観覧車が
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　観覧車が
 大好き　なんだ▼
 だから　キミ！
 ボクに　つきあいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T07:03:25" />
+				Time="2012-02-17T05:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

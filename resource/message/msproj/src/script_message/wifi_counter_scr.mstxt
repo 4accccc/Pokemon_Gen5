@@ -6559,7 +6559,7 @@ http://www.pokemon-gl.com/
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランダムマッチ または
+			<Text>ランダムマッチ　または
 Ｗｉ－Ｆｉたいかいの　さんかちゅうに▽
 ほんたいの　でんげんが　きれると▼
 １じかん　ランダムマッチや　たいかいで
@@ -6567,7 +6567,7 @@ http://www.pokemon-gl.com/
 ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-10T12:38:22" />
+				Time="2012-02-17T05:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6575,7 +6575,7 @@ http://www.pokemon-gl.com/
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ランダムマッチ または
+			<Text>ランダムマッチ　または
 Ｗｉ－Ｆｉ大会の　参加中に▽
 本体の電源が　切れると▼
 １時間　ランダムマッチや　大会で
@@ -6583,7 +6583,7 @@ http://www.pokemon-gl.com/
 ご注意ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-13T03:49:46" />
+				Time="2012-02-17T05:21:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
