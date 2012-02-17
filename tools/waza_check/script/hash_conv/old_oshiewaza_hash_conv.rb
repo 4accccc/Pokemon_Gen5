@@ -85,8 +85,8 @@ def OutputOshieWazaHash_from_old_wazaoshiedata( personal_filename, old_waza_file
     end
 
     # ÉÇÉìÉXÉ^Å[ñºìoò^É`ÉFÉbÉN 
-    unless mons_waza_data.key?( mons_name ) then
-      mons_waza_data[mons_name] = Array.new
+    unless mons_waza_data.key?( full_mons_name ) then
+      mons_waza_data[full_mons_name] = Array.new
     end
 
     # ãZìoò^
@@ -96,7 +96,7 @@ def OutputOshieWazaHash_from_old_wazaoshiedata( personal_filename, old_waza_file
       if index >= SKILL_NAME_STAET_ROW_INDEX then
         if mark.include?("Åú") then
           waza_index = index - SKILL_NAME_STAET_ROW_INDEX
-          mons_waza_data[mons_name] << waza_list[waza_index]
+          mons_waza_data[full_mons_name] << waza_list[waza_index]
         end
       end
     }
