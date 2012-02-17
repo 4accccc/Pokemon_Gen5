@@ -3244,6 +3244,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL, FALSE );
     p_wk->is_send_report  = FALSE;
     *p_seq  = SEQ_WAIT_SESSION;
+    p_wk->cnt = 0;
     p_wk->sc_state  = WIFIBATTLEMATCH_NET_SC_STATE_UPDATE;
     break;
 
@@ -3284,6 +3285,16 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
           WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        case WIFIBATTLEMATCH_NET_ERROR_NONE:
+          //1分間状態エラーなのにエラーがこない
+          if( p_wk->sc_state == WIFIBATTLEMATCH_NET_SC_STATE_FAILED )
+          {
+            if( p_wk->cnt++ > 60*60*1 )
+            {
+              GF_ASSERT_HEAVY( 0 );
+            }
+          }
           break;
         }
       }
