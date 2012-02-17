@@ -1389,7 +1389,7 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
   { //フェスBGMにしないゾーンチェック
     u16 zone_group = ZONEDATA_GetGroupID( zoneID );
     for( i = 0;i < NELEMS(fes_bgm_ng_zone_group);i++){
-      if( zoneID == fes_bgm_ng_zone_group[i]){
+      if( zone_group == fes_bgm_ng_zone_group[i]){
         return SPECIAL_BGM_NONE;
       }
     }
