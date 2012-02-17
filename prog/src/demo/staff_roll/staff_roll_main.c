@@ -1484,6 +1484,7 @@ static int SetFadeOut( SRMAIN_WORK * wk, int next )
 //--------------------------------------------------------------------------------------------
 static void CheckSkip( SRMAIN_WORK * wk )
 {
+#ifdef PM_DEBUG
 	if( wk->dat->fastMode == STAFFROLL_MODE_DEBUG ){
 		if( wk->skipCount == 0 ){
 			if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
@@ -1494,6 +1495,7 @@ static void CheckSkip( SRMAIN_WORK * wk )
 		}
 		wk->skipCount = ( wk->skipCount + 1 ) & 3;
 	}
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
