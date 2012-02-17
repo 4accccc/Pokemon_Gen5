@@ -749,7 +749,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
           gameWork->cam_member[mem].p_cap_buf[j] = GFL_NET_Align32Alloc( heapID, CAPTURE_SIZE);
           CTVT_TPrintf("mem[%d] %d adrs %x \n", mem,j,gameWork->cam_member[mem].p_cap_buf[j]);
         }
-        CTVT_TPrintf("netId %d mem %d \n", netId, mem);
+        CTVT_TPrintf("netId %d mem %d TWL \n", netId, mem);
       }
       else
       {
@@ -758,7 +758,9 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         for( j=0; j<CAPTURE_NUM; j++ )
         {
           gameWork->cam_member[mem].p_cap_buf[j] = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, dat_tbl[char_id]+j, FALSE, heapID );
+          CTVT_TPrintf("mem[%d] %d adrs %x \n", mem,j,gameWork->cam_member[mem].p_cap_buf[j]);
         }
+        CTVT_TPrintf("netId %d mem %d NTR \n", netId, mem);
       }
       mem++;
     }
@@ -1204,6 +1206,7 @@ void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 t
         {
           // TWLはキャプチャ画像、NITOROはキャラ画像
           src = (u16*)p_wk->p_cam_param->p_cap[type];
+          CTVT_Printf("自分:");
         }
         else
         {
@@ -1211,12 +1214,12 @@ void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 t
           // 
           // TWLなら受信した画像、NITOROならキャラ画像
           src = (u16*)p_wk->cam_member[mem_cnt].p_cap_buf[type];
+          CTVT_Printf("相手:");
         }
         size = CAPTURE_SIZE;
         rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
         GF_ASSERT(rc);
-        CTVT_TPrintf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
-        CTVT_TPrintf("netID %d texIDX %d mem_cnt %d", netID, tex_idx, mem_cnt);
+        CTVT_TPrintf("NetId %d dst %x src %x x \n", netID, dst, src );
       }
     }
 
@@ -1310,6 +1313,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk, const u8 balloon_wk_idx )
     }
   }
 
+  GF_ASSERT_MSG( 0, "風船の出現できない burst_idx %d \n", balloon_wk_idx );
   return FALSE;
 }
 
@@ -1424,6 +1428,8 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
 void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
 {
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+  GF_ASSERT( p_wk->balloon_wk[idx ].tcb != NULL );
 
   // 得点計算
 
