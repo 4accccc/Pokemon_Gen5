@@ -32,6 +32,7 @@ RND_MOVE_CODE = [
 
 # 結果出力先
 result_file = ARGV[0]
+result_file_use = ARGV[1]
 
 # Errorデータ型定義
 $assert_data = Struct.new("AssertData", :filename, :id ,:type ,:text )
@@ -49,6 +50,7 @@ end
 # Errorデータ配列
 error_array = Array.new
 
+tr_use_mev_list = Array.new
 
 filenames = Dir[ PATH_TO_DIR + TARGET_FILENAME ]
 filenames.each{|filename|
@@ -60,6 +62,9 @@ filenames.each{|filename|
   # エラーデータ収集
   mev_data.obj_section.event.each{|event|
     if event.Event_Script_Name =~ /^SCRID_TRID_(.*)_/ then
+
+      # 使用しているゾーンリストを作成
+      tr_use_mev_list << File.basename( filename )
     
       # =====================================
       # トレーナータイプ限定チェック
@@ -119,4 +124,14 @@ filenames.each{|filename|
   end
 
 }
+ 
+# データ出力(使用しているゾーンリストを作成)
+tr_use_mev_list.uniq!
+CSV.open(result_file_use, 'w') do |writer|
+  writer << [ "トレーナー配置ゾーン名" ]
+  # 検索結果出力
+  tr_use_mev_list.each{|filename|
+    writer << [ File.basename(filename,".mev") ]
+  }
+end
 

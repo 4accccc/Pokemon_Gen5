@@ -27,7 +27,7 @@ goto end
 @echo off
 echo トレーナーデータの配置状態をチェック
 cd    ../../resource/fldmapdata/eventdata/check_tool
-ruby tr_mev_param_check.rb %~dp0tr_mev_param_check_result.csv
+ruby tr_mev_param_check.rb %~dp0tr_mev_param_check_result.csv %~dp0tr_use_zone_list.csv
 echo チェック終了
 @echo on
 
