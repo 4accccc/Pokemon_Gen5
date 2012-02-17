@@ -40,6 +40,18 @@ void DEBUG_GAMEBEACON_Set_Random(void)
 //  info->trainer_id = org_id;
 }
 
+//==================================================================
+/**
+ * version_bitを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  int	  	PM_VERSION
+ */
+//==================================================================
+u8 DEBUG_GAMEBEACON_Get_VersionBit(const GAMEBEACON_INFO *info)
+{
+  return info->version_bit;
+}
+
 
 #endif  //PM_DEBUG
 

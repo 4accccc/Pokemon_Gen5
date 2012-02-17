@@ -64,7 +64,7 @@ enum
 	PLTID_OBJ_LOCALIZE_S	= 15,		//ローカライズ用
 };
 
-#define BUFLEN_TMP_MSG  (18*3*2+EOM_SIZE)
+#define BUFLEN_TMP_MSG  (18*4*2+EOM_SIZE)
 
 #define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
 #define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き

@@ -51,6 +51,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_local.h" //許可なく他でinclude禁止
+#include "gamesystem/game_beacon_debug.h" //許可なく他でinclude禁止
 #include "gamesystem/link_festival.h" //許可なく他でinclude禁止
 #include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
@@ -91,6 +92,7 @@ enum{
 #define FCOL_WIN_W  ( PRINTSYS_MACRO_LSB(1,2,FCOL_WIN_BASE) ) ///<BG白抜き
 
 #define BUFLEN_BEACON_MSG (8*2*2+EOM_SIZE)
+#define BUFLEN_DEB_TMP_STR_BUFFER (256*2+EOM_SIZE)
 
 /////////////////////////////////////////////
 ///スタックチェック
@@ -268,6 +270,7 @@ typedef struct _DMENU_LIVE_COMM{
 
   GAMEBEACON_INFO*  tmpInfo;
   u16               tmpTime;
+  GAMEBEACON_RECV_CLOCK tmpClock;
   BMP_WIN           win_ninput;
 }DMENU_LIVE_COMM;
 
@@ -623,8 +626,8 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_DEBUG_MESSAGE, NARC_debug_message_d_livecomm_dat, wk->heapID );
   
-  wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
-  wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_DEB_TMP_STR_BUFFER, wk->heapID );
+  wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_DEB_TMP_STR_BUFFER, wk->heapID );
 
   wk->pAllZoneName = ZONEDATA_GetAllZoneName( wk->heapID );
 
@@ -1279,14 +1282,15 @@ typedef struct _EVWK_STACK_CHECK{
   s8      log_num;
   RTCTime recv_time;
   u32     recv_time_ct;
-
+  
+  u8      timer;
   u8      page;
   BMP_WIN win;
 }EVWK_STACK_CHECK;
 
 static GMEVENT_RESULT event_StackCheckMain( GMEVENT * event, int *seq, void * work);
 static void scheck_GetBeaconRecvLogUpdate( EVWK_STACK_CHECK* evwk );
-static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, u16 time, u16 time_sec );
+static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, GAMEBEACON_RECV_CLOCK* clock, u16 time_sec );
 static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 page );
 
 //--------------------------------------------------------------
@@ -1346,6 +1350,13 @@ static GMEVENT_RESULT event_StackCheckMain( GMEVENT * event, int *seq, void * wo
         evwk->page = (evwk->page+1)%SCHECK_PAGE_MAX;
         scheck_PageDraw( wk, evwk, evwk->page );
       }
+      if( evwk->timer++ >= 30 ){
+        if( evwk->info_tbl == NULL ){
+          scheck_GetBeaconRecvLogUpdate( evwk );
+        }
+        scheck_PageDraw( wk, evwk, evwk->page );
+        evwk->timer = 0;
+      }
     }
     break;
   default:
@@ -1374,7 +1385,7 @@ static void scheck_GetBeaconRecvLogUpdate( EVWK_STACK_CHECK* evwk )
  *  @brief  スタック情報書き出し
  */
 //--------------------------------------------------------------
-static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, u16 time, u16 time_sec )
+static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, GAMEBEACON_RECV_CLOCK* clock, u16 time_sec )
 {
   int val;
   u8 msg_id;
@@ -1383,6 +1394,7 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
   WORDSET_RegisterNumber( wk->wset, 0, idx, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
   if( info != NULL ){
+    u8 version = GAMEBEACON_Get_PmVersion( info );
     msg_id = dlc_stack_check_param01;
   
     //プレイヤー名取得
@@ -1403,15 +1415,32 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
     sub_FreeWordset( wk->wset, 4, wk->str_tmp );
 
     //タイム
-    WORDSET_RegisterNumber( wk->wset, 5, time>>8, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-    WORDSET_RegisterNumber( wk->wset, 6, time&0xFF, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 5, clock->hour, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 6, clock->min, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
+    //送り主バージョン
+    GFL_MSG_GetString( wk->msgman, dlc_version_w+(version-VERSION_WHITE), wk->str_tmp );
+    sub_FreeWordset( wk->wset, 7, wk->str_tmp );
+    
     //カラー
     val = GAMEBEACON_Get_FavoriteColorIndex( info );
-    WORDSET_RegisterNumber( wk->wset, 7, val, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 8, val, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     
     //経過時間
-    WORDSET_RegisterNumber( wk->wset, 8, time_sec, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 9, time_sec, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    //受信モード
+    val = DEBUG_GAMEBEACON_Get_VersionBit( info );
+    GFL_MSG_GetString( wk->msgman, dlc_version_bit_01+(val==GAMEBEACON_RECV_VERSION_SWAN ), wk->str_tmp);
+    sub_FreeWordset( wk->wset, 10, wk->str_tmp );
+
+    //アンケート収集済み？
+    if( evwk->info_tbl == NULL ){
+      WORDSET_RegisterNumber( wk->wset, 11, clock->research_f, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    }else{
+      GFL_MSG_GetString( wk->msgman, dlc_research_f_01, wk->str_tmp);
+      sub_FreeWordset( wk->wset, 11, wk->str_tmp );
+    }
   }else{
     msg_id = dlc_stack_check_param02;
   }
@@ -1424,14 +1453,14 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
  * デバッグ用：指定オフセット位置の受信ログバッファの内容を取得
  */
 //--------------------------------------------------------------
-static BOOL scheck_GetBeaconRecvLog( EVWK_STACK_CHECK* evwk, int idx, GAMEBEACON_INFO* info, u16* pTime, u16* pTimeSec )
+static BOOL scheck_GetBeaconRecvLog( EVWK_STACK_CHECK* evwk, int idx, GAMEBEACON_INFO* info, GAMEBEACON_RECV_CLOCK* pClock, u16* pTimeSec )
 {
   u16 id;
   u32 time_ct;
   u8  hour,min;
 
   MI_CpuClear8( info, sizeof( GAMEBEACON_INFO ));
-  *pTime = 0;
+  pClock->clock = 0;
 
   if( idx >= evwk->log_num ){
     return FALSE;
@@ -1451,10 +1480,7 @@ static BOOL scheck_GetBeaconRecvLog( EVWK_STACK_CHECK* evwk, int idx, GAMEBEACON
   time_ct = (evwk->recv_log[id].time)/60; //秒単位に変換
   *pTimeSec = time_ct;
 
-  time_ct = evwk->recv_time_ct-time_ct;
-  hour = (time_ct/3600)%24;
-  min = (time_ct/60)%60;
-  *pTime = ((hour<<8)|(min));
+  *pClock = evwk->recv_log[id].clock;
 
   return TRUE;
 }
@@ -1479,19 +1505,19 @@ static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 pag
       break;
     }
     if( evwk->info_tbl != NULL ){
-      ret = GAMEBEACON_InfoTbl_GetBeacon( evwk->info_tbl, wk->tmpInfo, &wk->tmpTime, idx);
+      ret = GAMEBEACON_InfoTbl_GetBeacon( evwk->info_tbl, wk->tmpInfo, (u16*)&wk->tmpClock, idx);
       if( ret ){
         time_sec = GAMEBEACON_Get_RecvBeaconTime(GAMEBEACON_Get_TrainerID( wk->tmpInfo ));
       }else{
         time_sec = 0;
       }
     }else{
-      ret = scheck_GetBeaconRecvLog( evwk, idx, wk->tmpInfo, &wk->tmpTime, &time_sec );
+      ret = scheck_GetBeaconRecvLog( evwk, idx, wk->tmpInfo, &wk->tmpClock, &time_sec );
     }
     if(ret){
-      scheck_ParamDraw( wk, evwk, idx, i, wk->tmpInfo, wk->tmpTime, time_sec );
+      scheck_ParamDraw( wk, evwk, idx, i, wk->tmpInfo, &wk->tmpClock, time_sec );
     }else{
-      scheck_ParamDraw( wk, evwk, idx, i, NULL, 0, 0 );
+      scheck_ParamDraw( wk, evwk, idx, i, NULL, NULL, 0 );
     }
   }
 	GFL_BMPWIN_TransVramCharacter( evwk->win.win );

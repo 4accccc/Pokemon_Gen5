@@ -11,8 +11,7 @@
 #ifdef PM_DEBUG
 
 extern void DEBUG_GAMEBEACON_Set_Random(void);
-
-
+u8 DEBUG_GAMEBEACON_Get_VersionBit(const GAMEBEACON_INFO *info);
 
 #endif  //PM_DEBUG
 
