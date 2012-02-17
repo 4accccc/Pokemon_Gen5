@@ -589,6 +589,7 @@ static void GAME_PLATE_UpdatePlate( CTVT_GAME_WORK *p_wk );
 static void GAME_PLATE_ActivePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk );
 static void GAME_PLATE_SetPoint( CTVT_GAME_WORK *gameWork, const u8 netID, const u8 point );
 static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish );
+static void GAME_PLATE_SetRank( CTVT_GAME_WORK *gameWork );
 static BOOL GAME_PLATE_MovePlate( GAME_PLATE_WORK *p_wk, const int value );
 static void GAME_PLATE_ClearPlate( GAME_PLATE_WORK *p_wk );
 static void TaskFuncPlate( GFL_TCB* p_tcb, void* p_work );
@@ -7046,10 +7047,17 @@ static void GAME_PLATE_UpdatePlate( CTVT_GAME_WORK *p_wk )
     }
     if( move_in == plate_num )
     {
+      //
+      // ここでランク設定とプレート設定
+      //
+      GAME_PLATE_SetRank( p_wk );
+      
       for( i=0; i<PLATE_NUM; i++ )
       {
         if( p_wk->p_plate[i]->is_blank == FALSE )
         {
+          GAME_PLATE_ClearPlate( p_wk->p_plate[i] );
+
           p_wk->p_plate[i]->sub_seq = PLATE_SEQ_MOVE_IN;
           p_wk->p_plate[i]->move_wait = (plate_num - p_wk->p_plate[i]->rank) * 40;   // フェードインの待ち時間
         }
@@ -7186,11 +7194,7 @@ static void GAME_PLATE_SetPoint( CTVT_GAME_WORK *gameWork, const u8 netID, const
 //-----------------------------------------------------------------------------
 static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
 {
-  u8 i, j;
-  
-  u8  rank[4] = {1,2,3,4};  // 初期化必要ないが念のため
-  u8  tmp_rank = 1;
-  u8  point[4] = {0,};
+  u8 i;
   u8  plate_num = 0;
 
   // 得点保存
@@ -7198,13 +7202,70 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
   {
     if( gameWork->p_plate[i]->is_blank == FALSE )
     {
-      point[i] = gameWork->p_plate[i]->point;
       plate_num++;
+    }
+  }
+  
+  // 移動するときの設定
+  for( i=0; i<PLATE_NUM; i++ )
+  {
+    GAME_PLATE_WORK *p_wk = gameWork->p_plate[i];
+    
+    if( p_wk->is_blank == FALSE )
+    {
+      // 最初の移動時はランク順になっていないので、下から移動
+      if( gameWork->timeLimit == 40 )
+      {
+        p_wk->move_wait = p_wk->idx * 40;  // Xフレームごとに移動
+      }
+      else
+      {
+        p_wk->move_wait = (plate_num - p_wk->rank) * 40;  // Xフレームごとに移動
+      }
+      p_wk->is_move   = TRUE;
+      p_wk->move_value= 0;
+      if( is_vanish == FALSE )
+      {
+        p_wk->sub_seq   = PLATE_SEQ_MOVE_OUT;
+      }
+      else
+      {
+        p_wk->sub_seq   = PLATE_SEQ_MOVE_OUT_VANISH;
+      }
+
+      CTVT_TPrintf("%d rank %d wait %d \n", i, p_wk->rank, p_wk->move_wait);
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレートのランク更新
+ *
+ *	@param	CTVT_GAME_WORK *gameWork 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void GAME_PLATE_SetRank( CTVT_GAME_WORK *gameWork )
+{
+  u8 i, j;
+
+  u8  rank[4] = {1,2,3,4};  // 初期化必要ないが念のため
+  u8  tmp_rank = 1;
+  u8  point[4] = {0,};
+
+  // 得点保存
+  for( i=0; i<PLATE_NUM; i++ )
+  {
+    if( gameWork->p_plate[i]->is_blank == FALSE )
+    {
+      point[i] = gameWork->p_plate[i]->point;
 
       // 基準順位設定
       rank[i] = tmp_rank++;
     }
   }
+
   // 新しいランクを設定
   for( i=0; i<PLATE_NUM-1; i++ )
   {
@@ -7232,38 +7293,18 @@ static void GAME_PLATE_SetMovePlate( CTVT_GAME_WORK *gameWork, BOOL is_vanish )
     }
   }
 
-  // 移動するときの設定
+  // ランク設定
   for( i=0; i<PLATE_NUM; i++ )
   {
     GAME_PLATE_WORK *p_wk = gameWork->p_plate[i];
     
     if( p_wk->is_blank == FALSE )
     {
-      // 最初の移動時はランク順になっていないので、下から移動
-      if( gameWork->timeLimit == 40 )
-      {
-        p_wk->move_wait = p_wk->idx * 40;  // Xフレームごとに移動
-      }
-      else
-      {
-        p_wk->move_wait = (plate_num - p_wk->rank) * 40;  // Xフレームごとに移動
-      }
-      p_wk->is_move   = TRUE;
-      p_wk->move_value= 0;
-      if( is_vanish == FALSE )
-      {
-        p_wk->sub_seq   = PLATE_SEQ_MOVE_OUT;
-      }
-      else
-      {
-        p_wk->sub_seq   = PLATE_SEQ_MOVE_OUT_VANISH;
-      }
-      // 順位は最後に入れる
+      // 順位
       p_wk->rank      = rank[i];
-
-      CTVT_TPrintf("%d rank %d wait %d \n", i, p_wk->rank, p_wk->move_wait);
     }
   }
+
 }
 
 static BOOL GAME_PLATE_MovePlate( GAME_PLATE_WORK *p_wk, const int value )
@@ -7434,7 +7475,7 @@ static void TaskFuncPlate( GFL_TCB* p_tcb, void* p_work )
         {
           p_wk->sub_seq = PLATE_SEQ_MOVE_IN_WAIT;
 
-          GAME_PLATE_ClearPlate( p_wk );
+          //GAME_PLATE_ClearPlate( p_wk );
         }
         break;
       case PLATE_SEQ_MOVE_OUT_VANISH:
