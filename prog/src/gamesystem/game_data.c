@@ -66,6 +66,8 @@
 #include "fieldmap/zone_id.h"
 #include "field/field_goout_data.h"
 #include "app/local_tvt/local_tvt_secret_zone.cdat"// for sc_ltvt_secret_zoneID
+#include "savedata/key_system_save.h"
+#include "../../../resource/fldmapdata/warpdata/warpdata.h"
 
 //============================================================================================
 //============================================================================================
@@ -597,6 +599,35 @@ void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id)
 u16 GAMEDATA_GetWarpID(GAMEDATA * gamedata)
 {
   u16 * warp = Situation_GetWarpID( gamedata->situation );
+
+  //WFBCならばキーシステムの情報を見て正しい方に修正する
+  if( *warp == WARP_ID_BC10 ||  *warp == WARP_ID_WC10 )
+  {
+    SAVE_CONTROL_WORK*  p_sv  = GAMEDATA_GetSaveControlWork(gamedata);
+    KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( p_sv );
+    KEY_SYSTEM_WFBC wfbc_type = KEY_SYSTEM_SAVE_GetWfbc( p_key );
+
+#if PM_VERSION == VERSION_B2
+    if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+    {
+      return WARP_ID_BC10;
+    }
+    else
+    {
+      return WARP_ID_WC10;
+    }
+#else   // PM_VERSION == VERSION_B2
+    if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+    {
+      return WARP_ID_WC10;
+    }
+    else
+    {
+      return WARP_ID_BC10;
+    }
+#endif  // PM_VERSION == VERSION_B2
+  }
+
   return *warp;
 }
 
