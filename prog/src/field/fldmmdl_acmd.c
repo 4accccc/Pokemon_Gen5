@@ -3472,7 +3472,7 @@ static int AC_HeroItemGet_1( MMDL * mmdl )
   VecFx32 offs = {0,0,0};
   fx32 y[10] = {
     NUM_FX32(0), NUM_FX32(0), NUM_FX32(0), NUM_FX32(0), NUM_FX32(0),
-    NUM_FX32(4), NUM_FX32(4), NUM_FX32(3), NUM_FX32(1), 0 };
+    NUM_FX32(4), NUM_FX32(4), NUM_FX32(3), 0, 0 };
 
   work = MMDL_GetMoveCmdWork( mmdl );
 
