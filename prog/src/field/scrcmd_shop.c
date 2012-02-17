@@ -355,8 +355,10 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
 
-  // BPショップ以外の場合は買い物ビーコン送信
-  if(shop_id!=SCR_SHOPID_BP_ITEM && shop_id!=SCR_SHOPID_BP_WAZA){
+  // BPショップ・技教え以外なら買い物ビーコン送信
+  if(  shop_id!=SCR_SHOPID_BP_ITEM && shop_id!=SCR_SHOPID_BP_WAZA 
+    && shop_id!=SCR_SHOPID_WAZA_OSHIE_RED    && shop_id!=SCR_SHOPID_WAZA_OSHIE_BLUE
+    && shop_id!=SCR_SHOPID_WAZA_OSHIE_YELLOW && shop_id!=SCR_SHOPID_WAZA_OSHIE_GREEN ){
     GAMEBEACON_Set_Shoping();
   }
   /*
