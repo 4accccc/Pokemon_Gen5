@@ -438,6 +438,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
 
   //以下SWANから追加のデータ
   u8  resort_buffer[RESORT_RECV_DATA_SIZE];
+  BOOL  is_badword;
 };
 
 //=============================================================================
@@ -1499,6 +1500,18 @@ BOOL WIFIBATTLEMATCH_NET_RecvResortData( WIFIBATTLEMATCH_NET_WORK *p_wk )
   }
 
   return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用に相手の名前が不正かをセットする
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	is_badwood TRUE相手の名前は不正 FALSE正常
+ */
+//-----------------------------------------------------------------------------
+void WIFIBATTLEMATCH_NET_SetResortOtherBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_badword )
+{
+  p_wk->is_badword = is_badword;
 }
 
 //----------------------------------------------------------------------------
@@ -3512,9 +3525,19 @@ static void WifiBattleMatch_RecvResort(const int netID, const int size, const vo
     return;//自分のは今は受け取らない
   }
 
-  OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
+  OS_Printf( "リゾート受信コールバック！netID=%d size=%d 不正=%d\n", netID, size, p_wk->is_badword );
 
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, RESORT_COMM_TYPE_RNDMATCH );
+
+  //不正チェックにかかっていたら置き換える
+  if(p_wk->is_badword)
+  {
+    STRBUF *p_str = DWC_TOOL_CreateBadNickName( p_wk->heapID );
+    const STRCODE *cp_code = GFL_STR_GetStringCodePointer(p_str);
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)cp_code );
+    GFL_STR_DeleteBuffer( p_str );
+  }
+
   RESONANCE_RESORT_SV_SetData( p_resort_sv, p_wk->p_gamedata, p_recv, RESORT_MERGE_TYPE_RECV );
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_RESORT] = TRUE;
 }

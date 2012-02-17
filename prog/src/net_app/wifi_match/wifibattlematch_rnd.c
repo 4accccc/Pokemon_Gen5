@@ -444,6 +444,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
 #endif
 
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
+
+  if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE )
+  {
+    WIFIBATTLEMATCH_NET_SetResortOtherBadWord( p_wk->p_net, *p_wk->p_param->p_is_dirty_name );
+  }
 	
 	return GFL_PROC_RES_FINISH;
 }
