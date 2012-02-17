@@ -8271,13 +8271,14 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+[Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　おにあいの▽
 おみせを　おおしえしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-07T09:16:51" />
+				Time="2012-02-17T10:27:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8285,13 +8286,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！▼
+			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
+[Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]に
 ぴったり　お似合いの▽
 お店を　お教えしましょう！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2012-01-07T09:16:56" />
+				Time="2012-02-17T10:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8303,10 +8305,10 @@ BW♀
 0：秘書名
 1：クチグセ
 2：市長名
-</Comment>
+3：カンゲキ</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-16T02:20:58" />
+				Time="2012-02-17T10:17:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -46392,10 +46394,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎディーナー</Text>
+			<Text>ふしぎディナー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T19:49:21" />
+				Time="2012-02-17T09:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46403,10 +46405,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふしぎディーナー</Text>
+			<Text>ふしぎディナー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-28T19:49:23" />
+				Time="2012-02-17T09:43:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
