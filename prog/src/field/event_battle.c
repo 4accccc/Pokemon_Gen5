@@ -968,13 +968,29 @@ static GMEVENT_RESULT fieldBattleEvent(
 //--------------------------------------------------------------
 static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
+  static u16 sp_trtype_tbl[] = {  //トレーナーグループ判定できないものをここに登録
+    TRTYPE_BCHAMP_1,  //ノボリ
+    TRTYPE_BCHAMP_2,  //クダリ
+    TRTYPE_NINJA,     //ダーク
+    TRTYPE_SWSAGE2,   //七賢人ロット
+    TRTYPE_LEADER1A,  //ポッド
+    TRTYPE_LEADER1B,  //デント
+    TRTYPE_LEADER1C,  //コーン
+  };
+
   u16 tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
   u8 grp = TT_TrainerTypeGrpGet( tr_type );
 
-  if( tr_type == TRTYPE_BCHAMP_1 || 
-      tr_type == TRTYPE_BCHAMP2_1 ){
+  {
     //BTS738対策 ギアステーション前のノボリ・クダリとのマルチイベント戦は特別なトレーナー扱いにする
-    return TR_BEACON_SPACIAL;
+    //BTS1977 元七賢人ロットとニンジャ(ダーク)、ポッド・デント・コーンは特別なトレーナー扱い
+    int i;
+
+    for( i = 0; i < NELEMS(sp_trtype_tbl);i++ ){
+      if( tr_type == sp_trtype_tbl[i]){
+        return TR_BEACON_SPACIAL;
+      }
+    }
   }
   if( grp == TRTYPE_GRP_NONE ||
       grp == TRTYPE_GRP_PLASMA ){
