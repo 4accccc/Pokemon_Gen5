@@ -4725,25 +4725,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>パラメーター設計</Text>
+			<Text>パラメーターせっけい</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-06T10:25:58" />
+				Time="2012-02-16T08:02:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-06T10:25:58" />
+				Time="2012-02-16T08:02:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パラメーター設計</Text>
+			<Text>パラメーターせっけい</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-06T10:25:58" />
+				Time="2012-02-16T08:02:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2012-02-06T10:25:58" />
+				Time="2012-02-16T08:02:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

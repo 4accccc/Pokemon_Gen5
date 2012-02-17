@@ -841,8 +841,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_079">
-		<language name="JPN" width="256">BATTLE  EFFECT  GRAPHICS  DESIGN</language>
-		<language name="JPN_KANJI" width="256">BATTLE  EFFECT  GRAPHICS  DESIGN</language>
+		<language name="JPN" width="256">BATTLE  EFFECT  DESIGN</language>
+		<language name="JPN_KANJI" width="256">BATTLE  EFFECT  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_080">
