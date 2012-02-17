@@ -1735,15 +1735,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じょしゅ『ダメですっ！！
+			<Text>助手『ダメですっ！！
 近づいては　危険ですっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-17T08:02:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-17T08:02:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1877,15 +1877,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じょしゅ『[Name:TrainerName Idx="1" ]博士っ！！
+			<Text>助手『[Name:TrainerName Idx="1" ]博士っ！！
 危ないッ！　逃げてッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-02-17T08:02:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2012-02-17T08:02:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

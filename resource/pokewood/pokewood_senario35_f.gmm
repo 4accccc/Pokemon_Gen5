@@ -758,7 +758,7 @@
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">じょしゅ『ダメですっ！！
 ちかづいては　きけんですっ！</language>
-		<language name="JPN_KANJI" width="256">じょしゅ『ダメですっ！！
+		<language name="JPN_KANJI" width="256">助手『ダメですっ！！
 近づいては　危険ですっ！</language>
 	</row>
 	<row id="pw_event3_hero_3">
@@ -784,7 +784,7 @@
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">じょしゅ『[1:00:トレーナー名:1]はかせっ！！
 あぶないっ！　にげてっ！！</language>
-		<language name="JPN_KANJI" width="256">じょしゅ『[1:00:トレーナー名:1]博士っ！！
+		<language name="JPN_KANJI" width="256">助手『[1:00:トレーナー名:1]博士っ！！
 危ないッ！　逃げてッ！！</language>
 	</row>
 	<row id="pw_event3_hero_5">
