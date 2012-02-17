@@ -297,7 +297,7 @@ static void sub_AddMMdl( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_MISS
     if( pd->pos_type == EVENTDATA_POSTYPE_GRID ){
       const BG_TALK_DATA_GPOS* cp_pos = (const BG_TALK_DATA_GPOS*)pd->pos_buf;
  
-      MMDLHEADER_SetGridPos( &head, cp_pos->gx, cp_pos->gz, cp_pos->height );
+      MMDLHEADER_SetGridPos( &head, cp_pos->gx, cp_pos->gz, FX32_CONST(cp_pos->height) );
       head.move_code = MV_DIR_RND;
     }else{
       const BG_TALK_DATA_RPOS * cp_pos = (const BG_TALK_DATA_RPOS *)pd->pos_buf;
