@@ -796,6 +796,20 @@ MMDL * MMDLSYS_SearchRailLocationEx( const MMDLSYS *sys, const RAIL_LOCATION* lo
       if( egnore_mmdl != NULL && egnore_mmdl == mmdl ){
         continue;
       }
+
+      // BTS1661 
+      //
+      // 原因はレールの当たり判定で自分を含めていたことでした。
+      //
+      // 本来の原因はレールの根本になるが
+      // 現状レールのシステムを全て解析しきれない為
+      // ここで主人公の動作モデルを除外することで現状対処する
+      //
+      if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER )
+      {
+        continue;
+      }
+
       if( old_hit ){
         MMDL_GetOldRailLocation( mmdl, &old_location );
         FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &old_location, &mdl_pos );
