@@ -351,7 +351,8 @@ static BOOL ROU_GetStopFlg( ROULETTE_WORK *p_wk );
 //-------------------------------------
 ///	COMM
 //=====================================
-static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL isTwl, HEAPID heapID );
+static void COMM_Init( COMM_WORK *p_wk, BOOL isTwl, HEAPID heapID );
+static void COMM_InitLowerData( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL isTwl );
 static void COMM_Exit( COMM_WORK *p_wk, BOOL isTwl );
 static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] );
 static void COMM_SendCapture( COMM_WORK *p_wk );
@@ -449,7 +450,7 @@ GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_SYNC_Init );
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, heapID );
   PS_Init( &p_wk->ps, heapID );
-  COMM_Init( &p_wk->comm, p_param->member, p_param->isTwl, heapID );
+  COMM_Init( &p_wk->comm, p_param->isTwl, heapID );
 
   // TWLのみ
   if( p_wk->p_param->isTwl )
@@ -1547,21 +1548,50 @@ static BOOL ROU_GetStopFlg( ROULETTE_WORK *p_wk )
  *	@param	heapID          ヒープID
  */
 //-----------------------------------------------------------------------------
-static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL isTwl, HEAPID heapID )
+static void COMM_Init( COMM_WORK *p_wk, BOOL isTwl, HEAPID heapID )
 {
   // ワーククリア
   GFL_STD_MemClear( p_wk, sizeof(COMM_WORK) );
 
   p_wk->heapID = heapID;
 
-  // 低優先度システム作成
-  GFL_NET_LDATA_InitSystem( heapID , FALSE );
-
   // 送信用バッファ作成
   if( isTwl == TRUE )
   {
     p_wk->cap_buf = GFL_HEAP_AllocClearMemory( heapID, CAPTURE_SIZE);
   }
+
+  // カウンタクリア
+  {
+    u8 i;
+    for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
+    {
+      p_wk->cap_cnt[i] = 0;
+    }
+  }
+
+  // 初期の接続人数を保存
+  p_wk->connect_num = GFL_NET_GetConnectNum();
+  ICHI_Printf("初期接続人数 %d \n", p_wk->connect_num);
+
+  p_wk->wait_frame = 0;
+  p_wk->can_next = TRUE;   // 
+  p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信  初期化    低優先度通信のみ
+ *
+ *	@param	COMM_WORK *p_wk ワーク
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void COMM_InitLowerData( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL isTwl )
+{
+
+  // 低優先度システム作成
+  GFL_NET_LDATA_InitSystem( p_wk->heapID , FALSE );
 
   // 低優先度送信システムにカメラ受信バッファを渡す
   {
@@ -1595,7 +1625,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
       if( member[mem_cnt].isTwl == TRUE && DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
       {
         // バッファ設定
-        GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
+        GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, p_wk->heapID, member[mem_cnt].p_cap_buf[0] );
         p_wk->cap_buf_bit |= 1<<netID;
 
         CTVT_TPrintf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[0] );
@@ -1617,23 +1647,6 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     CTVT_TPrintf("camera capture 通信設定完了 ");
     CTVT_TPrintf("UserBit %x \n", p_wk->cap_buf_bit);
   }
-
-  // カウンタクリア
-  {
-    u8 i;
-    for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
-    {
-      p_wk->cap_cnt[i] = 0;
-    }
-  }
-
-  // 初期の接続人数を保存
-  p_wk->connect_num = GFL_NET_GetConnectNum();
-  ICHI_Printf("初期接続人数 %d \n", p_wk->connect_num);
-
-  p_wk->wait_frame = 0;
-  p_wk->can_next = TRUE;   // 
-  p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
 }
 
 //----------------------------------------------------------------------------
@@ -1715,7 +1728,8 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
 
               CTVT_TPrintf("%d からデータ来た\n", i );
               CTVT_TPrintf("member[%d].netID = %d \n", mem_cnt, member[mem_cnt].netID);
-              CTVT_TPrintf("size %x \n", GFL_NET_LDATA_GetPostDataSize(i));
+              CTVT_TPrintf("size %x ", GFL_NET_LDATA_GetPostDataSize(i));
+              CTVT_TPrintf("adrs %x \n", GFL_NET_LDATA_GetPostData(i));
 
               // バッファ設定
               GFL_NET_LDATA_DeletePostBuffer(i);
@@ -1723,10 +1737,10 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
               if( p_wk->cap_cnt[mem_cnt] < CAPTURE_NUM )
               {
                 GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, i, p_wk->heapID, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
-                CTVT_TPrintf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[0] ] );
+                CTVT_TPrintf("バッファ設定 netID %d mem %d adrs %x \n", i, mem_cnt, member[mem_cnt].p_cap_buf[ p_wk->cap_cnt[mem_cnt] ] );
               }
 
-              CTVT_TPrintf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
+              CTVT_TPrintf("NetId %d から%d枚受信完了 \n", i, p_wk->cap_cnt[mem_cnt] );
             }
           }
           // メンバーカウント
@@ -1742,6 +1756,13 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       {
         p_wk->seq = SEQ_SYNC;
         CTVT_TPrintf("全員分受信完了\n");
+
+        if( GFL_NET_LDATA_IsFinishSend() == TRUE )
+        {
+          CTVT_TPrintf("自分の送信は完了\n");
+        }else {
+          CTVT_TPrintf("自分の送信は未完了\n");
+        }
       }
     }
     break;
@@ -2028,14 +2049,75 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   enum
   {
+    // BTS1482 【撮影した写真が風船に表示されない】
+    //
+    // 原因は、会話モードの時の低優先度通信のデータが キューに残っていて
+    // それを受信し、それが終了フラグデータだった場合終了とみなされていた為。
+    //
+    // 対処として、データ受信終了待ちを行う
+    // それからカメラ撮影モードの通信初期化を呼び出す
+    //
+    SEQ_LOWER_DATA_RECV_WAIT,   // 低優先度データ受信待ち
+
     SEQ_SYNC,       // 同期
     SEQ_SYNC_WAIT,  // 同期待ち
+
+    // ↑の後にしないと、接続メンバー間で低優先度通信の設定が違ってしまう
+    SEQ_COMM_INIT,              // 通信モジュール初期化
+
     SEQ_END,
   };
 
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
   switch( *p_seq ){
+  case SEQ_LOWER_DATA_RECV_WAIT:   // 低優先度データ受信待ち
+    {
+      u8  netID;
+      const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      BOOL  ret = TRUE;
+
+      //
+      // 会話モードの送受信完了待ち
+      //
+
+      // 送信完了済みかチェック
+      if( GFL_NET_LDATA_IsFinishSend() == FALSE )
+      {
+        CTVT_Printf("会話モードのデータ送信終了していない\n");
+        ret = FALSE;
+      }
+
+      // 受信完了済みかチェック
+      for( netID=0; netID<CTVT_MEMBER_NUM; netID++ )
+      {
+        if( selfId == netID )
+        {
+          // 自分だとスキップ
+          continue;
+        }
+        // BTS463 
+        if( GFL_NET_IsConnectMember( netID ) == FALSE )
+        {
+          // 接続していないとスキップ
+          continue;
+        }
+
+        // データを受信しているかチェック
+        if( GFL_NET_LDATA_IsFinishPost(netID) == FALSE )
+        {
+          CTVT_Printf("会話モードのデータ受信終了していない\n");
+          ret = FALSE;
+          break;
+        }
+      }
+      
+      if( ret == TRUE )
+      {
+        *p_seq = SEQ_SYNC;
+      }
+    }
+    break;
   case SEQ_SYNC:      // 同期
     {
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
@@ -2049,10 +2131,19 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CAMERA_INIT_SYNC, WB_NET_COMM_TVT ) == TRUE )
       {
-        p_wk->comm.is_init = TRUE;
-        *p_seq = SEQ_END;
+        *p_seq = SEQ_COMM_INIT;
         CTVT_TPrintf("カメラ開始同期完了\n");
       }
+    }
+    break;
+  case SEQ_COMM_INIT:              // 通信モジュール初期化
+    {
+      // これで会話モードのシステムを削除
+      GFL_NET_LDATA_ExitSystem();
+      // 通信初期化
+      COMM_InitLowerData( &p_wk->comm, p_wk->p_param->member, p_wk->p_param->isTwl );
+      CTVT_Printf("カメラ通信初期化\n");
+      *p_seq = SEQ_END;
     }
     break;
   case SEQ_END:
@@ -2072,6 +2163,9 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     {
       SEQ_SetNext( p_seqwk, SEQFUNC_NITRO_Init );
     }
+
+    // 通信メインが動作する
+    p_wk->comm.is_init = TRUE;
     break;
   default:
     GF_ASSERT(0);

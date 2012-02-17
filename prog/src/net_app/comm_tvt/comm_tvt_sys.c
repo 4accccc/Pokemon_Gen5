@@ -440,7 +440,8 @@ static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
 
   APP_TASKMENU_RES_Delete( work->taskMenuRes );
 
-  GFL_NET_LDATA_ExitSystem();
+  // BTS1482Ç≈ÉRÉÅÉìÉg
+  //GFL_NET_LDATA_ExitSystem();
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
 
