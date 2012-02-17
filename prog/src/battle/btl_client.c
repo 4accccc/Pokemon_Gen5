@@ -584,6 +584,7 @@ static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *se
 static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
 static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw );
 static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule );
+static void _set_choice_to_flag( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *pokewoodSeqWork, int event_no, int choice );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -2512,7 +2513,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       POKEWOOD_EncChoice( &wk->pokewoodSeqWork );
       OS_Printf("choice=%d\n", wk->pokewoodSeqWork.choice);
       _set_pokewood_choice_bsp( wk, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );  // BSPに選択肢結果を保存
-      wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;                   // フラグワークに選択を反映
+      // 割り込みイベントでなければフラグワークに選択を反映
+      _set_choice_to_flag( senario, &wk->pokewoodSeqWork, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
       AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       // 確定させた選択肢にVFX指定がある場合はVFX予約を代入
@@ -2523,7 +2525,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択反映（上映時のみ）
   case POKEWOOD_EVENT_SEQ_CHOICE_READ:  
     wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork );
-    wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
+    // 割り込みイベントでなければフラグワークに選択を反映
+    _set_choice_to_flag( senario, &wk->pokewoodSeqWork, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
     p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
     AddSerifPoint( wk, &wk->pokewoodSeqWork.Estimate, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
     // 確定させた選択肢にVFX指定がある場合はVFX予約を代入
@@ -2600,7 +2603,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 
       // 選択肢内容の反映と背景VFX起動チェック
       wk->pokewoodSeqWork.choice = _get_pokewood_choice( wk, &wk->pokewoodSeqWork ); 
-      wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
+      // 割り込みイベントでなければフラグワークに選択を反映
+      _set_choice_to_flag( senario, &wk->pokewoodSeqWork, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
       _check_choice2vfx( senario, &wk->pokewoodSeqWork );
       wk->pokewoodSeqWork.seq++;
     }
@@ -2627,6 +2631,29 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	イベントの種類によって選択肢をフラグワークに反映させる
+ *
+ * @param   senario		      POKEWOOD_SENARIO
+ * @param   pokewoodSeqWork	POKEWOOD_SEQ_WORK
+ * @param   event_no		    発生したイベントNO
+ * @param   choice		      選択したセリフNO
+ */
+//----------------------------------------------------------------------------------
+static void _set_choice_to_flag( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *pokewoodSeqWork, int event_no, int choice )
+{
+  POKEWOOD_EVENT_DATA *event = &senario->event[event_no];
+
+  // 割り込みイベント（指定のポケモンが瀕死・指定の技を使用した）の場合は選択肢をフラグに反映させない
+  if(event->start_turn==-1 && event->flag_provision==-1 &&
+     (event->situ_provision==PROVISION_TYPE_WAZA || event->situ_provision==PROVISION_TYPE_DEAD_POKE )){
+    return;
+  }
+  pokewoodSeqWork->flagwork[0] = choice+1;  // フラグワークに選択を反映
+}
+
 
 enum{
   POKEWOOD_STAGE_SEQ_CHECK=0,
