@@ -1382,26 +1382,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『あれれ……
-ワザが　あたらなかった……</Text>
+こうげきが　あたらなかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				Time="2012-02-17T10:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				Time="2012-02-17T10:36:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『あれれ……
-ワザが　当たらなかった……</Text>
+攻撃が　当たらなかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				Time="2012-02-17T10:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T11:00:59" />
+				Time="2012-02-17T10:36:30" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
