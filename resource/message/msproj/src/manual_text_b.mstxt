@@ -330,10 +330,10 @@
 		Label="man_txt_title_no_001_007">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｗｉ－Ｆｉ せってい</Text>
+			<Text>Ｗｉ－Ｆｉせってい</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:58:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -680,10 +680,10 @@
 		Label="man_txt_title_no_002_013">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<Text>Ｗｉ－Ｆｉクラブ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -691,10 +691,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｗｉ－Ｆｉ クラブ</Text>
+			<Text>Ｗｉ－Ｆｉクラブ</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -755,10 +755,10 @@
 		Label="man_txt_title_no_003_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギア (シー ギア)</Text>
+			<Text>Ｃギア（シーギア）</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -805,10 +805,10 @@
 		Label="man_txt_title_no_003_003">
 		<LanguageCell
 			Language="JPN">
-			<Text>すれちがいちょうさ とは</Text>
+			<Text>すれちがいちょうさ　とは</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -3313,7 +3313,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンセンターの　２かいにある
-ポケモン Ｗｉ－Ｆｉクラブでは
+ポケモンＷｉ－Ｆｉクラブでは
 ともだちてちょうに　とうろくしたひと
 どうしで　つうしんこうかんや　たいせん
 ボイスチャット　ライブキャスターを
@@ -3322,8 +3322,8 @@
 「ともだちコード」の　せつめいを
 ごらんください。</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -3332,7 +3332,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターの　２階にある
-ポケモン Ｗｉ－Ｆｉ クラブでは
+ポケモンＷｉ－Ｆｉ クラブでは
 ともだちてちょうに　登録した人同士で
 通信交換や　対戦
 ボイスチャット　ライブキャスターを
@@ -3341,8 +3341,8 @@
 「ともだちコード」の
 説明を　ご覧ください。</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -4074,7 +4074,7 @@
 		Label="man_txt_page_no_003_007_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアの　「ＩＲ (アイアール）」と
+			<Text>Ｃギアの　「ＩＲ（アイアール）」と
 かかれた　まるい　わくを　タッチすると
 ちかくのひとに　つうしんこうかんや
 たいせんを　もうしこむことが　できます。
@@ -4082,8 +4082,8 @@
 つうしんあいてとの　あいしょうを
 チェックすることも　できます。</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				User="matsumiya:W00224"
+				Time="2012-02-17T03:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
