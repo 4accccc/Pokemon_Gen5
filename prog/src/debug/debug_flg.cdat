@@ -41,3 +41,6 @@ DEBUG_FLG_DEF( DebugCameraStop,   "Debug Camera Stop" )
 DEBUG_FLG_DEF( WeatherForceSunny,   "‚Ä‚ñ‚« ‚Í‚ê" )
 DEBUG_FLG_DEF( FMissionEvPosView,   "FMissionEvPosView" )
 DEBUG_FLG_DEF( FMissionEvPosMax,   "FMissionEvPosMax" )
+DEBUG_FLG_DEF( BeaconSendModeFix,  "BeaconSendModeFix" )
+DEBUG_FLG_DEF( BeaconSendModeBW,   "BeaconSendModeBW" )
+

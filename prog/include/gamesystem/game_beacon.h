@@ -32,9 +32,9 @@
 #define GAMEBEACON_INFO_TBL_END   (GAMEBEACON_INFO_TBL_MAX-1)
 
 ///受け取り可能バージョン定義
-#define GAMEBEACON_RECV_VERSION_FULL   (0xFFFF)  //全バージョン受け取り可
-#define GAMEBEACON_RECV_VERSION_SWAN   (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
-#define GAMEBEACON_RECV_VERSION_SYACHI (0x0003)  //BWが受け取れる
+#define GAMEBEACON_RECV_VERSION_FULL   (0xFF)  //全バージョン受け取り可
+#define GAMEBEACON_RECV_VERSION_SWAN   (0xFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
+#define GAMEBEACON_RECV_VERSION_SYACHI (0x03)  //BWが受け取れる
 
 typedef enum{
   GAMEBEACON_TYPE_COMMON,    ///<BWと互換する(bwとswan両方で受け取る)

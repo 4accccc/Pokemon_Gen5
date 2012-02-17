@@ -366,6 +366,18 @@ void GAMEBEACON_BeaconTypeSwap(void)
   if( bsys == NULL ){
     return; //スルー
   }
+#ifdef PM_DEBUG
+  //ビーコン送信モード固定デバッグ機能
+  if( DEBUG_FLG_GetFlg(DEBUG_FLG_BeaconSendModeFix) ){
+    if( DEBUG_FLG_GetFlg(DEBUG_FLG_BeaconSendModeBW) ){
+      bsys->beacon_type = GAMEBEACON_TYPE_COMMON;
+    }else{
+      bsys->beacon_type = GAMEBEACON_TYPE_SWAN_ONLY;
+    }
+    return;
+  }
+#endif
+
   if( bsys->beacon_type == GAMEBEACON_TYPE_COMMON ){
     bsys->beacon_type = GAMEBEACON_TYPE_SWAN_ONLY;
   }else{
@@ -731,8 +743,12 @@ static void BeaconInfo_BeaconDetailOverwrite( GAMEBEACON_INFO *info, BOOL recv_f
   //詳細情報Noがトレーナー戦関連だったら移動中に上書き
   if( info->details.details_no >= GAMEBEACON_DETAILS_NO_BATTLE_TRAINER &&
       info->details.details_no <= GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER ){
-      BEACONINFO_Set_Details_Walk( info );
-      info->details.battle_trainer = 0;
+#if 0
+    OS_TFPrintf(2,"DetailOverwrite act=%d detail=%d ver=%d, ver_bit=%08x\n",
+      info->action.action_no, info->details.details_no, info->pm_version, info->version_bit );
+#endif
+    BEACONINFO_Set_Details_Walk( info );
+    info->details.battle_trainer = 0;
   }
 }
 
@@ -1022,6 +1038,11 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 
   BeaconInfo_SetFestMissionLog( bsys, info );
   BeaconInfo_CheckCGearInfo( bsys, info, !same_player );
+
+#if 0
+  OS_TFPrintf(2,"BeaconRecv act=%d detail=%d ver = %d, ver_bit=%08x\n",
+      info->action.action_no, info->details.details_no, info->pm_version, info->version_bit );
+#endif
 
   //受信データをログバッファにセット
   if(same_player == TRUE){
