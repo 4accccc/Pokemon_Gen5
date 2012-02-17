@@ -20,7 +20,7 @@ class ATTR_DATA
 	attr_reader:tryangleType  
 	
   # アトリビュートID,bit
-  attr_reader :attr_id, :attr_bit
+  attr_reader :attr_id, :attr_bit ,:attr_value
 
   def initialize file
 
@@ -45,6 +45,9 @@ class ATTR_DATA
 
     # アトリビュートIDを取得
     @attr_id = (@attr & 0xFFFF)
+
+    # アトリビュートを公開
+    @attr_value = @attr
     
   end
 end

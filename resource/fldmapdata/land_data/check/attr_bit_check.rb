@@ -3,18 +3,24 @@ require 'csv'
 
 # 出力データ形式
 class ATTR_USE_DATA
-  attr_reader :file_name ,:attr_id_list ,:attr_bit_index_list
+  attr_reader :file_name ,:attr_id_list ,:attr_bit_index_list ,:null_use_cnt
 
-  def initialize( file_name, attr_id_list ,attr_bit_index_list )
+  def initialize( file_name, attr_id_list ,attr_bit_index_list ,null_use_cnt )
     @file_name = file_name
     @attr_id_list = attr_id_list
     @attr_bit_index_list = attr_bit_index_list
+    @null_use_cnt = null_use_cnt
   end
 end
 
 # 結果出力先
 result_name = ARGV[0]
 result_num_name = ARGV[1]
+result_null_attribute_name = ARGV[2]
+
+# 移動可能リスト出力先
+w_null_attr = CSV.open(result_null_attribute_name,"w")
+w_null_attr << ["ファイル名","X","Z"]
 
 # ビット名
 ATTR_BIN_NAME=[
@@ -50,6 +56,7 @@ File.open(ATTR_NAME_FILE,"r").each{|line|
   end
 }
 
+null_attr_use_file = Array.new
 output_data = Array.new
 
 #ディレクトリ内binファイルリストアップ
@@ -68,7 +75,8 @@ bin_ary.each{ | file_name |
   attr_bit_index_list = Array.new
 
   # 全データ解析
-  attr_data.attr_tbl.each{|data|
+  use_null_cnt = 0
+  attr_data.attr_tbl.each_with_index{|data,i|
     # アトリビュートIDをリスト化
     attr_id_list  << data.attr_id
     # ビットをインデックス化
@@ -77,11 +85,30 @@ bin_ary.each{ | file_name |
         attr_bit_index_list << index
       end
     }
+
+    # アトリビュート値が０のものを出力
+    if data.attr_value.to_i == 0 then
+      if attr_data.attr_tbl.size == 32*32 then
+        w_null_attr << [File.basename(file_name),i%32,i/32]
+      else
+        w_null_attr << [File.basename(file_name),i%32,i/32,i,"マップサイズが不明"]
+      end
+      use_null_cnt+=1
+    end
   }
 
+  # ヌルアトリビュートを使用しているファイルを登録
+  if use_null_cnt > 0 then
+    null_attr_use_file << File.basename(file_name)
+  end
+
   # 出力形式データに整形
-  output_data << ATTR_USE_DATA.new( file_name,attr_id_list ,attr_bit_index_list )
+  output_data << ATTR_USE_DATA.new( file_name,attr_id_list ,attr_bit_index_list ,use_null_cnt )
 }
+
+
+# NULLアトリビュートリストを出力
+w_null_attr.close
 
 # 全データ出力
 CSV.open(result_name,"w"){|writeer|
@@ -147,6 +174,7 @@ CSV.open(result_num_name,"w"){|writeer|
     end
   }
 
+  header << "nullアトリビュート使用"
   writeer << header
   # 全データ出力
   output_data.each{|data|
@@ -177,7 +205,12 @@ CSV.open(result_num_name,"w"){|writeer|
       end
     }
 
+    # ヌルアトリビュートを使用
+    line << data.null_use_cnt
+
     writeer << line
   }
 }
+
+puts "nullアトリビュートを使用しているファイル数:%d"%[null_attr_use_file.size]
 
