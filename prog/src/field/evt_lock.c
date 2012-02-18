@@ -91,4 +91,19 @@ BOOL EVTLOCK_CheckEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
   return FALSE;
 }
 
-
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントロッククリア
+ *
+ *	@param	MISC * misc ミスク
+ *	@param	int inNo  ナンバー
+ *	@param	*my 
+ */
+//-----------------------------------------------------------------------------
+void EVTLOCK_ClearEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
+{
+  //セーブデータにセット
+  MISC_SetEvtRockValue( misc, inNo, 0 );
+}
+#endif

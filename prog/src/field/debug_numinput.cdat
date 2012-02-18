@@ -581,4 +581,19 @@ static const DEBUG_NUMINPUT_LIST DNI_RndmatchList[] = {
   { dni_rndmatch_poweroff_00,    0, &DNI_RndmatchFlag },
 };
 
+//////////////////////////////////////////////////////
+///イベントロック
+static const DEBUG_NUMINPUT_PARAM DNP_EventLock =
+{
+  0, 1, DebugGetEventLock, DebugSetEventLock,
+};
+static const DEBUG_NUMINPUT_LIST DNI_EventLock[] = {
+  { dni_rndmatch_event_lock_01,    2, &DNP_EventLock },
+  { dni_rndmatch_event_lock_02,    3, &DNP_EventLock },
+  { dni_rndmatch_event_lock_03,    4, &DNP_EventLock },
+  { dni_rndmatch_event_lock_04,    5, &DNP_EventLock },
+  { dni_rndmatch_event_lock_05,    6, &DNP_EventLock },
+  { dni_rndmatch_event_lock_06,    7, &DNP_EventLock },
+};
+
 #endif  //PM_DEBUG

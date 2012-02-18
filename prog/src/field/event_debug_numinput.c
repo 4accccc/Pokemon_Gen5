@@ -63,6 +63,7 @@
 #include "gamesystem/game_beacon_local.h"
 
 #include "../app/local_tvt/local_tvt_call.h"
+#include "../field/evt_lock.h"
 
 #include "wbt_system.h" //WBTROM_TRID_MEM_MAX
 //======================================================================
@@ -263,6 +264,9 @@ static void DebugSetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param,
 static u32 DebugGetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
 static void DebugSetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value );
 
+static u32 DebugGetEventLock( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
+static void DebugSetEventLock( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value );
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -367,6 +371,10 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_Rndmatch =
 {
   D_NINPUT_DATA_LIST, NELEMS(DNI_RndmatchList), DNI_RndmatchList,
 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_EventLock =
+{
+  D_NINPUT_DATA_LIST, NELEMS(DNI_EventLock), DNI_EventLock,
+};
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -423,6 +431,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_wbtsave_title, (void*)&DATA_WBTSave, GFL_OVERLAY_BLANK_ID },
   { dni_sepia_color_title, (void*)&DATA_SepiaColor, GFL_OVERLAY_BLANK_ID },
   { dni_rndmatch_poweroff, (void*)&DATA_Rndmatch, GFL_OVERLAY_BLANK_ID },
+  { dni_rndmatch_event_lock_00, (void*)&DATA_EventLock, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1955,6 +1964,29 @@ static void DebugSetRndmatchFlag( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 para
   else
   {
     BATTLEMATCH_EndPowerOffCheck(p_btlmatch);
+  }
+}
+
+//=============================================================================
+//=============================================================================
+static u32 DebugGetEventLock( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param )
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gdata );
+  MISC *misc = GAMEDATA_GetMiscWork( gdata );
+  return EVTLOCK_CheckEvtLock( misc, param, mystatus );
+}
+static void DebugSetEventLock( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param, u32 value )
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gdata );
+  MISC *misc = GAMEDATA_GetMiscWork( gdata );
+
+  if( value )
+  {
+    EVTLOCK_SetEvtLock( misc, param, mystatus );
+  }
+  else 
+  {
+    EVTLOCK_ClearEvtLock( misc, param, mystatus );
   }
 }
 

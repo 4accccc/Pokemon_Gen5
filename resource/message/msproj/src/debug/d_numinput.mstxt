@@ -9639,4 +9639,186 @@
 				Time="2011-08-08T11:06:51" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イベントロック</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:58:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イベントロック</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:58:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッション配信１</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッション配信１</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッション配信２</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッション配信２</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッション配信３</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッション配信３</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッション配信４</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッション配信４</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:59:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うつしかがみ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:51:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うつしかがみ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T03:51:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_rndmatch_event_lock_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ランドロスAR</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T04:01:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ランドロスAR</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2012-02-18T04:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-08T11:06:51" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

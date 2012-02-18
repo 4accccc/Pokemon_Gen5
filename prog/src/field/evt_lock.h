@@ -19,4 +19,7 @@
 
 extern void EVTLOCK_SetEvtLock( MISC * misc, const int inNo, MYSTATUS *my );
 extern BOOL EVTLOCK_CheckEvtLock( MISC * misc, const int inNo, MYSTATUS *my );
+#ifdef PM_DEBUG
+extern void EVTLOCK_ClearEvtLock( MISC * misc, const int inNo, MYSTATUS *my );
+#endif
 
