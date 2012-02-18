@@ -116,6 +116,12 @@ static int DEBUG_MAIN_TIME_OverCount = 0;
 static int DEBUG_MAIN_TIME_check_sync = 0;
 static int DEBUG_MAIN_TIME_check_max = 0;
 
+#if defined(DEBUG_ONLY_FOR_hudson)
+BOOL DEBUG_MAIN_TIME_IS_PRINT = FALSE;
+#else
+BOOL DEBUG_MAIN_TIME_IS_PRINT = TRUE;
+#endif
+
 #endif
 
 //------------------------------------------------------------------
@@ -614,12 +620,23 @@ BOOL DEBUG_MAIN_TIME_End( int *p_ave, int *p_over_cnt )
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 {
+  if( !DEBUG_MAIN_TIME_IS_PRINT )
+  {
+    return;
+  }
+
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
 }
 
 static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 {
   OSTick now_time;
+
+  if( !DEBUG_MAIN_TIME_IS_PRINT )
+  {
+    return;
+  }
+
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_End = OS_GetTick(); 
 
   now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
