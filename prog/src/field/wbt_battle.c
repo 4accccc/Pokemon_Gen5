@@ -1055,10 +1055,13 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
 
     if ( wbtsys->wbtcup != WBTCUP_DOWNLOAD && wbt_tr->tr_id < WBTROM_TRID_MEM_MAX )
     {
-      //対戦相手のトレーナーIDを保存する（レッド以外）
       u8 pos = getBattleRecordIndex( wbtsys->stage );
-      if ( wbt_tr->tr_id != WBTROM_TRID_RED )
-      {
+      if ( wbt_tr->tr_id == WBTROM_TRID_RED )
+      { //対戦相手のトレーナーIDをクリア（レッドの場合）
+        WBTSAVE_SetTrainerID( wbtsave, pos, WBTROM_TRID_INVALID );
+      }
+      else
+      { //対戦相手のトレーナーIDを保存する（レッド以外）
         WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
       }
       //戦ったかどうかのフラグを反映
@@ -1219,6 +1222,11 @@ static void get_rom_msg( STRBUF * strbuf,
     idx = 1;
   }
   tr_id = WBTTRAINER_GetID( opponent );
+  if ( NELEMS(WBTTrainerMsgID) <= tr_id )
+  {
+    GF_ASSERT( 0 );
+    tr_id = 0;  //万が一の場合チェレンのMSGを出す
+  }
   msg_id = WBTTrainerMsgID[tr_id][idx] + msg_type;
   OS_Printf("tr_id = %2d msg_id = %3d\n", tr_id, msg_id );
   GF_ASSERT( tr_id < NELEMS(WBTTrainerMsgID) );
