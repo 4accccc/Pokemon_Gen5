@@ -10,11 +10,12 @@
 
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_comm.h"
+#include "gamesystem/pm_weather.h"
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
 #include "sound/pm_sndsys.h"
 #include "field/field_sound.h"
-
+#include "field/weather_no.h"
 #include "event_demo3d.h"
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 
@@ -99,14 +100,30 @@ static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work)
     GAMESYSTEM_SetNetOffEventFlag( wk->gsys, wk->net_off_flag );
 
     /*
+     * GFBTS683対策
+     *
      * フェスBGMが鳴っている時にデモ内でBGMを止めてしまうと、
      * 曲が変わらないために次のマップBGM再生リクエストが無視される。
-     * この対策として、デモがBGMを止めた状態で終了していたらSilentBGMに強制書き換えすることで
-     * 次のマップBGM再生リクエストでBGMが復帰する
+     * この対策として、デモ内でBGMを止める作りになっているフキヨセ・ヤマジの飛行機離陸デモ時は
+     * このタイミングでBGMを一度SilentBGMに強制書き換えすることで
+     * 次のマップBGM再生リクエストでBGMを復帰させる。
+     * イベントフローとして、直後に必ずマップチェンジを通ることを前提としている。
      */
     if( wk->demo_id == DEMO3D_ID_PLANE_TAKE_OFF_FUKIYOSE ||
         wk->demo_id == DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI ){
       GMEVENT_CallEvent( event, EVENT_FSND_PlayEventBGMSilent( wk->gsys, 0 ) );
+
+      if( wk->demo_id  == DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI ){
+        /*
+         * GFBTS915対策 
+         * ヤマジ→フキヨセデモの時、ヤマジにSEを伴う天候があると
+         * デモ終了直後のFieldOpenで天候が復帰し、マップチェンジ前に一瞬天候SEが鳴ってしまう。
+         * この対策として、ヤマジ飛行機デモの際は、一度天候を晴れに強制書き換えする。
+         * イベントフローとして、直後に必ずマップチェンジをはさむため
+         * 強制書き換えした天候IDはマップチェンジにより正しく復帰する。
+         */
+        GAMEDATA_SetWeatherNo( GAMESYSTEM_GetGameData( wk->gsys ), WEATHER_NO_SUNNY );
+      }
     }
     (*seq) += 1;
     break;
