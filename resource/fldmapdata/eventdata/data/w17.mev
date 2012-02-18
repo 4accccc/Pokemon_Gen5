@@ -1,5 +1,5 @@
 #event data
-#save date:2012/01/19 23:40:12
+#save date:2012/02/18 13:57:45
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\w17.wms
 #SECTION START:OBJ_EVENT
@@ -90,7 +90,7 @@ SCRID_TRID_SWIMMERW_10
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-5
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
