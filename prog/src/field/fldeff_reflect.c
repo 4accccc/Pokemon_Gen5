@@ -431,16 +431,16 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     param = MMDL_GetOBJCodeParam( mmdl );
     
     MMDL_GetVectorPos( mmdl, &pos );
-	  
-    if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == TRUE ){  //‚‚³Žæ“¾
-      pos.y = y;
-    }
-    
     pos.z += data_MdlOffsetZ[param->mdl_size];
     
     MMDL_GetVectorDrawOffsetPos( mmdl, &offs0 );
     pos.x += offs0.x;
     pos.z -= offs0.z;
+    
+	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == TRUE ){  //‚‚³Žæ“¾
+      pos.y = y;
+    }
+    
     pos.y += data_TypeOffsetY[work->head.type];
      
     MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs0 );
