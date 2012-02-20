@@ -2454,16 +2454,16 @@
 
 グレーの　やじるしを　じょうげに
 スライドして　いどう　させたい
-ボックスを　えらんだあと
-もういちど　ポケモンに　タッチすると
-ボックスに　いどうします。</Text>
+ボックスを　タッチすると
+ポケモンを　タッチした　ボックスに
+いどうさせることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				Time="2012-02-20T08:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-13T05:18:55" />
+				Time="2012-02-20T08:19:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2473,16 +2473,16 @@
 
 グレーの　矢印を　上下に
 スライドして　移動させたい
-ボックスを　選んだあと
-もう一度　ポケモンに　タッチすると
-ボックスに　移動します。</Text>
+ボックスを　タッチすると
+ポケモンを　タッチした　ボックスに
+移動させることが　できます。</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-17T06:41:26" />
+				Time="2012-02-20T08:50:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2012-02-17T06:41:26" />
+				Time="2012-02-20T08:50:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -6022,39 +6022,35 @@
 			Language="JPN">
 			<Text>ポケルスとは　ポケモンにくっつく　とても
 めずらしい　せいめいたいの　ことです。
-ポケルスが　くっついている　あいだは
-ポケモンが　よくそだつ　らしいです。
-なんにちかで　もとの　じょうたいに
-もどりますが　いちど　ポケルスが　つくと
-もう　その　ポケモンには　くっつきません。
+いちど　ポケルスが　くっついた
+ポケモンは　よくそだつ　らしいです。
+
 ほかの　ポケモンにも
 うつることが　あるようです。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-20T07:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-20T07:28:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケルスとは　ポケモンに　くっつく
 とても　珍しい　生命体の　ことです。
-ポケルスが　くっついている　あいだは
-ポケモンが　よく育つらしいです。
-何日かで　元の　状態に　戻りますが
-一度　ポケルスが　つくと
-もう　その　ポケモンには　くっつきません。
+一度　ポケルスが　くっついた
+ポケモンは　よく育つ らしいです。
+
 他の　ポケモンにも
 うつることが　あるようです。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-20T08:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T05:34:05" />
+				User="nakamura_akira:W00280"
+				Time="2012-02-20T08:19:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
