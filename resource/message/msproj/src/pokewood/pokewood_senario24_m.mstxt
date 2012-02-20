@@ -1648,31 +1648,31 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『はあ……
 はあ……　う……▼
-もんばん『ど　どうしたんだ？▼
+ぬいぐるみ『ど　どうしたんだ？▼
 [Name:TrainerName Idx="1" ]おうじ『なんか……
 ボク……　くるしくて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-20T09:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-20T09:34:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『はあ……
 はあ……　う……▼
-もんばん『ど　どうしたんだ？▼
+ぬいぐるみ『ど　どうしたんだ？▼
 [Name:TrainerName Idx="1" ]王子『なんか……
 ボク……　苦しくて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-20T09:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-20T09:34:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
