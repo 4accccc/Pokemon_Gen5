@@ -1,3 +1,4 @@
+//
 //============================================================================================
 /**
  * @file  tr_ai_def.h
@@ -6,52 +7,51 @@
  * @date  06.04.25
  */
 //============================================================================================
-#ifndef __TR_AI_DEF_H__
-#define __TR_AI_DEF_H__
+#pragma once
 
-namespace btl {
+//#define AIWT        ((AIWorkTbl *)&UserWork[0x16800])
+//#define AIWT2       ((AIWorkTbl2 *)&UserWork[0x16a00])
+//#define AI_PUSH_ADRS    ((PushAdrs *)&UserWork[0x16c00])  //4バイト*8+1
 
-enum {
-  LOSS_CALC_OFF = 0,    //ダメージロス計算のぶれなし
-  LOSS_CALC_ON = 1,   //ダメージロス計算のぶれあり
-};
+#define LOSS_CALC_OFF ( 0 )   //ダメージロス計算のぶれなし
+#define LOSS_CALC_ON  ( 1 )   //ダメージロス計算のぶれあり
 
 //=========================================================================
 //  AI_STATUSFLAG宣言
 //=========================================================================
-enum {
-  AI_STATUSFLAG_END           =  0x01,      //AIシーケンスの終了
-  AI_STATUSFLAG_ESCAPE        =  0x02,      //にげるを選択
-  AI_STATUSFLAG_SAFARI        =  0x04,      //サファリゾーン特有のアクション
-  AI_STATUSFLAG_FINISH        =  0x08,      //チェックする技が残っていても終了
-  AI_STATUSFLAG_CONTINUE      =  0x10,      //AI計算継続
-  AI_STATUSFLAG_END_OFF       =  (0x01^0xff),
-  AI_STATUSFLAG_ESCAPE_OFF    =  (0x01^0xff),
-  AI_STATUSFLAG_SAFARI_OFF    =  (0x04^0xff),
-  AI_STATUSFLAG_CONTINUE_OFF  =  (0x10^0xff),     //AI計算継続
 
-  AI_ENEMY_ESCAPE     = 4,
-  AI_ENEMY_SAFARI     = 5,
-  AI_ENEMY_RESHUFFLE  = 6,
+#define AI_STATUSFLAG_END       (0x01)      //AIシーケンスの終了
+#define AI_STATUSFLAG_ESCAPE    (0x02)      //にげるを選択
+#define AI_STATUSFLAG_SAFARI    (0x04)      //サファリゾーン特有のアクション
+#define AI_STATUSFLAG_FINISH    (0x08)      //チェックする技が残っていても終了
+#define AI_STATUSFLAG_CONTINUE  (0x10)      //AI計算継続
+
+#define AI_STATUSFLAG_END_OFF       (0x01^0xff)
+#define AI_STATUSFLAG_ESCAPE_OFF    (0x01^0xff)
+#define AI_STATUSFLAG_SAFARI_OFF    (0x04^0xff)
+#define AI_STATUSFLAG_CONTINUE_OFF  (0x10^0xff)     //AI計算継続
+
+#define AI_ENEMY_ESCAPE     4
+#define AI_ENEMY_SAFARI     5
+#define AI_ENEMY_RESHUFFLE  6
 
 //tr_ai.s waza_ai.cで使用（マクロでsideに指定する値）
-  CHECK_DEFENCE         = 0,
-  CHECK_ATTACK          = 1,
-  CHECK_DEFENCE_FRIEND  = 2,
-  CHECK_ATTACK_FRIEND   = 3,
+#define CHECK_DEFENCE         (0)
+#define CHECK_ATTACK          (1)
+#define CHECK_DEFENCE_FRIEND  (2)
+#define CHECK_ATTACK_FRIEND   (3)
 
-  CHECK_DEFENCE_TYPE1   = 0,
-  CHECK_ATTACK_TYPE1    = 1,
-  CHECK_DEFENCE_TYPE2   = 2,
-  CHECK_ATTACK_TYPE2    = 3,
-  CHECK_WAZA            = 4,
-  CHECK_DEFENCE_FRIEND_TYPE1  = 5,
-  CHECK_ATTACK_FRIEND_TYPE1   = 6,
-  CHECK_DEFENCE_FRIEND_TYPE2  = 7,
-  CHECK_ATTACK_FRIEND_TYPE2   = 8,
-}
-// @todo 面倒くさいから後で enum 化する
-#if 0
+#define CHECK_DEFENCE_TYPE1   (0)
+#define CHECK_ATTACK_TYPE1    (1)
+#define CHECK_DEFENCE_TYPE2   (2)
+#define CHECK_ATTACK_TYPE2    (3)
+#define CHECK_WAZA            (4)
+#define CHECK_DEFENCE_FRIEND_TYPE1  (5)
+#define CHECK_ATTACK_FRIEND_TYPE1   (6)
+#define CHECK_DEFENCE_FRIEND_TYPE2  (7)
+#define CHECK_ATTACK_FRIEND_TYPE2   (8)
+
+
 //COMP_POWERで使用
 #define COMP_POWER_NONE   (0)   //威力計算しない技
 #define COMP_POWER_NOTOP  (1)   //ダメージ量がトップじゃない
@@ -111,8 +111,4 @@ enum {
 
 //  AI_TABLE_JUMPで使用するインデックス用ワーク
 #define TABLE_JUMP_WAZASEQNO  ( 0 )   //技のシーケンスナンバーでジャンプ
-#endif
 
-} // end of namespace 'btl'
-
-#endif  /* #ifndef __TR_AI_DEF_H__ */

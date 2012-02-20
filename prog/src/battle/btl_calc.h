@@ -155,7 +155,7 @@ typedef struct {
 
 extern void BTL_ESCAPEINFO_Clear( BTL_ESCAPEINFO* info );
 extern void BTL_ESCAPEINFO_Add( BTL_ESCAPEINFO* info, u8 clientID );
-extern u32  BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info );
+extern u32 BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info );
 extern BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID, BtlCompetitor competitor );
 
 
