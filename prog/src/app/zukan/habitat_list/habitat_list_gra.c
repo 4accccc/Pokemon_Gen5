@@ -1134,7 +1134,7 @@ void HABITAT_LIST_GRA_CallFade( HABITAT_LIST_GRA_WK *p_wk, u8 start, u8 end )
   PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_BG,  0xbfff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
   PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_BG,   0x3ffe, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
   PaletteFadeReq( p_wk->p_pfd, PF_BIT_MAIN_OBJ, 0x3f, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
-	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0xffff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
+	PaletteFadeReq( p_wk->p_pfd, PF_BIT_SUB_OBJ,  0x3fff, ZKNCOMM_FADE_WAIT, start, end, 0, GFUser_VIntr_GetTCBSYS() );
 }
 
 //----------------------------------------------------------------------------
