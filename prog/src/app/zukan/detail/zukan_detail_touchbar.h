@@ -128,4 +128,5 @@ extern void Zukan_Detail_Touchbar_ActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
 
 extern void Zukan_Detail_Touchbar_VisibleAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOOL is_visible );
 extern void Zukan_Detail_Touchbar_PushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+extern BOOL Zukan_Detail_Touchbar_GetIsActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 

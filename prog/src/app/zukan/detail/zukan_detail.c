@@ -37,6 +37,7 @@
 #include "zukan_detail_voice.h"
 #include "zukan_detail_form.h"
 #include "zukan_detail.h"
+#include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
 
 // アーカイブ
 #include "arc_def.h"
@@ -403,6 +404,8 @@ static GFL_PROC_RESULT Zukan_Detail_ProcMain( GFL_PROC* proc, int* seq, void* pw
         ZUKAN_DETAIL_MAP_PARAM *proc_param = work->zkndtl_proc_param;
         param->habitat_zone_group  = proc_param->select_zone_group;
         param->ret = ZUKAN_DETAIL_RET_CALL_HABITAT;
+        // 正しいゾーングループが設定されているかチェック
+        GF_ASSERT( proc_param->select_zone_group != ZONE_ID_MAX );
       }
       break;
     }

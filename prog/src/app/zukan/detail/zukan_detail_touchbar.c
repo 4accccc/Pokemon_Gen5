@@ -1904,6 +1904,20 @@ void Zukan_Detail_Touchbar_ActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work ,BOO
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  エリアジャンプボタンのアクティブ状態を取得する
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL Zukan_Detail_Touchbar_GetIsActiveAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  return ZKND_TBAR_GetActive( work->tbwk ,work->icon_set[MAP_ICON_AREA_JUMP].cset->id );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  エリアジャンプの表示状態切替
  *
  *	@param	work 

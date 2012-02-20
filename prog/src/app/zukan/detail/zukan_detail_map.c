@@ -804,7 +804,9 @@ void             ZUKAN_DETAIL_MAP_InitParam(
                             ZUKAN_DETAIL_MAP_PARAM*  param,
                             HEAPID                    heap_id )
 {
+  // マップ画面用パラメータの初期化
   param->heap_id = heap_id;
+  param->select_zone_group = ZONE_ID_MAX;
 }
 
 
@@ -3141,6 +3143,8 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     BOOL          pull_force            = FALSE;  // もし吸い込みしかない場合、強制的に吸い込ませるか否か
     VecFx32	norm	= {0,0,0};
 	  VecFx32	pull	= {0,0,0};
+        
+    ONOUE_Printf("カーソル移動可能\n");
 
     // 移動前の位置
     GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_CURSOR], &pos, CLSYS_DEFREND_MAIN );
@@ -3280,8 +3284,15 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
       {
         // 同じ場所を選択した
         ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
-       // ボタンを押したことにする
+        // ボタンを押したことにする
         Zukan_Detail_Touchbar_PushAreaJump( touchbar );
+
+        // 生息地リストに遷移する場合は、入力をロックする
+        if( Zukan_Detail_Touchbar_GetIsActiveAreaJump(touchbar) == TRUE )
+        {
+          GF_ASSERT( work->select_data_idx!=DATA_IDX_NONE );
+          work->input_enable = FALSE;
+        }
       }
       else if( work->select_data_idx != DATA_IDX_NONE )
       {
@@ -4806,6 +4817,9 @@ static void SetAreaJumpButtonState( ZUKAN_DETAIL_MAP_PARAM* param,ZUKAN_DETAIL_M
   GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
   ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
   ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+   
+  // 選択ゾーンIDを初期化
+  param->select_zone_group = ZONE_ID_MAX;
 
   if(is_enable == TRUE )
   {
