@@ -1780,10 +1780,14 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
 
     if(tp_cont == TRUE){
       if(tp_y > _TITLE_BAR_Y_LEN && tp_y < 192-_MENU_BAR_Y_LEN){
-        mfw->tp_cont_frame = 1;
-        mfw->tp_backup_y = tp_y;
-        mfw->tp_first_hit_y = tp_y;
-        _SetCursorPos(mfw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+        // パネル領域タッチした際に、一度もれなくクリアしてしまうので、
+        // タッチした箇所をチェックし、クリアの有無を判断する(BTS2016)
+        if( _GetTouchListNo(mfw, tp_y) != _LIST_NO_NONE){
+          mfw->tp_cont_frame = 1;
+          mfw->tp_backup_y = tp_y;
+          mfw->tp_first_hit_y = tp_y;
+          _SetCursorPos(mfw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+        }
       }
       //「もらう」タッチチェック
       else if(GFL_UI_TP_GetTrg() == TRUE && mfw->cursor_pos != _CURSOR_POS_NONE
