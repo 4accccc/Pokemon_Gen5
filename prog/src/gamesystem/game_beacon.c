@@ -1614,19 +1614,32 @@ BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno )
   int i;
   static const u16 sp_poke[] = {
     MONSNO_530,	//ゾロアーク
-    MONSNO_645, //MONSNO_ATOSU, 
-    MONSNO_646, //MONSNO_PORUTOSU, 
-    MONSNO_647, //MONSNO_ARAMISU, 
-    MONSNO_648, //MONSNO_KAZAKAMI, 
-    MONSNO_649, //MONSNO_RAIKAMI, 
-    MONSNO_650, //MONSNO_SIN, 
-    MONSNO_651, //MONSNO_MU, 
-    MONSNO_652, //MONSNO_TUTINOKAMI, 
-    MONSNO_653, //MONSNO_RAI, 
-    MONSNO_654, //MONSNO_DARUTANISU, 
-    MONSNO_655, //MONSNO_MERODHIA, 
-    MONSNO_656, //MONSNO_INSEKUTA, 
-    MONSNO_657, //MONSNO_BIKUTHI, 
+    MONSNO_645, //MONSNO_ATOSU, コバルオン
+    MONSNO_646, //MONSNO_PORUTOSU, テラキオン
+    MONSNO_647, //MONSNO_ARAMISU, ビリジオン
+    MONSNO_648, //MONSNO_KAZAKAMI, トルネロス
+    MONSNO_649, //MONSNO_RAIKAMI, ボルトロス
+    MONSNO_650, //MONSNO_SIN, レシラム
+    MONSNO_651, //MONSNO_MU, ゼクロム
+    MONSNO_652, //MONSNO_TUTINOKAMI, ランドロス
+    MONSNO_653, //MONSNO_RAI, キュレム
+    MONSNO_654, //MONSNO_DARUTANISU, ケルディオ
+    MONSNO_655, //MONSNO_MERODHIA, メロエッタ
+    MONSNO_656, //MONSNO_INSEKUTA, ゲノセクト
+    MONSNO_657, //MONSNO_BIKUTHI, ビクティニ
+
+    //BTS2073対策追加
+    MONSNO_REZIAISU,   //レジアイス
+    MONSNO_REZIROKKU,  //レジロック
+    MONSNO_REZISUTIRU, //レジスチル
+    MONSNO_REZIGIGASU, //レジギガス
+    MONSNO_RATHIASU,   //ラティアス
+    MONSNO_RATHIOSU,   //ラティオス
+    MONSNO_YUKUSII,    //ユクシー
+    MONSNO_EMURITTO,   //エムリット
+    MONSNO_AGUNOMU,    //アグノム
+    MONSNO_HIIDORAN,   //ヒードラン
+    MONSNO_KURESERIA,  //クレセリア
   };
 
   for(i = 0;i < NELEMS(sp_poke);i++){
