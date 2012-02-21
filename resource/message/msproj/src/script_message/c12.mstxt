@@ -2733,10 +2733,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ベル『[Name:PokemonNickname Idx="0" ]！
-ニックネームは　それで　きまり？▼</Text>
+ニックネームは　それで　きまり？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T05:54:07" />
+				Time="2012-02-20T12:14:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2745,10 +2745,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベル『[Name:PokemonNickname Idx="0" ]！
-ニックネームは　それで　決まり？▼</Text>
+ニックネームは　それで　決まり？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T05:54:14" />
+				Time="2012-02-20T12:14:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
