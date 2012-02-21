@@ -2995,6 +2995,7 @@ SRCS_OVERLAY_DEBUG_ALL_WAZA_CHECK2 = field/event_debug_btl_all_waza_check2.c
 
 # DEBUG_ALL_POKE_CHECK
 #===> SRCS_OVERLAY_BATTLE_PLIST
+#===> SRCS_OVERLAY_ENC_CUTIN_NO
 SRCS_OVERLAY_DEBUG_ALL_POKE_CHECK = field/event_debug_btl_all_poke_check.c
 
 # DEBUG_ALL_WAZA_CAM_CHECK
@@ -3003,5 +3004,6 @@ SRCS_OVERLAY_DEBUG_ALL_WAZA_CAM_CHECK = field/event_debug_btl_all_waza_cam_check
 
 # DEBUG_POKE_CHANGE
 #===> SRCS_OVERLAY_BATTLE_PLIST
+#===> SRCS_OVERLAY_ENC_CUTIN_NO
 SRCS_OVERLAY_DEBUG_POKE_CHANGE = field/event_debug_btl_poke_change.c
 
