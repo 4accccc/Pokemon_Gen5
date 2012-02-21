@@ -550,6 +550,7 @@ static void TaskFuncScore( GFL_TCB* p_tcb, void* p_work );
 
 // タスクに登録されている風船とタッチの当たり判定
 static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx );
+static BOOL balloon_hit_check2( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx );
 // タスクに登録されている風船同士の距離判定
 static void balloon_collision_check( CTVT_GAME_WORK *p_wk );
 // 2点の距離の壁判定処理(移動も自動)
@@ -559,6 +560,16 @@ static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32
 
 // 結果発表中の風船の更新
 static void score_balloon_update( CTVT_GAME_WORK *p_wk );
+
+// 「バルーンキャッチ」の当たり判定
+// 楕円の半径定義
+static const u8 BALLOON_HIT_R[3][2] = 
+{
+//  rx  ry
+  { 15, 23 },   // 風船 小
+  { 18, 28 },   // 風船 中 
+  { 26, 39 },   // 風船 大
+};
 
 //-------------------------------------
 /// PLATE
@@ -1391,7 +1402,7 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
   BOOL  ret;
   u16   ret_idx;    // どの風船が当たったかIDXを格納
 
-  ret = balloon_hit_check( p_wk, data->frame, data->tpx, data->tpy, &ret_idx );
+  ret = balloon_hit_check2( p_wk, data->frame, data->tpx, data->tpy, &ret_idx );
   // Hit Check
   // 当たりがある → 送信
   if( ret == TRUE )
@@ -6639,6 +6650,98 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy
   return ret;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タスクに登録されている風船とタッチの当たり判定
+ *
+ *	@param	CTVT_GAME_WORK* p_wk    ゲーム管理構造体
+ *	@param  frame     タッチした時のフレーム
+ *	@param	tpx       タッチX座標
+ *	@param	tpy       タッチY座標
+ *	@param	*ret_idx  割れた風船のIDXを格納（当たったときのみ）　
+ *
+ *	@retval TRUE    当たり有り
+ *	@retval FALSE   当たり無し
+ */
+//-----------------------------------------------------------------------------
+static BOOL balloon_hit_check2( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx )
+{
+  u8  i;
+  BOOL      ret = FALSE;        // 返り値用
+  u8        save_size = 0;      // 当たったやつのサイズ保存しておく
+
+  for( i=0; i<BALLOON_MAX; i++ )
+  {
+    BOOL    b_hit = FALSE;
+
+    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
+    {
+      // 表示されていないならスキップ
+      continue;
+    }
+
+    if( p_wk->balloon_wk[i].is_hit_check_disable == 1 )
+    {
+      // 当たり判定除外フラグが立っているとSKIP
+      CTVT_Printf("当たり判定除外フラグ がたっている\n");
+      continue;
+    }
+
+    // 点と楕円の当たり判定
+    {
+      int x;    // 風船 2D X座標
+      int y;    // 風船 2D Y座標
+      int ofs_x = 0;
+      int ofs_y = 0;
+      int after_x = 0;
+      int after_y = 0;
+      int rx = BALLOON_HIT_R[ p_wk->balloon_wk[i].size-1 ][0];
+      int ry = BALLOON_HIT_R[ p_wk->balloon_wk[i].size-1 ][1];
+
+
+      // 風船座標を3D座標から2D座標変換
+      NNS_G3dWorldPosToScrPos( &p_wk->balloon_wk[i].status.trans ,&x, &y );
+
+      // 点に楕円→真円変換行列を適用
+      ofs_x = tpx - x;
+      ofs_y = tpy - y;
+      after_x = ofs_x;
+      after_y = (float)rx/ry * ofs_y;
+
+      // 原点から移動後点までの距離を算出
+      if( after_x*after_x + after_y*after_y <= rx*ry )
+      {
+        b_hit = TRUE;   // 衝突
+        //ICHI_Printf("当たった！\n");
+        //ICHI_Printf("風船座標 x:%d y:%d after_x:%d after_y:%d \n", x, y, after_x, after_y);
+      }
+    }
+
+
+    if( b_hit == TRUE )
+    {
+
+      // Hitデータ保存
+      ret = TRUE;
+
+      // サイズ大だと手前にあるはずなので、それ以降の処理はしない
+      if( p_wk->balloon_wk[i].size == BALLOON_SIZE_L )
+      {
+        *ret_idx = i;   // 何番目か保存
+        return TRUE;
+      }
+
+      // サイズ比較 (手前にあるか奥にあるか)
+      if( p_wk->balloon_wk[i].size > save_size )
+      {
+        *ret_idx = i;   // 何番目か保存
+        save_size = p_wk->balloon_wk[i].size;   // サイズを保存しておく
+      }
+    }
+  }
+
+  return ret;
+}
 
 // タスクに登録されている風船同士の距離判定
 //----------------------------------------------------------------------------
