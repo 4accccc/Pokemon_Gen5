@@ -3718,6 +3718,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( ( syswk->app->multiselect_outline.end_pos < BOX2OBJ_POKEICON_TRAY_MAX && ret >= BOX2OBJ_POKEICON_TRAY_MAX ) ||
 					( syswk->app->multiselect_outline.end_pos >= BOX2OBJ_POKEICON_TRAY_MAX && ret < BOX2OBJ_POKEICON_TRAY_MAX ) ){
 				MultiSelectCancel( syswk );
+				BOX2MAIN_PokeInfoPut( syswk, CURSORMOVE_PosGet(syswk->app->cmwk) );
 			}else{
 				int width,height;
 				syswk->app->multiselect_outline.end_pos = ret;
