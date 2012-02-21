@@ -1314,7 +1314,7 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk, const u8 balloon_wk_idx )
     }
   }
 
-  GF_ASSERT_MSG( 0, "風船の出現できない burst_idx %d \n", balloon_wk_idx );
+  GF_ASSERT_MSG( 0, "風船の出現できない appear_idx %d \n", balloon_wk_idx );
   return FALSE;
 }
 
@@ -1396,9 +1396,12 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
   // 当たりがある → 送信
   if( ret == TRUE )
   {
-    CTVT_GAME_SEND_DATA send_data;
-    send_data.burst_idx = ret_idx;
-    send_data.burst_netID = netID;
+    CTVT_GAME_SEND_DATA send_data = {0};
+    //send_data.burst_idx = ret_idx;
+    send_data.burst_idx[ netID ] = ret_idx;
+    //send_data.burst_netID = netID;
+    send_data.burst_netID = 1<<netID;
+    send_data.frame = p_wk->frame;
     CTVT_COMM_SendGameReq( commWork, send_data, CCGDT_BURST );
 
     // BTS1849 【複数のプレイヤーが同時に風船をタッチした場合、表示と得点が食い違うことがある】 
@@ -1423,87 +1426,102 @@ void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, c
  *
  *	@param	CTVT_GAME_WORK *p_wk
  *	@param	idx   割りたい風船のIDX(受信したものをそのまま指定してOK)
- *	@param  netID 割った人のnetID(受信したものをそのまま指定してOK)
+ *	@param  netID 割った人のnetID(ビットでNetIDが入っている)
  */
 //-----------------------------------------------------------------------------
-void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
+void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, const u8 idx[ CTVT_MEMBER_NUM ], u8 netIdBit )
 {
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  u8  i;
 
-  GF_ASSERT( p_wk->balloon_wk[idx ].tcb != NULL );
+  CTVT_Printf("受信のNetID %d \n", netIdBit );
 
-  // 得点計算
 
-  // ポイント加算
-  if( p_wk->balloon_wk[ idx ].unit_idx == netId )
+  for( i=0; i<CTVT_MEMBER_NUM; i++ )
   {
-    if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
+    // 処理する風船(=netID)をチェック
+    if( netIdBit & (1<<i) )
     {
-      // 制限時間20秒を切ると得点2倍
-      p_wk->score[ netId ] += 4;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_OK_4PT;
-    }
-    else
-    {
-      // 通常風船
-      p_wk->score[ netId ] += 2;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_OK_2PT;
-    }
-    // 最大得点表示は999
-    if( p_wk->score[ netId ] > 999 ){ p_wk->score[ netId ] = 999; }
+      u8 balloon_idx= idx[ i ];
 
-    // 自分だけ鳴らす
-    if( selfId == netId )
-    {
-      // SE再生
-      PMSND_PlaySystemSE( SEQ_SE_LCG_05 );
+      GF_ASSERT( p_wk->balloon_wk[ balloon_idx ].tcb != NULL );
+
+      // 得点計算
+
+      // ポイント加算
+      if( p_wk->balloon_wk[ balloon_idx ].unit_idx == i )
+      {
+        if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
+        {
+          // 制限時間20秒を切ると得点2倍
+          p_wk->score[ i ] += 4;
+          p_wk->balloon_wk[ balloon_idx ].point_type = BALLOON_POINT_OK_4PT;
+        }
+        else
+        {
+          // 通常風船
+          p_wk->score[ i ] += 2;
+          p_wk->balloon_wk[ balloon_idx ].point_type = BALLOON_POINT_OK_2PT;
+        }
+        // 最大得点表示は999
+        if( p_wk->score[ i ] > 999 ){ p_wk->score[ i ] = 999; }
+
+        // 自分だけ鳴らす
+        if( selfId == i )
+        {
+          // SE再生
+          PMSND_PlaySystemSE( SEQ_SE_LCG_05 );
+        }
+      }
+      // ポイント減算
+      else
+      {
+        if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
+        {
+          // 制限時間20秒を切ると得点2倍
+          p_wk->score[ i ] -= 2;
+          p_wk->balloon_wk[ balloon_idx ].point_type = BALLOON_POINT_NG_2PT;
+        }
+        else
+        {
+          // 通常風船
+          p_wk->score[ i ] -= 1;
+          p_wk->balloon_wk[ balloon_idx ].point_type = BALLOON_POINT_NG_1PT;
+        }
+        // マイナスにはならないようになった
+        if( p_wk->score[ i ] < 0 ){ p_wk->score[ i] = 0; }
+
+        // 自分だけ鳴らす
+        if( selfId == i )
+        {
+          // SE再生
+          PMSND_PlaySystemSE( SEQ_SE_LCG_02 );
+        }
+      }
+
+      // プレートの得点更新
+      GAME_PLATE_SetPoint( p_wk, i, p_wk->score[ i ] );
+
+      // 風船をHit時に変える -> 消去まで自動で行う
+      // 相手のか自分のか
+      if( p_wk->balloon_wk[ balloon_idx ].unit_idx == i )
+      {
+        p_wk->balloon_wk[ balloon_idx ].type = BALLOON_SMILE;
+      }
+      else
+      {
+        p_wk->balloon_wk[ balloon_idx ].type = BALLOON_BAD;
+      }
+
+      // エフェクトを出すのは自分だけ
+      if( selfId == i )
+      {
+        p_wk->balloon_wk[ balloon_idx ].anm_flg = TRUE;
+      }
+
     }
   }
-  // ポイント減算
-  else
-  {
-    if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
-    {
-      // 制限時間20秒を切ると得点2倍
-      p_wk->score[ netId ] -= 2;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_2PT;
-    }
-    else
-    {
-      // 通常風船
-      p_wk->score[ netId ] -= 1;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_1PT;
-    }
-    // マイナスにはならないようになった
-    if( p_wk->score[ netId ] < 0 ){ p_wk->score[ netId] = 0; }
-
-    // 自分だけ鳴らす
-    if( selfId == netId )
-    {
-      // SE再生
-      PMSND_PlaySystemSE( SEQ_SE_LCG_02 );
-    }
-  }
-
-  // プレートの得点更新
-  GAME_PLATE_SetPoint( p_wk, netId, p_wk->score[ netId ] );
-
-  // 風船をHit時に変える -> 消去まで自動で行う
-  // 相手のか自分のか
-  if( p_wk->balloon_wk[ idx ].unit_idx == netId )
-  {
-    p_wk->balloon_wk[ idx ].type = BALLOON_SMILE;
-  }
-  else
-  {
-    p_wk->balloon_wk[ idx ].type = BALLOON_BAD;
-  }
-
-  // エフェクトを出すのは自分だけ
-  if( selfId == netId )
-  {
-    p_wk->balloon_wk[ idx ].anm_flg = TRUE;
-  }
+  
 }
 
 
@@ -1901,7 +1919,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     // 親なら乱数Seed値送信
     if( selfId == 0 )
     {
-      CTVT_GAME_SEND_DATA data;
+      CTVT_GAME_SEND_DATA data ={0};
 
       RTCDate	date;
       RTCTime	time;
@@ -3492,7 +3510,7 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     if( isTrg == TRUE )
     {
       // 通信データ送信
-      CTVT_GAME_SEND_DATA data;
+      CTVT_GAME_SEND_DATA data = {0};
       data.tpx = tpx;
       data.tpy = tpy;
       data.frame = gameWork->frame;
@@ -3505,7 +3523,7 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   // ずれが発生するため
   if( gameWork->isRecvFrame == FALSE )
   {
-    ICHI_Printf("データ受信していない");
+    //ICHI_Printf("データ受信していない");
     return FALSE;
   }
   gameWork->isRecvFrame = FALSE;    // 受信していないに戻す
@@ -3529,9 +3547,9 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         if( balloon_get_appear_idx( gameWork, &balloon_idx ) == TRUE )
         {
           // 通信データ送信
-          CTVT_GAME_SEND_DATA data = {0,};
+          CTVT_GAME_SEND_DATA data = {0};
           // 出現する風船のタスクIDXを設定
-          data.burst_idx = balloon_idx;
+          data.appear_idx = balloon_idx;
           CTVT_COMM_SendGameReq( commWork, data, CCGDT_BALOON_APPEAR );
         }
       }

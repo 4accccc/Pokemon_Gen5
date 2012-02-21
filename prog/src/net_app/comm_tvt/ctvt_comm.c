@@ -2266,6 +2266,33 @@ void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, 
     }
   }
 
+  // BTS2040 【「バルーンキャッチ」にて風船をタッチしても割れない事がある】
+  //
+  // 同フレームで複数割れることを考慮していませんでした。
+  // NetIdをビットでおくることで同時割れに対応します。
+  //
+  if( data_type == CCGDT_BURST )
+  {
+    // 同フレームのみ
+    if( data.frame == commWork->sendGameData.frame )
+    {
+      u8 i;
+
+      // 前のデータは残しておく
+      for( i=0; i<CTVT_MEMBER_NUM; i++ )
+      {
+        // 送信データとして設定されているものはそのままの値で更新する
+        if( !(data.burst_netID & (1<<i))  )
+        {
+          data.burst_idx[i] = commWork->sendGameData.burst_idx[i];
+        }
+      }
+
+      data.burst_netID |= commWork->sendGameData.burst_netID;
+      CTVT_Printf("風船が同フレームで複数われた %d\n", data.burst_netID);
+    }
+  }
+
   // ゲームデータ更新
   commWork->sendGameData = data;
 
@@ -2301,6 +2328,11 @@ static const BOOL CTVT_COMM_SendGameData( COMM_TVT_WORK *work , CTVT_COMM_WORK *
     if( ret == FALSE )
     {
       CTVT_TPrintf("Send GameData failue!\n");
+    }
+    else
+    {
+      // 送信データを0クリア
+      GFL_STD_MemClear( &commWork->sendGameData, sizeof(CTVT_GAME_SEND_DATA) );
     }
     return ret;
   }
@@ -2353,7 +2385,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   // 受信データ種類判別
   switch( p_recv->data_type ){
   case CCGDT_BALOON_APPEAR:   // 風船出現
-    CTVT_GAME_BalloonAppear( gameWork, p_recv->burst_idx );
+    CTVT_GAME_BalloonAppear( gameWork, p_recv->appear_idx );
     break;
   case CCGDT_RND:   // 乱数シード値
     // 親のデータのみ受信
@@ -2369,6 +2401,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
     // 誰のデータでも受信するが、親のみ更新する
     if( selfId == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
     {
+      CTVT_Printf("touch recv! NetId %d tpx %d tpy %d frame %d \n", netID, p_recv->tpx, p_recv->tpy, p_recv->frame );
       CTVT_GAME_CommDataSet_TP( commWork, gameWork, p_recv, netID );
     }
     break;

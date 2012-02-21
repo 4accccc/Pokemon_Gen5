@@ -92,15 +92,19 @@ typedef enum {
 //=====================================
 struct _CTVT_GAME_SEND_DATA{
 
-  u32 rnd_seed;     // 乱数シード値
+  union
+  {
+    u32 rnd_seed;     // 乱数シード値
+    u8  burst_idx[ CTVT_MEMBER_NUM ];    // NetIDの要素に割れた風船IDXが入っている
+  };
 
   u8  data_type;    // 送信データの種類
 
   u8 tpx;           // TP座標
   u8 tpy;           // TP座標
 
-  u8  burst_idx;    // 割れた風船IDX
-  u8  burst_netID;  // 割った人がいる場合その人のNetID
+  u8  appear_idx;   // 出現する風船のタスクIDXが入っている
+  u8  burst_netID;  // 割った人がいる場合その人のNetIDのIDに1がたつ
 
   u16 frame;        // 親の経過フレーム数
 };
@@ -218,10 +222,10 @@ extern void CTVT_GAME_CommDataSet_TP( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *
  *
  *	@param	CTVT_GAME_WORK *p_wk
  *	@param	idx   割りたい風船のIDX(受信したものをそのまま指定してOK)
- *	@param  netID 割った人のnetID(受信したものをそのまま指定してOK)
+ *	@param  netID 割った人のnetID(ビットでNetIDが入っている)
  */
 //-----------------------------------------------------------------------------
-extern void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId );
+extern void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, const u8 idx[ CTVT_MEMBER_NUM ], u8 netIdBit );
 
 //----------------------------------------------------------------------------
 /**
