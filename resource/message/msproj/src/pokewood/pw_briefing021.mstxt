@@ -371,11 +371,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]こくはくは　かんらんしゃの　なか
-</Text>
+			<Text>[Ctrl1:xcenter ]こくはくは　かんらんしゃの　なか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T12:24:54" />
+				Time="2012-02-21T09:48:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -383,11 +382,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]告白は　観覧車の　中
-</Text>
+			<Text>[Ctrl1:xcenter ]告白は　観覧車の　中</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T12:25:06" />
+				Time="2012-02-21T09:48:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

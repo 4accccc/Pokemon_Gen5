@@ -257,14 +257,14 @@
 			<Text>[Name:TrainerName Idx="1" ]王子『また扉？▼
 でも　ボクが　入ってきた
 扉　ってことは……▽
-勝ったら　出られる　チャンスよね！</Text>
+勝ったら　出られる　チャンスだよな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:13" />
+				Time="2012-02-21T09:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T10:23:13" />
+				Time="2012-02-21T09:57:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2048,7 +2048,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ジュジュベ『そんな　いきなり……▼
-……だいだい　わたしと　あなたじゃ
+……だいたい　わたしと　あなたじゃ
 としが　はなれすぎてるわ……▼
 あっとうてきに　うつくしいとは　いえ
 わたしも　ことしで　１０８さいよ▽
@@ -2058,16 +2058,16 @@
 あうか　どうか　しんぱいだし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T06:40:45" />
+				Time="2012-02-21T10:01:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T06:40:45" />
+				Time="2012-02-21T10:01:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジュジュベ『そんな　いきなり……▼
-……だいだい　私と　あなたじゃ
+……大体　私と　あなたじゃ
 歳が　離れすぎてるわ……▼
 圧倒的に　美しいとは　いえ
 私も　今年で　１０８歳よ▽
@@ -2077,11 +2077,11 @@
 合うか　どうか　心配だし……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-21T10:01:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T04:04:19" />
+				Time="2012-02-21T10:01:44" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
