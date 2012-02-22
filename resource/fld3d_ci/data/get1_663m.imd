@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-06-07T15:20:39" source="cut_get1_02.mb"/>
+	<create user="unno" host="W00199" date="2012-02-21T17:56:50" source="cut_get1.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-06-07T15:20:39" source="cut_get1_02.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="unno" host="W00199" date="2012-02-21T17:56:50" source="cut_get1.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
 	pos_scale="2"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ci_item_663m"
-		path="C:/home/wb_data3d/cut_in/capture_cut_in/item_get1/souceimages/ncg/ci_item_663m.tga"
+		path="C:/home/swan_data3d/cut_in/capture_cut_in/item_get1/souceimages/ncg/ci_item_663m.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -172,8 +172,8 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="ci_item_663m" color_size="16">
-		5bd6 0000 35ad 2508 20c6 76a0 59a0 5ef7
-		7fff 35ad 18a5 1cc6 4d40 4610 4a52 0000
+		5936 0000 35ad 2508 20c6 093d 0cd3 5ef7
+		7fff 35ad 18a5 1cc6 10cd 4610 4a52 0000
 	</tex_palette>
 </tex_palette_array>
 
