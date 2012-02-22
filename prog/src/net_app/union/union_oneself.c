@@ -2571,6 +2571,18 @@ enum{
 static BOOL OneselfSeq_TrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    //BTS2076のため、エラー後アプリ用引数データ解放
+    //アプリに飛ぶと、アプリ内で消すので二重解放にならないように
+    //シーケンスを見ている
+    if( UNION_TRCARD_SEQ_TRCARD_SYNC2 <= (*seq)
+      && (*seq) <= UNION_TRCARD_SEQ_TRCARD_APP_EXEC )
+    {
+      if( unisys->alloc.card_param )
+      {
+        GFL_HEAP_FreeMemory(unisys->alloc.card_param);
+        unisys->alloc.card_param = NULL;
+      }
+    }
     return TRUE;
   }
 
