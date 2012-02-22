@@ -2586,6 +2586,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_INIT );
 		}else if( syswk->poke_get_key == 1 ){
 			MultiSelectCancel( syswk );
+      BOX2MAIN_PokeInfoOff( syswk );
 		}
     break;
 
@@ -2635,6 +2636,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeInfoOff( syswk );
     }else if( syswk->poke_get_key == 1 ){
 			MultiSelectCancel( syswk );
+      BOX2MAIN_PokeInfoOff( syswk );
 		}
 		return BgButtonAnmSet(
 						syswk, BOX2MAIN_WINFRM_POKE_BTN, 
@@ -3524,6 +3526,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_INIT );
 		}else if( syswk->poke_get_key == 1 ){
 			MultiSelectCancel( syswk );
+      BOX2MAIN_PokeInfoOff( syswk );
 		}
     break;
 
@@ -3571,6 +3574,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeInfoOff( syswk );
 		}else if( syswk->poke_get_key == 1 ){
 			MultiSelectCancel( syswk );
+      BOX2MAIN_PokeInfoOff( syswk );
 		}
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_BOXLIST_BTN, 
                             ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_BOXLIST_CHANGE) );
