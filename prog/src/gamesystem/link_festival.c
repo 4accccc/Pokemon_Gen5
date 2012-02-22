@@ -560,7 +560,8 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
     //タイムオーバーチェック
     ret = ( life == 0 );
   }
-  if( ret ){  //今の残り時間を覚えておく
+  if( ret ){  //今の残り時間を覚えおき、ステータスをFINISHに変更しておく
+    LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_FINISH );
     wk->mission.end_life = life; 
   }
   return ret;

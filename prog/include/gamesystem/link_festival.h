@@ -51,8 +51,8 @@
   4  | プレイスタート     | スタートイベント最終frame    | PLAY   |  o   |  o   |  o   |  o    |  o    |
   5  | プレイ中           | 自由行動中                   | PLAY   |  o   |  o   |  o   |  o    |  o    |
   
-  6  | タイムアップ       | フィニッシュイベント起動     | PLAY   |  o   |  o   |  o   |  o    |  o    |　<<ここで残り時間と現在のスコアを記録
-  7  | フィニッシュ演出中 | リザルト画面呼び出しまで     | PLAY   |  o   |  o   |  o   |  o    |  o    |
+  6  | タイムアップ       | フィニッシュイベント起動     | FINISH |  o   |  o   |  o   |  o    |  x    |　<<ここで残り時間と現在のスコアを記録
+  7  | フィニッシュ演出中 | リザルト画面呼び出しまで     | FINISH |  o   |  o   |  o   |  o    |  x    |
   
   8  | 結果確定           | リザルト画面初期化seq内      | RESULT |  o   |  x   |  x   |  x    |  x    |
   9  | リザルト画面演出中 |                              | RESULT |  o   |  x   |  x   |  x    |  x    |
@@ -63,7 +63,8 @@
 typedef enum{
  FMISSION_LIVE_STATUS_NULL,   //非ミッション時
  FMISSION_LIVE_STATUS_START,  //ミッション開始～スタート演出中
- FMISSION_LIVE_STATUS_PLAY,   //ミッションプレイ～フィニッシュ演出まで
+ FMISSION_LIVE_STATUS_PLAY,   //ミッションプレイ中
+ FMISSION_LIVE_STATUS_FINISH, //ミッションフィニッシュ～
  FMISSION_LIVE_STATUS_RESULT, //ミッション結果確定後
 }FMISSION_LIVE_STATUS;
 

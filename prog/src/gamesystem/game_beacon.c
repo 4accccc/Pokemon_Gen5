@@ -799,8 +799,8 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   { //ミッションステータスチェック
     FMISSION_LIVE_STATUS live_status = LINK_FESTIVAL_MissionLiveStatusGet( fest_sys );
     if( live_status < FMISSION_LIVE_STATUS_START ||
-        live_status > FMISSION_LIVE_STATUS_PLAY ){
-      //ステータスが START～PLAY状態の間しかログは取得しない
+        live_status > FMISSION_LIVE_STATUS_FINISH ){
+      //ステータスが START～FINISH状態の間しかログは取得しない
       return;
     }
   }
