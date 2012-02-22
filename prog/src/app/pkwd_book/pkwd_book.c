@@ -860,9 +860,9 @@ static const PKWD_BOOK_CANVAS_DATA pwb_canvas_01_tbl[] = {
 // トレーナー(パレット指定注意)
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	2,	10,},		// CAST
-	{ GFL_BG_FRAME0_S,	1,	15,	14,	2,	13,},		// 役名(fix)
-	{ GFL_BG_FRAME0_S,	1,	17,	14,	2,	13,},		// 職業名
-	{ GFL_BG_FRAME0_S,	1,	19,	14,	2,	13,},		// 職業
+	{ GFL_BG_FRAME0_S,	1,	15,	15,	2,	13,},		// 役名(fix)
+	{ GFL_BG_FRAME0_S,	1,	17,	15,	2,	13,},		// 職業名
+	{ GFL_BG_FRAME0_S,	1,	19,	15,	2,	13,},		// 職業
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
