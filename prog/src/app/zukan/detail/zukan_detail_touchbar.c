@@ -1945,3 +1945,26 @@ BOOL Zukan_Detail_Touchbar_GetIsPushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   return ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  詳細画面の上下ボタンが押されているか確認
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL Zukan_Detail_Touchbar_GetIsPushGeneralUpDown( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  BOOL is_push_down,is_push_up;
+  is_push_down  = ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_D].cset->id );
+  is_push_up    = ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_U].cset->id );
+
+  // どちらかが押されている
+  if( is_push_down || is_push_up )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+

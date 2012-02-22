@@ -654,15 +654,19 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       }
       else
       {
-        if( work->input_enable )
+        // 上下キーと同時押しは許可しない
+        if( Zukan_Detail_Touchbar_GetIsPushGeneralUpDown(touchbar) == FALSE )
         {
-          // 言語ボタンのタッチ入力
-          BOOL is_input = Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
-        
-          // 言語ボタンのキー入力
-          if( !is_input )
+          if( work->input_enable )
           {
-            Zukan_Detail_Info_KeyLangButton( param, work, cmn );
+            // 言語ボタンのタッチ入力
+            BOOL is_input = Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
+
+            // 言語ボタンのキー入力
+            if( !is_input )
+            {
+              Zukan_Detail_Info_KeyLangButton( param, work, cmn );
+            }
           }
         }
       }
