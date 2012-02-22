@@ -2591,7 +2591,7 @@ static void mreq_MakeCustomMissionParam( DMENU_LINK_FEST* wk, EVWK_PARAM_SET_REQ
   beacon->item = evwk->m_item;
   beacon->pay = evwk->m_pay;
   beacon->sp_item = evwk->m_sp_item;
-  beacon->sp_pay = evwk->m_pay;
+  beacon->sp_pay = evwk->m_sp_pay;
   beacon->goal = evwk->m_goal;
   beacon->time = evwk->m_time;
 }
