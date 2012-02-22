@@ -1844,12 +1844,12 @@ Ariizumi 100506</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タッチパネルを　こうごに　タッチ！
+			<Text>タッチスクリーンを　こうごに　タッチ！
 ふうせんに　くうきを　いれて
 たくさん　はれつさせよう！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T03:57:33" />
+				User="matsumiya:W00224"
+				Time="2012-02-22T09:35:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1857,12 +1857,12 @@ Ariizumi 100506</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タッチパネルを　交互に　タッチ！
+			<Text>タッチスクリーンを　交互に　タッチ！
 風船に　空気を入れて
 たくさん　破裂させよう！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T03:57:51" />
+				User="matsumiya:W00224"
+				Time="2012-02-22T09:36:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
