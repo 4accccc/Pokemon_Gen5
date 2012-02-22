@@ -83,6 +83,7 @@ struct _ICON_WORK
 	ZKND_TBAR_ICON_MOVETYPE	movetype;	//動作タイプ
 	ZKND_TBAR_ITEM_ICON			data;			//ボタン情報
   BOOL          is_push_by_key;  // TRUEのときアイコンをキーで押したことにする  // ZKND_Modified アイコン個別操作を追加。
+  BOOL          is_push_key;      // 押されたフレームのみTRUE
 } ;
 //-------------------------------------
 ///	共通リソース
@@ -728,6 +729,15 @@ void ZKND_TBAR_PushByKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon )
 }
 // ZKND_Modified アイコン個別操作を追加。↑
 
+//-------------------------------------
+///	アイコンに入力があったか調べる
+//=====================================
+BOOL ZKND_TBAR_IsPushKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon )
+{
+	ICON_WORK* p_icon	= Zknd_Tbar_Search( p_wk, icon );
+  return p_icon->is_push_key;
+}
+
 
 //=============================================================================
 /**
@@ -1060,6 +1070,9 @@ static BOOL ICON_Main( ICON_WORK *p_wk )
 
 	is_update		= FALSE;
 	is_visible	= GFL_CLACT_WK_GetDrawEnable( p_wk->p_clwk );
+  
+  // キー入力フラグのリセット
+  p_wk->is_push_key = FALSE;
 
 	//判定可能なときのみ
 	if( p_wk->is_active & is_visible )
@@ -1097,7 +1110,11 @@ static BOOL ICON_Main( ICON_WORK *p_wk )
 		//動作関数
 		if( is_update )
 		{	
-			p_wk->push_func( p_wk );
+      // キー入力フラグをセット
+      p_wk->is_push_key = TRUE;
+      ONOUE_Printf("ボタンを押した\n");
+
+      p_wk->push_func( p_wk );
 			return TRUE;
 		}
 	}

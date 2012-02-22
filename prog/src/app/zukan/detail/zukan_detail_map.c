@@ -2826,8 +2826,25 @@ static u8 Zukan_Detail_Map_PullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
 static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
-
+  GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+   
   if( (!(work->input_enable)) || (work->push_button != OBJ_PUSH_BUTTON_NONE) ) return;
+
+  // 生息地リストを所持していて、
+  // かつ詳細へ飛ぶボタンが押されているときはキーをロックする
+  if( Zukan_Detail_Touchbar_GetIsPushAreaJump( touchbar ) == TRUE )
+  {
+    if( ZUKANSAVE_GetHabitatListFlag( zkn_sv ) == TRUE )
+    {
+      ONOUE_Printf("入力をブロック中\n");
+    }
+    else
+    {
+      GF_ASSERT_MSG(0,"生息地リストを持っていないのに、詳細へ飛ぶボタンが押された\n");
+    }
+    return;
+  }
 
   switch(work->state)
   {
@@ -3286,13 +3303,6 @@ static void Zukan_Detail_Map_InputSelect( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
         // ボタンを押したことにする
         Zukan_Detail_Touchbar_PushAreaJump( touchbar );
-
-        // 生息地リストに遷移する場合は、入力をロックする
-        if( Zukan_Detail_Touchbar_GetIsActiveAreaJump(touchbar) == TRUE )
-        {
-          GF_ASSERT( work->select_data_idx!=DATA_IDX_NONE );
-          work->input_enable = FALSE;
-        }
       }
       else if( work->select_data_idx != DATA_IDX_NONE )
       {

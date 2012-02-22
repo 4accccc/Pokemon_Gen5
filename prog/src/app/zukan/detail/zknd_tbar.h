@@ -264,4 +264,8 @@ extern void ZKND_TBAR_SetPos( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon, const G
 //=====================================
 extern void ZKND_TBAR_PushByKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon );
 // ZKND_Modified アイコン個別操作を追加。↑
+//-------------------------------------
+///	アイコンが押されているか取得
+//=====================================
+extern BOOL ZKND_TBAR_IsPushKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon );
 
