@@ -1455,7 +1455,12 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, const u8 idx[ CTVT_MEMBER_N
     {
       u8 balloon_idx= idx[ i ];
 
-      GF_ASSERT( p_wk->balloon_wk[ balloon_idx ].tcb != NULL );
+      // 風船があるかチェック
+      if( p_wk->balloon_wk[ balloon_idx ].tcb == NULL )
+      {
+        CTVT_Printf("割る風船がない %d \n", balloon_idx );
+        continue;
+      }
 
       // 得点計算
 
