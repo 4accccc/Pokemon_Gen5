@@ -1746,6 +1746,15 @@ static void ListCallBack_Scroll( void * work, s8 mv )
     GRA_ICON_DATA *p_icon_s = &p_wk->icon_data_sub[i];
     p_icon_m->pos.y -= mv;
     p_icon_s->pos.y -= mv;
+
+    // 画面外のアイコンを非表示にする
+		if( p_icon_m->pos.y <= -12 || p_icon_m->pos.y >= 204 ){
+      p_icon_m->draw_flag = FALSE;
+    }
+		if( p_icon_s->pos.y <= -12 || p_icon_s->pos.y >= 204 ){
+      p_icon_s->draw_flag = FALSE;
+    }
+        
     p_icon_m->is_refresh = TRUE;
     p_icon_s->is_refresh = TRUE;
   }
