@@ -94,7 +94,8 @@ struct _FEST_MISSION{
   u16 my_score;   //マイスコア max=FMISSION_SCORE_MAX=9999(14bitでOK)
   u8  fword_sid;  //フリーワード用ショートカットID NAMEIN_SHORTCUT_RET(2bitあればOK)
   u32 key;        //マジックキー
-  s32 end_life;   //ミッション終了時の残り時間(秒)
+  s32 end_life;   //ミッションフィニッシュ時点の残り時間(秒)
+  s32 end_score;  //ミッションフィニッシュ時点でのスコア BTS2041対策
   s64 start_rtc;  //ミッション開始時RTC(日付+時刻の秒変換値)
 
 #ifdef PM_DEBUG

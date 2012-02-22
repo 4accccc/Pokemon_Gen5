@@ -92,6 +92,21 @@ extern BOOL FEST_MISSION_IsLifeLeftForEntry( const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
+ * @brief  BTS2041対策　リザルト取得用 ミッションフィニッシュ時点での残り時間取得
+ *
+ * @param  fmwk       FEST_MISSION型ワーク
+ * @param  now_score  リザルト取得時点でのトータルスコア
+ *
+ * @com ミッションフィニッシュ時からリザルト取得までのタイムラグ中にビーコン受信によって
+ *  　　加算されたスコア分のタイムボーナスを加味した、ミッションフィニッシュ時点での残り時間を返す
+ *
+ * @return  秒単位の残り時間
+ */
+//---------------------------------------------------------
+extern u32 FEST_MISSION_GetLifeAtTimeOfFinish( FEST_MISSION* fmwk, s32 total_score );
+
+//---------------------------------------------------------
+/*
  * @brief ミッションが生きているか取得
  *
  * @retval  TRUE   ミッション中且つライフ有
