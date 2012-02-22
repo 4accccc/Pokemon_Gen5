@@ -639,24 +639,28 @@ static void SetBoxParamFlag( POKEMON_PASO_PARAM *p_ppp ,MEDALREC_DATA *p_recdata
   // ボックスポケモンパラメータ構造体へのアクセスを高速化モードへ
   flag = PPP_FastModeOn( p_ppp );
 
-  // ポケルスチェック
-  if( p_recdata->is_get_pokerus == FALSE )
+  // タマゴは除く
+  if( !PPP_Get( p_ppp, ID_PARA_tamago_flag, NULL ) )
   {
-    if( PPP_Get( p_ppp, ID_PARA_pokerus, NULL ) != 0 )
+    // ポケルスチェック
+    if( p_recdata->is_get_pokerus == FALSE )
     {
-      p_recdata->is_get_pokerus = TRUE;
+      if( PPP_Get( p_ppp, ID_PARA_pokerus, NULL ) != 0 )
+      {
+        p_recdata->is_get_pokerus = TRUE;
+      }
     }
-  }
 
-  // Nポケ
-  if( p_recdata->is_get_n_poke == FALSE )
-  {
-    p_recdata->is_get_n_poke = PPP_Get( p_ppp, ID_PARA_n_poke_flag, NULL );
-  }
+    // Nポケ
+    if( p_recdata->is_get_n_poke == FALSE )
+    {
+      p_recdata->is_get_n_poke = PPP_Get( p_ppp, ID_PARA_n_poke_flag, NULL );
+    }
 
-  // レア
-  if( p_recdata->is_get_rare == FALSE ){
-    p_recdata->is_get_rare = PPP_CheckRare( p_ppp );
+    // レア
+    if( p_recdata->is_get_rare == FALSE ){
+      p_recdata->is_get_rare = PPP_CheckRare( p_ppp );
+    }
   }
 
   // ボックスポケモンパラメータ構造体へのアクセスを高速化モード終了
