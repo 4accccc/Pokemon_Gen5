@@ -454,10 +454,10 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『かっこよさだぜ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">ジュジュベ『ふざけないないで！！▼
+		<language name="JPN" width="256">ジュジュベ『ふざけないで！！▼
 あなたなんか　より　わたしのほうが
 カッコイイに　きまってるでしょ！？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『ふざけないないで！！▼
+		<language name="JPN_KANJI" width="256">ジュジュベ『ふざけないで！！▼
 あなたなんか　より　私のほうが
 カッコイイに　決まってるでしょ！？</language>
 	</row>
