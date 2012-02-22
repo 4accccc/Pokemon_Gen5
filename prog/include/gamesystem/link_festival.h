@@ -32,6 +32,41 @@
 #define LINKFEST_LIFE_LIMIT (30) //30秒
 #define FES_BGM_RECOVER_NONE  (0xFFFFFFFF)  //BGMのリカバー無しコード
 
+/*
+  @brief  フェス状態遷移図(各パラメータのアップデート状態図)
+
+  send  -> フェスビーコン送信
+  recv  -> フェスビーコン受信処理実行(ログ収集とランキング更新)
+  rank  -> トップスコア情報を含むスコアランキング情報更新
+  score -> トータルスコア収集
+  bonus -> タイムボーナス加算処理
+
+  No | 状態               | タイミング                   | status | send | recv | rank | score | bonus | 
+  ---------------------------------------------------------------------------------------------
+  1  | ミッション開始前   | ミッション開始前             | NULL   |  x   |  x   |  x   |  x    |  x    |
+
+  2  | ミッションスタート | スタートイベント開始～       | START  |  o   |  o   |  o   |  o    |  x    |
+  3  | スタート演出中     | 演出中～フィールド再生成まで | START  |  o   |  o   |  o   |  o    |  x    |
+  
+  4  | プレイスタート     | スタートイベント最終frame    | PLAY   |  o   |  o   |  o   |  o    |  o    |
+  5  | プレイ中           | 自由行動中                   | PLAY   |  o   |  o   |  o   |  o    |  o    |
+  
+  6  | タイムアップ       | フィニッシュイベント起動     | PLAY   |  o   |  o   |  o   |  o    |  o    |　<<ここで残り時間と現在のスコアを記録
+  7  | フィニッシュ演出中 | リザルト画面呼び出しまで     | PLAY   |  o   |  o   |  o   |  o    |  o    |
+  
+  8  | 結果確定           | リザルト画面初期化seq内      | RESULT |  o   |  x   |  x   |  x    |  x    |
+  9  | リザルト画面演出中 |                              | RESULT |  o   |  x   |  x   |  x    |  x    |
+  
+  10 | ミッション終了     | リザルト画面抜け直後         | NULL   |  x   |  x   |  x   |  x    |  x    |
+
+ */
+typedef enum{
+ FMISSION_LIVE_STATUS_NULL,   //非ミッション時
+ FMISSION_LIVE_STATUS_START,  //ミッション開始～スタート演出中
+ FMISSION_LIVE_STATUS_PLAY,   //ミッションプレイ～フィニッシュ演出まで
+ FMISSION_LIVE_STATUS_RESULT, //ミッション結果確定後
+}FMISSION_LIVE_STATUS;
+
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 
 //トップスコア保存用構造体
@@ -203,10 +238,17 @@ extern void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk, BOOL succeed_f );
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル ミッションアップデート　有効無効設定
+ * @brief リンクフェスティバル ミッションステータス 設定
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f );
+extern void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, FMISSION_LIVE_STATUS live_status );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションステータス 取得 
+ */
+//---------------------------------------------------------
+extern FMISSION_LIVE_STATUS LINK_FESTIVAL_MissionLiveStatusGet( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

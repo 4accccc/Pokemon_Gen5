@@ -104,7 +104,7 @@ void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return;
   }
-  if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( wk->gdata ) == FALSE ){  //表フィールドにいる間だけ更新
+  if( wk->live_status == FMISSION_LIVE_STATUS_PLAY ){
     u32 score = LINK_FESTIVAL_GetNowScore(wk);
 
     if( score-wk->now_score ){
@@ -311,7 +311,8 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
   log_ClearAll( wk );
 
   FEST_MISSION_Start( &wk->mission, m_src, succeed_f );
-  wk->live_f = FALSE;
+  //ステータスセット
+  LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_START );
 
   //ハイリンク接続禁止フラグOn
   GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), TRUE );
@@ -350,18 +351,28 @@ void LINK_FESTIVAL_MissionPlayStart( LINK_FESTIVAL* wk, BOOL succeed_f  )
     GF_ASSERT(!succeed_f);  //←継承ミッションなのにstart_rtcが無効値のままはおかしい
   }
   
-  //ライブ状態セット
-  LINK_FESTIVAL_MissionLiveStatusSet( wk, TRUE );
+  //プレイ開始ステータスセット
+  LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_PLAY );
 }
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル ミッションアップデート　有効無効設定
+ * @brief リンクフェスティバル ミッションステータス 取得 
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
+void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, FMISSION_LIVE_STATUS live_status )
 {
-  wk->live_f = live_f;
+  wk->live_status = live_status;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションステータス 取得 
+ */
+//---------------------------------------------------------
+FMISSION_LIVE_STATUS LINK_FESTIVAL_MissionLiveStatusGet( LINK_FESTIVAL* wk )
+{
+  return wk->live_status;
 }
 
 //---------------------------------------------------------
@@ -549,8 +560,7 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
     //タイムオーバーチェック
     ret = ( life == 0 );
   }
-  if( ret ){  //今の残り時間を覚えて、ライブ状態を解除する
-    LINK_FESTIVAL_MissionLiveStatusSet( wk, FALSE );
+  if( ret ){  //今の残り時間を覚えておく
     wk->mission.end_life = life; 
   }
   return ret;
@@ -869,6 +879,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
   FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
   FMISSION_GPOWER_TBL_Clear( &wk->mlog_gpower_tbl );
+  LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_NULL );
 
 #ifdef PM_DEBUG
   wk->deb_time_stop_f = FALSE;

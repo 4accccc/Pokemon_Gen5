@@ -146,7 +146,6 @@ static void RESORT_JUMP_FES_Update( GFL_TCBL *p_task, void *p_wk_adrs )
       FEST_MISSION mission;
       FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_NPC_PRESENT_GIFT, FMISSION_LEVEL_4, &mission, p_wk->heapID );
       LINK_FESTIVAL_MissionStart( p_fes, &mission, FALSE );
-      LINK_FESTIVAL_MissionLiveStatusSet( p_fes, FALSE );
     }
 
     p_wk->seq = SEQ_FES_WAIT;

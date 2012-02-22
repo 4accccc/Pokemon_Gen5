@@ -25,7 +25,7 @@ struct _LINK_FESTIVAL{
   GAMESYS_WORK* gsys;
   GAMEDATA* gdata;
   
-  u8  live_f:1;             ///<ミッションアップデートの有効無効フラグ
+  u8  live_status:7;        ///<ミッション状態遷移 FMISSION_LIVE_STATUS型
   u8  top_score_update_f:1; ///<トップスコアアップデートフラグ
   
   u8  log_num;  //スコアログ登録数

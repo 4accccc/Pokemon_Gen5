@@ -67,6 +67,10 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   MI_CpuClear8( pl, sizeof(LINKFEST_MISSION_RESULT));
 
+  //ミッションプレイ状態解除(これ以上スコアの更新は掛からない)
+  LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_RESULT );
+
+  //結果確認
   pl->clear_f = LINK_FESTIVAL_IsMissionClear( wk, &pl->score );
 
   if( wk->m_beacon->distribution_f == FALSE ){  //配信ミッションでは行わない処理

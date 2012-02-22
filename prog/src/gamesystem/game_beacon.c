@@ -795,6 +795,15 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
     //自分がエントリーしていない時、アクションが配布フェスミッションだった場合はログに積まない
     return;
   }
+
+  { //ミッションステータスチェック
+    FMISSION_LIVE_STATUS live_status = LINK_FESTIVAL_MissionLiveStatusGet( fest_sys );
+    if( live_status < FMISSION_LIVE_STATUS_START ||
+        live_status > FMISSION_LIVE_STATUS_PLAY ){
+      //ステータスが START～PLAY状態の間しかログは取得しない
+      return;
+    }
+  }
   //ログストアパラメータ生成
   LINKFEST_LOG_PARAM_Clear( &log );
   log.prm.score.tr_id = info->trainer_id;
