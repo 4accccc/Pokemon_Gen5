@@ -901,12 +901,12 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
       0, 0, 1,  //アニメ番号、優先順位、BGプライオリティ
     };
     int pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
-    gauge.softpri = 2;
+    gauge.softpri = 2 + (BTLV_MCSS_POS_MAX-1 - pos) * 3;
     bgw->bgcl[ pos ].base_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                       bgw->bgcl[ pos ].base_charID, bgw->plttID[ pltt_id ],
                                                       bgw->bgcl[ pos ].base_cellID,
                                                       &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-    gauge.softpri = 1;
+    gauge.softpri = 1 + (BTLV_MCSS_POS_MAX-1 - pos) * 3;
     bgw->bgcl[ pos ].hpnum_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                        bgw->bgcl[ pos ].hpnum_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].hpnum_cellID,
@@ -932,7 +932,7 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
 		}
     GFL_CLACT_WK_SetAutoAnmFlag( bgw->bgcl[ pos ].status_clwk, TRUE );
 
-    gauge.softpri = 0;
+    gauge.softpri = 0 + (BTLV_MCSS_POS_MAX-1 - pos)*3;
     bgw->bgcl[ pos ].hp_damage_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                            bgw->bgcl[ pos ].hp_damage_charID, bgw->plttID[ pltt_id ],
                                                            bgw->bgcl[ pos ].hp_damage_cellID,
