@@ -1957,9 +1957,6 @@ static BOOL CYGNUS_SAVE_MainSave( CYGNUS_SAVE_WORK *p_wk )
   enum
   {
     SEQ_IN_SAVE_START,
-    SEQ_IN_SAVE_LAST,
-    SEQ_OUT_SAVE_START,
-    SEQ_OUT_SAVE_WAIT,
     SEQ_IN_SAVE_WAIT,
     SEQ_END,
   };
@@ -1970,40 +1967,14 @@ static BOOL CYGNUS_SAVE_MainSave( CYGNUS_SAVE_WORK *p_wk )
     GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
     p_wk->sv_seq++;
     /* fall */
-  case SEQ_IN_SAVE_LAST:
-    {
-      SAVE_RESULT ret = GAMEDATA_SaveAsyncMain(p_wk->p_gamedata);
-      if( ret == SAVE_RESULT_LAST )
-      {
-        p_wk->sv_seq++;
-        /* fall  */
-      }
-      else
-      {
-        break;
-      }
-    }
-  case SEQ_OUT_SAVE_START:
-    CYGNUSSAVE_CONTROL_SaveAsyncInit( p_wk->p_cyg_sv_ctrl );
-    p_wk->sv_seq++;
-    /* fall */
-  case SEQ_OUT_SAVE_WAIT:
-    if( CYGNUSSAVE_CONTROL_SaveAsyncMain( p_wk->p_cyg_sv_ctrl ) )
-    {
-      p_wk->sv_seq++;
-      /* fall */
-    }
-    else
-    {
-      break;
-    }
   case SEQ_IN_SAVE_WAIT:
     {
       SAVE_RESULT ret = GAMEDATA_SaveAsyncMain(p_wk->p_gamedata);
       if( ret == SAVE_RESULT_OK )
       {
+        CYGNUSSAVE_CONTROL_Save();
         p_wk->sv_seq++;
-        /* fall */
+        /* fall  */
       }
       else
       {
