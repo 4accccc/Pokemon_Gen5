@@ -501,6 +501,7 @@ static int SetFrameListScroll( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmI
 static void PutListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, s16 y );
 static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos );
 static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv );
+static void ResetListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int max, int pos );
 static void SetListPageArrowAnime( BOX_SEARCH_MAIN_WORK * wk, BOOL anm );
 static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
 static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk );
@@ -1799,6 +1800,16 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		SetListPageArrowAnime( wk, FALSE );
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		if( wk->param->syswk->search_data.pokemon_id == 0 ){
+			ResetListCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 8, 0 );
+		}else{
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+		}
+		break;
+
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTPOKEMON1 );
 
@@ -1919,6 +1930,11 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
 			}
 		}
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -2062,6 +2078,26 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		}
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+		{
+			int	i;
+			u32	scroll = FRAMELIST_GetScrollCount( wk->frame_list_work );
+			int	max = GetPokeLibMax( wk, wk->topword-1, wk->nextword );
+			if( max > 8 ){
+				max = 8;		// タッチバーに隠れている項目を＋して８
+			}
+			for( i=0; i<max; i++ ){
+				if( wk->param->syswk->search_data.pokemon_id == FRAMELIST_GetItemParam(wk->frame_list_work,scroll+i) ){
+					PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, i );
+					break;
+				}
+			}
+		}
+		break;
+
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
 			return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTPOKEMON3 );
@@ -2185,6 +2221,12 @@ static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		SetListPageArrowAnime( wk, FALSE );
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		ResetListCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 8, wk->param->syswk->search_data.seikaku );
+		break;
+
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTSEIKAKU );
 
@@ -2292,6 +2334,16 @@ static int Subseq_SelectTokusei1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		SetListPageArrowAnime( wk, FALSE );
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		if(wk->param->syswk->search_data.tokusei == 0 ){
+			ResetListCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 8, 0 );
+		}else{
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+		}
+		break;
+
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTTOKUSEI1 );
 
@@ -2379,6 +2431,11 @@ static int Subseq_SelectTokusei2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
 			}
 		}
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -2489,6 +2546,26 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		}
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+		{
+			int	i;
+			u32	scroll = FRAMELIST_GetScrollCount( wk->frame_list_work );
+			int	max = get_sort_tokusei_num( wk->topword-1, wk->nextword );
+			if( max > 8 ){
+				max = 8;		// タッチバーに隠れている項目を＋して８
+			}
+			for( i=0; i<max; i++ ){
+				if( wk->param->syswk->search_data.tokusei == FRAMELIST_GetItemParam(wk->frame_list_work,scroll+i) ){
+					PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, i );
+					break;
+				}
+			}
+		}
+		break;
+
 	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
 		if( get_sort_tokusei_num(wk->topword-1,wk->nextword) > 7 ){
 			return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTTOKUSEI3 );
@@ -2584,6 +2661,11 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		}
 		break;
 
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
+		break;
+
 	case FRAMELIST_RET_NONE:
 		// リセット
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
@@ -2653,6 +2735,11 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 			seq = SUBSEQ_SELECTITEMHAVEEXIT;
 		}
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -2738,6 +2825,11 @@ static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 			SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		}
+		break;
+
+	case FRAMELIST_RET_JUMP_TOP:
+	case FRAMELIST_RET_JUMP_BOTTOM:
+		FRAMELIST_SetCursorPos( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work) );
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -3941,6 +4033,23 @@ static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv )
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
 		}
 	}
+}
+
+static void ResetListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int max, int pos )
+{
+	int	scroll;
+	int	i;
+
+	scroll = FRAMELIST_GetScrollCount( wk->frame_list_work );
+
+	for( i=0; i<max; i++ ){
+		if( pos == (scroll+i) ){
+			PutCheckObj( wk, id, i );
+			return;
+		}
+	}
+
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[id], FALSE );
 }
 
 
