@@ -2216,15 +2216,15 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Come sta？
+			<Text>Ciao! Come va?
 ポケウッドには　もう　なれたかい？▼
 ここには　いろんなくにの　スタッフが
 いるから　しげきに　なるだろ！▼
 じゃあ　さつえいで　あおうぜ！
-Buona giornata！</Text>
+Buona giornata!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:01:43" />
+				Time="2012-02-23T02:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2232,15 +2232,15 @@ Buona giornata！</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Come sta？
+			<Text>Ciao! Come va?
 ポケウッドには　もう　慣れたかい？▼
 ここには　色んな国の　スタッフが
 いるから　刺激に　なるだろ！▼
 じゃあ　撮影で　あおうぜ！
-Buona giornata！</Text>
+Buona giornata!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T10:02:29" />
+				Time="2012-02-23T02:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2268,14 +2268,14 @@ Buona giornata！</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>People know me as the
-miraculous child actress!▽
-Not to mention, a top star!▽
+			<Text>People know me as a
+brilliant child actress!▽
+Not to mention I’m a top star!▽
 My popularity and acting skills▽
 are way beyond yours, rookie!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:46:50" />
+				Time="2012-02-23T02:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2283,14 +2283,14 @@ are way beyond yours, rookie!</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>People know me as the
-miraculous child actress!▽
-Not to mention, a top star!▽
+			<Text>People know me as a
+brilliant child actress!▽
+Not to mention I’m a top star!▽
 My popularity and acting skills▽
 are way beyond yours, rookie!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:46:54" />
+				Time="2012-02-23T02:33:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2328,7 +2328,7 @@ are way beyond yours, rookie!</Text>
 って　いってますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-11T07:48:12" />
+				Time="2012-02-23T02:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2343,10 +2343,10 @@ are way beyond yours, rookie!</Text>
 駆け出しの　アンタなんかに▽
 人気も　演技も▽
 負けないんだからね！▼
-って　いってますわ</Text>
+って　申してますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-11T07:48:35" />
+				Time="2012-02-23T02:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2374,13 +2374,13 @@ are way beyond yours, rookie!</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Grüß Gott▼
+			<Text>Guten Tag!▼
 キミが　ポケウッドに　でるようになって
 ぼくら　スーツアクターも　いそがしくて！▼
-Bis  bald.</Text>
+Bis bald!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:50:11" />
+				Time="2012-02-23T02:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2388,13 +2388,13 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Grüß Gott▼
+			<Text>Guten Tag!▼
 キミが　ポケウッドに　出るようになって
 僕ら　スーツアクターも　忙しくて！▼
-Bis  bald.</Text>
+Bis bald!</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-12T06:50:16" />
+				Time="2012-02-23T02:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2512,13 +2512,16 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>¡Hola! ¿Qué tal ?
+			<Text>¡Hola! ¿Qué tal?
+
 キミも　ゆうめいに　なったな！▼
+
 くにじゃ　トップスターの　オレも
+
 イッシュじゃ　アンタに　かなわないぜ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:41:26" />
+				Time="2012-02-23T02:35:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2526,13 +2529,13 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>¡Hola! ¿Qué tal ?
+			<Text>¡Hola! ¿Qué tal?
 キミも　有名に　なったな！▼
 国じゃ　トップスターの　オレも
 イッシュじゃ　アンタに　かなわないぜ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:41:37" />
+				Time="2012-02-23T02:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2564,11 +2567,10 @@ Bis  bald.</Text>
 きょうは　ポケウッドの　スペシャルな▽
 セレモニーが　あるんだぜ！▼
 ウッドウさんも　まってるんだ！
-いっしょに　きてくれないかっ！！
-</Text>
+いっしょに　きてくれないかっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				Time="2012-02-23T02:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2580,11 +2582,10 @@ Bis  bald.</Text>
 今日は　ポケウッドの　スペシャルな▽
 セレモニーが　あるんだぜ！▼
 ウッドウさんも　いるからさ
-一緒に　来てくれないかっ！！
-</Text>
+一緒に　来てくれないかっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				Time="2012-02-23T02:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
