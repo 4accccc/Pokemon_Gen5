@@ -278,6 +278,7 @@ ev_t02_low_call_01:
       IF $LWK_POKE_FORMNO == 0 || $LWK_POKE_FORMNO == 1 || $LWK_POKE_FORMNO == 2 THEN
         //条件を満たしていたら「１」
         $LWK_LOW_POKE = 1
+        _MONS_NAME( 0, MONSNO_412 )
       ENDIF
 
     //チェックしたポケモンはリーシャンか
