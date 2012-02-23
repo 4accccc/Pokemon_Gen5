@@ -17641,10 +17641,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうれいＡ</Text>
+			<Text>ひの　たま　１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:41:04" />
+				Time="2012-02-23T10:51:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17652,10 +17652,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幽霊Ａ</Text>
+			<Text>火の玉　１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:41:45" />
+				Time="2012-02-23T10:51:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17707,10 +17707,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうれいＢ</Text>
+			<Text>ひの　たま　２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:41:04" />
+				Time="2012-02-23T10:51:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17718,10 +17718,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幽霊Ｂ</Text>
+			<Text>火の玉　２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:41:45" />
+				Time="2012-02-23T10:51:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17773,10 +17773,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっぱんしみんＡ</Text>
+			<Text>ひの　たま　３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-20T08:40:33" />
+				Time="2012-02-23T10:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -17784,10 +17784,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一般市民Ａ</Text>
+			<Text>火の玉　３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:41:45" />
+				Time="2012-02-23T10:51:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18641,10 +18641,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ</Text>
+			<Text>わかい　じょしゅ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:43:27" />
+				Time="2012-02-23T10:39:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18652,10 +18652,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手</Text>
+			<Text>若い　助手</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:44:26" />
+				Time="2012-02-23T10:39:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18707,10 +18707,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ</Text>
+			<Text>おいた　じょしゅ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:43:27" />
+				Time="2012-02-23T10:39:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18718,10 +18718,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手</Text>
+			<Text>老いた　助手</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:44:26" />
+				Time="2012-02-23T10:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18773,10 +18773,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅ</Text>
+			<Text>いらいぬし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:43:36" />
+				Time="2012-02-23T10:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -18784,10 +18784,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手</Text>
+			<Text>依頼主</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:44:26" />
+				Time="2012-02-23T10:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
