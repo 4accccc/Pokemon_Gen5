@@ -81,7 +81,8 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
       GMEVENT_CallEvent(event, fade_event);
     }
     //現時点での通信状態を取得
-    if( ( FIELDCOMM_CheckCommNo( faw->comm_sys ) == GAME_COMM_NO_FIELD_BEACON_SEARCH ) &&
+    if( ( GFL_NET_IsInit() == TRUE ) && 
+        ( FIELDCOMM_CheckCommNo( faw->comm_sys ) == GAME_COMM_NO_FIELD_BEACON_SEARCH ) &&
         ( GameCommSys_CheckSystemWaiting( faw->comm_sys ) == FALSE )){
       
       //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
@@ -152,7 +153,8 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     //ビーコンの子→親切り替えを止めていた場合は再開
     if( faw->comm_f ){
       //バッテリ10%未満スリープで通信切断可能性があるので、ここでもチェック
-      if(  FIELDCOMM_CheckCommNo( faw->comm_sys ) != GAME_COMM_NO_NULL ){
+      if( GFL_NET_IsInit() == TRUE && 
+          FIELDCOMM_CheckCommNo( faw->comm_sys ) != GAME_COMM_NO_NULL ){
         GFL_NET_WL_PauseBeaconSend( FALSE );
         faw->comm_f = FALSE;
 
