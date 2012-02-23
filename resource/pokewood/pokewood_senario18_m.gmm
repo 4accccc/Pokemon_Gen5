@@ -398,18 +398,16 @@
 		<language name="JPN_KANJI" width="256">レディアン『やらせはしない！</language>
 	</row>
 	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">レディアン『しぶとい　ニンゲンね</language>
-		<language name="JPN_KANJI" width="256">レディアン『しぶとい　ニンゲンね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_turn_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ま……
-まずい……！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ま……
-まずい……！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_turn_enemy_6">
-		<language name="JPN" width="256">レディアン『おわり　だわ……</language>
-		<language name="JPN_KANJI" width="256">レディアン『終わり　だわ……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『やめろ！

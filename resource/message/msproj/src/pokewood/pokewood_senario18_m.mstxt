@@ -253,26 +253,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『しぶとい　ニンゲンね</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:22" />
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:22" />
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『しぶとい　ニンゲンね</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:22" />
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-27T12:10:22" />
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:01:14" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -286,28 +293,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ『ま……
-まずい……！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士『ま……
-まずい……！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:01:15" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -321,26 +333,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レディアン『おわり　だわ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レディアン『終わり　だわ……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2012-01-14T08:23:45" />
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:03:12" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2012-02-23T04:01:16" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
