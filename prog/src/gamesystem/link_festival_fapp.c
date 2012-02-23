@@ -111,7 +111,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   }
  
   //残り時間
-  pl->life = FEST_MISSION_GetLifeAtTimeOfFinish( &wk->mission, pl->score );
+  pl->life = wk->mission.end_life;
 
   if( !pl->clear_f ){
     return; //ミッション失敗

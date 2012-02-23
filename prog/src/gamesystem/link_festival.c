@@ -545,7 +545,7 @@ BOOL LINK_FESTIVAL_IsMissionClear( LINK_FESTIVAL* wk, u32* score )
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 {
-  u32 score = 0,life;
+  u32 score,life;
   BOOL ret;
 
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
@@ -560,10 +560,9 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
     //タイムオーバーチェック
     ret = ( life == 0 );
   }
-  if( ret ){  //今の残り時間とスコアを覚えおき、ステータスをFINISHに変更しておく
+  if( ret ){  //今の残り時間を覚えおき、ステータスをFINISHに変更しておく
     LINK_FESTIVAL_MissionLiveStatusSet( wk, FMISSION_LIVE_STATUS_FINISH );
     wk->mission.end_life = life; 
-    wk->mission.end_score = score; 
   }
   return ret;
 }
