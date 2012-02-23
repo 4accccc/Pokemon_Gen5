@@ -900,10 +900,11 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！</Text>
+			<Text>あいての　とくせいに　ちゅうくもく！
+セリフのせんたくに　ちゅうい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T04:42:50" />
+				Time="2012-02-23T10:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -911,10 +912,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　とくせいに　注目！</Text>
+			<Text>相手の　とくせいに　注目！
+セリフの選択に　注意！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T06:06:05" />
+				Time="2012-02-23T10:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
