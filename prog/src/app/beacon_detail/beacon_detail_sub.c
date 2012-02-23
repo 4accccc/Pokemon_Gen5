@@ -649,7 +649,12 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_TR], TRUE );
 
       if( pd->icon != 0 ){
-        act_SetPosition( wk->pAct[ACT_ICON_EV], wk->icon_x-24, wk->icon_y, ACT_SF_MAIN );
+        int pos_x = wk->icon_x-24;
+        if( pos_x < 16 ){
+          //左側過ぎてアイコン位置が画面外になるので、自機アイコンの右側に移動
+          pos_x = wk->icon_x+24;
+        }
+        act_SetPosition( wk->pAct[ACT_ICON_EV], pos_x, wk->icon_y, ACT_SF_MAIN );
         act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
       }
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
