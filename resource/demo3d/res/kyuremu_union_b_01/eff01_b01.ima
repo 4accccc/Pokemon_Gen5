@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2012-01-11T22:01:49" source="kyuremu_union_b_01_043.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2012-02-22T20:31:44" source="kyuremu_union_b_01_s001.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -291,8 +291,8 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 28
-	20 11 3 0 5 26 31 31 31 31
+	31 31 30 24 16 7 1 0 0 0
+	0 0 0 0 5 26 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
