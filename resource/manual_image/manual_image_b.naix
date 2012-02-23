@@ -76,7 +76,7 @@ enum {
 	NARC_manual_image_b_000_01_wazabunrui_lz77_nbfs = 62,
 	NARC_manual_image_b_024_01_oya_lz77_nbfs = 63,
 	NARC_manual_image_b_024_02_are_lz77_nbfs = 64,
-	NARC_manual_image_b_023_01_status_lz77_nbfs = 65,
+	NARC_manual_image_b_023_01_status_black_lz77_nbfs = 65,
 	NARC_manual_image_b_041_01_pokerus_lz77_nbfs = 66,
 	NARC_manual_image_b_042_01_dowsing_lz77_nbfs = 67,
 	NARC_manual_image_b_025_07_raibucaster_lz77_nbfs = 68,

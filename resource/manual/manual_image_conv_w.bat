@@ -63,7 +63,7 @@ ntexconv 022_01_aishou_white.bmp -no -bg -bgb -bgf direct
 ntexconv 000_01_wazabunrui.bmp -no -bg -bgb -bgf direct
 ntexconv 024_01_oya.bmp -no -bg -bgb -bgf direct
 ntexconv 024_02_are.bmp -no -bg -bgb -bgf direct
-ntexconv 023_01_status.bmp -no -bg -bgb -bgf direct
+ntexconv 023_01_status_white.bmp -no -bg -bgb -bgf direct
 ntexconv 041_01_pokerus.bmp -no -bg -bgb -bgf direct
 ntexconv 042_01_dowsing.bmp -no -bg -bgb -bgf direct
 ntexconv 025_07_raibucaster.bmp -no -bg -bgb -bgf direct

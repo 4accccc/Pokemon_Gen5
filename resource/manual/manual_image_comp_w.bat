@@ -63,7 +63,7 @@ ntrcomp -l -o 022_01_aishou_white_lz77.nbfs 022_01_aishou_white.nbfs
 ntrcomp -l -o 000_01_wazabunrui_lz77.nbfs 000_01_wazabunrui.nbfs
 ntrcomp -l -o 024_01_oya_lz77.nbfs 024_01_oya.nbfs
 ntrcomp -l -o 024_02_are_lz77.nbfs 024_02_are.nbfs
-ntrcomp -l -o 023_01_status_lz77.nbfs 023_01_status.nbfs
+ntrcomp -l -o 023_01_status_white_lz77.nbfs 023_01_status_white.nbfs
 ntrcomp -l -o 041_01_pokerus_lz77.nbfs 041_01_pokerus.nbfs
 ntrcomp -l -o 042_01_dowsing_lz77.nbfs 042_01_dowsing.nbfs
 ntrcomp -l -o 025_07_raibucaster_lz77.nbfs 025_07_raibucaster.nbfs
