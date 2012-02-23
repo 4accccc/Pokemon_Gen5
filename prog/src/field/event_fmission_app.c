@@ -52,6 +52,7 @@ typedef struct {
   FMISSION_APP_PARAM prm;
   FMISSION_APP_MODE  mode;
   BOOL               comm_f;  //常時通信中が正常に機能中か？
+  GAME_COMM_SYS_PTR comm_sys;
 } EVENT_FMISSION_APP_WORK;
 
 extern void sub_AppCallWorkInit( FMISSION_APP_PARAM* prm, GAMESYS_WORK * gsys, GAMEDATA* gdata, FMISSION_APP_MODE mode );
@@ -79,9 +80,13 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
       }
       GMEVENT_CallEvent(event, fade_event);
     }
-    if( faw->comm_f ){
+    //現時点での通信状態を取得
+    if( ( FIELDCOMM_CheckCommNo( faw->comm_sys ) == GAME_COMM_NO_FIELD_BEACON_SEARCH ) &&
+        ( GameCommSys_CheckSystemWaiting( faw->comm_sys ) == FALSE )){
+      
       //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
       GFL_NET_WL_PauseBeaconSend( TRUE );
+      faw->comm_f = TRUE;
     }
     (*seq)++;
     break;
@@ -144,9 +149,18 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq) ++;
     break;
   case _FIELD_END: 
+    //ビーコンの子→親切り替えを止めていた場合は再開
     if( faw->comm_f ){
-      //ビーコンの子→親切り替えを再開
-      GFL_NET_WL_PauseBeaconSend( FALSE );
+      //バッテリ10%未満スリープで通信切断可能性があるので、ここでもチェック
+      if(  FIELDCOMM_CheckCommNo( faw->comm_sys ) != GAME_COMM_NO_NULL ){
+        GFL_NET_WL_PauseBeaconSend( FALSE );
+        faw->comm_f = FALSE;
+
+        /*
+         一度通信切断されてリブートした場合、フラグを保持している構造体も再生成されているので
+         通信が切れていたケースではフラグの整合性を気にする必要はない
+        */
+      }
     }
     return GMEVENT_RES_FINISH;
   default:
@@ -175,17 +189,8 @@ GMEVENT* EVENT_FMissionApp(GAMESYS_WORK * gsys, void* work )
   faw->save = GAMEDATA_GetSaveControlWork(faw->gdata);
   faw->gsys = gsys;
   faw->mode = mode;
+  faw->comm_sys = GAMESYSTEM_GetGameCommSysPtr(gsys);
 
-  //このイベントが呼び出された時点での通信状態を取得
-  {
-    GAME_COMM_SYS_PTR comm_sys = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    if( ( FIELDCOMM_CheckCommNo( comm_sys ) == GAME_COMM_NO_FIELD_BEACON_SEARCH ) &&
-        ( GameCommSys_CheckSystemWaiting( comm_sys ) == FALSE )){
-      faw->comm_f = TRUE;
-    }else{
-      faw->comm_f = FALSE;
-    }
-  }
 
   return event;
 }
