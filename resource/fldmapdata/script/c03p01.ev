@@ -124,7 +124,9 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _TIME_WAIT( 8 )
 
   //アニメ：アクロマ1歩離れる
-  IF $LCW_POSX ==18 THEN
+  IF $LCW_POSX == 12 && $LCW_POSZ == 9 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
+  ELSIF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
@@ -136,7 +138,11 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _MSGWIN_CLOSE()
 
   //アニメ：「！」向きなおす
-   IF $LCW_POSX ==18 THEN
+  IF $LCW_POSX == 12 && $LCW_POSZ == 9 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_common_gyoe)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
+  ELSIF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x18)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x13)
@@ -148,7 +154,9 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _MSGWIN_CLOSE()
 
   //アニメ：思索にふけってゆっくり歩く
-   IF $LCW_POSX ==18 THEN
+  IF $LCW_POSX == 12 && $LCW_POSZ == 9 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
+  ELSIF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x18)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x13)
@@ -160,7 +168,9 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _MSGWIN_CLOSE()
 
   //アニメ：戻る
-   IF $LCW_POSX ==18 THEN
+  IF $LCW_POSX == 12 && $LCW_POSZ == 9 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
+  ELSIF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
   ELSE
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
@@ -177,11 +187,7 @@ EVENT_START   ev_pos_c03P01_swboss_01
   }
 
   //アニメ：退場
-   IF $LCW_POSX ==18 THEN
-    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x18)
-  ELSE
-    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x13)
-  ENDIF
+  _OBJ_ANIME_AUTO( C03P01_SWBOSS_01, 15, 1, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
   //階段SE再生
