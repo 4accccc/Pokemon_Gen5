@@ -2278,6 +2278,10 @@ static void Cygnus_Save_ConvertRewardData( CYGNUS_SAVE_WORK *p_wk, const u32 cp_
 {
   int i;
 
+  //ご褒美データ初期化
+  GFL_STD_MemClear( p_wk->reward_data, sizeof(CYGNUS_REWARD_DATA)*CYGNUS_REWARD_DATA_NUM );
+  p_wk->reward_num  = 0;
+
   //SPデータを変換
   for( i = CYGDATA_SP_POKE01; i <= CYGDATA_SP_POKE08; i++ )
   {
