@@ -555,7 +555,7 @@ GMEVENT* EVENT_NameInput_FMission( GAMESYS_WORK* gameSystem, u16 mons_no, u16 id
   work->idx        = idx;
   work->mons_no    = mons_no;
   work->wordset    = wordset;
-  param2           = PTL_SEX_UNKNOWN << 8; // param2 の上位8ビットは性別 不明にすることでアイコンを出さない
+  param2           = PTL_SEX_MALE << 8; // param2 の上位8ビットは性別 不明にすることでアイコンを出さない
 
   work->nameInParam = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_FES_POKEMON, mons_no, param2, NAMEIN_POKEMON_LENGTH, NULL, misc );
 

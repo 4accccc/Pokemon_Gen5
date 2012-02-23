@@ -4384,11 +4384,19 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       sex = param1 < NELEMS(sc_wifi_unionobj_plt)/2 ? PTL_SEX_MALE : PTL_SEX_FEMALE;
       break;
     case ICON_TYPE_POKE:
+    case ICON_TYPE_POKE_NO_SEX:
       is_sex_visible  = TRUE;
       sex = ( param2 & 0xff00 ) >> 8;
 
       if( sex == PTL_SEX_UNKNOWN )
       { 
+        is_sex_visible  = FALSE;
+      }
+
+      // 性別アイコン非表示モード
+      // (フェスのミッションのみ)
+      if( type == ICON_TYPE_POKE_NO_SEX )
+      {
         is_sex_visible  = FALSE;
       }
 
@@ -4490,6 +4498,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       break;
     case ICON_TYPE_POKE:
+    case ICON_TYPE_POKE_NO_SEX:
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, POKEICON_ANM_HPMAX );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 
           POKEICON_GetPalNum( param1, param2 & 0x00ff, ( param2 & 0xff00 ) >> 8, FALSE ),
@@ -4764,8 +4773,9 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
     return ICON_TYPE_HERO;
 
 	case NAMEIN_POKEMON:
-	case NAMEIN_FES_POKEMON:
     return ICON_TYPE_POKE;
+	case NAMEIN_FES_POKEMON:
+    return ICON_TYPE_POKE_NO_SEX;
     
 	case NAMEIN_BOX:
     return ICON_TYPE_BOX;

@@ -340,6 +340,7 @@ typedef enum
   ICON_TYPE_BOX,
   ICON_TYPE_HATENA,
   ICON_TYPE_CITY,
+  ICON_TYPE_POKE_NO_SEX,    // 性別アイコンを非表示
 } ICON_TYPE;
 
 //-------------------------------------
