@@ -1943,7 +1943,11 @@ void Zukan_Detail_Touchbar_PushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 //-----------------------------------------------------------------------------
 BOOL Zukan_Detail_Touchbar_GetIsPushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  return ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id );
+    if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP )
+    {
+      return ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[MAP_ICON_AREA_JUMP].cset->id );
+    }
+    return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
