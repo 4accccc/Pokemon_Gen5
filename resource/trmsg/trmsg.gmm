@@ -6425,7 +6425,7 @@
 
 	<row id="TRID_FANW_11_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">かった　まけたも　だいじだけど
-それしか　みえなくなるは　ダメ！</language>
+それしか　みえなくなるのは　ダメ！</language>
 		<language name="JPN_KANJI" width="216">勝った　負けたも　大事だけど
 それしか　みえなくなるのは　ダメ！</language>
 	</row>
@@ -12368,7 +12368,7 @@
 おまえさん！　おれに　まけたら
 ほるのを　てつだってもらう！▼</language>
 		<language name="JPN_KANJI" width="216">どんどん　掘って
-地下の　世界を　ほりつづける！▼
+地下の　世界を　掘り続ける！▼
 おまえさん！　おれに　負けたら
 掘るのを　手伝ってもらう！▼</language>
 	</row>
