@@ -1847,15 +1847,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『おい！　Ｆー００！！
-どうしたんだっ！？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと！　Ｆー００！！
+どうしたのっ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-24T10:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2012-02-24T10:46:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
