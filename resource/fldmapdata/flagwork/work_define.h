@@ -78,14 +78,14 @@
 		/* not used 16450(0x4042) */
 #define WK_SYS_PAIR_ID                   16451 /* 0x4043 連れ歩きペアID */
 #define WK_SYS_HIDE_SHIP_PLACE           16452 /* 0x4044 アジト船の位置をタウンマップに通知するためのワーク SCR_HIDE_SHIP_PLACE_C05 (0) ///&lt; ホドモエ SCR_HIDE_SHIP_PLACE_W21 (1) ///&lt; ２１番水道 SCR_HIDE_SHIP_PLACE_D10 (2) ///&lt; ジャイアントホール SCR_HIDE_SHIP_PLACE_W17 (3) ///&lt; P2ラボにいるとき */
-#define WK_SYS_LINK_EVENT_01             16453 /* 0x4045 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_02             16454 /* 0x4046 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_03             16455 /* 0x4047 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_04             16456 /* 0x4048 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_05             16457 /* 0x4049 リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_06             16458 /* 0x404a リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_07             16459 /* 0x404b リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
-#define WK_SYS_LINK_EVENT_08             16460 /* 0x404c リンクイベント状態 0 なし 1 イベント起動 2 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_01             16453 /* 0x4045 リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_02             16454 /* 0x4046 リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_03             16455 /* 0x4047 リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_04             16456 /* 0x4048 リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_05             16457 /* 0x4049 リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_06             16458 /* 0x404a リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_07             16459 /* 0x404b リンクイベント状態 0 なし 1 イベント終了（なし） */
+#define WK_SYS_LINK_EVENT_08             16460 /* 0x404c リンクイベント状態 0 なし 1 イベント終了（なし） */
 #define WK_SYS_FES_TUTORIAL              16461 /* 0x404d 0 初回訪問イベント有効 1 初回訪問イベント終了 2 ミッション失敗イベント有効 3 ミッション成功イベント有効 4 ハイルツリー機能制限状態（デルパワーを受け取るしかできない） 5 デルパワー使用説明イベント有効 6 フェスチュートリアル終了 */
 		/* not used 16462(0x404e) */
 		/* not used 16463(0x404f) */
