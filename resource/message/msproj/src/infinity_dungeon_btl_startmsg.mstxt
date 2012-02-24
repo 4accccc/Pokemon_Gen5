@@ -19875,15 +19875,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワールドバトルトーナメトで
+			<Text>ポケモンワールドトーナメントで
 ゆうしょうけいけんが　あるなんて▽
 いっている　おとなが　いたけど▽
 たいせんしたら　よゆうで　かてたよ！▼
 ちじょうで　どんな　かつやくしたって
 ここじゃ　つうようしないんだよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-25T07:10:40" />
+				User="matsumiya:W00224"
+				Time="2012-02-24T08:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -19891,15 +19891,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワールドバトルトーナメトで
+			<Text>ポケモンワールドトーナメントで
 優勝経験が　あるって　いってる▽
 大人が　いたけど▽
 対戦したら　余裕で　勝てたよ！▼
 地上で　どんな　活躍したって
 ここじゃ　通用しないんだよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-25T07:11:18" />
+				User="matsumiya:W00224"
+				Time="2012-02-24T08:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
