@@ -447,7 +447,10 @@ static inline SetStrFormat get_strFormat( u8 pokeID )
 
     if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
     {
-      if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
+      // BTS2143【捕獲デモでの不具合】
+      // 捕獲デモならメッセージを「野生」にすることで対処
+      if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD ||
+          BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_DEMO_CAPTURE )
       {
         return SETTYPE_WILD;
       }
