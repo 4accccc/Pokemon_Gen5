@@ -1805,7 +1805,10 @@ static void CYGNUS_SAVE_Load( CYGNUS_SAVE_WORK *p_wk, HEAPID heapID )
         p_wk->p_out_sv, onetime_key, row_data );
 
     //ナマデータをご褒美データに編集
-    if( p_wk->out_state == CYGSAVE_STATE_RECEIVE )
+    //受け取り時はSWAN受信状態で、
+    //かつワンタイムキーチェック用領域が０（セット時必ず０のため）
+    if( p_wk->out_state == CYGSAVE_STATE_RECEIVE
+        && row_data[ CYGDATA_LAST ] == 0)
     {
       Cygnus_Save_ConvertRewardData( p_wk, row_data, heapID );
     }

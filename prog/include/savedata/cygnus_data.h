@@ -96,7 +96,9 @@ enum {
   CYGDATA_ITEMID05,
   CYGDATA_ITEMID06,
 
-  CYGDATA_MAX
+  CYGDATA_MAX,
+
+  CYGDATA_LAST  = CYGDATA_AREA_SIZE-1 ///<ここがワンタイムキーでチェックして０ならば正常データとする
 };
 
 //----------------------------------------------------------
