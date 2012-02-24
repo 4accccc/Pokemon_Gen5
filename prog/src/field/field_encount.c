@@ -389,6 +389,19 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     //ボール使用不能(捕獲不能な野生戦)
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_NOT_BALL );
   }
+
+  // BTS2151 キュレム戦のお盆がおかしい
+  //
+  // 対処としてキュレムならお盆を強制で変更する。
+  // 時期を考慮しての対処になります。
+  // キュレムのほかにキュロム・キュラムも変更されますが問題ありません。
+  //
+  if( mons_no == MONSNO_KYUREMU )
+  {
+    //戦闘背景・お盆変化
+    bp->fieldSituation.bgType = BATTLE_BG_TYPE_KYUREMU;  // キュレム専用
+  }
+
   //エンカウントイベント生成
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp, TRUE, ENC_TYPE_NORMAL );
 }
