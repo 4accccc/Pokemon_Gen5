@@ -749,11 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！
+			<Text>あいての　とくせいに　ちゅうもく！
 セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T07:06:56" />
+				Time="2012-02-24T02:26:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -793,11 +793,11 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！
+			<Text>あいての　とくせいに　ちゅうもく！
 セリフのせんたくに　ちゅうい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T06:15:20" />
+				Time="2012-02-24T02:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -830,10 +830,10 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！</Text>
+			<Text>あいての　とくせいに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T04:42:50" />
+				Time="2012-02-24T02:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -865,10 +865,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！</Text>
+			<Text>あいての　とくせいに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T04:42:50" />
+				Time="2012-02-24T02:27:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -900,11 +900,11 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！
+			<Text>あいての　とくせいに　ちゅうもく！
 セリフのせんたくに　ちゅうい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-23T10:11:01" />
+				Time="2012-02-24T02:27:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -937,10 +937,10 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　とくせいに　ちゅうくもく！</Text>
+			<Text>あいての　とくせいに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T06:05:54" />
+				Time="2012-02-24T02:27:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
