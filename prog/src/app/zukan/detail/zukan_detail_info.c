@@ -487,10 +487,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       {
         ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
         GFL_CLUNIT*     clunit = ZUKAN_DETAIL_GRAPHIC_GetClunit( ZKNDTL_COMMON_GetGraphic(cmn) );
-        
-        BOOL is_zenkoku = ZUKANSAVE_GetZenkokuZukanFlag( zkn_sv );
-        // 全国図鑑を持っていても、地方図鑑として扱っていたらFALSEになる。
-        
+        BOOL is_zenkoku;
+         
         u16  monsno;
         u16  formno;
         u16  sex;
@@ -498,6 +496,26 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         u32  personal_rnd;
         BOOL b_get_flag;
         BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
+
+        // 図鑑モードにより分岐
+        switch( ZUKANSAVE_GetZukanMode( zkn_sv ) )
+        {
+        case ZUKAN_MODE_LOCAL:
+          // 地方図鑑の場合
+          is_zenkoku = FALSE;
+          break;
+        case ZUKAN_MODE_ZENKOKU:
+          // 全国図鑑の場合
+          is_zenkoku = TRUE;
+          break;
+        case ZUKAN_MODE_HABITAT:
+          // 生息地リストの場合（全国を持っているときは、全国図鑑番号）
+          is_zenkoku = ZUKANSAVE_GetZenkokuZukanFlag( zkn_sv );
+          break;
+        default:
+            GF_ASSERT(0);
+            break;
+        }
 
         // 現在表示するポケモンの情報を得る
         Zukan_Detail_Info_GetCurrPokeInfo(
