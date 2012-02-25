@@ -1427,11 +1427,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュリンクの　キーシステム　で
-モードせんたくの　キーが▽
+モードへんこうの　キーが▽
 そうしん　できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T05:14:26" />
+				Time="2012-02-20T10:45:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1440,11 +1440,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュリンクの　キーシステム　で
-モード選択の　キーが▽
+モード変更の　キーが▽
 送信できるように　なりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-09T05:14:58" />
+				Time="2012-02-20T10:45:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
