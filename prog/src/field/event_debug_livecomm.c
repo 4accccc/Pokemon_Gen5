@@ -1406,7 +1406,7 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
 
     //ƒAƒNƒVƒ‡ƒ“
     action = GAMEBEACON_Get_Action_ActionNo( info );
-    WORDSET_RegisterNumber( wk->wset, 3, action, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 3, action, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     if( action < 2 ){
       GFL_MSG_GetString( wk->msgman, dlc_action_null+action, wk->str_tmp);
     }else{

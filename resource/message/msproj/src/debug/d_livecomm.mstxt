@@ -732,11 +732,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[System:Color name="2" ][Digit:2digits Idx="0" ]：[Name:TrainerName Idx="1" ]　id= [Digit:5digits Idx="2" ] time=[Digit:2digits Idx="5" ]:[Digit:2digits Idx="6" ] [System:Color name="2" ]ver=[/System:Color][/System:Color][System:Color name="2" ][Name:PMS Idx="7" ][/System:Color]
- no=[Digit:2digits Idx="3" ]　[Name:PMS Idx="4" ]
+ no=[Digit:3digits Idx="3" ]　[Name:PMS Idx="4" ]
  col=[Digit:2digits Idx="8" ] t_sec=[Digit:4digits Idx="9" ] recv=[Name:PMS Idx="10" ] research=[Digit:1digit Idx="11" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-02-17T11:14:32" />
+				Time="2012-02-27T06:02:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -745,11 +745,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[System:Color name="2" ][Digit:2digits Idx="0" ]：[Name:TrainerName Idx="1" ]　id= [Digit:5digits Idx="2" ] time=[Digit:2digits Idx="5" ]:[Digit:2digits Idx="6" ] [System:Color name="2" ]ver=[/System:Color][/System:Color][System:Color name="2" ][Name:PMS Idx="7" ][/System:Color]
- no=[Digit:2digits Idx="3" ]　[Name:PMS Idx="4" ]
+ no=[Digit:3digits Idx="3" ]　[Name:PMS Idx="4" ]
  col=[Digit:2digits Idx="8" ] t_sec=[Digit:4digits Idx="9" ] recv=[Name:PMS Idx="10" ] research=[Digit:1digit Idx="11" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-02-17T11:14:36" />
+				Time="2012-02-27T06:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6261,37 +6261,1129 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlc_action_null"
-		Style="Large">
+		Label="dlc_action_60">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェス受信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェス受信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_61">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信フェス受信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信フェス受信</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_62">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名とエンカウントした</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:24:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名とエンカウントした</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_63">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を倒した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を倒した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_64">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を捕まえた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を捕まえた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_65">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名に逃げられた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名に逃げられた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_66">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fトレーナー戦開始</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fトレーナー戦開始</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_67">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fトレーナー戦勝利</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fトレーナー戦勝利</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_68">
+		<LanguageCell
+			Language="JPN">
+			<Text>F全滅した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F全滅した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_69">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を使用した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を使用した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_70">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を手に入れた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を手に入れた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_71">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fフィールド技を使った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fフィールド技を使った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_72">
+		<LanguageCell
+			Language="JPN">
+			<Text>F買い物中</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F買い物中</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_73">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fデルパワーを使った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fデルパワーを使った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_74">
+		<LanguageCell
+			Language="JPN">
+			<Text>F観覧車に乗った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F観覧車に乗った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_75">
+		<LanguageCell
+			Language="JPN">
+			<Text>F看板を調べている</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F看板を調べている</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_76">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fタマゴを受け取った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fタマゴを受け取った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_77">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を倒した 草</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を倒した 草</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_78">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を捕まえた 草</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を捕まえた 草</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_79">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を倒した キノコ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を倒した キノコ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_80">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を捕まえた キノコ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を捕まえた キノコ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_81">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を見つけた キラキラ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を見つけた キラキラ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_82">
+		<LanguageCell
+			Language="JPN">
+			<Text>F鐘を鳴らした</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F鐘を鳴らした</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_83">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を見つけた　羽</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を見つけた　羽</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_84">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を見つけた　石</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を見つけた　石</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_85">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名\]が生まれた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名\]が生まれた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_86">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を釣り上げた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を釣り上げた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_87">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名を見つけた　獣道</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名を見つけた　獣道</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_88">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fまいごを助けた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fまいごを助けた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_89">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を渡した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を渡した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_90">
+		<LanguageCell
+			Language="JPN">
+			<Text>F道具交換成功</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F道具交換成功</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_91">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名を買った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名を買った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_92">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fじゃんけんに買った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fじゃんけんに買った</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_93">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fクイズに正解した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fクイズに正解した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_94">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fトレーナーを倒した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fトレーナーを倒した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_95">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fアイテム名をもらった</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fアイテム名をもらった</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_96">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fクイズに正解した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fクイズに正解した</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_97">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fお金が足りない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fお金が足りない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_98">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fじゃんけんに負けた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fじゃんけんに負けた</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_99">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fクイズに不正解</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fクイズに不正解</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_100">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名がひん死</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名がひん死</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_101">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名のHPが少ない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名のHPが少ない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_102">
+		<LanguageCell
+			Language="JPN">
+			<Text>Fポケモン名のPPが少ない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Fポケモン名のPPが少ない</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_103">
+		<LanguageCell
+			Language="JPN">
+			<Text>F一言メッセージ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>F一言メッセージ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:25:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:23:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dlc_action_null">
 		<LanguageCell
 			Language="JPN">
 			<Text>NULLアクション</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>NULLアクション</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
@@ -6301,37 +7393,29 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dlc_action_search"
-		Style="Large">
+		Label="dlc_action_search">
 		<LanguageCell
 			Language="JPN">
 			<Text>サーチ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サーチ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2012-02-27T05:50:36" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
