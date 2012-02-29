@@ -4004,6 +4004,12 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
     break;
   case STATE_EXCHANGE:
     {
+      // タッチバーで交換コマンドが発行される場合はスキップ
+      if( Zukan_Detail_Touchbar_GetIsPushFormExchange( touchbar ) )
+      {
+        break;
+      }
+      // 入力可能な場合のみ実行
       if( work->input_enable )
       {
         // タッチ継続中の場合は、それが最優先となる
@@ -5068,6 +5074,13 @@ static void Zukan_Detail_Form_ObjBarSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 static void Zukan_Detail_Form_ObjBarMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   BOOL ret = FALSE;
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+
+  // タッチバーで交換コマンドが発光される場合はスキップ
+  if( Zukan_Detail_Touchbar_GetIsPushFormExchange( touchbar ) )
+  {
+    return;
+  }
 
 #ifndef DEF_SCMD_CHANGE
   if(    work->state == STATE_EXCHANGE

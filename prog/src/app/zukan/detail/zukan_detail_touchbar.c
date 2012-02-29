@@ -1971,4 +1971,22 @@ BOOL Zukan_Detail_Touchbar_GetIsPushGeneralUpDown( ZUKAN_DETAIL_TOUCHBAR_WORK* w
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォルム画面の交換ボタンが押されたかチェック
+ *
+ *	@param	work 
+ *	@param	is_visible 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL Zukan_Detail_Touchbar_GetIsPushFormExchange( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+    if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM )
+    {
+      return ZKND_TBAR_IsPushKey( work->tbwk, work->icon_set[FORM_ICON_CUSTOM_EXCHANGE].cset->id );
+    }
+    return FALSE;
+}
 

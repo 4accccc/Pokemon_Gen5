@@ -130,4 +130,5 @@ extern void Zukan_Detail_Touchbar_VisibleAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* w
 extern void Zukan_Detail_Touchbar_PushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern BOOL Zukan_Detail_Touchbar_GetIsPushAreaJump( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern BOOL Zukan_Detail_Touchbar_GetIsPushGeneralUpDown( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+extern BOOL Zukan_Detail_Touchbar_GetIsPushFormExchange( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
