@@ -426,7 +426,7 @@
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">ペネロペ『フフ……　そうね……▼
 （ちょっと！！　ドーブル！！
-しゃしゃり　ででこないでよっ！！</language>
+しゃしゃり　でてこないでよっ！！</language>
 		<language name="JPN_KANJI" width="256">ペネロペ『フフ……　そうね……▼
 （ちょっと！！　ドーブル！！
 しゃしゃり　出てこないでよっ！！</language>
@@ -1025,9 +1025,9 @@
 	</row>
 	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『えっと……
-とても　いいにくんですけど……</language>
+とても　いいにくいんですけど……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『えっと……
-とても　いいにくんですけど……</language>
+とても　いいにくいんですけど……</language>
 	</row>
 	<row id="pw_event5_enemy_4">
 		<language name="JPN" width="256">ペネロペ『なに？　どうしたの？</language>
