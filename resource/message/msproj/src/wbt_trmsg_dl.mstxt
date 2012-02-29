@@ -10699,10 +10699,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょうてんを　めざし　ひたはしるゥ
-じしょう　せかいいちの　オトコｫ！！</Text>
+じしょう　せかいいちの　オトコｫ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-27T09:05:29" />
+				User="matsumiya:W00224"
+				Time="2012-02-29T04:58:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -10711,10 +10711,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>頂点を　目指し　ひた走るゥ
-自称　世界一の　オトコォ！！</Text>
+自称　世界一の　オトコォ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-27T09:05:37" />
+				User="matsumiya:W00224"
+				Time="2012-02-29T04:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
