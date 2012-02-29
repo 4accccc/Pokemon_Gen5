@@ -2293,7 +2293,26 @@ static void UI_Main( UI_WORK *p_wk )
       } 
     }
 
-    if( trg & PAD_KEY_UP )
+    if( trg & PAD_BUTTON_A )
+    {
+      p_wk->input = UI_INPUT_TRG_DECIDE;
+    }
+    else if( trg & PAD_BUTTON_B )
+    {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      p_wk->input = UI_INPUT_TRG_CANCEL;
+    }
+    else if( trg & PAD_BUTTON_Y )
+    {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      p_wk->input = UI_INPUT_TRG_Y;
+    }
+    else if( trg & PAD_BUTTON_X )
+    {
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY ); 
+      p_wk->input = UI_INPUT_TRG_X;
+    }
+    else if( trg & PAD_KEY_UP )
     {
       p_wk->input = UI_INPUT_TRG_UP;
     }
@@ -2316,25 +2335,6 @@ static void UI_Main( UI_WORK *p_wk )
     else if( cont & PAD_KEY_DOWN )
     {
       p_wk->input = UI_INPUT_CONT_DOWN;
-    }
-    else if( trg & PAD_BUTTON_A )
-    {
-      p_wk->input = UI_INPUT_TRG_DECIDE;
-    }
-    else if( trg & PAD_BUTTON_B )
-    {
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      p_wk->input = UI_INPUT_TRG_CANCEL;
-    }
-    else if( trg & PAD_BUTTON_Y )
-    {
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      p_wk->input = UI_INPUT_TRG_Y;
-    }
-    else if( trg & PAD_BUTTON_X )
-    {
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY ); 
-      p_wk->input = UI_INPUT_TRG_X;
     }
   }
 }
@@ -3209,7 +3209,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     }
     break;
 
+  case UI_INPUT_TRG_X:
+    //GFBTS1050‘Îô p_wk->select‚ª–¢‰Šú‰»‚Å—ˆ‚½‚Æ‚«‘Îô‚Ì‰Šú‰»
+    p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+    break;
   case UI_INPUT_TRG_Y:
+    //GFBTS1050‘Îô p_wk->select‚ª–¢‰Šú‰»‚Å—ˆ‚½‚Æ‚«‘Îô‚Ì‰Šú‰»
+    p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
     Scroll_ChangePlt( p_wk, TRUE );
     break;
 
