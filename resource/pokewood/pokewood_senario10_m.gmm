@@ -413,7 +413,7 @@
 		<language name="JPN" width="256">さけぶ　おんな『もう　イヤッ！！
 だれか　ＵＦＯを　やっつけてよっ！</language>
 		<language name="JPN_KANJI" width="256">さけぶ　女『もう　イヤッ！！
-誰か　ＵＦＯを　やっつけてよっ！</language>
+だれか　ＵＦＯを　やっつけてよっ！</language>
 	</row>
 	<row id="pw_turn_enemy_5">
 		<language name="JPN" width="256">ＵＦＯ『……</language>
