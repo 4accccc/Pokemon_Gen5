@@ -50,6 +50,7 @@ DEFINE_LOCAL	LWK_TYPE1			//１番目のタイプ格納
 DEFINE_LOCAL	LWK_TYPE2			//２番目のタイプ格納
 DEFINE_LOCAL	LWK_RET_MONSNO		//ポケモン種族名を格納
 DEFINE_LOCAL	LWK_EV_CHK		//指定タイプがいるか・いないか
+DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
 
 /************************************************************/
 /*		飛行機降りた後のリザーブ						*/
@@ -741,26 +742,29 @@ ev_poketype_chk:
 //ＰＯＳ値に０を代入
 $LWK_COUNT_NUM = 0
 
-//手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
-_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+//手持ちのポケモンの数を確認
+//手持ち取得処理をTOTALに修正（2012.02.29　水口）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
 //手持ちのポケモン数分繰り返す
 WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
 	//指定POSのポケモンのタイプを取得
 	_GET_TEMOTI_POKE_TYPE( LWK_TYPE1, LWK_TYPE2, LWK_COUNT_NUM )
+	//タマゴすけチェックを追加（2012.02.29　水口）
+  _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
 
 	//エスパータイプ・ひこうタイプの場合
-	IF $LWK_TYPE1 == POKETYPE_ESPER || $LWK_TYPE1 == POKETYPE_HIKOU || $LWK_TYPE2 == POKETYPE_ESPER || $LWK_TYPE2 == POKETYPE_HIKOU  THEN
-	
-		//指定POSのポケモンのNOを取得
-		_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
-	
-		_MONS_NAME( 0, LWK_RET_MONSNO )
+  IF $LWK_TYPE1 == POKETYPE_ESPER || $LWK_TYPE1 == POKETYPE_HIKOU || $LWK_TYPE2 == POKETYPE_ESPER || $LWK_TYPE2 == POKETYPE_HIKOU  THEN
+    IF $LWK_EGG_CHK == FALSE THEN
 
-		$LWK_EV_CHK = 1
-	
-	ENDIF
+      //指定POSのポケモンのNOを取得
+      _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+      _MONS_NAME( 0, LWK_RET_MONSNO )
+      $LWK_EV_CHK = 1
+  
+    ENDIF
+  ENDIF
 
 	//カウント
 	$LWK_COUNT_NUM += 1
