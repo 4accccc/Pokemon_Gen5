@@ -344,16 +344,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『質問は　後に　しろ……▼
-お前は　私が　指示に
+お前は　私の　指示に
 従っていればいい……▼
 ポケモンは　持っているな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-29T12:14:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-29T12:14:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1728,15 +1728,15 @@
 [Name:TrainerName Idx="1" ]は　ヨダレを　タラタラ▽
 眠りこけるのだった……▼
 そして　この　数十時間後……
-大量の　ＵＦＯが　襲われ▽
+大量の　ＵＦＯに　襲われ▽
 人類は　滅亡するのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-29T12:14:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:19" />
+				Time="2012-02-29T12:14:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
