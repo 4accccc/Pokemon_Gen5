@@ -3875,18 +3875,18 @@
 			Language="JPN_KANJI">
 			<Text>……門番だった　ぬいぐるみと
 一緒に　魔法のオリから▽
-脱げ出した　[Name:TrainerName Idx="1" ]姫▼
+脱け出した　[Name:TrainerName Idx="1" ]姫▼
 少しの　優しさを　おぼえ
 ひとまわり　強くなった　姫なら▽
 きっと　最後の　試練も▽
 乗り越えられるはず……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:54:18" />
+				Time="2012-02-29T12:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-02-03T03:54:18" />
+				Time="2012-02-29T12:26:38" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
