@@ -120,8 +120,8 @@ EVENT_START   ev_r07r0301_woman3_01
   DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
   DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
 
-  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
-  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+  //手持ちのポケモンの数を確認
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
   //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
   WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
