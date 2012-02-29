@@ -10,7 +10,7 @@
 
   //@author fujimura_souichirou
   //@aithor suginaka_katsunori//データコンバートイベント
-  //@aithor Mizuguchi_Mai//データコンバートイベント不具合修正
+  //@aithor Mizuguchi_Mai//データコンバートイベント・アイテム入手イベント不具合修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -118,7 +118,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r01_girl1_01
   //アイテム「キズぐすり」入手
-  _EASY_TALK_ITEM_EVENT( ITEM_KIZUGUSURI, 1, FE_C03R0501_ITEMGET_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
+  _EASY_TALK_ITEM_EVENT( ITEM_KIZUGUSURI, 1, FE_R01_ITEMGET_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
 EVENT_END
 
 /**************************************************************/
