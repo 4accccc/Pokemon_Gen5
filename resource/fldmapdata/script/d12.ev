@@ -56,8 +56,9 @@ IF $WK_SCENE_D12 == 0 THEN
 	//フキヨセシティにいったことがある
 	IF $WK_SCENE_C06HAKASE >= 1 THEN
 
-		//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-		_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+		//手持ちのポケモンの数を確認
+		//タマゴ除外処理をTOTALに変更（2012.02.28　水口）
+		_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
 		//手持ちのポケモンの中にビクティニがいるか確認（繰り返し処理）
 		WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
@@ -300,8 +301,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d12_sunglasses_01
 
-//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+//手持ちのポケモンの数を確認
+//タマゴ除外処理をTOTALに変更（2012.02.28　水口）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
 //手持ちのポケモンの中にビクティニがいるか確認（繰り返し処理）
 WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
