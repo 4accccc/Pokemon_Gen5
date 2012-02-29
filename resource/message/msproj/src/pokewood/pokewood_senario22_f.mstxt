@@ -1315,33 +1315,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『オーッホホホ！
 ここに　わたしの　１しゅうかんの▽
-おこづかいが　ごさいますの！▼
+おこづかいが　ございますの！▼
 アナタ　これが　ほしくないかしら？
 めぐんで　ほしければ　ただちに▽
 わたしを　おしろまで　おくりなさい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-29T11:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-29T11:40:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『オーッホホホ！
 ここに　私の　１週間分の▽
-お小遣いが　ごさいますの！▼
+お小遣いが　ございますの！▼
 アナタ　これが　欲しくないかしら？
 恵んで欲しければ　ただちに▽
 私を　お城まで　送りなさい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-29T11:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:36" />
+				Time="2012-02-29T11:40:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1903,7 +1903,7 @@
 			Language="JPN_KANJI">
 			<Text>ジュジュベ『おほほ……
 あなたが　姫だってことは▽
-初めからは　分かってたのよ▼
+初めから　分かっていたのよ▼
 親の　言いつけも　守らず
 フラフラ　遊びまわってばかりの▽
 ダメダメな　バカ姫　ってことも▼
@@ -1915,11 +1915,11 @@
 じきに　争いが　始まるわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:32" />
+				Time="2012-02-29T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:32" />
+				Time="2012-02-29T11:42:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

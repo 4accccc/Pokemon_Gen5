@@ -1315,17 +1315,17 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『ガハハハ！
 ここに　ボクの　１しゅうかんの▽
-こづかいが　あるんだかねぇ！▼
+こづかいが　あるんだがねぇ！▼
 チミは　これが　ほしくないかね？
 めぐんで　ほしければ　ただちに▽
 ボクを　おしろに　かえしたまえよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:37" />
+				Time="2012-02-29T11:45:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2012-01-06T05:56:37" />
+				Time="2012-02-29T11:45:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1903,7 +1903,7 @@
 			Language="JPN_KANJI">
 			<Text>ジュジュベ『おほほ……
 あなたが　王子だってことは▽
-初めからは　分かってたのよ▼
+初めから　分かっていたのよ▼
 親の　言いつけも　守らず
 フラフラ　遊びまわってばかりの▽
 ダメダメな　バカ王子　ってことも▼
@@ -1915,11 +1915,11 @@
 じきに　争いが　始まるわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2012-02-29T11:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2012-02-29T11:42:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
