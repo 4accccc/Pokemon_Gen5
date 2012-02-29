@@ -24,7 +24,7 @@ typedef struct _SITUATION SITUATION;
 // 歩数カウントスクリプト未起動時の値
 #define DEFAULT_SC_WALK_CNT (0xFFFF)
 // 歩数カウンタの最大値
-#define SC_WALK_CNT_MAX (99999)
+#define SC_WALK_CNT_MAX (9999)
 
 //==============================================================================
 //	構造体定義
