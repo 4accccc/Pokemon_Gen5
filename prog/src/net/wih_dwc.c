@@ -210,16 +210,40 @@ void WIH_DWC_MainLoopScanBeaconData(void)
 static BOOL _scanAPReserveed( WMBssDesc* pChk )
 {
   int i;
-
+  int j;
+  int len;
+  u8 configSsid[WM_SIZE_SSID+1]; // SSIDが最大文字長のとき、最後に0があることを保証する
+  configSsid[WM_SIZE_SSID] = 0;
 
 
   for(i = 0;i < 3;i++){
-    int len = GFL_STD_StrLen(_localWork->cfg->slot[i].ap.ssid[0]);
-    if(len > 0){
-     // NET_PRINT("SSIDCHK %s\n",pChk->ssid);
-      if(0==GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid[0], pChk->ssid, len)){
-      //  NET_PRINT("SSIDFIND %s\n",pChk->ssid);
-        return TRUE;
+    for(j = 0;j < 2;j++){
+      GFL_STD_MemCopy(_localWork->cfg->slot[i].ap.ssid[j], configSsid, WM_SIZE_SSID);
+      len = GFL_STD_StrLen(configSsid);
+      if(len > 0){
+        // NET_PRINT("SSIDCHK %s\n",pChk->ssid);
+        if(0==GFL_STD_MemComp(configSsid, pChk->ssid, len)){
+          //  NET_PRINT("SSIDFIND %s\n",pChk->ssid);
+          return TRUE;
+        }
+      }
+      //拡張スロットも読み込む
+      GFL_STD_MemCopy(_localWork->cfg->slotEx[i].ap.ssid[j], configSsid, WM_SIZE_SSID);
+      len = GFL_STD_StrLen(configSsid);
+      if(len > 0){
+        if(0==GFL_STD_MemComp(configSsid, pChk->ssid, len)){
+          return TRUE;
+        }
+      }
+      //AOSS-WPAの判定(NTRは必ずfalse）
+      if(_localWork->cfg->slotEx[i].ap.setType == NCFG_SETTYPE_AOSS_WPA){
+        GFL_STD_MemCopy(_localWork->cfg->slotEx[i].apEx.aossEx.ssid[j], configSsid, WM_SIZE_SSID);
+        len = GFL_STD_StrLen(configSsid);
+        if(len > 0){
+          if(0==GFL_STD_MemComp(configSsid, pChk->ssid, len)){
+            return TRUE;
+          }
+        }
       }
     }
   }
@@ -472,7 +496,8 @@ void WIH_DWC_DeleteCFG(void)
 void WIH_DWC_ReloadCFG(void)
 {
   GF_ASSERT_HEAVY(_localcfg);
-  NCFG_ReadConfig(&_localcfg->compat, NULL);
+  //拡張スロットも読み込む
+  NCFG_ReadConfigEx(_localcfg, NULL);
 }
 
 //------------------------------------------------------------------------------
