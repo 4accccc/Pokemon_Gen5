@@ -13922,29 +13922,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きんにくを　ちからを　こめて
+			<Text>きんにくに　ちからを　こめて
 しゅんかんてきに　ふくらませることで
 てにした　いしを　ふんしゅつできる。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-29T10:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-29T10:34:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>筋肉を　力を　込めて
+			<Text>筋肉に　力を　込めて
 瞬間的に　膨らませることで
 手にした　石を　噴出できる。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-29T10:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-02-29T10:34:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
