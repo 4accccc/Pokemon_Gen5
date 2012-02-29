@@ -47,7 +47,7 @@ EVENT_START	ev_r23r0101_trainerw_01
   _TALK_OBJ_START()
 
   //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
-  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
   //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
   WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
