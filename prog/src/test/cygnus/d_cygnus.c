@@ -62,10 +62,11 @@ typedef enum
   MENU_ITEM_ADD_ITEM,
   MENU_ITEM_ONETIMEKEY,
   MENU_ITEM_SWANFLAGS,
+  MENU_ITEM_BREAK_DATALAST,
   MENU_ITEM_BREAK_CTRLCRC,
   MENU_ITEM_BREAK_DATACRC,
-  MENU_ITEM_PRINT,
 
+  MENU_ITEM_PRINT,
   MENU_ITEM_EXIT,
 
   MENU_ITEM_NUM
@@ -91,10 +92,11 @@ static const STRCODE* str_menu[] =
   L"渡すどうぐ　追加",
   L"SWAN側ワンタイムキー操作",
   L"SWAN側フラグ操作",
+  L"データ末尾操作",
   L"管理CRC破壊",
   L"データCRC破壊",
-  L"デバッグ表示",
 
+  L"デバッグ表示",
   L"戻る",
 };
 SDK_COMPILER_ASSERT( MENU_ITEM_NUM == NELEMS(str_menu) );
@@ -196,6 +198,7 @@ typedef struct {
   u32 cygBuf[ CYGDATA_AREA_SIZE ];
   u32 swan_flags;
   u32 swan_key;
+  u32 last_data;
 
   int subSeq;
   int subCurPos;
@@ -252,6 +255,7 @@ static BOOL SubSeqSpPokeControl( PROC_WORK *p_wk );
 static BOOL ControlSwanFlagValue( PROC_WORK * p_wk );
 static BOOL SubSeqBreakCtrlCrc( PROC_WORK * p_wk );
 static BOOL SubSeqBreakDataCrc( PROC_WORK * p_wk );
+static BOOL SubSeqBreakDataLast( PROC_WORK * p_wk );
 static BOOL SubSeqAddItem( PROC_WORK *p_wk );
 static BOOL SubSeqAddPokemon( PROC_WORK *p_wk );
 static BOOL SubSeqControlOneTimeKey( PROC_WORK * p_wk );
@@ -390,6 +394,7 @@ static void Init( PROC_WORK *p_wk )
     DUMMY3DS_SAVEDATA_GetData( p_wk->inner_save, DUMMY3DS_SAVEDATA_PARAM_FLAG);
   p_wk->swan_key =
     DUMMY3DS_SAVEDATA_GetData( p_wk->inner_save, DUMMY3DS_SAVEDATA_PARAM_ONETIME_KEY);
+  p_wk->last_data = 0;
 
   clearGifts( p_wk );
 
@@ -697,6 +702,8 @@ static BOOL CallSubSeq( u32 id, PROC_WORK *p_wk )
     return SubSeqBreakCtrlCrc( p_wk );
   case MENU_ITEM_BREAK_DATACRC:
     return SubSeqBreakDataCrc( p_wk );
+  case MENU_ITEM_BREAK_DATALAST:
+    return SubSeqBreakDataLast( p_wk );
   }
   return TRUE;  //対応がない場合はすぐに終了
 }
@@ -768,6 +775,8 @@ static LAST_STATUS CygnusBufSet( PROC_WORK * p_wk )
     p_wk->cygBuf[ CYGDATA_ITEMID01 + buf_id ] = p_wk->cygnus_item[buf_id];
     add_flag = TRUE;
   }
+
+  p_wk->cygBuf[ CYGDATA_LAST ] = p_wk->last_data;
 
   if ( add_flag ) return STAT_CYGNUS_WRITE_SUCCESS;
   return STAT_CYGNUS_EMPTY_FAILURE;
@@ -1489,6 +1498,32 @@ static BOOL SubSeqBreakDataCrc( PROC_WORK * p_wk )
       p_wk->last_status = STAT_CYGNUS_BREAK_DATACRC;
       return TRUE;  //終了
     }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/// サブシーケンス：データ領域用CRCを破壊する
+//----------------------------------------------------------------------------
+static BOOL SubSeqBreakDataLast( PROC_WORK * p_wk )
+{
+  switch ( p_wk->subSeq )
+  {
+  case 0:
+    controlFlagInit( p_wk, p_wk->last_data, 16 );
+    p_wk->subSeq ++;
+    /* FALL THROUGH */
+
+  case 1:
+    {
+      CTRL_FLAG_RESULT res = controlFlagMain( p_wk );
+      if ( res != CTRL_FLAG_RESULT_CONTINUE )
+      {
+        p_wk->last_data = p_wk->flag_value;
+        return TRUE;
+      }
+    }
+    break;
   }
   return FALSE;
 }
