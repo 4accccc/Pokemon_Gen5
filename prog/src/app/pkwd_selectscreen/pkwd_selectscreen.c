@@ -2176,7 +2176,7 @@ static int _check_nowpos( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 //----------------------------------------------------------------------------------
 static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
-  int result;
+  int result=GFL_UI_TP_HIT_NONE;
   s32 flg=0;
   
   // debug
@@ -2194,8 +2194,10 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   }
   //
   // タッチ・キー制御
-  if((result=_touch_input(wk))==GFL_UI_TP_HIT_NONE){
-    result = _key_input(wk);
+  if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
+    if((result=_touch_input(wk))==GFL_UI_TP_HIT_NONE){
+      result = _key_input(wk);
+    }
   }
   SubTitle_Func(wk);
 
