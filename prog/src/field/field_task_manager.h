@@ -110,3 +110,16 @@ extern u8 FIELD_TASK_MAN_GetTaskNum( const FIELD_TASK_MAN* man );
  */
 //----------------------------------------------------------------------------------------
 extern BOOL FIELD_TASK_MAN_IsAllTaskEnd( const FIELD_TASK_MAN* man );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定したタスクが終了しているかどうかを取得する
+ *
+ *	@param	const FIELD_TASK_MAN* man
+ *	@param	FIELD_TASK_MAIN_FUNC  mainFunc  タスクに設定した処理関数
+ *
+ *  @return タスクが終了していたら FALSE, そうでなければ TRUE
+ */
+//-----------------------------------------------------------------------------
+extern BOOL FIELD_TASK_MAN_CheckTaskFunc( const FIELD_TASK_MAN* man, FIELD_TASK_MAIN_FUNC mainFunc );
+

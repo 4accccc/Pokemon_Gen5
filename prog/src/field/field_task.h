@@ -148,3 +148,15 @@ extern BOOL FIELD_TASK_IsEnd( const FIELD_TASK* task );
  */ 
 //----------------------------------------------------------------------------------------
 extern FIELD_TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タスクの処理関数を取得する
+ *
+ *  @param  task 取得対象のタスク
+ *
+ *	@return 指定したタスクの処理関数
+ */
+//-----------------------------------------------------------------------------
+extern FIELD_TASK_MAIN_FUNC* FIELD_TASK_GetMainFunc( const FIELD_TASK* task );
+

@@ -23,6 +23,7 @@
 typedef struct CAM_SHAKE_WORK_tag {
 
   FIELD_TASK* task;
+  FIELD_TASK_MAIN_FUNC* save_task_mainFunc;
   CAM_SHAKE_PARAM shakeParam;
   const VecFx32 *WatchTarget;
 
@@ -95,6 +96,7 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* wk )
     {
       FIELD_TASK_MAN* taskMan;
       work->task = FIELD_TASK_ShakeCamera( fieldmap, p_param );
+      work->save_task_mainFunc = FIELD_TASK_GetMainFunc( work->task );
       taskMan = FIELDMAP_GetTaskManager( fieldmap );
       FIELD_TASK_MAN_AddTask( taskMan, work->task, NULL );
       (*seq)++; // フィールドタスク終了待ちへ
@@ -102,7 +104,10 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* wk )
     break;
   case 1:
     {
-      if( FIELD_TASK_IsEnd( work->task ) == TRUE )
+      FIELD_TASK_MAN* taskMan = FIELDMAP_GetTaskManager( fieldmap );
+
+      // タスク終了待ち
+      if( FIELD_TASK_MAN_CheckTaskFunc( taskMan, work->save_task_mainFunc ) == FALSE )
       {
         // カメラ振動タスクが終了していたらイベント終了
         return GMEVENT_RES_FINISH;

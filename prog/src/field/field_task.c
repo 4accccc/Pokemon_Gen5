@@ -157,6 +157,21 @@ FIELD_TASK_STATE FIELD_TASK_GetState( const FIELD_TASK* task )
   return task->state;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タスクの処理関数を取得する
+ *
+ *  @param  task 取得対象のタスク
+ *
+ *	@return 指定したタスクの処理関数
+ */
+//-----------------------------------------------------------------------------
+FIELD_TASK_MAIN_FUNC* FIELD_TASK_GetMainFunc( const FIELD_TASK* task )
+{
+  GF_ASSERT( task != NULL );
+  return task->mainFunc;
+}
+
 
 //========================================================================================
 // ■非公開関数
