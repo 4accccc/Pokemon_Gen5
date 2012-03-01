@@ -287,9 +287,10 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
     }else{
       egnore = FMISSION_HOST_BLACK;
     }
-    for( i = 0;i < FMISSION_ID_MAX; i++ ){
+    for( i = 1;i < FMISSION_ID_MAX; i++ ){  //チュートリアル(=0番)を除く
       if( wk->p_arc_data[i].host >= FMISSION_HOST_COMM ||
-          wk->p_arc_data[i].host == egnore ){
+          wk->p_arc_data[i].host == egnore ||
+          i == FMISSION_ID_ITEM_KINOMI_MOVIE ){ //メロエッタ配布で開放されるミッションなので除く
         continue; //自分では開催できないミッションは除く
       }
       if( FMISSION_SAVE_GetMissionStatusClearLevel( f_save, i ) == FMISSION_CLEAR_LEVEL_0 ){
