@@ -7407,7 +7407,7 @@
 			Language="JPN_KANJI">
 			<Text>エリアクリア　するには
 エリアの　どこかに　いる▽
-ボストレーナーを　倒すすこと！▼
+ボストレーナーを　倒すこと！▼
 そうすれば　次の　エリアに
 挑戦することが　できるぜ▼
 エリアにいる　トレーナーと
@@ -7423,7 +7423,7 @@
 使えないからな！　覚えておけよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2012-02-10T12:30:19" />
+				Time="2012-03-01T07:33:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15405,10 +15405,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
 ひとりで　へやに
-いるんじゃ　ないかしたら</Text>
+いるんじゃ　ないかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-21T05:34:02" />
+				User="matsumiya:W00224"
+				Time="2012-03-01T07:48:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -15829,10 +15829,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
 ふたりで　へやに
-いるんじゃ　ないかしたら</Text>
+いるんじゃ　ないかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:27:29" />
+				User="matsumiya:W00224"
+				Time="2012-03-01T07:48:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16253,10 +16253,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
 ３にんで　へやに
-いるんじゃ　ないかしたら</Text>
+いるんじゃ　ないかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-21T04:04:11" />
+				User="matsumiya:W00224"
+				Time="2012-03-01T07:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16677,10 +16677,10 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
 ４にんで　へやに
-いるんじゃ　ないかしたら</Text>
+いるんじゃ　ないかしら</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-21T04:04:57" />
+				User="matsumiya:W00224"
+				Time="2012-03-01T07:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
