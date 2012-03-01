@@ -4515,16 +4515,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミュウの　遺伝子を　組み替えて
-生み出された。ポケモンで　一番
+			<Text>ミュウの　遺伝子を　組み換えて
+生みだされた。ポケモンで　一番
 凶暴な　心を　持つという。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -7066,15 +7066,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しっぽを　筆のように　使って
-縄張りを　マークで　描く。
+縄張りに　マークを　描く。
 その　種類は　５０００以上。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T03:31:50" />
+				User="nishino:W00221"
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -10787,14 +10787,14 @@
 			Language="JPN_KANJI">
 			<Text>ツノで　察知した　災いを
 人に　知らせようとして
-山奥から　姿を　表す。</Text>
+山奥から　姿を　現す。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -13834,14 +13834,14 @@
 			Language="JPN">
 			<Text>ツメで　いしに　サインをのこし
 コミュニケーションを　とりながら
-れいけいプレイで　てきを　おいこむ。</Text>
+れんけいプレイで　てきを　おいこむ。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -15165,16 +15165,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>体内の　発行物質で
+			<Text>体内の　発光物質で
 目玉や　体を　光らせ
 襲ってきた　敵を　ひるませる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2011-12-26T09:03:17" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -16082,29 +16082,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいちゅうと　りくちで　くらしつつ
+			<Text>すいちゅうと　りくちで　くらす。
 ながく　ねばねばする　ベロをつかって
 あいての　うごきを　ふうじこめる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>水中と　陸地で　暮らしつつ
+			<Text>水中と　陸地で　暮らす。
 長く　ねばねばする　ベロを使って
 相手の　動きを　封じこめる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -17507,14 +17507,14 @@
 			Language="JPN_KANJI">
 			<Text>辺りの　空気を　冷やして
 氷の　粒を　発生　させて
-敵の　体を　氷つかせる。</Text>
+敵の　体を　凍りつかせる。</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nishino:W00221"
-				Time="2012-01-16T06:08:59" />
+				Time="2012-03-01T08:50:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

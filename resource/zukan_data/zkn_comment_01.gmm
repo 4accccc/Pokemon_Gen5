@@ -1695,8 +1695,8 @@
 		<language name="JPN">ミュウの　いでんしを　くみかえて
 うみだされた。ポケモンで　いちばん
 きょうぼうな　こころを　もつという。</language>
-		<language name="JPN_KANJI">ミュウの　遺伝子を　組み替えて
-生み出された。ポケモンで　一番
+		<language name="JPN_KANJI">ミュウの　遺伝子を　組み換えて
+生みだされた。ポケモンで　一番
 凶暴な　心を　持つという。</language>
 	</row>
 
@@ -2461,7 +2461,7 @@
 なわばりに　マークを　えがく。
 その　しゅるいは　５０００いじょう。</language>
 		<language name="JPN_KANJI">しっぽを　筆のように　使って
-縄張りを　マークで　描く。
+縄張りに　マークを　描く。
 その　種類は　５０００以上。</language>
 	</row>
 
@@ -3578,7 +3578,7 @@
 やまおくから　すがたを　あらわす。</language>
 		<language name="JPN_KANJI">ツノで　察知した　災いを
 人に　知らせようとして
-山奥から　姿を　表す。</language>
+山奥から　姿を　現す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_360_000">
@@ -4493,7 +4493,7 @@
 	<row id="ZKN_COMMENT_01_461_000">
 		<language name="JPN">ツメで　いしに　サインをのこし
 コミュニケーションを　とりながら
-れいけいプレイで　てきを　おいこむ。</language>
+れんけいプレイで　てきを　おいこむ。</language>
 		<language name="JPN_KANJI">ツメで　石に　サインを残し
 コミュニケーションを　とりながら
 連携プレイで　敵を　追いこむ。</language>
@@ -4890,7 +4890,7 @@
 		<language name="JPN">たいないの　はっこうぶっしつで
 めだまや　からだを　ひからせ
 おそってきた　てきを　ひるませる。</language>
-		<language name="JPN_KANJI">体内の　発行物質で
+		<language name="JPN_KANJI">体内の　発光物質で
 目玉や　体を　光らせ
 襲ってきた　敵を　ひるませる。</language>
 	</row>
@@ -5166,10 +5166,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_536_000">
-		<language name="JPN">すいちゅうと　りくちで　くらしつつ
+		<language name="JPN">すいちゅうと　りくちで　くらす。
 ながく　ねばねばする　ベロをつかって
 あいての　うごきを　ふうじこめる。</language>
-		<language name="JPN_KANJI">水中と　陸地で　暮らしつつ
+		<language name="JPN_KANJI">水中と　陸地で　暮らす。
 長く　ねばねばする　ベロを使って
 相手の　動きを　封じこめる。</language>
 	</row>
@@ -5594,7 +5594,7 @@
 てきの　からだを　こおりつかせる。</language>
 		<language name="JPN_KANJI">辺りの　空気を　冷やして
 氷の　粒を　発生　させて
-敵の　体を　氷つかせる。</language>
+敵の　体を　凍りつかせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_584_000">
