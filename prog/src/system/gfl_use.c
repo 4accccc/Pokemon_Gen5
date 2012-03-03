@@ -76,7 +76,7 @@ enum {
 
 enum {
   HEAPSIZE_SYSTEM   =   0x6000,
-  HEAPSIZE_APP_BASE = 0x186800,   // +800h 110929 ichiraku
+  HEAPSIZE_APP_BASE = 0x186800 + 0x4000,   // +800h 110929 ichiraku
 };
 
 #ifdef PM_DEBUG

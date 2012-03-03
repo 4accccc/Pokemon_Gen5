@@ -27,7 +27,7 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  HEAPSIZE_FIELDMAP_NORMAL = 0x132800,  // +800h 110929 ichiraku
+  HEAPSIZE_FIELDMAP_NORMAL = 0x132800 + 0x4000,  // +800h 110929 ichiraku
   HEAPSIZE_FIELDMAP_COMM   = 0x12a000,
   HEAPSIZE_FIELDMAP_MUSICAL = 0xaa000,
 };

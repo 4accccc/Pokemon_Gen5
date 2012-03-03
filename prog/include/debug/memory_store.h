@@ -20,8 +20,9 @@
 //-----------------------------------------------------------------------------
 static void DEBUG_MEMORY_STORE_Use( void )
 {
-  static u8 sc_memory_buffer[0x04000];
-  sc_memory_buffer[0] = 0;
+  //Ç∑Ç◊ÇƒäJï˙ÇµappÇ…+0x4000ÅAfieldÇ…+0x4000í«â¡
+  //static u8 sc_memory_buffer[0x04000];
+  //sc_memory_buffer[0] = 0;
 }
 
 #endif //PM_DEBUG
