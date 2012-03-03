@@ -207,7 +207,7 @@ static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SER
 static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _BoxPokeRemove(G_SYNC_WORK* pWork);
 static void _Resort_SetFootMark( GAMEDATA * gamedata, DREAM_WORLD_FOOTMARK_DATA footMark[], HEAPID heapID );
-
+static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSave,int monsno,int sex, int form, int tec, int act);
 
 static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
 {
@@ -389,6 +389,12 @@ static void _ErrorDisp3(G_SYNC_WORK* pWork)
 
 static void _ErrorDisp2(G_SYNC_WORK* pWork)
 {
+#ifdef BUGFIX_GFBTS2029_20101021
+  if(pWork->errEnd){  //これ以上は進ませない
+    return;
+  }
+#endif
+
   if(( GFL_UI_KEY_GetTrg() & GSYNC_COMMON_TRG_KEY ) || GFL_UI_TP_GetTrg()){
     
     if(pWork->bSaveDataAsync){
@@ -716,12 +722,14 @@ static void _wakeupAction_save22(G_SYNC_WORK* pWork)
     return;
   }
 
+#ifndef BUGFIX_GFBTS2029_20101021
 #ifdef BUGFIX_BTS7876_20100716
   if(_IsLv1Mode(pWork)){
     _CHANGE_STATE(_wakeupAction7);
     pWork->noERROR = TRUE;
     return;
   }
+#endif
 #endif
 
 
@@ -783,6 +791,23 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
     _Resort_SetFootMark(pWork->pGameData, pWork->pDreamDownload->footMark, pWork->heapID );
 
   }
+#ifdef BUGFIX_GFBTS2029_20101021
+  else{
+    int i,j;
+    DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
+
+    //ポケモンシンボルエンカウント
+    _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
+                       pDreamStatus->findPokemonSex,
+                       pDreamStatus->findPokemonForm,
+                       pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
+    for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+      DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
+    }
+
+    
+  }
+#endif
 
   pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
@@ -1355,13 +1380,15 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
   DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
   DREAM_WORLD_SERVER_STATUS_DATA *pDreamStatus = &pWork->pParent->aDreamStatus;
 
-  
+#ifndef BUGFIX_GFBTS2029_20101021  
   //ポケモンシンボルエンカウント
   _symbolPokemonSave(pWork, pDreamSave, pDreamStatus->findPokemon,
                      pDreamStatus->findPokemonSex,
                      pDreamStatus->findPokemonForm,
                      pDreamStatus->findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
 
+#endif //BUGFIX_GFBTS2029_20101021  
+  
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     for(j=i+1;j<DREAM_WORLD_DATA_MAX_ITEMBOX;j++){
       if((pDreamStatus->itemID[i] != 0) && (pDreamStatus->itemID[j] == pDreamStatus->itemID[i])){
@@ -1369,9 +1396,11 @@ static BOOL _lv1check(G_SYNC_WORK* pWork)
       }
     }
   }
+#ifndef BUGFIX_GFBTS2029_20101021  
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i, pDreamStatus->itemID[i], pDreamStatus->itemNum[i]);
   }
+#endif// BUGFIX_GFBTS2029_20101021  
   return TRUE;
 }
 
