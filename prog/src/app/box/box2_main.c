@@ -1684,19 +1684,24 @@ BOOL BOX2MAIN_BattlePokeCheck( BOX2_SYS_WORK * syswk, u32 pos )
   POKEMON_PARAM * pp;
   u32 i;
 
-	// ï°êîëIë
-	if( syswk->mv_cnv_mode == 2 ){
-		for( i=0; i<PokeParty_GetPokeCount(syswk->dat->pokeparty); i++ ){
-			if( (i%2) < syswk->app->multi_w &&
-					(i/2) >= (pos/2) && (i/2) < (pos/2)+syswk->app->multi_h ){
-				continue;
-			}
-			pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
-			if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == 0 &&
-					PP_Get( pp, ID_PARA_hp, NULL ) != 0 ){
-				return TRUE;
-			}
-		}
+  // ï°êîëIë
+  if( syswk->mv_cnv_mode == 2 ){
+    int pos_x = pos % 2;
+    int pos_y = pos / 2;
+
+    for( i=0; i<PokeParty_GetPokeCount(syswk->dat->pokeparty); i++ ){
+      int tmp_x = i % 2;
+      int tmp_y = i / 2;
+      if( tmp_x >= pos_x && tmp_x < pos_x + syswk->app->multi_w &&
+          tmp_y >= pos_y && tmp_y < pos_y + syswk->app->multi_h ){
+        continue;
+      }
+      pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
+      if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == 0 &&
+          PP_Get( pp, ID_PARA_hp, NULL ) != 0 ){
+          return TRUE;
+      }
+    }
 	// í èÌ
 	}else{
 		for( i=0; i<PokeParty_GetPokeCount(syswk->dat->pokeparty); i++ ){
