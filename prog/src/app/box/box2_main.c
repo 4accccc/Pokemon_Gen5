@@ -2270,7 +2270,13 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
   // トレイアイコンへ配置
   if( put_pos >= BOX2OBJ_POKEICON_PUT_MAX ){
 		tray  = MoveBoxGet( syswk, put_pos-BOX2OBJ_POKEICON_PUT_MAX );
-		count = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ) + BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app );
+		// 複数選択時
+		if( syswk->mv_cnv_mode == 2 ){
+			count = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ) + BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app );
+		// それ以外は常に１匹
+		}else{
+			count = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ) + 1;
+		}
     if( tray == syswk->tray || count > BOX_MAX_POS ){
       syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_BOXMAX;
       return FALSE;
