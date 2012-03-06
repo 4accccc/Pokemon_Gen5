@@ -2351,6 +2351,7 @@ static int MainSeq_ArrangeMultiPokeGetInit( BOX2_SYS_WORK * syswk )
 {
   switch( syswk->app->sub_seq ){
   case 0:
+		syswk->mv_cnv_menu = 0;
     if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
 	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
 		}
@@ -3217,6 +3218,7 @@ static int MainSeq_ArrangePartyMultiPokeGetInit( BOX2_SYS_WORK * syswk )
 {
   switch( syswk->app->sub_seq ){
   case 0:
+		syswk->mv_cnv_menu = 0;
 		if( BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == TRUE ){
 /*　バトルボックスがロックされているときは便利モードにもいかないはずなので、この状況はありえないはず。 */
 /*
