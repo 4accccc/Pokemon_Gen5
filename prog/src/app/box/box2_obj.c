@@ -1382,6 +1382,34 @@ void BOX2OBJ_PartyPokeIconFrmInSet( BOX2_SYS_WORK * syswk, u32 get )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief   複数選択された手持ちポケモンアイコンを非表示にする
+ *
+ * @param   syswk   ボックス画面システムワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2OBJ_PartyPokeIconFrmInSetMulti( BOX2_SYS_WORK * syswk )
+{
+	u32	pos;
+  u32 i;
+
+	if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		return;
+	}
+
+	pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
+
+  for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX; i++ ){
+		if( (i%2) >= (pos%2) && (i%2) < ((pos%2)+syswk->app->multi_w) &&
+				(i/2) >= (pos/2) && (i/2) < ((pos/2)+syswk->app->multi_h) ){
+      BOX2OBJ_Vanish( syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_TRAY_MAX+i], FALSE );
+		}
+  }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief   手持ちポケモンアイコンをフレームイン前の座標に移動（右）
  *
  * @param   syswk   ボックス画面システムワーク

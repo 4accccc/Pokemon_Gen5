@@ -3175,11 +3175,14 @@ static int MainSeq_ArrangeMultiPokeGetPartyChange( BOX2_SYS_WORK * syswk )
   case 1:
     BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
     BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-    if( syswk->poke_get_key == 1 ){
+    if( syswk->poke_get_key == 2 ){
       BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
-    }else{
+			BOX2OBJ_PartyPokeIconFrmInSetMulti( syswk );
+    }else if( syswk->poke_get_key == 0 ){
       BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
-    }
+		}else{
+			GF_ASSERT( 0 );
+		}
     PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
     syswk->app->sub_seq++;
     return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_PARTY_CHANGE );
