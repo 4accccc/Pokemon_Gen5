@@ -5297,7 +5297,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
       }
       // ボックス/手持ち切り替えボタンヒットチェック
       if( ret1 == 0 && ret2 == 0 ){
-        if( BOX2UI_HitCheckModeChange() != GFL_UI_TP_HIT_NONE ){
+        if( BOX2UI_HitCheckModeChange() != GFL_UI_TP_HIT_NONE && syswk->dat->callMode != BOX_MODE_BATTLE ){
           if( syswk->app->mode_chg_flg == 0 ){
             if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
               BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
