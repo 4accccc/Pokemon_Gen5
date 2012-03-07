@@ -205,6 +205,7 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   if( load_ret[SAVE_PERMANENT] == FALSE )
   {
     //データなし。ならば、初期化を行う
+    OS_Printf( "パーマネントデータなし\n" );
     OUTSIDE_PERMANENT_Init( (OUTSIDE_PERMANENT*)outsv_ctrl->permanent_save.permanent );
   }
   else
@@ -231,6 +232,13 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   if(ok_side != -1){
     outsv_ctrl->data_exists = TRUE;
   }
+  else
+  {
+    OS_Printf( "不思議外部データなし\n" );
+    GFL_STD_MemClear(&outsv_ctrl->mystery_save, sizeof(OUTSIDE_MYSTERY_SAVEDATA));
+    MYSTERYDATA_Coded( &outsv_ctrl->mystery_save.mystery, MYSTERY_DATA_TYPE_OUTSIDE );
+  }
+
   return outsv_ctrl;
 }
 
