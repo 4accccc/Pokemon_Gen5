@@ -288,15 +288,11 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   //ブライトネス処理が途中終了した場合対策のリセット
   BrightnessChgReset(MASK_DOUBLE_DISPLAY);
 
-#ifdef PM_DEBUG
-  if( wk->param->demo_id != DEMO3D_ID_C_CRUISER){
-    //サウンドも強制ストップ
-    PMSND_StopSE_byPlayerID( PLAYER_SE_SYS );
-    PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
-    PMSND_StopSE_byPlayerID( PLAYER_SE_2 );
-    PMSND_StopSE_byPlayerID( PLAYER_SE_PSG );
-  }
-#endif
+  //サウンドも強制ストップ
+  PMSND_StopSE_byPlayerID( PLAYER_SE_SYS );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_2 );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_PSG );
 
   // デモ毎の例外処理サウンドヒープ破棄
   APP_EXCEPTION_SndGroupExit( wk->param->demo_id );
