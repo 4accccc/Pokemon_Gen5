@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		animal_trail.h
-//   @brief   ‚¯‚à‚Ì‚Ý‚¿
-//   @author	Masayuki Onoue
-//   @date		2011.05.19
-//
-//
+/**
+ *
+ *	@file		animal_trail.h
+ *	@brief  ‚¯‚à‚Ì‚Ý‚¿
+ *	@author	Masayuki Onoue
+ *	@date		2011.05.19
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "savedata/save_control.h"

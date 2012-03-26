@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		event_debug_menu_ov_infinity.h
-//   @brief
-//   @author	Masayuki Onoue
-//   @date		2011.03.29
-//
-//
+/**
+ *
+ *	@file		event_debug_menu_ov_infinity.h
+ *	@brief  無限ダンジョンデバッグ
+ *	@author	Masayuki Onoue
+ *	@date		2011.03.29
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "event_debug_local.h"

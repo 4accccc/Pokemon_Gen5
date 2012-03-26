@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		inf_dungeon_retire_event.h
-//   @brief   無限ダンジョンリタイアイベント
-//   @author	Masayuki Onoue
-//   @date		2011.08.02
-//
-//
+/**
+ *
+ *	@file		inf_dungeon_retire_event.h
+ *	@brief  無限ダンジョンリタイアイベント
+ *	@author	Masayuki Onoue
+ *	@date		2011.08.02
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "field/event_field_proclink.h"

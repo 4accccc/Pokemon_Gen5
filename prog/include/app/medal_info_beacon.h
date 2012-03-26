@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		medal_info_beacon.h
-//   @brief   ビーコン情報からメダル詳細画面を構築するアプリ
-//   @author	Masayuki Onoue
-//   @date		2011.07.22
-//
-//
+/**
+ *
+ *	@file		medal_info_beacon.h
+ *	@brief  ビーコン情報からメダル詳細画面を構築するアプリ
+ *	@author	Masayuki Onoue
+ *	@date		2011.07.22
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
@@ -28,10 +28,10 @@ extern GFL_PROC_DATA beacon_medalInfo_ProcData;
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK		*gsys;	//[in]ゲームシステム
-	GAMEDATA				*gdata;	//[in]ゲームシステム
-  u8              target; //リストのトップに表示する
-  u8              ret_mode; //TRUEならCギアに戻る
-  u8              view_ofs; //詳細画面コール時のターゲットのすれ違いログのViewオフセット
+	GAMESYS_WORK		*gsys;	//< [in]ゲームシステム
+	GAMEDATA				*gdata;	//< [in]ゲームシステム
+  u8              target; //< リストのトップに表示する
+  u8              ret_mode; //< TRUEならCギアに戻る
+  u8              view_ofs; //< 詳細画面コール時のターゲットのすれ違いログのViewオフセット
 }BEACON_MEDALINFO_INIT_PARAM;
 

@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		src\field\scrcmd_bgate_table.h
+ *	@file		scrcmd_bgate_table.h
  *	@brief  バッジチェック用スクリプトコマンドテーブル
  *	@author	Masayuki Onoue
  *	@date		2011.02.24

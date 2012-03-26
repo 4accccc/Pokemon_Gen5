@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		src\field\scrcmd_infinity_dungeon_table.h
+ *	@file		scrcmd_infinity_dungeon_table.h
  *	@brief  無限ダンジョン用スクリプトコマンドテーブル
  *	@author	Masayuki Onoue
  *	@date		2011.02.24

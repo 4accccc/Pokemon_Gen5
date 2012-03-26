@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		infinity_dungeon_local_def.h
-//   @brief   無限ダンジョンローカル定義
-//   @author	Masayuki Onoue
-//   @date		2011.04.11
-//
-//
+/**
+ *
+ *	@file		infinity_dungeon_local_def.h
+ *	@brief  無限ダンジョンローカル定義
+ *	@author	Masayuki Onoue
+ *	@date		2011.04.11
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 

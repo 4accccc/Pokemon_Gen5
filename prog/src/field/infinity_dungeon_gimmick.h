@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		infinity_dungeon_gimmick.h
-//   @brief   無限ダンジョンギミック
-//   @author	Masayuki Onoue
-//   @date		2011.03.03
-//
-//
+/**
+ *
+ *	@file		infinity_dungeon_gimmick.h
+ *	@brief  無限ダンジョンギミック
+ *	@author	Masayuki Onoue
+ *	@date		2011.03.03
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 

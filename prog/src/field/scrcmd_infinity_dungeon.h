@@ -1,12 +1,12 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		scrcmd_infinity_dungeon.h
-//   @brief   無限ダンジョン　スクリプト
-//   @author	Masayuki Onoue
-//   @date		2011.02.24
-//
-//
+/**
+ *
+ *	@file		scrcmd_infinity_dungeon.h
+ *	@brief  無限ダンジョン　スクリプト
+ *	@author	Masayuki Onoue
+ *	@date		2011.02.24
+ *
+ */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
