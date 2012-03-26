@@ -63,9 +63,9 @@ typedef enum
 //ドラゴンジムセーブワーク
 typedef struct GYM_DRAGON_SV_WORK_tag
 {
-  u8 now_location;    //< 左右中のどの位置にいるか(GYM_LOCATION型)
-  u8 now_floor_layer; //< どのレイヤーにいるか(FLOOR_LAYER型)
-  fx32 model_frame[GYM_DRAGON_MODELID_MAX]; //< モデルのフレーム
+  u8 now_location;    ///< 左右中のどの位置にいるか(GYM_LOCATION型)
+  u8 now_floor_layer; ///< どのレイヤーにいるか(FLOOR_LAYER型)
+  fx32 model_frame[GYM_DRAGON_MODELID_MAX]; ///< モデルのフレーム
 }GYM_DRAGON_SV_WORK;
 
 #endif //__ASM_NO_DEF_
