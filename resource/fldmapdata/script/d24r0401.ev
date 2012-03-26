@@ -77,19 +77,35 @@ EVENT_START   ev_pos_d24r0401_swbell_01
     $LCW_POSX += 1
   ENDIF
   
+  //カメラ操作　ベル追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,688128,-294966,1015808,32 )
+  
   //アニメ：主人公・ベル部屋中央部に移動
   _OBJ_ANIME_AUTO( PAIR_TRAINER_01, LCW_POSX,15, FORCE_TYPE_NOT, 8, DIR_LR )
   _TIME_WAIT( 16 )
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LCW_PLAYER_POSX,16, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
   
   //ベル：ここって…
   _BALLOONWIN_OBJMSG_POS( msg_d24r0401_swbell_01, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (32)
+  
   //アニメ：ベル戻る
-  _OBJ_ANIME_AUTO( PAIR_TRAINER_01, LCW_POSX,16, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( PAIR_TRAINER_01, LCW_POSX,18, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   
