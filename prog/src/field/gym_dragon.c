@@ -80,18 +80,17 @@ typedef struct
 typedef struct GYM_DRAGON_TMP_tag
 {
   // sys
-  HEAPID              heapID;
-  HEAPID              heapAnmID;
-  FLD_EXP_OBJ_CNT_PTR p_ex_obj;
-  FIELDMAP_WORK       *p_fld_wk;  
-  EVENTWORK           *p_event_wk;
+  HEAPID              heapID;       //< ヒープID
+  HEAPID              heapAnmID;    //< アニメーション用ヒープID
+  FLD_EXP_OBJ_CNT_PTR p_ex_obj;     //< 拡張OBJ
+  FIELDMAP_WORK       *p_fld_wk;    //< フィールドプレイヤー
+  EVENTWORK           *p_event_wk;  //< イベントワーク
 
   // data
-  GYM_DRAGON_SV_WORK  *p_sv_work;
-  MODEL               model[GYM_DRAGON_MODELID_MAX]; // モデル
+  GYM_DRAGON_SV_WORK  *p_sv_work; //< セーブデータ
+  MODEL               model[GYM_DRAGON_MODELID_MAX]; //< モデル
   
-  // アニメーションヒープフラグ(TRUEの時ヒープ作成済み)
-  BOOL                is_set_anm_heep;  
+  BOOL                is_set_anm_heep;  //< アニメーションヒープフラグ(TRUEの時ヒープ作成済み)
   
 }GYM_DRAGON_TMP;
 
