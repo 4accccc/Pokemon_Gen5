@@ -371,6 +371,7 @@ EVENT_START  ev_r06r0101_ambrella_01
   //ポケモンチェック変数一覧
   DEFINE_LOCAL LWK_PARTY_NUM      //手持ちポケモンの数
   DEFINE_LOCAL LWK_COUNT_POKE_NUM //WHILE文01のカウンタ（手持ちポケモンの数）
+  DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
 
   DEFINE_LOCAL LWK_WAZA_NUM       //ポケモンの技個数
   DEFINE_LOCAL LWK_COUNT_WAZA_NUM //WHILE文02のカウンタ（技の数）
@@ -421,16 +422,18 @@ EVENT_START  ev_r06r0101_ambrella_01
 
   {
     //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
     //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
     WHILE $LWK_PARTY_NUM > $LWK_COUNT_POKE_NUM
 
       //指定POSのポケモンの特性を取得
       _GET_PARTY_POKE_PARAM( LWK_POKE_TOKUSEI, LWK_COUNT_POKE_NUM, SCR_POKEPARA_TOKUSEI )
+      //タマゴすけチェックを追加（2012.03.26　水口）
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
 
       //指定POSのポケモンの特性は「ひでり」か
-      IF $LWK_POKE_TOKUSEI == TOKUSYU_HIDERI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+      IF $LWK_POKE_TOKUSEI == TOKUSYU_HIDERI && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら、晴れ状態の説明へ
         $LWK_TENKI = $LWK_CLEAR_HARE
         //指定POSのポケモンの名前取得
@@ -441,7 +444,7 @@ EVENT_START  ev_r06r0101_ambrella_01
         $LWK_POKE_TOKUSEI_CLEAR = 1
 
       //指定POSのポケモンの特性は「あめふらし」か
-      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_AMEHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_AMEHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら、雨状態の説明へ
         $LWK_TENKI = $LWK_CLEAR_AME
         //指定POSのポケモンの名前取得
@@ -452,7 +455,7 @@ EVENT_START  ev_r06r0101_ambrella_01
         $LWK_POKE_TOKUSEI_CLEAR = 1
 
       //指定POSのポケモンの特性は「ゆきふらし」か
-      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_YUKIHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_YUKIHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら、霰状態の説明へ
         $LWK_TENKI = $LWK_CLEAR_ARARE
         //指定POSのポケモンの名前取得
@@ -463,7 +466,7 @@ EVENT_START  ev_r06r0101_ambrella_01
         $LWK_POKE_TOKUSEI_CLEAR = 1
 
       //指定POSのポケモンの特性は「すなおこし」か
-      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_SUNAOKOSI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_SUNAOKOSI && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら、砂嵐状態の説明へ
         $LWK_TENKI = $LWK_CLEAR_SUNA
         //指定POSのポケモンの名前取得
@@ -473,8 +476,19 @@ EVENT_START  ev_r06r0101_ambrella_01
         //条件を満たしたポケモンがいた（値セット）
         $LWK_POKE_TOKUSEI_CLEAR = 1
 
-      //指定POSのポケモンの特性は「ノーてんき」「エアロック」か
-      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_NOOTENKI || $LWK_POKE_TOKUSEI == TOKUSYU_EAROKKU && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+      //指定POSのポケモンの特性は「エアロック」か
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_EAROKKU && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
+        //条件を満たしていたら、天候打消しの説明へ
+        $LWK_TENKI = $LWK_CLEAR_NOOTEN
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「ノーてんき」「エアロック」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+      
+      //指定POSのポケモンの特性は「ノーてんき」
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_NOOTENKI && $LWK_POKE_TOKUSEI_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら、天候打消しの説明へ
         $LWK_TENKI = $LWK_CLEAR_NOOTEN
         //指定POSのポケモンの名前取得
@@ -525,9 +539,11 @@ EVENT_START  ev_r06r0101_ambrella_01
 
           //指定POSのポケモンの技番号取得
           _GET_TEMOTI_WAZA_ID( LWK_POKE_WAZA, LWK_COUNT_POKE_NUM, LWK_COUNT_WAZA_NUM )
+          //タマゴすけチェックを追加（2012.03.26　水口）
+          _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_POKE_NUM )
 
           //「にほんばれ」を覚えている
-          IF $LWK_POKE_WAZA == WAZANO_NIHONBARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
+          IF $LWK_POKE_WAZA == WAZANO_NIHONBARE && $LWK_POKE_WAZA_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
 
             //条件を満たしていたら、晴れ状態の説明へ
             $LWK_TENKI = $LWK_CLEAR_HARE
@@ -539,7 +555,7 @@ EVENT_START  ev_r06r0101_ambrella_01
             $LWK_POKE_WAZA_CLEAR = 1
 
           //「あまごい」を覚えている
-          ELSIF $LWK_POKE_WAZA == WAZANO_AMAGOI && $LWK_POKE_WAZA_CLEAR == 0 THEN
+          ELSIF $LWK_POKE_WAZA == WAZANO_AMAGOI && $LWK_POKE_WAZA_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
 
             //条件を満たしていたら、雨状態の説明へ
             $LWK_TENKI = $LWK_CLEAR_AME
@@ -551,7 +567,7 @@ EVENT_START  ev_r06r0101_ambrella_01
             $LWK_POKE_WAZA_CLEAR = 1
 
           //「あられ」を覚えている
-          ELSIF $LWK_POKE_WAZA == WAZANO_ARARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
+          ELSIF $LWK_POKE_WAZA == WAZANO_ARARE && $LWK_POKE_WAZA_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
 
             //条件を満たしていたら、霰状態の説明へ
             $LWK_TENKI = $LWK_CLEAR_ARARE
@@ -563,7 +579,7 @@ EVENT_START  ev_r06r0101_ambrella_01
             $LWK_POKE_WAZA_CLEAR = 1
 
           //「すなあらし」を覚えている
-          ELSIF $LWK_POKE_WAZA == WAZANO_SUNAARASI && $LWK_POKE_WAZA_CLEAR == 0 THEN
+          ELSIF $LWK_POKE_WAZA == WAZANO_SUNAARASI && $LWK_POKE_WAZA_CLEAR == 0 && $LWK_EGG_CHK == FALSE THEN
 
             //条件を満たしていたら、砂嵐状態の説明へ
             $LWK_TENKI = $LWK_CLEAR_SUNA
