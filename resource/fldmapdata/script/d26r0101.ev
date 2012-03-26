@@ -501,8 +501,9 @@ DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
 DEFINE_LOCAL LWK_N_POKE_RET       //Ｎポケモン有無の返り値
 DEFINE_LOCAL LWK_N_POKE       //Ｎポケモンの有無
 
-//手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+//手持ちのポケモンの数を確認
+//手持ち取得処理をTOTALに修正（2012.02.29　水口）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
 //手持ちのポケモンの中にＮポケモンがいるか確認（繰り返し処理）
 WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
