@@ -38,6 +38,7 @@ DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
 DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
 DEFINE_LOCAL LWK_CLEAR_POKE   //条件を満たしたポケモンの有無（ラブカス）
 DEFINE_LOCAL LWK_BAG_CHK      //バッグの空きチェック
+DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
 
   _TALK_OBJ_START()
 
@@ -56,17 +57,20 @@ DEFINE_LOCAL LWK_BAG_CHK      //バッグの空きチェック
     _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_02 )
     _AB_KEYWAIT_MARK()
 
-    //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+    //手持ちのポケモンの数を確認
+    //手持ち取得処理をTOTALに修正（2012.02.29　水口）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
     //手持ちのポケモンの中にラブカスがいるか確認（繰り返し処理）
     WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
       //指定POSのポケモンのNOを取得
       _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+      //タマゴすけチェックを追加（2012.02.29　水口）
+      _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
 
       //チェックしたポケモンはラブカスか
-      IF $LWK_RET_MONSNO == 370 THEN
+      IF $LWK_RET_MONSNO == 370 && $LWK_EGG_CHK == FALSE THEN
         //条件を満たしていたら「１」
         $LWK_CLEAR_POKE = 1
       ENDIF
