@@ -43,6 +43,8 @@ DEFINE_LOCAL LWK_HIGH_POKE    //大きいポケモンの有無
 DEFINE_LOCAL LWK_CLEAR_POKE   //条件を満たしたポケモンの種族名（繰り返し処理なので最後のポケモン名になるかも）
 DEFINE_LOCAL LWK_POKE_FORMNO  //ポケモンのフォルム
 
+DEFINE_LOCAL LWK_EGG_CHK        //タマゴであるか
+
 
 /**************************************************************/
 /*  T02 看板：街                                              */
@@ -65,9 +67,8 @@ EVENT_START   ev_t02_woman1_01
 
   _TALK_OBJ_START()
 
-  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+  //手持ちのポケモンの数を確認
   _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
-
   //手持ちのポケモンの中に最初の３匹のポケモンがいるか確認（繰り返し処理）
   WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
@@ -233,45 +234,48 @@ EVENT_END
 //小さいポケモンチェック
 ev_t02_low_call_01:
 
-  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+  //手持ちのポケモンの数を確認
+  //手持ち取得処理をTOTALに修正（2012.02.29　水口）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
   //手持ちのポケモンの中に小さいポケモンがいるか確認（繰り返し処理）
   WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
     //指定POSのポケモンのNOを取得
     _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+    //タマゴすけチェックを追加（2012.02.29　水口）
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
 
     //チェックしたポケモンはディグダか
-    IF $LWK_RET_MONSNO == 50 THEN
+    IF $LWK_RET_MONSNO == 50 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をディグダに
       _MONS_NAME( 0, MONSNO_050 )
 
     //チェックしたポケモンはネイティか
-    ELSIF $LWK_RET_MONSNO == 177 THEN
+    ELSIF $LWK_RET_MONSNO == 177 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をネイティに
       _MONS_NAME( 0, MONSNO_177 )
 
     //チェックしたポケモンはルリリか
-    ELSIF $LWK_RET_MONSNO == 298 THEN
+    ELSIF $LWK_RET_MONSNO == 298 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をルリリに
       _MONS_NAME( 0, MONSNO_298 )
 
     //チェックしたポケモンはスボミーか
-    ELSIF $LWK_RET_MONSNO == 406 THEN
+    ELSIF $LWK_RET_MONSNO == 406 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をスボミーに
       _MONS_NAME( 0, MONSNO_406 )
 
     //チェックしたポケモンはミノムッチか
-    ELSIF $LWK_RET_MONSNO == 412 THEN
+    ELSIF $LWK_RET_MONSNO == 412 && $LWK_EGG_CHK == FALSE THEN
       //ミノムッチのフォルムを取得
       _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
       //ミノムッチは草、砂、ゴミか（念のため全てチェック）
@@ -282,14 +286,14 @@ ev_t02_low_call_01:
       ENDIF
 
     //チェックしたポケモンはリーシャンか
-    ELSIF $LWK_RET_MONSNO == 433 THEN
+    ELSIF $LWK_RET_MONSNO == 433 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をリーシャンに
       _MONS_NAME( 0, MONSNO_433 )
 
     //チェックしたポケモンはシェイミか
-    ELSIF $LWK_RET_MONSNO == 492 THEN
+    ELSIF $LWK_RET_MONSNO == 492 && $LWK_EGG_CHK == FALSE THEN
       //シェイミのフォルムを取得
       _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
       //シェイミはランドフォルムか
@@ -301,21 +305,21 @@ ev_t02_low_call_01:
       ENDIF
 
     //チェックしたポケモンはタマゲタケか
-    ELSIF $LWK_RET_MONSNO == 590 THEN
+    ELSIF $LWK_RET_MONSNO == 590 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をタマゲタケに
       _MONS_NAME( 0, MONSNO_580 )
 
     //チェックしたポケモンはバチュルか
-    ELSIF $LWK_RET_MONSNO == 595 THEN
+    ELSIF $LWK_RET_MONSNO == 595 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をバチュルに
       _MONS_NAME( 0, MONSNO_577 )
 
     //チェックしたポケモンはシビシラスか
-    ELSIF $LWK_RET_MONSNO == 602 THEN
+    ELSIF $LWK_RET_MONSNO == 602 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_LOW_POKE = 1
       //条件を満たしたポケモンの名前をシビシラスに
@@ -406,73 +410,76 @@ EVENT_END
 //大きいポケモンチェック
 ev_t02_high_call_01:
 
-  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
-  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+  //手持ちのポケモンの数を確認
+  //手持ち取得処理をTOTALに修正（2012.02.29　水口）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
 
   //手持ちのポケモンの中に大きいポケモンがいるか確認（繰り返し処理）
   WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
 
     //指定POSのポケモンのNOを取得
     _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+    //タマゴすけチェックを追加（2012.02.29　水口）
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_COUNT_NUM )
 
     //チェックしたポケモンはイワークか
-    IF $LWK_RET_MONSNO == 95 THEN
+    IF $LWK_RET_MONSNO == 95 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をイワークに
       _MONS_NAME( 0, MONSNO_095 )
 
     //チェックしたポケモンはギャラドスか
-    ELSIF $LWK_RET_MONSNO == 130 THEN
+    ELSIF $LWK_RET_MONSNO == 130 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をギャラドスに
       _MONS_NAME( 0, MONSNO_130 )
 
     //チェックしたポケモンはハガネールか
-    ELSIF $LWK_RET_MONSNO == 208 THEN
+    ELSIF $LWK_RET_MONSNO == 208 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をハガネールに
       _MONS_NAME( 0, MONSNO_208 )
 
     //チェックしたポケモンはルギアか
-    ELSIF $LWK_RET_MONSNO == 249 THEN
+    ELSIF $LWK_RET_MONSNO == 249 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をルギアに
       _MONS_NAME( 0, MONSNO_249 )
 
     //チェックしたポケモンはホエルオーか
-    ELSIF $LWK_RET_MONSNO == 321 THEN
+    ELSIF $LWK_RET_MONSNO == 321 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をホエルオーに
       _MONS_NAME( 0, MONSNO_321 )
 
     //チェックしたポケモンはミロカロスか
-    ELSIF $LWK_RET_MONSNO == 350 THEN
+    ELSIF $LWK_RET_MONSNO == 350 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をミロカロスに
       _MONS_NAME( 0, MONSNO_350 )
 
     //チェックしたポケモンはレックウザか
-    ELSIF $LWK_RET_MONSNO == 384 THEN
+    ELSIF $LWK_RET_MONSNO == 384 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をレックウザに
       _MONS_NAME( 0, MONSNO_384 )
 
     //チェックしたポケモンはディアルガか
-    ELSIF $LWK_RET_MONSNO == 483 THEN
+    ELSIF $LWK_RET_MONSNO == 483 && $LWK_EGG_CHK == FALSE THEN
       //条件を満たしていたら「１」
       $LWK_HIGH_POKE = 1
       //条件を満たしたポケモンの名前をディアルガに
       _MONS_NAME( 0, MONSNO_483 )
 
     //チェックしたポケモンはギラティナか
-    ELSIF $LWK_RET_MONSNO == 487 THEN
+    ELSIF $LWK_RET_MONSNO == 487 && $LWK_EGG_CHK == FALSE THEN
       //ギラティナのフォルムを取得
       _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
       //ギラティナはオリジンフォルムか
