@@ -33,6 +33,7 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_POKE_SELECT
 DEFINE_LOCAL LWK_POKE_SELECT_CHK
 DEFINE_LOCAL LWK_MONSNO
+DEFINE_LOCAL LWK_EGG_CHK
 
 //主人公方向取得変数
 DEFINE_LOCAL LWK_DIR
@@ -70,9 +71,11 @@ EVENT_START   ev_c08r0402_man3_01
 
         //選んだポケモンのナンバーを取得する
         _GET_PARTY_POKE_MONSNO( LWK_MONSNO, LWK_POKE_SELECT )
+        //指定POSのポケモンはタマゴか（タマゴすけチェック追加：2012.03.05　水口）
+        _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_POKE_SELECT )
 
         //選択したポケモンは「オタマロ」か
-        IF $LWK_MONSNO == 535 THEN
+        IF $LWK_MONSNO == 535 && $LWK_EGG_CHK == FALSE THEN
 
           //男性：ナイスな　ボイスを　カモン！！
           _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_05 )
@@ -143,9 +146,11 @@ EVENT_START   ev_c08r0402_man3_01
 
         //選んだポケモンのナンバーを取得する
         _GET_PARTY_POKE_MONSNO( LWK_MONSNO, LWK_POKE_SELECT )
+        //指定POSのポケモンはタマゴか（タマゴすけチェック追加：2012.03.05　水口）
+        _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_POKE_SELECT )
 
         //選択したポケモンは「オタマロ」か
-        IF $LWK_MONSNO == 535 THEN
+        IF $LWK_MONSNO == 535 && $LWK_EGG_CHK == FALSE THEN
 
           //男性：レッツ！　ハーモニー！！！
           _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_08 )
