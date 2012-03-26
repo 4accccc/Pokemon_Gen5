@@ -22,9 +22,9 @@
 ///	バッグ用アイテム管理ワーク
 //=====================================
 typedef struct{
-  u16 id;
-  u16 pocket;
-  BOOL visible;
+  u16 id;         //< アイテムID
+  u16 pocket;     //< ポケット番号
+  BOOL visible;   //< 表示状態
 }REPOSITORY_ITEM_ST;
 
 //-------------------------------------
@@ -32,11 +32,11 @@ typedef struct{
 // （ITEM_DATA_MAXは最後のアイテムIDをさしているので＋１）
 //=====================================
 typedef struct{
-  ITEM_ST     dummy;    // 保管用ダミーデータ実体
-  MYITEM_PTR  p_myitem;
-  HEAPID      heapID;
-  REPOSITORY_ITEM_ST  repository_item[ITEM_DATA_MAX+1];
-  u8  item_existence_table[ITEM_DATA_MAX+1];
+  ITEM_ST     dummy;      //< 保管用ダミーデータ実体
+  MYITEM_PTR  p_myitem;   //< マイアイテムポインタ
+  HEAPID      heapID;     //< ヒープID
+  REPOSITORY_ITEM_ST  repository_item[ITEM_DATA_MAX+1]; //< 保管アイテムデータ
+  u8  item_existence_table[ITEM_DATA_MAX+1];            //< アイテム存在フラグ
 }BAGITEM_WORK;
 
 //=============================================================================
