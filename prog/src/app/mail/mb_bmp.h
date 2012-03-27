@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file  mb_bmp.c
+ * @file  mb_bmp.h
  * @brief メールボックス画面 BMP関連
  * @author  Akito Mori / Hiroyuki Nakamura
  * @date  09.12.03
@@ -15,11 +15,11 @@
 
 //「メールをけす」メッセージＩＤ
 enum {
-  MBBMP_DELMSG_ID_CHECK = 0,  //「ないようは　きえて　しまいますが　よろしい　ですか？」
-  MBBMP_DELMSG_ID_ERASE,    //「ないようを　けしました」
-  MBBMP_DELMSG_ID_POKE,   //「ポケモンに　もたせますか？」
-  MBBMP_DELMSG_ID_BAG,    //「ないようを　けした　メールを バッグに　しまいました」
-  MBBMP_DELMSG_ID_DELETE,   //「バッグが　いっぱいです… メールを　すてました」
+  MBBMP_DELMSG_ID_CHECK = 0, ///<「ないようは　きえて　しまいますが　よろしい　ですか？」
+  MBBMP_DELMSG_ID_ERASE,     ///<「ないようを　けしました」
+  MBBMP_DELMSG_ID_POKE,      ///<「ポケモンに　もたせますか？」
+  MBBMP_DELMSG_ID_BAG,       ///<「ないようを　けした　メールを バッグに　しまいました」
+  MBBMP_DELMSG_ID_DELETE,    ///<「バッグが　いっぱいです… メールを　すてました」
 };
 
 

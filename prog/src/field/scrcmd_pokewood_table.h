@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  *
- *	@file		src\field\scrcmd_pokewood_table.h
+ *	@file		scrcmd_pokewood_table.h
  *  @brief  ポケウッド用スクリプトコマンドテーブル
  *	@author	tamada  GAME FREAK inc.
  *  @date   2011.06.30

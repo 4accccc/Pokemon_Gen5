@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file  proc_gameclear_save.c
+ * @file  proc_gameclear_save.h
  * @date  2009.12.20
  * @author  tamada GAMEFREAK inc.
  * @brief ゲームクリア時のセーブなど

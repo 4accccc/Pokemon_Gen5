@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *	@file		src\field\event_debug_menu_ov_pokewood.h
+ *	@file		event_debug_menu_ov_pokewood.h
  *	@brief  デバッグメニューポケウッド系オーバーレイ領域
  *	@author	tamada GAMEFREAK inc.
  *	@date		2011.04.28

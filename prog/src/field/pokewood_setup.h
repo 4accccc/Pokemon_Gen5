@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file  pokewood_setup.c
+ * @file  pokewood_setup.h
  * @brief
  * @author  tamada GAMEFREAK inc.
  * @date  2011.07.04

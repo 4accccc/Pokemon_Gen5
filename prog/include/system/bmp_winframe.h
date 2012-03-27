@@ -1,12 +1,12 @@
 //======================================================================
 /**
- * @file	window.h
+ * @file	bmp_winframe.h
  * @brief	ウィンドウ表示
  * @author	Hiroyuki Nakamura
  * @date	2005.10.13
  */
 //======================================================================
-#ifndef WINDOW_H
+#ifndef WINDOW_H    // ココ微妙なんだけどもう書き換えることができない
 #define WINDOW_H
 
 #include <gflib.h>
@@ -14,32 +14,33 @@
 //======================================================================
 //	定数定義
 //======================================================================
-#define	MENU_WIN_CGX_SIZ	( 9 )		// メニューウィンドウのキャラ数
-#define	TALK_WIN_CGX_SIZ	( 18+12 )		// 会話ウィンドウのキャラ数
-#define	BOARD_WIN_CGX_SIZ	( 18+12 )		// 看板ウィンドウのキャラ数
-#define	BOARD_MAP_CGX_SIZ	( 24 )		// 看板のマップのキャラ数
+#define	MENU_WIN_CGX_SIZ	( 9 )		  ///< メニューウィンドウのキャラ数
+#define	TALK_WIN_CGX_SIZ	( 18+12 )	///< 会話ウィンドウのキャラ数
+#define	BOARD_WIN_CGX_SIZ	( 18+12 )	///< 看板ウィンドウのキャラ数
+#define	BOARD_MAP_CGX_SIZ	( 24 )		///< 看板のマップのキャラ数
 
-// 町看板、道看板の全キャラ数
+/// 町看板、道看板の全キャラ数
 #define	BOARD_DATA_CGX_SIZ	( BOARD_WIN_CGX_SIZ + BOARD_MAP_CGX_SIZ )
 
+/// 転送定義
 enum {
-	WINDOW_TRANS_ON = 0,
-	WINDOW_TRANS_ON_V,	//Vブランクで転送
-	WINDOW_TRANS_OFF
+	WINDOW_TRANS_ON = 0,  ///< その場で転送
+	WINDOW_TRANS_ON_V,	  ///< Vブランクで転送
+	WINDOW_TRANS_OFF      ///< 転送しない
 };
 
-// メニューウィンドウのタイプ
+/// メニューウィンドウのタイプ
 typedef enum {
-	MENU_TYPE_SYSTEM = 0,	// 選択ウィンドウ（システムウィンドウ）
-	MENU_TYPE_TALK,		// フィールドのプレーンウィンドウ(と同じ見た目)
+	MENU_TYPE_SYSTEM = 0,	///< 選択ウィンドウ（システムウィンドウ）
+	MENU_TYPE_TALK,		    ///< フィールドのプレーンウィンドウ(と同じ見た目)
 	MENU_TYPE_MAX,
 }MENU_TYPE;
 
-// 看板
-#define BOARD_TYPE_TOWN	(0)	// タウンマップ
-#define	BOARD_TYPE_ROAD	(1)	// 標識
-#define	BOARD_TYPE_POST	(2)	// 表札
-#define	BOARD_TYPE_INFO	(3)	// 掲示板
+/// 看板
+#define BOARD_TYPE_TOWN	(0)	///< タウンマップ
+#define	BOARD_TYPE_ROAD	(1)	///< 標識
+#define	BOARD_TYPE_POST	(2)	///< 表札
+#define	BOARD_TYPE_INFO	(3)	///< 掲示板
 
 typedef struct{
   u32 pos;

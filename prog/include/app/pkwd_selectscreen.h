@@ -1,7 +1,7 @@
 //============================================================================
 /**
  *
- *	@file		pkwd_select_screen.h
+ *	@file		pkwd_selectscreen.h
  *	@brief  ポケウッド上映選択画面
  *	@author	mori
  *	@data		2011.07.19
@@ -36,8 +36,8 @@ extern const GFL_PROC_DATA PkwdSelectScreenProcData;
 //=============================================================================
 
 typedef enum {
-  PKWD_SELECT_MODE_NORMAL = ( 0 ), // 上映する映画を選択
-  PKWD_SELECT_MODE_DEL    = ( 1 ), // 削除する映画を選択
+  PKWD_SELECT_MODE_NORMAL = ( 0 ), ///< 上映する映画を選択
+  PKWD_SELECT_MODE_DEL    = ( 1 ), ///< 削除する映画を選択
 }PKWD_SELECT_MODE;
 
 
@@ -51,9 +51,9 @@ typedef enum {
 //=====================================
 typedef struct
 {	
-  MYSTATUS          *mystatus;
-  SAVE_CONTROL_WORK *sv;          // 外部セーブデータにアクセスするために必要
-  u16               *result;      // 選択結果を返す。(POKEWOOD_SAVEDATA_MAXだったらキャンセル)
-  POKEWOOD_SAVEDATA *pokewood_sv; // ポケウッド関連セーブデータ（内部）
-  PKWD_SELECT_MODE  mode;         // PKWD_SELECT_MODE_NORMAL（選択）かPKWD_SELECT_MODE_DEL(削除）を入れる
+  MYSTATUS          *mystatus;    ///< 主人公情報（性別・名前）を取得するためのMYSTATUS
+  SAVE_CONTROL_WORK *sv;          ///< 外部セーブデータにアクセスするために必要
+  u16               *result;      ///< 選択結果を返す。(POKEWOOD_SAVEDATA_MAXだったらキャンセル)
+  POKEWOOD_SAVEDATA *pokewood_sv; ///< ポケウッド関連セーブデータ（内部）
+  PKWD_SELECT_MODE  mode;         ///< PKWD_SELECT_MODE_NORMAL（選択）かPKWD_SELECT_MODE_DEL(削除）を入れる
 }PKWD_SELECT_SCREEN_PARAM;

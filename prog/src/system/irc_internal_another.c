@@ -1,3 +1,17 @@
+//=============================================================================
+/**
+ * @file	irc_internal_another.c
+ * @brief 赤外線チェック関数（クローン）
+ * @author	by mori
+ * @date	  2009.??.??
+ *
+ * @note  このソースコードは任天堂製の赤外線チェックルーチンをそのままコピーして
+ * @note  別関数として呼べるようにしたものです。
+ * @note  理由はオーバーレイで別々の場所に赤外線チェック処理を起きたかったからで、
+ * @note  R4対策などで片方が削除されてももう片方が残ることを期待しています。
+ */
+//=============================================================================
+
 /*---------------------------------------------------------------------------*
   Project:  TwlSDK - IRC - libraries
   File:     irc.c
@@ -10,9 +24,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-04-20 #$
-  $Rev: 10429 $
-  $Author: yosizaki $
+  Date:: 2009-04-20 #$
+  Rev: 10429 $
+  Author: yosizaki $
  *---------------------------------------------------------------------------*/
 #include <nitro.h>
 #include <nitro/irc.h>

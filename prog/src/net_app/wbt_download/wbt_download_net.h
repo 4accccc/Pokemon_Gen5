@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		wbt_download_proc.h
+ *	@file		wbt_download_net.h
  *	@brief  WBTダウンロードプロセス
  *	@author	Toru=Nagihashi
  *	@data		2011.05.10
