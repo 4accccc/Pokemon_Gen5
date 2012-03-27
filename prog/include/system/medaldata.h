@@ -21,16 +21,16 @@
 //-------------------------------------
 ///	ヒントタイプ
 //-------------------------------------
-#define MEDALDATA_HINTTYPE_NONE     0 // ヒント無し
-#define MEDALDATA_HINTTYPE_FIRST    1 // 最初から達成した状態
-#define MEDALDATA_HINTTYPE_LEVEL    2 // ヒントレベルによる達成
-#define MEDALDATA_HINTTYPE_PROGRAM  3 // プログラム内で達成フラグ操作
+#define MEDALDATA_HINTTYPE_NONE     0 ///< ヒント無し
+#define MEDALDATA_HINTTYPE_FIRST    1 ///< 最初から達成した状態
+#define MEDALDATA_HINTTYPE_LEVEL    2 ///< ヒントレベルによる達成
+#define MEDALDATA_HINTTYPE_PROGRAM  3 ///< プログラム内で達成フラグ操作
 
 //-------------------------------------
 ///	比較タイプ
 //-------------------------------------
-#define MEDALDATA_CMPTYPE_RECORD      0 // レコードデータと比較
-#define MEDALDATA_CMPTYPE_MEDALRECORD 1 // レコード以外のデータと比較
+#define MEDALDATA_CMPTYPE_RECORD      0 ///< レコードデータと比較
+#define MEDALDATA_CMPTYPE_MEDALRECORD 1 ///< レコード以外のデータと比較
 
 //=============================================================================
 //
@@ -42,12 +42,12 @@
 ///	メダルアーカイブデータ構造体
 //=====================================
 typedef struct {
-  u32 target_count;   // 目標数
-  s32 cmp_id;         // 比較対象レコードID
-  u8  cmp_type;       // 比較タイプ
-  u8  graphic_type;   // メダルグラフィックタイプ
-  u8  hint_type;      // ヒント開示条件
-  u8  hint_level;     // ヒントレベル
+  u32 target_count;   ///< 目標数
+  s32 cmp_id;         ///< 比較対象レコードID
+  u8  cmp_type;       ///< 比較タイプ
+  u8  graphic_type;   ///< メダルグラフィックタイプ
+  u8  hint_type;      ///< ヒント開示条件
+  u8  hint_level;     ///< ヒントレベル
 }MEDALDATA;
 
 

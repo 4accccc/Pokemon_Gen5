@@ -19,11 +19,11 @@
 //
 //=============================================================================
 
-#define DEFAULT_LOTTERY_COUNT (1) // 抽選回数
-#define DATA_TABLE_LEN        (4) // 抽選テーブルの長さ
-#define POKEMON_TABLE_CNT     (3) // ポケモン抽選テーブル数
-#define NORMAL_ITEM_TABLE_CNT (4) // 通常配置アイテムの抽選テーブル数
-#define HIDE_ITEM_TABLE_CNT   (4) // 隠しアイテム抽選テーブル数
+#define DEFAULT_LOTTERY_COUNT (1) ///< 抽選回数
+#define DATA_TABLE_LEN        (4) ///< 抽選テーブルの長さ
+#define POKEMON_TABLE_CNT     (3) ///< ポケモン抽選テーブル数
+#define NORMAL_ITEM_TABLE_CNT (4) ///< 通常配置アイテムの抽選テーブル数
+#define HIDE_ITEM_TABLE_CNT   (4) ///< 隠しアイテム抽選テーブル数
 #define TABLE_TABLE_CNT (POKEMON_TABLE_CNT+NORMAL_ITEM_TABLE_CNT+HIDE_ITEM_TABLE_CNT)
 
 //-------------------------------------
@@ -55,11 +55,11 @@ enum
 ///	ポケモンアーカイブデータ
 //=====================================
 typedef struct {
-  u16 pokemon_id[DATA_TABLE_LEN];
-  u8  max_lv[DATA_TABLE_LEN];
-  u8  min_lv[DATA_TABLE_LEN];
-  u8  female_probability[DATA_TABLE_LEN];
-  u8  forum[DATA_TABLE_LEN];
+  u16 pokemon_id[DATA_TABLE_LEN]; ///< ポケモンID
+  u8  max_lv[DATA_TABLE_LEN];     ///< 最大レベル
+  u8  min_lv[DATA_TABLE_LEN];     ///< 最小レベル
+  u8  female_probability[DATA_TABLE_LEN]; ///< メスになる確率
+  u8  forum[DATA_TABLE_LEN];              ///< フォルム
   u16 padding;
 }AT_POKEMON_DATA;
 
@@ -67,10 +67,10 @@ typedef struct {
 ///	ポケモンアーカイブデータ
 //=====================================
 typedef struct {
-  AT_POKEMON_DATA poke_data_w[POKEMON_TABLE_CNT];
-  AT_POKEMON_DATA poke_data_b[POKEMON_TABLE_CNT];
-  u16 item_id[NORMAL_ITEM_TABLE_CNT][DATA_TABLE_LEN];
-  u16 hide_item_id[HIDE_ITEM_TABLE_CNT][DATA_TABLE_LEN];
+  AT_POKEMON_DATA poke_data_w[POKEMON_TABLE_CNT]; ///< ホワイトポケモンデータ
+  AT_POKEMON_DATA poke_data_b[POKEMON_TABLE_CNT]; ///< ブラックポケモンデータ
+  u16 item_id[NORMAL_ITEM_TABLE_CNT][DATA_TABLE_LEN];     ///< アイテムデータ
+  u16 hide_item_id[HIDE_ITEM_TABLE_CNT][DATA_TABLE_LEN];  ///< 隠しアイテムデータ
 }ANIMAL_TRAIL_ARC_DATA;
 
 //=============================================================================

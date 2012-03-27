@@ -29,11 +29,11 @@
 //  下のものほど優先度が高く、タイトル達成→ヒント取得と遷移することはない
 //=====================================
 enum{
-  MEDAL_STATE_NONE =0,      // 状態なし
-  MEDAL_STATE_HINT_ACHIVE,  // ヒント達成
-  MEDAL_STATE_HINT_GET,     // ヒント取得
-  MEDAL_STATE_TITLE_ACHIVE, // タイトル達成
-  MEDAL_STATE_TITLE_GET,    // タイトル取得
+  MEDAL_STATE_NONE =0,      ///< 状態なし
+  MEDAL_STATE_HINT_ACHIVE,  ///< ヒント達成
+  MEDAL_STATE_HINT_GET,     ///< ヒント取得
+  MEDAL_STATE_TITLE_ACHIVE, ///< タイトル達成
+  MEDAL_STATE_TITLE_GET,    ///< タイトル取得
   MEDAL_STATE_MAX,
 };
 

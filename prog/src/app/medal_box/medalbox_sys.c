@@ -360,16 +360,16 @@ typedef enum
 	MEDALBOXSYS_OBJ_CLWK_MEDAL24_OBJWIN,
 	MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN,
 
-	MEDALBOXSYS_OBJ_CLWK_UPMEDAL,         // 上画面用メダルOBJ
+	MEDALBOXSYS_OBJ_CLWK_UPMEDAL,         ///< 上画面用メダルOBJ
 	MEDALBOXSYS_OBJ_CLWK_MAX,
-	MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX      = MEDALBOXSYS_OBJ_CLWK_MEDAL25 + 1 ,// メダルのセルID最大数
-	MEDALBOXSYS_OBJ_MEDAL_OBJWIN_MAX    = MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN - MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN + 1 ,// OBJウィンドウの最大値
-	MEDALBOXSYS_OBJ_UI_CLWK_MAX         = MEDALBOXSYS_OBJ_CLWK_CAP + 1,    // UIセルワークの管理ID
-	MEDALBOXSYS_OBJ_COMMON_CLWK_MAX     = MEDALBOXSYS_OBJ_CLWK_EXIT + 1,    // コモンUIセルワークの管理ID
+	MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX      = MEDALBOXSYS_OBJ_CLWK_MEDAL25 + 1, ///< メダルのセルID最大数
+	MEDALBOXSYS_OBJ_MEDAL_OBJWIN_MAX    = MEDALBOXSYS_OBJ_CLWK_MEDAL25_OBJWIN - MEDALBOXSYS_OBJ_CLWK_MEDAL1_OBJWIN + 1 ,///< OBJウィンドウの最大値
+	MEDALBOXSYS_OBJ_UI_CLWK_MAX         = MEDALBOXSYS_OBJ_CLWK_CAP + 1,   ///< UIセルワークの管理ID
+	MEDALBOXSYS_OBJ_COMMON_CLWK_MAX     = MEDALBOXSYS_OBJ_CLWK_EXIT + 1,  ///< コモンUIセルワークの管理ID
 }MEDALBOXSYS_GRAPHIC_OBJ_CLWK ;
 
-#define NEW_EFFETC_MAX      (MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_9-MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+1) // 新品エフェクトの最大数
-#define MEDAL_HIT_TABLE_MAX (MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX+1-PAGE_MEDAL_MAX-PAGE_MEDAL_MAX)  // 当たり判定テーブルの数(最初の5枚と最後の5枚には当たり判定がない)
+#define NEW_EFFETC_MAX      (MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_9-MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+1) ///< 新品エフェクトの最大数
+#define MEDAL_HIT_TABLE_MAX (MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX+1-PAGE_MEDAL_MAX-PAGE_MEDAL_MAX)  ///< 当たり判定テーブルの数(最初の5枚と最後の5枚には当たり判定がない)
 
 //-------------------------------------
 ///	アーカイブタイプ
@@ -601,70 +601,70 @@ static const struct
 typedef struct {
 
   // システム関連
-	HEAPID heapID;
-  MEDALBOXSYS_PARAM *p_param;
-	GFL_TCB						*p_vblank_task;
-	GFL_CLUNIT			  *p_clunit;
-	GFL_CLWK				  *p_clwk[MEDALBOXSYS_OBJ_CLWK_MAX];
-  u32							  obj_res[OBJRESID_MAX];
-  GFL_BMPWIN        *p_name_win;
-  GFL_BMPWIN        *p_info_win;
-  GFL_BMPWIN        *p_menu_win;
+	HEAPID heapID;                        ///< ヒープID
+  MEDALBOXSYS_PARAM *p_param;           ///< パラメータ
+	GFL_TCB						*p_vblank_task;     ///< Vブランクタスク
+	GFL_CLUNIT			  *p_clunit;          ///< カットイン
+	GFL_CLWK				  *p_clwk[MEDALBOXSYS_OBJ_CLWK_MAX];  ///< セルアクターワーク
+  u32							  obj_res[OBJRESID_MAX];              ///< リソース
+  GFL_BMPWIN        *p_name_win;  ///< 名前用BMPWIN
+  GFL_BMPWIN        *p_info_win;  ///< 説明文用BMPWIN
+  GFL_BMPWIN        *p_menu_win;  ///< メニュー用BMPWIN
 
   // メッセージ関連
-	GFL_FONT			    *p_font;
-	GFL_MSGDATA		    *p_app_msg;    // 共通
-	GFL_MSGDATA		    *p_mdlname_msg;   // メダル
-	GFL_MSGDATA		    *p_mdlinfo_msg;
-	GFL_MSGDATA		    *p_mdlhelp_msg;
+	GFL_FONT			    *p_font;          ///< フォント
+	GFL_MSGDATA		    *p_app_msg;       ///< アプリケーション用メッセージ
+	GFL_MSGDATA		    *p_mdlname_msg;   ///< メダル名
+	GFL_MSGDATA		    *p_mdlinfo_msg;   ///< メダル名
+	GFL_MSGDATA		    *p_mdlhelp_msg;   ///< ヒントメッセージ
 
   // アプリ関連
-  u8                sub_seq;
-  MEDALBOXSYS_MODE  box_mode;       // メダルボックスモード
-  MEDALBOXSYS_SEQ   now_seq;        // 現在のシーケンス
-  MY_MEDALDATA      medal_data;     // メダルデータ
-  u16               top_page_num;             // ページユニットの一番左端に表示するページ番号
-  u16               modechange_top_page_num;  // モードチェンジ後に表示されるトップページ
-  fx32              page_offset;    // ページオフセット
-  SCROLL_DIR        scroll_dir;     // スクロール方向
-  s32               scroll_count;   // スクロール回数
-  u32               scroll_speed;   // スクロールスピード
-  PAGEDATA          page[ MEDALBOX_DRAW_PAGE_NUM_LIST ];   // 表示しているページデータ
-  u8                cursor_pos;         // カーソル位置
-  u8                cursor_pos_tmp;     // 保存カーソル位置
-  CURSOR_STATE      cursor_state;       // カーソル状態
+  u8                sub_seq;        ///< サブシーケンス
+  MEDALBOXSYS_MODE  box_mode;       ///< メダルボックスモード
+  MEDALBOXSYS_SEQ   now_seq;        ///< 現在のシーケンス
+  MY_MEDALDATA      medal_data;     ///< メダルデータ
+  u16               top_page_num;             ///< ページユニットの一番左端に表示するページ番号
+  u16               modechange_top_page_num;  ///< モードチェンジ後に表示されるトップページ
+  fx32              page_offset;    ///< ページオフセット
+  SCROLL_DIR        scroll_dir;     ///< スクロール方向
+  s32               scroll_count;   ///< スクロール回数
+  u32               scroll_speed;   ///< スクロールスピード
+  PAGEDATA          page[ MEDALBOX_DRAW_PAGE_NUM_LIST ];   ///< 表示しているページデータ
+  u8                cursor_pos;         ///< カーソル位置
+  u8                cursor_pos_tmp;     ///< 保存カーソル位置
+  CURSOR_STATE      cursor_state;       ///< カーソル状態
 
-  fx32              scroll_button_pos;  // スクロールバーの位置(初期座標からのオフセット)
-  APP_TASKMENU_RES  *p_taskmenu_res;        // タスクメニュー用リソース
-  APP_TASKMENU_ITEMWORK menulist[SEARCH_MENU_MAX];
-  APP_TASKMENU_WORK *p_menu_wk;
-  s32               menu_cnt;                 // メニューの数
+  fx32              scroll_button_pos;              ///< スクロールバーの位置(初期座標からのオフセット)
+  APP_TASKMENU_RES  *p_taskmenu_res;                ///< タスクメニュー用リソース
+  APP_TASKMENU_ITEMWORK menulist[SEARCH_MENU_MAX];  ///< タスクメニューアイテム
+  APP_TASKMENU_WORK *p_menu_wk;                     ///< タスクメニュー用ワーク
+  s32               menu_cnt;                       ///< メニューの数
 
-  fx32              cap_offset;           // フォントボードの表示位置
-  fx32              monitor_offset;       // フォントボードの表示位置
-  fx32              fontbord_offset;      // フォントボードの表示位置
+  fx32              cap_offset;           ///< フォントボードの表示位置
+  fx32              monitor_offset;       ///< フォントボードの表示位置
+  fx32              fontbord_offset;      ///< フォントボードの表示位置
 
-  u32               tmp_frame;            // サブシーケンス用フレーム数テンポラリ
+  u32               tmp_frame;            ///< サブシーケンス用フレーム数テンポラリ
 
-  PUSHMEDAL_TYPE    pushmedal_set_type;   // イチオシボタンの設定方法
+  PUSHMEDAL_TYPE    pushmedal_set_type;   ///< イチオシボタンの設定方法
 
-  s32               before_x;             // 1フレーム前のｘ座標
-  s32               slide_length;         // スライド量
-  BOOL              is_slide_touch;       // 画面をタッチしてのスライド中
-  BLINKPALANM_WORK  *p_blinkanm_wk;       // カーソル点滅アニメーション           
+  s32               before_x;             ///< 1フレーム前のｘ座標
+  s32               slide_length;         ///< スライド量
+  BOOL              is_slide_touch;       ///< 画面をタッチしてのスライド中
+  BLINKPALANM_WORK  *p_blinkanm_wk;       ///< カーソル点滅アニメーション           
 
-  GFL_TCBLSYS               *p_tcb_sys;               // プリントシステム用タスク
-  APP_PRINTSYS_COMMON_WORK  print_sys_wk;             // プリントシステムワーク
-  PRINT_QUE                 *p_print_que;             // プリントキュー
-  PRINT_STREAM              *p_print_stream;          // プリントストリーム
-  APP_KEYCURSOR_WORK        *p_cursor;                // カーソル
-  SCROLLEND_CURSOR_POS      scrollend_cursor_pos;     // スクロール終了時点でのカーソル位置
+  GFL_TCBLSYS               *p_tcb_sys;               ///< プリントシステム用タスク
+  APP_PRINTSYS_COMMON_WORK  print_sys_wk;             ///< プリントシステムワーク
+  PRINT_QUE                 *p_print_que;             ///< プリントキュー
+  PRINT_STREAM              *p_print_stream;          ///< プリントストリーム
+  APP_KEYCURSOR_WORK        *p_cursor;                ///< カーソル
+  SCROLLEND_CURSOR_POS      scrollend_cursor_pos;     ///< スクロール終了時点でのカーソル位置
 
-  BOOL        is_print_util_wati;                     // プリントユーティリティー終了待ち
-  BOOL        is_polis_active;                        // 光沢がスクロール中かどうか
-  s32         polis_frame;                            // 光沢用フレーム
-  PRINT_UTIL  print_util[PRINT_UTIL_MAX];             // 文字列描画フレーム用ユーティリティー
-  MEDALBOX* p_medal_box;                              // メダルボックスセーブ
+  BOOL        is_print_util_wati;                     ///< プリントユーティリティー終了待ち
+  BOOL        is_polis_active;                        ///< 光沢がスクロール中かどうか
+  s32         polis_frame;                            ///< 光沢用フレーム
+  PRINT_UTIL  print_util[PRINT_UTIL_MAX];             ///< 文字列描画フレーム用ユーティリティー
+  MEDALBOX* p_medal_box;                              ///< メダルボックスセーブ
 #ifdef PM_DEBUG
   // デバッグ
   u8              debgu_seq;

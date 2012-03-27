@@ -55,10 +55,10 @@
 ///	タイプデータアーカイブ構造体
 //=====================================
 typedef struct {
-  u16 zenkoku_no;
-  u8  type1;
-  u8  type2;
-  u8  is_check;
+  u16 zenkoku_no; ///< 全国番号
+  u8  type1;      ///< タイプ１
+  u8  type2;      ///< タイプ２
+  u8  is_check;   ///< チェックするか
   u8  padding[3];
 }TYPE_TABLE_DATA;
 
@@ -66,18 +66,18 @@ typedef struct {
 ///	データチェック用ワーク
 //=====================================
 typedef struct {
-  BOOL  is_set_zukandata;
-  BOOL  zukan_type_flag[POKETYPE_MAX];  // タイプごとのコンプリートフラグ
-  BOOL  is_set_medal_data;    // メダルデータを調べ済み
-  BOOL  is_set_my_party;      // 手持ちデータを調べ済み
-  BOOL  is_set_boxdata;       // ボックスデータを調べ済み
-  BOOL  is_set_box_save_data; // ボックスデータを調べ済み
-  BOOL  is_set_sodateya;
-  BOOL  is_get_pokerus;
-  BOOL  is_get_n_poke;
-  BOOL  is_get_rare;
-  u32   medal_get_count[ SCR_MEDALCATEGORY_MAX ];
-  u32   box_total;
+  BOOL  is_set_zukandata;               ///< 図鑑データセットフラグ
+  BOOL  zukan_type_flag[POKETYPE_MAX];  ///< タイプごとのコンプリートフラグ
+  BOOL  is_set_medal_data;    ///< メダルデータを調べ済み
+  BOOL  is_set_my_party;      ///< 手持ちデータを調べ済み
+  BOOL  is_set_boxdata;       ///< ボックスデータを調べ済み
+  BOOL  is_set_box_save_data; ///< ボックスデータを調べ済み
+  BOOL  is_set_sodateya;      ///< 育てやチェックフラグ
+  BOOL  is_get_pokerus;       ///< ポケルスチェックフラグ
+  BOOL  is_get_n_poke;        ///< Nポケチェックフラグ
+  BOOL  is_get_rare;          ///< レアチェックフラグ
+  u32   medal_get_count[ SCR_MEDALCATEGORY_MAX ]; ///< カテゴリごとのメダル取得数
+  u32   box_total;  ///< ボックスに含まれるポケモンの数
 }MEDALREC_DATA;
 
 //-------------------------------------

@@ -10,18 +10,6 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-//
-//
-//   @file		habitat_zone.h
-//   @brief  生息地リスト：ゾーン詳細画面
-//   @author	Masayuki Onoue
-//   @date		2011.08.11
-//
-//
-//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#pragma once
-
 #include "savedata/zukan_savedata.h"
 #include "savedata/habitat_list_save.h"
 #include "gamesystem/game_data.h"
@@ -65,20 +53,20 @@ typedef enum{
 
 // ポケモンデータ
 typedef struct {
-  u16   monsno; // モンスターナンバー
-  u8  is_appear[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 出現条件 
-  u8  form[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; // 季節ごとのフォルム
-  u8 status; // 見た、捕獲、知らない
+  u16   monsno; ///< モンスターナンバー
+  u8  is_appear[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; ///< 出現条件 
+  u8  form[ PMSEASON_TOTAL ][ HABITAT_GROUND_MAX ]; ///< 季節ごとのフォルム
+  u8 status; ///< 見た、捕獲、知らない
 }HABITAT_ZONE_POKE_DATA;
 
 // ゾーンデータ
 typedef struct {
-  u16 zone_group;              // ゾーングループ
-  u16 season_enable[HABITAT_GROUND_MAX];           // 季節の存在状態
-  HABITAT_GROUND_INFO_TYPE info_ground_type;  // 地形の詳細情報
-  HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; // データリスト
-  HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  // コンプリートしているか
-  BOOL                is_zone_complete;
+  u16 zone_group;              ///< ゾーングループ
+  u16 season_enable[HABITAT_GROUND_MAX];           ///< 季節の存在状態
+  HABITAT_GROUND_INFO_TYPE info_ground_type;  ///< 地形の詳細情報
+  HABITAT_ZONE_POKE_DATA poke_data[ HABITAT_ZONE_POKE_LIST_MAX ]; ///< データリスト
+  HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  ///< コンプリートしているか
+  BOOL                is_zone_complete; //< ゾーンをコンプリートしているか
 }HABITAT_ZONE_DATA;
 
 //===================================================================================
@@ -87,12 +75,12 @@ typedef struct {
 // 外部設定データ
 typedef struct {
 	// [in]
-  GAMEDATA *p_gdata;				// ゲームデータ
-  u32 zone_cnt;             // データ数
-  HABITAT_ZONE_DATA zone_list_data[HABITAT_LIST_DATA_MAX];      // ゾーンごとのデータ格納先
+  GAMEDATA *p_gdata;				///< ゲームデータ
+  u32 zone_cnt;             ///< データ数
+  HABITAT_ZONE_DATA zone_list_data[HABITAT_LIST_DATA_MAX];      ///< ゾーンごとのデータ格納先
 
 	// [out]
-	u32	ret_mode;								// 終了モード
+	u32	ret_mode;								///< 終了モード
 }ZUKANHABITAT_ZONE_DATA;
 
 // メインワーク

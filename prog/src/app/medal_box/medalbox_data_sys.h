@@ -20,17 +20,17 @@
 */
 //=============================================================================
 
-#define LOW_PAGE_LIMIT (10)  // 最低ページ枚数
-#define PAGE_MEDAL_MAX (5) // 1ページあたりのメダル数
+#define LOW_PAGE_LIMIT (10)  ///<  最低ページ枚数
+#define PAGE_MEDAL_MAX (5) ///<  1ページあたりのメダル数
 
 //-------------------------------------
 /// 新着状態
 //=====================================
 typedef enum
 {
-  MDL_NO_NEW,   // 新着でない
-  MDL_IS_NEW,   // 新着状態
-  MDL_WRITE_NEW,// 新着書き込み
+  MDL_NO_NEW,   ///< 新着でない
+  MDL_IS_NEW,   ///< 新着状態
+  MDL_WRITE_NEW,///< 新着書き込み
 } MDL_NEWSTATE;
 
 // ==================
@@ -38,12 +38,12 @@ typedef enum
 // ==================
 typedef enum
 {
-  SORT_MODE_DEFAULT,          // 古い順
-  SORT_MODE_NEW,              // 新しい順
-  SORT_MODE_TITLE_ONLY,       // 古い順でタイトルだけ
-  SORT_MODE_HINT_ONLY,        // ヒントだけ（タイプ順）
-  SORT_MODE_NAME,             // なまえ順
-  SORT_MODE_TYPE,             // タイプ順
+  SORT_MODE_DEFAULT,          ///< 古い順
+  SORT_MODE_NEW,              ///< 新しい順
+  SORT_MODE_TITLE_ONLY,       ///< 古い順でタイトルだけ
+  SORT_MODE_HINT_ONLY,        ///< ヒントだけ（タイプ順）
+  SORT_MODE_NAME,             ///< なまえ順
+  SORT_MODE_TYPE,             ///< タイプ順
   SORT_MODE_MAX,
 }SORT_MODE;
 
@@ -57,14 +57,14 @@ typedef enum
 /// メダルデータ	
 //=====================================
 typedef struct {
-  MedalID medal_id;
-  u8  medal_state;        // メダル状態
-  u8  year;
-  u8  month;
-  u8  day;
-  u8  graphic_type;
-  u8  name_sort_id;
-  MDL_NEWSTATE new_state; // 新着状態( 0=新着でない,1=新着,2=新着書き込み)
+  MedalID medal_id;       ///< メダルID
+  u8  medal_state;        ///< メダル状態
+  u8  year;               ///< 年
+  u8  month;              ///< 月
+  u8  day;                ///< 日
+  u8  graphic_type;       ///< グラフィックタイプ
+  u8  name_sort_id;       ///< 名前順ソート番号
+  MDL_NEWSTATE new_state; ///< 新着状態( 0=新着でない,1=新着,2=新着書き込み)
 } MY_MEDAL_ST;
 
 
@@ -72,23 +72,23 @@ typedef struct {
 ///	取得済みメダルデータ構造体
 //=====================================
 typedef struct {
-  SORT_MODE       sort_mode;
-  MedalID         sort_medal_id[MDLID_MAX];
-  MedalID         sort_medal_id_tmp[MDLID_MAX];
-  MedalID         push_medalid;
-  MY_MEDAL_ST     *p_medal_st;
-  u8              boxrank;
-  u8              medal_cnt;
-  u8              page_max;
+  SORT_MODE       sort_mode;                    ///< ソートモード
+  MedalID         sort_medal_id[MDLID_MAX];     ///< ソート用メダルID
+  MedalID         sort_medal_id_tmp[MDLID_MAX]; ///< ソート用テンポラリメダルID
+  MedalID         push_medalid;///< イチオシメダルID
+  MY_MEDAL_ST     *p_medal_st;///< メダルデータ
+  u8              boxrank;    ///< ボックスランク
+  u8              medal_cnt;  ///< メダル数
+  u8              page_max;   ///< ページ最大数
 }MY_MEDALDATA;
 
 //-------------------------------------
 ///	取得済みメダルデータ構造体
 //=====================================
 typedef struct {
-  MY_MEDAL_ST   *p_medal_st[PAGE_MEDAL_MAX];
-  u8  medal_max;
-  u8  page_num;   // ページ番号
+  MY_MEDAL_ST   *p_medal_st[PAGE_MEDAL_MAX];  ///< メダルデータ
+  u8  medal_max;  ///< メダル数
+  u8  page_num;   ///< ページ番号
 }PAGEDATA;
 
 //=============================================================================

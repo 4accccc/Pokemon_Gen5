@@ -32,18 +32,18 @@
 struct _INFINITYDUNGEON_SAVE{
 
   // ダンジョン用データ（白黒共通）
-  u32 rand_seed;
-  u32 trainer_flag[INFINITYDUNGEON_FLOOR_MAX];
-  u32 recover_flag;
-  u8  map_status;
-  u8  floor_id;
-  u8  room_id;
+  u32 rand_seed;    ///< 乱数シード
+  u32 trainer_flag[INFINITYDUNGEON_FLOOR_MAX];  ///< トレーナー戦闘状態
+  u32 recover_flag; ///< 回復フラグ
+  u8  map_status;   ///< ダンジョンクリア状態
+  u8  floor_id;     ///< フロアID
+  u8  room_id;      ///< 部屋ID
 
   // ダンジョンの状態
-  u8  dungeon_status_w;   // 白バージョン用セーブデータ
-  u8  dungeon_status_b;   // 黒バージョン用セーブデータ
+  u8  dungeon_status_w;   ///< 白バージョン用セーブデータ
+  u8  dungeon_status_b;   ///< 黒バージョン用セーブデータ
 
-  u32 dungeon_start_gold; // ダンジョン開始時の所持金
+  u32 dungeon_start_gold; ///< ダンジョン開始時の所持金
 
   u8  key_system_area[KEY_SYSTEM_SAVE_WORK_SIZE];
 };

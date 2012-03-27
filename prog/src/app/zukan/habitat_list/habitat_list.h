@@ -27,11 +27,11 @@ typedef enum{
 
 // ゾーンの状態
 typedef enum{
-  HABITAT_LIST_STATUS_NEW,        // 新着(高優先度)
-  HABITAT_LIST_STATUS_NOTICE,     // お知らせあり
-  HABITAT_LIST_STATUS_GET_CMP,    // 捕獲コンプリート
-  HABITAT_LIST_STATUS_LOOK_CMP,   // 見たコンプリート
-  HABITAT_LIST_STATUS_NONE,       // アイコンなし(低優先度)
+  HABITAT_LIST_STATUS_NEW,        ///< 新着(高優先度)
+  HABITAT_LIST_STATUS_NOTICE,     ///< お知らせあり
+  HABITAT_LIST_STATUS_GET_CMP,    ///< 捕獲コンプリート
+  HABITAT_LIST_STATUS_LOOK_CMP,   ///< 見たコンプリート
+  HABITAT_LIST_STATUS_NONE,       ///< アイコンなし(低優先度)
 }HABITAT_LIST_STATUS;
 
 //===================================================================================
@@ -39,11 +39,11 @@ typedef enum{
 //===================================================================================
 // リストデータ
 typedef struct {
-  u16           zone_group; // ゾーングループ
-  u8            is_exist_landtype[ HABITAT_GROUND_MAX ];
-  HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  // コンプリートしているか
-  HABITAT_LIST_STATUS list_status[ HABITAT_GROUND_MAX ];  // リストの状態
-  BOOL                is_vanish[ HABITAT_GROUND_MAX ];    // リストの表示状態
+  u16           zone_group; ///< ゾーングループ
+  u8            is_exist_landtype[ HABITAT_GROUND_MAX ];  ///< 地形が存在しているか
+  HABITATLIST_STATUS  is_complete[ HABITAT_GROUND_MAX ];  ///< コンプリートしているか
+  HABITAT_LIST_STATUS list_status[ HABITAT_GROUND_MAX ];  ///< リストの状態
+  BOOL                is_vanish[ HABITAT_GROUND_MAX ];    ///< リストの表示状態
 }ZUKANHABITAT_LIST_LISTDATA;
 
 //===================================================================================
@@ -52,12 +52,12 @@ typedef struct {
 // 外部設定データ
 typedef struct {
 	// [in]
-  GAMEDATA  *p_gdata;				                // ゲームデータ
-  u8        list_size;
-  ZUKANHABITAT_LIST_LISTDATA list_data[HABITAT_LIST_DATA_MAX];  // リストデータ
+  GAMEDATA  *p_gdata;			///< ゲームデータ
+  u8        list_size;    ///< リストサイズ
+  ZUKANHABITAT_LIST_LISTDATA list_data[HABITAT_LIST_DATA_MAX];  ///< リストデータ
 
 	// [out]
-	u32	ret_mode;								// 終了モード
+	u32	ret_mode;								///< 終了モード
 }ZUKANHABITAT_LIST_DATA;
 
 // メインワーク

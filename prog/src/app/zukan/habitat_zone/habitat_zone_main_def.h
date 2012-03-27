@@ -104,23 +104,23 @@ struct _HABITAT_ZONE_WK{
   GFL_MSGDATA         *p_app_msg;
   GFL_TCB             *p_vtask;
 
-  BOOL  is_cursor_active;           // カーソルが選択状態かどうか
-  s32   select_index;               // 選択中のポケモン
-  s32   tp_select_index;            // タッチで選択したインデックス
-  s32   zone_data_cnt;              // データ数
-  s32   list_size;                  // ポケモンリストに表示されている数
-  s32   zone_data_index;            // リストのインデックス
-  s32   season;                     // 表示中のの季節
-  HABITAT_GROUND_TYPE land_type;    // 表示中のの場所タイプ
+  BOOL  is_cursor_active;           ///<  カーソルが選択状態かどうか
+  s32   select_index;               ///<  選択中のポケモン
+  s32   tp_select_index;            ///<  タッチで選択したインデックス
+  s32   zone_data_cnt;              ///<  データ数
+  s32   list_size;                  ///<  ポケモンリストに表示されている数
+  s32   zone_data_index;            ///<  リストのインデックス
+  s32   season;                     ///<  表示中のの季節
+  HABITAT_GROUND_TYPE land_type;    ///<  表示中のの場所タイプ
   WORDSET *p_word_set;
-  HABITATLIST_STATUS cmp_event_id;  // コンプリートイベントのID
+  HABITATLIST_STATUS cmp_event_id;  ///<  コンプリートイベントのID
 
   // ゾーンごとに更新されるデータ -----------------
-  BOOL  land_appear[ HABITAT_GROUND_MAX ];           // 地形を表示するか
-  BOOL  land_complete_status[ HABITAT_GROUND_MAX ];  // 地形ごとのコンプリート
-  u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  // 表示中のモンスター番号リスト
+  BOOL  land_appear[ HABITAT_GROUND_MAX ];           ///<  地形を表示するか
+  BOOL  land_complete_status[ HABITAT_GROUND_MAX ];  ///<  地形ごとのコンプリート
+  u32   monsno_list[HABITAT_ZONE_POKE_LIST_MAX];  ///<  表示中のモンスター番号リスト
 
-  SEQ_CHANGE_PARAM seq_param; // シーケンス切替パラメータ
+  SEQ_CHANGE_PARAM seq_param; ///<  シーケンス切替パラメータ
   
   // 図鑑セーブデータ
   ZUKAN_SAVEDATA    *p_zkn_sv;
@@ -131,13 +131,13 @@ struct _HABITAT_ZONE_WK{
   s32 sub_scroll_cnt;
 
   // 地形位置
-  HABITAT_GROUND_TYPE default_land_type;    // 表示中のの場所タイプ
+  HABITAT_GROUND_TYPE default_land_type;    ///<  表示中のの場所タイプ
   
   // はんこ演出
   u32 stump_se_frame;
 
   // 生息していないデータかどうか
-  BOOL is_no_habitat;
+  BOOL is_no_habitat; ///< 生息していないデータかどうか
 
 };
 

@@ -60,9 +60,9 @@ extern BOOL g_debug_inf_is_map_info;
 ///	ヒントメッセージ取得用ワーク
 //=====================================
 typedef struct{
-  const INF_DUNGEON_DATA      *p_dungeon_data;
-  const INFINITYDUNGEON_SAVE  *p_save;
-  u8                    talk_type;  // 会話タイプ
+  const INF_DUNGEON_DATA      *p_dungeon_data;  ///< 無限ダンジョンデータ
+  const INFINITYDUNGEON_SAVE  *p_save;          ///< 無限ダンジョンセーブ
+  u8                    talk_type;              ///< 会話タイプ
 }TRHINT_WK;
 
 // チュートリアルマップデータ
@@ -73,44 +73,44 @@ typedef struct{
 ///	イベントチェンジ用ワーク
 //=====================================
 typedef struct {
-  VecFx32 warp_pos;       // 遷移先でのマップ位置
-  s32     zone_id;        // 遷移先ゾーンID
+  VecFx32 warp_pos;       ///< 遷移先でのマップ位置
+  s32     zone_id;        ///< 遷移先ゾーンID
 }NEXT_MAP_DATA;
 
 //-------------------------------------
 ///	イベントチェンジ用ワーク
 //=====================================
 typedef struct {
-  GAMESYS_WORK          *p_gsys;
-  GAMEDATA              *p_gdata;
-  FIELDMAP_WORK         *p_field_work;
-  INFINITYDUNGEON_SAVE  *p_save;
-  FLDMAPPER             *p_g3d_mapper;
-  FIELD_BMODEL_MAN      *p_bmodel_man;
-  MMDLSYS               *p_mmdlsys;
-  const INF_DUNGEON_DATA      *p_dungeon_data;
-  HEAPID                heapID;
+  GAMESYS_WORK          *p_gsys;          ///< ゲームシステム
+  GAMEDATA              *p_gdata;         ///< ゲームデータ
+  FIELDMAP_WORK         *p_field_work;    ///< フィールドワーク
+  INFINITYDUNGEON_SAVE  *p_save;          ///< 無限ダンジョンセーブ
+  FLDMAPPER             *p_g3d_mapper;    ///< マッパー
+  FIELD_BMODEL_MAN      *p_bmodel_man;    ///< 配置モデルマネージャ
+  MMDLSYS               *p_mmdlsys;       ///< 動作モデルシステム
+  const INF_DUNGEON_DATA      *p_dungeon_data;  ///< 無限ダンジョンデータ
+  HEAPID                heapID;           ///< ヒープID
 
   // 移動タイプ
-  u8                    map_change_type;
+  u8                    map_change_type;  ///< 移動タイプ
 
   // フェードタイプ
-  u8                    fade_in_param;
-  u8                    fade_out_param;
+  u8                    fade_in_param;    ///< フェードインパラメータ
+  u8                    fade_out_param;   ///< フェードアウトパラメータ
 
   // 移動データ
-  u16                   warp_dir;
-  NEXT_MAP_DATA         next_map_data;
-  const u16             *p_zone_data;
+  u16                   warp_dir;         ///< 移動方向
+  NEXT_MAP_DATA         next_map_data;    ///< 次のマップデータ
+  const u16             *p_zone_data;     ///< ゾーンIDテーブルデータ
 
   // フロア
-  s32 now_room;
-  s32 now_floor;
-  s32 next_room;
-  s32 next_floor;
+  s32 now_room;   ///< 現在の部屋番号
+  s32 now_floor;  ///< 現在のフロア番号
+  s32 next_room;  ///< 次の部屋番号
+  s32 next_floor; ///< 次のフロア番号
 
   // エリア(フロアから算出)
-  u16 now_area;
+  u16 now_area;   ///< 現在のエリア
 
 }MAP_CHAGE_EVENT_WORK;
 

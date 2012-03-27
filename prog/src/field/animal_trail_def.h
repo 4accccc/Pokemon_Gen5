@@ -15,22 +15,22 @@
 //					定数宣言
 //
 //=============================================================================
-#define ANIMAL_TRAIL_SELECT_WALK_CNT    (256) // 何歩ごとに抽選するか
-#define ANIMAL_TRAIL_SELECT_PROBABILITY (5)   // 256歩ごとの抽選される確率
-#define ANIMAL_TRAIL_NUM        (20)          // けものみちの数
-#define ANIMAL_TRAIL_TABLE_NUM  (11)          // ランクテーブルの数
-#define ANIMAL_TRAIL_OBJ_POS_GX (15)          // 配置するオブジェクトの位置
-#define ANIMAL_TRAIL_OBJ_POS_GZ (12)          // 配置するオブジェクトの位置
-#define ANIMAL_TRAIL_ZONE_ID    (ZONE_ID_D34R0101)  // けものみちのゾーンID
+#define ANIMAL_TRAIL_SELECT_WALK_CNT    (256) ///< 何歩ごとに抽選するか
+#define ANIMAL_TRAIL_SELECT_PROBABILITY (5)   ///< 256歩ごとの抽選される確率
+#define ANIMAL_TRAIL_NUM        (20)          ///< けものみちの数
+#define ANIMAL_TRAIL_TABLE_NUM  (11)          ///< ランクテーブルの数
+#define ANIMAL_TRAIL_OBJ_POS_GX (15)          ///< 配置するオブジェクトの位置
+#define ANIMAL_TRAIL_OBJ_POS_GZ (12)          ///< 配置するオブジェクトの位置
+#define ANIMAL_TRAIL_ZONE_ID    (ZONE_ID_D34R0101)  ///< けものみちのゾーンID
 
 //-------------------------------------
 ///	けものみち：配置されるオブジェクトのタイプ
 //=====================================
 typedef enum
 {
-  AT_OBJ_TYPE_NONE,       // 置かれていない
-  AT_OBJ_TYPE_MONSTER,    // ポケモン
-  AT_OBJ_TYPE_ITEM,       // 通常アイテム
-  AT_OBJ_TYPE_HIDE_ITEM,  // 隠しアイテム
+  AT_OBJ_TYPE_NONE,       ///< 置かれていない
+  AT_OBJ_TYPE_MONSTER,    ///< ポケモン
+  AT_OBJ_TYPE_ITEM,       ///< 通常アイテム
+  AT_OBJ_TYPE_HIDE_ITEM,  ///< 隠しアイテム
 }AT_OBJ_TYPE;
 

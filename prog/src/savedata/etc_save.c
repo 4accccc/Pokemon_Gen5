@@ -53,19 +53,19 @@ static const AT_OBJ_TYPE sc_obj_type_table[ANIMAL_TRAIL_TABLE_NUM] =
 ///	獣道データ
 //=====================================
 typedef struct{
-  u16 is_set:1;         // 置かれている
-  u16 table_index:4;    // テーブルのインデックス
-  u16 data_index:3;     // データテーブルのインデックス
-  u16 female_num:7;     // メスかどうか
-  u16 pad:1;            // パディング
+  u16 is_set:1;         ///< 置かれている
+  u16 table_index:4;    ///< テーブルのインデックス
+  u16 data_index:3;     ///< データテーブルのインデックス
+  u16 female_num:7;     ///< メスかどうか
+  u16 pad:1;            ///< パディング
 }ANIMAL_TRAIL_DATA;
 
 //-------------------------------------
 ///	獣道セーブデータ
 //=====================================
 typedef struct {
-  ANIMAL_TRAIL_DATA trail_data[ANIMAL_TRAIL_NUM];
-  u8 now_trail_id; // 現在のけものみち番号
+  ANIMAL_TRAIL_DATA trail_data[ANIMAL_TRAIL_NUM]; ///< 獣道データ
+  u8 now_trail_id; ///< 現在のけものみち番号
   u8 padding[3];
 }ANIMAL_TRAIL_SAVE;
 

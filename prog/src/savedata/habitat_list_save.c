@@ -28,10 +28,10 @@
 //=====================================
 typedef struct {
   // 参照、設定用データ
-  u8 ground_status:2;
-  u8 waterside_status:2;
-  u8 fishing_status:2;
-  u8 zone_complete_flg:1;
+  u8 ground_status:2;     ///< 地面タイプのコンプリート状態
+  u8 waterside_status:2;  ///< 水辺タイプのコンプリート状態
+  u8 fishing_status:2;    ///< 海タイプのコンプリート状態
+  u8 zone_complete_flg:1; ///< ゾーンコンプリートフラグ
   u8 pad:1;
 } HABITAT_ZONE_STATUS_DATA;
 
@@ -39,9 +39,9 @@ typedef struct {
 ///	生息地状態構造体
 //=====================================
 typedef struct {
-  u16 default_zone_group_id;
-  u8  default_season;
-  u8  default_ground_type;
+  u16 default_zone_group_id;  ///< 閲覧中のゾーングループID
+  u8  default_season;         ///< 閲覧中の季節
+  u8  default_ground_type;    ///< 閲覧中の地形タイプ
 } HABITAT_ZONE_DATA;
 
 

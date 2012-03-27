@@ -263,9 +263,9 @@ typedef enum{
 // 隠しスポット
 typedef enum
 {
-  HIDE_STATE_NO,          // 隠しスポットではない
-  HIDE_STATE_HIDE_TRUE,   // 隠しスポットで隠し中
-  HIDE_STATE_HIDE_FALSE,  // 隠しスポットで表示中
+  HIDE_STATE_NO,          ///<  隠しスポットではない
+  HIDE_STATE_HIDE_TRUE,   ///<  隠しスポットで隠し中
+  HIDE_STATE_HIDE_FALSE,  ///<  隠しスポットで表示中
 }
 HIDE_STATE;
 
@@ -305,8 +305,8 @@ typedef struct {
   PALETTE_FADE_PTR  p_pfd;
   // パレット点滅　    -------------------------------
   BOOL is_stop_blink;
-  BLINKPALANM_WORK  *p_blinkanm_wk; // カーソル
-  BLINKPALANM_WORK  *p_blinkanm_wk_land_icon; // 地形アイコン
+  BLINKPALANM_WORK  *p_blinkanm_wk; ///<  カーソル
+  BLINKPALANM_WORK  *p_blinkanm_wk_land_icon; ///<  地形アイコン
 	
   // セルアクターユニット
   GFL_CLUNIT			*p_clunit;
@@ -331,23 +331,23 @@ typedef struct {
   UI_EASY_CLWK_RES  clres_root_obj;
   
   // 文字ウィンドウ---------------------
-  BOOL              is_print_util_wati;         // 転送待ち
+  BOOL              is_print_util_wati;         ///<  転送待ち
 	GFL_FONT			    *p_font;
-  PRINT_UTIL        print_util[PRINT_UTIL_MAX]; // プリントユーティリティー
+  PRINT_UTIL        print_util[PRINT_UTIL_MAX]; ///<  プリントユーティリティー
   PRINT_QUE         *p_print_que;
   GFL_BMPWIN        *p_font_win;
   GFL_BMPWIN        *p_font_win_sub;
   GFL_BMPWIN        *p_event_win_sub;
   
-  APP_PRINTSYS_COMMON_WORK  print_sys_wk;             // プリントシステムワーク
-  GFL_TCBLSYS       *p_tcb_sys;               // プリントシステム用タスク
+  APP_PRINTSYS_COMMON_WORK  print_sys_wk;             ///<  プリントシステムワーク
+  GFL_TCBLSYS       *p_tcb_sys;               ///<  プリントシステム用タスク
   PRINT_STREAM      *p_print_stream;
   
   // 背景スクロール---------------------
-  u32 back_bg_scroll_wait_count;
+  u32 back_bg_scroll_wait_count; ///< 背景スクロール待ちカウント
 
   // タウンマップデータ ----------------
-  TOWNMAP_DATA*     p_townmap_data;
+  TOWNMAP_DATA*     p_townmap_data; ///< タウンマップデータ
   
   // アルファアニメーション -----------
   s32               obj_exist_ev1;
@@ -358,11 +358,11 @@ typedef struct {
   BOOL                      is_cursor_draw;
 
   // トレイパレット転送 ------------
-  BOOL is_trance_pal_col;
-  HABITAT_GROUND_TYPE set_trance_traypal_type;
+  BOOL is_trance_pal_col;   ///< パレット転送終了フラグ
+  HABITAT_GROUND_TYPE set_trance_traypal_type;  ///< パレット転送タイプ
 
   // 隠しスポット
-  HIDE_SPOT                   hide_spot[TOWNMAP_DATA_MAX];
+  HIDE_SPOT                   hide_spot[TOWNMAP_DATA_MAX]; ///< 隠しスポット
 
 }HABITAT_ZONE_GRA_WK;
 

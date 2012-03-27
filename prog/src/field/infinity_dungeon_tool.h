@@ -42,31 +42,31 @@
 #define ROOM_TR_MAX (4)
 
 // トレーナー出現タイプ
-#define INF_MULTI_DUNGEON (0)   // 両方
-#define INF_B2_ONLY_DUNGEON (1) // 黒のみ
-#define INF_W2_ONLY_DUNGEON (2) // 白のみ
+#define INF_MULTI_DUNGEON (0)   ///< 両方
+#define INF_B2_ONLY_DUNGEON (1) ///< 黒のみ
+#define INF_W2_ONLY_DUNGEON (2) ///< 白のみ
 
 // 無限ダンジョンに登場するトレーナータイプ
 #define INFINITY_DUNGEON_TALK_PATTERN_MAX (30)
 
 // 部屋サイズ定義
-#define ROOM_MAX_X            (4)                       // 部屋X最大数
-#define ROOM_MAX_Y            (4)                       // 部屋Y最大数
-#define ROOM_MAX              (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
+#define ROOM_MAX_X            (4)                       ///< 部屋X最大数
+#define ROOM_MAX_Y            (4)                       ///< 部屋Y最大数
+#define ROOM_MAX              (ROOM_MAX_X*ROOM_MAX_Y)   ///< 部屋最大数
 
 //-------------------------------------
 //	ヒントタイプ
 //=====================================
 enum
 {
-  INFTR_HINT_TYPE_GATE_TR_DIR,          // A-1
-  INFTR_HINT_TYPE_GATE_TR_UP_DOWN,      // A-2
-  INFTR_HINT_TYPE_GATE_TR_ROOM_TR_NUM,  // A-3
-  INFTR_HINT_TYPE_GATE_SEX,             // B-1
-  INFTR_HINT_TYPE_GATE_MOVE_TYPE,       // B-2
-  INFTR_HINT_TYPE_MEDIC_DIR,            // C
-  INFTR_HINT_TYPE_BOSS_MONSTER,         // D
-  INFTR_HINT_TYPE_BOSS_INFO,            // E1,E2
+  INFTR_HINT_TYPE_GATE_TR_DIR,          ///< A-1
+  INFTR_HINT_TYPE_GATE_TR_UP_DOWN,      ///< A-2
+  INFTR_HINT_TYPE_GATE_TR_ROOM_TR_NUM,  ///< A-3
+  INFTR_HINT_TYPE_GATE_SEX,             ///< B-1
+  INFTR_HINT_TYPE_GATE_MOVE_TYPE,       ///< B-2
+  INFTR_HINT_TYPE_MEDIC_DIR,            ///< C
+  INFTR_HINT_TYPE_BOSS_MONSTER,         ///< D
+  INFTR_HINT_TYPE_BOSS_INFO,            ///< E1,E2
   INFTR_HINT_TYPE_NONE,
   INFTR_HINT_TYPE_MAX,
 };
@@ -76,14 +76,14 @@ enum
 //=====================================
 enum
 {
-  INFTR_TALK_TYPE_BOY,      // 少年
-  INFTR_TALK_TYPE_GIRL,     // 少女
-  INFTR_TALK_TYPE_YOUNG_M,  // 成人男性
-  INFTR_TALK_TYPE_YOUNG_W,  // 成人女性
-  INFTR_TALK_TYPE_MIDDLE_M, // 中年男性
-  INFTR_TALK_TYPE_MIDDLE_W, // 中年女性
-  INFTR_TALK_TYPE_OLD_M,    // 老人
-  INFTR_TALK_TYPE_OLD_W,    // 老女
+  INFTR_TALK_TYPE_BOY,      ///< 少年
+  INFTR_TALK_TYPE_GIRL,     ///< 少女
+  INFTR_TALK_TYPE_YOUNG_M,  ///< 成人男性
+  INFTR_TALK_TYPE_YOUNG_W,  ///< 成人女性
+  INFTR_TALK_TYPE_MIDDLE_M, ///< 中年男性
+  INFTR_TALK_TYPE_MIDDLE_W, ///< 中年女性
+  INFTR_TALK_TYPE_OLD_M,    ///< 老人
+  INFTR_TALK_TYPE_OLD_W,    ///< 老女
   INFTR_TALK_TYPE_MAX,
 };
 
@@ -97,40 +97,40 @@ enum
 ///	MMDL用パラメータ
 //=====================================
 typedef struct {
-  u16 move_code;
-  u16 ev_type;
-  u16 direction;
-  u16 param0;
-  u16 param1;
-  s32 lim_x;
-  s32 lim_z;
-  u16 hint_msg_id;
+  u16 move_code;  ///< 動作移動モデルコード
+  u16 ev_type;    ///< イベントタイプ
+  u16 direction;  ///< 方向
+  u16 param0;     ///< パラメータ0
+  u16 param1;     ///< パラメータ1
+  s32 lim_x;      ///< x限界値
+  s32 lim_z;      ///< y限界値
+  u16 hint_msg_id;///< ヒントメッセージID
 }INF_MMDL_PARAM;
 
 //-------------------------------------
 ///	部屋データ
 //=====================================
 typedef struct {
-  u16 move_type;
-  u32 g_x;
-  u32 g_y;
+  u16 move_type;  ///< 移動タイプ
+  u32 g_x;        ///< 位置X
+  u32 g_y;        ///< 位置Y
 }INF_ROOM_TR_DATA;
 
 //-------------------------------------
 ///	配置パラメータ
 //=====================================
 typedef struct {
-  u8  version;
-  u8  member_num;
-  u32 room_type;
-  INF_ROOM_TR_DATA tr_move_data[ROOM_TR_MAX];
+  u8  version;      ///< バージョン
+  u8  member_num;   ///< メンバー数
+  u32 room_type;    ///< 部屋タイプ
+  INF_ROOM_TR_DATA tr_move_data[ROOM_TR_MAX]; ///< 部屋トレーナーデータ
 }INF_ROOM_SET_TR_PARAM;
 
 //-------------------------------------
 ///	部屋データ
 //=====================================
 typedef struct {
-  u32 tr_pos_type;
+  u32 tr_pos_type;    ///< 位置タイプ
 //  u32 probability;
 }INF_ROOM_DATA;
 
@@ -138,10 +138,10 @@ typedef struct {
 ///	トレーナーデータ
 //=====================================
 typedef struct {
-  u8 start_area;
-  u8 end_area;
-  u8 version;
-  u8 tr_type;
+  u8 start_area;  ///< 出現開始エリア
+  u8 end_area;    ///< 出現終了エリア
+  u8 version;     ///< バージョン制限
+  u8 tr_type;     ///< トレーナータイプ
 }INF_TR_AREA_DATA;
 
 //-------------------------------------
@@ -157,25 +157,25 @@ typedef struct {
 ///	レベルデータ
 //=====================================
 typedef struct {
-  u16 level_min;
-  u16 level_max;
+  u16 level_min;  ///< 最小レベル
+  u16 level_max;  ///< 最大レベル
 }INF_LEVEL_TABLE_PARAM;
 
 //-------------------------------------
 ///	ルームデータ
 //=====================================
 typedef struct{
-  u8  tr_pos_type;
-  u8 room_type;
-  BOOL can_move[4];
-  u8  room_id;
+  u8  tr_pos_type;  ///< トレーナー位置タイプ
+  u8 room_type;     ///< 部屋タイプ
+  BOOL can_move[4]; ///< 左右上下に移動できるか
+  u8  room_id;      ///< 部屋ID
 }ROOM_DATA;
 
 //-------------------------------------
 ///	ダンジョン内トレーナーデータ
 //=====================================
 typedef struct{
-  u16 tr_id[INFINITY_DUNGEON_TRID_MAX]; // 全トレーナーランダム配列
+  u16 tr_id[INFINITY_DUNGEON_TRID_MAX]; ///<  全トレーナーランダム配列
 }DUNGEON_TRAINER;
 
 //-------------------------------------
@@ -183,28 +183,28 @@ typedef struct{
 //=====================================
 typedef struct 
 {
-  s32 master_seed;
-  s32 tr_data_seed;
-  s32 dungeon_data_seed;
-  s32 reward_item_seed;
-  u16 tr_seed[INFINITYDUNGEON_FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; // トレーナーシード
+  s32 master_seed;        ///< シード
+  s32 tr_data_seed;       ///< トレーナーデータシード
+  s32 dungeon_data_seed;  ///< ダンジョンのシード
+  s32 reward_item_seed;   ///< 報酬のシード
+  u16 tr_seed[INFINITYDUNGEON_FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; ///< トレーナーシード
 }INF_DUNGEON_SEED;
 
 //-------------------------------------
 ///	無限ダンジョンデータ
 //=====================================
 typedef struct {
-  INF_DUNGEON_SEED  seed;
-  ROOM_DATA         room_data[INFINITYDUNGEON_FLOOR_MAX][ROOM_MAX];
-  DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];
-  u16               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
-  u16               recover_room_id[INFINITYDUNGEON_FLOOR_MAX];
-  u8                gate_trainer_floor;
-  u8                gate_trainer_room_id;
-  u8                gate_trainer_id_pos;
-  u16               reward_item_id;
-  u8                reward_item_num;
-  u8                version;
+  INF_DUNGEON_SEED  seed; ///< ダンジョンのシード
+  ROOM_DATA         room_data[INFINITYDUNGEON_FLOOR_MAX][ROOM_MAX]; ///< 部屋データ
+  DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];             ///< トレーナーデータ
+  u16               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];   ///< 回復トレーナーデータ
+  u16               recover_room_id[INFINITYDUNGEON_FLOOR_MAX];     ///< 回復トレーナー部屋IDデータ
+  u8                gate_trainer_floor;     ///< ゲートトレーナーフロア
+  u8                gate_trainer_room_id;   ///< ゲートトレーナー部屋ID
+  u8                gate_trainer_id_pos;    ///< ゲートトレーナー位置
+  u16               reward_item_id;         ///< 報酬アイテムID
+  u8                reward_item_num;        ///< 報酬アイテム数
+  u8                version;                ///< バージョン
 }INF_DUNGEON_DATA;
 
 //=============================================================================
