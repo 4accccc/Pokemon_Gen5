@@ -1,7 +1,7 @@
 //============================================================================
 /**
  *
- *  @file   intro_cmd_type.h
+ *  @file   intro_cmd_def.h
  *  @brief  コマンド定義
  *  @author hosaka genya
  *  @data   2009.12.11

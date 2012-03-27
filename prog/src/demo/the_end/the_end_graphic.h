@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *  @file   subway_map_graphic.h
+ *  @file   the_end_graphic.h
  *  @brief  グラフィック設定
  *  @author Koji Kawada
  *  @date   2010.03.15

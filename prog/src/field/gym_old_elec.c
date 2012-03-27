@@ -38,13 +38,13 @@
 #define PLATFORM_NUM_MAX (9)
 
 #define PLATFORM_NONE (0xff)
-#define RIDE_NONE   (0xff)  //カプセルに乗っていない
+#define RIDE_NONE   (0xff)  ///<カプセルに乗っていない
 
 #define GYM_ELEC_GMK_OBJ_NUM  (10)
-#define RALE_PLATFORM_NUM_MAX (2)   //1レールで止まるプラットホームの数
+#define RALE_PLATFORM_NUM_MAX (2)   ///<1レールで止まるプラットホームの数
 
 #define STOP_TIME (90)
-#define CAP_OPEN_FRAME  (15*FX32_ONE)   //蓋が開ききるフレーム（データ依存）
+#define CAP_OPEN_FRAME  (15*FX32_ONE)   ///<蓋が開ききるフレーム（データ依存）
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
@@ -111,8 +111,8 @@ static const int RaleAnm[RALE_NUM_MAX] = {
 
 
 
-#define FRAME_POS_SIZE  (4*3*360)   //座標ＸＹＺ各4バイトｘ360フレーム
-#define HEADER_SIZE  (8)   //フレームサイズ4バイト+格納情報3バイトのヘッダー情報があるためアライメントを加味して8バイト確保する
+#define FRAME_POS_SIZE  (4*3*360)   ///<座標ＸＹＺ各4バイトｘ360フレーム
+#define HEADER_SIZE  (8)   ///<フレームサイズ4バイト+格納情報3バイトのヘッダー情報があるためアライメントを加味して8バイト確保する
 
 typedef struct ELEC_GYM_TASK_WK_tag
 {
@@ -122,20 +122,20 @@ typedef struct ELEC_GYM_TASK_WK_tag
 //ジム内部中の一時ワーク
 typedef struct GYM_ELEC_TMP_tag
 {
-  GFL_TCB * CapStopTcbPtr;   //カプセル停止制御ＴＣＢ
-  u8 RadeRaleIdx;          //自機が走行しているレールインデックス
+  GFL_TCB * CapStopTcbPtr;   ///<カプセル停止制御ＴＣＢ
+  u8 RadeRaleIdx;          ///<自機が走行しているレールインデックス
   //↑トレーナーバトルイベント中のレール特定にも使用。間借してるだけなのでスクリプトチェンジの際に、値をリセットする
-  s8 LeverIdx;              //操作しようとしているレバーインデックス(イベント中以外は-1)
-  u8 ChgingSw;            //イベント中のみ使用
-  s8 RideEvt;            //乗降イベント中カプセル番号
+  s8 LeverIdx;              ///<操作しようとしているレバーインデックス(イベント中以外は-1)
+  u8 ChgingSw;            ///<イベント中のみ使用
+  s8 RideEvt;            ///<乗降イベント中カプセル番号
   ELEC_GYM_TASK_WK  TaskWk[CAPSULE_NUM_MAX];
   ICA_ANIME* IcaAnmPtr;
   u8 FramePosDat[FRAME_POS_SIZE*2+HEADER_SIZE];
   BOOL AltoMove;
 
   u8 RaleChgReq[CAPSULE_NUM_MAX];
-  u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
-  s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
+  u8 NowRaleIdx[CAPSULE_NUM_MAX];     ///<現在走行しているレールのインデックス(スイッチ非依存)
+  s8 StopPlatformIdx[CAPSULE_NUM_MAX];  ///<PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
 /**
   ICA_ANIME* IcaAnmPtr2[RALE_NUM_MAX];
   u8 FramePosDat2[RALE_NUM_MAX][FRAME_POS_SIZE*2+HEADER_SIZE];
@@ -144,9 +144,9 @@ typedef struct GYM_ELEC_TMP_tag
 
 typedef struct STOP_DAT_tag
 {
-  int PlatformIdx;      //停車プラットフォーム
-  int StopStart;        //停車開始フレーム
-  int StopEnd;          //停車終了フレーム
+  int PlatformIdx;      ///<停車プラットフォーム
+  int StopStart;        ///<停車開始フレーム
+  int StopEnd;          ///<停車終了フレーム
 }STOP_DAT;
 
 typedef struct SE_RECT_tag

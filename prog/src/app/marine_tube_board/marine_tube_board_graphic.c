@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		graphic.c
+ *	@file		marine_tube_board_graphic.c
  *	@brief	グラフィック設定
  *	@author	ichiraku_katsuhiko
  *	@data		2011.09.05
