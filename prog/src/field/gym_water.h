@@ -32,10 +32,10 @@ extern void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_WATER_End(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap);
 
-// イベントチェック用
+//! イベントチェック用
 extern GMEVENT * GYM_WATER_CheckHasuEvent( GAMESYS_WORK *p_gamesys );
 
-// スクリプトコマンドで呼ばれる関数
+//! スクリプトコマンドで呼ばれる関数
 extern void GYM_WATER_SplashAnime( GAMESYS_WORK *gsys );
 extern void GYM_WATER_ReturnAnime( GAMESYS_WORK *gsys );
 

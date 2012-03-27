@@ -55,92 +55,94 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define HASU_EX_OBJ_NULL (0xff)   // ハスOBJIDXなし
-#define HASU_EX_OBJ_IDX_MINE  (0) // 拡張高さハスインデックス(自分)
-#define HASU_EX_OBJ_IDX_OTHER (1) // 拡張高さハスインデックス(周り)
+#define HASU_EX_OBJ_NULL (0xff)   ///< ハスOBJIDXなし
+#define HASU_EX_OBJ_IDX_MINE  (0) ///< 拡張高さハスインデックス(自分)
+#define HASU_EX_OBJ_IDX_OTHER (1) ///< 拡張高さハスインデックス(周り)
 
-//-------------------------------------
-///	ハスの上情報
-//=====================================
+/**
+ * ハスの上情報
+ */
 typedef enum {
-  EX_HEIGHT_RIDE_MINE,    // 自分のハスに乗っている( =HASU_EX_OBJ_IDX_MINE
-  EX_HEIGHT_RIDE_OTHER,   // 周りのハスに乗っている( =HASU_EX_OBJ_IDX_OTHER
-  EX_HEIGHT_RIDE_NO,      // 乗っていない
+  EX_HEIGHT_RIDE_MINE,    ///< 自分のハスに乗っている( =HASU_EX_OBJ_IDX_MINE
+  EX_HEIGHT_RIDE_OTHER,   ///< 周りのハスに乗っている( =HASU_EX_OBJ_IDX_OTHER
+  EX_HEIGHT_RIDE_NO,      ///< 乗っていない
 
 } EX_HEIGHT_RIDE_TYPE;
 
 
-#define HASU_NUM   (11)   // ハスの個数
+#define HASU_NUM   (11)   ///< ハスの個数
 
-#define HASU_Y      (-4*FX32_ONE) // ハスの高さ(4ユニット)
-#define EX_HEIGHT_Y (-4*FX32_ONE) // 拡張高さ(4ユニット)
+#define HASU_Y      (-4*FX32_ONE) ///< ハスの高さ(4ユニット)
+#define EX_HEIGHT_Y (-4*FX32_ONE) ///< 拡張高さ(4ユニット)
 
-// ハス座標
-#define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
-#define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
-#define HASU2_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　X座標
-#define HASU2_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　Z座標
-#define HASU3_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　X座標
-#define HASU3_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　Z座標
-#define HASU4_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　X座標
-#define HASU4_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　Z座標
-#define HASU5_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　X座標
-#define HASU5_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　Z座標
-#define HASU6_X    ( 6 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　X座標
-#define HASU6_Z    (31 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　Z座標
-#define HASU7_X    (12 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　X座標
-#define HASU7_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　Z座標
-#define HASU8_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　X座標
-#define HASU8_Z    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　Z座標
-#define HASU9_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　X座標
-#define HASU9_Z    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　Z座標
-#define HASU10_X   (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　X座標
-#define HASU10_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　Z座標
-#define HASU11_X   (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　X座標
-#define HASU11_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
+///< ハス座標
+#define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスA　X座標
+#define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスA　Z座標
+#define HASU2_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスB　X座標
+#define HASU2_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスB　Z座標
+#define HASU3_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスC　X座標
+#define HASU3_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスC　Z座標
+#define HASU4_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスD　X座標
+#define HASU4_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスD　Z座標
+#define HASU5_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスE　X座標
+#define HASU5_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスE　Z座標
+#define HASU6_X    ( 6 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスF　X座標
+#define HASU6_Z    (31 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスF　Z座標
+#define HASU7_X    (12 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスG　X座標
+#define HASU7_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスG　Z座標
+#define HASU8_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスH　X座標
+#define HASU8_Z    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスH　Z座標
+#define HASU9_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスI　X座標
+#define HASU9_Z    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスI　Z座標
+#define HASU10_X   (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスJ　X座標
+#define HASU10_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスJ　Z座標
+#define HASU11_X   (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスK　X座標
+#define HASU11_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスK　Z座標
 
-// クリア後のハス座標
-#define HASU1_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
-#define HASU1_CLEAR_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
-#define HASU2_CLEAR_X    (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　X座標
-#define HASU2_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　Z座標
-#define HASU3_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　X座標
-#define HASU3_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　Z座標
-#define HASU4_CLEAR_X    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　X座標
-#define HASU4_CLEAR_Z    (52 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　Z座標
-#define HASU5_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　X座標
-#define HASU5_CLEAR_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　Z座標
-#define HASU6_CLEAR_X    ( 9 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　X座標
-#define HASU6_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　Z座標
-#define HASU7_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　X座標
-#define HASU7_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　Z座標
-#define HASU8_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　X座標
-#define HASU8_CLEAR_Z    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　Z座標
-#define HASU9_CLEAR_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　X座標
-#define HASU9_CLEAR_Z    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　Z座標
-#define HASU10_CLEAR_X   (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　X座標
-#define HASU10_CLEAR_Z   (61 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　Z座標
-#define HASU11_CLEAR_X   (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　X座標
-#define HASU11_CLEAR_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
+///< クリア後のハス座標
+#define HASU1_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスA　X座標
+#define HASU1_CLEAR_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスA　Z座標
+#define HASU2_CLEAR_X    (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスB　X座標
+#define HASU2_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスB　Z座標
+#define HASU3_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスC　X座標
+#define HASU3_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスC　Z座標
+#define HASU4_CLEAR_X    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスD　X座標
+#define HASU4_CLEAR_Z    (52 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスD　Z座標
+#define HASU5_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスE　X座標
+#define HASU5_CLEAR_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスE　Z座標
+#define HASU6_CLEAR_X    ( 9 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスF　X座標
+#define HASU6_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスF　Z座標
+#define HASU7_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスG　X座標
+#define HASU7_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスG　Z座標
+#define HASU8_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスH　X座標
+#define HASU8_CLEAR_Z    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスH　Z座標
+#define HASU9_CLEAR_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスI　X座標
+#define HASU9_CLEAR_Z    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスI　Z座標
+#define HASU10_CLEAR_X   (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスJ　X座標
+#define HASU10_CLEAR_Z   (61 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスJ　Z座標
+#define HASU11_CLEAR_X   (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスK　X座標
+#define HASU11_CLEAR_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       ///< ハスK　Z座標
 
-#define HASU_ID_CLEAR   (3)   // 乗るとクリアとするハスID
+#define HASU_ID_CLEAR   (3)   ///< 乗るとクリアとするハスID
 
-// アニメ
-#define HASU_ANM        (0)   // 常時たゆわう
-#define HASU_ANM_MOVE   (1)   // 降りるとき
+///< アニメ
+#define HASU_ANM        (0)   ///< 常時たゆわう
+#define HASU_ANM_MOVE   (1)   ///< 降りるとき
 
-#define ANM_HIT_RIPPLE_MINE   (0)     // 衝突波紋(自分)
-#define ANM_HIT_RIPPLE_OTHER  (1)     // 衝突波紋(相手)
+#define ANM_HIT_RIPPLE_MINE   (0)     ///< 衝突波紋(自分)
+#define ANM_HIT_RIPPLE_OTHER  (1)     ///< 衝突波紋(相手)
 
-// 水しぶきの種類
+/**
+ * 水しぶきの種類
+ */
 enum {
-  ANM_SPLASH,       // 水しぶき(着水：その場)
-  ANM_SPLASH_MOVE,  // 水しぶき(着水：前方)
-  ANM_HIT_SPLASH,   // 水しぶき(衝突)
+  ANM_SPLASH,       ///< 水しぶき(着水：その場)
+  ANM_SPLASH_MOVE,  ///< 水しぶき(着水：前方)
+  ANM_HIT_SPLASH,   ///< 水しぶき(衝突)
 };
 
-// タスク
-#define TASK_MAX        (9)   // 移動波紋6 + 衝突波紋2 + 水しぶき1
+///< タスク
+#define TASK_MAX        (9)   ///< 移動波紋6 + 衝突波紋2 + 水しぶき1
 
 //=============================================================================
 /**
@@ -148,79 +150,79 @@ enum {
 */
 //=============================================================================
 
-//-------------------------------------
-///	ANIME用タスクワーク
-//=====================================
+/**
+ * ANIME用タスクワーク
+ */
 typedef struct {
-  BOOL                is_enable;    // 動作しているか
-  FLD_EXP_OBJ_CNT_PTR exp_obj;
-  u16                 obj_idx;
-  u8                  anm_num;
+  BOOL                is_enable;    ///< 動作しているか
+  FLD_EXP_OBJ_CNT_PTR exp_obj;      ///< 拡張3Dモデルコントローラ
+  u16                 obj_idx;      ///< OBJインデックス
+  u8                  anm_num;      ///< アニメ総数
 } ANM_TASK_WORK;
 
-//-------------------------------------
-///	ジム内部中の一時ワーク
-//=====================================
+/**
+ * ジム内部中の一時ワーク
+ */
 typedef struct {
-  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
-  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
-  GYM_WATER_SV_WORK   *p_sv_wk;       // セーブワーク
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        ///< 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    ///< フィールドマップ
+  GYM_WATER_SV_WORK   *p_sv_wk;       ///< セーブワーク
 
-  ANM_TASK_WORK       anm_task_wk[ TASK_MAX ];
+  ANM_TASK_WORK       anm_task_wk[ TASK_MAX ];  ///< アニメ用タスクのワーク
 
-  EX_HEIGHT_RIDE_TYPE now_hasu_ride;  // ハスに乗っているか
-  BOOL                is_anm_hasu;    // ハス降りるアニメフラグ
-  u16                 anm_hasu_obj;   // ↑のハスOBJ
-  u8                  ex_height_idx;  // 拡張高さインデックス         
+  EX_HEIGHT_RIDE_TYPE now_hasu_ride;  ///< ハスに乗っているか
+  BOOL                is_anm_hasu;    ///< ハス降りるアニメフラグ
+  u16                 anm_hasu_obj;   ///< ↑のハスOBJ
+  u8                  ex_height_idx;  ///< 拡張高さインデックス         
 } GYM_WATER_TMP;
 
-//-------------------------------------
-///	ハス移動ワーク
-//=====================================
+/**
+ * ハス移動ワーク
+ */
 typedef struct {
 
   // 移動用
-  int               frame;  // 現在のフレーム数
-  int            endFrame;  // 最終フレーム数
-  VecFx32        startPos;  // 移動開始位置
-  VecFx32          endPos;  // 最終位置
+  int               frame;  ///< 現在のフレーム数
+  int            endFrame;  ///< 最終フレーム数
+  VecFx32        startPos;  ///< 移動開始位置
+  VecFx32          endPos;  ///< 最終位置
 
   // 上下ゆれ用
-  s16              Height;  // ゆれ高さ
-  u32                Sync;  // 1周期するのにかかるシンク数
-  u32             NowSync;  // 現在のシンク
-  BOOL              First;  // 最初のゆれフラグ
+  s16              Height;  ///< ゆれ高さ
+  u32                Sync;  ///< 1周期するのにかかるシンク数
+  u32             NowSync;  ///< 現在のシンク
+  BOOL              First;  ///< 最初のゆれフラグ
 } HASU_MOVE_WORK;
 
-//-------------------------------------
-///	ハス衝突の反動ゆれワーク
-//=====================================
+/**
+ * ハス衝突の反動ゆれワーク
+ */
 typedef struct {
-  VecFx32        startPos;  // 移動開始位置
-  s16               Width;  // ゆれ幅
-  u32                Sync;  // 1周期するのにかかるシンク数
-  u32             NowSync;  // 現在のシンク
+  VecFx32        startPos;  ///< 移動開始位置
+  s16               Width;  ///< ゆれ幅
+  u32                Sync;  ///< 1周期するのにかかるシンク数
+  u32             NowSync;  ///< 現在のシンク
 } HASU_REACTION_WORK;
 
-//-------------------------------------
-///	ハスイベントワーク
-//=====================================
+/**
+ * ハスイベントワーク
+ */
 typedef struct {
-  GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER    *player;      // 自機
+  GAMESYS_WORK    *gsys;        ///< ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER    *player;      ///< 自機
 
-  HASU_MOVE_WORK  move_wk;      // 移動ワーク
-  HASU_REACTION_WORK  reaction_wk;  // 反動ワーク
+  HASU_MOVE_WORK  move_wk;      ///< 移動ワーク
+  HASU_REACTION_WORK  reaction_wk;  ///< 反動ワーク
 
-  u8              id;           // ハスID
-  u16             obj_idx;      // OBJインデックス
+  u8              id;           ///< ハスID
+  u16             obj_idx;      ///< OBJインデックス
 
-  // 衝突用
-  BOOL            is_collision; // ハスに衝突したか
-  u16             other_obj_idx;// 衝突したハスOBJインデックス
-  u16             other_move_distance;  // 衝突ハスの移動距離
-  s16             wait_frame;   // 待ちフレーム
+  ///< 衝突用
+  BOOL            is_collision; ///< ハスに衝突したか
+  u16             other_obj_idx;///< 衝突したハスOBJインデックス
+  u16             other_move_distance;  ///< 衝突ハスの移動距離
+  s16             wait_frame;   ///< 待ちフレーム
 
   FIELD_CAMERA*   camera;
   const VecFx32   *WatchTarget;
@@ -236,31 +238,31 @@ typedef struct {
 //=============================================================================
 // リソースの並び順
 enum {
-  RESID_HASU_MDL = 0,     // ハス
-  RESID_HASU_ANM,         // ハスたゆわう(常時)
-  RESID_HASU_ANM_MOVE,    // ハス揺れる（降りるとき）
+  RESID_HASU_MDL = 0,     ///< ハス
+  RESID_HASU_ANM,         ///< ハスたゆわう(常時)
+  RESID_HASU_ANM_MOVE,    ///< ハス揺れる（降りるとき）
 
-  RESID_WATER1_MDL,       // 衝突波紋(自機側)
+  RESID_WATER1_MDL,       ///< 衝突波紋(自機側)
   RESID_WATER1_ANM_IMA,   // 
   RESID_WATER1_ANM_ITA,   // 
-  RESID_WATER2_MDL,       // 衝突波紋(相手側)
+  RESID_WATER2_MDL,       ///< 衝突波紋(相手側)
   RESID_WATER2_ANM_IMA,   // 
   RESID_WATER2_ANM_ITA,   // 
-  RESID_WATER3_MDL,       // 移動波紋
+  RESID_WATER3_MDL,       ///< 移動波紋
   RESID_WATER3_ANM_IMA,   // 
   RESID_WATER3_ANM_ITA,   // 
-  RESID_WATER4_MDL,       // 水しぶき(着水)
+  RESID_WATER4_MDL,       ///< 水しぶき(着水)
   RESID_WATER4_ANM_IMA,   // 
   RESID_WATER4_ANM_ITA,   // 
-  RESID_WATER5_MDL,       // 水しぶき(衝突)
+  RESID_WATER5_MDL,       ///< 水しぶき(衝突)
   RESID_WATER5_ANM_IMA,   // 
   RESID_WATER5_ANM_ITA,   // 
 
   // スクリプト ジムリーダー用
-  RESID_LEADER_SPLASH_MDL,      // 水しぶき
+  RESID_LEADER_SPLASH_MDL,      ///< 水しぶき
   RESID_LEADER_SPLASH_ANM_IMA,  //
   RESID_LEADER_SPLASH_ANM_ITA,  //
-  RESID_LEADER_RETURN_MDL,      // 帰るアニメ
+  RESID_LEADER_RETURN_MDL,      ///< 帰るアニメ
   RESID_LEADER_RETURN_ANM_ICA,  // 
   RESID_LEADER_RETURN_ANM_IMA,  // 
   RESID_LEADER_RETURN_ANM_ITA,  // 
@@ -268,34 +270,34 @@ enum {
 
 // OBJインデックス
 enum {
-  OBJ_HASU_1,   // ハスA
-  OBJ_HASU_2,   // ハスB
-  OBJ_HASU_3,   // ハスC
-  OBJ_HASU_4,   // ハスD
-  OBJ_HASU_5,   // ハスE
-  OBJ_HASU_6,   // ハスF
-  OBJ_HASU_7,   // ハスG
-  OBJ_HASU_8,   // ハスH
-  OBJ_HASU_9,   // ハスI
-  OBJ_HASU_10,  // ハスJ
-  OBJ_HASU_11,  // ハスK
+  OBJ_HASU_1,   ///< ハスA
+  OBJ_HASU_2,   ///< ハスB
+  OBJ_HASU_3,   ///< ハスC
+  OBJ_HASU_4,   ///< ハスD
+  OBJ_HASU_5,   ///< ハスE
+  OBJ_HASU_6,   ///< ハスF
+  OBJ_HASU_7,   ///< ハスG
+  OBJ_HASU_8,   ///< ハスH
+  OBJ_HASU_9,   ///< ハスI
+  OBJ_HASU_10,  ///< ハスJ
+  OBJ_HASU_11,  ///< ハスK
 
   // 演出
-  EFFECT_HIT_RIPPLE1,   // 衝突波紋(自分)
-  EFFECT_HIT_RIPPLE2,   // 衝突波紋(相手)
-  EFFECT_MOVE_RIPPLE1,  // 移動波紋
-  EFFECT_MOVE_RIPPLE2,  // 移動波紋
-  EFFECT_MOVE_RIPPLE3,  // 移動波紋
-  EFFECT_MOVE_RIPPLE4,  // 移動波紋
-  EFFECT_MOVE_RIPPLE5,  // 移動波紋
-  EFFECT_MOVE_RIPPLE6,  // 移動波紋
-  EFFECT_MOVE_RIPPLE_MAX, // 移動波紋 総数
-  EFFECT_SPLASH = EFFECT_MOVE_RIPPLE_MAX, // 水しぶき
-  EFFECT_HIT_SPLASH,    // 水しぶき(衝突)
+  EFFECT_HIT_RIPPLE1,   ///< 衝突波紋(自分)
+  EFFECT_HIT_RIPPLE2,   ///< 衝突波紋(相手)
+  EFFECT_MOVE_RIPPLE1,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE2,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE3,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE4,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE5,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE6,  ///< 移動波紋
+  EFFECT_MOVE_RIPPLE_MAX, ///< 移動波紋 総数
+  EFFECT_SPLASH = EFFECT_MOVE_RIPPLE_MAX, ///< 水しぶき
+  EFFECT_HIT_SPLASH,    ///< 水しぶき(衝突)
 
   // ジムリーダー用
-  EFFECT_LEADER_SPLASH, // 水しぶき
-  EFFECT_LEADER_RETURN, // 帰るアニメ
+  EFFECT_LEADER_SPLASH, ///< 水しぶき
+  EFFECT_LEADER_RETURN, ///< 帰るアニメ
 
   OBJ_NUM,
 };
@@ -303,33 +305,33 @@ enum {
 // RES
 static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
-  { ARCID_GYM_WATER, NARC_gym_water_hasu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_hasu_shake_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
-  { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
-  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_shake_nsbca, GFL_G3D_UTIL_RESARC }, ///< ICA
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, ///< ICA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water4_shibu_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
 
   // ジムリーダー用
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbmd, GFL_G3D_UTIL_RESARC }, ///< IMD
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbca, GFL_G3D_UTIL_RESARC }, ///< ICA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbma, GFL_G3D_UTIL_RESARC }, ///< IMA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbta, GFL_G3D_UTIL_RESARC }, ///< ITA
 
 };
 
@@ -582,16 +584,19 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
  *          データ
  */
 //=============================================================================
-//-------------------------------------
-///	ハスイベント起動位置パラメータ
-//=====================================
+/**
+ * ハスイベント起動位置パラメータ
+ */
 typedef struct {
-  u8    gx;       // 起動Xグリッド座標
-  u8    gz;       // 起動Zグリッド座標
-  u8    move_dir; // 移動方向
-  u8    move_distance;  // 移動距離
+  u8    gx;       ///< 起動Xグリッド座標
+  u8    gz;       ///< 起動Zグリッド座標
+  u8    move_dir; ///< 移動方向
+  u8    move_distance;  ///< 移動距離
 } HASU_POS_PARAM;
 
+/**
+ * ハスの位置情報
+ */
 static const HASU_POS_PARAM HasuPosParam[ HASU_POS_NUM ] = {
   { HASU_POS_0_X, HASU_POS_0_Z, HASU_POS_0_DIR, HASU_POS_0_MOVE },
   { HASU_POS_1_X, HASU_POS_1_Z, HASU_POS_1_DIR, HASU_POS_1_MOVE },
@@ -639,24 +644,24 @@ static const HASU_POS_PARAM HasuPosParam[ HASU_POS_NUM ] = {
 */
 //=============================================================================
 
-// EXPOBJ
+//! EXPOBJ
 static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk );
 static void EXPOBJ_ObjDell( GYM_WATER_TMP *p_wk );
 static void EXPOBJ_ObjMain( GYM_WATER_TMP *p_wk );
 
 
-// HASU
+//! HASU
 static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32 z, u16 *p_obj_idx );
 static BOOL HASU_GetCenterPos( u8 id, int *p_gx, int *p_gz );
 static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk );
 static void HASU_InitExHeight( GYM_WATER_TMP *p_wk );
 static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk );
 
-// HASUイベント
+//! HASUイベント
 static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u16 obj_idx );
 static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk );
 
-// HASU移動
+//! HASU移動
 static int  HASU_EVENT_GetMoveDistance( HASU_EVENT_WORK *p_wk, u8 id );
 static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos );
 static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk );
@@ -665,7 +670,7 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk );
 static void HASU_EVENT_ReactionInit( HASU_EVENT_WORK *p_wk );
 static BOOL HASU_EVENT_ReactionMain( HASU_EVENT_WORK *p_wk );
 
-// ANIME
+//! ANIME
 static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk, EX_HEIGHT_RIDE_TYPE ride );
 static BOOL ANIME_HASU_LeaveCheck( GYM_WATER_TMP *p_wk );
 static void ANIME_HASU_LeaveEnd( GYM_WATER_TMP *p_wk );
@@ -673,19 +678,19 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk, u16 type );
 static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx );
 static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx, const u8 anm_type );
 
-// EX_HEIGHT 拡張高さ
+//! EX_HEIGHT 拡張高さ
 static EX_HEIGHT_RIDE_TYPE EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
 static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk ); 
 static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id );
 static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
 
-// TASK追加
+//! TASK追加
 static void ANM_TASK_Add( GYM_WATER_TMP *p_wk, u16 obj_idx, u8 anm_num );
-// task関数
+//! task関数
 static void tcb_CheckAnime( GFL_TCB *tcb, void* work );
 
 //-------------------------------------
-///	セーブ情報
+//!	セーブ情報
 //=====================================
 static void SAVE_SetHasuPos( GYM_WATER_SV_WORK *p_wk, const fx32 x, const fx32 z, const int idx );
 static void SAVE_GetHasuPos( GYM_WATER_SV_WORK *p_wk, fx32 *p_x, fx32 *p_z, const int idx );
@@ -693,7 +698,7 @@ static void SAVE_SetSaveFlag( GYM_WATER_SV_WORK *p_wk );
 static BOOL SAVE_GetSaveFlag( GYM_WATER_SV_WORK *p_wk );
 static void SAVE_SetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx, const u8 obj_idx );
 static u8   SAVE_GetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx );
-// ギミック外でも破棄されない
+//! ギミック外でも破棄されない
 static void SAVE_SetClearFlag( GIMMICKWORK* p_gmkwk, const BOOL flag );
 static BOOL SAVE_GetClearFlag( GIMMICKWORK* p_gmkwk );
 

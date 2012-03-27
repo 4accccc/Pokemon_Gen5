@@ -31,10 +31,10 @@ extern void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork);
 extern void GYM_FLY_End(FIELDMAP_WORK *fieldWork);
 extern void GYM_FLY_Move(FIELDMAP_WORK *fieldWork);
 
-// 時間監視
+//! 時間監視
 extern GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys );
 
-// スクリプトコマンドで呼ばれる関数
+//! スクリプトコマンドで呼ばれる関数
 extern GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys, const u16 obj_id );
 
 

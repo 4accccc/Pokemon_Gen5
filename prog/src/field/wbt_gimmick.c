@@ -67,38 +67,38 @@
 #define VISION_Y  (0)
 #define VISION_Z  (160 << FX32_SHIFT)
 #define EFFECT_X  (256 << FX32_SHIFT)
-#define EFFECT_X_MARGIN   (EFFECT_X*2)    // 差調整
+#define EFFECT_X_MARGIN   (EFFECT_X*2)    ///< 差調整
 #define EFFECT_Y  (0)
 #define EFFECT_Z  (256 << FX32_SHIFT)
 
-#define RES_E_NUM (4)   // 片方の通路エフェクトのリソース総数
+#define RES_E_NUM (4)   ///< 片方の通路エフェクトのリソース総数
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	ギミック一時ワーク
-//=====================================
+/**
+ * ギミック一時ワーク
+ */
 typedef struct {
-  HEAPID              heapID;         // ヒープID
+  HEAPID              heapID;         ///< ヒープID
 
-  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
-  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        ///< 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    ///< フィールドマップ
   PLAYER_WORK         *p_player_wk;
 
   // ユニット追加フラグ
-  BOOL      is_unit_effect;     // EXPOBJ_UNIT_IDX_EFFECT
+  BOOL      is_unit_effect;     ///< EXPOBJ_UNIT_IDX_EFFECT
 
   // 発動フラグ
-  BOOL      move_e_win;         // 優勝エフェクト
+  BOOL      move_e_win;         ///< 優勝エフェクト
 
-  // trtype
+  //! trtype
   u16       trtype1;
   u16       trtype2;
 
-  // 顔グラフィックテクスチャ転送用
+  //! 顔グラフィックテクスチャ転送用
   GFL_BMP_DATA* img_bitmap;
   NNSG2dCharacterData *chr;
   NNSG2dPaletteData   *plt;
@@ -492,14 +492,14 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 	NELEMS(obj_3d_table),		//オブジェクト数
 };
 
-//-------------------------------------
-///	テクスチャデータ
-//=====================================
+/**
+ * テクスチャデータ
+ */
 typedef enum
 {
-  TEX_INDEX_LEFT,     // 左上の名前
-  TEX_INDEX_RIGHT,    // 右下の名前
-  TEX_INDEX_WIN,      // 優勝者の名前
+  TEX_INDEX_LEFT,     ///< 左上の名前
+  TEX_INDEX_RIGHT,    ///< 右下の名前
+  TEX_INDEX_WIN,      ///< 優勝者の名前
 
   TEX_INDEX_MAX,
 }TEX_INDEX;
@@ -529,8 +529,8 @@ static char* kao_plt_name[ TEX_INDEX_MAX ] =
   "wbt_v_kao2_pl",
   "wbt_v_kao1_pl",
 };
-#define TEX_W   (4)     // テクスチャ幅(キャラ)
-#define TEX_H   (4)     // テクスチャ幅(キャラ)
+#define TEX_W   (4)     ///< テクスチャ幅(キャラ)
+#define TEX_H   (4)     ///< テクスチャ幅(キャラ)
 
 //=============================================================================
 /**
@@ -538,25 +538,25 @@ static char* kao_plt_name[ TEX_INDEX_MAX ] =
  */
 //=============================================================================
 
-// EXPOBJ
+//! EXPOBJ
 static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk );
 static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_num, VecFx32 pos );
 
-// アニメ管理
-// 共通
+//! アニメ管理
+//! 共通
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop );
 static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
 
-// 爆破エフェクト
+//! 爆破エフェクト
 static void ANM_VS1_L_Play( WBT_GMK_TMP *p_wk );
 static void ANM_VS1_R_Play( WBT_GMK_TMP *p_wk );
 static void ANM_VS2_Play( WBT_GMK_TMP *p_wk );
 static void ANM_VS3_Play( WBT_GMK_TMP *p_wk );
 
 
-// 背景ビジョン
+//! 背景ビジョン
 static void VISION_Setup( WBT_GMK_TMP *p_wk );
 static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type );
 static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, GFL_FONT* fontHandle, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
@@ -574,24 +574,26 @@ static void SetResName(NNSG3dResName *outName,const char *inName);
 static void* GetTexStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 static void* GetPlttStartVRAMAdrByName(NNSG3dResTex *inResTex, const char *name);
 
-// 通路エフェクト
-// チャンピオンズの設定
+//! 通路エフェクト
+//! チャンピオンズの設定
 static void EFFECT_ChampInit( WBT_GMK_TMP *p_wk, u8 pos );
 
-// task
-// タスクワーク
+//! task
+/**
+ * タスクワーク
+ */
 typedef struct {
   u16           seq;
-  WBT_GMK_TMP   *p_gmk_wk;    // ギミックワーク
+  WBT_GMK_TMP   *p_gmk_wk;    ///< ギミックワーク
 } VISION_TASK_WORK;
-// VSビジョン演出タスク
+//! VSビジョン演出タスク
 static void VISION_VS_TASK_Add( WBT_GMK_TMP *p_wk );
 static FIELD_TASK_RETVAL VisionVsTaskFunc( void* wk );
-// 優勝ビジョン演出タスク
+//! 優勝ビジョン演出タスク
 static void VISION_WIN_TASK_Add( WBT_GMK_TMP *p_wk );
 static FIELD_TASK_RETVAL VisionWinTaskFunc( void* wk );
 
-// チャンピオンズエフェクト再生タスク
+//! チャンピオンズエフェクト再生タスク
 static void CHAMP_TASK_Add( WBT_GMK_TMP *p_wk );
 static FIELD_TASK_RETVAL ChampTaskFunc( void* wk );
 

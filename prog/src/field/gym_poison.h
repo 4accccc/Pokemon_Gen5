@@ -31,7 +31,7 @@ extern void GYM_POISON_Setup(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_POISON_End(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_POISON_Move(FIELDMAP_WORK *p_fieldmap);
 
-// スクリプトコマンドで呼ばれる関数
+//! スクリプトコマンドで呼ばれる関数
 extern void GYM_POISON_AnmStop(GAMESYS_WORK *gsys, const int idx);
 extern void GYM_POISON_IssObjStop(GAMESYS_WORK *gsys, const int obj_id);
 

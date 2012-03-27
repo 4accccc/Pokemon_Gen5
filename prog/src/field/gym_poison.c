@@ -56,39 +56,39 @@
 #define GYM_POISON_UNIT_IDX (0)
 #define GYM_POISON_TMP_ASSIGN_ID  (1)
 
-#define SPEAKER1_X    (29 << FX32_SHIFT)      // スピーカー1　X座標
-#define SPEAKER1_Y    (0 << FX32_SHIFT)      // スピーカー1　Y座標
-#define SPEAKER1_Z    (78 << FX32_SHIFT)     // スピーカー1　Z座標
-#define SPEAKER2_X    (243 << FX32_SHIFT)     // スピーカー2  X座標
-#define SPEAKER2_Y    (0 << FX32_SHIFT)      // スピーカー2  Y座標
-#define SPEAKER2_Z    (78 << FX32_SHIFT)      // スピーカー2  Z座標
-#define SPEAKER3_X    (227 << FX32_SHIFT)     // スピーカー3  X座標
-#define SPEAKER3_Y    (18 << FX32_SHIFT)      // スピーカー3  Y座標
-#define SPEAKER3_Z    (25 << FX32_SHIFT)      // スピーカー3  Z座標
+#define SPEAKER1_X    (29 << FX32_SHIFT)      ///< スピーカー1　X座標
+#define SPEAKER1_Y    (0 << FX32_SHIFT)      ///< スピーカー1　Y座標
+#define SPEAKER1_Z    (78 << FX32_SHIFT)     ///< スピーカー1　Z座標
+#define SPEAKER2_X    (243 << FX32_SHIFT)     ///< スピーカー2  X座標
+#define SPEAKER2_Y    (0 << FX32_SHIFT)      ///< スピーカー2  Y座標
+#define SPEAKER2_Z    (78 << FX32_SHIFT)      ///< スピーカー2  Z座標
+#define SPEAKER3_X    (227 << FX32_SHIFT)     ///< スピーカー3  X座標
+#define SPEAKER3_Y    (18 << FX32_SHIFT)      ///< スピーカー3  Y座標
+#define SPEAKER3_Z    (25 << FX32_SHIFT)      ///< スピーカー3  Z座標
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	マップ位置チェック
-//=====================================
+/**
+ * マップ位置チェック
+ */
 typedef struct {
-  FIELDMAP_WORK   *p_fieldmap;        // フィールドマップ
-  ISS_SWITCH_SYS  *p_iss_switch;      // スイッチiss
-  u8              volume_idx;         // 音量インデックス
+  FIELDMAP_WORK   *p_fieldmap;        ///< フィールドマップ
+  ISS_SWITCH_SYS  *p_iss_switch;      ///< スイッチiss
+  u8              volume_idx;         ///< 音量インデックス
 } MAP_WORK;
 
 
-//-------------------------------------
-///	ジム内部中の一時ワーク
-//=====================================
+/**
+ * ジム内部中の一時ワーク
+ */
 typedef struct {
-  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        ///< 拡張3Dモデルコントローラ
   
   // 各ワーク
-  MAP_WORK    map_wk;     // マップワーク
+  MAP_WORK    map_wk;     ///< マップワーク
 
 } GYM_POISON_TMP;
 
@@ -97,15 +97,17 @@ typedef struct {
 //=============================================================================
 // マップデータ
 #include "../../../resource/fldmapdata/gimmick/gym_poison/map_array.cdat"
-// map_array.xlsの数字と同じ
+/**
+ * map_array.xlsの数字と同じ
+ */
 enum {
-  VOLUME_0 = 127,   // 100%
-  VOLUME_1 = 78,    // 61%
-  VOLUME_2 = 38,    // 30%
-  VOLUME_3 = 12,    // 10%
+  VOLUME_0 = 127,   ///< 100%
+  VOLUME_1 = 78,    ///< 61%
+  VOLUME_2 = 38,    ///< 30%
+  VOLUME_3 = 12,    ///< 10%
 };
 
-#define VOLUME_FADE_FRAME (30)      // ISSのボリュームフェードフレーム
+#define VOLUME_FADE_FRAME (30)      ///< ISSのボリュームフェードフレーム
 #define VOLUME_IDX_NULL   (0xffff)
 
 
@@ -188,12 +190,12 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 */
 //=============================================================================
 
-// EXPOBJ
+//! EXPOBJ
 static void EXPOBJ_ObjSet( GYM_POISON_TMP *p_wk, const BOOL visible );
 static void EXPOBJ_ObjDell( GYM_POISON_TMP *p_wk );
 static void EXPOBJ_ObjMain( GYM_POISON_TMP *p_wk );
 
-// MAP
+//! MAP
 static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap );
 static BOOL MAP_CheckPos( MAP_WORK *p_wk );
 static const int MAP_GetVolumeIdx( MAP_WORK *p_wk );

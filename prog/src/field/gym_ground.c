@@ -56,33 +56,33 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
-#define LIFT_MOVE_NUM      (4)   // 昇降リフト数
-#define LIFT_MOVE_SPD ( LIFT_MOVE_SPEED * FX32_ONE )              // 昇降リフトY座標加算値
-#define LIFT_Y        ( HEIGHT1 * FIELD_CONST_GRID_FX32_SIZE )    // 昇降リフトが上がった時の高さ
-#define LIFT_1_X      (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト1 X座標
-#define LIFT_1_Z      (29 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト1 Z座標
-#define LIFT_2_X      (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト2 X座標
-#define LIFT_2_Z      (29 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト2 Z座標
-#define LIFT_3_X      (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト3 X座標
-#define LIFT_3_Z      (62 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト3 Z座標
-#define LIFT_4_X      (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト4 X座標
-#define LIFT_4_Z      (62 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト4 Z座標
+#define LIFT_MOVE_NUM      (4)   ///< 昇降リフト数
+#define LIFT_MOVE_SPD ( LIFT_MOVE_SPEED * FX32_ONE )              ///< 昇降リフトY座標加算値
+#define LIFT_Y        ( HEIGHT1 * FIELD_CONST_GRID_FX32_SIZE )    ///< 昇降リフトが上がった時の高さ
+#define LIFT_1_X      (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト1 X座標
+#define LIFT_1_Z      (29 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト1 Z座標
+#define LIFT_2_X      (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト2 X座標
+#define LIFT_2_Z      (29 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト2 Z座標
+#define LIFT_3_X      (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト3 X座標
+#define LIFT_3_Z      (62 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト3 Z座標
+#define LIFT_4_X      (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト4 X座標
+#define LIFT_4_Z      (62 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< リフト4 Z座標
 
-#define LIFT_YACON_X  (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE )    // ヤーコンリフト
-#define LIFT_YACON_Z  (18 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // ヤーコンリフト
-#define LIFT_ENT_X    (11 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // エントランスリフト
-#define LIFT_ENT_Z    (87 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // エントランスリフト
+#define LIFT_YACON_X  (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE )    ///< ヤーコンリフト
+#define LIFT_YACON_Z  (18 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< ヤーコンリフト
+#define LIFT_ENT_X    (11 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< エントランスリフト
+#define LIFT_ENT_Z    (87 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    ///< エントランスリフト
 
-#define LIFT_NUM      (36)      // リフト数     
+#define LIFT_NUM      (36)      ///< リフト数     
 
-#define BELT_ANM_SPD  (0x6500)  // ベルトコンベアのアニメ速度
+#define BELT_ANM_SPD  (0x6500)  ///< ベルトコンベアのアニメ速度
 
 // 最初のリフトの位置
 // 最初のみ、歩いてライトが光る
-#define FIRST_LIFT_X  ( 6 )     // Xグリッド座標
-#define FIRST_LIFT_Z  ( 63 )    // Zグリッド座標
+#define FIRST_LIFT_X  ( 6 )     ///< Xグリッド座標
+#define FIRST_LIFT_Z  ( 63 )    ///< Zグリッド座標
 
-// WBの出口リフト移動から移植
+//! WBの出口リフト移動から移植
 #define F0_HEIGHT ( HEIGHT0*FIELD_CONST_GRID_FX32_SIZE )
 #define EXIT_LIFT_MOVE_SPD (2*FX32_ONE)
 
@@ -92,7 +92,9 @@
 */
 //=============================================================================
 
-// WBのソースから移植
+/**
+ * WBのソースから移植
+ */
 typedef struct SHAKE_WORK_tag
 {
   u8 Seq;
@@ -105,103 +107,106 @@ typedef struct SHAKE_WORK_tag
   VecFx32 OrgOffset;
 }SHAKE_WORK;
 
-//-------------------------------------
-// ジム内部中の一時ワーク
-//=====================================
+/**
+ * ジム内部中の一時ワーク
+ */
 typedef struct GYM_GROUND_TMP_tag
 {
-  HEAPID          heapID;       // ヒープID
+  HEAPID          heapID;       ///< ヒープID
 
-  FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
-  FIELDMAP_WORK       *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER        *player;  // 自機
+  FLD_EXP_OBJ_CNT_PTR exp_obj;  ///< 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER        *player;  ///< 自機
 
-  BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
-  BOOL            first_lift;   // 最初のリフトに到達したか
+  BOOL            lift_arrival[ LIFT_NUM ]; ///< リフト到達フラグ
+  BOOL            first_lift;   ///< 最初のリフトに到達したか
 
-  // 出口リフト用
-  const VecFx32 *watch;
+  const VecFx32 *watch; ///< 出口リフト用
 
 } GYM_GROUND_TMP;
 
-//-------------------------------------
-///	ベルトコンベアイベントワーク
-//=====================================
+/**
+ * ベルトコンベアイベントワーク
+ */
 typedef struct {
-  GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER    *player;      // 自機
+  GAMESYS_WORK    *gsys;        ///< ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER    *player;      ///< 自機
 
-  u8              belt_id;      // ベルトコンベア情報ID
+  u8              belt_id;      ///< ベルトコンベア情報ID
   u8              move_frame;
   u8              move_frame_num;
 } BELT_EVENT_WORK;
 
-//-------------------------------------
-///	昇降リフトイベントワーク
-//=====================================
+/**
+ * 昇降リフトイベントワーク
+ */
 typedef struct {
-  GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER    *player;      // 自機
+  GAMESYS_WORK    *gsys;        ///< ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER    *player;      ///< 自機
 
-  int             lift_id;      // 昇降リフトID 0-3
+  int             lift_id;      ///< 昇降リフトID 0-3
   u8              way;
-  fx32            now_height;   // 現在位置
-  fx32            dst_height;   // 移動後位置
-  fx32            add_val;      // 加算値
+  fx32            now_height;   ///< 現在位置
+  fx32            dst_height;   ///< 移動後位置
+  fx32            add_val;      ///< 加算値
 
-  u16             obj_idx;      // 差し替えようのモデル
+  u16             obj_idx;      ///< 差し替えようのモデル
 } LIFT_EVENT_WORK;
 
-//-------------------------------------
-///	出口リフトイベントワーク
-//=====================================
+/**
+ * 出口リフトイベントワーク
+ */
 typedef struct {
-  // WBの出口リフト処理と同じ
+  //! WBの出口リフト処理と同じ
   fx32          now_height;
   fx32          dst_height;
   fx32          add_val;
   SHAKE_WORK    ShakeWork;
   BOOL          exit;
 
-  int           obj_idx;    // 出口リフト or ヤーコンリフト
-  MMDL          *yacon_mmdl;// ヤーコンのMMDL
-  BOOL          is_yacon;   // ヤーコンリフトか
+  int           obj_idx;    ///< 出口リフト or ヤーコンリフト
+  MMDL          *yacon_mmdl;///< ヤーコンのMMDL
+  BOOL          is_yacon;   ///< ヤーコンリフトか
 } EXIT_LIFT_EVENT_WORK;
 
 
-// 3Dリソース
+//! 3Dリソース
 #include "gym_ground.cdat"
 
 //=============================================================================
 // ベルトコンベア情報
 //=============================================================================
-// ベルトコンベア種類
+/**
+ * ベルトコンベア種類
+ */
 typedef enum {
-  BELT_TYPE_UD,     // ベルトコンベア(縦)
-  BELT_TYPE_LR,     // ベルトコンベア(横)
-  BELT_TYPE_SP_UD,  // ベルトコンベア(縦)
-  BELT_TYPE_SP_LR,  // ベルトコンベア(横)
+  BELT_TYPE_UD,     ///< ベルトコンベア(縦)
+  BELT_TYPE_LR,     ///< ベルトコンベア(横)
+  BELT_TYPE_SP_UD,  ///< ベルトコンベア(縦)
+  BELT_TYPE_SP_LR,  ///< ベルトコンベア(横)
 } BELT_TYPE;
 
-// ベルトコンベアの長さ
+//! ベルトコンベアの長さ
 // ジャンプ２回分で２グリッド少なくなる
 #define BELT_UD_MOVE    (7)
 #define BELT_LR_MOVE    (4)
 #define BELT_SP_UD_MOVE (18)
 #define BELT_SP_LR_MOVE (14)
 
-// ベルトコンベア情報構造体
+/**
+ * ベルトコンベア情報構造体
+ */
 typedef struct {
-  BELT_TYPE   type;   // 種類
-  u8          x;      // Xグリッド座標
-  u8          z;      // Zグリッド座標
-  u8          dir;    // 向き
-  u8          lift_id;// 移動後のリフトのID
+  BELT_TYPE   type;   ///< 種類
+  u8          x;      ///< Xグリッド座標
+  u8          z;      ///< Zグリッド座標
+  u8          dir;    ///< 向き
+  u8          lift_id;///< 移動後のリフトのID
 } BELT_INFO;
 
-#define BELT_ID_MAX     (OBJ_BELT_NUM*2)       // ベルトコンベア起動位置の数
+#define BELT_ID_MAX     (OBJ_BELT_NUM*2)       ///< ベルトコンベア起動位置の数
 // ベルトコンベア1つにつき2箇所起動位置がある
 static const BELT_INFO BeltInfo[BELT_ID_MAX] = {
 //  TYPE          X  Z  dir
@@ -303,35 +308,35 @@ static const BELT_INFO BeltInfo[BELT_ID_MAX] = {
 */
 //=============================================================================
 
-// EXPOBJ
+//! EXPOBJ
 static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk );
 static void EXPOBJ_ObjDell( GYM_GROUND_TMP *p_wk );
 static void EXPOBJ_ObjMain( GYM_GROUND_TMP *p_wk );
 
-// ベルトコンベアイベント
+//! ベルトコンベアイベント
 static GMEVENT* BELT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u16 belt_id );
 static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk );
 
-// 座標からベルトコンベアIDを調べる
+//! 座標からベルトコンベアIDを調べる
 static u8 BELT_GetId( const int x, const int z, const u16 dir ); 
 static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const u8 dir );
 static void BELT_AnmStop( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id );
 
-// リフト
+//! リフト
 static void LIFT_Init( GYM_GROUND_TMP *p_wk );
 static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id );
 static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk );
 static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk );
 
-// スクリプトコマンド用
-// 昇降リフト
+//! スクリプトコマンド用
+//! 昇降リフト
 static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int lift_id, const int way );
 static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk );
 static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk );
 static void LIFT_EVENT_SetFogEnable( LIFT_EVENT_WORK *p_wk, const BOOL flag, const u16 obj_idx );
 static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk );
 
-// 出口リフト
+//! 出口リフト
 static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit, const BOOL yacon );
 static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk );
 static BOOL EXIT_LIFT_CheckArrive( EXIT_LIFT_EVENT_WORK *p_wk );
@@ -344,7 +349,7 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
 
 
 //-------------------------------------
-///	セーブ情報 ギミック外でも破棄されない
+//!	セーブ情報 ギミック外でも破棄されない
 //=====================================
 static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival );
 static void SAVE_GetLiftArrival( GIMMICKWORK* p_gmkwk, BOOL *arrival );

@@ -26,7 +26,7 @@ extern void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void WBT_GIMMICK_End( FIELDMAP_WORK *p_fieldmap );
 extern void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 
-// スクリプトコマンド用
+//! スクリプトコマンド用
 extern void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf1, STRBUF *strbuf2, u16 trtype1, u16 trtype2 );
 extern void WBT_GIMMICK_VisionChangeStart( FIELDMAP_WORK *p_fieldmap, u8 type );
 extern void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos );

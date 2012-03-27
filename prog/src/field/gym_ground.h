@@ -31,10 +31,10 @@ extern void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_GROUND_End(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap);
 
-// ベルトコンベア イベント
+//! ベルトコンベア イベント
 extern GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys );
 
-// スクリプトコマンド用
+//! スクリプトコマンド用
 extern GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id, const int way );
 extern GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL exit, const BOOL yacon );
 extern void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys );

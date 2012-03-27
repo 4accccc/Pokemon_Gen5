@@ -69,73 +69,75 @@
 #define GYM_FLY_UNIT_IDX (0)
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
-#define SE_PITCH_LOW            (-256)      // 低速のpitch    64*-4 -4音
-#define SE_PITCH_MIDDLE         (128)       // 中速のpitch    64*2
-#define SE_PITCH_HIGH           (256)       // 高速のpitch    64*4
-#define SE_PITCH_SUPER          (768)       // 超高速のpitch  64*12
+#define SE_PITCH_LOW            (-256)      ///< 低速のpitch    64*-4 -4音
+#define SE_PITCH_MIDDLE         (128)       ///< 中速のpitch    64*2
+#define SE_PITCH_HIGH           (256)       ///< 高速のpitch    64*4
+#define SE_PITCH_SUPER          (768)       ///< 超高速のpitch  64*12
 #define SE_PITCH_ADD            (16)
 
-#define FAN_SPEED_LOW           (0x1000)    // 低速のアニメ速度
-#define FAN_SPEED_MIDDLE        (0x2000)    // 中速のアニメ速度
-#define FAN_SPEED_HIGH          (0x3000)    // 高速のアニメ速度
-#define FAN_SPEED_SUPER         (0x4000)    // 超高速のアニメ速度(ショートカット用)
-#define FAN_SPEED_ADD           (0x260)     // アニメ加算値
+#define FAN_SPEED_LOW           (0x1000)    ///< 低速のアニメ速度
+#define FAN_SPEED_MIDDLE        (0x2000)    ///< 中速のアニメ速度
+#define FAN_SPEED_HIGH          (0x3000)    ///< 高速のアニメ速度
+#define FAN_SPEED_SUPER         (0x4000)    ///< 超高速のアニメ速度(ショートカット用)
+#define FAN_SPEED_ADD           (0x260)     ///< アニメ加算値
 
-#define WINDMETER_NUM_MAX       (17)        // 風力計の数
-#define WINDMETER_SPEED_LOW     (0x2000)    // 低速のアニメ速度
-#define WINDMETER_SPEED_MIDDLE  (0x5000)    // 中速のアニメ速度
-#define WINDMETER_SPEED_HIGH    (0xb000)    // 高速のアニメ速度
-#define WINDMETER_SPEED_SUPER   (0xf000)    // 超高速のアニメ速度(ショートカット用)
-#define WINDMETER_SPEED_ADD     (0x300)     // アニメ加算
+#define WINDMETER_NUM_MAX       (17)        ///< 風力計の数
+#define WINDMETER_SPEED_LOW     (0x2000)    ///< 低速のアニメ速度
+#define WINDMETER_SPEED_MIDDLE  (0x5000)    ///< 中速のアニメ速度
+#define WINDMETER_SPEED_HIGH    (0xb000)    ///< 高速のアニメ速度
+#define WINDMETER_SPEED_SUPER   (0xf000)    ///< 超高速のアニメ速度(ショートカット用)
+#define WINDMETER_SPEED_ADD     (0x300)     ///< アニメ加算
 
-#define BOX_NUM_MAX             (2)         // 貨物箱の数
+#define BOX_NUM_MAX             (2)         ///< 貨物箱の数
 
 // 吹き飛ばしイベント用
-#define STAY_WALK_NUM           (4)         // 何歩足踏みするか
+#define STAY_WALK_NUM           (4)         ///< 何歩足踏みするか
 //#define SHAKE_CAM_WIDTH         (3)         // 横揺れ幅
 //#define SHAKE_CAM_SYNC          (9)         // 1周期にかけるシンク数
 //#define SHAKE_CAM_TIME          (2)         // 揺れ回数
 //#define SHAKE_CAM_WAIT          (28)        // 待ちフレーム
 
 // 安全地帯吹き飛ばしイベント
-#define SHAKE_MMDL_WIDTH        (1)         // 横揺れ幅
-#define SHAKE_MMDL_SYNC         (4)         // 1周期にかけるシンク数
-#define SHAKE_MMDL_TIME         (6)         // ゆれ回数
-#define SHAKE_WAIT_TIME1        (20)        // 1回目のゆれ開始までの待ち
+#define SHAKE_MMDL_WIDTH        (1)         ///< 横揺れ幅
+#define SHAKE_MMDL_SYNC         (4)         ///< 1周期にかけるシンク数
+#define SHAKE_MMDL_TIME         (6)         ///< ゆれ回数
+#define SHAKE_WAIT_TIME1        (20)        ///< 1回目のゆれ開始までの待ち
 
 // ショートカット吹き飛ばしイベント用
-#define SHORTCUT_CAMERA_FRAME   (30)        // カメラ速度
-#define SHORTCUT_CAMERA_PITCH   (0x20d8)    // カメラ角度
-#define SHORTCUT_CAMERA_LEGTH   (0xD5 << FX32_SHIFT)  // カメラ距離
+#define SHORTCUT_CAMERA_FRAME   (30)        ///< カメラ速度
+#define SHORTCUT_CAMERA_PITCH   (0x20d8)    ///< カメラ角度
+#define SHORTCUT_CAMERA_LEGTH   (0xD5 << FX32_SHIFT)  ///< カメラ距離
 
 // map_array.cdatの配列の要素
-#define MAP_ARRAY_ROW           (51)        // マップの縦MAX
-#define MAP_ARRAY_COL           (23)        // マップの横MAX
-// map_array.xlsの数字と同じ
+#define MAP_ARRAY_ROW           (51)        ///< マップの縦MAX
+#define MAP_ARRAY_COL           (23)        ///< マップの横MAX
+/**
+ * map_array.xlsの数字と同じ
+ */
 enum{
-  MAP_ARRAY_BLOW = 0,     // 吹き飛べる
-  MAP_ARRAY_STOP,         // 吹き飛べない
-  MAP_ARRAY_TIMECOUNT_START,  // 時間計測開始
-  MAP_ARRAY_SHORTCUT,     // 帰り道ショートカット
-  MAP_ARRAY_TIMECOUNT_STOP,// 時間計測をしない
+  MAP_ARRAY_BLOW = 0,     ///< 吹き飛べる
+  MAP_ARRAY_STOP,         ///< 吹き飛べない
+  MAP_ARRAY_TIMECOUNT_START,  ///< 時間計測開始
+  MAP_ARRAY_SHORTCUT,     ///< 帰り道ショートカット
+  MAP_ARRAY_TIMECOUNT_STOP,///< 時間計測をしない
 };
 
-//-------------------------------------
-///	風力計状態
-//=====================================
+/**
+ * 風力計状態
+ */
 typedef enum {
-  WIND_STATE_LOW,     // 低速
-  WIND_STATE_MIDDLE,  // 中速
-  WIND_STATE_HIGH,    // 高速
-  WIND_STATE_SUPER,   // 超高速
+  WIND_STATE_LOW,     ///< 低速
+  WIND_STATE_MIDDLE,  ///< 中速
+  WIND_STATE_HIGH,    ///< 高速
+  WIND_STATE_SUPER,   ///< 超高速
 }WIND_STATE;
 
-//-------------------------------------
-/// 吹き飛ばしのHIT種類	
-//=====================================
+/**
+ * 吹き飛ばしのHIT種類	
+ */
 typedef enum {
-  BLOW_HIT_WALL,      // 壁にぶつかる
-  BLOW_HIT_NPC,       // NPCにぶつかる
+  BLOW_HIT_WALL,      ///< 壁にぶつかる
+  BLOW_HIT_NPC,       ///< NPCにぶつかる
 
   BLOW_HIT_MAX,
 } BLOW_HIT_TYPE;
@@ -146,86 +148,88 @@ typedef enum {
  *					構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-///	ファン
-//=====================================
+/**
+ * ファン
+ */
 typedef struct {
-  fx32    anm_speed;      // アニメーション再生の速度
-  fx32    anm_speed_max;  // アニメーション再生の目標速度
+  fx32    anm_speed;      ///< アニメーション再生の速度
+  fx32    anm_speed_max;  ///< アニメーション再生の目標速度
 
-  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  // 拡張3Dモデルコントローラ
+  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  ///< 拡張3Dモデルコントローラ
 } FAN_WORK;
 
-//-------------------------------------
-///	風力計
-//=====================================
+/**
+ * 風力計
+ */
 typedef struct {
-  fx32    anm_speed;      // アニメーション再生の速度
-  fx32    anm_speed_max;  // アニメーション再生の目標速度
+  fx32    anm_speed;      ///< アニメーション再生の速度
+  fx32    anm_speed_max;  ///< アニメーション再生の目標速度
 
-  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  // 拡張3Dモデルコントローラ
+  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  ///< 拡張3Dモデルコントローラ
 } WINDMETER_WORK;
 
-//-------------------------------------
-///	音管理
-//=====================================
+/**
+ * 音管理
+ */
 typedef struct {
-  int     pitch;        // 現pitch
-  int     pitch_max;    // pitchの目標
+  int     pitch;        ///< 現pitch
+  int     pitch_max;    ///< pitchの目標
 } SOUND_WORK;
 
 
-//ジム内部中の一時ワーク
+/**
+ * ジム内部中の一時ワーク
+ */
 typedef struct GYM_FLY_TMP_tag
 {
-  HEAPID  heapID;     // ヒープID
+  HEAPID  heapID;     ///< ヒープID
 
-  u8      state;          // 風速状態   WIND_STATE_XXX
+  u8      state;          ///< 風速状態   WIND_STATE_XXX
 
-  BOOL    time_start;     // 時間計測開始フラグ
-  u16     time;           // 時間計測用
+  BOOL    time_start;     ///< 時間計測開始フラグ
+  u16     time;           ///< 時間計測用
 
-  s8      alpha[2];       // α値(0～31)
-  BOOL    alpha_flag[2];  // α計算フラグ
-  BOOL    alpha_reset;    // 初期化フラグ
+  s8      alpha[2];       ///< α値(0～31)
+  BOOL    alpha_flag[2];  ///< α計算フラグ
+  BOOL    alpha_reset;    ///< 初期化フラグ
 
   FAN_WORK            fan_wk;
   WINDMETER_WORK      windmeter_wk;
   SOUND_WORK          sound;
 
-  FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
-  FIELD_PLAYER        *player;  // 自機
-	FIELD_SOUND         *p_sound; // サウンド情報
-  GYM_FLY_SV_WORK     *p_sv_wk; // セーブワーク
+  FLD_EXP_OBJ_CNT_PTR exp_obj;  ///< 拡張3Dモデルコントローラ
+  FIELD_PLAYER        *player;  ///< 自機
+	FIELD_SOUND         *p_sound; ///< サウンド情報
+  GYM_FLY_SV_WORK     *p_sv_wk; ///< セーブワーク
 
 }GYM_FLY_TMP;
 
-//-------------------------------------
-///	吹き飛ばしイベントワーク
-//=====================================
+/**
+ * 吹き飛ばしイベントワーク
+ */
 typedef struct {
-  GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER    *player;      // 自機
-  MMDL            *mmdl;        // 動作モデル
+  GAMESYS_WORK    *gsys;        ///< ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER    *player;      ///< 自機
+  MMDL            *mmdl;        ///< 動作モデル
 
-  BLOW_HIT_TYPE   hit_type;     // 衝突種類   BLOW_HIT_XXX
-  u16             time;         // 時間計測用
-  u8              stay_walk_cnt;// 足踏みカウント
-  BOOL            is_wall;      // 後ろがすぐ壁か？
-  u16             save_time;    // 時間保存用(安全地帯吹き飛ばしで使用)
+  BLOW_HIT_TYPE   hit_type;     ///< 衝突種類   BLOW_HIT_XXX
+  u16             time;         ///< 時間計測用
+  u8              stay_walk_cnt;///< 足踏みカウント
+  BOOL            is_wall;      ///< 後ろがすぐ壁か？
+  u16             save_time;    ///< 時間保存用(安全地帯吹き飛ばしで使用)
 } BLOW_EVENT_WORK;
 
-//-------------------------------------
-///	帰り道ショートカットイベントワーク
-//=====================================
+/**
+ * 帰り道ショートカットイベントワーク
+ */
 typedef struct {
-  GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
-  FIELD_PLAYER    *player;      // 自機
-  MMDL            *mmdl;        // 自機の動作モデル
+  GAMESYS_WORK    *gsys;        ///< ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  ///< フィールドマップ
+  FIELD_PLAYER    *player;      ///< 自機
+  MMDL            *mmdl;        ///< 自機の動作モデル
 
-  u8              stay_walk_cnt;// 足踏みカウント
+  u8              stay_walk_cnt;///< 足踏みカウント
 } SHORTCUT_EVENT_WORK;
 
 
@@ -239,48 +243,48 @@ typedef struct {
  *					static関数宣言
 */
 //=============================================================================
-// ジム初期化
+//! ジム初期化
 static void GYM_FLY_Init( GYM_FLY_TMP *p_wk, const u16 c_time );
-// 状態
+//! 状態
 static WIND_STATE WIND_GetState( const u16 c_time ); 
 static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state );
-// 吹き飛ばしイベント
+//! 吹き飛ばしイベント
 static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
-// 帰り道ショートカットイベント
+//! 帰り道ショートカットイベント
 static GMEVENT* SHORTCUT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk );
-// スクリプト用吹き飛ばしイベント
+//! スクリプト用吹き飛ばしイベント
 static GMEVENT* SCRIPT_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const u16 obj_id );
 static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk );
 
-// 吹き飛びの移動距離算出
+//! 吹き飛びの移動距離算出
 static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_TYPE *p_hit_type, s16 gx, s16 gz );
-// NPCにぶつかった時に、上を向かせる
+//! NPCにぶつかった時に、上を向かせる
 static BOOL BLOW_EVENT_HitMdl( FIELDMAP_WORK *p_fieldmap, FIELD_PLAYER *p_player );
 
-// EXPOBJ
+//! EXPOBJ
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
 static void EXPOBJ_ObjDell( GYM_FLY_TMP *p_wk );
 static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk );
 
-// FAN
+//! FAN
 static void FAN_Update( FAN_WORK *p_wk );
 static BOOL FAN_CheckAnmSpeed( const FAN_WORK *cp_wk );
 
-// WINDMETER
+//! WINDMETER
 static void WINDMETER_Update( WINDMETER_WORK *p_wk );
 static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk );
 
-// SOUND
+//! SOUND
 static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time );
 static void SOUND_ChangePitch( SOUND_WORK *p_wk, const WIND_STATE state );
 
 //-------------------------------------
 ///	セーブ情報
 //=====================================
-// GYM_FLY_SV_WORK
+//! GYM_FLY_SV_WORK
 static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag );
 static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk );
 static void SAVE_SetTime( GYM_FLY_SV_WORK *p_wk, const u16 time );
@@ -289,31 +293,35 @@ static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk );
 //=====================================
 // フィールドタスク関係
 //=====================================
-// モデルの平行移動
+/**
+ * モデルの平行移動
+ */
 typedef struct
 {
-  u8                  seq;  // シーケンス
-  FIELDMAP_WORK* fieldmap;  // 動作対象フィールドマップ
-  int               frame;  // 現在のフレーム数
-  int            endFrame;  // 最終フレーム数
-  VecFx32        startPos;  // 移動開始位置
-  VecFx32          endPos;  // 最終位置
-  MMDL              *mmdl;  // 対象モデル
+  u8                  seq;  ///< シーケンス
+  FIELDMAP_WORK* fieldmap;  ///< 動作対象フィールドマップ
+  int               frame;  ///< 現在のフレーム数
+  int            endFrame;  ///< 最終フレーム数
+  VecFx32        startPos;  ///< 移動開始位置
+  VecFx32          endPos;  ///< 最終位置
+  MMDL              *mmdl;  ///< 対象モデル
 
 } TASK_WORK;
 static FIELD_TASK_RETVAL  TransMMdl( void* wk );
 
-// モデルの振動
+/**
+ * モデルの振動
+ */
 typedef struct
 {
-  u8                  seq;  // シーケンス
-  FIELDMAP_WORK* fieldmap;  // 動作対象フィールドマップ
-  int               frame;  // 現在のフレーム数
-  VecFx32         basePos;  // 移動開始位置
-  MMDL              *mmdl;  // 対象モデル
+  u8                  seq;  ///< シーケンス
+  FIELDMAP_WORK* fieldmap;  ///< 動作対象フィールドマップ
+  int               frame;  ///< 現在のフレーム数
+  VecFx32         basePos;  ///< 移動開始位置
+  MMDL              *mmdl;  ///< 対象モデル
 
-  s16               width;  // ゆれ幅
-  u8                 time;  // 振動回数
+  s16               width;  ///< ゆれ幅
+  u8                 time;  ///< 振動回数
   u32                sync;  // 
   u32             nowSync;  // 
 

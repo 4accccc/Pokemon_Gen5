@@ -59,7 +59,9 @@
  *					構造体宣言
 */
 //=============================================================================
-//ジム内部中の一時ワーク
+/**
+ * ジム内部中の一時ワーク
+ */
 typedef struct GYM_GROUND_ENT_TMP_tag
 {
   fx32          NowHeight;
@@ -76,18 +78,22 @@ typedef struct GYM_GROUND_ENT_TMP_tag
  *          3Dリソース
  */
 //=============================================================================
-//リソースの並び順番
+/**
+ * リソースの並び順番
+ */
 enum {
   RES_ID_LIFT_MDL = 0,
   RES_ID_LIFT_ANM,
-  RES_ID_LIFT_YACON_MDL,     // ヤーコンリフト
-  RES_ID_LIFT_YACON_ANM,     // ヤーコンリフト
+  RES_ID_LIFT_YACON_MDL,     ///< ヤーコンリフト
+  RES_ID_LIFT_YACON_ANM,     ///< ヤーコンリフト
 };
 
-//ＯＢＪインデックス
+/**
+ * ＯＢＪインデックス
+ */
 enum {
   OBJ_LIFT_0 = 0,
-  OBJ_LIFT_1,     // ヤーコンリフト
+  OBJ_LIFT_1,     ///< ヤーコンリフト
 };
 
 //--リソース関連--
