@@ -47,10 +47,10 @@ typedef enum{
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK*		gsys;	//[in]ゲームシステム
-	GAMEDATA*			gdata;
+	GAMESYS_WORK*		gsys;	///<[in]ゲームシステム
+	GAMEDATA*			gdata;	///<ゲームデータ
 	//
-	FMISSION_APP_MODE	mode;	// 画面切り替え
+	FMISSION_APP_MODE	mode;	///< 画面切り替え
 
   LINK_FESTIVAL* fest_sys;  ///<ハイリンクフェス　管理ワーク
   const FEST_MISSION* fmwk; ///<現在のミッションデータ

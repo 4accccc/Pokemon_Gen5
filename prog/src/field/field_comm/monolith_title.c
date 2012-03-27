@@ -78,17 +78,17 @@ typedef struct{
   u8 no_focus;        ///<TRUE:カーソルが何もフォーカスしていない状態
   s32   Mode;         ///<モード(0:通常、1:チュートリアル、2:GPOWERチュートリアル)
   MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
-  GFL_BMPWIN *bmpwin;
-  PRINT_STREAM *print_stream;
-  STRBUF *strbuf_stream;
+  GFL_BMPWIN *bmpwin;           ///<bmpwin
+  PRINT_STREAM *print_stream;   ///<stream(未使用)
+  STRBUF *strbuf_stream;        ///<文字列(未使用)
 }MONOLITH_TITLE_WORK;
 
 // objのパラメータ
 typedef struct{
-  s16  index;		// index(-1:終了)
-  s16  x;			// x
-  s16  y;			// y
-  s16  msgid;		// msgid
+  s16  index;		///< index(-1:終了)
+  s16  x;			///< x
+  s16  y;			///< y
+  s16  msgid;		///< msgid
 }MONO_TITLE_OBJ_DATA;
 
 //==============================================================================

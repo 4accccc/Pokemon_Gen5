@@ -251,11 +251,11 @@ enum{
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 					// リソース
+	u32			res[RESID_OBJ_MAX]; 					///< リソース
 	// 共通
-	GFL_CLWK	*clwk_cmn[GPOWER_APP_CMN_OBJ_MAXNUM];	// CLWK(cmn)
+	GFL_CLWK	*clwk_cmn[GPOWER_APP_CMN_OBJ_MAXNUM];	///< CLWK(cmn)
 	// 通常
-	GFL_CLWK	*clwk[GPOWER_APP_OBJ_MAXNUM];			// CLWK
+	GFL_CLWK	*clwk[GPOWER_APP_OBJ_MAXNUM];			///< CLWK
 } GPOWER_APP_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -263,42 +263,42 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	HEAPID						heapID;
+	HEAPID						heapID;					///< ヒープID
 	// OBJ
-	GPOWER_APP_OBJ_WORK			wk_obj;
+	GPOWER_APP_OBJ_WORK			wk_obj;					///< obj管理
 	//描画設定
-	GPOWER_APP_GRAPHIC_WORK		*graphic;
+	GPOWER_APP_GRAPHIC_WORK		*graphic;				///< graphic管理
 	//
-	GPOWER_APP_PARAM 			*Param;							// 参照用として保存
+	GPOWER_APP_PARAM 			*Param;					///< 参照用として保存
 	//フォント
-	GFL_FONT					*font;
+	GFL_FONT					*font;					///< font
 	//プリントキュー
-	PRINT_QUE					*print_que;
-	GFL_MSGDATA					*MsgData[GPOWER_APP_MES_MAXNUM];		// メッセージ
-	PRINT_UTIL					PrintUtil[GPOWER_APP_CANVAS_MAXNUM];	// 文字表示用
-	WORDSET						*WordSet;
+	PRINT_QUE					*print_que;				///< キュー
+	GFL_MSGDATA					*MsgData[GPOWER_APP_MES_MAXNUM];		///< メッセージ
+	PRINT_UTIL					PrintUtil[GPOWER_APP_CANVAS_MAXNUM];	///< 文字表示用
+	WORDSET						*WordSet;								///< wordset
 	//
-	BMPOAM_SYS_PTR				BmpOamSys;								// BMPOAM
-	GFL_BMP_DATA				*BmpData[GPOWER_APP_BMPOAM_MAXNUM];		// Bmp
-	BMPOAM_ACT_PTR				BmpOamWork[GPOWER_APP_BMPOAM_MAXNUM];	// BMPOAM用Work
+	BMPOAM_SYS_PTR				BmpOamSys;								///< BMPOAM
+	GFL_BMP_DATA				*BmpData[GPOWER_APP_BMPOAM_MAXNUM];		///< Bmp
+	BMPOAM_ACT_PTR				BmpOamWork[GPOWER_APP_BMPOAM_MAXNUM];	///< BMPOAM用Work
 	//
-	APP_TASKMENU_WIN_WORK		*pAppTask[2];
-	APP_TASKMENU_ITEMWORK		appitem[2];
-	APP_TASKMENU_RES			*pAppTaskRes;
+	APP_TASKMENU_WIN_WORK		*pAppTask[2];			///< 選択肢
+	APP_TASKMENU_ITEMWORK		appitem[2];				///< 項目
+	APP_TASKMENU_RES			*pAppTaskRes;			///< リソース
 	//
-	s32							Step;							// ステップ
-	u32							Flag;							// フラグ
-	s32							CurPos;							// カーソル
-	s32							CurPosMax;						// カーソル最大
-	s32							Result;							// 結果
-	s32							Timer;							// タイマ
-	s32							AnimNum;						// 決定アニメ用
-	s32							YesNoCursor;					// yes/noカーソル位置
-	u32							DelTamaFlag;					// デルダマ用フラグ
-	s32							DelTama[3];						// 必要なデルタマ数
-	s32							BgOffset;						// BGのオフセット(スクロールで使用)
+	s32							Step;							///< ステップ
+	u32							Flag;							///< フラグ
+	s32							CurPos;							///< カーソル
+	s32							CurPosMax;						///< カーソル最大
+	s32							Result;							///< 結果
+	s32							Timer;							///< タイマ
+	s32							AnimNum;						///< 決定アニメ用
+	s32							YesNoCursor;					///< yes/noカーソル位置
+	u32							DelTamaFlag;					///< デルダマ用フラグ
+	s32							DelTama[3];						///< 必要なデルタマ数
+	s32							BgOffset;						///< BGのオフセット(スクロールで使用)
 	//
-	s16							*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
+	s16							*EmptyBuffer;					///< 座標用のバッファ(必ず破棄すること)
 	// パレットチェンジ用
 	s32							PCount;							///< カウンタ
 	u16							PBufStart[0x10];				///< 開始
@@ -310,70 +310,70 @@ typedef struct
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				pad;
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
+	u8				pad;			///< pad
 }GPOWER_APP_OBJ_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
-	u8				y;
-	u8				width;			// サイズ
-	u8				height;
-	u8				palnum;			// パレット番号
+	u8				frmnumber;		///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
+	u8				palnum;			///< パレット番号
 }GPOWER_APP_CANVAS_DATA;
 
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }GPOWER_APP_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }GPOWER_APP_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }GPOWER_APP_BGSCN_DATA;
 
 //-----------------------------------------
 // BMPOAMの定義
 //------------------------------------------
 typedef struct{
-	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
-	u8				height;
-	u8				softpri;		// プライオリティ(obj)
-	u8				bgpri;			// プライオリティ(bg)
-	u8				visible;		// 表示/非表示
-	u8				paloffset;		// パレットオフセット(nclの何番目か)
-	u8				empty_num;		// empty番号
-	u8				pad;
+	u8				width;			///< 横サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				height;			///< 縦サイズ
+	u8				softpri;		///< プライオリティ(obj)
+	u8				bgpri;			///< プライオリティ(bg)
+	u8				visible;		///< 表示/非表示
+	u8				paloffset;		///< パレットオフセット(nclの何番目か)
+	u8				empty_num;		///< empty番号
+	u8				pad;			///< pad
 }GPOWER_APP_BMPOAM_DATA;
 
 //=============================================================================

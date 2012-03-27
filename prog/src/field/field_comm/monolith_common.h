@@ -166,10 +166,10 @@ typedef struct{
   u8 power_mono_use;         ///<パワー画面：power_select_noのMONO_USE_POWER状態
   u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった
 //  u8 padding;
-  u8 fmission_id;
-  u8 fmission_level;
+  u8 fmission_id;            ///<ミッションのID
+  u8 fmission_level;         ///<ミッションのレベル
   s8 title_curpos;           ///<タイトルのカーソル
-  u8 pad;
+  u8 pad;                    ///<pad
   u8 gpower_no[4];           ///<パワー画面：選択中の3つ(1つはpad)
 }MONOLITH_COMMON_WORK;
 

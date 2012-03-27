@@ -264,19 +264,19 @@ enum{
 // 一つ前の情報(まとめ)
 //-------------------------------------
 typedef struct{
-	s32			Timer;			// 時間
-	s32			Num;			// 人数
-	s32			Score;			// スコア
-	s32			Rank;			// ランク
+	s32			Timer;			///< 時間
+	s32			Num;			///< 人数
+	s32			Score;			///< スコア
+	s32			Rank;			///< ランク
 } FMISSION_APP_OLD_WORK;
 
 //-------------------------------------
 // スコアログの情報(1名分)
 //-------------------------------------
 typedef struct{
-	STRBUF		*strbuf;		// 名前
-	s32			score;			// スコア
-	s32			tr_id;			// tr_id
+	STRBUF		*strbuf;		///< 名前
+	s32			score;			///< スコア
+	s32			tr_id;			///< tr_id
 } FMISSION_APP_LOG;
 
 //-------------------------------------
@@ -284,13 +284,13 @@ typedef struct{
 //-------------------------------------
 typedef struct
 {
-	u32			res[FMA_RESID_OBJ_MAX]; 			// リソース
+	u32			res[FMA_RESID_OBJ_MAX]; 			///< リソース
 	// 共通
-	GFL_CLWK	*cmn_clwk[FMA_CMN_OBJ_MAXNUM];		// CLWK(common)
+	GFL_CLWK	*cmn_clwk[FMA_CMN_OBJ_MAXNUM];		///< CLWK(common)
 	// 通常
-	GFL_CLWK	*clwk[FMA_OBJ_MAXNUM];				// CLWK
+	GFL_CLWK	*clwk[FMA_OBJ_MAXNUM];				///< CLWK
 	// 結果
-	GFL_CLWK	*rd_clwk[FMA_OBJ_RD_MAXNUM];		// CLWK(result down)
+	GFL_CLWK	*rd_clwk[FMA_OBJ_RD_MAXNUM];		///< CLWK(result down)
 } FMISSION_APP_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -298,47 +298,47 @@ typedef struct
 //==============================================================
 typedef struct 
 {
-	HEAPID					heapID;
+	HEAPID					heapID;					///< ヒープID
 	// OBJ
-	FMISSION_APP_OBJ_WORK	wk_obj;
+	FMISSION_APP_OBJ_WORK	wk_obj;					///< obj管理
 	//描画設定
-	FMISSION_APP_GRAWK		*graphic;
+	FMISSION_APP_GRAWK		*graphic;				///< graphic管理
   //すれ違いアイコン表示更新用
-  WIFI_LIST* wifi_list;
+  WIFI_LIST* wifi_list;								///< すれ違いアイコン表示更新用
 
 	//
-	GFL_FONT				*font;							// フォント
-	PRINT_QUE				*print_que;						// プリントキュー
-	GFL_MSGDATA				*MsgData[FMA_MSG_MAXNUM];		// メッセージ
-	PRINT_UTIL				PrintUtil[FMA_CANVAS_MAXNUM];	// 文字表示用
-	WORDSET					*Wordset;						// wordset
-	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
-	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
-	STRBUF					*MsgBuffer;						// メッセージ用バッファ
-	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
-	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
+	GFL_FONT				*font;							///< フォント
+	PRINT_QUE				*print_que;						///< プリントキュー
+	GFL_MSGDATA				*MsgData[FMA_MSG_MAXNUM];		///< メッセージ
+	PRINT_UTIL				PrintUtil[FMA_CANVAS_MAXNUM];	///< 文字表示用
+	WORDSET					*Wordset;						///< wordset
+	PRINT_STREAM			*PrintStream;					///< 文字表示用(PrintStream)
+	GFL_TCBLSYS				*MsgTcblSys;					///< メッセージ用タスク
+	STRBUF					*MsgBuffer;						///< メッセージ用バッファ
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					///< ページ送りマーク用ワーク
+	APP_PRINTSYS_COMMON_WORK PrintSysWork;					///< 汎用PrintStream管理ワーク
 	//
-	FMISSION_APP_PARAM 		*Param;				// 参照用として保存	
+	FMISSION_APP_PARAM 		*Param;				///< 参照用として保存	
 	//
-	FMISSION_DATA_MAN		*FMissionManager;	// manager
-	ARCHANDLE				*Handle;
-	FMISSION_ARCDATA		*ArcData;
-	LINKFEST_MISSION_STATUS	MissionStatus;		// 情報(実体)
-	LINKFEST_MISSION_RESULT MissionResult;		// 結果(実体)
-	LINKFEST_LOG_TOP_SCORE	*TopScore;			// トップスコア用
-	FMISSION_LOG_LATEST		*Latest;			// ログ
-	FMISSION_LOG_LATEST		LatestLocal;		// ログ(localで使用：実体)
-	FMISSION_APP_LOG		ScoreLog;			// スコアログ(1名分)
+	FMISSION_DATA_MAN		*FMissionManager;	///< manager
+	ARCHANDLE				*Handle;			///< ハンドル
+	FMISSION_ARCDATA		*ArcData;			///< アーカイブ
+	LINKFEST_MISSION_STATUS	MissionStatus;		///< 情報(実体)
+	LINKFEST_MISSION_RESULT MissionResult;		///< 結果(実体)
+	LINKFEST_LOG_TOP_SCORE	*TopScore;			///< トップスコア用
+	FMISSION_LOG_LATEST		*Latest;			///< ログ
+	FMISSION_LOG_LATEST		LatestLocal;		///< ログ(localで使用：実体)
+	FMISSION_APP_LOG		ScoreLog;			///< スコアログ(1名分)
 	//
-	s32						Step;				// 処理の流れ
-	s32						Mode;				// モード(詳細、評価)
-	u32						Flag;				// フラグ
-	s32						BgOffX;				// オフセット
-	s32						LevelTimer;			// タイマ
-	s32						Level;				// 段階
+	s32						Step;				///< 処理の流れ
+	s32						Mode;				///< モード(詳細、評価)
+	u32						Flag;				///< フラグ
+	s32						BgOffX;				///< オフセット
+	s32						LevelTimer;			///< タイマ
+	s32						Level;				///< 段階
 	//
-	FMISSION_APP_OLD_WORK	OldWork;			// 保存
+	FMISSION_APP_OLD_WORK	OldWork;			///< 保存
 	//
-	s16						*EmptyBuffer;		// 座標用のバッファ(必ず破棄すること)
+	s16						*EmptyBuffer;		///< 座標用のバッファ(必ず破棄すること)
 } FMISSION_APP_WORK;
 

@@ -259,11 +259,11 @@ enum{
 //-------------------------------------
 typedef struct
 {
-	u32			res[T_DOWNLOAD_RESID_OBJ_MAX]; 			// リソース
+	u32			res[T_DOWNLOAD_RESID_OBJ_MAX]; 			///< リソース
 	// 共通
-	GFL_CLWK	*cmn_clwk[T_DOWNLOAD_CMN_OBJ_MAXNUM];	// CLWK(common)
+	GFL_CLWK	*cmn_clwk[T_DOWNLOAD_CMN_OBJ_MAXNUM];	///< CLWK(common)
 	// 通常
-	GFL_CLWK	*clwk[T_DOWNLOAD_OBJ_MAXNUM];			// CLWK
+	GFL_CLWK	*clwk[T_DOWNLOAD_OBJ_MAXNUM];			///< CLWK
 } T_DOWNLOAD_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -271,50 +271,50 @@ typedef struct
 //==============================================================
 typedef struct 
 {
-	HEAPID					heapID;
+	HEAPID					heapID;						///< ヒープID
 	// OBJ
-	T_DOWNLOAD_OBJ_WORK		wk_obj;
+	T_DOWNLOAD_OBJ_WORK		wk_obj;						///< obj管理
 	//描画設定
-	T_DOWNLOAD_GRAPHIC_WORK	*graphic;
+	T_DOWNLOAD_GRAPHIC_WORK	*graphic;					///< graphic管理
 	//
-	T_DOWNLOAD_PARAM 		*Param;							// 参照用として保存	
+	T_DOWNLOAD_PARAM 		*Param;							///< 参照用として保存	
 	//フォント
-	GFL_FONT				*font;
+	GFL_FONT				*font;							///< font
 	//プリントキュー
-	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[T_DOWNLOAD_MSG_MAX];		// 0:メッセージ,1:未使用
-	PRINT_UTIL				PrintUtil[T_DOWNLOAD_CANVAS_MAXNUM];	// 文字表示用
-	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
-	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
-	STRBUF					*MsgBuffer;						// メッセージ用バッファ
-	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
-	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
-	WORDSET					*Wordset;						// wordset
+	PRINT_QUE				*print_que;						///< キュー
+	GFL_MSGDATA				*msg[T_DOWNLOAD_MSG_MAX];		///< 0:メッセージ,1:未使用
+	PRINT_UTIL				PrintUtil[T_DOWNLOAD_CANVAS_MAXNUM];	///< 文字表示用
+	PRINT_STREAM			*PrintStream;					///< 文字表示用(PrintStream)
+	GFL_TCBLSYS				*MsgTcblSys;					///< メッセージ用タスク
+	STRBUF					*MsgBuffer;						///< メッセージ用バッファ
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					///< ページ送りマーク用ワーク
+	APP_PRINTSYS_COMMON_WORK PrintSysWork;					///< 汎用PrintStream管理ワーク
+	WORDSET					*Wordset;						///< wordset
 	//
-	APP_TASKMENU_WORK		*pAppTask;
-	APP_TASKMENU_ITEMWORK	appitem[3];
-	APP_TASKMENU_RES		*pAppTaskRes;
+	APP_TASKMENU_WORK		*pAppTask;						///< 選択ウインドウ
+	APP_TASKMENU_ITEMWORK	appitem[3];						///< 項目
+	APP_TASKMENU_RES		*pAppTaskRes;					///< リソース
 	//
-	TIMEICON_WORK			*TimeIconWork;					// セーブ中のタイムアイコン
+	TIMEICON_WORK			*TimeIconWork;					///< セーブ中のタイムアイコン
 	//
-	s32						Step;							// ステップ
-	s32						Mode;							// モード
-	u32						Flag;							// フラグ
-	u32						CmnFlag;						// 共通フラグ
-	u32						DebugFlag;						// debug
-	s32						RetMode;						// 戻りモード
-	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
-	s32						ScrollOffy;						// BG3のスクロールoffset
-	u32						PFlag;							// Canvas用フラグ
-	u32						SaveFlag;						// セーブフラグ
-	s32						JoinCurPos;						// 参加カーソル
-	s32						SaveCurPos;						// セーブカーソル
-	s32						NextMode;						// 飛び先
-	s32						SaveSrc;						// セーブ元
-	s32						SaveDest;						// セーブ先
+	s32						Step;							///< ステップ
+	s32						Mode;							///< モード
+	u32						Flag;							///< フラグ
+	u32						CmnFlag;						///< 共通フラグ
+	u32						DebugFlag;						///< debug
+	s32						RetMode;						///< 戻りモード
+	s32						InfoCurPos;						///< 詳細カーソル位置(0-2)
+	s32						ScrollOffy;						///< BG3のスクロールoffset
+	u32						PFlag;							///< Canvas用フラグ
+	u32						SaveFlag;						///< セーブフラグ
+	s32						JoinCurPos;						///< 参加カーソル
+	s32						SaveCurPos;						///< セーブカーソル
+	s32						NextMode;						///< 飛び先
+	s32						SaveSrc;						///< セーブ元
+	s32						SaveDest;						///< セーブ先
 	//
-	s32						SaveMaxNum;						// セーブ数
-	s32						ListMaxNum;						// リスト最大数
+	s32						SaveMaxNum;						///< セーブ数
+	s32						ListMaxNum;						///< リスト最大数
 	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
@@ -324,23 +324,23 @@ typedef struct
 	u16						FontPal[0x20];					///< パレット用
 	//
 	// list
-	FRAMELIST_WORK			*frame_list_work;					// リスト
-	s32						DispMaxNum;							// 表示最大数
-	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
-	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
-	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
+	FRAMELIST_WORK			*frame_list_work;					///< リスト
+	s32						DispMaxNum;							///< 表示最大数
+	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		///< 通し番号
+	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	///< 画面上の位置
+	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	///< スクロールの位置
 	s32						SlotLast;							///< 最後のスロット番号
 	// 詳細画面用(3アイコン用)
-	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		// 項目数
-	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	// ページ最大数
-	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数
+	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		///< 項目数
+	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	///< ページ最大数
+	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; ///< カレントページ数
 	//
-	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
-    u16						*TestBuffer;					// テスト
+	s16						*EmptyBuffer;					///< 座標用のバッファ(必ず破棄すること)
+    u16						*TestBuffer;					///< テスト
 	//
-	WBTDL_DATA				*CurrentWbt;					// カレント(上画面の切り替えタイミング)
-	WBTDL_DATA				*WbtSaveData[3];				// セーブデータ用
+	WBTDL_DATA				*CurrentWbt;					///< カレント(上画面の切り替えタイミング)
+	WBTDL_DATA				*WbtSaveData[3];				///< セーブデータ用
 	//
-	WBTDL_DATA				*CheckBuffer[WBTDL_TOTAL_NUM];	// チェック後のデータ
+	WBTDL_DATA				*CheckBuffer[WBTDL_TOTAL_NUM];	///< チェック後のデータ
 } T_DOWNLOAD_MAIN_WORK;
 

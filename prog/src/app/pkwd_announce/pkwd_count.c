@@ -213,11 +213,11 @@ enum{
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 					// リソース
+	u32			res[RESID_OBJ_MAX]; 					///< リソース
 	// 通常
-	GFL_CLWK	*clwk[PKWD_COUNT_OBJ_MAXNUM];			// CLWK
+	GFL_CLWK	*clwk[PKWD_COUNT_OBJ_MAXNUM];			///< CLWK
 	// ロゴ
-	GFL_CLWK	*logo_clwk[PKWD_COUNT_LOGO_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*logo_clwk[PKWD_COUNT_LOGO_OBJ_MAXNUM];	///< logo CLWK
 	
 } PKWD_COUNT_OBJ_WORK;
 
@@ -226,25 +226,25 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	HEAPID					heapID;
+	HEAPID					heapID;						///< ヒープID
 	// OBJ
-	PKWD_COUNT_OBJ_WORK		wk_obj;
+	PKWD_COUNT_OBJ_WORK		wk_obj;						///< obj管理
 	//描画設定
-	PKWD_COUNT_GRAPHIC_WORK	*graphic;
+	PKWD_COUNT_GRAPHIC_WORK	*graphic;					///< graphic管理
 	//
-	PKWD_COUNT_PARAM 		*Param;						// 参照用として保存
+	PKWD_COUNT_PARAM 		*Param;						///< 参照用として保存
 	//
 	GFL_FONT				*font;									///< フォント
 	PRINT_QUE				*print_que;								///< que
 	PRINT_UTIL				PrintUtil[PKWD_COUNT_CANVAS_MAXNUM];	///< 文字表示用
-	GFL_MSGDATA				*MsgData[PKWD_COUNT_MES_MAX];			///< 
+	GFL_MSGDATA				*MsgData[PKWD_COUNT_MES_MAX];			///< メッセージ
 	//
-	s32						Step;						// ステップ
-	s32						Count;						// カウント
-	u32						Flag;						// フラグ
-	s32						Timer[TIMER_MAX];			// タイマ
+	s32						Step;						///< ステップ
+	s32						Count;						///< カウント
+	u32						Flag;						///< フラグ
+	s32						Timer[TIMER_MAX];			///< タイマ
 	//
-	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
+	s16						*EmptyBuffer;				///< 座標用のバッファ(必ず破棄すること)
 	//
 //	PALETTE_FADE_PTR		PalPtr;						// パレットアニメ用(grahpicに移行)
 } PKWD_COUNT_MAIN_WORK;
@@ -253,56 +253,56 @@ typedef struct
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				pad;
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
+	u8				pad;			///< pad
 }PKWD_COUNT_OBJ_DATA;
 
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }PKWD_COUNT_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }PKWD_COUNT_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				poff;			// パレットのオフセット
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				poff;			///< パレットのオフセット
 }PKWD_COUNT_BGSCN_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
-	u8				y;
-	u8				width;			// サイズ
-	u8				height;
-	u8				palnum;			// パレット番号
+	u8				frmnumber;		///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
+	u8				palnum;			///< パレット番号
 }PKWD_CANVAS_DATA;
 
 //=============================================================================

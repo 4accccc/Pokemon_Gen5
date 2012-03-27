@@ -80,9 +80,9 @@ enum{
 //==============================================================================
 ///ミッション説明画面制御ワーク
 typedef struct{
-  GFL_BMPWIN *bmpwin[BMPWIN_MAX];
-  PRINT_UTIL print_util[BMPWIN_MAX];
-  MONOLITH_CANCEL_ICON cancel_icon;
+  GFL_BMPWIN *bmpwin[BMPWIN_MAX];        ///< bmpwin
+  PRINT_UTIL print_util[BMPWIN_MAX];     ///< printutil
+  MONOLITH_CANCEL_ICON cancel_icon;      ///< キャンセルアイコン用
 }MONOLITH_STATUS_WORK;
 
 

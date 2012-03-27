@@ -144,14 +144,14 @@ enum{
 // (すべてが)u32でなくてもよいはずが、
 // 返り値を直接セットするため以下のようにした
 typedef struct{
-	u32					id;				// id
-	u32					sex;			// 性別
-	u32					level;			// レベル
-	u32					item;			// もちもの
-	u32					stat;			// 特性
-	u32					poke_type[2];	// タイプ
-	u32					skill[4];		// 技
-	u32					skill_type[4];	// 技対応
+	u32					id;				///< id
+	u32					sex;			///< 性別
+	u32					level;			///< レベル
+	u32					item;			///< もちもの
+	u32					stat;			///< 特性
+	u32					poke_type[2];	///< タイプ
+	u32					skill[4];		///< 技
+	u32					skill_type[4];	///< 技対応
 } BSCENARIO_POKE_WORK;
 
 //
@@ -174,9 +174,9 @@ typedef struct {
 	GFL_CLWK*			clwk_cursor[BS_CLWK_CURSOR_MAX];	///< CLWK(cursor)
 	GFL_CLWK*			clwk_arrow[BS_CLWK_ARROW_MAX];		///< CLWK(arrow)
 	//
-	u32					ResPal[ BS_RES_PAL_MAX];
-	u32					ResChr[ BS_RES_CHR_MAX];
-	u32					ResCell[BS_RES_CELL_MAX];
+	u32					ResPal[ BS_RES_PAL_MAX];			///< Res(Pal)
+	u32					ResChr[ BS_RES_CHR_MAX];			///< Res(Chr)
+	u32					ResCell[BS_RES_CELL_MAX];			///< Res(Cell)
 	//
 	// 以下、追加
 	s32					Step;			///< ステップ

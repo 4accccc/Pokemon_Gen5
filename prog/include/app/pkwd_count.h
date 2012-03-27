@@ -52,7 +52,7 @@ extern const GFL_PROC_DATA PkwdCountProcData;
 typedef struct{
 	int					title_no;		  ///< タイトル番号
 	int					scenario_no;	///< シナリオ番号
-	STRBUF*				message;		///< メッセージ
+	STRBUF*				message;		///< サブタイトルで使用するポケモンの種族名(wordsetで使用)
   int         sex;          ///< 主人公性別
 }PKWD_COUNT_PARAM;
 

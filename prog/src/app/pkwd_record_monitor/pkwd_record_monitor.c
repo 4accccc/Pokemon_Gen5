@@ -368,10 +368,10 @@ typedef struct{
 /// シナリオ開放状況
 //-------------------------------------
 typedef struct{
-	u8					openid;		// 開放のシナリオ番号(0-47)(0xff:初期値)
-	u8					color;		// カラー(0-3)
-	u8					stateflag;	// マーク(bit判断)
-	u8					dummy;
+	u8					openid;		///< 開放のシナリオ番号(0-47)(0xff:初期値)
+	u8					color;		///< カラー(0-3)
+	u8					stateflag;	///< マーク(bit判断)
+	u8					dummy;		///< dummy
 } PKWD_RECORD_MONITOR_FLAG_BUFFER;
 
 //-------------------------------------
@@ -379,15 +379,15 @@ typedef struct{
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 					// リソース
+	u32			res[RESID_OBJ_MAX]; 					///< リソース
 	// cmn
-	GFL_CLWK	*clwk_cmn[PKWD_RECORD_MONITOR_CMN_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_cmn[PKWD_RECORD_MONITOR_CMN_OBJ_MAXNUM];	///< CLWK
 	// poke
-	GFL_CLWK	*clwk_poke[PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_poke[PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM];	///< CLWK
 	// list
-	GFL_CLWK	*clwk_list[PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_list[PKWD_RECORD_MONITOR_LIST_OBJ_MAXNUM];	///< CLWK
 	// up
-  GFL_CLWK  *clwk_up[PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM];  // CLWK
+  GFL_CLWK  *clwk_up[PKWD_RECORD_MONITOR_UP_OBJ_MAXNUM];  ///< CLWK
 } PKWD_RECORD_MONITOR_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -395,13 +395,13 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	HEAPID					heapID;
+	HEAPID					heapID;						///< ヒープID
 	// OBJ
-	PKWD_RECORD_MONITOR_OBJ_WORK		wk_obj;
+	PKWD_RECORD_MONITOR_OBJ_WORK		wk_obj;			///< obj管理
 	//描画設定
-	PKWD_RECORD_MONITOR_GRAPHIC_WORK	*graphic;
+	PKWD_RECORD_MONITOR_GRAPHIC_WORK	*graphic;		///< graphic管理
 	//
-	PKWD_RECORD_MONITOR_PARAM 		*Param;						// 参照用として保存
+	PKWD_RECORD_MONITOR_PARAM 		*Param;						///< 参照用として保存
 	//
 	GFL_FONT				*font;									///< フォント
 	PRINT_QUE				*print_que;								///< que
@@ -414,27 +414,27 @@ typedef struct
 	FRAMELIST_WORK			*frame_list_work;			///< リスト
 	//
 	//
-	s32						Step;						// ステップ
-	s32						Mode;						// モード
-	s32						SubMode;					// サブモード
-	s32						TitleMode;					// タイトル
-	s32						NextMode;					// 次
-	u32						Flag;						// フラグ
-	u32						PFlag;						// フラグ
-	u32						PFlag2;						// フラグ(要整理)
-	s32						ScenarioCurPos;				// 台本カーソル(0-47)
-	s32						ScenarioMax;				// シナリオ最大
+	s32						Step;						///< ステップ
+	s32						Mode;						///< モード
+	s32						SubMode;					///< サブモード
+	s32						TitleMode;					///< タイトル
+	s32						NextMode;					///< 次
+	u32						Flag;						///< フラグ
+	u32						PFlag;						///< フラグ
+	u32						PFlag2;						///< フラグ(要整理)
+	s32						ScenarioCurPos;				///< 台本カーソル(0-47)
+	s32						ScenarioMax;				///< シナリオ最大
 	s32						ListCurPos;					///< リストのトップ(画面上のトップ)
 	s32						ListScrollPos;				///< リストのスクロール
 	s32						Result;						///< 結果
 	s32						OldPos;						///< 一つ前の位置
 	//
-	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
+	s16						*EmptyBuffer;				///< 座標用のバッファ(必ず破棄すること)
 	//
 	PKWD_RECORD_MONITOR_FLAG_BUFFER	FlagBuffer[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< フラグのバッファ
 	//
 	u8	          profits[PKWD_RECORD_MONITOR_SCENARIO_MAX];	///< 収益の高いフラグ
-	BOOL          first_anime_flag;        // 最初のアニメフラグ
+	BOOL          first_anime_flag;        ///< 最初のアニメフラグ
 	//
 } PKWD_RECORD_MONITOR_MAIN_WORK;
 
@@ -442,56 +442,56 @@ typedef struct
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				res_cnum;		// リソース番号(注意)
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
+	u8				res_cnum;		///< リソース番号(注意)
 }PKWD_RECORD_MONITOR_OBJ_DATA;
 
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }PKWD_RECORD_MONITOR_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }PKWD_RECORD_MONITOR_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				poff;			// パレットのオフセット
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				poff;			///< パレットのオフセット
 }PKWD_RECORD_MONITOR_BGSCN_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
-	u8				y;
-	u8				width;			// サイズ
-	u8				height;
-	u8				palnum;			// パレット番号
+	u8				frmnumber;		///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
+	u8				palnum;			///< パレット番号
 }PKWD_RECORD_MONITOR_CANVAS_DATA;
 
 //=============================================================================

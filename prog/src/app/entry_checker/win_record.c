@@ -315,13 +315,13 @@ enum{
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 					// リソース
+	u32			res[RESID_OBJ_MAX]; 					///< リソース
 	// 共通
-	GFL_CLWK	*cmn_clwk[WIN_RECORD_CMN_OBJ_MAXNUM];	// CLWK(common)
+	GFL_CLWK	*cmn_clwk[WIN_RECORD_CMN_OBJ_MAXNUM];	///< CLWK(common)
 	// 通常
-	GFL_CLWK	*clwk[WIN_RECORD_OBJ_MAXNUM];			// CLWK
+	GFL_CLWK	*clwk[WIN_RECORD_OBJ_MAXNUM];			///< CLWK
 	//
-	GFL_CLWK	*up_clwk[WIN_RECORD_UP_OBJ_MAXNUM];		// CLWK(up)
+	GFL_CLWK	*up_clwk[WIN_RECORD_UP_OBJ_MAXNUM];		///< CLWK(up)
 } WIN_RECORD_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -329,93 +329,93 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	HEAPID					heapID;
+	HEAPID					heapID;						///< ヒープID
 	// OBJ
-	WIN_RECORD_OBJ_WORK		wk_obj;
+	WIN_RECORD_OBJ_WORK		wk_obj;						///< obj管理
 	//描画設定
-	WIN_RECORD_GRAPHIC_WORK	*graphic;
+	WIN_RECORD_GRAPHIC_WORK	*graphic;					///< graphic管理
 	//
-	WIN_RECORD_PARAM 		*Param;							// 参照用として保存
+	WIN_RECORD_PARAM 		*Param;						///< 参照用として保存
 	
 	//フォント
-	GFL_FONT				*font;
+	GFL_FONT				*font;						///< font
 	//プリントキュー
-	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[WIN_RECORD_MES_MAXNUM];			// 0:メッセージ,1:未使用
-	PRINT_UTIL				PrintUtil[WIN_RECORD_CANVAS_MAXNUM];	// 文字表示用
-	WORDSET					*Wordset;								// wordset
+	PRINT_QUE				*print_que;					///< キュー
+	GFL_MSGDATA				*msg[WIN_RECORD_MES_MAXNUM];			///< 0:メッセージ,1:未使用
+	PRINT_UTIL				PrintUtil[WIN_RECORD_CANVAS_MAXNUM];	///< 文字表示用
+	WORDSET					*Wordset;								///< wordset
 	//
-	s32						Step;							// ステップ
-	s32						Mode;							// モード(0-2)
-	u32						Flag;							// フラグ
-	s32						TrainerId;						// トレーナーID
-	s32						ScrollOffy;						// オフセット
-	s32						DispMaxNum;						// 最大数
-	s32						TotalWinCount;					// 総優勝回数
-	s16						CountBuffer[TMT_MAX+2];			// カウント
-	s16						DispBuffer[TMT_MAX+2];			// 表示のバッファ
+	s32						Step;							///< ステップ
+	s32						Mode;							///< モード(0-2)
+	u32						Flag;							///< フラグ
+	s32						TrainerId;						///< トレーナーID
+	s32						ScrollOffy;						///< オフセット
+	s32						DispMaxNum;						///< 最大数
+	s32						TotalWinCount;					///< 総優勝回数
+	s16						CountBuffer[TMT_MAX+2];			///< カウント
+	s16						DispBuffer[TMT_MAX+2];			///< 表示のバッファ
 	// list
-	FRAMELIST_WORK			*frame_list_work;				// リスト
+	FRAMELIST_WORK			*frame_list_work;				///< リスト
 	//
-	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
-	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
-	GFL_UI_TP_HITTBL		HitBuffer[AREA_TP_MAX+1];		// タッチペン用(+1は終了コードを入れるため)
+	s16						*EmptyBuffer;					///< 座標用のバッファ(必ず破棄すること)
+	s16						*ParamBuffer;					///< パラメータのバッファ(必ず破棄すること)
+	GFL_UI_TP_HITTBL		HitBuffer[AREA_TP_MAX+1];		///< タッチペン用(+1は終了コードを入れるため)
 } WIN_RECORD_MAIN_WORK;
 
 //-----------------------------------------
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				pad;
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
+	u8				pad;			///< pad
 }WIN_RECORD_OBJ_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
-	u8				y;
-	u8				width;			// サイズ
-	u8				height;
-	u8				palnum;			// パレット番号
+	u8				frmnumber;		///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
+	u8				palnum;			///< パレット番号
 }WIN_RECORD_CANVAS_DATA;
 
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }WIN_RECORD_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }WIN_RECORD_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }WIN_RECORD_BGSCN_DATA;
 
 //=============================================================================

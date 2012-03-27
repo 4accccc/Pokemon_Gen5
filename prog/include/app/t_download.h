@@ -59,11 +59,11 @@ typedef enum {
 //
 // トーナメントダウンロード
 typedef struct{
-	GAMESYS_WORK		*gamesys;
+	GAMESYS_WORK		*gamesys;   ///<ゲームシステム
 
-  WBTDL_TOTAL_DATA  *data;
+  WBTDL_TOTAL_DATA  *data;          ///<wifiからダウンロードしたデータ
 	//
-	T_DOWNLOAD_STATUS	status;
+	T_DOWNLOAD_STATUS	status;     ///<呼び出しモード
 	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
 	u16 *				curpos;			///<カーソル位置(0:なし、値：T_DOWNLOAD_CURPOS_OFFSETはじまり)
 }T_DOWNLOAD_PARAM;

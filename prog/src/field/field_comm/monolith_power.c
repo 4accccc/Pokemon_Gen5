@@ -179,8 +179,8 @@ typedef struct{
   PRINT_STREAM *print_stream;
   MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
 
-  BMPOAM_ACT_PTR bmpoam_power[POWER_ITEM_DISP_NUM];
-  GFL_BMP_DATA *bmpoam_power_bmp[POWER_ITEM_DISP_NUM];
+  BMPOAM_ACT_PTR bmpoam_power[POWER_ITEM_DISP_NUM];      ///<項目名用
+  GFL_BMP_DATA *bmpoam_power_bmp[POWER_ITEM_DISP_NUM];   ///<項目名用
   
   s32 list_y;    ///<下位8ビット小数
   
@@ -204,8 +204,8 @@ typedef struct{
   u32       DebugFlag;        ///<デバッグ
   APP_KEYCURSOR_WORK  *MsgCursorWork;  ///<ページ送りマーク用ワーク
   
-  APP_TASKMENU_RES *app_menu_res;
-  APP_TASKMENU_WORK *app_menu_work;
+  APP_TASKMENU_RES *app_menu_res;      ///<選択肢用
+  APP_TASKMENU_WORK *app_menu_work;    ///<選択肢用
 }MONOLITH_PWSELECT_WORK;
 
 //==============================================================================

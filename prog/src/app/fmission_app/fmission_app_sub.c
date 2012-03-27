@@ -79,56 +79,56 @@ enum{
 // BGPALの定義
 //-----------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }FMA_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //-----------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				pad;
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;			///< pad
 }FMA_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
 //-----------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				mode;			// (0:詳細、1:結果)
+	u8				frmnumber;		///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				mode;			///< (0:詳細、1:結果)
 }FMA_BGSCN_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-  u8				frmnumber;			// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-  u8				x;					// 座標
-  u8				y;
-  u8				width;				// サイズ
-  u8				height;
-  u8				palnum;				// パレット番号
+  u8				frmnumber;			///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+  u8				x;					///< x座標
+  u8				y;					///< y座標
+  u8				width;				///< 横サイズ
+  u8				height;				///< 縦サイズ
+  u8				palnum;				///< パレット番号
 }FMA_CANVAS_DATA;
 
 //-----------------------------------------
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				pad;
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
+	u8				pad;			///< pad
 }FMA_OBJ_DATA;
 
 //=============================================================================

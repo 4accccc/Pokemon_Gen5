@@ -388,26 +388,26 @@ enum{
 // (すべてが)u32でなくてもよいはずが、
 // 返り値を直接セットするため以下のようにした
 typedef struct{
-	u32					id;				// id
-	u32					sex;			// 性別
-	u32					level;			// レベル
-	u32					item;			// もちもの
-	u32					stat;			// 特性
-	u32					poke_type[2];	// タイプ
-	u32					skill[4];		// 技
-	u32					skill_type[4];	// 技対応
+	u32					id;				///< id
+	u32					sex;			///< 性別
+	u32					level;			///< レベル
+	u32					item;			///< もちもの
+	u32					stat;			///< 特性
+	u32					poke_type[2];	///< タイプ
+	u32					skill[4];		///< 技
+	u32					skill_type[4];	///< 技対応
 } PKWD_BOOK_POKE_WORK;
 
 //--------------------------------------
 // ポケモンの情報(1シナリオ分)(debug用)
 //--------------------------------------
 typedef struct{
-	s16					num[2];			// 個数(自分、相手)
-	s16					my_id[6];		// id(自分側)
-	s16					my_sex[6];		// 性別
+	s16					num[2];			///< 個数(自分、相手)
+	s16					my_id[6];		///< id(自分側)
+	s16					my_sex[6];		///< 性別
 	//
-	s16					ene_id[6];		// id(相手側)
-	s16					ene_sex[6];		// 性別
+	s16					ene_id[6];		///< id(相手側)
+	s16					ene_sex[6];		///< 性別
 //	u32					level;			// レベル
 //	u32					item;			// もちもの
 //	u32					stat;			// 特性
@@ -420,9 +420,9 @@ typedef struct{
 /// シナリオ開放状況
 //-------------------------------------
 typedef struct{
-	u16					openid:8;		// 開放のシナリオ番号(0-47)(0xff:初期値)
-	u16					color:7;		// カラー(0-3)
-	u16					newflag:1;		// newマーク(0:なし,1:あり)
+	u16					openid:8;		///< 開放のシナリオ番号(0-47)(0xff:初期値)
+	u16					color:7;		///< カラー(0-3)
+	u16					newflag:1;		///< newマーク(0:なし,1:あり)
 } PKWD_BOOK_FLAG_BUFFER;
 
 //-------------------------------------
@@ -430,17 +430,17 @@ typedef struct{
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 					// リソース
+	u32			res[RESID_OBJ_MAX]; 					///< リソース
 	// cmn
-	GFL_CLWK	*clwk_cmn[PKWD_BOOK_CMN_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_cmn[PKWD_BOOK_CMN_OBJ_MAXNUM];	///< CLWK
 	// poke
-	GFL_CLWK	*clwk_poke[PKWD_BOOK_POKE_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_poke[PKWD_BOOK_POKE_OBJ_MAXNUM];	///< CLWK
 	// type
-	GFL_CLWK	*clwk_type[PKWD_BOOK_TYPE_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_type[PKWD_BOOK_TYPE_OBJ_MAXNUM];	///< CLWK
 	// trainer
-	GFL_CLWK	*clwk_tr[PKWD_BOOK_TRAINER_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_tr[PKWD_BOOK_TRAINER_OBJ_MAXNUM];	///< CLWK
 	// list
-	GFL_CLWK	*clwk_list[PKWD_BOOK_LIST_OBJ_MAXNUM];	// CLWK
+	GFL_CLWK	*clwk_list[PKWD_BOOK_LIST_OBJ_MAXNUM];	///< CLWK
 	//
 } PKWD_BOOK_OBJ_WORK;
 
@@ -449,13 +449,13 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-	HEAPID					heapID;
+	HEAPID					heapID;						///< ヒープID
 	// OBJ
-	PKWD_BOOK_OBJ_WORK		wk_obj;
+	PKWD_BOOK_OBJ_WORK		wk_obj;						///< obj管理
 	//描画設定
-	PKWD_BOOK_GRAPHIC_WORK	*graphic;
+	PKWD_BOOK_GRAPHIC_WORK	*graphic;					///< graphic管理
 	//
-	PKWD_BOOK_PARAM 		*Param;						// 参照用として保存
+	PKWD_BOOK_PARAM 		*Param;						///< 参照用として保存
 	//
 	GFL_FONT				*font;									///< フォント
 	GFL_FONT				*sfont;									///< フォント(小文字)
@@ -473,7 +473,7 @@ typedef struct
 	//
 	APP_TASKMENU_WORK		*pAppTask;					///< 選択肢
 	APP_TASKMENU_ITEMWORK	appitem[3];					///< 3項目あり
-	APP_TASKMENU_RES		*pAppTaskRes;
+	APP_TASKMENU_RES		*pAppTaskRes;				///< リソース
 	//
 	s32						Step;						///< ステップ
 	s32						Mode;						///< モード
@@ -509,8 +509,8 @@ typedef struct
 	void					*FontPalBuf[PKWD_BOOK_COLOR_NUM];	  ///< フォント上画面パレット(4本分)(こちらを破棄)
 	NNSG2dPaletteData		*FontPalBufData[PKWD_BOOK_COLOR_NUM]; ///< フォント上画面パレット(4本分)
 	//
-	s32						Alpha[2];		// debug用として残しておく
-	u32						DebugFlag;		// debug用
+	s32						Alpha[2];		///< debug用として残しておく
+	u32						DebugFlag;		///< debug用
 } PKWD_BOOK_MAIN_WORK;
 
 //-----------------------------------------
@@ -544,7 +544,7 @@ typedef struct{
 	u8				frmnumber;	///< frame(0xffの場合は終了判定)
 	u8				arcid;			///< id
 	u8				offset;			///< オフセット
-	u8				pad;
+	u8				pad;			///< pad
 }PKWD_BOOK_BGCHR_DATA;
 
 //-----------------------------------------
@@ -561,14 +561,14 @@ typedef struct{
 // BMPOAMの定義
 //------------------------------------------
 typedef struct{
-	u8				width;			///< サイズ(8x8単位)(0xffの場合は終了判定)
-	u8				height;
+	u8				width;			///< 横サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				height;			///< 縦サイズ
 	u8				softpri;		///< プライオリティ(obj)
 	u8				bgpri;			///< プライオリティ(bg)
 	u8				visible;		///< 表示/非表示
 	u8				paloffset;	///< パレットオフセット(nclの何番目か)
 	u8				empty_num;	///< empty番号
-	u8				pad;
+	u8				pad;		///< pad
 }PKWD_BOOK_BMPOAM_DATA;
 
 //-----------------------------------------
@@ -576,10 +576,10 @@ typedef struct{
 //------------------------------------------
 typedef struct{
 	u8				frmnumber;	///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				  ///< 座標
-	u8				y;
-	u8				width;			///< サイズ
-	u8				height;
+	u8				x;				  ///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
 	u8				palnum;			///< パレット番号
 }PKWD_BOOK_CANVAS_DATA;
 
@@ -603,7 +603,7 @@ typedef struct{
 	u8				frmnumber;	///< frame(0xffの場合は終了判定)
 	u8				arcid;			///< id
 	u8				offset;			///< オフセット
-	u8				pad;
+	u8				pad;			///< pad
 }PKWD_COUNT_BGCHR_DATA;
 
 //-----------------------------------------

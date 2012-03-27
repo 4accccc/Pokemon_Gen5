@@ -35,8 +35,8 @@ enum{
 //==============================================================================
 ///ミッション説明画面制御ワーク
 typedef struct{
-  GFL_BMPWIN *bmpwin[BMPWIN_MAX];
-  PRINT_UTIL print_util[BMPWIN_MAX];
+  GFL_BMPWIN *bmpwin[BMPWIN_MAX];     ///< bmpwin
+  PRINT_UTIL print_util[BMPWIN_MAX];  ///< printutil
   
   GPOWER_ID print_select_gpower_id;   ///<描画したGPOWER_ID
 }MONOLITH_POWEREXPLAIN_WORK;

@@ -316,7 +316,7 @@ enum{
 //==============================================================
 typedef struct 
 {
-	int dummy;
+	int dummy;					///< 未使用
 } WBTLIST_BG_WORK;
 
 //-------------------------------------
@@ -324,8 +324,8 @@ typedef struct
 //-------------------------------------
 typedef struct
 {
-	u32			res[RESID_OBJ_MAX]; 		//リソース
-	GFL_CLWK	*clwk[WBT_OBJ_MAXNUM];		//CLWK
+	u32			res[RESID_OBJ_MAX]; 		///< リソース
+	GFL_CLWK	*clwk[WBT_OBJ_MAXNUM];		///< CLWK
 } WBTLIST_OBJ_WORK;
 
 //-------------------------------------
@@ -333,13 +333,13 @@ typedef struct
 //-------------------------------------
 typedef struct
 {
-	s16			sx;				// 開始
-	s16			ex;				// 終了
-	s16			flag;			// フラグ
-	s16			pad;
+	s16			sx;				///< 開始
+	s16			ex;				///< 終了
+	s16			flag;			///< フラグ
+	s16			pad;			///< pad
 	//
-	s32			rate;			// 加算値(x100)
-	s32			calcnum;		// 計算結果(x100)
+	s32			rate;			///< 加算値(x100)
+	s32			calcnum;		///< 計算結果(x100)
 } WBTLIST_MOVE_WORK;
 
 
@@ -349,35 +349,35 @@ typedef struct
 //-------------------------------------
 typedef struct
 {
-	u8			exppos;			// 爆発位置
-	u8			winpos;			// 勝った位置
-	u8			moveflag;		// 移動可能フラグ
-	u8			linework;		// ラインのワーク
-	u8			pattern;		// パターン
-	u8			mesid;			// メッセージid
-	u8			t_1st;			// トレーナー番号(左)
-	u8			t_2nd;			// トレーナー番号(右)
+	u8			exppos;			///< 爆発位置
+	u8			winpos;			///< 勝った位置
+	u8			moveflag;		///< 移動可能フラグ
+	u8			linework;		///< ラインのワーク
+	u8			pattern;		///< パターン
+	u8			mesid;			///< メッセージid
+	u8			t_1st;			///< トレーナー番号(左)
+	u8			t_2nd;			///< トレーナー番号(右)
 } WBTLIST_PARAM_WORK;
 
 // 個数
 enum{
-	PARAM_ROUND1 = 3,		// 決めせりふ(1) + トーナメント、ルール名(1) + 1回戦(1)
-	PARAM_ROUND2 = 5,		// 人数分の結果(4) + 2回戦(1)
-	PARAM_ROUND3 = 3,		// 人数分の結果(2) + 決勝戦(1)
+	PARAM_ROUND1 = 3,		///< 決めせりふ(1) + トーナメント、ルール名(1) + 1回戦(1)
+	PARAM_ROUND2 = 5,		///< 人数分の結果(4) + 2回戦(1)
+	PARAM_ROUND3 = 3,		///< 人数分の結果(2) + 決勝戦(1)
 	//
 	PARAM_WORK_MAX	= (PARAM_ROUND1 + PARAM_ROUND2 + PARAM_ROUND3),
 };
 
 // パラメータ参照用(WBTLIST_PARAM_WORKと対応)
 enum{
-	PRM_EXPPOS = 0,				// 爆発位置
-	PRM_WINPOS,					// 勝った位置
-	PRM_MOVEFLAG,				// 移動可能フラグ
-	PRM_LINEWORK,				// ラインのワーク
-	PRM_PATTERN,				// パターン
-	PRM_MESID,					// メッセージid
-	PRM_T1ST,					// トレーナー番号(左)
-	PRM_T2ND,					// トレーナー番号(右)
+	PRM_EXPPOS = 0,				///< 爆発位置
+	PRM_WINPOS,					///< 勝った位置
+	PRM_MOVEFLAG,				///< 移動可能フラグ
+	PRM_LINEWORK,				///< ラインのワーク
+	PRM_PATTERN,				///< パターン
+	PRM_MESID,					///< メッセージid
+	PRM_T1ST,					///< トレーナー番号(左)
+	PRM_T2ND,					///< トレーナー番号(右)
 };
 
 //--------------------------------------------------------------
@@ -385,56 +385,56 @@ enum{
 //==============================================================
 typedef struct 
 {
-	HEAPID					heapID;
+	HEAPID					heapID;							///< ヒープID
 	// BG
-	WBTLIST_BG_WORK			wk_bg;
+	WBTLIST_BG_WORK			wk_bg;							///< BG管理
 	// OBJ
-	WBTLIST_OBJ_WORK		wk_obj;
+	WBTLIST_OBJ_WORK		wk_obj;							///< obj管理
 	//描画設定
-	WBTLIST_GRAPHIC_WORK	*graphic;
+	WBTLIST_GRAPHIC_WORK	*graphic;						///< graphic管理
 	//フォント
-	GFL_FONT				*font;
+	GFL_FONT				*font;							///< font
 	//プリントキュー
-	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[2];						// 0:メッセージ,1:未使用
+	PRINT_QUE				*print_que;						///< キュー
+	GFL_MSGDATA				*msg[2];						///< 0:メッセージ,1:未使用
 	
 	// OAMマップモデル
-	u8						clwk_oam_mmdl_count;
-	UI_EASY_CLWK_RES		clres_oam_mmdl;
-	GFL_CLWK				*clwk_oam_mmdl[ WBT_TRAINER_MAX ];
+	u8						clwk_oam_mmdl_count;				///< トレーナー数
+	UI_EASY_CLWK_RES		clres_oam_mmdl;						///< トレーナー用res
+	GFL_CLWK				*clwk_oam_mmdl[ WBT_TRAINER_MAX ];	///< トレーナー用clwk
 	
 	//---------------------
 	// 以下に追加記入
 	//---------------------
-	WBTLIST_PARAM 			*Param;							// 参照用として保存
+	WBTLIST_PARAM 			*Param;							///< 参照用として保存
 	
-	BMPOAM_SYS_PTR			BmpOamSys;						// BMPOAM
-	GFL_BMP_DATA			*BmpData[WBT_BMPOAM_MAXNUM];	// Bmp
-	BMPOAM_ACT_PTR			BmpOamWork[WBT_BMPOAM_MAXNUM];	// BMPOAM用Work
-	PRINT_UTIL				PrintUtil[WBT_CANVAS_MAXNUM];	// 文字表示用
-	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
-	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
-	STRBUF					*MsgBuffer;						// メッセージ用バッファ
-	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
-	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
+	BMPOAM_SYS_PTR			BmpOamSys;						///< BMPOAM
+	GFL_BMP_DATA			*BmpData[WBT_BMPOAM_MAXNUM];	///< Bmp
+	BMPOAM_ACT_PTR			BmpOamWork[WBT_BMPOAM_MAXNUM];	///< BMPOAM用Work
+	PRINT_UTIL				PrintUtil[WBT_CANVAS_MAXNUM];	///< 文字表示用
+	PRINT_STREAM			*PrintStream;					///< 文字表示用(PrintStream)
+	GFL_TCBLSYS				*MsgTcblSys;					///< メッセージ用タスク
+	STRBUF					*MsgBuffer;						///< メッセージ用バッファ
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					///< ページ送りマーク用ワーク
+	APP_PRINTSYS_COMMON_WORK PrintSysWork;					///< 汎用PrintStream管理ワーク
 	//
-	s32						Mode;							// モード(段階)
-	s32						Step;							// ステップ
-	s32						DispCount;						// カウンタ
-	s32						PlayerNum;						// プレイヤの番号
-	u32						MoveFlag;						// 移動可能フラグ
-	u32						MesFlag;						// メッセージフラグ
-	u32						DebugFlag;						// debug
-	s32						DebugSound;						// debug(sound)
-	s32						RandCount;						// random用カウンタ
-	s32						RandBuffer[4];					// random用のバッファ
-	s32						Timer[TIMER_MAX];				// タイマ
-	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動用ワーク
-	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
-	u16						PalBuffer[0x10*8];				// 色変え用(u16なので1パレット0x10分でよい)
-	u16						TmpBuffer[0x10*8];				// パレット用(連続で転送させるためPalBufferと同じサイズを確保)
+	s32						Mode;							///< モード(段階)
+	s32						Step;							///< ステップ
+	s32						DispCount;						///< カウンタ
+	s32						PlayerNum;						///< プレイヤの番号
+	u32						MoveFlag;						///< 移動可能フラグ
+	u32						MesFlag;						///< メッセージフラグ
+	u32						DebugFlag;						///< debug
+	s32						DebugSound;						///< debug(sound)
+	s32						RandCount;						///< random用カウンタ
+	s32						RandBuffer[4];					///< random用のバッファ
+	s32						Timer[TIMER_MAX];				///< タイマ
+	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			///< 移動用ワーク
+	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		///< パラメータのワーク
+	u16						PalBuffer[0x10*8];				///< 色変え用(u16なので1パレット0x10分でよい)
+	u16						TmpBuffer[0x10*8];				///< パレット用(連続で転送させるためPalBufferと同じサイズを確保)
 	//
-	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
+	s16						*EmptyBuffer;					///< 座標用のバッファ(必ず破棄すること)
 } WBTLIST_MAIN_WORK;
 
 
@@ -442,13 +442,13 @@ typedef struct
 // OBJ用の定義
 //------------------------------------------
 typedef struct{
-	u8				anmseq;			// アニメシーケンス(0xff終了コード)
-	u8				softpri;		// OBJ(プライオリティ)
-	u8				bgpri;			// BG(プライオリティ)
-	u8				visible;		// 表示/非表示
-	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
-	u8				dispflag;		// 表示フラグ
-	u8				empty_num;		// empty番号(これから座標を参照)
+	u8				anmseq;			///< アニメシーケンス(0xff終了コード)
+	u8				softpri;		///< OBJ(プライオリティ)
+	u8				bgpri;			///< BG(プライオリティ)
+	u8				visible;		///< 表示/非表示
+	u8				palnum;			///< パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		///< 表示フラグ
+	u8				empty_num;		///< empty番号(これから座標を参照)
 	u8				pad;
 }WBTLIST_OBJ_DATA;
 
@@ -456,38 +456,38 @@ typedef struct{
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-	u8				x;				// 座標
-	u8				y;
-	u8				width;			// サイズ
-	u8				height;
-	u8				palnum;			// パレット番号
+	u8				frmnumber;		///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				///< x座標
+	u8				y;				///< y座標
+	u8				width;			///< 横サイズ
+	u8				height;			///< 縦サイズ
+	u8				palnum;			///< パレット番号
 }WBTLIST_CANVAS_DATA;
 
 //-----------------------------------------
 // BMPOAMの定義
 //------------------------------------------
 typedef struct{
-	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
-	u8				height;
-	u8				softpri;		// プライオリティ(obj)
-	u8				bgpri;			// プライオリティ(bg)
-	u8				visible;		// 表示/非表示
-	u8				paloffset;		// パレットオフセット(nclの何番目か)
-	u8				empty_num;		// empty番号
-	u8				pad;
+	u8				width;			///< 横サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				height;			///< 縦サイズ
+	u8				softpri;		///< プライオリティ(obj)
+	u8				bgpri;			///< プライオリティ(bg)
+	u8				visible;		///< 表示/非表示
+	u8				paloffset;		///< パレットオフセット(nclの何番目か)
+	u8				empty_num;		///< empty番号
+	u8				pad;			///< pad
 }WBTLIST_BMPOAM_DATA;
 
 //-----------------------------------------
 // MAPMODELの定義
 //------------------------------------------
 typedef struct{
-	u8				id;				// id(パラメータ参照時は未使用)(0xffの場合終了判定)
-	u8				pattern;		// パターン(パラメータ参照時は未使用)
-	u8				palnum;			// 転送先パレット番号
-	u8				empty_num;		// empty番号
-	u8				softpri;		// プライオリティ(obj)
-	u8				pad;
+	u8				id;				///< id(パラメータ参照時は未使用)(0xffの場合終了判定)
+	u8				pattern;		///< パターン(パラメータ参照時は未使用)
+	u8				palnum;			///< 転送先パレット番号
+	u8				empty_num;		///< empty番号
+	u8				softpri;		///< プライオリティ(obj)
+	u8				pad;			///< pad
 }WBTLIST_MAPMODEL_DATA;
 
 //=============================================================================

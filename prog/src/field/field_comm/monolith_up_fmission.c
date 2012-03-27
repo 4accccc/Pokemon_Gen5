@@ -42,27 +42,27 @@ enum{
 //==============================================================================
 ///ミッション説明画面制御ワーク
 typedef struct{
-  GFL_BMPWIN 			*bmpwin[BMPWIN_MAX];	// bmpwin
-  PRINT_UTIL 			print_util[BMPWIN_MAX];	// print_util
+  GFL_BMPWIN 			*bmpwin[BMPWIN_MAX];	///< bmpwin
+  PRINT_UTIL 			print_util[BMPWIN_MAX];	///< print_util
   
-  FMISSION_DATA_MAN		*FMissionManager;		// manager
-  ARCHANDLE				*Handle;
-  FMISSION_ARCDATA		*ArcData;
+  FMISSION_DATA_MAN		*FMissionManager;		///< manager
+  ARCHANDLE				*Handle;				///< ハンドル
+  FMISSION_ARCDATA		*ArcData;				///< データ
   //
-  s32  					Id;						// 表示するID
-  s32					Level;					// 表示するレベル
+  s32  					Id;						///< 表示するID
+  s32					Level;					///< 表示するレベル
 }MONOLITH_UP_WORK;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
 typedef struct{
-  u8				frmnumber;			// BG上下(frame定義なので注意)(0xffの場合は終了判定)
-  u8				x;					// 座標
-  u8				y;
-  u8				width;				// サイズ
-  u8				height;
-  u8				palnum;				// パレット番号
+  u8				frmnumber;			///< BG上下(frame定義なので注意)(0xffの場合は終了判定)
+  u8				x;					///< x座標
+  u8				y;					///< y座標
+  u8				width;				///< 横サイズ
+  u8				height;				///< 縦サイズ
+  u8				palnum;				///< パレット番号
 }MONOLITH_CANVAS_DATA;
 
 //==============================================================================

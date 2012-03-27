@@ -66,8 +66,8 @@ typedef struct {
 //-------------------------------------
 //-------------------------------------
 typedef struct {
-  BOOL upside_win;
-  u8 msg_type;
+  BOOL upside_win;  ///< 上側が勝った
+  u8 msg_type;      ///< メッセージのオフセット
 }WBTLIST_RESULT;
 
 //-------------------------------------
@@ -75,13 +75,13 @@ typedef struct {
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
-  WBTLIST_STAGE stage;
-  WBTLIST_TRAINER trainer[ WBT_TRAINER_NUM ];
-  WBTLIST_RESULT  first_stage[4];
-  WBTLIST_RESULT  second_stage[2];
-  STRBUF * tournament_name;
-  STRBUF * tournament_rule;
-  BOOL call_fade_flag;    //このPROC内部では使用しない。呼び出し側で設定・参照している
+	GAMESYS_WORK				*gamesys;	///<[in]ゲームシステム
+  WBTLIST_STAGE stage;                         ///< 何回戦か
+  WBTLIST_TRAINER trainer[ WBT_TRAINER_NUM ];  ///< トレーナー情報
+  WBTLIST_RESULT  first_stage[4];              ///< 1回戦の結果
+  WBTLIST_RESULT  second_stage[2];             ///< 2回戦の結果
+  STRBUF * tournament_name;                    ///< トーナメント名
+  STRBUF * tournament_rule;                    ///< トーナメントルール
+  BOOL call_fade_flag;    ///<このPROC内部では使用しない。呼び出し側で設定・参照している
 }WBTLIST_PARAM;
 
