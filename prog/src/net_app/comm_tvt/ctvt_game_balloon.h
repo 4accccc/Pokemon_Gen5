@@ -2,7 +2,7 @@
 /**
  *
  *	@file		ctvt_game_balloon.h
- *	@brief
+ *	@brief  ミニゲームの風船に関する処理
  *	@author		Katsuhiko=Ichiraku
  *	@date		2010.12.14
  *
@@ -18,15 +18,15 @@
 */
 //=============================================================================
 
-#define BALLOON_MAX             (8)    // 風船の出る個数MAX
+#define BALLOON_MAX             (8)    ///< 風船の出る個数MAX
 
 //-------------------------------------
 ///	風船の種類
 //=====================================
 typedef enum {
-  BALLOON_NORMAL,   // 通常顔
-  BALLOON_SMILE,    // 笑い顔
-  BALLOON_BAD,      // 困り顔
+  BALLOON_NORMAL,   ///< 通常顔
+  BALLOON_SMILE,    ///< 笑い顔
+  BALLOON_BAD,      ///< 困り顔
 } BALLOON_TYPE;
 
 //-------------------------------------
@@ -34,10 +34,10 @@ typedef enum {
 //  これによりエフェクトが変わる
 //=====================================
 typedef enum {
-  BALLOON_POINT_OK_2PT,
-  BALLOON_POINT_OK_4PT,
-  BALLOON_POINT_NG_1PT,
-  BALLOON_POINT_NG_2PT,
+  BALLOON_POINT_OK_2PT, ///< +2ポイント
+  BALLOON_POINT_OK_4PT, ///< +4ポイント
+  BALLOON_POINT_NG_1PT, ///< -1ポイント
+  BALLOON_POINT_NG_2PT, ///< -2ポイント
 } BALLOON_POINT_TYPE;
 
 
@@ -45,9 +45,9 @@ typedef enum {
 ///	風船の大きさ定義
 //=====================================
 typedef enum {
-  BALLOON_SIZE_S = 1,   // 小
-  BALLOON_SIZE_M = 2,   // 中
-  BALLOON_SIZE_L = 3,   // 大
+  BALLOON_SIZE_S = 1,   ///< 小
+  BALLOON_SIZE_M = 2,   ///< 中
+  BALLOON_SIZE_L = 3,   ///< 大
 } BALLOON_SIZE;
 
 
@@ -62,36 +62,36 @@ typedef enum {
 //=====================================
 typedef struct {
 
-  BOOL      visible;  // 表示フラグ
-  GFL_TCB*  tcb;      // タスク
+  BOOL      visible;  ///< 表示フラグ
+  GFL_TCB*  tcb;      ///< タスク
 
-  CTVT_GAME_WORK *p_game_wk; // 親のアドレス
+  CTVT_GAME_WORK *p_game_wk; ///< 親のアドレス
 
   //========================
   // 風船の表示に関するもの
-  GFL_G3D_UTIL      *parent_g3dUtil;  // G3D_OBJ取得用
-  u16               unit_idx;         // モデル指定用
+  GFL_G3D_UTIL      *parent_g3dUtil;  ///< G3D_OBJ取得用
+  u16               unit_idx;         ///< モデル指定用
 
-  GFL_G3D_OBJSTATUS status;           // OBJ情報
-  BALLOON_TYPE      type;             // 種類 (0～2)
-  BALLOON_SIZE      size;             // サイズ (1～3)
+  GFL_G3D_OBJSTATUS status;           ///< OBJ情報
+  BALLOON_TYPE      type;             ///< 種類 (0～2)
+  BALLOON_SIZE      size;             ///< サイズ (1～3)
 
   // 当たったときのエフェクト用
-  s8                alpha;            // α値(0～31)
-  fx32              anm_frm;          // アニメフレームカウンタ
-  BOOL              anm_flg;          // エフェクトON/OFFフラグ
-  fx32              scale;            // 拡大率
-  BALLOON_POINT_TYPE  point_type;     // 得点種類
+  s8                alpha;            ///< α値(0～31)
+  fx32              anm_frm;          ///< アニメフレームカウンタ
+  BOOL              anm_flg;          ///< エフェクトON/OFFフラグ
+  fx32              scale;            ///< 拡大率
+  BALLOON_POINT_TYPE  point_type;     ///< 得点種類
 
   //========================
   // 風船の動きに関するもの
-  VecFx32           vec;              // 移動ベクトル
-  u16               save_frame;       // 出現したときのフレームの値
+  VecFx32           vec;              ///< 移動ベクトル
+  u16               save_frame;       ///< 出現したときのフレームの値
 
-  s8                effect_wait;      // 失敗のエフェクトの空ループ用
+  s8                effect_wait;      ///< 失敗のエフェクトの空ループ用
 
   // BTS1849
-  u8                is_hit_check_disable;     // 当たり判定除外フラグ
+  u8                is_hit_check_disable;     ///< 当たり判定除外フラグ
 
 } BALLOON_WORK;
 
@@ -100,41 +100,41 @@ typedef struct {
 //=====================================
 typedef struct {
 
-  BOOL      visible;  // 表示フラグ
-  GFL_TCB*  tcb;      // タスク
+  BOOL      visible;  ///< 表示フラグ
+  GFL_TCB*  tcb;      ///< タスク
 
-  CTVT_GAME_WORK *p_game_wk; // 親のアドレス
+  CTVT_GAME_WORK *p_game_wk; ///< 親のアドレス
 
   //========================
   // 風船の表示に関するもの
-  GFL_G3D_UTIL      *parent_g3dUtil;  // G3D_OBJ取得用
-  u16               unit_idx;         // モデル指定用
-  GFL_G3D_OBJSTATUS status;           // OBJ情報
-  BALLOON_TYPE      type;             // TEX種類 (0～2)
-  u8                stage;            // 大きさ段階
-  BOOL              is_self;          // 自分の風船か
-  u8                cnt;              // 何個目の風船か(0～3)
+  GFL_G3D_UTIL      *parent_g3dUtil;  ///< G3D_OBJ取得用
+  u16               unit_idx;         ///< モデル指定用
+  GFL_G3D_OBJSTATUS status;           ///< OBJ情報
+  BALLOON_TYPE      type;             ///< TEX種類 (0～2)
+  u8                stage;            ///< 大きさ段階
+  BOOL              is_self;          ///< 自分の風船か
+  u8                cnt;              ///< 何個目の風船か(0～3)
 
-  u8                interval;         // 風船出現までのインターバル
+  u8                interval;         ///< 風船出現までのインターバル
 
   // エフェクト用
-  fx32              scale_add;        // 1フレームの拡大率加算値
-  fx32              scale_max;        // 拡大率MAX
-  fx32              scale;            // 拡大率
-  BOOL              scale_flg;        // 拡大ON/OFFフラグ
+  fx32              scale_add;        ///< 1フレームの拡大率加算値
+  fx32              scale_max;        ///< 拡大率MAX
+  fx32              scale;            ///< 拡大率
+  BOOL              scale_flg;        ///< 拡大ON/OFFフラグ
 
-  BOOL              anm_flg;          // エフェクトON/OFFフラグ
-  BOOL              effect_flg;       // ica・imaアニメ再生フラグ
-  fx32              anm_frm;          // アニメフレームカウンタ
+  BOOL              anm_flg;          ///< エフェクトON/OFFフラグ
+  BOOL              effect_flg;       ///< ica・imaアニメ再生フラグ
+  fx32              anm_frm;          ///< アニメフレームカウンタ
 
-  s8                alpha;            // α値(0～31)
-  BOOL              alpha_flg;        // αONフラグ
+  s8                alpha;            ///< α値(0～31)
+  BOOL              alpha_flg;        ///< αONフラグ
 
   //========================
   // 風船の動きに関するもの
-  s16               ang;              // ゆれる動き用
-  u8                ang_state;        // ゆれる状態
-  BOOL              ang_flg;          // ゆれるフラグ
+  s16               ang;              ///< ゆれる動き用
+  u8                ang_state;        ///< ゆれる状態
+  BOOL              ang_flg;          ///< ゆれるフラグ
 
 } BALLOON2_WORK;
 
@@ -144,29 +144,29 @@ typedef struct {
 //=====================================
 typedef struct {
 
-  BOOL      visible;  // 表示フラグ
-  BOOL      effect;   // エフェクトフラグ
-  GFL_TCB*  tcb;      // タスク
+  BOOL      visible;  ///< 表示フラグ
+  BOOL      effect;   ///< エフェクトフラグ
+  GFL_TCB*  tcb;      ///< タスク
 
-  CTVT_GAME_WORK *p_game_wk; // 親のアドレス
+  CTVT_GAME_WORK *p_game_wk; ///< 親のアドレス
 
   //========================
   // 風船の表示に関するもの
-  GFL_G3D_UTIL      *parent_g3dUtil;  // G3D_OBJ取得用
-  u16               unit_idx;         // モデル指定用
-  GFL_G3D_OBJSTATUS status;           // OBJ情報
+  GFL_G3D_UTIL      *parent_g3dUtil;  ///< G3D_OBJ取得用
+  u16               unit_idx;         ///< モデル指定用
+  GFL_G3D_OBJSTATUS status;           ///< OBJ情報
 
   // 当たったときのエフェクト用
-  s8                alpha;            // α値(0～31)
-  fx32              anm_frm;          // アニメフレームカウンタ
-  BOOL              anm_flg;          // エフェクトON/OFFフラグ
-  fx32              scale;            // 拡大率
+  s8                alpha;            ///< α値(0～31)
+  fx32              anm_frm;          ///< アニメフレームカウンタ
+  BOOL              anm_flg;          ///< エフェクトON/OFFフラグ
+  fx32              scale;            ///< 拡大率
 
   //========================
   // 風船の動きに関するもの
-  VecFx32           vec;              // 移動ベクトル
-  fx32              max_y;            // 上昇できるMAXのY座標
-  u8                rank;             // 順位
+  VecFx32           vec;              ///< 移動ベクトル
+  fx32              max_y;            ///< 上昇できるMAXのY座標
+  u8                rank;             ///< 順位
 
 } BALLOON_S_WORK;
 

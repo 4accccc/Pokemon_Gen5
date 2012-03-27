@@ -2,7 +2,7 @@
 /**
  *
  *	@file		ctvt_game_balloon.c
- *	@brief
+ *	@brief  ミニゲームの風船に関する処理
  *	@author		Katsuhiko=Ichiraku
  *	@date		2010.12.14
  *
@@ -14,7 +14,7 @@
 #include "ctvt_game_balloon.h"
 #include "ctvt_game.h"
 
-#include "calctool.h"   // VEC_COPY
+#include "calctool.h"   ///< VEC_COPY
 
 //=============================================================================
 /**
@@ -23,19 +23,19 @@
 //=============================================================================
 
 // ゲーム1
-#define SCALE_ADD   ( 0x4A )      // 1フレームの拡大率加算値
-#define SCALE_MAX   ( 0x310 )     // 風船の拡大率MAX
+#define SCALE_ADD   ( 0x4A )      ///< 1フレームの拡大率加算値
+#define SCALE_MAX   ( 0x310 )     ///< 風船の拡大率MAX
 
 //-------------------------------------
 ///	画面外判定用構造体
 //=====================================
 typedef struct {
-  fx32      top;    // 高さ
-  fx32      left;   // 左端
-  fx32      right;  // 右端
+  fx32      top;    ///< 高さ
+  fx32      left;   ///< 左端
+  fx32      right;  ///< 右端
 } HIT_OUT_SCREEN;
 
-// 画面外判定用テーブル
+/// 画面外判定用テーブル
 static const HIT_OUT_SCREEN hit_out_screen_tbl[3] =
 {
   //    高さ上限        左端上限          右端上限
@@ -48,32 +48,32 @@ static const HIT_OUT_SCREEN hit_out_screen_tbl[3] =
 };
 
 // ゲーム2
-#define SCALE_SELF          ( 0x900 )     // 自分の風船の拡大値
-#define SCALE_OTHER         ( 0x500 )     // 相手の風船の拡大値
-#define SCALE_ADD_SELF      ( 0x75 )      // 1フレームの拡大率加算値
-#define SCALE_ADD_MAX_SELF  ( 0x750 )     // 風船の拡大率MAX
-#define SCALE_ADD_OTHER     ( 0x27 )      // 1フレームの拡大率加算値
-#define SCALE_ADD_MAX_OTHER ( 0x180 )     // 風船の拡大率MAX
+#define SCALE_SELF          ( 0x900 )     ///< 自分の風船の拡大値
+#define SCALE_OTHER         ( 0x500 )     ///< 相手の風船の拡大値
+#define SCALE_ADD_SELF      ( 0x75 )      ///< 1フレームの拡大率加算値
+#define SCALE_ADD_MAX_SELF  ( 0x750 )     ///< 風船の拡大率MAX
+#define SCALE_ADD_OTHER     ( 0x27 )      ///< 1フレームの拡大率加算値
+#define SCALE_ADD_MAX_OTHER ( 0x180 )     ///< 風船の拡大率MAX
 
-// 最大に大きくなったときの拡大率
+/// 最大に大きくなったときの拡大率
 #define SCALE_MAX_SELF    ( SCALE_SELF + SCALE_ADD_MAX_SELF*2 )
 #define SCALE_MAX_OTHER    ( SCALE_OTHER + SCALE_ADD_MAX_OTHER*2 )
 
 // 通常揺れ
-#define ANGLE_ADD         ( 0x50 )     // 風船が揺れる時の角度加算値
-#define ANGLE_MAX         ( 0x400 )     // 風船が揺れる時の角度MAX
+#define ANGLE_ADD         ( 0x50 )     ///< 風船が揺れる時の角度加算値
+#define ANGLE_MAX         ( 0x400 )     ///< 風船が揺れる時の角度MAX
 // 拡大時の揺れ
-#define SCALE_ANGLE_ADD   ( 0x100 )     // 風船が揺れる時の角度加算値
-#define SCALE_ANGLE_MAX   ( 0xc00 )     // 風船が揺れる時の角度MAX
-// ゆれる状態 上から順
+#define SCALE_ANGLE_ADD   ( 0x100 )     ///< 風船が揺れる時の角度加算値
+#define SCALE_ANGLE_MAX   ( 0xc00 )     ///< 風船が揺れる時の角度MAX
+/// ゆれる状態 上から順
 enum{
-  ANG_STATE_RIGHT,    // 右に揺れる
-  ANG_STATE_LEFT,     // 左に揺れる
-  ANG_STATE_RIGHT2,   // 右に揺れる(中央に戻る為)
+  ANG_STATE_RIGHT,    ///< 右に揺れる
+  ANG_STATE_LEFT,     ///< 左に揺れる
+  ANG_STATE_RIGHT2,   ///< 右に揺れる(中央に戻る為)
 };
 
 // 結果発表
-#define SCALE_S_MAX   ( 0x260 )   // 風船の拡大率MAX 結果発表版
+#define SCALE_S_MAX   ( 0x260 )   ///< 風船の拡大率MAX 結果発表版
 //=============================================================================
 /**
  *					構造体宣言
@@ -86,9 +86,9 @@ enum{
 */
 //=============================================================================
 
-// 風船1のエフェクト（破裂）
+//! 風船1のエフェクト（破裂）
 static BOOL baloon_effect_burst( BALLOON_WORK *p_wk );
-// 風船1のエフェクト（アルファフェードアウト）
+//! 風船1のエフェクト（アルファフェードアウト）
 static BOOL baloon_effect_alpha( BALLOON_WORK *p_wk );
 
 //----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	enc_adpcm.c
+ * @file	enc_adpcm.h
  * @brief	ADPCM•ÏŠ·
  * @author	ariizumi
  * @data	09/11/11

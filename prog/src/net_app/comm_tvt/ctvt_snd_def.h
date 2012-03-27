@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file  ctvt_local_def.h
+ * @file  ctvt_snd_def.h
  * @brief ’ÊMTVT Œø‰Ê‰¹’è‹`
  * @author  ariizumi
  * @data  09/06/10

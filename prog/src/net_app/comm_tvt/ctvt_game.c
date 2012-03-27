@@ -71,43 +71,43 @@ static GFL_STD_RandContext gRandContext = {0};
 #endif
 //===============================
 
-#define CTVT_UNIT_IDX_MAX       (5)     // 3Dユニットの数   
-#define CTVT_GAME_TIME_LIMIT    (60)    // 制限時間 (秒)
-#define CTVT_GAME_TIME_LASTSPURT  (20)  // 制限時間 ラストスパート(秒)
-#define CTVT_GAME_TIME_RETRY    (5)     // リトライがでるまでの時間 (秒)
-#define CTVT_GAME_TIME_RETRY_NO (30)    // 自動で「いいえ」を選択する時間 (秒)
+#define CTVT_UNIT_IDX_MAX       (5)     ///< 3Dユニットの数   
+#define CTVT_GAME_TIME_LIMIT    (60)    ///< 制限時間 (秒)
+#define CTVT_GAME_TIME_LASTSPURT  (20)  ///< 制限時間 ラストスパート(秒)
+#define CTVT_GAME_TIME_RETRY    (5)     ///< リトライがでるまでの時間 (秒)
+#define CTVT_GAME_TIME_RETRY_NO (30)    ///< 自動で「いいえ」を選択する時間 (秒)
 
 // タイムゲージ
-#define TIME_BAR_W        (23)          // 幅
-#define TIME_BAR_H        (3)           // 高さ
-#define TIME_BAR_X        (7)           // X
-#define TIME_BAR_Y        (20)          // Y
-#define TIME_BAR_COL_R    (0x1)         // パレットの色
-#define TIME_BAR_COL_Y    (0x2)         // パレットの色
-#define TIME_BAR_COL_G    (0x3)         // パレットの色
-#define TIME_BAR_COL_BASE (0x4)         // パレットの色
+#define TIME_BAR_W        (23)          ///< 幅
+#define TIME_BAR_H        (3)           ///< 高さ
+#define TIME_BAR_X        (7)           ///< X
+#define TIME_BAR_Y        (20)          ///< Y
+#define TIME_BAR_COL_R    (0x1)         ///< パレットの色
+#define TIME_BAR_COL_Y    (0x2)         ///< パレットの色
+#define TIME_BAR_COL_G    (0x3)         ///< パレットの色
+#define TIME_BAR_COL_BASE (0x4)         ///< パレットの色
 
-#define BALLOON_RND_W_MAX       (4)     // 出現位置乱数のMAX値
-#define BALLOON_RND_V_MAX       (3)     // 出現位置乱数のMAX値
+#define BALLOON_RND_W_MAX       (4)     ///< 出現位置乱数のMAX値
+#define BALLOON_RND_V_MAX       (3)     ///< 出現位置乱数のMAX値
 
 // PLATE関係  
 #define PLATE_NUM       (4)
-#define PLATE_OFFSET_X  (-8)        // プレートの中央から名前までの距離
-#define PLATE_OFFSET_Y  (8)         // 
-#define PLATE_OFFSET_X_SCORE  (5)   // プレートの中央から点数までの距離
-#define PLATE_OFFSET_X_P      (28)   // Pの文字までの距離
-#define PLATE_OFFSET_X_CROWN  (-78)   // 王冠までの距離
+#define PLATE_OFFSET_X  (-8)        ///< プレートの中央から名前までの距離
+#define PLATE_OFFSET_Y  (8)         ///< 
+#define PLATE_OFFSET_X_SCORE  (5)   ///< プレートの中央から点数までの距離
+#define PLATE_OFFSET_X_P      (28)   ///< Pの文字までの距離
+#define PLATE_OFFSET_X_CROWN  (-78)   ///< 王冠までの距離
 #define PLATE_S_OFFSET_X_P    (-16)
-#define PLATE_SWING_TIME    (180)       // 揺れるまでの待ち時間
+#define PLATE_SWING_TIME    (180)       ///< 揺れるまでの待ち時間
 
 // ２つ目ミニゲーム
-#define TOUCH_CNT_1 (10)    // 初期段階のタッチポイント
-#define TOUCH_CNT_2 (20)    // 第2段階のタッチポイント
-#define TOUCH_CNT_3 (30)    // 第3段階のタッチポイント
+#define TOUCH_CNT_1 (10)    ///< 初期段階のタッチポイント
+#define TOUCH_CNT_2 (20)    ///< 第2段階のタッチポイント
+#define TOUCH_CNT_3 (30)    ///< 第3段階のタッチポイント
 
-#define SWING_INTERVAL  (80) // 風船の揺れのインターバル
+#define SWING_INTERVAL  (80) ///< 風船の揺れのインターバル
 
-#define PINPOINT_EFFECT_NUM (3) // ピンポイントタッチエフェクトの同時再生MAX数
+#define PINPOINT_EFFECT_NUM (3) ///< ピンポイントタッチエフェクトの同時再生MAX数
 
 //======================================================================
 //	enum
@@ -117,18 +117,18 @@ static GFL_STD_RandContext gRandContext = {0};
 //ステート
 typedef enum
 {
-  CGS_FADEOUT, //両方フェード
+  CGS_FADEOUT, ///<両方フェード
   CGS_FADEOUT_WAIT,
 
-  CGS_FADEOUT_CAMERA,     // カメラ用
-  CGS_FADEOUT_WAIT_CAMERA,// カメラ用
+  CGS_FADEOUT_CAMERA,     ///< カメラ用
+  CGS_FADEOUT_WAIT_CAMERA,///< カメラ用
 
-  CGS_CAMERA_INIT,  // カメラ撮影
-  CGS_CAMERA_MAIN,  // カメラ撮影
-  CGS_CAMERA_EXIT,  // カメラ撮影
-  CGS_GAME_INIT,    // ゲーム初期化
-  CGS_GAME_MAIN,    // ゲームメイン
-  CGS_GAME_EXIT,    // ゲーム終了
+  CGS_CAMERA_INIT,  ///< カメラ撮影
+  CGS_CAMERA_MAIN,  ///< カメラ撮影
+  CGS_CAMERA_EXIT,  ///< カメラ撮影
+  CGS_GAME_INIT,    ///< ゲーム初期化
+  CGS_GAME_MAIN,    ///< ゲームメイン
+  CGS_GAME_EXIT,    ///< ゲーム終了
 
 }CTVT_GAME_STATE;
 
@@ -137,101 +137,101 @@ typedef enum
 ///	セルリソースインデックス
 //=====================================
 typedef enum {
-  CGOR_UPPER_PLT,     // ゲーム上画面
-  CGOR_LOWER_PLT,     // ゲーム下画面  
+  CGOR_UPPER_PLT,     ///< ゲーム上画面
+  CGOR_LOWER_PLT,     ///< ゲーム下画面  
 
-  CGOR_UPPER_NCG,     // ゲーム上画面
-  CGOR_LOWER_NCG,     // ゲーム下画面  
+  CGOR_UPPER_NCG,     ///< ゲーム上画面
+  CGOR_LOWER_NCG,     ///< ゲーム下画面  
 
-  CGOR_UPPER_ANM,     // ゲーム上画面
-  CGOR_LOWER_ANM,     // ゲーム下画面  
+  CGOR_UPPER_ANM,     ///< ゲーム上画面
+  CGOR_LOWER_ANM,     ///< ゲーム下画面  
   
-  CGOR_MAX,   // 最大値
+  CGOR_MAX,   ///< 最大値
 } CTVT_GAME_OBJ_RES;
-#define CGOR_PLT_TOP  ( CGOR_UPPER_PLT )   // パレットTOP
-#define CGOR_NCG_TOP  ( CGOR_UPPER_NCG )   // キャラクタTOP
-#define CGOR_ANM_TOP  ( CGOR_UPPER_ANM )   // セルアニメTOP
+#define CGOR_PLT_TOP  ( CGOR_UPPER_PLT )   ///< パレットTOP
+#define CGOR_NCG_TOP  ( CGOR_UPPER_NCG )   ///< キャラクタTOP
+#define CGOR_ANM_TOP  ( CGOR_UPPER_ANM )   ///< セルアニメTOP
 
 //-------------------------------------
 ///	セルアニメインデックス
 //=====================================
 typedef enum {
-  CGOAS_TIMEBAR,      // タイムバー
-  CGOAS_PLATE,        // プレート
-  CGOAS_LAST,         // 「ラストスパート」
-  CGOAS_KEKKA,        // 「けっかはっぴょう」
-  CGOAS_TITLE1_A,     // タイトル1 文字
-  CGOAS_TITLE1_B,     // タイトル1 雲
-  CGOAS_TITLE1_C,     // タイトル1 風船
-  CGOAS_TITLE2_A,     // タイトル2 文字
-  CGOAS_TITLE2_B,     // タイトル2 雲
-  CGOAS_TITLE2_C,     // タイトル2 風船
-  CGOAS_P,            // P
+  CGOAS_TIMEBAR,      ///< タイムバー
+  CGOAS_PLATE,        ///< プレート
+  CGOAS_LAST,         ///< 「ラストスパート」
+  CGOAS_KEKKA,        ///< 「けっかはっぴょう」
+  CGOAS_TITLE1_A,     ///< タイトル1 文字
+  CGOAS_TITLE1_B,     ///< タイトル1 雲
+  CGOAS_TITLE1_C,     ///< タイトル1 風船
+  CGOAS_TITLE2_A,     ///< タイトル2 文字
+  CGOAS_TITLE2_B,     ///< タイトル2 雲
+  CGOAS_TITLE2_C,     ///< タイトル2 風船
+  CGOAS_P,            ///< P
 } CTVT_GAME_OBJ_ANM_SUB;
 
 typedef enum {
-  CGOAM_NUM_0,        // 数字 0
-  CGOAM_NUM_1,        // 数字 1
-  CGOAM_NUM_2,        // 数字 2
-  CGOAM_NUM_3,        // 数字 3
-  CGOAM_NUM_4,        // 数字 4
-  CGOAM_NUM_5,        // 数字 5
-  CGOAM_NUM_6,        // 数字 6
-  CGOAM_NUM_7,        // 数字 7
-  CGOAM_NUM_8,        // 数字 8
-  CGOAM_NUM_9,        // 数字 9
-  CGOAM_P,            // P
-  CGOAM_NUM_DRUM,     // 0-9ドラムロール
-  CGOAM_PLATE_S,      // 結果発表のプレート
-  CGOAM_CLOUD1,       // 雲1 倍角
-  CGOAM_CLOUD2,       // 雲2 倍角
-  CGOAM_OME1,         // おめでとうアニメ 倍角
-  CGOAM_TEXT_O,       // 「お」 倍角
-  CGOAM_TEXT_ME,      // 「め」 倍角
-  CGOAM_TEXT_DE,      // 「で」 倍角
-  CGOAM_TEXT_TO,      // 「と」 倍角
-  CGOAM_TEXT_U,       // 「う」 倍角
-  CGOAM_TEXT_EX,      // 「！」 倍角
-  CGOAM_OME_CLOUD_L,  // おめでとう 雲  倍角
-  CGOAM_OME_CLOUD_R,  // おめでとう 雲  倍角
-  CGOAM_OME_PLATE_L,  // おめでとう 隠しプレート
-  CGOAM_OME_PLATE_R,  // おめでとう 隠しプレート
-  CGOAM_RAINBOW1,     // 虹 昼
-  CGOAM_RAINBOW2,     // 虹 夜
-  CGOAM_STAR1,        // 星 昼
-  CGOAM_STAR2,        // 星 夜
-  CGOAM_STAR1_2,      // おめでとう 星
-  CGOAM_STAR2_2,      // おめでとう 星
-  CGOAM_OME_PLATE_2,  // おめでとう 隠しプレート
-  CGOAM_RANK1,        // 「1st」
-  CGOAM_RANK2,        // 「おしい2nd」
-  CGOAM_RANK3,        // 「ざんねん3rd」
-  CGOAM_RANK4,        // 「ざんねん4th」
-  CGOAM_DOT,          // 「・・・」
+  CGOAM_NUM_0,        ///< 数字 0
+  CGOAM_NUM_1,        ///< 数字 1
+  CGOAM_NUM_2,        ///< 数字 2
+  CGOAM_NUM_3,        ///< 数字 3
+  CGOAM_NUM_4,        ///< 数字 4
+  CGOAM_NUM_5,        ///< 数字 5
+  CGOAM_NUM_6,        ///< 数字 6
+  CGOAM_NUM_7,        ///< 数字 7
+  CGOAM_NUM_8,        ///< 数字 8
+  CGOAM_NUM_9,        ///< 数字 9
+  CGOAM_P,            ///< P
+  CGOAM_NUM_DRUM,     ///< 0-9ドラムロール
+  CGOAM_PLATE_S,      ///< 結果発表のプレート
+  CGOAM_CLOUD1,       ///< 雲1 倍角
+  CGOAM_CLOUD2,       ///< 雲2 倍角
+  CGOAM_OME1,         ///< おめでとうアニメ 倍角
+  CGOAM_TEXT_O,       ///< 「お」 倍角
+  CGOAM_TEXT_ME,      ///< 「め」 倍角
+  CGOAM_TEXT_DE,      ///< 「で」 倍角
+  CGOAM_TEXT_TO,      ///< 「と」 倍角
+  CGOAM_TEXT_U,       ///< 「う」 倍角
+  CGOAM_TEXT_EX,      ///< 「！」 倍角
+  CGOAM_OME_CLOUD_L,  ///< おめでとう 雲  倍角
+  CGOAM_OME_CLOUD_R,  ///< おめでとう 雲  倍角
+  CGOAM_OME_PLATE_L,  ///< おめでとう 隠しプレート
+  CGOAM_OME_PLATE_R,  ///< おめでとう 隠しプレート
+  CGOAM_RAINBOW1,     ///< 虹 昼
+  CGOAM_RAINBOW2,     ///< 虹 夜
+  CGOAM_STAR1,        ///< 星 昼
+  CGOAM_STAR2,        ///< 星 夜
+  CGOAM_STAR1_2,      ///< おめでとう 星
+  CGOAM_STAR2_2,      ///< おめでとう 星
+  CGOAM_OME_PLATE_2,  ///< おめでとう 隠しプレート
+  CGOAM_RANK1,        ///< 「1st」
+  CGOAM_RANK2,        ///< 「おしい2nd」
+  CGOAM_RANK3,        ///< 「ざんねん3rd」
+  CGOAM_RANK4,        ///< 「ざんねん4th」
+  CGOAM_DOT,          ///< 「・・・」
 
   // 2つ目のゲーム
-  CGOAM_POMP_BASE,    // ポンプ土台
-  CGOAM_POMP_HANDLE,  // ポンプ取っ手
-  CGOAM_R_BUTTON_TOUCH,   // 右側タッチするところ
-  CGOAM_L_BUTTON_TOUCH,   // 左側タッチするところ
-  CGOAM_BUTTON_TOUCH_OFF, // タッチするところがOFF
-  CGOAM_R_BUTTON_LAST_TOUCH,  // 右側タッチするところ
-  CGOAM_L_BUTTON_LAST_TOUCH,  // 左側タッチするところ
-  CGOAM_BUTTON_LAST_TOUCH_OFF,// タッチするところがOFF
-  CGOAM_POMP_HANDLE_LAST,  // ポンプ取っ手 残り時間20秒板
-  CGOAM_PEN1,               // ペンタッチアニメ
-  CGOAM_PEN2,               // ペンタッチアニメ
-  CGOAM_PINPOINT_EFFECT_L,  // ピンポイントタッチエフェクト
-  CGOAM_PINPOINT_EFFECT_R,  // ピンポイントタッチエフェクト
+  CGOAM_POMP_BASE,    ///< ポンプ土台
+  CGOAM_POMP_HANDLE,  ///< ポンプ取っ手
+  CGOAM_R_BUTTON_TOUCH,   ///< 右側タッチするところ
+  CGOAM_L_BUTTON_TOUCH,   ///< 左側タッチするところ
+  CGOAM_BUTTON_TOUCH_OFF, ///< タッチするところがOFF
+  CGOAM_R_BUTTON_LAST_TOUCH,  ///< 右側タッチするところ
+  CGOAM_L_BUTTON_LAST_TOUCH,  ///< 左側タッチするところ
+  CGOAM_BUTTON_LAST_TOUCH_OFF,///< タッチするところがOFF
+  CGOAM_POMP_HANDLE_LAST,  ///< ポンプ取っ手 残り時間20秒板
+  CGOAM_PEN1,               ///< ペンタッチアニメ
+  CGOAM_PEN2,               ///< ペンタッチアニメ
+  CGOAM_PINPOINT_EFFECT_L,  ///< ピンポイントタッチエフェクト
+  CGOAM_PINPOINT_EFFECT_R,  ///< ピンポイントタッチエフェクト
 } CTVT_GAME_OBJ_ANM_MAIN;
 
 // PLATE task seq
 enum
 {
-  PLATE_SEQ_MOVE_OUT,         // 画面外に移動
-  PLATE_SEQ_MOVE_OUT_VANISH,  // 画面外に消える
-  PLATE_SEQ_MOVE_IN_WAIT,     // 移動開始待ち
-  PLATE_SEQ_MOVE_IN,          // 画面内に移動
+  PLATE_SEQ_MOVE_OUT,         ///< 画面外に移動
+  PLATE_SEQ_MOVE_OUT_VANISH,  ///< 画面外に消える
+  PLATE_SEQ_MOVE_IN_WAIT,     ///< 移動開始待ち
+  PLATE_SEQ_MOVE_IN,          ///< 画面内に移動
 };
 // SCORE PLATE task seq
 enum
@@ -251,48 +251,48 @@ enum
 //=====================================
 typedef struct {
 
-  GFL_TCB*      tcb;            // タスク
+  GFL_TCB*      tcb;            ///< タスク
   HEAPID        heapID;
 
-  u8            sub_seq;        // サブシーケンス
+  u8            sub_seq;        ///< サブシーケンス
 
-  u8            rank;           // 何位 
-  u8            idx;            // インデックス
-  u8            netID;          // NetID
-  u16           point;          // 点数
+  u8            rank;           ///< 何位 
+  u8            idx;            ///< インデックス
+  u8            netID;          ///< NetID
+  u16           point;          ///< 点数
 
-  BOOL          is_blank;       // 空プレートフラグ
-  BOOL          is_mine;        // 自分か
+  BOOL          is_blank;       ///< 空プレートフラグ
+  BOOL          is_mine;        ///< 自分か
 
   // 自分プレート揺れ
-  BOOL          is_swing;       // 揺れフラグ
-  s8            swing_cnt;      // 揺れ状態
-  u8            swing_wait;     // ゆれ待ち時間
+  BOOL          is_swing;       ///< 揺れフラグ
+  s8            swing_cnt;      ///< 揺れ状態
+  u8            swing_wait;     ///< ゆれ待ち時間
 
   // 文字描画用
   GFL_FONT      *parent_fontHandle;
   GFL_MSGDATA   *parent_msgHandle;
   PRINT_QUE     *parent_printQue;
 
-  GFL_BMPWIN    *bmpwin_name;   // プレイヤー名
-  GFL_BMPWIN    *bmpwin_score;  // 得点
-  BOOL          is_update_name; // プレイヤー名更新
-  BOOL          is_update_score;// 得点更新
-  STRBUF        *str_name;      // プレイヤー名
-  STRBUF        *str_tmp;       // 得点用
-  STRBUF        *str_expand;    // 得点用
+  GFL_BMPWIN    *bmpwin_name;   ///< プレイヤー名
+  GFL_BMPWIN    *bmpwin_score;  ///< 得点
+  BOOL          is_update_name; ///< プレイヤー名更新
+  BOOL          is_update_score;///< 得点更新
+  STRBUF        *str_name;      ///< プレイヤー名
+  STRBUF        *str_tmp;       ///< 得点用
+  STRBUF        *str_expand;    ///< 得点用
 
   // プレート移動用
-  u8            move_wait;      // 待ち時間 差をつけるため
-  int           move_value;       // アニメカウント
-  BOOL          is_move;        // 移動開始フラグ
+  u8            move_wait;      ///< 待ち時間 差をつけるため
+  int           move_value;       ///< アニメカウント
+  BOOL          is_move;        ///< 移動開始フラグ
 
-  GFL_CLWK*       clwkPlate;      // 土台
-  GFL_CLWK*       clwkPoint[3];   // 点数
-  GFL_CLWK*       clwkP;          // 「P」
+  GFL_CLWK*       clwkPlate;      ///< 土台
+  GFL_CLWK*       clwkPoint[3];   ///< 点数
+  GFL_CLWK*       clwkP;          ///< 「P」
 
 #ifdef PM_DEBUG
-  BOOL  debug_blank;  // 表示したいだけフラグ
+  BOOL  debug_blank;  ///< 表示したいだけフラグ
 #endif
 } GAME_PLATE_WORK;
 
@@ -303,29 +303,29 @@ typedef struct {
 struct _CTVT_GAME_WORK
 {
   HEAPID          heapId;
-  CTVT_GAME_ID    game_id;        // ゲーム種類
+  CTVT_GAME_ID    game_id;        ///< ゲーム種類
 
-  RECORD          *record;        // レコード追加用
+  RECORD          *record;        ///< レコード追加用
 
   CTVT_GAME_STATE state;
   
-  // 各ステート内でのシーケンス管理用
-  // タイトル
-  // ゲーム
-  // 結果発表など
+  /*! 各ステート内でのシーケンス管理用
+      タイトル
+      ゲーム
+      結果発表など */
   u8    seq;      
 
-  // 各シーケンス内でのシーケンス
-  // 結果発表の中でまたシーケンス分けたいときなど
-  // 結果発表ぐらいでしか使っていない
+  /*! 各シーケンス内でのシーケンス
+      結果発表の中でまたシーケンス分けたいときなど
+      結果発表ぐらいでしか使っていない */
   u8    sub_seq;
   
-  BOOL isRetry;     // TRUEだとリトライ
+  BOOL isRetry;     ///< TRUEだとリトライ
 
   //=====================================
   // カメラ関係
   //-------------------------------------
-  // カメラ撮影用パラメータ
+  /*! カメラ撮影用パラメータ */
   CTVT_GAME_CAM_MEMBER_WORK cam_member[ CTVT_MEMBER_NUM-1 ];
   CTVT_GAME_CAM_PARAM       *p_cam_param;
   CTVT_GAME_CAM_WORK        *p_cam_wk;
@@ -333,76 +333,76 @@ struct _CTVT_GAME_WORK
   //=====================================
   // ゲームプレイ関係
   //-------------------------------------
-  GFL_TCBSYS    *task;          // タスクシステム
-  void          *taskMem;       // タスク用メモリ
-  BALLOON_WORK  balloon_wk[ BALLOON_MAX ];    // 風船構造体
-  u8            balloon_rnd_w;                // 風船出現調整
-  u8            balloon_rnd_v;                // 風船出現調整
-  u8            balloon_z_cnt;                // 風船出現調整
-  u8            balloon_tbl_idx;              // 風船出現にどのテーブルを使用するか
-  u8            balloon_tbl_cnt;              // テーブルの要素カウンタ
+  GFL_TCBSYS    *task;          ///< タスクシステム
+  void          *taskMem;       ///< タスク用メモリ
+  BALLOON_WORK  balloon_wk[ BALLOON_MAX ];    ///< 風船構造体
+  u8            balloon_rnd_w;                ///< 風船出現調整
+  u8            balloon_rnd_v;                ///< 風船出現調整
+  u8            balloon_z_cnt;                ///< 風船出現調整
+  u8            balloon_tbl_idx;              ///< 風船出現にどのテーブルを使用するか
+  u8            balloon_tbl_cnt;              ///< テーブルの要素カウンタ
 
   // 2つ目  本来は1つ目と2つ目でワークにわけてやるべきだが、
   // 今変えると変更点が多すぎるのでここに2つ目のものも書く
   BALLOON2_WORK *p_balloon2[CTVT_MEMBER_NUM];
-  u8            touch_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ計測
-  u8            level_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ段階
-  u8            swing_interval;               // 風船揺れのインターバル
-  u8            pinpoint_effect_cnt_r;        // ピンポイントタッチエフェクトの同時再生用
-  u8            pinpoint_effect_cnt_l;        // ピンポイントタッチエフェクトの同時再生用
+  u8            touch_cnt[CTVT_MEMBER_NUM];   ///< 4人分のタッチ計測
+  u8            level_cnt[CTVT_MEMBER_NUM];   ///< 4人分のタッチ段階
+  u8            swing_interval;               ///< 風船揺れのインターバル
+  u8            pinpoint_effect_cnt_r;        ///< ピンポイントタッチエフェクトの同時再生用
+  u8            pinpoint_effect_cnt_l;        ///< ピンポイントタッチエフェクトの同時再生用
   u16           touch_anmseq;
 
   // 制限時間管理
-  u16           timeLimit;      // 制限時間 (秒)
-  u32           befFrameCnt;    // フレームカウンタ保存用
-  GFL_BMPWIN    *bmpWinTime;    // タイムゲージ
+  u16           timeLimit;      ///< 制限時間 (秒)
+  u32           befFrameCnt;    ///< フレームカウンタ保存用
+  GFL_BMPWIN    *bmpWinTime;    ///< タイムゲージ
 
   // タイトル文字
-  GFL_BMPWIN    *msgWinTitleFont;     // ゲームルール
-  BOOL          isUpdateMsgTitleFont; // ゲームルール
-  GFL_BMPWIN    *msgWinTitle;         // 説明
-  BOOL          isUpdateMsgTitle;     // 説明
-  u16           title_cnt;            // 自動開始
+  GFL_BMPWIN    *msgWinTitleFont;     ///< ゲームルール
+  BOOL          isUpdateMsgTitleFont; ///< ゲームルール
+  GFL_BMPWIN    *msgWinTitle;         ///< 説明
+  BOOL          isUpdateMsgTitle;     ///< 説明
+  u16           title_cnt;            ///< 自動開始
 
   // プレート系
-  GFL_TCBSYS        *task_plate;          // タスクシステム
-  void              *taskmem_plate;       // タスク用メモリ
+  GFL_TCBSYS        *task_plate;          ///< タスクシステム
+  void              *taskmem_plate;       ///< タスク用メモリ
   GAME_PLATE_WORK   *p_plate[CTVT_MEMBER_NUM];
   BOOL              plate_move;
 
   // 結果発表用
   BALLOON_S_WORK    *p_balloon_s_wk[CTVT_MEMBER_NUM];
-  void              *p_plt_buff;    // BGアニメ用のパレット
-  NNSG2dPaletteData *p_plt_data;    // パレットデータ
-  u8                bg_pal_anm;     // パレットアニメ用フレーム
-  u16               score_cnt;      // カウンタ用
+  void              *p_plt_buff;    ///< BGアニメ用のパレット
+  NNSG2dPaletteData *p_plt_data;    ///< パレットデータ
+  u8                bg_pal_anm;     ///< パレットアニメ用フレーム
+  u16               score_cnt;      ///< カウンタ用
 
   // リトライ用
-  GFL_BMPWIN        *msgRetry;            // メッセージ描画用
-  BOOL              isUpdateMsgRetry;     // メッセージ更新
-  u16               msgWait;              // メッセージ表示待ち
-  u16               retry_cnt;            // メッセージ表示待ち
-  APP_TASKMENU_RES  *taskMenuRes;         // 共通リソース
-  APP_TASKMENU_WORK *yesNoWork;           // はい・いいえ選択
-  APP_TASKMENU_WORK *cancelWork;          // ちゅうし
-  BOOL              isCancelGame;         // CANCEL_GAMEが送信されたか？
-  BOOL              isExitGame;           // EXIT_GAMEが送信されたか？
-  BOOL              isStartGame;          // START_GAMEが送信されたか？
-  BOOL              isStartGame2;         // START_GAMEが送信されたか？
-  u8                acceptBit;            // 参加したNetIDのビット管理
-  u8                acceptBit2;           // 参加したNetIDのビット管理
+  GFL_BMPWIN        *msgRetry;            ///< メッセージ描画用
+  BOOL              isUpdateMsgRetry;     ///< メッセージ更新
+  u16               msgWait;              ///< メッセージ表示待ち
+  u16               retry_cnt;            ///< メッセージ表示待ち
+  APP_TASKMENU_RES  *taskMenuRes;         ///< 共通リソース
+  APP_TASKMENU_WORK *yesNoWork;           ///< はい・いいえ選択
+  APP_TASKMENU_WORK *cancelWork;          ///< ちゅうし
+  BOOL              isCancelGame;         ///< CANCEL_GAMEが送信されたか？
+  BOOL              isExitGame;           ///< EXIT_GAMEが送信されたか？
+  BOOL              isStartGame;          ///< START_GAMEが送信されたか？
+  BOOL              isStartGame2;         ///< START_GAMEが送信されたか？
+  u8                acceptBit;            ///< 参加したNetIDのビット管理
+  u8                acceptBit2;           ///< 参加したNetIDのビット管理
 
   //===============================
   // 通信
-  u32   rnd_seed;         // 乱数シード値
-  u16   frame;            // 通信で受信したフレーム
-  BOOL  isRecvFrame;      // フレーム受信したか
+  u32   rnd_seed;         ///< 乱数シード値
+  u16   frame;            ///< 通信で受信したフレーム
+  BOOL  isRecvFrame;      ///< フレーム受信したか
   // 以下親のみ
-  BOOL  is_main;          // ゲームがプレイ中か
-  u16   oya_frame;        // 親のフレーム経過数
-  s16   balloon_wait;     // 風船出現待ち時間
-  u8    balloon_flg;      // 風船出現フラグ
-  s32   score[CTVT_MEMBER_NUM];    // スコア
+  BOOL  is_main;          ///< ゲームがプレイ中か
+  u16   oya_frame;        ///< 親のフレーム経過数
+  s16   balloon_wait;     ///< 風船出現待ち時間
+  u8    balloon_flg;      ///< 風船出現フラグ
+  s32   score[CTVT_MEMBER_NUM];    ///< スコア
 
 
   //=====================================
@@ -414,31 +414,31 @@ struct _CTVT_GAME_WORK
 
   // 2D
   // セル関係
-  u32         cellResIdx[ CGOR_MAX ];   // セルリソースインデックス
-  GFL_CLUNIT  *cellUnit;                // セルアクターシステム
+  u32         cellResIdx[ CGOR_MAX ];   ///< セルリソースインデックス
+  GFL_CLUNIT  *cellUnit;                ///< セルアクターシステム
   // タイトル
-  GFL_CLWK    *clwkTitle[3];            // タイトル
+  GFL_CLWK    *clwkTitle[3];            ///< タイトル
   // ゲームプレイ中
-  GFL_CLWK    *clwkCloud_M[2];          // 雲
-  GFL_CLWK    *clwkTime;                // タイムゲージ
-  GFL_CLWK    *clwkLast;                // ラストスパートの文字
-  GFL_CLWK    *clwkTouch;               // タッチするボタン
-  GFL_CLWK    *clwkPompBase;            // 空気入れ土台
-  GFL_CLWK    *clwkPompHandle;          // 空気入れ取っ手
-  GFL_CLWK    *clwkPenAnm;              // ペンタッチアニメ
-  GFL_CLWK    *clwkPinPointEffectR[PINPOINT_EFFECT_NUM];     // [右]ピンポイントタッチエフェクト
-  GFL_CLWK    *clwkPinPointEffectL[PINPOINT_EFFECT_NUM];     // [左]ピンポイントタッチエフェクト
+  GFL_CLWK    *clwkCloud_M[2];          ///< 雲
+  GFL_CLWK    *clwkTime;                ///< タイムゲージ
+  GFL_CLWK    *clwkLast;                ///< ラストスパートの文字
+  GFL_CLWK    *clwkTouch;               ///< タッチするボタン
+  GFL_CLWK    *clwkPompBase;            ///< 空気入れ土台
+  GFL_CLWK    *clwkPompHandle;          ///< 空気入れ取っ手
+  GFL_CLWK    *clwkPenAnm;              ///< ペンタッチアニメ
+  GFL_CLWK    *clwkPinPointEffectR[PINPOINT_EFFECT_NUM];     ///< [右]ピンポイントタッチエフェクト
+  GFL_CLWK    *clwkPinPointEffectL[PINPOINT_EFFECT_NUM];     ///< [左]ピンポイントタッチエフェクト
 
   // 結果発表
-  GFL_CLWK    *clwkKekka;               // けっかはっぴょうの文字
-  GFL_CLWK    *clwkOmeFont;             // 「おめでとう」倍角
-  GFL_CLWK    *clwkOmeText[6];          // 「おめでとう」単文字 倍角
-  GFL_CLWK    *clwkOmeCloud[2];         // エフェクト雲倍角
-  GFL_CLWK    *clwkOmeHide[2];          // エフェクト隠すプレート
-  GFL_CLWK    *clwkOmeNiji;             // エフェクト虹
-  GFL_CLWK    *clwkOmeStar;             // エフェクト星
-  GFL_CLWK    *clwkRank;                // 順位 
-  GFL_CLWK    *clwkDot;                 // 三点リーダー 3,4位のみ
+  GFL_CLWK    *clwkKekka;               ///< けっかはっぴょうの文字
+  GFL_CLWK    *clwkOmeFont;             ///< 「おめでとう」倍角
+  GFL_CLWK    *clwkOmeText[6];          ///< 「おめでとう」単文字 倍角
+  GFL_CLWK    *clwkOmeCloud[2];         ///< エフェクト雲倍角
+  GFL_CLWK    *clwkOmeHide[2];          ///< エフェクト隠すプレート
+  GFL_CLWK    *clwkOmeNiji;             ///< エフェクト虹
+  GFL_CLWK    *clwkOmeStar;             ///< エフェクト星
+  GFL_CLWK    *clwkRank;                ///< 順位 
+  GFL_CLWK    *clwkDot;                 ///< 三点リーダー 3,4位のみ
 
   // 3D
   GFL_G3D_UTIL    *g3dUtil;
@@ -451,14 +451,14 @@ struct _CTVT_GAME_WORK
   //=====================================
   // DEBUG　主にゲーム調整用
   //-------------------------------------
-  fx32  debug_r;    // 風船:半径特定用(当たり判定)
-  fx32  debug_size; // 風船:サイズ変更
-  fx32  debug_v;    // 風船:速さ変更
-  u16   debug_wait; // 風船:個数変更(出現タイミング)
-  u16   debug_b_cnt[4]; // どれだけ風船がでたか数える
+  fx32  debug_r;    ///< 風船:半径特定用(当たり判定)
+  fx32  debug_size; ///< 風船:サイズ変更
+  fx32  debug_v;    ///< 風船:速さ変更
+  u16   debug_wait; ///< 風船:個数変更(出現タイミング)
+  u16   debug_b_cnt[4]; ///< どれだけ風船がでたか数える
 
-  s8    debug_touch_r;        // タッチ半径
-  s8    debug_touch_ex_r;    // タッチ半径
+  s8    debug_touch_r;        ///< タッチ半径
+  s8    debug_touch_ex_r;    ///< タッチ半径
 #endif
 };
 
@@ -467,14 +467,14 @@ struct _CTVT_GAME_WORK
 //======================================================================
 #pragma mark [> proto
 
-// モード別メイン関数
+///< モード別メイン関数
 static void CTVT_GAME_Init( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 static void CTVT_GAME_Exit( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
 static void exit_error( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
-// ↑のシーケンス内での関数 本当はシーケンス関数をつくりたかったが、複雑になりそうなので個別で関数を定義した
+///< ↑のシーケンス内での関数 本当はシーケンス関数をつくりたかったが、複雑になりそうなので個別で関数を定義した
 static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 static void game_update_seq_init_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
@@ -490,13 +490,13 @@ static void game_update_seq_exit_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
 static void game_update_seq_exit_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 static void game_update_seq_exit_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 
-// 強制終了チェック
+///< 強制終了チェック
 static const BOOL CTVT_GAME_CheckFinishReq( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
-// 乱数
+///< 乱数
 static u32 get_rand( u32 range );
 
-// GRAPHIC
+///< GRAPHIC
 static void GRAPHIC_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_Exit( CTVT_GAME_WORK* p_wk );
 static void GRAPHIC_Draw( CTVT_GAME_WORK* p_wk );
@@ -504,77 +504,77 @@ static void GRAPHIC_Draw2( CTVT_GAME_WORK* p_wk );
 static void VBlankFunc( GFL_TCB *p_tcb, void *p_work );
 static void GRAPHIC_OBJ_Remove( GFL_CLWK* p_wk );
 
-// BG
+///< BG
 static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_BG_Exit( CTVT_GAME_WORK* p_wk );
 static void GRAPHIC_BG_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 
-// 3d
+///< 3d
 static void GRAPHIC_3D_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( CTVT_GAME_WORK* p_wk );
 
-// resource
+///< resource
 static void RESOURCE_Init_Part1( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHandle );
 static void RESOURCE_Exit_Part1( CTVT_GAME_WORK* p_wk );
 static void RESOURCE_Init_Part2( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHandle );
 static void RESOURCE_Exit_Part2( CTVT_GAME_WORK* p_wk );
 static void RESOURCE3D_Init_Score( CTVT_GAME_WORK* p_wk, HEAPID heapID );
 
-// message
+///< message
 static void disp_message_retry( COMM_TVT_WORK *work, CTVT_GAME_WORK* p_wk, const u16 msgId );
 
-// timebar
+///< timebar
 static void draw_timebar( CTVT_GAME_WORK* p_wk );
 
-// retry
+///< retry
 static const BOOL retry_check_finish_req( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 APP_TASKMENU_WORK* retry_open_yesno_menu( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 APP_TASKMENU_WORK* retry_open_cancel_menu( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 
 // balloon
-// 風船設定
+///< 風船設定
 static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  unit_idx );
-// 全ての風船が終了しているか？
+///< 全ての風船が終了しているか？
 static BOOL balloon_end_check( CTVT_GAME_WORK *p_wk );
-// 誰の風船を出すか計算して求める
+///< 誰の風船を出すか計算して求める
 static u8   balloon_find_idx( CTVT_GAME_WORK *p_wk );
-// 風船を出せるかどうか、出せるならIDXを取得
+///< 風船を出せるかどうか、出せるならIDXを取得
 static BOOL balloon_get_appear_idx( CTVT_GAME_WORK *p_wk, u8 *p_idx );
 
-// タスクに設定するタスク関数(風船用)
+///< タスクに設定するタスク関数(風船用)
 static void TaskFunc( GFL_TCB* p_tcb, void* p_work );
-// タスクに設定するタスク関数(風船2用)
+///< タスクに設定するタスク関数(風船2用)
 static void TaskFunc2( GFL_TCB* p_tcb, void* p_work );
-// タスクに設定するタスク関数(結果発表の風専用)
+///< タスクに設定するタスク関数(結果発表の風専用)
 static void TaskFuncScore( GFL_TCB* p_tcb, void* p_work );
 
-// タスクに登録されている風船とタッチの当たり判定
+///< タスクに登録されている風船とタッチの当たり判定
 static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx );
 static BOOL balloon_hit_check2( CTVT_GAME_WORK* p_wk, u32 frame, u32 tpx, u32 tpy, u16 *ret_idx );
-// タスクに登録されている風船同士の距離判定
+///< タスクに登録されている風船同士の距離判定
 static void balloon_collision_check( CTVT_GAME_WORK *p_wk );
-// 2点の距離の壁判定処理(移動も自動)
+///< 2点の距離の壁判定処理(移動も自動)
 static void collision_vec( fx32* x1, fx32* y1, fx32* x2, fx32* y2, fx32 dir, u8 avoid );
-// レイと球の交差判定
+///< レイと球の交差判定
 static BOOL collision3d_sphere_checkRay( const VecFx32 *cp_rayPos, const VecFx32 *cp_rayWay, const GFL_COLLISION3D_CIRCLE *cp_circle );
 
-// 結果発表中の風船の更新
+///< 結果発表中の風船の更新
 static void score_balloon_update( CTVT_GAME_WORK *p_wk );
 
 // 「バルーンキャッチ」の当たり判定
 // 楕円の半径定義
 static const u8 BALLOON_HIT_R[3][2] = 
 {
-//  rx  ry
-  { 15, 23 },   // 風船 小
-  { 18, 28 },   // 風船 中 
-  { 26, 39 },   // 風船 大
+///<  rx  ry
+  { 15, 23 },   ///< 風船 小
+  { 18, 28 },   ///< 風船 中 
+  { 26, 39 },   ///< 風船 大
 };
 
 //-------------------------------------
 /// PLATE
 //=====================================
-// プレートの位置
+///< プレートの位置
 static const u8 PLATE_POS[4][2] = 
 {
   { 112, 25 },
@@ -583,7 +583,7 @@ static const u8 PLATE_POS[4][2] =
   { 136, 127 },
 };
 
-// 結果発表プレートの位置
+///< 結果発表プレートの位置
 static const u8 PLATE_S_POS[4][2] = 
 {
   { 32, 176 },
@@ -604,7 +604,7 @@ static void GAME_PLATE_SetRank( CTVT_GAME_WORK *gameWork );
 static BOOL GAME_PLATE_MovePlate( GAME_PLATE_WORK *p_wk, const int value );
 static void GAME_PLATE_ClearPlate( GAME_PLATE_WORK *p_wk );
 static void TaskFuncPlate( GFL_TCB* p_tcb, void* p_work );
-// 結果発表画面でのプレート
+///< 結果発表画面でのプレート
 static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk );
 static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work );
 
@@ -626,17 +626,17 @@ enum{
 
 static const GFL_UI_TP_HITTBL button_tbl[TP_MAX] =
 {
-  // 左
-  {168, 172, 16, 20 }, // ピンポイント範囲
-  {142, 192, 0, 47 }, // タッチ範囲
-  {129, 141, 0, 37 }, // タッチ範囲(誤差範囲)
-  {155, 192, 48, 64 },// タッチ範囲(誤差範囲)
+  ///< 左
+  {168, 172, 16, 20 }, ///< ピンポイント範囲
+  {142, 192, 0, 47 }, ///< タッチ範囲
+  {129, 141, 0, 37 }, ///< タッチ範囲(誤差範囲)
+  {155, 192, 48, 64 },///< タッチ範囲(誤差範囲)
 
-  // 右
-  {168, 172, 232, 236 }, // ピンポイント範囲
-  {142, 192, 208, 255 }, // タッチ範囲
-  {155, 192, 192, 207 }, // タッチ範囲(誤差範囲)
-  {129, 144, 217, 255 }, // タッチ範囲(誤差範囲)
+  ///< 右
+  {168, 172, 232, 236 }, ///< ピンポイント範囲
+  {142, 192, 208, 255 }, ///< タッチ範囲
+  {155, 192, 192, 207 }, ///< タッチ範囲(誤差範囲)
+  {129, 144, 217, 255 }, ///< タッチ範囲(誤差範囲)
   {GFL_UI_TP_HIT_END,0,0,0}
 };
 
@@ -649,8 +649,8 @@ static void DEBUGMENU_Init( CTVT_GAME_WORK *p_wk, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 
 static s32 debug_score[CTVT_MEMBER_NUM];
-static BOOL debug_trg;  // R+Yを押下フラグ
-static BOOL debug_on; // デバッグ入力ONフラグ
+static BOOL debug_trg;  ///< R+Yを押下フラグ
+static BOOL debug_on; ///< デバッグ入力ONフラグ
 
 #endif // CTVT_GAME_DEBUG_MENU
 

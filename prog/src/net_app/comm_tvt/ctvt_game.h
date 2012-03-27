@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	ctvt_game.c
+ * @file	ctvt_game.h
  * @brief	通信TVTシステム：ミニゲーム画面
  * @author	ichiraku
  * @date	2010/11/25
@@ -30,27 +30,27 @@
 #define CTVT_GAME_FRAME_S_BG2     (GFL_BG_FRAME3_S)
 
 // パレット
-#define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
-#define CTVT_GAME_PAL_BG_M_TASKMENU (12) // 1本
-#define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
-#define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
+#define CTVT_GAME_PAL_BG_M_BG       (0) ///< 5本
+#define CTVT_GAME_PAL_BG_M_TASKMENU (12) ///< 1本
+#define CTVT_GAME_PAL_BG_M_WINFRAME (14) ///< 1本
+#define CTVT_GAME_PAL_BG_M_FONT     (15) ///< 1本
 
-#define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_S_BG       (0) ///< 5本
 #define CTVT_GAME_PAL_BG_S_BG2_1    (3) //
 #define CTVT_GAME_PAL_BG_S_BG2_2    (4) //
-#define CTVT_GAME_PAL_BG_S_TIMEBAR  (13) // 1本
-#define CTVT_GAME_PAL_BG_S_WINFRAME (14) // 1本
-#define CTVT_GAME_PAL_BG_S_FONT     (15) // 1本
+#define CTVT_GAME_PAL_BG_S_TIMEBAR  (13) ///< 1本
+#define CTVT_GAME_PAL_BG_S_WINFRAME (14) ///< 1本
+#define CTVT_GAME_PAL_BG_S_FONT     (15) ///< 1本
 
-#define CTVT_GAME_PAL_OBJ_COMMON    (0)  // 12本
-#define CTVT_GAME_PAL_OBJ_COMM      (14) // 通信アイコン用 
-#define CTVT_GAME_PAL_OBJ_LOCALIZE  (15) // ローカライズ用
+#define CTVT_GAME_PAL_OBJ_COMMON    (0)  ///< 12本
+#define CTVT_GAME_PAL_OBJ_COMM      (14) ///< 通信アイコン用 
+#define CTVT_GAME_PAL_OBJ_LOCALIZE  (15) ///< ローカライズ用
 
 // フレームを読みこんだキャラ位置
 #define CTVT_GAME_BMPWIN_CGX_MAIN (1)
 #define CTVT_GAME_BMPWIN_CGX (1)
 
-#define CTVT_UNIT_IDX_EFFECT  (4)   // エフェクトのユニットID
+#define CTVT_UNIT_IDX_EFFECT  (4)   ///< エフェクトのユニットID
 
 //======================================================================
 //	enum
@@ -59,26 +59,26 @@
 
 // ゲーム専用通信フラグ
 typedef enum {
-  CCGF_DECIDE_RETRY,      // リトライ決定         子が送信
-  CCGF_CANCEL_RETRY,      // リトライ拒否         子が送信
-  CCGF_START_RETRY,       // 開始要求             親が送信
-  CCGF_EXIT_RETRY,        // 終了通知             親が送信
-  CCGF_DECIDE_RETRY2,     // リトライ決定 確認用  子が送信
-  CCGF_START_RETRY2,      // 開始要求 確認用      親が送信
+  CCGF_DECIDE_RETRY,      ///< リトライ決定         子が送信
+  CCGF_CANCEL_RETRY,      ///< リトライ拒否         子が送信
+  CCGF_START_RETRY,       ///< 開始要求             親が送信
+  CCGF_EXIT_RETRY,        ///< 終了通知             親が送信
+  CCGF_DECIDE_RETRY2,     ///< リトライ決定 確認用  子が送信
+  CCGF_START_RETRY2,      ///< 開始要求 確認用      親が送信
 } CTVT_COMM_GAME_FLAG;
 
 // ゲーム送信データの種類
 typedef enum {
-  CCGDT_BALOON_APPEAR,  // 風船出現
-  CCGDT_RND,        // 乱数シード値
-  CCGDT_FRAME,      // 毎フレーム送信
-  CCGDT_TP,         // タッチ座標
-  CCGDT_BURST,      // 風船割れた
+  CCGDT_BALOON_APPEAR,  ///< 風船出現
+  CCGDT_RND,        ///< 乱数シード値
+  CCGDT_FRAME,      ///< 毎フレーム送信
+  CCGDT_TP,         ///< タッチ座標
+  CCGDT_BURST,      ///< 風船割れた
 
   // ミニゲーム2つ目
-  CCGDT_TOUCH,      // タッチ範囲をタッチした
-  CCGDT_TOUCH_EX,   // タッチ範囲をタッチした ピンポイントタッチ
-  CCGDT_BURST2,     // 風船が大きくなるor破裂
+  CCGDT_TOUCH,      ///< タッチ範囲をタッチした
+  CCGDT_TOUCH_EX,   ///< タッチ範囲をタッチした ピンポイントタッチ
+  CCGDT_BURST2,     ///< 風船が大きくなるor破裂
   
 } CTVT_COMM_GAME_DATA_TYPE;
 
@@ -94,19 +94,19 @@ struct _CTVT_GAME_SEND_DATA{
 
   union
   {
-    u32 rnd_seed;     // 乱数シード値
-    u8  burst_idx[ CTVT_MEMBER_NUM ];    // NetIDの要素に割れた風船IDXが入っている
+    u32 rnd_seed;     ///< 乱数シード値
+    u8  burst_idx[ CTVT_MEMBER_NUM ];    ///< NetIDの要素に割れた風船IDXが入っている
   };
 
-  u8  data_type;    // 送信データの種類
+  u8  data_type;    ///< 送信データの種類
 
-  u8 tpx;           // TP座標
-  u8 tpy;           // TP座標
+  u8 tpx;           ///< TP座標
+  u8 tpy;           ///< TP座標
 
-  u8  appear_idx;   // 出現する風船のタスクIDXが入っている
-  u8  burst_netID;  // 割った人がいる場合その人のNetIDのIDに1がたつ
+  u8  appear_idx;   ///< 出現する風船のタスクIDXが入っている
+  u8  burst_netID;  ///< 割った人がいる場合その人のNetIDのIDに1がたつ
 
-  u16 frame;        // 親の経過フレーム数
+  u16 frame;        ///< 親の経過フレーム数
 };
 
 //-------------------------------------

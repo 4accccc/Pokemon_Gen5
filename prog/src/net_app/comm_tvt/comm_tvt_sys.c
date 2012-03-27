@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	comm_tvt_sys
+ * @file	comm_tvt_sys.c
  * @brief	通信TVTシステム
  * @author	ariizumi
  * @data	09/12/16

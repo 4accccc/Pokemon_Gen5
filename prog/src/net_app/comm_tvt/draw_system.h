@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	draw_system.c
+ * @file	draw_system.h
  * @brief	‰æ–Ê‚¨ŠG•`‚«ƒVƒXƒeƒ€
  * @author	ariizumi
  * @data	09/12/20

@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		graphic.h
+ *	@file		ctvt_game_cam_graphic.h
  *	@brief	グラフィック設定
  *	@author		Katsuhiko=Ichiraku
  *	@date		2011.01.18
