@@ -53,15 +53,30 @@ typedef enum{
 	GPOWER_ID_CAPTURE_MAX,	//45 : ポケモンの捕獲率が×１．３倍される。（具体的な数値は言わない）（パレス用に効果時間１時間）
 	GPOWER_ID_HAPPEN_MAX,	//46 : ダミーデータ
 	GPOWER_ID_DISTRIBUTION_MAX,	//47 : ダミーデータ
+	GPOWER_ID_NULL,	//48 : Gパワーが発動してない。BWとGPOWER_NULLコードをずらさないための特殊コード。種類は一応パレスパワーにしておく
+	GPOWER_ID_ENCEFF_INC_A,	//49 : 歩数毎の抽選確率を10％上昇させる。
+	GPOWER_ID_ENCEFF_INC_B,	//50 : 歩数毎の抽選確率を15％上昇させる。
+	GPOWER_ID_ENCEFF_INC_C,	//51 : 歩数毎の抽選確率を20％上昇させる。
+	GPOWER_ID_ANIMAL_TRAIL_INC_A,	//52 : かくしあな（けものみち）にポケモンがいる確率があがる。
+	GPOWER_ID_ANIMAL_TRAIL_INC_B,	//53 : かくしあな（けものみち）にポケモンがいる確率があがる。
+	GPOWER_ID_ANIMAL_TRAIL_INC_C,	//54 : かくしあな（けものみち）にポケモンがいる確率があがる。
+	GPOWER_ID_RAREPOKE_INC_A,	//55 : 出現率の低いポケモンと出会いやすくなる。
+	GPOWER_ID_RAREPOKE_INC_B,	//56 : 出現率の低いポケモンと出会いやすくなる。
+	GPOWER_ID_RAREPOKE_INC_C,	//57 : 出現率の低いポケモンと出会いやすくなる。色違いポケモンと出会いやすくなる。
+	GPOWER_ID_ENCEFF_INC_S,	//58 : 10歩毎に抽選するようになる。歩数毎の抽選確率を20％上昇させる。
+	GPOWER_ID_ENCEFF_INC_MAX,	//59 : 10歩毎に抽選するようになる。歩数毎の抽選確率を20％上昇させる。
+	GPOWER_ID_ANIMAL_TRAIL_INC_S,	//60 : かくしあな（けものみち）にポケモンがいる確率があがる。
+	GPOWER_ID_ANIMAL_TRAIL_INC_MAX,	//61 : かくしあな（けものみち）にポケモンがいる確率があがる。
+	GPOWER_ID_RAREPOKE_INC_S,	//62 : 出現率の低いポケモンと出会いやすくなる。色違いポケモンと出会いやすくなる。
+	GPOWER_ID_RAREPOKE_INC_MAX,	//63 : 出現率の低いポケモンと出会いやすくなる。色違いポケモンと出会いやすくなる。
 
 	GPOWER_ID_DISTRIBUTION_START = 33,		//配布Gパワー開始ID(このIDを含む)
 	GPOWER_ID_DISTRIBUTION_END = 38,		//配布Gパワー終了ID(このIDを含む)
 
-	GPOWER_ID_PALACE_START = 39,		//パレスGパワー開始ID(このIDを含む)
-	GPOWER_ID_PALACE_END = 47,		//パレスGパワー終了ID(このIDを含む)
+	GPOWER_ID_DUMMY_START = 46,		//BWの未実装パワー開始ID(このIDを含む)
+	GPOWER_ID_DUMMY_END = 48,		//BWの未実装パワー終了ID(このIDを含む)
 
-	GPOWER_ID_MAX = 48,		//Gパワー最大数
-	GPOWER_ID_NULL = GPOWER_ID_MAX,		//Gパワーが発動していない
+	GPOWER_ID_MAX = 64,		//Gパワー最大数
 }GPOWER_ID;
 
 
@@ -81,6 +96,9 @@ typedef enum{
 	GPOWER_TYPE_CAPTURE_UP,		//10
 	GPOWER_TYPE_HAPPEN,		//11
 	GPOWER_TYPE_DISTRIBUTION,		//12
+	GPOWER_TYPE_EFFENC_UP,		//13
+	GPOWER_TYPE_ANIMAL_TRAIL_UP,		//14
+	GPOWER_TYPE_RAREPOKE_UP,		//15
 
 	GPOWER_TYPE_MAX,
 	GPOWER_TYPE_NULL = GPOWER_TYPE_MAX,

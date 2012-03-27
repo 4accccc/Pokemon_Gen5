@@ -36,10 +36,11 @@ class POWER_DATA
     @comment = "0"             #効果説明
     @type = "0"                #効果系統
     @data = "0"                #効果データ
+    @enable_f = "0"            #有効無効フラグ
   end
 
   attr_accessor :no, :level_w, :level_b, :point, :time;
-  attr_accessor :msg_id_title, :msg_id_explain, :type, :data, :gpower_id, :comment;
+  attr_accessor :msg_id_title, :msg_id_explain, :type, :data, :gpower_id, :comment, :enable_f;
 end
 
 
@@ -47,10 +48,14 @@ PowerData = [];
 
 POWER_TYPE_ARRAY_MAX = 100;
 PowerType = [];
+$DummyStartNo = 0;
+$DummyEndNo = -1;
 $PalaceStartNo = 0;
 $PalaceEndNo = -1;
 $DistributionStartNo = 0;
 $DistributionEndNo = -1;
+$DistributionStartNoSw = 0;
+$DistributionEndNoSw = -1;
 
 =begin
 //==================================================================
@@ -107,6 +112,8 @@ def CsvConvFileCheck()
     cell += 1;
     PowerData[s].time = line[cell];
     cell += 1;
+    PowerData[s].enable_f = line[cell];
+    cell += 1;
 
     s += 1;
   }
@@ -124,7 +131,9 @@ end
 def DataConv()
   
   distribution_start = 0;
+  distribution_start_sw = 0;
   palace_start = 0;
+  dummy_start = 0;
   
   for i in 0..PowerData.size-1
     if(PowerData[i].type == "ENCOUNT_UP" || PowerData[i].type == "ENCOUNT_DOWN" \
@@ -137,15 +146,32 @@ def DataConv()
       PowerData[i].data = num.to_i;  #下位8bit固定小数にさらに変換
     end
 
+    if(PowerData[i].enable_f == "×")
+      if($DummyEndNo != -1)
+        print "ダミーが連番になっていない"
+        print i;
+        print "\n"
+        exit(200);
+      end
+      if(dummy_start == 0)
+        $DummyStartNo = i
+        dummy_start = 1
+      end
+    elsif(dummy_start == 1 && $DummyEndNo == -1)
+      $DummyEndNo = i - 1;
+    end
+
     if(PowerData[i].level_w != "配布" && PowerData[i].level_b != "配布" \
         && PowerData[i].level_w != "パレス" && PowerData[i].level_b != "パレス")
+=begin
       if(palace_start != 0)
         print "パレスの後にノーマルのGパワーが設定されている"
         print i;
         print "\n"
         exit(200);
       end
-      if(distribution_start != 0)
+=end
+      if(distribution_start_sw != 0)
         print "配布の後にノーマルのGパワーが設定されている"
         print i;
         print "\n"
@@ -154,18 +180,33 @@ def DataConv()
     end
     
     if(PowerData[i].level_w == "配布" || PowerData[i].level_b == "配布")
-      if(palace_start != 0)
+=begin
+      if(palace_start != 0 )
         print "配布よりも先 or 途中で パレスが設定されている\n"
         exit(200);
       end
+=end
+      if( $DistributionEndNo != -1 )
+        print "BW配布より後に配布が設定されている\n"
+        exit(200);
+      end
+
       if(distribution_start == 0)
         $DistributionStartNo = i;
         distribution_start = 1;
+      elsif(distribution_start_sw == 0 && $DistributionEndNo != -1)
+        $DistributionStartNoSw = i
+        distribution_start_sw = 1
       end
       PowerData[i].level_w = "POWER_LEVEL_DISTRIBUTION";
       PowerData[i].level_b = "POWER_LEVEL_DISTRIBUTION";
-    elsif(distribution_start == 1 && $DistributionEndNo == -1)
-      $DistributionEndNo = i - 1;
+    else
+      if(distribution_start == 1 && $DistributionEndNo == -1)
+        $DistributionEndNo = i - 1;
+      end
+      if(distribution_start_sw == 1 && $DistributionEndNoSw == -1 )
+        $DistributionEndNoSw = i - 1;
+      end
     end
     
     if(PowerData[i].level_w == "パレス" || PowerData[i].level_b == "パレス")
@@ -175,8 +216,10 @@ def DataConv()
       end
       PowerData[i].level_w = "POWER_LEVEL_PALACE";
       PowerData[i].level_b = "POWER_LEVEL_PALACE";
-    elsif(palace_start == 1 && $PalaceEndNo == -1)
-      $PalaceEndNo = i - 1;
+    else
+      if(palace_start == 1 && $PalaceEndNo == -1)
+        $PalaceEndNo = i - 1;
+      end
     end
   end
   if($PalaceEndNo == -1)
@@ -246,14 +289,23 @@ def DataFileOutput()
     for i in 0..PowerData.size-1
       file.printf("\t%s,\t//%d : %s\n", PowerData[i].gpower_id, i, PowerData[i].comment);
     end
-    
+   
+    if $DistributionEndNoSw == -1 then
+      $DistributionEndNoSw = PowerData.size-1
+    end
     file.printf("\n");
     file.printf("\tGPOWER_ID_DISTRIBUTION_START = %d,\t\t//配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNo);
     file.printf("\tGPOWER_ID_DISTRIBUTION_END = %d,\t\t//配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNo);
-    file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo);
-    file.printf("\tGPOWER_ID_PALACE_END = %d,\t\t//パレスGパワー終了ID(このIDを含む)\n\n", $PalaceEndNo);
+    if $DistributionStgartNoSw == 0 then
+      file.printf("\tGPOWER_ID_DISTRIBUTION_START_SW = %d,\t\t//SWAN配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNoSw);
+      file.printf("\tGPOWER_ID_DISTRIBUTION_END_SW = %d,\t\t//SWAN配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNoSw);
+    end
+#   file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo); #この定義は未使用なので削除111128
+#   file.printf("\tGPOWER_ID_PALACE_END = %d,\t\t//パレスGパワー終了ID(このIDを含む)\n\n", $PalaceEndNo); #この定義は未使用なので削除11128
+    file.printf("\tGPOWER_ID_DUMMY_START = %d,\t\t//BWの未実装パワー開始ID(このIDを含む)\n", $DummyStartNo);
+    file.printf("\tGPOWER_ID_DUMMY_END = %d,\t\t//BWの未実装パワー終了ID(このIDを含む)\n\n", $DummyEndNo);
     file.printf("\tGPOWER_ID_MAX = %d,\t\t//Gパワー最大数\n", PowerData.size);
-    file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
+    #file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
     file.printf("}GPOWER_ID;\n\n");
     
     file.printf("\n\n//効果系統　　!!出力元データによってenumの並びが変わる場合があります!!\n");

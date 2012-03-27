@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-06T12:33:24"/>
+	<create user="nagihashi_toru" host="W00268" date="2012-03-27T14:39:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="10" top="109" right="723" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="104" top="400" right="577" bottom="1024" visible="yes"/>
+		<tag-palette left="104" top="400" right="577" bottom="1024" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -863,6 +863,164 @@
 		<comment>はいふパワー　？</comment>
 		<language name="JPN" width="256">ダミー</language>
 		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="plc_power_s_49">
+		<comment>GPOWER_ID_NULL
+BWと揃えた無効ID
+</comment>
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="plc_power_s_50">
+		<comment>たんさくパワー　＋</comment>
+		<language name="JPN" width="256">ゆれる　くさむらや　つちけむりが
+すこしだけ　みつけやすく　なります
+こうかは　３ふん　です&quot;</language>
+		<language name="JPN_KANJI" width="256">揺れる　草むらや　洞穴の　土煙が
+少しだけ　みつけやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_51">
+		<comment>たんさくパワー　＋＋</comment>
+		<language name="JPN" width="256">ゆれる　くさむらや　つちけむりが
+とても　みつけやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">揺れる　草むらや　洞穴の　土煙が
+とても　みつけやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_52">
+		<comment>たんさくパワー　＋＋＋</comment>
+		<language name="JPN" width="256">ゆれる　くさむらや　つちけむりが
+かなり　みつけやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">揺れる　草むらや　洞穴の　土煙が
+かなり　みつけやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_53">
+		<comment>かくしあなパワー　＋</comment>
+		<language name="JPN" width="256">かくしあなで　ポケモンと
+すこし　であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">隠し穴で　ポケモンと
+少し　出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_54">
+		<comment>かくしあなパワー　＋＋</comment>
+		<language name="JPN" width="256">かくしあなで　ポケモンと
+とても　であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">隠し穴で　ポケモンと
+とても　出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_55">
+		<comment>かくしあなパワー　＋＋＋</comment>
+		<language name="JPN" width="256">かくしあなで　ポケモンと
+かなり　であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">隠し穴で　ポケモンと
+かなり　出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_56">
+		<comment>おまじないパワー　＋</comment>
+		<language name="JPN" width="256">めずらしい　ポケモンと
+ちょっぴり　であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">めずらしい　ポケモンと
+ちょっぴり　出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_57">
+		<comment>おまじないパワー　＋＋</comment>
+		<language name="JPN" width="256">めずらしい　ポケモンと
+すこし　であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">めずらしい　ポケモンと
+すこし　出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_58">
+		<comment>おまじないパワー　＋＋＋</comment>
+		<language name="JPN" width="256">めずらしい　ポケモンと
+であいやすく　なります
+こうかは　３ふん　です</language>
+		<language name="JPN_KANJI" width="256">めずらしい　ポケモンと
+出会いやすく　なります
+効果は　３分　です</language>
+	</row>
+
+	<row id="plc_power_s_59">
+		<comment>たんさくパワー　Ｓ</comment>
+		<language name="JPN" width="256">ゆれる　くさむらや　つちけむりが
+かなり　みつけやすく　なります
+こうかは　１０ふん　です</language>
+		<language name="JPN_KANJI" width="256">揺れる　草むらや　洞穴の　土煙が
+かなり　みつけやすく　なります
+効果は　１０分　です</language>
+	</row>
+
+	<row id="plc_power_s_60">
+		<comment>たんさくパワー　ＭＡＸ</comment>
+		<language name="JPN" width="256">ゆれる　くさむらや　つちけむりが
+かなり　みつけやすく　なります
+こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">揺れる　草むらや　洞穴の　土煙が
+かなり　みつけやすく　なります
+効果は　６０分　です</language>
+	</row>
+
+	<row id="plc_power_s_61">
+		<comment>かくしあなパワー　Ｓ</comment>
+		<language name="JPN" width="256">かくしあなで　ポケモンと
+かなり　であいやすく　なります
+こうかは　２０ふん　です</language>
+		<language name="JPN_KANJI" width="256">隠し穴で　ポケモンと
+かなり　出会いやすく　なります
+効果は　２０分　です</language>
+	</row>
+
+	<row id="plc_power_s_62">
+		<comment>かくしあなパワー　ＭＡＸ</comment>
+		<language name="JPN" width="256">かくしあなで　ポケモンと
+かなり　であいやすく　なります
+こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">隠し穴で　ポケモンと
+かなり　出会いやすく　なります
+効果は　６０分　です</language>
+	</row>
+
+	<row id="plc_power_s_63">
+		<comment>おまじないパワー　Ｓ</comment>
+		<language name="JPN" width="256">めずらしい　ポケモンと
+であいやすく　なります
+こうかは　１０ふん　です</language>
+		<language name="JPN_KANJI" width="256">めずらしい　ポケモンと
+出会いやすく　なります
+効果は　１０分　です</language>
+	</row>
+
+	<row id="plc_power_s_64">
+		<comment>おまじないパワー　ＭＡＸ</comment>
+		<language name="JPN" width="256">めずらしい　ポケモンと
+であいやすく　なります
+こうかは　６０ふん　です</language>
+		<language name="JPN_KANJI" width="256">めずらしい　ポケモンと
+出会いやすく　なります
+効果は　６０分　です</language>
 	</row>
 
 	<flowchart-group-list>

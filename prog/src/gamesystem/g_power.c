@@ -23,6 +23,7 @@
 ///1分のフレーム数
 #define ONE_MINUTE_FRAME    (ONE_SECOND_FRAME * 60)
 
+#define GPOWER_DISTRIBUTION_POWER_NUM_BW (GPOWER_ID_DISTRIBUTION_END-GPOWER_ID_DISTRIBUTION_START+1) //BWの配布パワーの数
 
 //==============================================================================
 //  構造体定義
@@ -104,6 +105,84 @@ void GPOWER_Clear_AllPower(void)
 
 //==================================================================
 /**
+ * 不正IDかチェック
+ * GPOWER_IsEnableID()との違いは GPOWER_ID_NULLを許容するかどうか
+ *
+ * IsErrorID()では NULL を許容する
+ */
+//==================================================================
+BOOL GPOWER_IsErrorID( GPOWER_ID gpower_id )
+{
+  //GPOWER_ID_NULL == GPOWER_ID_DUMMY_END
+  if( gpower_id == GPOWER_ID_NULL ) return FALSE; //NULLはありえる値なのでOK
+
+  if( ( gpower_id >= GPOWER_ID_MAX ) ||
+      ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id < GPOWER_ID_DUMMY_END ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 発動可能な有効IDかチェック
+ */
+//==================================================================
+BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id )
+{
+  //GPOWER_ID_NULL == GPOWER_ID_DUMMY_END
+  if( ( gpower_id >= GPOWER_ID_MAX ) ||
+      ( gpower_id >= GPOWER_ID_DUMMY_START && gpower_id <= GPOWER_ID_DUMMY_END ) )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+//==================================================================
+/**
+ * BWでも発動可能な有効IDかチェック
+ */
+//==================================================================
+BOOL GPOWER_IsEnableID_BW( GPOWER_ID gpower_id )
+{
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
+    return FALSE;
+  }
+  return ( gpower_id < GPOWER_ID_DUMMY_START );
+}
+
+//==================================================================
+/**
+ * 配布パワーに割り振られた連番IDを取得
+ *
+ * 配布パワーでない場合 GPOWER_DISTRIBUTION_ID_NULL を返す
+ */
+//==================================================================
+u8 GPOWER_GetDistributionPowerID( GPOWER_ID gpower_id )
+{
+  if( gpower_id >= GPOWER_ID_DISTRIBUTION_START && gpower_id <= GPOWER_ID_DISTRIBUTION_END ){
+    return gpower_id - GPOWER_ID_DISTRIBUTION_START;
+  }
+  /*
+   *  111128に一度SWANには配布パワーは無いことになったが
+   *  やっぱりやりたい！と言われた時のためにindefによる分岐でソースを残しておく
+   *
+   *  管理表でSWAN配布パワーが設定されなければ、GPOWER_ID_DISTRIBUTION_START_SWは定義されない
+   *  by iwasawa
+   */
+#ifdef GPOWER_ID_DISTRIBUTION_START_SW
+  if( gpower_id >= GPOWER_ID_DISTRIBUTION_START_SW && gpower_id <= GPOWER_ID_DISTRIBUTION_END_SW ){
+    return ((gpower_id - GPOWER_ID_DISTRIBUTION_START)+GPOWER_DISTRIBUTION_POWER_NUM_BW );
+  }
+#endif
+  return GPOWER_DISTRIBUTION_ID_NULL;
+}
+
+//==================================================================
+/**
  * 発動するGパワーIDをセット
  *
  * @param   gpower_id		
@@ -115,11 +194,10 @@ void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata, B
 {
   GPOWER_TYPE type;
   
-  if(gpower_id >= GPOWER_ID_MAX){
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     GF_ASSERT_MSG(0, "gpower_id = %d", gpower_id);
     return;
   }
-  
   type = powerdata[gpower_id].type;
   GPowerSys.occur_power[type] = gpower_id;
   GPowerSys.life[type] = powerdata[gpower_id].time * ONE_MINUTE_FRAME;
@@ -271,6 +349,7 @@ static void _OccurPowerClear(GPOWER_TYPE type)
   }
   GPowerSys.occur_power[type] = GPOWER_ID_NULL;
   GPowerSys.life[type] = 0;
+  GPowerSys.powerdata_data[type] = 0;
   if(GPowerSys.my_power_type == type){
     GPowerSys.my_power_type = GPOWER_TYPE_NULL;
   }
@@ -410,11 +489,14 @@ u32 GPOWER_Calc_Hatch(u32 add_count)
  * @param   natsuki		道具などの補正が入った後のなつき度加算値
  *
  * @retval  s32		Gパワー影響後のなつき度加算値
+ *
+ * BTS825対策 なつき度減算の時はデルパワーを影響させない
  */
 //==================================================================
 s32 GPOWER_Calc_Natsuki(s32 natsuki)
 {
-  if(GPowerSys.occur_power[GPOWER_TYPE_NATSUKI_UP] != GPOWER_ID_NULL){
+  if(GPowerSys.occur_power[GPOWER_TYPE_NATSUKI_UP] != GPOWER_ID_NULL &&
+     natsuki > 0 ){
     return natsuki + GPowerSys.powerdata_data[GPOWER_TYPE_NATSUKI_UP];
   }
   return natsuki;
@@ -609,3 +691,170 @@ void GPOWER_Calc_Distribution(void)
     GF_ASSERT(0); //仕様待ち
   }
 }
+
+//==================================================================
+/**
+ * Gパワー計算：揺れ草パワー インターバル計算
+ *
+ * @param   interval	現在の抽選インターバル
+ *
+ * @retval  u32		パワー影響後の抽選インターバル
+ */
+//==================================================================
+u32 GPOWER_Calc_EffEncInterval( u32 interval )
+{
+  GPOWER_EFFENC_UP_LEVEL level;
+  
+  if(GPowerSys.occur_power[GPOWER_TYPE_EFFENC_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_EFFENC_UP];
+    if( level >= GPOWER_EFFENC_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return interval;
+    }
+    if( level >= GPOWER_EFFENC_UP_LV3 ){
+      OS_Printf("EffEncInterval %d->%d\n", interval, interval/2);
+      return interval/2;
+    }
+  }
+  return interval;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：揺れ草パワー 確率アップ計算
+ *
+ * @param   prob	現在の抽選確率(0-100%)
+ *
+ * @retval  u32		パワー影響後の抽選確率
+ */
+//==================================================================
+u32 GPOWER_Calc_EffEncProb( u32 prob )
+{
+  GPOWER_EFFENC_UP_LEVEL level;
+  static const up_tbl[GPOWER_EFFENC_UP_LV_MAX] = { 10, 15, 20 };
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_EFFENC_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_EFFENC_UP];
+    if( level >= GPOWER_EFFENC_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return prob;
+    }
+    OS_Printf("EffEncProb %d->", prob );
+    prob += up_tbl[level];
+    if( prob > 100 ){
+      prob = 100;
+    }
+    OS_Printf("%d\n", prob );
+    return prob;
+  }
+  return prob;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：けものみち 配置率アップ計算
+ *
+ * @param   prob	現在の抽選確率(0-100%)
+ *
+ * @retval  u32		パワー影響後の抽選確率
+ */
+//==================================================================
+u32 GPOWER_Calc_AnimalTrailProb( u32 prob )
+{
+  GPOWER_ANIMAL_TRAIL_UP_LEVEL level;
+  static const up_tbl[GPOWER_ANIMAL_TRAIL_UP_LV_MAX] = { 10, 20, 30, 50 };
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_ANIMAL_TRAIL_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_ANIMAL_TRAIL_UP];
+    if( level >= GPOWER_ANIMAL_TRAIL_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return prob;
+    }
+    OS_Printf("ATrailProb %d->", prob );
+    prob += up_tbl[level];
+    if( prob > 100 ){
+      prob = 100;
+    }
+    OS_Printf("%d\n", prob );
+    return prob;
+  }
+  return prob;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：けものみち ポケモン抽選に当たるまでのトライ数計算
+ *
+ * @param   count	現在のトライ数
+ *
+ * @retval  u32		パワー影響後のトライ数(パワーが有効ならcount+2の値を返す 1なら3)
+ */
+//==================================================================
+u32 GPOWER_Calc_AnimalTrailPokeTryCount( u32 count )
+{
+  GPOWER_ANIMAL_TRAIL_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_ANIMAL_TRAIL_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_ANIMAL_TRAIL_UP];
+    if( level >= GPOWER_ANIMAL_TRAIL_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return count;
+    }
+    OS_Printf("ATrailPokeTryCt %d->%d\n", count, count+2);
+    return count+2;
+  }
+  return count;
+}
+
+//==================================================================
+/**
+ * Gパワー計算： レアポケパワー エンカウント率テーブルシフト数計算
+ *
+ * @param   calc_type	ENCPROB_CALCTYPE 
+ *
+ * @retval  u32		パワー影響後のシフト数(平時は常に0)
+ */
+//==================================================================
+u32 GPOWER_Calc_RarePokeEncTblShift( u32 shift )
+{
+  GPOWER_RAREPOKE_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_RAREPOKE_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_RAREPOKE_UP];
+    if( level >= GPOWER_RAREPOKE_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return shift;
+    }
+    OS_Printf("RarePokeEncTblShift %d->%d\n",shift,level);
+    return level;
+  }
+  return shift;
+}
+
+//==================================================================
+/**
+ * Gパワー計算：レアポケパワー レア抽選に当たるまでのトライ数計算
+ *
+ * @param   count	現在のトライ数
+ *
+ * @retval  u32		パワー影響後のトライ数(パワーが有効ならcount+1の値を返す 1なら2)
+ */
+//==================================================================
+u32 GPOWER_Calc_RarePokeEncTryCount( u32 count )
+{
+  GPOWER_RAREPOKE_UP_LEVEL level;
+
+  if(GPowerSys.occur_power[GPOWER_TYPE_RAREPOKE_UP] != GPOWER_ID_NULL){
+    level = GPowerSys.powerdata_data[GPOWER_TYPE_RAREPOKE_UP];
+    if( level >= GPOWER_RAREPOKE_UP_LV_MAX ){
+      GF_ASSERT(0); //データ設定ミス
+      return count;
+    }
+    if( level == GPOWER_RAREPOKE_UP_LV3 ){
+      OS_Printf("RarePokeEncTryCt %d->%d\n",count,count+1);
+      return count+1;
+    }
+  }
+  return count;
+}
+

@@ -46,7 +46,7 @@
 #define MOVEMODE_NO (1)
 
 
-#define _TOOL_GPOWER_ID_MAX (GPOWER_ID_MAX-2)
+#define _TOOL_GPOWER_ID_MAX (GPOWER_ID_MAX-3)
 
 
 
@@ -148,6 +148,7 @@ static void _PrintPowerTime(D_MATSU_WORK *wk, int win_no);
 static void _PrintPowerOdds(D_MATSU_WORK *wk, int win_no);
 static void _PrintWinTarget(D_MATSU_WORK *wk, int bmpwin_no);
 static void _CursorMove(D_MATSU_WORK *wk);
+static BOOL _CheckIsEnablePower( GPOWER_ID id );
 
 
 //==============================================================================
@@ -605,7 +606,7 @@ static GFL_PROC_RESULT HaisinMenuProcMain( GFL_PROC * proc, int * seq, void * pw
       int i, power_count = 0;
       
       for(i = 0; i < HAISIN_POWER_MAX; i++){
-        if(wk->control->powergroup.hp[i].g_power_id < _TOOL_GPOWER_ID_MAX){
+        if( _CheckIsEnablePower( wk->control->powergroup.hp[i].g_power_id ) ){
           power_count++;
         }
       }
@@ -629,7 +630,7 @@ static GFL_PROC_RESULT HaisinMenuProcMain( GFL_PROC * proc, int * seq, void * pw
   		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
   		break;
   	default:
-  		if(_TOOL_GPOWER_ID_MAX > bmp_ret){
+  		if(_CheckIsEnablePower( bmp_ret ) ){
         wk->control->powergroup.hp[wk->active_win - WIN_POWER_0].g_power_id = bmp_ret;
       }
       else{
@@ -721,23 +722,28 @@ static void DebugMenuHeadCreate(D_MATSU_WORK *wk, BMPMENULIST_HEADER *bmphead)
 static void DebugMenuListCreate(D_MATSU_WORK *wk)
 {
 	BMP_MENULIST_DATA *list_data;
-	int save_tbl_max, i;
+	int save_tbl_max, i, cnt;
 	STRBUF *tempbuf, *status, *destsrc;
 	BOOL ret_a, ret_b;
 	
 	save_tbl_max = _TOOL_GPOWER_ID_MAX + D_POWER_CLEAR;
 	list_data = BmpMenuWork_ListCreate(save_tbl_max, HEAPID_MATSUDA_DEBUG);
 	
-	for(i = 0; i < _TOOL_GPOWER_ID_MAX; i++){
-		list_data[i].param = i;
-		destsrc = GFL_MSG_CreateString(wk->mm_power, i);
-		list_data[i].str = destsrc;
+  cnt = 0;
+	for(i = 0; i < GPOWER_ID_MAX; i++){
+    if( _CheckIsEnablePower(i) )
+    {
+		  list_data[cnt].param = i;
+		  destsrc = GFL_MSG_CreateString(wk->mm_power, i);
+		  list_data[cnt].str = destsrc;
+      cnt++;
+    }
 	}
 
 	//「設定無し」
 	destsrc = GFL_MSG_CreateString(wk->mm, DM_MSG_HAISIN_001);
-	list_data[_TOOL_GPOWER_ID_MAX + 0].str = destsrc;
-	list_data[_TOOL_GPOWER_ID_MAX + 0].param = _TOOL_GPOWER_ID_MAX + 0;
+	list_data[cnt].str = destsrc;
+	list_data[cnt].param = GPOWER_ID_MAX;
 
 	wk->list_data = list_data;
 }
@@ -970,7 +976,7 @@ static void _PrintPowerName(D_MATSU_WORK *wk, int win_no)
 {
   STRBUF *tempbuf;
   
-  if(wk->control->powergroup.hp[win_no].g_power_id < _TOOL_GPOWER_ID_MAX){
+  if( _CheckIsEnablePower(wk->control->powergroup.hp[win_no].g_power_id)){
     tempbuf = GFL_MSG_CreateString(wk->mm_power, wk->control->powergroup.hp[win_no].g_power_id);
     Local_MessagePut(wk, WIN_POWER_0 + win_no, tempbuf, 0,0, wk->active_win==WIN_POWER_0+win_no);
     GFL_STR_DeleteBuffer(tempbuf);
@@ -1188,6 +1194,27 @@ static void _CursorMove(D_MATSU_WORK *wk)
     _PrintWinTarget(wk, backup_win);
     _PrintWinTarget(wk, wk->active_win);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  有効なGパワーをチェック
+ *
+ *	@param	GPOWER_ID id  番号
+ *
+ *	@return TRUE有効なGパワー  FALSE無効なGパワー
+ */
+//-----------------------------------------------------------------------------
+static BOOL _CheckIsEnablePower( GPOWER_ID id )
+{
+  if( id < GPOWER_ID_MAX 
+      && id != GPOWER_ID_HAPPEN_MAX
+      && id != GPOWER_ID_DISTRIBUTION_MAX
+      && id != GPOWER_ID_NULL )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 

@@ -488,7 +488,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcEnd( GFL_PROC * proc, int * seq, void * 
 }
 
 
-static BOOL _printList(D_GPOWER_WORK *wk, int initmsgNo)
+static void _printList(D_GPOWER_WORK *wk, int initmsgNo)
 {
   const int yini = 12;
   BOOL ret, irc_ret = 0;
