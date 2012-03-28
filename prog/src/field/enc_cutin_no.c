@@ -13,29 +13,29 @@
 
 static const ENC_CUTIN_DAT EncCutinDat[] = 
 {
-  {FLDCIID_RIVAL, SPTR_RIVAL, 0x7fff ,0x0000}, //ライバル
-  {FLDCIID_GYM_VS_01, SPTR_GYM01, 0x7fff,0x0000}, //ジムリーダー01
-  {FLDCIID_GYM_VS_02, SPTR_GYM02, 0x7fff,0x0000}, //ジムリーダー02
-  {FLDCIID_GYM_VS_03, SPTR_GYM03, 0x7fff,0x0000}, //ジムリーダー03
+  {FLDCIID_RIVAL, SPTR_RIVAL, 0x7fff ,0x5294}, //ライバル
+  {FLDCIID_GYM_VS_01, SPTR_GYM01, 0x7fff,0x5294}, //ジムリーダー01
+  {FLDCIID_GYM_VS_02, SPTR_GYM02, 0x7fff,0x5294}, //ジムリーダー02
+  {FLDCIID_GYM_VS_03, SPTR_GYM03, 0x7fff,0x5294}, //ジムリーダー03
   {FLDCIID_GYM_VS_04, SPTR_GYM04, 0x7fff,0x5294}, //ジムリーダー04
-  {FLDCIID_GYM_VS_05, SPTR_GYM05, 0x7fff,0x0000}, //ジムリーダー05
-  {FLDCIID_GYM_VS_06, SPTR_GYM06, 0x7fff,0x0000}, //ジムリーダー06
-  {FLDCIID_GYM_VS_07, SPTR_GYM07, 0x7fff,0x0000}, //ジムリーダー07
-  {FLDCIID_GYM_VS_08, SPTR_GYM08, 0x7fff,0x0000}, //ジムリーダー08
-  {FLDCIID_SITEN_01, SPTR_BIGFOUR01, 0x7fff,0x0000}, //四天王1
-  {FLDCIID_SITEN_02, SPTR_BIGFOUR02, 0x7fff,0x0000}, //四天王2
-  {FLDCIID_SITEN_03, SPTR_BIGFOUR03, 0x7fff,0x0000}, //四天王3
-  {FLDCIID_SITEN_04, SPTR_BIGFOUR04, 0x7fff,0x0000}, //四天王4
-  {FLDCIID_CHAMP, SPTR_CHAMP ,0x7fff,0x0000}, //チャンプ
+  {FLDCIID_GYM_VS_05, SPTR_GYM05, 0x7fff,0x5294}, //ジムリーダー05
+  {FLDCIID_GYM_VS_06, SPTR_GYM06, 0x7fff,0x5294}, //ジムリーダー06
+  {FLDCIID_GYM_VS_07, SPTR_GYM07, 0x7fff,0x5294}, //ジムリーダー07
+  {FLDCIID_GYM_VS_08, SPTR_GYM08, 0x7fff,0x5294}, //ジムリーダー08
+  {FLDCIID_SITEN_01, SPTR_BIGFOUR01, 0x7fff,0x5294}, //四天王1
+  {FLDCIID_SITEN_02, SPTR_BIGFOUR02, 0x7fff,0x5294}, //四天王2
+  {FLDCIID_SITEN_03, SPTR_BIGFOUR03, 0x7fff,0x5294}, //四天王3
+  {FLDCIID_SITEN_04, SPTR_BIGFOUR04, 0x7fff,0x5294}, //四天王4
+  {FLDCIID_CHAMP, SPTR_CHAMP ,0x7fff,0x5294}, //チャンプ
   // swan
-  {FLDCIID_N,     SPTR_N,     0x7fff ,0x0000}, //ポケモントレーナーN
-  {FLDCIID_SWBOSS,SPTR_SWBOSS,0x7fff,0x0000},  //ボス(アクロマ)
+  {FLDCIID_N,     SPTR_N,     0x7fff ,0x5294}, //ポケモントレーナーN
+  {FLDCIID_SWBOSS,SPTR_SWBOSS,0x7fff,0x5294},  //ボス(アクロマ)
   {FLDCIID_NEO_PLASMA, 0,     0x7fff,0x0000},  //ネオプラズマ団
-  {FLDCIID_SAGE,  SPTR_SAGE,  0x7fff,0x0000},  //セージ
+  {FLDCIID_SAGE,  SPTR_SAGE,  0x7fff,0x5294},  //セージ
   {FLDCIID_WBT,        0,     0x7fff,0x0000},  //WBT
   {FLDCIID_POKEWOOD,   0,     0x7fff,0x0000},  //ポケウッド
-  {FLDCIID_MUGEN_BOSS, SPTR_MUGEN_BOSS, 0x7fff ,0x0000}, //無限ダンジョンボス
-  {FLDCIID_SWBOSS2,SPTR_SWBOSS,0x7fff,0x0000},  //ボス(アクロマ クリア後)
+  {FLDCIID_MUGEN_BOSS, SPTR_MUGEN_BOSS, 0x7fff ,0x5294}, //無限ダンジョンボス
+  {FLDCIID_SWBOSS2,SPTR_SWBOSS,0x7fff,0x5294},  //ボス(アクロマ クリア後)
   //
   {FLDCIID_SHIN_MU,  0, 0x7fff,0x0000}, //パッケージ
   {FLDCIID_IDOU, 0, 0x7fff,0x0000}, //移動ポケ
