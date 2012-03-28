@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include "pm_version.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
@@ -27,6 +28,7 @@
 
 #include "game_beacon_local.h"
 #include "fieldmap/zone_id.h"
+#include "gamesystem/g_power.h"
 
 //==============================================================================
 //  定数定義
@@ -690,6 +692,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->action.action_no = GAMEBEACON_ACTION_NULL;
 }
 
+extern void GPowerHaisin_SendBeacon_Init(const STRBUF *name, u16 trainer_id, const STRBUF *selfmsg, u8 union_index);
 //--------------------------------------------------------------
 /**
  * ※Gパワー配信
@@ -1305,6 +1308,17 @@ void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_
   info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_GPOWER;
   info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_GPOWER;
   info->action.distribution.gpower_id = g_power_id;
+
+  if( GPOWER_IsEnableID_BW(g_power_id) )
+  {
+    //BW互換ビーコン
+    info->version_bit = 0xffff; //全バージョン指定
+  }
+  else
+  {
+    //SWAN専用ビーコン
+    info->version_bit = (1 << (VERSION_W2-VERSION_WHITE) | (1 << (VERSION_B2-VERSION_WHITE)) );
+  }
 
   BEACONINFO_Set_Details_Walk(info);
 }

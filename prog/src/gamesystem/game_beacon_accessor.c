@@ -495,9 +495,8 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->play_hour > 999 || info->play_min > 59 ){
     return TRUE;
   }
-  //GパワーIDチェック(無効値でない&&有効値より大きいIDならエラー)
-  if( info->g_power_id > GPOWER_ENABLE_ID_END && 
-      info->g_power_id != GPOWER_ID_NULL ) {
+  //GパワーIDチェック
+  if( GPOWER_IsErrorID( info->g_power_id ) ) {
     return TRUE;
   }
   //ゾーンIDチェック

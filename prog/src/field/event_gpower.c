@@ -98,7 +98,7 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
   sc = SCRIPT_GetScriptWorkFromEvent( event );
 
   //セキュリティ
-  if( power == GPOWER_ID_NULL || power > GPOWER_ENABLE_ID_END ){
+  if( GPOWER_IsEnableID( power ) == FALSE ){
     power = GPOWER_ID_SOUGUU_INC_A;
     GF_ASSERT(0);
   }

@@ -2044,7 +2044,7 @@ static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BO
     gpower_id = GAMEBEACON_Get_GPowerID( info );
   }
   //セキュリティ
-  if( gpower_id == GPOWER_ID_NULL || gpower_id > GPOWER_ENABLE_ID_END ){
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     GF_ASSERT(0);
     return FALSE;
   }
