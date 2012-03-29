@@ -1119,6 +1119,11 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
     
         task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
         FLDEFF_NAMIPOKE_SetJointFlag( task, NAMIPOKE_JOINT_ONLY );
+
+#ifdef BUGFIX_GFBTS232_20120120
+        // ”g‚ð”ñ•\Ž¦‚É
+        FLDEFF_NAMIPOKE_SetRippleEffect( task, FALSE );
+#endif
         
         {
           FLDEFF_CTRL *fectrl;
@@ -1235,6 +1240,16 @@ static void ev_Takikudari( TAKINOBORI_WORK *work )
       FLDEFF_TASK_CallDelete( work->eff_task );
       FLDEFF_CTRL_DeleteEffect( fectrl, FLDEFF_PROCID_NAMIPOKE_EFFECT );
       FIELD_PLAYER_EVREQUEST_ReqExMove( work->fld_player );
+
+#ifdef BUGFIX_GFBTS232_20120120
+      // ”g‚ð•\Ž¦‚·‚éó‘Ô‚É
+      {
+        FLDEFF_TASK *p_field_task;
+        p_field_task = FIELD_PLAYER_GetEffectTaskWork( work->fld_player );
+        FLDEFF_NAMIPOKE_SetRippleEffect( p_field_task, TRUE );
+      }
+#endif
+
       work->eff_task = NULL;
       work->end_flag = TRUE;
       PMSND_PlaySE( SEQ_SE_FLD_83 );

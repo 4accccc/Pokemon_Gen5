@@ -1650,3 +1650,11 @@ resource/wifi_earth/wifi_earth.narc
  *
  */
 
+
+/*
+  滝下りイベント開始時に、波エフェクトを非表示にし、
+  イベント終了時に再度復帰させる処理を追加
+  担当：尾上
+
+ */
+#define BUGFIX_GFBTS232_20120120
