@@ -15985,7 +15985,7 @@ static const ZONEDATA ZoneData[] = {
 	},
 	{//ZONE_ID_D22 = 444
 		RSC_GRID_DEFAULT,
-		MMLID_NOENTRY,
+		MMLID_AREA_OUT54,
 		AREA_ID_OUT54,
 		MATRIX_ID_WB,
 		NARC_script_seq_d22_bin,
