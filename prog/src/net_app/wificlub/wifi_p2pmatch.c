@@ -3512,7 +3512,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   //      wk->DirectModeNo=0;
   //}
   //  }
-  if( wk->is_talk == FALSE )
+  if( wk->is_talk != 0xff ) //修正内容を取り消すため、必ず実行させる。is_talkはTRUE/FALSE以外の値を通らないはず
   {
     int j;
     for(j = 0; j < WIFIP2PMATCH_MEMBER_MAX ; j++){
