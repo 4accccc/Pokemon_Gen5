@@ -1,0 +1,55 @@
+//=============================================================================
+/**
+ *
+ *	@file		fes_rom.cdat
+ *	@brief  フェスミッション配信画面 データ定義 
+ *	@author	Miyuki Iwasawa
+ *	@data		2010.02.01
+ *
+ */
+//=============================================================================
+
+////////////////////////////////////////////////
+//入力パラメータ
+static const INPUT_PARAM DATA_InputParamTbl[INPUT_CODE_MAX] = {
+ { 0, 0,     1, WSET_NONE }, //INPUT_CODE_NONE
+
+ { 1, 60,    2, WSET_NONE }, //INPUT_CODE_BEACON_INTERVAL
+ { 0, 2*24,  2, WSET_NONE }, //INPUT_CODE_TIME
+ { 0, 1,     1, WSET_NONE }, //INPUT_CODE_MODE
+ 
+};
+
+
+////////////////////////////////////////////////
+//獣道ポケモンリスト
+static const u16 DATA_TrailMonsTbl[] = {
+  0, 
+  MONSNO_ROKON,
+  MONSNO_NYOROMO,
+  MONSNO_IIBUI,
+  MONSNO_BUUSUTAA,
+  MONSNO_SYAWAAZU,
+  MONSNO_SANDAASU,
+  MONSNO_EEFI,
+  MONSNO_BURAKKII,
+  MONSNO_GUREISIA,
+  MONSNO_RIIFIA,
+  MONSNO_SUBAME,
+  MONSNO_KINOKOKO,
+  MONSNO_TUTININ,
+  MONSNO_GOKURIN,
+  MONSNO_PATTIIRU,
+  MONSNO_GONYONYO,
+  MONSNO_POTIENA,
+  MONSNO_ZIGUZAGUMA,
+  MONSNO_HASUBOO,
+  MONSNO_MAKUNOSITA,
+  MONSNO_HAKURYUU,
+  MONSNO_REAKOIRU,
+  MONSNO_GABAITO,
+  MONSNO_KOMORUU,
+  MONSNO_TOGETIKKU,
+  MONSNO_RAKKII,
+};
+

@@ -2115,6 +2115,8 @@
 			<ContentItem
 				Name="dendou_demo.mstxt" />
 			<ContentItem
+				Name="fes_rom.mstxt" />
+			<ContentItem
 				Name="fest_mission.mstxt" />
 			<ContentItem
 				Name="fld_trade.mstxt" />

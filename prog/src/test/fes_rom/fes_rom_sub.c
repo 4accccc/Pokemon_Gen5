@@ -1,0 +1,1223 @@
+//=============================================================================
+/**
+ *
+ *	@file		fes_rom_sub.c
+ *	@brief  フェスミッション配信画面 サブ
+ *	@author	Miyuki Iwasawa
+ *	@data		2010.02.01
+ *
+ */
+//=============================================================================
+//必ず必要なインクルード
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/main.h"
+
+// 簡易会話表示システム
+#include "system/pms_draw.h"
+#include "system/palanm.h"
+
+//テクスチャをOAMに転送
+#include "system/nsbtx_to_clwk.h"
+
+//FONT
+#include "print/gf_font.h"
+#include "font/font.naix"
+
+//PRINT_QUE
+#include "print/printsys.h"
+
+#include "print/wordset.h"
+
+//INFOWIN
+#include "infowin/infowin.h"
+
+//描画設定
+#include "fes_rom_gra.h"
+
+//簡易CLWK読み込み＆開放ユーティリティー
+#include "ui/ui_easy_clwk.h"
+
+//タッチバー
+#include "ui/touchbar.h"
+
+//ポケパラ、ポケモンNO
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/monsno_def.h"
+
+//アプリ共通素材
+#include "app/app_menu_common.h"
+
+//アーカイブ
+#include "arc_def.h"
+
+#include "field/zonedata.h"
+#include "field/map_change_type.h"
+//外部公開
+#include "fes_rom.h"
+
+#include "message.naix"
+#include "msg/msg_beacon_detail.h"  // GMM
+#include "beacon_status.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+#include "config_gra.naix"
+#include "wifi_unionobj.naix"
+#include "wmi.naix"
+
+#include "fes_rom_local.h"
+#include "fes_rom_sub.h"
+
+
+#include "arc/wifi_unionobj_plt.cdat" //ユニオンキャラパレット参照テーブル
+#include "arc/fieldmap/zone_id.h"
+
+//////////////////////////////////////////////////////////////
+//定数定義
+
+typedef struct BEACON_WIN_COLOR{
+ PRINTSYS_LSB color;
+ u8           base;
+}BEACON_WIN_COLOR;
+
+static const BEACON_WIN_COLOR DATA_BeaconWinColor[] = {
+  { FCOL_WIN01, FCOL_WIN_BASE1 }, 
+  { FCOL_WIN02, FCOL_WIN_BASE2 }, 
+};
+
+#define FCOL_BEACON_BASE( n ) ( DATA_BeaconWinColor[n].base ) 
+#define FCOL_BEACON_COL( n )  ( DATA_BeaconWinColor[n].color )
+
+#include "fes_rom.cdat"
+
+static const PARAM_SET DATA_ParamSetBase[] = {
+  {
+    PRM_BASE_BEACON_INTERVAL,  //PARAM_ID
+    WSET_BEACON_INTERVAL, f_rom_prm_base_beacon_interval, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_BEACON_INTERVAL,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_0, 1, 1+7 },
+  },
+  {
+    PRM_BASE_START_TIME,  //PARAM_ID
+    WSET_TIME, f_rom_prm_base_start_time, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_0, 9, 9+11 },
+  },
+  {
+    PRM_BASE_END_TIME,  //PARAM_ID
+    WSET_TIME, f_rom_prm_base_end_time, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_0, 21, 21+10 },
+  },
+  {
+    PRM_BASE_MODE,  //PARAM_ID
+    WSET_MODE, f_rom_prm_base_mode, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MODE,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_1, 1, 1+7 },
+  },
+  {
+    PRM_BASE_SAVE,  //PARAM_ID
+    WSET_NONE, f_rom_prm_base_save, //WSET_TYPE, msg
+    EXE_CODE_SAVE, INPUT_CODE_NONE,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_1, 8, 8+6 },
+  },
+};
+
+#define PRM_BASE_ID_MAX   (NELEMS(DATA_ParamSetBase))
+
+//////////////////////////////////////////////////////////////
+
+static void targetWin_Clear( TARGET_WIN* twin );
+static void targetWin_ClearAll( FES_ROM_WORK* wk );
+
+//プロトタイプ
+
+
+//パラメータ系
+static void param_Draw( FES_ROM_WORK* wk, int idx );
+static void param_DrawAll( FES_ROM_WORK* wk, int target_idx );
+static void param_DrawAllEx( FES_ROM_WORK* wk, int target_idx1, int target_idx2 );
+
+static void param_BasePop( FES_ROM_WORK* wk );
+static void param_BasePush( FES_ROM_WORK* wk );
+static void param_PopParam( FES_ROM_WORK* wk );
+static void param_PushParam( FES_ROM_WORK* wk );
+
+//入力系
+static int input_ParamNextPos( FES_ROM_WORK* wk, int dir );
+static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param );
+static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff );
+
+//プリント系
+static void print_GetMsgToBuf( FES_ROM_WORK* wk, u8 msg_id );
+static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
+static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type );
+
+//汎用サブルーチン系
+static void sub_PlaySE( u16 se_no );
+static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num );
+
+static void act_AnmStart( GFL_CLWK* act, u8 anm_no );
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y, u16 setsf );
+
+static void draw_MsgWinFromID( FES_ROM_WORK* wk, TARGET_VIEW view, int msg_id );
+static void draw_MsgWin( FES_ROM_WORK* wk, TARGET_VIEW view, STRBUF* str );
+static void draw_MsgClear( FES_ROM_WORK* wk, TARGET_VIEW view );
+
+static void draw_UnionObjUpdate( FES_ROM_WORK* wk, u8 char_no );
+static void draw_BeaconWindowIni( FES_ROM_WORK* wk );
+static void draw_BeaconData( FES_ROM_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx );
+static void draw_BeaconWindowVisibleSet( FES_ROM_WORK* wk, u8 idx, BOOL visible_f );
+static void draw_BeaconWindow( FES_ROM_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx );
+
+static void effReq_PopupMsg( FES_ROM_WORK* wk );
+static void printReq_BmpwinPrint( FES_ROM_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color );
+
+//セーブリクエスト
+static void taskReq_Save( FES_ROM_WORK* wk );
+
+
+
+//==============================================================================
+//==============================================================================
+//==============================================================================
+/*
+ *  @brief  フェス配信画面画面初期描画
+ */
+void FesRom_InitialDraw( FES_ROM_WORK* wk )
+{
+  int i;
+
+  targetWin_ClearAll( wk );
+
+  switch( wk->app_mode ){
+  case FESROM_APP_MODE_BASE:
+  case FESROM_APP_MODE_MISSION:
+  case FESROM_APP_MODE_SEND:
+    wk->prmset_tbl = DATA_ParamSetBase;
+    wk->prmset_num = PRM_BASE_ID_MAX;
+    wk->prmset_idx = PRM_BASE_ID_START;
+    param_BasePop( wk );
+    break;
+  }
+  param_DrawAll( wk, POS_TARGET_NONE );
+
+#if 0
+  draw_BeaconWindowIni( wk );
+
+  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[wk->list_top]);
+  draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw );
+  draw_BeaconWindowVisibleSet( wk, wk->flip_sw, TRUE );
+  draw_BeaconWindowVisibleSet( wk, wk->flip_sw^1, FALSE );
+#endif
+
+  GFL_NET_ReloadIconTopOrBottom( FALSE, wk->tmpHeapID );
+}
+
+//========================================================
+//ベースパラメータのPushPop
+static void param_BasePop( FES_ROM_WORK* wk )
+{
+  MI_CpuClear8( &wk->param[PRM_BASE_ID_START], sizeof(int)*PRM_BASE_ID_MAX );
+  
+  wk->param[PRM_BASE_BEACON_INTERVAL] = wk->sys_save->beacon_interval;
+  wk->param[PRM_BASE_START_TIME] = wk->sys_save->start_time;
+  wk->param[PRM_BASE_END_TIME] = wk->sys_save->end_time;
+  wk->param[PRM_BASE_TR_VIEW] = wk->sys_save->tr_view;
+}
+static void param_BasePush( FES_ROM_WORK* wk )
+{
+  wk->sys_save->beacon_interval = wk->param[PRM_BASE_BEACON_INTERVAL];
+  wk->sys_save->start_time = wk->param[PRM_BASE_START_TIME];
+  wk->sys_save->end_time = wk->param[PRM_BASE_END_TIME];
+  wk->sys_save->tr_view = wk->param[PRM_BASE_TR_VIEW];
+}
+
+static void param_PopParam( FES_ROM_WORK* wk )
+{
+  switch( wk->app_mode ){
+  case FESROM_APP_MODE_BASE:
+  case FESROM_APP_MODE_MISSION:
+  case FESROM_APP_MODE_SEND:
+    param_BasePop( wk );
+    break;
+  }
+}
+/*
+ *  @brief  フェス配信画面 パラメータ初期化
+ */
+static void param_PushParam( FES_ROM_WORK* wk )
+{
+  switch( wk->app_mode ){
+  case FESROM_APP_MODE_BASE:
+  case FESROM_APP_MODE_MISSION:
+  case FESROM_APP_MODE_SEND:
+    param_BasePush( wk );
+    break;
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//入力取得
+
+/*
+ *
+ */
+static int input_ParamNextPos( FES_ROM_WORK* wk, int diff )
+{
+  int i, n_line;
+
+  n_line = wk->prmset_tbl[wk->pos].area.line;
+
+  if( diff > 0 ){
+    for( i = wk->pos;i < wk->prmset_num;i++){
+      if( n_line < wk->prmset_tbl[i].area.line ){
+        return i;
+      }
+    }
+    return 0;
+  }else{
+    for( i = wk->pos;i >= 0;i--){
+      if( n_line > wk->prmset_tbl[i].area.line ){
+        return i;
+      }
+    }
+    return wk->prmset_num-1;
+  }
+}
+
+/*
+ *  @brief  フェス配信ベース画面　入力取得
+ */
+int FesRom_InputCheckBase( FES_ROM_WORK* wk )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+  int repeat = GFL_UI_KEY_GetRepeat();
+  int old_pos = wk->pos;
+  const PARAM_SET* pset = &wk->prmset_tbl[wk->pos];
+
+  if( pset->exe_code == EXE_CODE_INPUT_SWITCH ){
+    if( repeat & PAD_BUTTON_A ){
+      return input_BaseExe( wk, &wk->prmset_tbl[wk->pos], 1 );
+    }else if( repeat & PAD_BUTTON_B ){
+      return input_BaseExe( wk, &wk->prmset_tbl[wk->pos], -1 );
+    }
+  }else if( trg & PAD_BUTTON_A ){
+    return input_BaseExe( wk, &wk->prmset_tbl[wk->pos], 0 );
+  }
+  if( trg & PAD_KEY_RIGHT ){
+    wk->pos = (wk->pos+1)%wk->prmset_num; 
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_LEFT ){
+    wk->pos = (wk->pos+(wk->prmset_num-1))%wk->prmset_num; 
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_UP ){
+    wk->pos = input_ParamNextPos( wk, -1 );
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_DOWN ){
+    wk->pos = input_ParamNextPos( wk, 1 );
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }
+  return SEQ_BASE_MAIN;
+}
+
+/*
+ *  @brief フェス配信ベース 入力実行
+ */
+static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
+{
+  switch( pset->exe_code ){
+  case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
+    return exe_InputSwitch( wk, pset, param );
+
+  case EXE_CODE_INPUT_NUM:    //数値入力実行
+  case EXE_CODE_INPUT_FWORD:  //フリーワード入力実行
+  case EXE_CODE_INPUT_NAME:   //名前入力実行
+    break;
+  case EXE_CODE_SAVE:         //セーブ実行
+    taskReq_Save( wk );
+    return SEQ_TASK_WAIT; 
+  }
+  return wk->ret_seq; 
+}
+
+/*
+ *  @brief  スイッチ式入力実行
+ */
+static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff )
+{
+  const INPUT_PARAM* iprm = &DATA_InputParamTbl[pset->input_code]; 
+  int value = wk->param[ pset->id ];
+    
+  sub_PlaySE( BDETAIL_SE_DECIDE );
+  wk->ret_seq = SEQ_BASE_MAIN;
+
+  if( diff > 0 && ( value+1 > iprm->max ) ){
+    value = iprm->min;
+  }else if( diff < 0 && (value-1 < iprm->min) ){
+    value = iprm->max;
+  }else{
+    value += diff;
+  }
+  wk->param[pset->id] = value;
+  param_Draw( wk, wk->pos );
+
+  sub_PlaySE( BDETAIL_SE_DECIDE );
+  return wk->ret_seq;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//ターゲットウィンドウ
+static void targetWin_Clear( TARGET_WIN* twin )
+{
+  GFL_BMP_Clear( twin->base.bmp, 0 );
+  GFL_BMP_Clear( twin->input.bmp, 0 );
+  GFL_BMP_Clear( twin->msg.bmp, 0 );
+}
+
+static void targetWin_ClearAll( FES_ROM_WORK* wk )
+{
+  int i;
+
+  for( i = 0;i < TARGET_VIEW_MAX; i++ ){
+    targetWin_Clear( &wk->target[i] );
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//パラメータ描画
+/*
+ *  @brief 個別パラメータ描画 
+ */
+static void param_Draw( FES_ROM_WORK* wk, int idx )
+{
+  int id  = wk->prmset_idx+idx;
+  static const PRINTSYS_LSB f_col[2] = { FCOL_WHITE_N, FCOL_RED_N };
+  
+  const PARAM_SET* pset = &wk->prmset_tbl[id];
+  TARGET_WIN* twin = &wk->target[pset->area.view];
+  s16 sx = pset->area.sx*LINE_W;
+  s16 sy = pset->area.line*LINE_H;
+
+  GFL_BMP_Fill( twin->base.bmp, sx, sy, (pset->area.ex-pset->area.sx)*LINE_W, LINE_H, FCOL_WIN_CLEAR );
+  print_ParamWordset( wk, 0, wk->param[id], pset->wset_type );
+  print_GetMsgToBuf( wk, pset->msg );
+	PRINTSYS_PrintColor( twin->base.bmp, sx, sy, wk->str_expand, wk->font, f_col[(wk->pos==idx)] );
+	GFL_BMPWIN_TransVramCharacter( twin->base.win );
+}
+
+/*
+ *  @brief パラメータ描画 一括
+ */
+static void param_DrawAll(  FES_ROM_WORK* wk, int target_idx )
+{
+  param_DrawAllEx( wk, target_idx, POS_TARGET_NONE );
+}
+static void param_DrawAllEx( FES_ROM_WORK* wk, int target_idx1, int target_idx2 )
+{
+  int i, id;
+  
+  for( i = 0;i < wk->prmset_num;i++){
+    id = wk->prmset_idx+i;
+
+    if( target_idx1 == POS_TARGET_NONE ||
+        i == target_idx1 ||
+        i == target_idx2 ){
+      param_Draw( wk, i );
+    }
+  }
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//サブルーチン
+
+/*
+ *  @brief  文字列整形
+ *
+ *  指定メッセージを wk->str_expandにつめる
+ */
+static void print_GetMsgToBuf( FES_ROM_WORK* wk, u8 msg_id )
+{
+  GFL_MSG_GetString( wk->msgman, msg_id, wk->str_tmp);
+  WORDSET_ExpandStr( wk->wset, wk->str_expand, wk->str_tmp );
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  フリーワード展開
+ */
+//----------------------------------------------------------
+static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str )
+{
+  WORDSET_RegisterWord( wset, idx, str, PM_NEUTRAL, TRUE, PM_LANG );
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  指定パラメータワード展開
+ */
+//----------------------------------------------------------
+static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type )
+{
+  switch( type ){
+  case WSET_BEACON_INTERVAL:
+    WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    return TRUE;
+  case WSET_TIME:
+    {
+      int hour = value/FES_ROM_TIME_UNIT_HOUR;
+      int min = (value%FES_ROM_TIME_UNIT_HOUR)*FES_ROM_TIME_UNIT_MIN;
+      WORDSET_RegisterNumber( wk->wset, idx, hour, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( wk->wset, idx+1, min, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    }
+    return TRUE;
+  case WSET_MODE:
+    GFL_MSG_GetString( wk->msgman, f_rom_param_mode_01+value, wk->str_tmp );
+    break;
+  case WSET_TRNAME:
+//    if( value == 0){
+//      MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
+//    }else{
+      WORDSET_RegisterTrainerName( wk->wset, idx, value );
+      return TRUE;
+//    }
+    break;
+  case WSET_MONSNAME:
+    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
+    return TRUE;
+  case WSET_ITEMNAME:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    return TRUE;
+  case WSET_ITEMNAME_CHECK:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value ) ||
+        value == ITEM_MASUTAABOORU){
+      return FALSE;
+    }
+    return TRUE;
+  case WSET_ITEMNAME_CHECK_SP:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( value == 0 ) return TRUE;
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value ) ){
+      return FALSE;
+    }
+    return TRUE;
+  case WSET_FREEWORD:
+    GFL_MSG_GetString( wk->msgman, f_rom_freeword_icon_01+value, wk->str_tmp );
+    break;
+  case WSET_TR_VIEW:
+    GFL_MSG_GetString( wk->msgman, f_rom_tr_view_01+value, wk->str_tmp );
+    break;
+  case WSET_MBASE_EVENT:
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_base_event_01+value, wk->str_tmp );
+    break;
+  case WSET_MBASE_ITEM:
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_base_item_01+value, wk->str_tmp );
+    break;
+  case WSET_MBASE_NPC:
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_base_npc_01+value, wk->str_tmp );
+    break;
+  case WSET_MEX_EVENT_TRAIL:
+    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_TrailMonsTbl[value] );
+    return TRUE;
+  case WSET_MEX_NPC_ITEM_TRADE:
+    GFL_MSG_GetString( wk->msgman, f_rom_npc_item_trade_01+value, wk->str_tmp );
+    break;
+  case WSET_MEX_NPC_SHOPPING:
+    GFL_MSG_GetString( wk->msgman, f_rom_npc_shopping_01+value, wk->str_tmp );
+    break;
+  case WSET_MEX_NPC_TR_BATTLE:
+    GFL_MSG_GetString( wk->msgman, f_rom_npc_tr_battle_01+value, wk->str_tmp );
+    break;
+  case WSET_MEX_NPC_GET_A_PRESENT:
+    GFL_MSG_GetString( wk->msgman, f_rom_npc_get_a_present_01+value, wk->str_tmp );
+    break;
+  case WSET_MEX_NPC_POKE_QUIZ:
+    GFL_MSG_GetString( wk->msgman, f_rom_npc_poke_quiz_01+value, wk->str_tmp );
+    OS_Printf("quiz_value=%d\n", value);
+    break;
+  case WSET_MISSION_ID_NAME:
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_id_name_01+value, wk->str_tmp );
+    break;
+  case WSET_MISSION_MSGID_NAME:
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_msg_id_01+value, wk->str_tmp );
+    break;
+  }
+#if 0
+  switch( type ){
+  case BPRM_WSET_TRNAME_EX:
+    if( value == 0){
+      MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
+    }else{
+      WORDSET_RegisterTrainerName( wk->wset, idx, value );
+      return TRUE;
+    }
+    break;
+  case BPRM_WSET_MONSNAME:
+  case BPRM_WSET_MBASE_EFF_ENC:
+    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
+    return TRUE;
+  case BPRM_WSET_ITEMNAME:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    return TRUE;
+  case BPRM_WSET_ITEMNAME_CHECK:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value ) ||
+        value == ITEM_MASUTAABOORU){
+      return FALSE;
+    }
+    return TRUE;
+  case BPRM_WSET_ITEMNAME_CHECK_SP:
+    WORDSET_RegisterItemName( wk->wset, idx, value );
+    if( value == 0 ) return TRUE;
+    if( ITEM_IsDisableItem( value ) ||
+        ITEM_IsOnlyOneItem( value ) ){
+      return FALSE;
+    }
+    return TRUE;
+  case BPRM_WSET_FWAZA:
+    WORDSET_RegisterWazaName( wk->wset, idx, DATA_FieldWazaTbl[value]);
+    return TRUE;
+  case BPRM_WSET_GPOWER:
+    if( GPOWER_IsEnableID( value ) ){
+      WORDSET_RegisterGPowerName( wk->wset, idx, value );
+      return TRUE;
+    }else{
+      GFL_MSG_GetString( wk->msgman, dlf_ng_gpower_name, wk->str_tmp );
+      print_FreeWordset( wk->wset, idx, wk->str_tmp );
+      return FALSE;
+    }
+  case BPRM_WSET_ACTION:
+    GFL_MSG_GetString( wk->msgman, dlf_action_00+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_LOG_REQ_TYPE:
+    GFL_MSG_GetString( wk->msgman, dlf_log_req_type01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_SEX:
+    GFL_MSG_GetString( wk->msgman, dlf_sex_male+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_VERSION:
+    GFL_MSG_GetString( wk->msgman, dlf_version_white+(value-VERSION_W2), wk->str_tmp );
+    break;
+  case BPRM_WSET_LANG:
+    GFL_MSG_GetString( wk->msgman, dlf_lang_01+(value-LANG_JAPAN), wk->str_tmp );
+    break;
+  case BPRM_WSET_ZONE:
+    WORDSET_RegisterPlaceName( wk->wset, 7, ZONEDATA_GetPlaceNameID(value) );
+    sub_GetMsgToBuf( wk, dlf_tmp_buf );
+    sub_GetZoneIDStr( wk->pAllZoneName, value, wk->str_tmp );
+    GFL_STR_AddString( wk->str_tmp, wk->str_expand );
+    break;
+  case BPRM_WSET_FREEWORD:
+    GFL_MSG_GetString( wk->msgman, dlf_freeword_icon_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_TR_VIEW:
+    {
+      u8 ofs = 0;
+      if( wk->fake_prm[ TR_PAT_FAKE-(idx==3)][FAKE_SEX] ){
+        ofs = UNION_VIEW_INDEX_WOMAN_START;
+      }
+      GFL_MSG_GetString( wk->msgman, dlf_tr_view_01+value+ofs, wk->str_tmp );
+    }
+    break;
+  case BPRM_WSET_MBASE_MUSHROOM_ENC:
+    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_MushroomMonsTbl[value] );
+    return TRUE;
+  case BPRM_WSET_MBASE_EVENT:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_base_event_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MBASE_ITEM:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_base_item_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MBASE_NPC:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_base_npc_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MEX_EVENT_TRAIL:
+    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_TrailMonsTbl[value] );
+    return TRUE;
+  case BPRM_WSET_MEX_NPC_ITEM_TRADE:
+    GFL_MSG_GetString( wk->msgman, dlf_npc_item_trade_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MEX_NPC_SHOPPING:
+    GFL_MSG_GetString( wk->msgman, dlf_npc_shopping_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MEX_NPC_TR_BATTLE:
+    GFL_MSG_GetString( wk->msgman, dlf_npc_tr_battle_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MEX_NPC_GET_A_PRESENT:
+    GFL_MSG_GetString( wk->msgman, dlf_npc_get_a_present_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MEX_NPC_POKE_QUIZ:
+    GFL_MSG_GetString( wk->msgman, dlf_npc_poke_quiz_01+value, wk->str_tmp );
+    OS_Printf("quiz_value=%d\n", value);
+    break;
+  case BPRM_WSET_MISSION_ID_NAME:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_id_name_01+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_MISSION_MSGID_NAME:
+    GFL_MSG_GetString( wk->msgman, dlf_mission_msg_id_01+value, wk->str_tmp );
+    break;
+  }
+#endif
+  print_FreeWordset( wk->wset, idx, wk->str_tmp );
+  return TRUE;
+}
+ 
+/*
+ *  @brief  SE再生
+ */
+static void sub_PlaySE( u16 se_no )
+{
+  PMSND_PlaySE( se_no );
+}
+
+/*
+ *  @パレット転送
+ */
+static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num  )
+{
+  u32 adrs = pos*2;
+  u32 siz = num*2;
+
+  DC_FlushRange( p_data, siz );
+
+  switch( target ){
+  case FADE_MAIN_BG:
+    GX_LoadBGPltt( p_data, adrs, siz );
+    break;
+  case FADE_SUB_BG:
+    GXS_LoadBGPltt( p_data, adrs, siz );
+    break;
+  case FADE_MAIN_OBJ:
+    GX_LoadOBJPltt( p_data, adrs, siz );
+    break;
+  case FADE_SUB_OBJ:
+    GXS_LoadOBJPltt( p_data, adrs, siz );
+    break;
+  }
+}
+
+/*
+ *  @brief  アクター アニメスタート
+ */
+static void act_AnmStart( GFL_CLWK* act, u8 anm_no )
+{
+  GFL_CLACT_WK_SetAnmSeq( act, anm_no );
+  GFL_CLACT_WK_ResetAnm( act );
+}
+
+/*
+ *  @brief  アクター　座標セット
+ */
+static void act_SetPosition( GFL_CLWK* act, s16 x, s16 y, u16 setsf )
+{
+  GFL_CLACTPOS pos;
+  pos.x = x;
+  pos.y = y;
+  
+  GFL_CLACT_WK_SetPos( act, &pos, setsf );
+}
+
+
+/*
+ *  @brief  Unionアクター更新
+ */
+static void draw_UnionObjUpdate( FES_ROM_WORK* wk, u8 char_no )
+{
+  u8 sex, p_ofs;
+ 
+  //キャラクタ転送
+  GFL_CLGRP_CGR_Replace(  wk->objResUnion.cgr,
+                          wk->resCharUnion[ char_no ].p_char );
+  //パレット転送
+  p_ofs = 16*sc_wifi_unionobj_plt[char_no];
+  sub_PlttVramTrans( &wk->resPlttUnion.dat[p_ofs], FADE_MAIN_OBJ, PLTID_OBJ_UNION_M*16, 16 );
+}
+
+
+/*
+ *  @brief  ビーコンウィンドウ初期描画
+ */
+static void draw_BeaconWindowIni( FES_ROM_WORK* wk )
+{
+#if 0
+  int i,j;
+  BEACON_WIN* bp;
+  
+  //プロフィール見出し
+  for(i = 0;i < BEACON_PROF_MAX;i++){
+    GFL_MSG_GetString( wk->msgman, msg_prof01+i, wk->str_tmp );
+  
+    for(j = 0;j < BEACON_WIN_MAX;j++){
+      bp = &wk->beacon_win[j];
+  
+      GFL_BMP_Clear( bp->prof[i].bmp, FCOL_BEACON_BASE(i%2) );
+
+      printReq_BmpwinPrint( wk, &bp->prof[i],
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(i%2) );
+      GFL_BMPWIN_MakeTransWindow( bp->prof[i].win );
+    }
+  }
+  //出身地見出し
+  GFL_MSG_GetString( wk->msgman, msg_home_town, wk->str_tmp );
+  for(j = 0;j < BEACON_WIN_MAX;j++){
+    bp = &wk->beacon_win[j];
+
+    GFL_BMP_Clear( bp->home[0].bmp, FCOL_BEACON_BASE(0) );
+
+    printReq_BmpwinPrint( wk, &bp->home[0],
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
+    GFL_BMPWIN_MakeTransWindow( bp->home[0].win );
+  }
+
+  //レコード見出し
+  GFL_MSG_GetString( wk->msgman, msg_record, wk->str_tmp);
+  
+  for(i = 0;i < BEACON_WIN_MAX;i++){
+    bp = &wk->beacon_win[i];
+    
+    GFL_BMP_Clear( bp->record.bmp, FCOL_BEACON_BASE(0) );
+    printReq_BmpwinPrint( wk, &bp->record,
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
+    GFL_BMPWIN_MakeTransWindow( bp->record.win );
+  }
+#endif
+}
+
+/*
+ *  @brief  単発メッセージ描画
+ */
+static void draw_MsgWinFromID( FES_ROM_WORK* wk, TARGET_VIEW view, int msg_id )
+{
+  print_GetMsgToBuf( wk, msg_id );
+  draw_MsgWin( wk, view, wk->str_expand);
+}
+
+/*
+ *  @brief  メッセージウィンドウ描画 サブ
+ */
+static void draw_MsgWin( FES_ROM_WORK* wk, TARGET_VIEW view, STRBUF* str )
+{
+  TARGET_WIN* twin = &wk->target[ view ];
+
+  GFL_BMP_Clear( twin->msg.bmp, FCOL_WIN_WHITE );
+	PRINTSYS_PrintColor( twin->msg.bmp, 0, 0, str, wk->font, FCOL_BLACK_W );
+  GFL_BMPWIN_MakeTransWindow( twin->msg.win );
+}
+/*
+ *  @brief  メッセージウィンドウ描画 サブ
+ */
+static void draw_MsgClear( FES_ROM_WORK* wk, TARGET_VIEW view )
+{
+  TARGET_WIN* twin = &wk->target[ view ];
+  GFL_BMP_Clear( twin->msg.bmp, FCOL_WIN_CLEAR );
+  GFL_BMPWIN_MakeTransWindow( twin->msg.win );
+}
+
+/*
+ *  @brief  ビーコンウィンドウ 表示制御
+ */
+static void draw_BeaconWindowVisibleSet( FES_ROM_WORK* wk, u8 idx, BOOL visible_f )
+{
+#if 0
+  BEACON_WIN* bp = &wk->beacon_win[idx];
+
+  GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, visible_f );
+  if(bp->rank > 0){
+    GFL_CLACT_WK_SetDrawEnable( bp->cRank, visible_f );
+  }
+  if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
+    PMS_DRAW_VisibleSet( wk->pms_draw, idx, visible_f );
+  }
+	GFL_BG_SetVisible( bp->frame, visible_f );
+#endif
+}
+
+/*
+ *  @brief  ビーコンウィンドウ描画
+ */
+static void draw_BeaconWindow( FES_ROM_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx )
+{
+#if 0
+  BEACON_WIN* bp = &wk->beacon_win[idx];
+
+  //パネルベースカラー
+  {
+    u8  col_idx;
+    u16 pal[2];
+    GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[0], info);
+    SoftFade(&pal[0], &pal[1], 1, 3, 0x0000); //補色を作成
+ 
+    sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+0x01, 2);
+  }
+
+  //プレイヤー名
+  GAMEBEACON_Get_PlayerNameToBuf( info, wk->str_tmp );
+  draw_BeaconData( wk, &bp->prof[0], wk->str_tmp,
+      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  //仕事
+  {
+    u8 job = GAMEBEACON_Get_Job(info);
+    if( job == GAMEBEACON_DETAILS_JOB_NULL ){
+      GFL_STR_ClearBuffer( wk->str_expand );
+    }else{
+      WORDSET_RegisterJobName( wk->wset, 0, job);
+      print_GetMsgToBuf( wk, msg_prof_job );
+    }
+    draw_BeaconData( wk, &bp->prof[1], wk->str_expand,
+      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 1 );
+  }
+  //趣味
+  {
+    u8 hobby = GAMEBEACON_Get_Hobby( info );
+    if( hobby == GAMEBEACON_DETAILS_HOBBY_NULL ){
+      GFL_STR_ClearBuffer( wk->str_expand );
+    }else{
+      WORDSET_RegisterHobbyName( wk->wset, 0, hobby );
+      print_GetMsgToBuf( wk, msg_prof_hobby );
+    }
+    draw_BeaconData( wk, &bp->prof[2], wk->str_expand,
+        BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
+  }
+
+  //プレイ時間
+  {
+    u16 hour,min;
+    GAMEBEACON_Get_PlayTime( info, &hour, &min );
+
+    WORDSET_RegisterNumber( wk->wset, 2,
+        hour, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->wset, 3,
+        min, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  
+    print_GetMsgToBuf( wk, msg_prof_ptime );
+    draw_BeaconData( wk, &bp->prof[3], wk->str_expand,
+        BMP_PROF02_DAT_PX, 0, BMP_PROF02_DAT_SX, BMP_PROF02_DAT_SY, 1);
+  }
+  //出身地
+  {
+    u16 nation = GAMEBEACON_Get_Nation(info);
+    WORDSET_RegisterCountryName( wk->wset, 0, nation);
+    WORDSET_RegisterLocalPlaceName( wk->wset, 1, nation, GAMEBEACON_Get_Area(info));
+    print_GetMsgToBuf( wk, msg_home_town_word );
+    draw_BeaconData( wk, &bp->home[1], wk->str_expand,
+        0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
+  }
+  //レコード
+  WORDSET_RegisterNumber( wk->wset, 0,
+      GAMEBEACON_Get_ThanksRecvCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 1,
+      GAMEBEACON_Get_SuretigaiCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  
+  print_GetMsgToBuf( wk, msg_record_num );
+  draw_BeaconData( wk, &bp->record, wk->str_expand,
+      BMP_RECORD_DAT_PX, 0, BMP_RECORD_DAT_SX, BMP_RECORD_DAT_SY, 0);
+
+  //簡易会話
+  {
+    PMS_DATA pms;
+  
+    if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
+      PMS_DRAW_Clear( wk->pms_draw, idx, TRUE );
+    }
+    GAMEBEACON_Get_IntroductionPms( info, &pms );
+    PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , idx );
+  }
+  //ユニオンキャラクタナンバーを取得
+  bp->union_char = GAMEBEACON_Get_TrainerView( info );
+
+  //トレーナーOBJリソース再転送
+  TR2DGRA_OBJ_RES_Replace( wk->h_trgra, UnionView_GetTrType( bp->union_char),
+      wk->objResTrainer[idx].cgr, wk->objResTrainer[idx].pltt, wk->tmpHeapID );
+#endif
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  セーブリクエスト
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_SAVE{
+  u8  seq;
+  int child_task;
+
+  int wait;
+  FES_ROM_WORK* few;
+  int* task_ct;
+}TASKWK_SAVE;
+
+static void taskAdd_Save( FES_ROM_WORK* wk, int* task_ct );
+static void tcb_Save( GFL_TCBL *tcb , void* work);
+
+static void taskReq_Save( FES_ROM_WORK* wk )
+{
+  taskAdd_Save( wk, &wk->task_ct);
+}
+
+/*
+ *  @brief セーブリクエスト 
+ */
+static void taskAdd_Save( FES_ROM_WORK* wk, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_SAVE* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_Save, sizeof(TASKWK_SAVE), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_SAVE ));
+
+  twk->few = wk;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_Save( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_SAVE* twk = (TASKWK_SAVE*)tcb_wk;
+  FES_ROM_WORK* wk = twk->few;
+
+  switch( twk->seq ){
+  case 0:
+    draw_MsgWinFromID( wk, TARGET_VIEW_U, f_rom_msg_save_check );
+    sub_PlaySE( BDETAIL_SE_POPUP );
+    twk->seq++;
+    return;
+  case 1:
+    if( twk->wait++ < 4 ){
+      return;
+    }
+    twk->wait = 0;
+    twk->seq++;
+    return;
+  case 2:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+
+      if( trg & PAD_BUTTON_B ){
+        break;
+      }
+      if( trg & PAD_BUTTON_A ){
+        param_BasePush( wk );
+        FesRomSys_SaveWrite( wk->sys_wk );
+        draw_MsgWinFromID( wk, TARGET_VIEW_U, f_rom_msg_save_end );
+        twk->seq++;
+      }
+    }
+    return;
+  case 3:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_MASK ){
+      draw_MsgClear( wk, TARGET_VIEW_U );
+      break;
+    }
+    return;
+  }
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  数値入力 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_INPUT_NUM{
+  u8  seq;
+  int child_task;
+ 
+  PARAM_SET* pset;
+
+  FES_ROM_WORK* few;
+  int* task_ct;
+}TASKWK_INPUT_NUM;
+
+static void taskAdd_InputNum( FES_ROM_WORK* wk, PARAM_SET* pset, int* task_ct );
+static void tcb_InputNum( GFL_TCBL *tcb , void* work);
+
+static void taskReq_InputNum( FES_ROM_WORK* wk, PARAM_SET* pset )
+{
+  taskAdd_InputNum( wk, pset, &wk->task_ct);
+}
+
+/*
+ *  @brief  スイッチ式数値入力タスク登録
+ */
+static void taskAdd_InputNum( FES_ROM_WORK* wk, PARAM_SET* pset, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_INPUT_NUM* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_InputNum, sizeof(TASKWK_INPUT_NUM), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_INPUT_NUM ));
+
+  twk->few = wk;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_InputNum( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_INPUT_NUM* twk = (TASKWK_INPUT_NUM*)tcb_wk;
+
+  switch( twk->seq ){
+  case 0:
+    sub_PlaySE( BDETAIL_SE_POPUP );
+    twk->seq++;
+    break;
+  case 1:
+    twk->seq++;
+    return;
+  case 2:
+    break;
+  }
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ ポップアップ 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_POPUP{
+  u8  seq;
+  u8  wait;
+  int child_task;
+ 
+  FES_ROM_WORK* bdw;
+  int* task_ct;
+}TASKWK_WIN_POPUP;
+
+static void taskAdd_WinPopup( FES_ROM_WORK* wk, int* task_ct );
+static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
+
+static void effReq_PopupMsg( FES_ROM_WORK* wk )
+{
+  taskAdd_WinPopup( wk, &wk->task_ct);
+}
+
+/*
+ *  @brief  メッセージウィンドウ ポップアップタスク登録
+ */
+static void taskAdd_WinPopup( FES_ROM_WORK* wk, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_POPUP* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinPopup, sizeof(TASKWK_WIN_POPUP), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_POPUP ));
+
+  twk->bdw = wk;
+  twk->wait = 60*3;
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static BOOL popup_CheckTimeWait( TASKWK_WIN_POPUP* twk )
+{
+  if( GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A)){
+    twk->wait = 0;
+    return FALSE;
+  }
+  if( twk->wait-- == 0){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_POPUP* twk = (TASKWK_WIN_POPUP*)tcb_wk;
+
+  switch( twk->seq ){
+  case 0:
+    sub_PlaySE( BDETAIL_SE_POPUP );
+    twk->seq++;
+    break;
+  case 1:
+    if(popup_CheckTimeWait(twk)){
+      return;
+    }
+    twk->seq++;
+    return;
+  case 2:
+    break;
+  }
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  BMPウィンドウメッセージ表示キュー処理 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_BMPWIN_PRINT{
+  BMP_WIN* win;
+  FES_ROM_WORK* bdw;
+  int* task_ct;
+}TASKWK_BMPWIN_PRINT;
+
+static void taskAdd_BmpwinPrint( FES_ROM_WORK* wk, BMP_WIN* win, int* task_ct );
+static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* work);
+
+static void printReq_BmpwinPrint( FES_ROM_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color )
+{
+  PRINT_UTIL_PrintColor( &win->putil, wk->print_que, x, y, str, wk->font, color );
+  taskAdd_BmpwinPrint( wk, win, &wk->task_ct );
+}
+
+/*
+ *  @brief  メッセージウィンドウ パネルフラッシュタスク登録
+ */
+static void taskAdd_BmpwinPrint( FES_ROM_WORK* wk, BMP_WIN* win, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_BMPWIN_PRINT* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_BmpwinPrint, sizeof(TASKWK_BMPWIN_PRINT), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_BMPWIN_PRINT ));
+
+  twk->bdw = wk;
+  twk->win = win;
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_BMPWIN_PRINT* twk = (TASKWK_BMPWIN_PRINT*)tcb_wk;
+  FES_ROM_WORK* bdw = twk->bdw;
+
+  if( !PRINT_UTIL_Trans( &twk->win->putil, bdw->print_que )){
+    return;
+  }
+
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+

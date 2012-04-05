@@ -14,7 +14,7 @@
 #include "title/title.h"
 #include "demo/command_demo.h"
 #include "corporate.h"
-
+#include "test/fes_rom_sys.h"
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -88,7 +88,12 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     else
 #endif
     {
+#if 0
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
+#else
+      //フェス配信アプリプロセスコール
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(fes_rom), &FesRomSysProcData, NULL );
+#endif      
       *seq = TC_SEQ_GFLOGO; // ムービーに移行
     }
     break;
