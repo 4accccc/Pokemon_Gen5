@@ -593,8 +593,8 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
   // VBlankFunc登録
   wk->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 1 );
 
-  // 16dot上にずらしセンタリングする
-  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 16 );
+  // 海外版では40dot上にずらしセンタリングする
+  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 40 );
 
   GFL_NET_ReloadIconTopOrBottom( FALSE, HEAPID_PKWD_SELSCR);
   
@@ -1446,7 +1446,7 @@ static const BMPWIN_DAT bmpdat[]={
     GFL_BG_FRAME2_M, TITLE_PAL,    5, 15, TITLE_WIN_W, TITLE_WIN_H,
   },
   { // 上画面サブタイトル１
-    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3,  0, SUBTITLE_WIN1_W, SUBTITLE_WIN1_H,
+    GFL_BG_FRAME0_S, SUBTITLE_PAL, 3, 13, SUBTITLE_WIN1_W, SUBTITLE_WIN1_H,
   },
   { // 上画面サブタイトル２
     GFL_BG_FRAME0_S, SUBTITLE_PAL, 3, 16, SUBTITLE_WIN2_W, SUBTITLE_WIN2_H,
