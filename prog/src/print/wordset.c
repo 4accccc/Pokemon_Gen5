@@ -231,6 +231,10 @@ static void ClearBuffer( WORDSET* wordset, u32 bufID )
   GFL_STR_ClearBuffer( wordset->word[bufID].str );
 }
 
+void WORDSET_RegisterClear( WORDSET* wordset, u32 bufID )
+{
+  ClearBuffer( wordset, bufID );
+}
 
 
 //======================================================================================================
