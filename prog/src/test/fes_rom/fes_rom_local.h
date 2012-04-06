@@ -81,7 +81,6 @@ typedef struct _TARGET_WIN{
 }TARGET_WIN;
 
 typedef struct _BMPWIN_AREA{
-  TARGET_VIEW view;
   u8  line;
   u8  sx,ex;
 }BMPWIN_AREA;
@@ -103,6 +102,12 @@ typedef struct _PARAM_SET{
   BMPWIN_AREA area;
 }PARAM_SET;
 
+///数値で管理できないパラメータ
+typedef struct _PARAM_EX{
+  STRBUF* tr_name;
+  STRBUF* greeting;
+}PARAM_EX;
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -118,6 +123,7 @@ typedef struct
   int                   task_ct;
   BOOL                  data_error_f;
 
+  FES_ROM_SAVE_WK*   save_wk;
   FES_ROM_SAVE*      sys_save;
   FES_ROM_PARAM*     sys_param;
   FES_ROM_SYS_WORK*  sys_wk;
@@ -129,6 +135,7 @@ typedef struct
   const PARAM_SET*      prmset_tbl; //パラメータセットテーブルの参照ポインタ
   int                   prmset_num; //パラメータセットの要素数
   int                   param[PARAM_ID_MAX];
+  PARAM_EX              param_ex;
 
   u8                    flip_sw;
   u8                    list_max;

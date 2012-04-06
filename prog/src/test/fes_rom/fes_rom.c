@@ -184,7 +184,8 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   //ˆø”Žæ“¾
 	wk->sys_param	= pwk;
 	wk->sys_wk = wk->sys_param->sys;
-  wk->sys_save = &wk->sys_wk->save;
+  wk->save_wk = &wk->sys_wk->save_wk;
+  wk->sys_save = &wk->sys_wk->save_wk.save;
 
   // ‰Šú‰»
   wk->heapID = HEAPID_FES_ROM;

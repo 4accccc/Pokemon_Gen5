@@ -13,6 +13,7 @@
 
 //system
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/game_beacon.h"
 #include "sound/pm_sndsys.h"
 
 ///ミッションセーブデータ数
@@ -65,6 +66,7 @@ typedef struct _FESROM_MISSION{
   FESROM_MISSION_SEND   send;
 }FESROM_MISSION;
 
+#define BUFLEN_FESROM_SELFMSG (GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE)
 
 //--------------------------------------------------------------
 //  セーブ
@@ -79,7 +81,7 @@ typedef struct _FES_ROM_SAVE{
   //プレイヤーネーム
   STRCODE name[SAVELEN_PLAYER_NAME + EOM_SIZE];
   //あいさつ文
-  STRCODE selfmsg[8 + EOM_SIZE];
+  STRCODE selfmsg[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM_SIZE];
 
   int tr_view;
   int start_time;
@@ -87,6 +89,14 @@ typedef struct _FES_ROM_SAVE{
   int beacon_interval;
 }FES_ROM_SAVE;
 
+///セーブデータ参照用ワーク(STRCODEなどを展開したコピー)
+typedef struct _FES_ROM_SAVE_WORK{
+  FES_ROM_SAVE  save; //セーブデータコピー
+
+  STRBUF* str_name;
+  STRBUF* str_selfmsg;
+
+}FES_ROM_SAVE_WK;
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -106,8 +116,8 @@ typedef struct
 
   GFL_TCBLSYS*  pTcbSys;
 
-  FES_ROM_SAVE          data; ///<セーブワーク編集データ
-  FES_ROM_SAVE          save; ///<セーブワーク
+  FES_ROM_SAVE_WK       save_wk; ///<セーブワーク編集データ
+  FES_ROM_SAVE          save;    ///<セーブオリジナル
 } FES_ROM_SYS_WORK;
 
 //==================================================================

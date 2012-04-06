@@ -153,8 +153,8 @@ static GFL_PROC_RESULT FesRomSystemProcInit( GFL_PROC *proc, int *seq, void *pwk
   wk->heapID = HEAPID_FES_ROM_SYS;
   wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FES_ROM_SYS );
 	
-  _sub_DataSetup( wk );
   _sub_SystemSetup( wk );
+  _sub_DataSetup( wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -175,8 +175,8 @@ static GFL_PROC_RESULT FesRomSystemProcExit( GFL_PROC *proc, int *seq, void *pwk
 { 
 	FES_ROM_SYS_WORK* wk = mywk;
 
-  _sub_SystemExit( wk );
   _sub_DataExit( wk );
+  _sub_SystemExit( wk );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
@@ -338,6 +338,10 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
   wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 64, 128 );
 
   GFL_FONTSYS_SetDefaultColor();
+
+  MI_CpuClear8( &wk->save_wk, sizeof(FES_ROM_SAVE_WK) );
+  wk->save_wk.str_name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, wk->heapID );
+  wk->save_wk.str_selfmsg = GFL_STR_CreateBuffer( BUFLEN_FESROM_SELFMSG, wk->heapID );
 }
 
 //--------------------------------------------------------------
@@ -349,6 +353,9 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
 //--------------------------------------------------------------
 static void _sub_SystemExit( FES_ROM_SYS_WORK* wk)
 {
+  GFL_STR_DeleteBuffer(wk->save_wk.str_selfmsg);
+  GFL_STR_DeleteBuffer(wk->save_wk.str_name);
+
   GFL_FONTSYS_SetDefaultColor();
  
   GFL_TCBL_Exit( wk->pTcbSys );
@@ -371,6 +378,10 @@ static BOOL _sub_LocalProcWait( GFL_PROCSYS* localProc )
 ///セーブ関連
 //==================================================================
 
+/*
+ *  @brief  セーブワーク初期化
+ */
+
 //==================================================================
 /**
  * 現在の設定でセーブを実行する
@@ -380,14 +391,17 @@ static BOOL _sub_LocalProcWait( GFL_PROCSYS* localProc )
 //==================================================================
 void FesRomSys_SaveWrite( FES_ROM_SYS_WORK* wk )
 {
+  wk->save.magic_key = FES_ROM_SAVE_MAGICKEY;
+  
+  //編集用データをコピー
+  MI_CpuCopy8( &wk->save_wk.save, &wk->save, sizeof(FES_ROM_SAVE));
+  GFL_STR_GetStringCode( wk->save_wk.str_name, wk->save.name, SAVELEN_PLAYER_NAME + EOM_SIZE);
+  GFL_STR_GetStringCode( wk->save_wk.str_selfmsg,  wk->save.selfmsg, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM_SIZE);
 #if 0
-  GFL_STR_GetStringCode( control->name, save_data.name, SAVELEN_PLAYER_NAME + EOM_SIZE);
-  GFL_STR_GetStringCode( control->selfmsg, save_data.selfmsg, 8 + EOM_SIZE);
   save_data.union_index = control->union_index;
   save_data.powergroup = control->powergroup;
   save_data.beacon_space_time = control->powergroup.beacon_space_time;
 #endif
-  wk->save.magic_key = FES_ROM_SAVE_MAGICKEY;
   
   GFL_BACKUP_DirectFlashSave(0, &wk->save, sizeof(FES_ROM_SAVE));
   PMSND_PlaySE(SEQ_SE_SAVE);
@@ -408,13 +422,18 @@ BOOL FesRomSys_SaveLoad(  FES_ROM_SYS_WORK* wk )
   
   ret = GFL_BACKUP_DirectFlashLoad(0, &wk->save, sizeof(FES_ROM_SAVE));
 
+  if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_BUTTON_Y)){
+    if( ret ) wk->save.magic_key = 0; //セーブ消去
+  }
   if(ret == FALSE || wk->save.magic_key != FES_ROM_SAVE_MAGICKEY){
     FesRomSys_SaveInit( &wk->save );
     ret = FALSE;
   }
 
   //編集用データをコピー
-  MI_CpuCopy8( &wk->save, &wk->data, sizeof(FES_ROM_SAVE));
+  MI_CpuCopy8( &wk->save, &wk->save_wk.save, sizeof(FES_ROM_SAVE));
+  GFL_STR_SetStringCode( wk->save_wk.str_name, wk->save.name );
+  GFL_STR_SetStringCode( wk->save_wk.str_selfmsg, wk->save.selfmsg );
 #if 0
   GFL_STR_SetStringCode( control->name, load_data.name );
   GFL_STR_SetStringCode( control->selfmsg, load_data.selfmsg );
@@ -446,17 +465,17 @@ BOOL FesRomSys_SaveLoad(  FES_ROM_SYS_WORK* wk )
 //==================================================================
 void FesRomSys_SaveInit( FES_ROM_SAVE* sv )
 {
-  STRCODE name[] = L"フェスじい";
-  STRCODE greeting[] = L"こんにちは";
+  static STRCODE name[] = L"フェスじい";
+  static STRCODE selfmsg[] = L"こんにちは";
 
   MI_CpuClear8( sv, sizeof( FES_ROM_SAVE ) );
 
   //名前
   MI_CpuCopy16( name, sv->name, sizeof(STRCODE)*NELEMS(name));
-  sv->name[NELEMS(name)] = GFL_STR_GetEOMCode();
+  sv->name[NELEMS(name)-1] = GFL_STR_GetEOMCode();
   //あいさつ
-  MI_CpuCopy16( greeting, sv->selfmsg, sizeof(STRCODE)*NELEMS(greeting));
-  sv->selfmsg[NELEMS(greeting)] = GFL_STR_GetEOMCode();
+  MI_CpuCopy16( selfmsg, sv->selfmsg, sizeof(STRCODE)*NELEMS(selfmsg));
+  sv->selfmsg[NELEMS(selfmsg)-1] = GFL_STR_GetEOMCode();
 
   sv->beacon_interval = 3;  //3秒
   sv->start_time = FES_ROM_TIME_UNIT_HOUR*8;  //8時～

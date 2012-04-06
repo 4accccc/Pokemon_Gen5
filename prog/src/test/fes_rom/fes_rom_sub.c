@@ -89,42 +89,147 @@ static const BEACON_WIN_COLOR DATA_BeaconWinColor[] = {
 
 #include "fes_rom.cdat"
 
+#define DEV_PARAM_SET_MSEND_ID(id,no,line) \
+  { \
+    id,  \
+    WSET_MSEND_ID, f_rom_prm_base_msend_id, \
+    EXE_CODE_MSEND_ID, INPUT_CODE_NONE, \
+    { no, 0, 0 }, \
+    { line, 1, 1+30 },  \
+  }, \
+  { \
+    id+1, \
+    WSET_MSEND_TIME, f_rom_prm_base_msend_time, \
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_TIME, \
+    { no, 0, 0 }, \
+    { line+1, 3, 3+5 }, \
+  }, \
+  { \
+    id+2, \
+    WSET_MSEND_BLANK, f_rom_prm_base_msend_blank, \
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_BLANK, \
+    { no, 0, 0 }, \
+    { line+1, 9, 9+5 }, \
+  }, \
+  { \
+    id+3, \
+    WSET_MSEND_PER, f_rom_prm_base_msend_per, \
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_PER, \
+    { no, 0, 0 },  \
+    { line+1, 17, 17+6 }, \
+  }
+
 static const PARAM_SET DATA_ParamSetBase[] = {
+  //line0
   {
     PRM_BASE_BEACON_INTERVAL,  //PARAM_ID
     WSET_BEACON_INTERVAL, f_rom_prm_base_beacon_interval, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_BEACON_INTERVAL,
     { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_0, 1, 1+7 },
+    { LINE_0, 1, 1+7 },
   },
   {
     PRM_BASE_START_TIME,  //PARAM_ID
     WSET_TIME, f_rom_prm_base_start_time, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
     { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_0, 9, 9+11 },
+    { LINE_0, 9, 9+11 },
   },
   {
     PRM_BASE_END_TIME,  //PARAM_ID
     WSET_TIME, f_rom_prm_base_end_time, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
     { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_0, 21, 21+10 },
+    { LINE_0, 22, 22+10 },
   },
+  //line1
   {
     PRM_BASE_MODE,  //PARAM_ID
     WSET_MODE, f_rom_prm_base_mode, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MODE,
     { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_1, 1, 1+7 },
+    { LINE_1, 1, 1+7 },
   },
+  {
+    PRM_BASE_TR_VIEW,  //PARAM_ID
+    WSET_TR_VIEW, f_rom_prm_base_tr_view, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TR_VIEW,
+    { 0, 0, 0 },  //param
+    { LINE_1, 9, 9+11 },
+  },
+  //line2
+  {
+    PRM_BASE_TR_NAME,  //PARAM_ID
+    WSET_TR_NAME, f_rom_prm_base_tr_name, //WSET_TYPE, msg
+    EXE_CODE_INPUT_NAME, INPUT_CODE_NONE,
+    { 0, 0, 0 },  //param
+    { LINE_2, 1, 1+11 },
+  },
+  {
+    PRM_BASE_SELFMSG,  //PARAM_ID
+    WSET_SELFMSG, f_rom_prm_base_selfmsg, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SELFMSG, INPUT_CODE_NONE,
+    { 0, 0, 0 },  //param
+    { LINE_2, 13, 13+12 },
+  },
+  //line3
   {
     PRM_BASE_SAVE,  //PARAM_ID
     WSET_NONE, f_rom_prm_base_save, //WSET_TYPE, msg
     EXE_CODE_SAVE, INPUT_CODE_NONE,
     { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_1, 8, 8+6 },
+    { LINE_3, 1, 1+7 },
   },
+  {
+    PRM_BASE_SEND_START,  //PARAM_ID
+    WSET_NONE, f_rom_prm_base_send_start, //WSET_TYPE, msg
+    EXE_CODE_SEND_START, INPUT_CODE_NONE,
+    { 0, 0, 0 },  //param
+    { LINE_3, 9, 9+6 },
+  },
+
+  //LINE4-5 ミッション01
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID01,  0, LINE_4),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID02,  1, LINE_6),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID03,  2, LINE_8),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID04,  3, LINE_10),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID05,  4, LINE_12),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID06,  5, LINE_14),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID07,  6, LINE_16),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID08,  7, LINE_18),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID09,  8, LINE_20),
+  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID10,  9, LINE_22),
+  
+#if 0
+  {
+    PRM_BASE_MSEND_ID01,  //PARAM_ID
+    WSET_MSEND_ID, f_rom_prm_base_msend_id, //WSET_TYPE, msg
+    EXE_CODE_MSEND_ID, INPUT_CODE_NONE,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_4, 1, 1+30 },
+  },
+  {
+    PRM_BASE_MSEND_TIME01,  //PARAM_ID
+    WSET_MSEND_TIME, f_rom_prm_base_msend_time, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_TIME,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_5, 3, 3+5 },
+  },
+  {
+    PRM_BASE_MSEND_BLANK01,  //PARAM_ID
+    WSET_MSEND_BLANK, f_rom_prm_base_msend_blank, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_BLANK,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_5, 9, 9+5 },
+  },
+  {
+    PRM_BASE_MSEND_PER01,  //PARAM_ID
+    WSET_MSEND_PER, f_rom_prm_base_msend_per, //WSET_TYPE, msg
+    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_PER,
+    { 0, 0, 0 },  //param
+    { TARGET_VIEW_U, LINE_5, 17, 17+6 },
+  },
+#endif
 };
 
 #define PRM_BASE_ID_MAX   (NELEMS(DATA_ParamSetBase))
@@ -156,6 +261,7 @@ static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff );
 static void print_GetMsgToBuf( FES_ROM_WORK* wk, u8 msg_id );
 static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
 static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type );
+static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg );
 
 //汎用サブルーチン系
 static void sub_PlaySE( u16 se_no );
@@ -334,13 +440,15 @@ static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
   case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
     return exe_InputSwitch( wk, pset, param );
 
-  case EXE_CODE_INPUT_NUM:    //数値入力実行
-  case EXE_CODE_INPUT_FWORD:  //フリーワード入力実行
-  case EXE_CODE_INPUT_NAME:   //名前入力実行
+  case EXE_CODE_INPUT_NUM:      //数値入力実行
+  case EXE_CODE_INPUT_SELFMSG:  //フリーワード入力実行
+  case EXE_CODE_INPUT_NAME:     //名前入力実行
     break;
   case EXE_CODE_SAVE:         //セーブ実行
     taskReq_Save( wk );
     return SEQ_TASK_WAIT; 
+  case EXE_CODE_SEND_START:     //配信開始
+    break;
   }
   return wk->ret_seq; 
 }
@@ -350,10 +458,16 @@ static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
  */
 static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff )
 {
+  int i;
   const INPUT_PARAM* iprm = &DATA_InputParamTbl[pset->input_code]; 
   int value = wk->param[ pset->id ];
-    
-  sub_PlaySE( BDETAIL_SE_DECIDE );
+   
+  if( wk->param[ PRM_BASE_MODE ] == SEND_MODE_TURN &&
+      pset->id == PRM_BASE_MSEND_PER01 ){
+    sub_PlaySE( FESROM_SE_CANCEL );
+    return wk->ret_seq;
+  }
+  sub_PlaySE( FESROM_SE_DECIDE );
   wk->ret_seq = SEQ_BASE_MAIN;
 
   if( diff > 0 && ( value+1 > iprm->max ) ){
@@ -366,7 +480,14 @@ static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff )
   wk->param[pset->id] = value;
   param_Draw( wk, wk->pos );
 
-  sub_PlaySE( BDETAIL_SE_DECIDE );
+  switch( pset->id ){
+  case PRM_BASE_MODE:
+    param_Draw( wk, PRM_BASE_MSEND_PER01 );
+    for( i = 0; i < FESROM_MISSION_DATA_MAX; i++ ){
+///      param_Draw( wk, PRM_BASE_MSEND_PER01+i );
+    }
+    break;
+  }
   return wk->ret_seq;
 }
 
@@ -396,17 +517,25 @@ static void targetWin_ClearAll( FES_ROM_WORK* wk )
 static void param_Draw( FES_ROM_WORK* wk, int idx )
 {
   int id  = wk->prmset_idx+idx;
-  static const PRINTSYS_LSB f_col[2] = { FCOL_WHITE_N, FCOL_RED_N };
+  int ret_wset = TRUE;
+  PRINTSYS_LSB col = FCOL_WHITE_N;
   
   const PARAM_SET* pset = &wk->prmset_tbl[id];
-  TARGET_WIN* twin = &wk->target[pset->area.view];
+  TARGET_WIN* twin = &wk->target[pset->area.line/LINE_VIEW_NUM];
   s16 sx = pset->area.sx*LINE_W;
-  s16 sy = pset->area.line*LINE_H;
+  s16 sy = (pset->area.line%LINE_VIEW_NUM)*LINE_H;
 
   GFL_BMP_Fill( twin->base.bmp, sx, sy, (pset->area.ex-pset->area.sx)*LINE_W, LINE_H, FCOL_WIN_CLEAR );
-  print_ParamWordset( wk, 0, wk->param[id], pset->wset_type );
+  ret_wset = print_ParamWordsetEx( wk, 0, wk->param[id], pset->wset_type, id );
   print_GetMsgToBuf( wk, pset->msg );
-	PRINTSYS_PrintColor( twin->base.bmp, sx, sy, wk->str_expand, wk->font, f_col[(wk->pos==idx)] );
+
+  if( ret_wset ){
+    if( wk->pos==idx ) col = FCOL_BLUE_N;
+  }else{
+    if( wk->pos==idx ) col = FCOL_PINK_N;
+    else col = FCOL_GRAY_N;
+  }
+	PRINTSYS_PrintColor( twin->base.bmp, sx, sy, wk->str_expand, wk->font, col );
 	GFL_BMPWIN_TransVramCharacter( twin->base.win );
 }
 
@@ -466,6 +595,10 @@ static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str )
 //----------------------------------------------------------
 static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type )
 {
+  return print_ParamWordsetEx( wk, idx, value, type, 0 );
+}
+static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg )
+{
   switch( type ){
   case WSET_BEACON_INTERVAL:
     WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -481,14 +614,48 @@ static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE t
   case WSET_MODE:
     GFL_MSG_GetString( wk->msgman, f_rom_param_mode_01+value, wk->str_tmp );
     break;
-  case WSET_TRNAME:
-//    if( value == 0){
-//      MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
-//    }else{
+  case WSET_TR_NAME:
+    if( value == 0){
+      GFL_STR_CopyBuffer( wk->str_tmp, wk->save_wk->str_name );
+    }else{
       WORDSET_RegisterTrainerName( wk->wset, idx, value );
       return TRUE;
-//    }
+    }
     break;
+  case WSET_SELFMSG:
+    GFL_STR_CopyBuffer( wk->str_tmp, wk->save_wk->str_selfmsg );
+    break;
+  case WSET_MSEND_ID:
+    {
+      const PARAM_SET* pset = &wk->prmset_tbl[arg];
+      WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( wk->wset, idx+1, pset->arg[0]+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      if( value == 0 ){
+        GFL_MSG_GetString( wk->msgman, f_rom_param_msend_id_none, wk->str_tmp );
+        print_FreeWordset( wk->wset, idx+2, wk->str_tmp );
+      }else{
+        WORDSET_RegisterFMissionTitle( wk->wset, 2, value, 0 );
+      }
+    }
+    return TRUE;
+  case WSET_MSEND_TIME:
+    WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    return TRUE;
+  case WSET_MSEND_BLANK:
+    WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    return TRUE;
+  case WSET_MSEND_PER:
+    if( wk->param[PRM_BASE_MODE] == SEND_MODE_RANDOM){  //random
+      WORDSET_RegisterNumber( wk->wset, idx, value, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      GFL_MSG_GetString( wk->msgman, f_rom_param_percent, wk->str_tmp );
+      print_FreeWordset( wk->wset, idx+1, wk->str_tmp );
+      return TRUE;
+    }else{
+      const PARAM_SET* pset = &wk->prmset_tbl[arg];
+      WORDSET_RegisterNumber( wk->wset, idx, pset->arg[0]+1, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterClear( wk->wset, idx+1 );
+      return FALSE;
+    }
   case WSET_MONSNAME:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
     return TRUE;
@@ -991,7 +1158,7 @@ static void tcb_Save( GFL_TCBL *tcb , void* tcb_wk)
   switch( twk->seq ){
   case 0:
     draw_MsgWinFromID( wk, TARGET_VIEW_U, f_rom_msg_save_check );
-    sub_PlaySE( BDETAIL_SE_POPUP );
+    sub_PlaySE( FESROM_SE_POPUP );
     twk->seq++;
     return;
   case 1:
@@ -1075,7 +1242,7 @@ static void tcb_InputNum( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-    sub_PlaySE( BDETAIL_SE_POPUP );
+    sub_PlaySE( FESROM_SE_POPUP );
     twk->seq++;
     break;
   case 1:
@@ -1148,7 +1315,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-    sub_PlaySE( BDETAIL_SE_POPUP );
+    sub_PlaySE( FESROM_SE_POPUP );
     twk->seq++;
     break;
   case 1:

@@ -12,11 +12,16 @@
 ////////////////////////////////////////////////
 //ì¸óÕÉpÉâÉÅÅ[É^
 static const INPUT_PARAM DATA_InputParamTbl[INPUT_CODE_MAX] = {
- { 0, 0,     1, WSET_NONE }, //INPUT_CODE_NONE
+ { 0, 0,     1, WSET_NONE },    //INPUT_CODE_NONE
 
- { 1, 60,    2, WSET_NONE }, //INPUT_CODE_BEACON_INTERVAL
- { 0, 2*24,  2, WSET_NONE }, //INPUT_CODE_TIME
- { 0, 1,     1, WSET_NONE }, //INPUT_CODE_MODE
+ { 1, 60,    2, WSET_NONE },    //INPUT_CODE_BEACON_INTERVAL
+ { 0, 2*24,  2, WSET_NONE },    //INPUT_CODE_TIME
+ { 0, 1,     1, WSET_NONE },    //INPUT_CODE_MODE
+ { 0, 15,    2, WSET_TR_VIEW }, //INPUT_CODE_TR_VIEW
+ 
+ { 1, 60,    2, WSET_NONE },   //INPUT_CODE_MSEND_TIME
+ { 1, 60,    2, WSET_NONE },   //INPUT_CODE_MSEND_BLANK
+ { 0, 100,   3, WSET_NONE },   //INPUT_CODE_MSEND_PER
  
 };
 

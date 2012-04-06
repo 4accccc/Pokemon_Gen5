@@ -163,28 +163,285 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="f_rom_prm_base_tr_view"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:28:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:28:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:28:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:28:42" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_tr_name">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:26" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_selfmsg">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T04:24:36" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="f_rom_prm_base_save">
 		<LanguageCell
 			Language="JPN">
 			<Text>セーブ実行</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-03T12:03:49" />
+				Time="2012-04-06T06:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-03T12:03:45" />
+				Time="2012-04-06T06:33:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セーブ実行</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-03T12:03:52" />
+				Time="2012-04-06T06:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-03T12:03:52" />
+				Time="2012-04-06T06:33:30" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_send_start">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信開始</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:33:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:33:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信開始</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:33:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:33:56" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_msend_id">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits Idx="1" ]: [Digit:2digits ] 「[Name:FesMissionName Idx="2" ]」</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T10:08:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:40:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits Idx="1" ]: [Digit:2digits ] 「[Name:FesMissionName Idx="2" ]」</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T10:09:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:42:01" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_msend_time">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:12" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_msend_blank">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:50:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_base_msend_per">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ][Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:36:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:52:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ][Name:PMS Idx="1" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:39:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T06:52:39" />
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -513,6 +770,70 @@
 			<StatusModifiedBy
 				User="iwasawa:W00270"
 				Time="2012-04-04T14:08:45" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_param_msend_id_none">
+		<LanguageCell
+			Language="JPN">
+			<Text> -----</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:46:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:46:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text> -----</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:46:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:46:32" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_param_percent">
+		<LanguageCell
+			Language="JPN">
+			<Text>%</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:37:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:37:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>%</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:37:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-06T09:37:42" />
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1710,10 +2031,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんぱんこぞう</Text>
+			<Text>たんぱんこぞう♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1721,10 +2042,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たんぱんこぞう</Text>
+			<Text>たんぱんこぞう♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1875,10 +2196,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>やまおとこ</Text>
+			<Text>やまおとこ♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1886,10 +2207,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やまおとこ</Text>
+			<Text>やまおとこ♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1908,10 +2229,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>スキンヘッド</Text>
+			<Text>スキンヘッド♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1919,10 +2240,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スキンヘッド</Text>
+			<Text>スキンヘッド♂</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1974,10 +2295,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうじょ</Text>
+			<Text>しょうじょ♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1985,10 +2306,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょうじょ</Text>
+			<Text>しょうじょ♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2139,10 +2460,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>パラソル</Text>
+			<Text>パラソル♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2150,10 +2471,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パラソル</Text>
+			<Text>パラソル♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2172,10 +2493,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナース</Text>
+			<Text>ナース♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2183,10 +2504,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ナース</Text>
+			<Text>ナース♀</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-03-30T07:13:02" />
+				Time="2012-04-06T06:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
