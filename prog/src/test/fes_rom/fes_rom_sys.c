@@ -231,15 +231,16 @@ static GFL_PROC_RESULT FesRomSystemProcMain( GFL_PROC *proc, int *seq, void *pwk
  */
 static int seq_FesCall( FES_ROM_SYS_WORK* wk )
 {
-  FES_ROM_PARAM param;
+  FES_ROM_PARAM* param;
+
+  wk->proc_wk = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(FES_ROM_PARAM) );
+  param = (FES_ROM_PARAM*)wk->proc_wk;
 
   //呼び出しパラメータ設定
-  MI_CpuClear8( &param, sizeof(FES_ROM_PARAM) );
+  param->sys = wk;
+  param->mode = FESROM_APP_MODE_BASE;
 
-  param.sys = wk;
-  param.mode = FESROM_APP_MODE_BASE;
-
-  GFL_PROC_LOCAL_CallProc( wk->localProc, NULL, &FesRomProcData, &param );
+  GFL_PROC_LOCAL_CallProc( wk->localProc, NULL, &FesRomProcData, wk->proc_wk );
 
   wk->sub_seq = 0;
   return SEQ_SYS_FES_WAIT;
@@ -252,6 +253,10 @@ static int seq_FesWait( FES_ROM_SYS_WORK* wk )
 {
   if( _sub_LocalProcWait( wk->localProc ) == FALSE ){
     return SEQ_SYS_FES_WAIT;
+  }
+  if( wk->proc_wk != NULL ){
+    GFL_HEAP_FreeMemory( wk->proc_wk );
+    wk->proc_wk = NULL;
   }
   return SEQ_SYS_FES_CALL;
 }
@@ -391,12 +396,12 @@ static BOOL _sub_LocalProcWait( GFL_PROCSYS* localProc )
 //==================================================================
 void FesRomSys_SaveWrite( FES_ROM_SYS_WORK* wk )
 {
-  wk->save.magic_key = FES_ROM_SAVE_MAGICKEY;
-  
   //編集用データをコピー
   MI_CpuCopy8( &wk->save_wk.save, &wk->save, sizeof(FES_ROM_SAVE));
   GFL_STR_GetStringCode( wk->save_wk.str_name, wk->save.name, SAVELEN_PLAYER_NAME + EOM_SIZE);
   GFL_STR_GetStringCode( wk->save_wk.str_selfmsg,  wk->save.selfmsg, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN + EOM_SIZE);
+  //マジックキー設定
+  wk->save.magic_key = FES_ROM_SAVE_MAGICKEY;
 #if 0
   save_data.union_index = control->union_index;
   save_data.powergroup = control->powergroup;

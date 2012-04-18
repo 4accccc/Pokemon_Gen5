@@ -17,9 +17,11 @@ enum{
  SEQ_INI_DRAW,
  SEQ_FADEIN,
  SEQ_BASE_MAIN,
+ SEQ_MEDIT_MAIN,
  SEQ_TASK_WAIT,
  SEQ_FADEOUT,
  SEQ_EXIT,
+ SEQ_MAX,
 };
 
 enum{
@@ -88,7 +90,7 @@ enum
 #define FCOL_YELLOW_N ( PRINTSYS_MACRO_LSB(8,7,0) )  ///<BG黄抜き
 #define FCOL_GREEN_N  ( PRINTSYS_MACRO_LSB(10,9,0) )  ///<BG緑抜き
 #define FCOL_PINK_N   ( PRINTSYS_MACRO_LSB(12,11,0) )  ///<BGピンク抜き
-#define FCOL_GRAY_N   ( PRINTSYS_MACRO_LSB(1,2,0) )  ///<BGグレー抜き
+#define FCOL_GRAY_N   ( PRINTSYS_MACRO_LSB(2,1,0) )  ///<BGグレー抜き
 
 #define FCOL_BLACK_W  ( PRINTSYS_MACRO_LSB(1,2,15) )  ///<BG黒白地
 
@@ -165,6 +167,13 @@ typedef enum{
  SEND_MODE_RANDOM,
 }SEND_MODE;
 
+typedef enum{
+  M_UPDATE_ID,
+  M_UPDATE_LEVEL,
+  M_UPDATE_BASE,
+  M_UPDATE_CUSTOM,
+}M_UPDATE_CODE;
+
 #define POS_TARGET_NONE  (-1)
 ///設定データID
 typedef enum{
@@ -232,8 +241,42 @@ typedef enum{
   PRM_BASE_MSEND_BLANK10,
   PRM_BASE_MSEND_PER10,
 
+  PRM_MEDIT_ID_START,
+  PRM_M_CANCEL = PRM_MEDIT_ID_START,
+  PRM_M_DECIDE,
+  PRM_M_DELETE,
+
+  PRM_M_ID,
+
+  PRM_M_BASE,
+  PRM_M_EX,
+  
+  PRM_M_LEVEL,
+  PRM_M_GOAL,
+  PRM_M_TIME,     //制限時間
+  PRM_M_VERSION,  //開催バージョン
+  PRM_M_UNIT,     //単位 
+
+  PRM_M_ITEM,     //アイテム
+  PRM_M_PAY,      //アイテム数
+  PRM_M_SP_ITEM,  //ダブルスコアアイテム
+  PRM_M_SP_PAY,   //ダブルスコアアイテム数
+  PRM_M_T_BONUS,  //タイムボーナス
+
+  PRM_M_PAT_TOWN,
+  PRM_M_PAT_ROAD,
+  PRM_M_PAT_CAVE,
+  PRM_M_PAT_FOREST,
+  PRM_M_PAT_HIGH,
+  PRM_M_PAT_LOW,
+  
+  PRM_M_TITLE,  //タイトルID
+  PRM_M_EXP,  //説明文ID
+
   PARAM_ID_MAX,
   PARAM_ID_NONE=PARAM_ID_MAX,
+
+  PARAM_BASE_MSET_NUM = 4,  //1ミッション分のベースパラメータは4つで一つ
 }PARAM_ID;
 
 ///設定データワードセット関連
@@ -267,6 +310,20 @@ typedef enum{
  WSET_MEX_NPC_POKE_QUIZ,
  WSET_MISSION_ID_NAME,
  WSET_MISSION_MSGID_NAME,
+
+ WSET_MEDIT_ID,
+ 
+ WSET_MEDIT_LEVEL,
+ WSET_MEDIT_TIME,
+ WSET_MEDIT_VERSION,
+ WSET_MEDIT_T_BONUS,
+ WSET_MEDIT_UNIT,
+ WSET_MEDIT_PATTERN,
+ WSET_MEDIT_NUM,
+
+ WSET_MEDIT_TITLE,
+ WSET_MEDIT_EXP,
+ //
  WSET_TYPE_MAX,
 }WSET_TYPE;
 
@@ -281,6 +338,12 @@ typedef enum{
 
   EXE_CODE_MSEND_ID,   //ミッション選択
   EXE_CODE_MSEND_PER,  //ミッション送信パーセンテージ
+  
+  EXE_CODE_MEDIT_CANCEL,   //ミッション編集キャンセル
+  EXE_CODE_MEDIT_DECIDE,   //ミッション編集決定
+  
+  EXE_CODE_MEDIT_BASE,   //ミッション編集BaseParam
+  EXE_CODE_MEDIT_EX,     //ミッション編集ExParam
 }EXE_CODE;
 
 //入力パターンコード
@@ -293,7 +356,43 @@ typedef enum{
  INPUT_CODE_MSEND_TIME,
  INPUT_CODE_MSEND_BLANK,
  INPUT_CODE_MSEND_PER,
+
+ INPUT_CODE_MEDIT_ID,
+ INPUT_CODE_MEDIT_LEVEL,
+ INPUT_CODE_MEDIT_GOAL,
+ INPUT_CODE_MEDIT_TIME,
+ INPUT_CODE_MEDIT_VERSION,
+
+ INPUT_CODE_MEDIT_ITEM,
+ INPUT_CODE_MEDIT_PAY,
+ INPUT_CODE_MEDIT_SP_ITEM,
+ INPUT_CODE_MEDIT_SP_PAY,
+ 
+ INPUT_CODE_MEDIT_T_BONUS,
+ INPUT_CODE_MEDIT_UNIT,
+ INPUT_CODE_MEDIT_PATTERN,
+ 
+ INPUT_CODE_MEDIT_TITLE,
+ INPUT_CODE_MEDIT_EXP,
+
+ INPUT_CODE_MEDIT_EFF_ENC,
+ INPUT_CODE_MEDIT_BASE_EVENT,
+ INPUT_CODE_MEDIT_BASE_ITEM,
+ INPUT_CODE_MEDIT_BASE_NPC,
+
+ INPUT_CODE_MEDIT_EX_EV_ANIMAL_TRAIL,
+ INPUT_CODE_MEDIT_EX_NPC_ITEM_TRADE,
+ INPUT_CODE_MEDIT_EX_NPC_SHOPPING,
+ INPUT_CODE_MEDIT_EX_NPC_BATTLE,
+ INPUT_CODE_MEDIT_EX_NPC_G_PRESENT,
+ INPUT_CODE_MEDIT_EX_NPC_POKE_QUIZ,
+
+ INPUT_CODE_MEDIT_BASE,
+ INPUT_CODE_MEDIT_EX,
+
+
  INPUT_CODE_MAX,
+ INPUT_CODE_ERR,
 }INPUT_CODE;
 
 ///////////////////////////////////////////////////
@@ -324,37 +423,6 @@ typedef enum{
 #define BMP_MSG_SX (30)
 #define BMP_MSG_SY (4)
 #define BMP_MSG_PAL ( PLTID_BG_FONT_M )
-
-#if 0
-#define BMP_PMS_PX (2)
-#define BMP_PMS_PY (15)
-#define BMP_PMS_SX (28)
-#define BMP_PMS_SY (4)
-#define BMP_PMS_PAL ( PLTID_BG_FONT_M )
-
-//ポップアップウィンドウ
-#define BMP_POPUP_PX (2)
-#define BMP_POPUP_PY (22)
-#define BMP_POPUP_SX  (28)
-#define BMP_POPUP_SY  (6)
-#define BMP_POPUP_FRM (BG_FRAME_MSG_M)
-#define BMP_POPUP_PAL (PLTID_BG_FONT_M)
-#endif
-
-///////////////////////////////////////////
-//ウィンドウレイアウト
-
-#define BMP_PROF01_DAT_PX  (6)
-#define BMP_PROF01_DAT_SX  (BMP_PROF_SX-BMP_PROF01_DAT_PX)
-#define BMP_PROF01_DAT_SY  (BMP_PROF_SY)
-
-#define BMP_PROF02_DAT_PX  (9)
-#define BMP_PROF02_DAT_SX  (BMP_PROF_SX-BMP_PROF02_DAT_PX)
-#define BMP_PROF02_DAT_SY  (BMP_PROF_SY)
-
-#define BMP_RECORD_DAT_PX  (18)
-#define BMP_RECORD_DAT_SX  (BMP_RECORD_SX-BMP_RECORD_DAT_PX)
-#define BMP_RECORD_DAT_SY  (BMP_RECORD_SY)
 
 //////////////////////////////////////////////
 //アクター

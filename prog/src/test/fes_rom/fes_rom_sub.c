@@ -57,7 +57,7 @@
 #include "fes_rom.h"
 
 #include "message.naix"
-#include "msg/msg_beacon_detail.h"  // GMM
+#include "msg/msg_fest_mission.h"  // GMM
 #include "beacon_status.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 #include "config_gra.naix"
@@ -89,150 +89,10 @@ static const BEACON_WIN_COLOR DATA_BeaconWinColor[] = {
 
 #include "fes_rom.cdat"
 
-#define DEV_PARAM_SET_MSEND_ID(id,no,line) \
-  { \
-    id,  \
-    WSET_MSEND_ID, f_rom_prm_base_msend_id, \
-    EXE_CODE_MSEND_ID, INPUT_CODE_NONE, \
-    { no, 0, 0 }, \
-    { line, 1, 1+30 },  \
-  }, \
-  { \
-    id+1, \
-    WSET_MSEND_TIME, f_rom_prm_base_msend_time, \
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_TIME, \
-    { no, 0, 0 }, \
-    { line+1, 3, 3+5 }, \
-  }, \
-  { \
-    id+2, \
-    WSET_MSEND_BLANK, f_rom_prm_base_msend_blank, \
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_BLANK, \
-    { no, 0, 0 }, \
-    { line+1, 9, 9+5 }, \
-  }, \
-  { \
-    id+3, \
-    WSET_MSEND_PER, f_rom_prm_base_msend_per, \
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_PER, \
-    { no, 0, 0 },  \
-    { line+1, 17, 17+6 }, \
-  }
-
-static const PARAM_SET DATA_ParamSetBase[] = {
-  //line0
-  {
-    PRM_BASE_BEACON_INTERVAL,  //PARAM_ID
-    WSET_BEACON_INTERVAL, f_rom_prm_base_beacon_interval, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_BEACON_INTERVAL,
-    { 0, 0, 0 },  //param
-    { LINE_0, 1, 1+7 },
-  },
-  {
-    PRM_BASE_START_TIME,  //PARAM_ID
-    WSET_TIME, f_rom_prm_base_start_time, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
-    { 0, 0, 0 },  //param
-    { LINE_0, 9, 9+11 },
-  },
-  {
-    PRM_BASE_END_TIME,  //PARAM_ID
-    WSET_TIME, f_rom_prm_base_end_time, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TIME,
-    { 0, 0, 0 },  //param
-    { LINE_0, 22, 22+10 },
-  },
-  //line1
-  {
-    PRM_BASE_MODE,  //PARAM_ID
-    WSET_MODE, f_rom_prm_base_mode, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MODE,
-    { 0, 0, 0 },  //param
-    { LINE_1, 1, 1+7 },
-  },
-  {
-    PRM_BASE_TR_VIEW,  //PARAM_ID
-    WSET_TR_VIEW, f_rom_prm_base_tr_view, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_TR_VIEW,
-    { 0, 0, 0 },  //param
-    { LINE_1, 9, 9+11 },
-  },
-  //line2
-  {
-    PRM_BASE_TR_NAME,  //PARAM_ID
-    WSET_TR_NAME, f_rom_prm_base_tr_name, //WSET_TYPE, msg
-    EXE_CODE_INPUT_NAME, INPUT_CODE_NONE,
-    { 0, 0, 0 },  //param
-    { LINE_2, 1, 1+11 },
-  },
-  {
-    PRM_BASE_SELFMSG,  //PARAM_ID
-    WSET_SELFMSG, f_rom_prm_base_selfmsg, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SELFMSG, INPUT_CODE_NONE,
-    { 0, 0, 0 },  //param
-    { LINE_2, 13, 13+12 },
-  },
-  //line3
-  {
-    PRM_BASE_SAVE,  //PARAM_ID
-    WSET_NONE, f_rom_prm_base_save, //WSET_TYPE, msg
-    EXE_CODE_SAVE, INPUT_CODE_NONE,
-    { 0, 0, 0 },  //param
-    { LINE_3, 1, 1+7 },
-  },
-  {
-    PRM_BASE_SEND_START,  //PARAM_ID
-    WSET_NONE, f_rom_prm_base_send_start, //WSET_TYPE, msg
-    EXE_CODE_SEND_START, INPUT_CODE_NONE,
-    { 0, 0, 0 },  //param
-    { LINE_3, 9, 9+6 },
-  },
-
-  //LINE4-5 ミッション01
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID01,  0, LINE_4),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID02,  1, LINE_6),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID03,  2, LINE_8),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID04,  3, LINE_10),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID05,  4, LINE_12),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID06,  5, LINE_14),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID07,  6, LINE_16),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID08,  7, LINE_18),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID09,  8, LINE_20),
-  DEV_PARAM_SET_MSEND_ID( PRM_BASE_MSEND_ID10,  9, LINE_22),
-  
-#if 0
-  {
-    PRM_BASE_MSEND_ID01,  //PARAM_ID
-    WSET_MSEND_ID, f_rom_prm_base_msend_id, //WSET_TYPE, msg
-    EXE_CODE_MSEND_ID, INPUT_CODE_NONE,
-    { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_4, 1, 1+30 },
-  },
-  {
-    PRM_BASE_MSEND_TIME01,  //PARAM_ID
-    WSET_MSEND_TIME, f_rom_prm_base_msend_time, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_TIME,
-    { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_5, 3, 3+5 },
-  },
-  {
-    PRM_BASE_MSEND_BLANK01,  //PARAM_ID
-    WSET_MSEND_BLANK, f_rom_prm_base_msend_blank, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_BLANK,
-    { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_5, 9, 9+5 },
-  },
-  {
-    PRM_BASE_MSEND_PER01,  //PARAM_ID
-    WSET_MSEND_PER, f_rom_prm_base_msend_per, //WSET_TYPE, msg
-    EXE_CODE_INPUT_SWITCH, INPUT_CODE_MSEND_PER,
-    { 0, 0, 0 },  //param
-    { TARGET_VIEW_U, LINE_5, 17, 17+6 },
-  },
-#endif
-};
-
-#define PRM_BASE_ID_MAX   (NELEMS(DATA_ParamSetBase))
+#define InPrmWSet( code ) ( DATA_InputParamTbl[code].type )
+#define InPrmMin( code )  ( DATA_InputParamTbl[code].min )
+#define InPrmMax( code )  ( DATA_InputParamTbl[code].max )
+#define InPrmKeta( code ) ( DATA_InputParamTbl[code].keta )
 
 //////////////////////////////////////////////////////////////
 
@@ -246,22 +106,33 @@ static void targetWin_ClearAll( FES_ROM_WORK* wk );
 static void param_Draw( FES_ROM_WORK* wk, int idx );
 static void param_DrawAll( FES_ROM_WORK* wk, int target_idx );
 static void param_DrawAllEx( FES_ROM_WORK* wk, int target_idx1, int target_idx2 );
+static void param_Trans( FES_ROM_WORK* wk );
 
 static void param_BasePop( FES_ROM_WORK* wk );
 static void param_BasePush( FES_ROM_WORK* wk );
+static void param_MissionPop( FES_ROM_WORK* wk );
+static void param_MissionPush( FES_ROM_WORK* wk );
+static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code );
+static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* fmwk );
+static void param_MissionPopToFMWKEdit( FES_ROM_WORK* wk, FEST_MISSION* fmwk );
 static void param_PopParam( FES_ROM_WORK* wk );
 static void param_PushParam( FES_ROM_WORK* wk );
+static INPUT_CODE meditEx_InputCodeGet( FES_ROM_WORK* wk );
 
 //入力系
 static int input_ParamNextPos( FES_ROM_WORK* wk, int dir );
 static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param );
+static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param );
 static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff );
+static int exe_InputSwitchEx( FES_ROM_WORK* wk, const PARAM_SET* pset, INPUT_CODE input_code, int diff );
 
 //プリント系
 static void print_GetMsgToBuf( FES_ROM_WORK* wk, u8 msg_id );
 static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
 static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type );
-static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg );
+static BOOL print_ParamWordsetICode( FES_ROM_WORK* wk, u8 idx, int value, INPUT_CODE input_code );
+static BOOL print_ParamWordsetICodeEx( FES_ROM_WORK* wk, u8 idx, int value, INPUT_CODE input_code, int arg );
+static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg, int keta );
 
 //汎用サブルーチン系
 static void sub_PlaySE( u16 se_no );
@@ -302,13 +173,19 @@ void FesRom_InitialDraw( FES_ROM_WORK* wk )
 
   switch( wk->app_mode ){
   case FESROM_APP_MODE_BASE:
-  case FESROM_APP_MODE_MISSION:
   case FESROM_APP_MODE_SEND:
     wk->prmset_tbl = DATA_ParamSetBase;
     wk->prmset_num = PRM_BASE_ID_MAX;
     wk->prmset_idx = PRM_BASE_ID_START;
     param_BasePop( wk );
+    FES_ROM_SetFadeInOutSeq( wk, SEQ_BASE_MAIN, SEQ_EXIT );
     break;
+  case FESROM_APP_MODE_MEDIT:
+    wk->prmset_tbl = DATA_ParamSetMEdit;
+    wk->prmset_num = PRM_MEDIT_ID_MAX;
+    wk->prmset_idx = PRM_MEDIT_ID_START;
+    param_MissionPop( wk );
+    FES_ROM_SetFadeInOutSeq( wk, SEQ_MEDIT_MAIN, SEQ_EXIT );
   }
   param_DrawAll( wk, POS_TARGET_NONE );
 
@@ -328,28 +205,250 @@ void FesRom_InitialDraw( FES_ROM_WORK* wk )
 //ベースパラメータのPushPop
 static void param_BasePop( FES_ROM_WORK* wk )
 {
+  int i;
+
   MI_CpuClear8( &wk->param[PRM_BASE_ID_START], sizeof(int)*PRM_BASE_ID_MAX );
   
   wk->param[PRM_BASE_BEACON_INTERVAL] = wk->sys_save->beacon_interval;
   wk->param[PRM_BASE_START_TIME] = wk->sys_save->start_time;
   wk->param[PRM_BASE_END_TIME] = wk->sys_save->end_time;
   wk->param[PRM_BASE_TR_VIEW] = wk->sys_save->tr_view;
+
+  for( i = 0;i < FESROM_MISSION_DATA_MAX; i++ ){
+    int idx = PARAM_BASE_MSET_NUM*i;
+    FESROM_MISSION* pm = &wk->sys_save->mission[i];
+    wk->param[PRM_BASE_MSEND_ID01+idx] = pm->param.m_id;
+    wk->param[PRM_BASE_MSEND_TIME01+idx] = pm->send.time;
+    wk->param[PRM_BASE_MSEND_BLANK01+idx] = pm->send.blank;
+    wk->param[PRM_BASE_MSEND_PER01+idx] = pm->send.per;
+  }
 }
 static void param_BasePush( FES_ROM_WORK* wk )
 {
+  int i;
+  
   wk->sys_save->beacon_interval = wk->param[PRM_BASE_BEACON_INTERVAL];
   wk->sys_save->start_time = wk->param[PRM_BASE_START_TIME];
   wk->sys_save->end_time = wk->param[PRM_BASE_END_TIME];
   wk->sys_save->tr_view = wk->param[PRM_BASE_TR_VIEW];
+  
+  for( i = 0;i < FESROM_MISSION_DATA_MAX; i++ ){
+    int idx = PARAM_BASE_MSET_NUM*i;
+    FESROM_MISSION* pm = &wk->sys_save->mission[i];
+  
+    pm->param.m_id = wk->param[PRM_BASE_MSEND_ID01+idx];
+    pm->send.time = wk->param[PRM_BASE_MSEND_TIME01+idx];
+    pm->send.blank = wk->param[PRM_BASE_MSEND_BLANK01+idx];
+    pm->send.per = wk->param[PRM_BASE_MSEND_PER01+idx];
+  }
 }
 
+//========================================================
+//ミッションパラメータのPushPop
+static void param_MissionPop( FES_ROM_WORK* wk )
+{
+  int i;
+
+  FESROM_MISSION* fmp = &wk->sys_save->mission[wk->edit_id];
+  FESROM_MISSION_PARAM* prm = &fmp->param;
+
+  if( fmp->send.id == 0 ){
+    wk->param[PRM_M_ID] = 1;  //デフォルト
+    wk->param[PRM_M_LEVEL] = FMISSION_LEVEL_1;  //デフォルト
+    param_MissionUpdate( wk, M_UPDATE_ID );
+    return;
+  }
+
+  wk->param[PRM_M_ID] = fmp->send.id;
+
+  wk->param[PRM_M_T_BONUS] = prm->m_t_bonus;
+  wk->param[PRM_M_BASE] = prm->m_base_param;
+  wk->param[PRM_M_EX] = prm->m_ex_param;
+  wk->param[PRM_M_LEVEL] = prm->m_level;
+  wk->param[PRM_M_GOAL] = prm->m_goal;
+  wk->param[PRM_M_TIME] = prm->m_time;
+  wk->param[PRM_M_VERSION] = prm->m_version;
+  wk->param[PRM_M_UNIT] = prm->m_unit;
+
+  wk->param[PRM_M_ITEM] = prm->m_item;
+  wk->param[PRM_M_PAY] = prm->m_pay;
+  wk->param[PRM_M_SP_ITEM] = prm->m_sp_item;
+  wk->param[PRM_M_SP_PAY] = prm->m_sp_pay;
+  
+  wk->param[PRM_M_TITLE] = prm->m_title;
+  wk->param[PRM_M_EXP] = prm->m_exp;
+  
+  for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
+    wk->param[PRM_M_PAT_TOWN+i] = prm->m_pattern[i];
+  }
+  param_MissionUpdate( wk, M_UPDATE_CUSTOM );
+}
+
+static void param_MissionPush( FES_ROM_WORK* wk )
+{
+  int i;
+
+  FESROM_MISSION* fmp = &wk->sys_save->mission[wk->edit_id];
+  FESROM_MISSION_PARAM* prm = &fmp->param;
+
+  fmp->send.id = wk->param[PRM_M_ID];
+
+  prm->m_t_bonus = wk->param[PRM_M_T_BONUS];
+
+  prm->m_base_param = wk->param[PRM_M_BASE];
+  prm->m_ex_param = wk->param[PRM_M_EX];
+  prm->m_level = wk->param[PRM_M_LEVEL];
+  prm->m_goal = wk->param[PRM_M_GOAL];
+  prm->m_time = wk->param[PRM_M_TIME];
+  prm->m_version = wk->param[PRM_M_VERSION];
+  prm->m_unit = wk->param[PRM_M_UNIT];
+
+  prm->m_item = wk->param[PRM_M_ITEM];
+  prm->m_pay = wk->param[PRM_M_PAY];
+  prm->m_sp_item = wk->param[PRM_M_SP_ITEM];
+  prm->m_sp_pay = wk->param[PRM_M_SP_PAY];
+  
+  prm->m_title = wk->param[PRM_M_TITLE];
+  prm->m_exp = wk->param[PRM_M_EXP];
+  
+  for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
+    prm->m_pattern[i] = wk->param[PRM_M_PAT_TOWN+i];
+  }
+}
+
+//ミッションデフォルトパラメータ再取得
+static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
+{
+  int i;
+
+  FESROM_MISSION* fmp = &wk->sys_save->mission[wk->edit_id];
+  FESROM_MISSION_PARAM* prm = &fmp->param;
+  FEST_BEACON* beacon = &wk->e_fmwk.beacon;
+ 
+  if( up_code != M_UPDATE_BASE ){
+    FMISSION_DATA_GetMissionParam( wk->fm_data_man, wk->param[PRM_M_ID], wk->param[PRM_M_LEVEL], &wk->e_fmwk );
+  }
+  wk->p_base_set = &DATA_MissionBaseParam[ wk->e_fmwk.arc.m_type-1 ];
+
+  switch( up_code ){
+  case M_UPDATE_BASE:
+    {
+      INPUT_CODE icode = meditEx_InputCodeGet( wk );
+      wk->param[PRM_M_EX] = ( (icode==INPUT_CODE_ERR)?  0 : InPrmMin( icode ));
+      wk->param[PRM_M_UNIT] = wk->e_fmwk.beacon.unit;
+    }
+    return;
+  case M_UPDATE_LEVEL:
+    wk->param[PRM_M_GOAL] = beacon->goal;
+    wk->param[PRM_M_TIME] = beacon->time;
+    wk->param[PRM_M_PAY] = beacon->pay;
+    return;
+  case M_UPDATE_CUSTOM:
+    return;
+  default:
+    break;
+  }
+  wk->param[PRM_M_T_BONUS] = beacon->time_bonus;
+  wk->param[PRM_M_BASE] = beacon->base_param;
+  wk->param[PRM_M_EX] = beacon->ex_param;
+  wk->param[PRM_M_LEVEL] = beacon->m_level;
+  wk->param[PRM_M_GOAL] = beacon->goal;
+  wk->param[PRM_M_TIME] = beacon->time;
+  wk->param[PRM_M_VERSION] = beacon->version_idx;
+  wk->param[PRM_M_UNIT] = beacon->unit;
+
+  wk->param[PRM_M_ITEM] = beacon->item;
+  wk->param[PRM_M_PAY] = beacon->pay;
+  wk->param[PRM_M_SP_ITEM] = beacon->sp_item;
+  wk->param[PRM_M_SP_PAY] = beacon->sp_pay;
+  
+  wk->param[PRM_M_TITLE] = beacon->m_title_id;
+  wk->param[PRM_M_EXP] = beacon->m_exp_id;
+  
+  for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
+    wk->param[PRM_M_PAT_TOWN+i] = (beacon->pattern>>(i*3))&0x3;
+  }
+}
+
+static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* fmwk )
+{
+  int i;
+
+  FESROM_MISSION* fmp = &wk->sys_save->mission[edit_id];
+  FESROM_MISSION_PARAM* prm = &fmp->param;
+  FEST_BEACON* beacon = &fmwk->beacon;
+
+  if( fmp->send.id == 0 ){
+    FEST_MISSION_Clear( fmwk );
+    return 0;
+  }
+  //デフォルトパラメータ取得
+  FMISSION_DATA_GetMissionParam( wk->fm_data_man, fmp->send.id, prm->m_level, fmwk );
+
+  beacon->distribution_f = TRUE;
+
+  //カスタムパラメータ適用
+  if( beacon->end_type == FMISSION_ENDTYPE_SCORE ){
+    beacon->time_bonus = prm->m_t_bonus;
+    beacon->sp_item = 0;
+    beacon->sp_pay = 0;
+  }else{
+    beacon->sp_item = prm->m_sp_item;
+    beacon->sp_pay = prm->m_sp_pay;
+  }
+  beacon->base_param = prm->m_base_param;
+  beacon->ex_param = prm->m_ex_param;
+  beacon->m_level = prm->m_level;
+  beacon->goal = prm->m_goal;
+  beacon->time = prm->m_time;
+  beacon->version_idx = prm->m_version;
+  beacon->unit = prm->m_unit;
+
+  beacon->time = prm->m_item;
+  beacon->pay = prm->m_pay;
+  
+  beacon->m_title_id = prm->m_title;
+  beacon->m_exp_id = prm->m_exp;
+ 
+  beacon->pattern = 0;
+  for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
+     beacon->pattern |= (prm->m_pattern[i]<<(i*3))&0x03;
+  }
+  return fmp->send.id;
+}
+
+static void param_MissionPopToFMWKEdit( FES_ROM_WORK* wk, FEST_MISSION* fmwk )
+{
+  int i;
+  FEST_BEACON* beacon = &fmwk->beacon;
+
+  *fmwk = wk->e_fmwk;
+
+  //編集中パラメータセット
+  beacon->m_title_id = wk->param[PRM_M_TITLE];
+  beacon->m_exp_id = wk->param[PRM_M_EXP];
+  beacon->goal = wk->param[PRM_M_GOAL];
+  beacon->base_param = wk->param[PRM_M_BASE];
+  beacon->ex_param = wk->param[PRM_M_EXP];
+  beacon->m_level = wk->param[PRM_M_LEVEL];
+}
+
+static INPUT_CODE meditEx_InputCodeGet( FES_ROM_WORK* wk )
+{
+  if( wk->p_base_set->tbl ) return wk->p_base_set->tbl[ wk->param[PRM_M_BASE]];
+  return INPUT_CODE_ERR;
+}
+
+//========================================================
+//プロセス初期化時のPushPop
 static void param_PopParam( FES_ROM_WORK* wk )
 {
   switch( wk->app_mode ){
   case FESROM_APP_MODE_BASE:
-  case FESROM_APP_MODE_MISSION:
   case FESROM_APP_MODE_SEND:
     param_BasePop( wk );
+    break;
+  case FESROM_APP_MODE_MEDIT:
     break;
   }
 }
@@ -360,9 +459,10 @@ static void param_PushParam( FES_ROM_WORK* wk )
 {
   switch( wk->app_mode ){
   case FESROM_APP_MODE_BASE:
-  case FESROM_APP_MODE_MISSION:
   case FESROM_APP_MODE_SEND:
     param_BasePush( wk );
+    break;
+  case FESROM_APP_MODE_MEDIT:
     break;
   }
 }
@@ -438,7 +538,16 @@ static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
 {
   switch( pset->exe_code ){
   case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
+    wk->ret_seq = SEQ_BASE_MAIN;
     return exe_InputSwitch( wk, pset, param );
+
+  case EXE_CODE_MSEND_ID:
+    wk->ret_pos = wk->pos;
+    wk->pos = 0;
+    wk->edit_id = pset->arg[0];
+    wk->app_mode = FESROM_APP_MODE_MEDIT;
+    FES_ROM_SetFadeInOutSeq( wk, SEQ_MEDIT_MAIN, SEQ_INI_DRAW );
+    return SEQ_FADEOUT;
 
   case EXE_CODE_INPUT_NUM:      //数値入力実行
   case EXE_CODE_INPUT_SELFMSG:  //フリーワード入力実行
@@ -454,13 +563,107 @@ static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
 }
 
 /*
+ *  @brief  フェス配信 ミッション編集画面　入力取得
+ */
+int FesRom_InputCheckMEdit( FES_ROM_WORK* wk )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+  int cont = GFL_UI_KEY_GetCont();
+  int repeat = GFL_UI_KEY_GetRepeat();
+  int old_pos = wk->pos;
+  const PARAM_SET* pset = &wk->prmset_tbl[wk->pos];
+
+  if( pset->exe_code == EXE_CODE_INPUT_SWITCH ||
+      pset->exe_code == EXE_CODE_MEDIT_BASE ||
+      pset->exe_code == EXE_CODE_MEDIT_EX ){
+    int diff = 1;
+
+    if( cont & PAD_BUTTON_R ) diff*=10;
+    if( cont & PAD_BUTTON_L ) diff*=10;
+
+    if( repeat & PAD_BUTTON_A ){
+      return input_MEditExe( wk, &wk->prmset_tbl[wk->pos], diff );
+    }else if( repeat & PAD_BUTTON_B ){
+      return input_MEditExe( wk, &wk->prmset_tbl[wk->pos], diff*-1 );
+    }
+  }else if( trg & PAD_BUTTON_A ){
+    return input_MEditExe( wk, &wk->prmset_tbl[wk->pos], 0 );
+  }else if( trg & PAD_BUTTON_SELECT ){
+    wk->pos = wk->ret_pos;
+    FES_ROM_SetFadeInOutSeq( wk, SEQ_BASE_MAIN, SEQ_INI_DRAW );
+    return SEQ_FADEOUT;
+  }
+  if( trg & PAD_KEY_RIGHT ){
+    wk->pos = (wk->pos+1)%wk->prmset_num; 
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_LEFT ){
+    wk->pos = (wk->pos+(wk->prmset_num-1))%wk->prmset_num; 
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_UP ){
+    wk->pos = input_ParamNextPos( wk, -1 );
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }else if( trg & PAD_KEY_DOWN ){
+    wk->pos = input_ParamNextPos( wk, 1 );
+    param_DrawAllEx( wk, wk->pos, old_pos );
+  }
+  return SEQ_MEDIT_MAIN;
+}
+
+/*
+ *  @brief フェス配信ミッション編集 入力実行
+ */
+static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
+{
+  switch( pset->exe_code ){
+  case EXE_CODE_MEDIT_DECIDE:
+    param_MissionPush( wk );
+    //break throw
+  case EXE_CODE_MEDIT_CANCEL:
+    wk->pos = wk->ret_pos;
+    wk->app_mode = FESROM_APP_MODE_BASE;
+    FES_ROM_SetFadeInOutSeq( wk, SEQ_BASE_MAIN, SEQ_INI_DRAW );
+    return SEQ_FADEOUT;
+  
+  case EXE_CODE_MEDIT_BASE:
+    wk->ret_seq = SEQ_MEDIT_MAIN;
+    return exe_InputSwitchEx( wk, pset, wk->p_base_set->input_code, param );
+  
+  case EXE_CODE_MEDIT_EX:
+    wk->ret_seq = SEQ_MEDIT_MAIN;
+    return exe_InputSwitchEx( wk, pset, meditEx_InputCodeGet(wk), param );
+
+  case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
+    wk->ret_seq = SEQ_MEDIT_MAIN;
+    return exe_InputSwitch( wk, pset, param );
+
+  case EXE_CODE_SAVE:         //セーブ実行
+    taskReq_Save( wk );
+    return SEQ_TASK_WAIT; 
+  }
+  return wk->ret_seq; 
+}
+
+/*
  *  @brief  スイッチ式入力実行
  */
 static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff )
 {
-  int i;
-  const INPUT_PARAM* iprm = &DATA_InputParamTbl[pset->input_code]; 
-  int value = wk->param[ pset->id ];
+  return exe_InputSwitchEx( wk, pset, pset->input_code, diff );
+}
+/*
+ *  @brief  スイッチ式入力実行
+ */
+static int exe_InputSwitchEx( FES_ROM_WORK* wk, const PARAM_SET* pset, INPUT_CODE input_code, int diff )
+{
+  int i, value;
+  const INPUT_PARAM* iprm;
+  
+  if( input_code == INPUT_CODE_ERR ){
+    sub_PlaySE( FESROM_SE_CANCEL );
+    return wk->ret_seq;
+  }
+  iprm = &DATA_InputParamTbl[input_code]; 
+  value = wk->param[ pset->id ];
    
   if( wk->param[ PRM_BASE_MODE ] == SEND_MODE_TURN &&
       pset->id == PRM_BASE_MSEND_PER01 ){
@@ -468,26 +671,38 @@ static int exe_InputSwitch( FES_ROM_WORK* wk, const PARAM_SET* pset, int diff )
     return wk->ret_seq;
   }
   sub_PlaySE( FESROM_SE_DECIDE );
-  wk->ret_seq = SEQ_BASE_MAIN;
 
-  if( diff > 0 && ( value+1 > iprm->max ) ){
+  if( diff > 0 && ( value+diff > iprm->max ) ){
     value = iprm->min;
-  }else if( diff < 0 && (value-1 < iprm->min) ){
+  }else if( diff < 0 && (value+diff < iprm->min) ){
     value = iprm->max;
   }else{
     value += diff;
   }
   wk->param[pset->id] = value;
-  param_Draw( wk, wk->pos );
 
   switch( pset->id ){
   case PRM_BASE_MODE:
-    param_Draw( wk, PRM_BASE_MSEND_PER01 );
     for( i = 0; i < FESROM_MISSION_DATA_MAX; i++ ){
-///      param_Draw( wk, PRM_BASE_MSEND_PER01+i );
+      param_Draw( wk, PRM_BASE_MSEND_PER01+(i*PARAM_BASE_MSET_NUM) );
     }
     break;
+  case PRM_M_ID:
+    param_MissionUpdate( wk, M_UPDATE_ID );
+    break;
+  case PRM_M_BASE:
+    param_MissionUpdate( wk, M_UPDATE_BASE );
+    break;
+  case PRM_M_LEVEL:
+    param_MissionUpdate( wk, M_UPDATE_LEVEL );
+    break;
   }
+  if( wk->app_mode == FESROM_APP_MODE_BASE ){
+    param_Draw( wk, wk->pos );
+  }else{
+    param_DrawAll( wk, POS_TARGET_NONE );
+  }
+  param_Trans( wk );
   return wk->ret_seq;
 }
 
@@ -498,6 +713,9 @@ static void targetWin_Clear( TARGET_WIN* twin )
   GFL_BMP_Clear( twin->base.bmp, 0 );
   GFL_BMP_Clear( twin->input.bmp, 0 );
   GFL_BMP_Clear( twin->msg.bmp, 0 );
+	GFL_BMPWIN_TransVramCharacter( twin->base.win );
+	GFL_BMPWIN_TransVramCharacter( twin->input.win );
+	GFL_BMPWIN_TransVramCharacter( twin->msg.win );
 }
 
 static void targetWin_ClearAll( FES_ROM_WORK* wk )
@@ -520,13 +738,37 @@ static void param_Draw( FES_ROM_WORK* wk, int idx )
   int ret_wset = TRUE;
   PRINTSYS_LSB col = FCOL_WHITE_N;
   
-  const PARAM_SET* pset = &wk->prmset_tbl[id];
+  const PARAM_SET* pset = &wk->prmset_tbl[idx];
   TARGET_WIN* twin = &wk->target[pset->area.line/LINE_VIEW_NUM];
   s16 sx = pset->area.sx*LINE_W;
   s16 sy = (pset->area.line%LINE_VIEW_NUM)*LINE_H;
 
-  GFL_BMP_Fill( twin->base.bmp, sx, sy, (pset->area.ex-pset->area.sx)*LINE_W, LINE_H, FCOL_WIN_CLEAR );
-  ret_wset = print_ParamWordsetEx( wk, 0, wk->param[id], pset->wset_type, id );
+  GFL_BMP_Fill( twin->base.bmp, sx, sy, (pset->area.ex-pset->area.sx)*LINE_W, pset->area.sy*LINE_H, FCOL_WIN_CLEAR );
+
+  switch( id ){
+  case PRM_M_BASE:
+    {
+      WORDSET_RegisterNumber( wk->wset, 0, wk->param[id], 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      ret_wset = print_ParamWordsetEx( wk, 1, wk->param[id], wk->p_base_set->wset_type, id, -1 );
+    }
+    break;
+  case PRM_M_EX:
+    {
+      INPUT_CODE icode = meditEx_InputCodeGet( wk );
+      if( icode == INPUT_CODE_ERR ){
+        WORDSET_RegisterClear( wk->wset, 0 );
+        WORDSET_RegisterClear( wk->wset, 1 );
+        ret_wset = FALSE;
+      }else{
+        WORDSET_RegisterNumber( wk->wset, 0, wk->param[id], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+        ret_wset = print_ParamWordsetICodeEx( wk, 1, wk->param[id], icode, id );
+      }
+    }
+    break;
+  default:
+    ret_wset = print_ParamWordsetEx( wk, 0, wk->param[id], pset->wset_type, id, InPrmKeta( pset->input_code ) );
+    break;
+  }
   print_GetMsgToBuf( wk, pset->msg );
 
   if( ret_wset ){
@@ -536,7 +778,6 @@ static void param_Draw( FES_ROM_WORK* wk, int idx )
     else col = FCOL_GRAY_N;
   }
 	PRINTSYS_PrintColor( twin->base.bmp, sx, sy, wk->str_expand, wk->font, col );
-	GFL_BMPWIN_TransVramCharacter( twin->base.win );
 }
 
 /*
@@ -559,8 +800,16 @@ static void param_DrawAllEx( FES_ROM_WORK* wk, int target_idx1, int target_idx2 
       param_Draw( wk, i );
     }
   }
+  param_Trans( wk );
 }
-
+/*
+ *  @brief パラメータ描画転送
+ */
+static void param_Trans(  FES_ROM_WORK* wk )
+{
+	GFL_BMPWIN_TransVramCharacter( wk->target[0].base.win );
+	GFL_BMPWIN_TransVramCharacter( wk->target[1].base.win );
+}
 
 
 
@@ -595,9 +844,17 @@ static inline void print_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str )
 //----------------------------------------------------------
 static BOOL print_ParamWordset( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type )
 {
-  return print_ParamWordsetEx( wk, idx, value, type, 0 );
+  return print_ParamWordsetEx( wk, idx, value, type, 0, -1 );
 }
-static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg )
+static BOOL print_ParamWordsetICode( FES_ROM_WORK* wk, u8 idx, int value, INPUT_CODE input_code )
+{
+  return print_ParamWordsetEx( wk, idx, value, InPrmWSet( input_code ), 0, InPrmKeta( input_code ) );
+}
+static BOOL print_ParamWordsetICodeEx( FES_ROM_WORK* wk, u8 idx, int value, INPUT_CODE input_code, int arg )
+{
+  return print_ParamWordsetEx( wk, idx, value, InPrmWSet( input_code ), arg, InPrmKeta( input_code ) );
+}
+static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE type, int arg, int keta )
 {
   switch( type ){
   case WSET_BEACON_INTERVAL:
@@ -628,16 +885,20 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
   case WSET_MSEND_ID:
     {
       const PARAM_SET* pset = &wk->prmset_tbl[arg];
-      WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      int m_id = param_MissionPopToFMWK( wk, pset->arg[0], &wk->tmp_fmwk );
+      
+      WORDSET_RegisterNumber( wk->wset, idx, m_id, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
       WORDSET_RegisterNumber( wk->wset, idx+1, pset->arg[0]+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      if( value == 0 ){
+      if( m_id == 0 ){
         GFL_MSG_GetString( wk->msgman, f_rom_param_msend_id_none, wk->str_tmp );
         print_FreeWordset( wk->wset, idx+2, wk->str_tmp );
       }else{
-        WORDSET_RegisterFMissionTitle( wk->wset, 2, value, 0 );
+        FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_tmp, &wk->tmp_fmwk, wk->heapID );
+        print_FreeWordset( wk->wset, idx+2, wk->str_tmp );
       }
     }
     return TRUE;
+    
   case WSET_MSEND_TIME:
     WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
     return TRUE;
@@ -656,6 +917,8 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
       WORDSET_RegisterClear( wk->wset, idx+1 );
       return FALSE;
     }
+
+
   case WSET_MONSNAME:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
     return TRUE;
@@ -663,7 +926,8 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
     WORDSET_RegisterItemName( wk->wset, idx, value );
     return TRUE;
   case WSET_ITEMNAME_CHECK:
-    WORDSET_RegisterItemName( wk->wset, idx, value );
+    WORDSET_RegisterNumber( wk->wset, idx, value, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterItemName( wk->wset, idx+1, value );
     if( ITEM_IsDisableItem( value ) ||
         ITEM_IsOnlyOneItem( value ) ||
         value == ITEM_MASUTAABOORU){
@@ -671,7 +935,8 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
     }
     return TRUE;
   case WSET_ITEMNAME_CHECK_SP:
-    WORDSET_RegisterItemName( wk->wset, idx, value );
+    WORDSET_RegisterNumber( wk->wset, idx, value, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterItemName( wk->wset, idx+1, value );
     if( value == 0 ) return TRUE;
     if( ITEM_IsDisableItem( value ) ||
         ITEM_IsOnlyOneItem( value ) ){
@@ -718,6 +983,66 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
   case WSET_MISSION_MSGID_NAME:
     GFL_MSG_GetString( wk->msgman, f_rom_mission_msg_id_01+value, wk->str_tmp );
     break;
+
+  case WSET_MEDIT_ID:
+    //DataNo展開
+    WORDSET_RegisterNumber( wk->wset, idx+1, wk->edit_id+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    //ミッションNo展開
+    WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+    //デフォルトタイトル展開
+    WORDSET_RegisterFMissionTitle( wk->wset, idx+2, value, FMISSION_LEVEL_1);
+    //ミッションタイプ展開
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_type_01+wk->e_fmwk.arc.m_type-1, wk->str_tmp );
+    print_FreeWordset( wk->wset, idx+3, wk->str_tmp );
+    //ミッション終了タイプ展開
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_end_type_01+wk->e_fmwk.beacon.end_type, wk->str_tmp );
+    print_FreeWordset( wk->wset, idx+4, wk->str_tmp );
+    return TRUE;
+  
+  case WSET_MEDIT_LEVEL:
+    WORDSET_RegisterNumber( wk->wset, idx, value+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+    return TRUE;
+  
+  case WSET_MEDIT_TIME:
+    WORDSET_RegisterNumber( wk->wset, idx, value, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    return TRUE;
+  
+  case WSET_MEDIT_VERSION:
+    GFL_MSG_GetString( wk->msgman, f_rom_version_white+value, wk->str_tmp );
+    break;
+  
+  case WSET_MEDIT_T_BONUS:
+    {
+      static const u8 bonus[] = {0,30,60,180};
+      WORDSET_RegisterNumber( wk->wset, idx, bonus[value], 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+    }
+    return TRUE;
+  
+  case WSET_MEDIT_UNIT:
+    GFL_MSG_GetString( wk->msgman, f_rom_fes_unit_01+value, wk->str_tmp );
+    break;
+  
+  case WSET_MEDIT_PATTERN:
+    GFL_MSG_GetString( wk->msgman, f_rom_fes_attr_01+value, wk->str_tmp );
+    break;
+  
+  case WSET_MEDIT_NUM:
+    WORDSET_RegisterNumber( wk->wset, idx, value, keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    return TRUE;
+  
+  case WSET_MEDIT_TITLE:
+  case WSET_MEDIT_EXP:
+    WORDSET_RegisterNumber( wk->wset, idx, value, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    GFL_MSG_GetString( wk->msgman, f_rom_mission_msg_id_01+value, wk->str_tmp );
+    print_FreeWordset( wk->wset, idx+1, wk->str_tmp );
+    param_MissionPopToFMWKEdit( wk, &wk->tmp_fmwk );
+    if( type == WSET_MEDIT_TITLE ){
+      FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_tmp, &wk->tmp_fmwk, wk->heapID );
+    }else{
+      FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->str_tmp, &wk->tmp_fmwk, wk->heapID );
+    }
+    print_FreeWordset( wk->wset, idx+2, wk->str_tmp );
+    return TRUE;
   }
 #if 0
   switch( type ){
@@ -800,34 +1125,6 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
   case BPRM_WSET_MBASE_MUSHROOM_ENC:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_MushroomMonsTbl[value] );
     return TRUE;
-  case BPRM_WSET_MBASE_EVENT:
-    GFL_MSG_GetString( wk->msgman, dlf_mission_base_event_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MBASE_ITEM:
-    GFL_MSG_GetString( wk->msgman, dlf_mission_base_item_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MBASE_NPC:
-    GFL_MSG_GetString( wk->msgman, dlf_mission_base_npc_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MEX_EVENT_TRAIL:
-    WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, DATA_TrailMonsTbl[value] );
-    return TRUE;
-  case BPRM_WSET_MEX_NPC_ITEM_TRADE:
-    GFL_MSG_GetString( wk->msgman, dlf_npc_item_trade_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MEX_NPC_SHOPPING:
-    GFL_MSG_GetString( wk->msgman, dlf_npc_shopping_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MEX_NPC_TR_BATTLE:
-    GFL_MSG_GetString( wk->msgman, dlf_npc_tr_battle_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MEX_NPC_GET_A_PRESENT:
-    GFL_MSG_GetString( wk->msgman, dlf_npc_get_a_present_01+value, wk->str_tmp );
-    break;
-  case BPRM_WSET_MEX_NPC_POKE_QUIZ:
-    GFL_MSG_GetString( wk->msgman, dlf_npc_poke_quiz_01+value, wk->str_tmp );
-    OS_Printf("quiz_value=%d\n", value);
-    break;
   case BPRM_WSET_MISSION_ID_NAME:
     GFL_MSG_GetString( wk->msgman, dlf_mission_id_name_01+value, wk->str_tmp );
     break;
@@ -1128,6 +1425,7 @@ static void tcb_Save( GFL_TCBL *tcb , void* work);
 
 static void taskReq_Save( FES_ROM_WORK* wk )
 {
+  wk->ret_seq = SEQ_BASE_MAIN;
   taskAdd_Save( wk, &wk->task_ct);
 }
 
@@ -1173,6 +1471,7 @@ static void tcb_Save( GFL_TCBL *tcb , void* tcb_wk)
       int trg = GFL_UI_KEY_GetTrg();
 
       if( trg & PAD_BUTTON_B ){
+        draw_MsgClear( wk, TARGET_VIEW_U );
         break;
       }
       if( trg & PAD_BUTTON_A ){

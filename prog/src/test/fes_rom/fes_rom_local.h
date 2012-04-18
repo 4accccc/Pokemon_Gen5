@@ -82,7 +82,7 @@ typedef struct _TARGET_WIN{
 
 typedef struct _BMPWIN_AREA{
   u8  line;
-  u8  sx,ex;
+  u8  sx,ex,sy;
 }BMPWIN_AREA;
 
 #define PARAM_SET_ARG_MAX (3)
@@ -108,6 +108,18 @@ typedef struct _PARAM_EX{
   STRBUF* greeting;
 }PARAM_EX;
 
+typedef struct _MEDIT_PRM_EX{
+  s16 min,max;   //パラメータのmix,max
+  WSET_TYPE wset_type;
+}MEDIT_PRM_EX;
+
+typedef struct _MEDIT_PRM_BASE_SET{
+  INPUT_CODE  input_code;
+  WSET_TYPE wset_type;
+  const INPUT_CODE* tbl;
+}MEDIT_PRM_BASE_SET;
+
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -120,6 +132,8 @@ typedef struct
   int                   seq;
 	int										sub_seq;
   int                   ret_seq;  //リターンシーケンス
+  int                   fadein_seq;
+  int                   fadeout_seq;
   int                   task_ct;
   BOOL                  data_error_f;
 
@@ -130,12 +144,20 @@ typedef struct
   GFL_TCBLSYS*       pTcbSys;
 
   TARGET_WIN            target[TARGET_VIEW_MAX];
-  int                   pos;  //現在のカーソル位置
+  int                   pos;      //現在のカーソル位置
+  int                   ret_pos;  //戻りのカーソル位置
   int                   prmset_idx;  //param id の参照開始index
   const PARAM_SET*      prmset_tbl; //パラメータセットテーブルの参照ポインタ
   int                   prmset_num; //パラメータセットの要素数
   int                   param[PARAM_ID_MAX];
   PARAM_EX              param_ex;
+
+  int                   edit_id;     //現在エディット中のミッションデータNo
+  FEST_MISSION          e_fmwk;      //編集用
+  FEST_MISSION          tmp_fmwk;    //テンポラリ用
+  FEST_MISSION          send_fmwk;   //送信用
+  FMISSION_DATA_MAN*    fm_data_man;
+  const MEDIT_PRM_BASE_SET* p_base_set;
 
   u8                    flip_sw;
   u8                    list_max;
@@ -185,5 +207,7 @@ typedef struct
 
 } FES_ROM_WORK;
 
+
+extern void FES_ROM_SetFadeInOutSeq( FES_ROM_WORK* wk, int fadein_seq, int fadeout_seq );
 
 

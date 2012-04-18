@@ -20,7 +20,7 @@
 #define FESROM_MISSION_DATA_MAX (10)
 
 ///セーブデータ有効を示すマジックキー
-#define FES_ROM_SAVE_MAGICKEY    (0xaefb3235)
+#define FES_ROM_SAVE_MAGICKEY    (0xaefb3234)
 
 #define FES_ROM_TIME_UNIT_MIN   (30)  //30分単位
 #define FES_ROM_TIME_UNIT_HOUR  (60/FES_ROM_TIME_UNIT_MIN)  //1時間は2単位
@@ -28,7 +28,7 @@
 //フェスロムアプリの呼び出しモード定義
 typedef enum{
  FESROM_APP_MODE_BASE,
- FESROM_APP_MODE_MISSION,
+ FESROM_APP_MODE_MEDIT,
  FESROM_APP_MODE_SEND,
  FESROM_APP_MODE_MAX,
 }FESROM_APP_MODE;
@@ -41,21 +41,29 @@ typedef struct _FESROM_MISSION_PARAM{
   u8      live_f; ///<データが有効かどうか？
 
   int     m_id;
+  int     m_t_bonus;
   int     m_base_param;
   int     m_ex_param;
   int     m_level;
-  int     m_title;
-  int     m_exp;
-  int     m_time;
   int     m_goal;
+  int     m_time;
+  int     m_version;
+  int     m_unit;
+
   int     m_item;
   int     m_pay;
+  
+  int     m_title;
+  int     m_exp;
+  
   int     m_sp_item;
   int     m_sp_pay;
+  int     m_pattern[FMISSION_MAP_ATTR_MAX]; //出現パターン
 }FESROM_MISSION_PARAM;
 
 typedef struct _FESROM_MISSION_SEND{
-  int     min;     ///<配信時間(1-60分)
+  int     id;      ///<ミッションID(0は無効値)
+  int     time;    ///<配信時間(1-60分)
   int     blank;   ///<配信間隔(1-60分)
   int     per;          ///<ランダム配信時の%指定
 }FESROM_MISSION_SEND;
@@ -115,6 +123,8 @@ typedef struct
   BOOL                  save_enable;
 
   GFL_TCBLSYS*  pTcbSys;
+
+  void*                 proc_wk;
 
   FES_ROM_SAVE_WK       save_wk; ///<セーブワーク編集データ
   FES_ROM_SAVE          save;    ///<セーブオリジナル

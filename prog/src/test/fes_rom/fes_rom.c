@@ -105,6 +105,7 @@ static GFL_PROC_RESULT FesRomProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 
 
 static int seq_BaseMain( FES_ROM_WORK* wk );
+static int seq_MEditMain( FES_ROM_WORK* wk );
 static int seq_TaskWait( FES_ROM_WORK* wk );
 static int seq_InitialDraw( FES_ROM_WORK* wk );
 static int seq_FadeIn( FES_ROM_WORK* wk );
@@ -187,6 +188,9 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->save_wk = &wk->sys_wk->save_wk;
   wk->sys_save = &wk->sys_wk->save_wk.save;
 
+  wk->app_mode = wk->sys_param->mode;
+  OS_Printf("AppMode=%d\n",wk->app_mode);
+
   // 初期化
   wk->heapID = HEAPID_FES_ROM;
   wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FES_ROM );
@@ -203,6 +207,8 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //ウィンドウ初期化
   _sub_BeaconWinInit( wk );
+  
+  OS_Printf("AppMode=%d\n",wk->app_mode);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -274,6 +280,9 @@ static GFL_PROC_RESULT FesRomProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   case SEQ_BASE_MAIN:
     *seq = seq_BaseMain( wk );
     break;
+  case SEQ_MEDIT_MAIN:
+    *seq = seq_MEditMain( wk );
+    break;
   case SEQ_TASK_WAIT:
     *seq = seq_TaskWait( wk );
     break;
@@ -294,6 +303,22 @@ static GFL_PROC_RESULT FesRomProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 
   return GFL_PROC_RES_CONTINUE;
 }
+
+//=============================================================================
+/**
+ *								global関数
+ */
+//=============================================================================
+void FES_ROM_SetFadeInOutSeq( FES_ROM_WORK* wk, int fadein_seq, int fadeout_seq )
+{
+  if( fadein_seq < SEQ_MAX ){
+    wk->fadein_seq = fadein_seq;
+  }
+  if( fadeout_seq < SEQ_MAX ){
+    wk->fadeout_seq = fadeout_seq;
+  }
+}
+
 //=============================================================================
 /**
  *								static関数
@@ -306,6 +331,14 @@ static GFL_PROC_RESULT FesRomProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 static int seq_BaseMain( FES_ROM_WORK* wk )
 {
   return FesRom_InputCheckBase( wk );
+}
+
+/*
+ *  @brief  ミッション編集メイン
+ */
+static int seq_MEditMain( FES_ROM_WORK* wk )
+{
+  return FesRom_InputCheckMEdit( wk );
 }
 
 /*
@@ -352,7 +385,7 @@ static int seq_FadeIn( FES_ROM_WORK* wk )
   case 1:
     if( !GFL_FADE_CheckFade() ){	
       wk->seq = 0;
-			return SEQ_BASE_MAIN;
+			return wk->fadein_seq;
 		}
     break;
   }
@@ -372,7 +405,7 @@ static int seq_FadeOut( FES_ROM_WORK* wk )
   case 1:
     if( !GFL_FADE_CheckFade() ){	
       wk->seq = 0;
-      return SEQ_EXIT; 
+			return wk->fadeout_seq;
 		}
     break;
   }
@@ -416,6 +449,9 @@ static void _sub_DataExit(FES_ROM_WORK* wk)
 static void _sub_SystemSetup( FES_ROM_WORK* wk)
 {
   wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 64, 128 );
+  
+  //フェスミッションデータマネージャ
+  wk->fm_data_man = FMISSION_DATA_Init( wk->heapID );
 
   //グラフィックハンドル取得
   wk->handle	= GFL_ARC_OpenDataHandle( ARCID_CONFIG_GRA, wk->heapID );
@@ -463,6 +499,8 @@ static void _sub_SystemExit( FES_ROM_WORK* wk)
   GFL_TCBL_Exit( wk->pTcbSys );
 	
   GFL_ARC_CloseDataHandle( wk->handle );
+  
+  FMISSION_DATA_Release( wk->fm_data_man );
 }
 
 //-----------------------------------------------------------------------------
