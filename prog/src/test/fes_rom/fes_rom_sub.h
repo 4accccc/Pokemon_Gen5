@@ -27,6 +27,11 @@ extern int FesRom_InputCheckBase( FES_ROM_WORK* wk );
 extern int FesRom_InputCheckMEdit( FES_ROM_WORK* wk );
 
 /*
+ *  @brief  フェス配信 配信画面メイン　入力取得
+ */
+extern int FesRom_InputCheckSend( FES_ROM_WORK* wk );
+
+/*
  *  @brief  フェス配信ロム画面　メニューバー状態更新
  */
 extern void FesRom_ButtonActiveControl( FES_ROM_WORK* wk );

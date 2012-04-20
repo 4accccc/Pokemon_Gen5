@@ -267,22 +267,26 @@ void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
  * トレーナーカードのあいさつとして初期化する
  *
  * @param   pms     文章型へのポインタ
+ *
+ * #TAG_FES_ROM
  */
 //-----------------------------------------------------------------------------
 void PMSDAT_SetupDefaultIntroductionMessage( PMS_DATA* pms )
 {
 #if 0
   PMSDAT_Init( pms, PMS_TYPE_MAIL );
-
-  // 「『トレーナー』です！　よろしくおねがいします！」
-  pms->sentence_id = pmss_mail_02;
-  pms->word[0]     = PMSW_GetWordNumberByGmmID( NARC_message_pms_word06_dat, pms_word06_29 );
-#else
-  PMSDAT_Init( pms, PMS_TYPE_MAIL );
   
   // 「『トレーナー』です！　よろしくおねがいします！」
   pms->sentence_id = pmss_mail_02;
   pms->word[0]     = mypms01;
+#else
+  //フェスロム用
+  PMSDAT_Init( pms, PMS_TYPE_UNION );
+  
+  // 「『みんな』と　『ミッション』　したい！」
+  pms->sentence_id = pmss_union_13;
+  pms->word[0] = PMSW_GetWordNumberByGmmID( NARC_message_pms_word07_dat, pms_word07_35 );
+  pms->word[1] = PMSW_GetWordNumberByGmmID( NARC_message_pms_word11_dat, pms_word11_25 );
 #endif
 }
 

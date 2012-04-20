@@ -22,6 +22,9 @@
 ///セーブデータ有効を示すマジックキー
 #define FES_ROM_SAVE_MAGICKEY    (0xaefb3234)
 
+///トレーナーID
+#define FES_ROM_TRAINER_ID       (0x0CA9)
+
 #define FES_ROM_TIME_UNIT_MIN   (30)  //30分単位
 #define FES_ROM_TIME_UNIT_HOUR  (60/FES_ROM_TIME_UNIT_MIN)  //1時間は2単位
 
@@ -32,6 +35,12 @@ typedef enum{
  FESROM_APP_MODE_SEND,
  FESROM_APP_MODE_MAX,
 }FESROM_APP_MODE;
+
+typedef enum{
+ FESROM_APP_RET_NONE,
+ FESROM_APP_RET_EDIT_NAME,
+ FESROM_APP_RET_EDIT_SELFMSG, 
+}FESROM_APP_RET_MODE;
 
 //--------------------------------------------------------------
 //  ミッション詳細セーブ
@@ -65,7 +74,7 @@ typedef struct _FESROM_MISSION_SEND{
   int     id;      ///<ミッションID(0は無効値)
   int     time;    ///<配信時間(1-60分)
   int     blank;   ///<配信間隔(1-60分)
-  int     per;          ///<ランダム配信時の%指定
+  int     odds;    ///<ランダム配信時の%指定
 }FESROM_MISSION_SEND;
 
 ///送信ミッションパラメータ
@@ -120,11 +129,15 @@ typedef struct
 	int										sub_seq;
   int                   eff_task_ct;
   BOOL                  data_error_f;
-  BOOL                  save_enable;
+  BOOL                  data_enable_f;
+  BOOL                  save_enable_f;
+  FESROM_APP_RET_MODE   ret_mode;
+  int                   init_pos;
 
   GFL_TCBLSYS*  pTcbSys;
 
   void*                 proc_wk;
+  STRBUF*               str_tmp;
 
   FES_ROM_SAVE_WK       save_wk; ///<セーブワーク編集データ
   FES_ROM_SAVE          save;    ///<セーブオリジナル
@@ -159,4 +172,5 @@ extern BOOL FesRomSys_SaveLoad(  FES_ROM_SYS_WORK* wk );
 //==================================================================
 extern void FesRomSys_SaveInit( FES_ROM_SAVE* sv );
 
+extern void FesRomSys_MissionSaveInit( FES_ROM_SAVE* sv, int idx );
 

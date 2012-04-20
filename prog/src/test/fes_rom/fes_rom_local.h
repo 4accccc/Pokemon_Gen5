@@ -27,7 +27,13 @@
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
 
+//タッチバー
+#include "ui/touchbar.h"
+// 簡易会話表示システム
+#include "system/pms_draw.h"
+
 #include "fes_rom_def.h"
+#include "fes_rom_gra.h"
 
 //=============================================================================
 /**
@@ -135,6 +141,7 @@ typedef struct
   int                   fadein_seq;
   int                   fadeout_seq;
   int                   task_ct;
+  int                   initial_f;
   BOOL                  data_error_f;
 
   FES_ROM_SAVE_WK*   save_wk;
@@ -146,10 +153,10 @@ typedef struct
   TARGET_WIN            target[TARGET_VIEW_MAX];
   int                   pos;      //現在のカーソル位置
   int                   ret_pos;  //戻りのカーソル位置
-  int                   prmset_idx;  //param id の参照開始index
+//  int                   prmset_idx;  //param id の参照開始index
   const PARAM_SET*      prmset_tbl; //パラメータセットテーブルの参照ポインタ
   int                   prmset_num; //パラメータセットの要素数
-  int                   param[PARAM_ID_MAX];
+  int                   param[PARAM_ID_MAX+1];
   PARAM_EX              param_ex;
 
   int                   edit_id;     //現在エディット中のミッションデータNo
@@ -158,6 +165,21 @@ typedef struct
   FEST_MISSION          send_fmwk;   //送信用
   FMISSION_DATA_MAN*    fm_data_man;
   const MEDIT_PRM_BASE_SET* p_base_set;
+
+  int                   send_id;  //送信データNo
+  int                   send_odds;
+  int                   send_id_ct; //送信IDカウンター
+  int                   send_time_sec;   //送信継続時間
+  int                   send_lest_sec;   //送信継続時間
+  int                   send_blank_sec;  //送信終了後インターバル時間
+  int                   send_diff_sec;
+  int                   send_exit_f;
+  const FESROM_MISSION* send_m;
+  s64                   send_rtc;
+
+  s64                   old_date_time;
+//  RTCDate               date;
+//  RTCTime               time;
 
   u8                    flip_sw;
   u8                    list_max;
@@ -206,7 +228,6 @@ typedef struct
   GFL_CLWK* pAct[ACT_MAX];
 
 } FES_ROM_WORK;
-
 
 extern void FES_ROM_SetFadeInOutSeq( FES_ROM_WORK* wk, int fadein_seq, int fadeout_seq );
 

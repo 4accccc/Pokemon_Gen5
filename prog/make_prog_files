@@ -1983,7 +1983,8 @@ SRCS_OVERLAY_CODEIN = app/codein/codein.c \
 SRCS_OVERLAY_FES_ROM  = test/fes_rom/fes_rom_sys.c \
         test/fes_rom/fes_rom.c \
         test/fes_rom/fes_rom_sub.c \
-        test/fes_rom/fes_rom_gra.c
+        test/fes_rom/fes_rom_gra.c \
+        test/fes_rom/fes_rom_comm.c
 
 # 松田デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI

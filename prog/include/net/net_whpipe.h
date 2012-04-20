@@ -566,6 +566,16 @@ extern void GFL_NET_WL_PauseBeaconSend(BOOL bPause);
 
 //-------------------------------------------------------------
 /**
+ * @brief   親→子への切り替えを一時停止し、親機固定(ビーコン送信のみ)する
+ * @param   bPause TRUEで停止 FALSEで解除
+ *
+ * #TAG_FES_ROM
+ */
+//-------------------------------------------------------------
+extern void GFL_NET_WL_PauseBeaconRecv(BOOL bPause);
+
+//-------------------------------------------------------------
+/**
  * @brief   ユニオンルーム施設の人数を集めるか
  * @param   none
  * @retval  none

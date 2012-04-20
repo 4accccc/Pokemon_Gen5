@@ -420,7 +420,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="f_rom_prm_base_msend_per">
+		Label="f_rom_prm_base_msend_odds">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:2digits ][Name:PMS Idx="1" ]</Text>
@@ -1244,6 +1244,297 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="f_rom_prm_medit_send_time">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信指定時間　[Digit:2digits ]:[Digit:2digits Idx="1" ] - [Digit:2digits Idx="2" ]:[Digit:2digits Idx="3" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:27:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:26:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信指定時間　[Digit:2digits ]:[Digit:2digits Idx="1" ] - [Digit:2digits Idx="2" ]:[Digit:2digits Idx="3" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:27:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:27:19" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_now_rtc">
+		<LanguageCell
+			Language="JPN">
+			<Text>現在時刻 [Digit:4digits ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]  [Digit:2digits Idx="3" ]:[Digit:2digits Idx="4" ]:[Digit:2digits Idx="5" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T07:46:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:44:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>現在時刻 [Digit:4digits ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]  [Digit:2digits Idx="3" ]:[Digit:2digits Idx="4" ]:[Digit:2digits Idx="5" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T07:46:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:49:49" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_overtime">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信指定時間外です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:51:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:50:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信指定時間外です</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:51:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:51:08" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_end">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信プログラム終了　電源を切ってください</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T11:11:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T10:39:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信プログラム終了　電源を切ってください</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T11:11:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T10:39:41" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_exec">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッション配信中　残り [Digit:2digits ]:[Digit:2digits Idx="1" ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:18:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:51:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッション配信中　残り [Digit:2digits ]:[Digit:2digits Idx="1" ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:18:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:52:27" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_interval">
+		<LanguageCell
+			Language="JPN">
+			<Text>配信待機中　次の配信まで後 [Digit:2digits ]:[Digit:2digits Idx="1" ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:19:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:17:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>配信待機中　次の配信まで後 [Digit:2digits ]:[Digit:2digits Idx="1" ]min</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:19:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T04:19:23" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_m_title">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits Idx="1" ]： m_id=[Digit:2digits ] [Name:FesMissionName Idx="2" ]
+ type=[Name:PMS Idx="3" ] end=[Name:PMS Idx="4" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:54:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:53:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits Idx="1" ]： m_id=[Digit:2digits ] [Name:FesMissionName Idx="2" ]
+ type=[Name:PMS Idx="3" ] end=[Name:PMS Idx="4" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:53:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:53:40" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_m_exp">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T09:01:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:55:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T09:01:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-19T02:56:08" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="f_rom_prm_send_end_exp"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>STARTボタンで　配信プログラム終了</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T11:11:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T10:39:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>STARTボタンで　配信プログラム終了</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T11:11:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-04-20T10:39:49" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="f_rom_msg_save_check">
 		<LanguageCell
 			Language="JPN">
@@ -1670,7 +1961,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="f_rom_param_percent">
+		Label="f_rom_param_odds">
 		<LanguageCell
 			Language="JPN">
 			<Text>%</Text>

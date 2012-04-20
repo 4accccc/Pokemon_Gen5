@@ -239,6 +239,9 @@ extern void GAMEBEACON_SetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
 extern void GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
 extern BOOL GAMEBEACON_GetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
 
+//#TAG_FES_ROM
+extern void GAMEBEACON_FesRom_SendBeacon_Init(const STRBUF *name, u16 trainer_id, const STRBUF *selfmsg, u8 union_index);
+
 //--------------------------------------------------------------
 //  ÉrÅ[ÉRÉìèÓïÒéÊìæ
 //--------------------------------------------------------------
@@ -323,6 +326,7 @@ extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( void );
 extern void GAMEBEACON_Set_DistributionFestMission( void );
+extern void GAMEBEACON_Set_FestMissionForFesRom( FEST_MISSION* fmwk );
 extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f );
 extern void GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACTION log_act, u16 param );
 extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );

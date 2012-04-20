@@ -106,6 +106,7 @@ static GFL_PROC_RESULT FesRomProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 
 static int seq_BaseMain( FES_ROM_WORK* wk );
 static int seq_MEditMain( FES_ROM_WORK* wk );
+static int seq_SendMain( FES_ROM_WORK* wk );
 static int seq_TaskWait( FES_ROM_WORK* wk );
 static int seq_InitialDraw( FES_ROM_WORK* wk );
 static int seq_FadeIn( FES_ROM_WORK* wk );
@@ -189,6 +190,20 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->sys_save = &wk->sys_wk->save_wk.save;
 
   wk->app_mode = wk->sys_param->mode;
+
+  //呼び出しモード補正
+  if( wk->app_mode == FESROM_APP_MODE_BASE ){
+    if( GFL_UI_KEY_GetCont() != ( PAD_BUTTON_R|PAD_BUTTON_L|PAD_BUTTON_X) &&
+        wk->sys_wk->save_enable_f &&
+        wk->sys_wk->ret_mode == FESROM_APP_RET_NONE){
+      //送信モードから始める
+      wk->app_mode = FESROM_APP_MODE_SEND;
+    }
+  }
+  if( wk->sys_wk->init_pos >= 0 ){
+    wk->pos = wk->sys_wk->init_pos;
+  } 
+  wk->initial_f = TRUE; //初回呼び出しフラグ
   OS_Printf("AppMode=%d\n",wk->app_mode);
 
   // 初期化
@@ -204,11 +219,12 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   _sub_BmpWinCreate( wk );
   _sub_ActorResourceLoad( wk, wk->handle);
   _sub_ActorCreate( wk );
-
   //ウィンドウ初期化
   _sub_BeaconWinInit( wk );
   
   OS_Printf("AppMode=%d\n",wk->app_mode);
+  wk->sys_wk->init_pos = -1;
+  wk->sys_wk->ret_mode = FESROM_APP_RET_NONE;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -265,11 +281,6 @@ static GFL_PROC_RESULT FesRomProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 { 
 	FES_ROM_WORK* wk = mywk;
 
-  if( (*seq)>SEQ_FADEIN && GFL_UI_KEY_GetTrg()&PAD_BUTTON_SELECT){
-    //強制終了
-    (*seq) = SEQ_FADEOUT;
-  }
-
   switch(*seq){
   case SEQ_INI_DRAW:
     *seq = seq_InitialDraw( wk );
@@ -282,6 +293,9 @@ static GFL_PROC_RESULT FesRomProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     break;
   case SEQ_MEDIT_MAIN:
     *seq = seq_MEditMain( wk );
+    break;
+  case SEQ_SEND_MAIN:
+    *seq = seq_SendMain( wk );
     break;
   case SEQ_TASK_WAIT:
     *seq = seq_TaskWait( wk );
@@ -339,6 +353,14 @@ static int seq_BaseMain( FES_ROM_WORK* wk )
 static int seq_MEditMain( FES_ROM_WORK* wk )
 {
   return FesRom_InputCheckMEdit( wk );
+}
+
+/*
+ *  @brief  ミッション送信メイン
+ */
+static int seq_SendMain( FES_ROM_WORK* wk )
+{
+  return FesRom_InputCheckSend( wk );
 }
 
 /*

@@ -42,11 +42,8 @@ typedef struct
 {	
   FES_ROM_SYS_WORK* sys;  //[in/out]システムワーク
   FESROM_APP_MODE mode;   //呼び出しモード
+//  FESROM_APP_RET_MODE ret_mode; //TRUEならCギアに戻る
 
-	GAMESYS_WORK		*gsys;	//[in]ゲームシステム
-	GAMEDATA				*gdata;	//[in]ゲームシステム
-  u8              target; //リストのトップに表示する
-  u8              view_ofs; //詳細画面コール時のターゲットのすれ違いログのViewオフセット
-  u8              ret_mode; //TRUEならCギアに戻る
+//  int             init_pos;
 }FES_ROM_PARAM;
 

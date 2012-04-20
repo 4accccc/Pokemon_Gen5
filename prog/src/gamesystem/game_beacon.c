@@ -1365,6 +1365,101 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   //行動パラメータ
   info->action.action_no = GAMEBEACON_ACTION_NULL;
 }
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション配信用に初期データをセット
+ *
+ * @param   send		
+ * @param   gamedata		
+ *
+ * #TAG_FES_ROM
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_FesRom_SendBeacon_Init(const STRBUF *name, u16 trainer_id, const STRBUF *selfmsg, u8 union_index)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+//  const MYPMS_DATA *mypms = SaveData_GetMyPmsDataConst( sv );
+  OSOwnerInfo owner_info;
+  PMS_DATA pms = {0};
+  int sex;
+  PMSDAT_SetupDefaultIntroductionMessage( &pms );
+
+  if(union_index < UNION_VIEW_INDEX_WOMAN_START){
+    sex = PM_MALE;
+  }
+  else{
+    union_index -= UNION_VIEW_INDEX_WOMAN_START;
+    sex = PM_FEMALE;
+  }
+  
+  OS_GetOwnerInfo(&owner_info);
+  
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //スワンOnly指定
+  info->zone_id = ZONE_ID_D35R0101; //自然保護区
+  info->townmap_root_zone_id = ZONE_ID_D35R0101;
+  info->g_power_id = GPOWER_ID_NULL;
+  info->trainer_id = trainer_id;
+  info->favorite_color_index = owner_info.favoriteColor;
+  info->sex = sex;
+  info->trainer_view = union_index;
+
+  info->pm_version = GET_VERSION(); //PM_VERSION;
+  info->language = PM_LANG;
+  info->nation = 0; //MyStatus_GetMyNation(myst);
+  info->area = 0; //MyStatus_GetMyArea(myst);
+  info->research_team_rank = 0; //MISC_CrossComm_GetResearchTeamRank(misc);
+  
+  info->thanks_recv_count = 0;  //MISC_CrossComm_GetThanksRecvCount(misc);
+  info->suretigai_count = 0;  //MISC_CrossComm_GetSuretigaiCount(misc);
+ 
+  {
+    info->push_medal = MDLID_MAX; //MEDALBOX_GetPushMedalID( sv_mdlbox );
+    info->medal_count = 0;  //MEDALBOX_GetMedalCount( sv_mdlbox , FALSE );
+  }
+  {
+    info->play_hour = 999;  //PLAYTIME_GetHour( sv_playtime );
+    info->play_min = 59;  //PLAYTIME_GetMinute( sv_playtime );
+  }
+  
+  {
+    GFL_STD_MemClear( &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
+  }
+  
+//  MYPMS_GetPms( mypms, MYPMS_PMS_TYPE_INTRODUCTION, &pms );
+  GAMEBEACON_Set_Details_IntroductionPms(&pms);
+
+  { //名前＆自己紹介文コピー　文字数がFullの場合はEOMを差し込まないので
+    //STRTOOL_Copyは使用せずに独自コピー
+    STRCODE code_eom = GFL_STR_GetEOMCode();
+    const STRCODE *src_code;
+    int i;
+
+    src_code = GFL_STR_GetStringCodePointer(name);
+    for(i = 0; i < PERSON_NAME_SIZE; i++){
+      info->name[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+    
+    src_code = GFL_STR_GetStringCodePointer(selfmsg);
+    for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
+      info->self_introduction[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+  }
+  
+  //詳細情報
+  BEACONINFO_Set_Details_Walk(info);
+
+  //行動パラメータ
+  info->action.action_no = GAMEBEACON_ACTION_NULL;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  リゾート用データを受け取る  開始処理
@@ -1525,6 +1620,31 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
     //実際の送信バッファに生成したパラメータを反映して、送信リクエストをかける
     *send = tmp;
   }
+}
+
+/*
+ *  フェスミッション配信プロセス用
+ */
+void GAMEBEACON_Set_FestMissionForFesRom( FEST_MISSION* fmwk )
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO* info = &send->info;
+
+  //送信パラメータセット
+  info->action.fest_beacon = fmwk->beacon;
+  info->action.fest_beacon.time = FEST_MISSION_GetLife( fmwk );
+
+  info->action.fmission.fword_sid = 0;
+  info->action.fmission.score = 0;
+  info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_FMISSION;
+  info->fmission_key = fmwk->key; //マジックキー登録
+
+  BEACONINFO_Set_Details_Walk( info );
+  
+  //送信リクエスト
+  info->send_counter++;
+  send->life = 0;
+  send->beacon_update = TRUE;
 }
 
 //--------------------------------------------------------------
