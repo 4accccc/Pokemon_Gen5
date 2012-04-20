@@ -630,6 +630,10 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
   case WBTREG_POKETYPE:
     //タイプトーナメントの場合はタイプ指定
     poketype = wbtsys->poketype;
+#ifdef  BUGFIX_SYSTEM116_20120420
+    //タイプトーナメントの場合でもフリーフォール禁止
+    waza_no = WAZANO_HURIIFOORU;
+#endif
     break;
   case WBTREG_DOWNLOAD:
     poketype = wbtsys->wbtdl_data.wbtdl_rule.need_poketype;

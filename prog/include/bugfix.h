@@ -1658,3 +1658,13 @@ resource/wifi_earth/wifi_earth.narc
 
  */
 #define BUGFIX_GFBTS232_20120120
+
+
+/**
+ * System116
+ * 【PWTのタイプエキスパートのルールが、実際の挙動と説明文で異なります】
+ * タイプエキスパートの拡張レギュレーションにフリーフォール禁止を追加
+ * 
+ */
+#define BUGFIX_SYSTEM116_20120420
+
