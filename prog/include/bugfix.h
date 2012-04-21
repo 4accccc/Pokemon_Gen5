@@ -1668,3 +1668,13 @@ resource/wifi_earth/wifi_earth.narc
  */
 #define BUGFIX_SYSTEM116_20120420
 
+
+/**
+ * System160
+ *【隠しキャラの間違ったセリフ】
+ * 隠しキャラに呼び出しポイントで電話をかける前に、
+ * ママに電話をかけてからすぐ隠しキャラに電話をかけると、
+ * 主人公の名前ではなく場所名を呼びます。
+ * 
+ */
+#define BUGFIX_SYSTEM160_20120421

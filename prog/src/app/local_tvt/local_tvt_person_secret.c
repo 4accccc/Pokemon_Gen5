@@ -383,6 +383,13 @@ static BOOL Local_Tvt_Secret_GreetingInner( LOCAL_TVT_PERSON_SYS *p_person, cons
       u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_param->p_data );
       u32 msgID = LOCAL_TVT_CALLDATA_GetGreetingMsgID( cp_param->p_data, LOCAL_TVT_PERSON_SECRET );
 
+#ifdef BUGFIX_SYSTEM160_20120421
+      {
+        GAMEDATA *p_gamedata = LOCAL_TVT_CALLDATA_GetGameData( cp_param->p_data );
+        LOCAL_TVT_MESSAGE_RegisterPlayerName( cp_param->p_message, p_gamedata );
+      }
+#endif
+
 #if 0 //かならず最初の１０回は相手からかけて、その後は自分しかかけないので
       //エクセルで管理することにした
       //かけてくる場合番号を足す
