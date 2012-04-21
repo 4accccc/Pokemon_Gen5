@@ -4527,6 +4527,18 @@ static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
     break;
 
   case 1:
+#ifdef BUGFIX_SYSTEM157_20120421
+    /*
+     * BTS System157 レーダーアイコンアニメ中にスリープさせると、
+     * _PFadeSetSleepBlack()の副作用でアニメーションが止まりハマリを起こすバグを修正
+     *
+     * レーダーアイコン以外は_PFadeSetSleepBlack()の副作用を受けないので問題がない
+     */
+    //LCDOff復帰時のスリープブラック_PFadeSetSleepBlack()時対策でオートアニメをセットしなおす
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor ], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor+1 ], TRUE );
+#endif  //#ifdef BUGFIX_SYSTEM160_20120421
+
     //対のパーツは同じアニメ設定なので、アニメ終了は最初の一個を待てばいいことにする
     if( GFL_CLACT_WK_CheckAnmActive( pWork->cellCursor[ pWork->select_cursor ] ) == FALSE ){
       pWork->eff_seq = 0;

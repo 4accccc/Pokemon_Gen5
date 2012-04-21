@@ -1678,3 +1678,17 @@ resource/wifi_earth/wifi_earth.narc
  * 
  */
 #define BUGFIX_SYSTEM160_20120421
+
+/**
+ * System157
+ *【Cギア/LCDオフモード/はまり】
+ *
+ * レーダーアイコンをタッチした際のアニメーション中に
+ * ・LCDオフにする(本体を閉じる)
+ * ・CTRのHOMEボタンを押す
+ * と、ゲーム復帰後に調査レーダー画面遷移イベントのシーケンスが進行しなくなり
+ * にCGearがパッシブのままハマりが発生します
+ * 
+ */
+#define BUGFIX_SYSTEM157_20120421
+
