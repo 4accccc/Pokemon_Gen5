@@ -158,9 +158,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろうの　バンジロウに
-おまえ……▼
-ブラックシティで　おまえらのように
+			<Text>ブラックシティに　おまえのような
 すごい　やつが　いると▽
 おれの　そんざいが　かすんでしまう▼
 いいや！▼
@@ -169,8 +167,8 @@
 そうよ！　おれさまこそが
 ブラックシティの　ボスだぜ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2012-02-09T06:42:15" />
+				User="suginaka_katsunori:W00289"
+				Time="2012-04-23T08:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
