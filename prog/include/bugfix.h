@@ -1692,3 +1692,13 @@ resource/wifi_earth/wifi_earth.narc
  */
 #define BUGFIX_SYSTEM157_20120421
 
+/*
+  SYSTEM131
+  【全言語：ポケウッド上映選択画面でシナリオを切り替えた時にグラフィック化けが起きる】
+
+  上映選択画面で選択状態を「魔法の国の 不思議な扉」から「OL The Giant！！」や「忘れえぬ 記憶」に
+  切り替えた時、切り替え先の上画面にあるロゴ上半分にグラフィック化けが起きます。
+
+  修正ソース: src/app/pkwd_selectscreen/pkwd_screenselect.c
+*/
+#define BUGFIX_SYSTEM131_20120424

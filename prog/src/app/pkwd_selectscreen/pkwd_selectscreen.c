@@ -910,6 +910,20 @@ static void PkwdSelectScreen_LOGO_u_LoadResource( PKWD_SELECT_SCREEN_BG_WORK *wk
     pal = pwc_bgpal_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
     cgx = pwc_bgchr_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
     scr = pwc_bgscn_01_tbl[scenario_logo_tbl[scenario_no]].arcid;
+/*
+  SYSTEM131
+  【全言語：ポケウッド上映選択画面でシナリオを切り替えた時にグラフィック化けが起きる】
+
+  上映選択画面で選択状態を「魔法の国の 不思議な扉」から「OL The Giant！！」や「忘れえぬ 記憶」に
+  切り替えた時、切り替え先の上画面にあるロゴ上半分にグラフィック化けが起きます。
+
+  修正ソース: src/app/pkwd_selectscreen/pkwd_screenselect.c
+*/
+#ifdef BUGFIX_SYSTEM131_20120424
+    GFL_BG_ClearScreenCode( BG_FRAME_BACK_S, 1 );
+    GFL_BG_LoadScreenReq( BG_FRAME_BACK_S );
+#endif
+
     GFL_ARCHDL_UTIL_TransVramPalette( handle, pal, PALTYPE_SUB_BG,  PLTID_BG_BACK_S, RES_PAL_02S_SIZE, HEAPID_PKWD_SELSCR );
     GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, cgx, BG_FRAME_BACK_S,  0, 0, 0, HEAPID_PKWD_SELSCR );
     GFL_ARCHDL_UTIL_TransVramScreen(      handle, scr,	BG_FRAME_BACK_S,  0, 0, 0, HEAPID_PKWD_SELSCR );	
