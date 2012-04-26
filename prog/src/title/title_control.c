@@ -88,7 +88,7 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
     else
 #endif
     {
-#if 0
+#if 0 //#TAG_FES_ROM
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
 #else
       //フェス配信アプリプロセスコール
@@ -131,7 +131,12 @@ static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * 
 #else
   switch( *seq  ){
   case TC_SEQ_CORPLOGO:   // 社名表示
+#if 0 //#TAG_FES_ROM
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(title), &CorpProcData, &CorpParam );
+#else
+    //フェス配信アプリプロセスコール
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(fes_rom), &FesRomSysProcData, NULL );
+#endif      
     *seq = 1;
     break;
 

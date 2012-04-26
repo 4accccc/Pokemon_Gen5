@@ -390,7 +390,7 @@ static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
   wk->param[PRM_M_EXP] = beacon->m_exp_id;
   
   for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
-    wk->param[PRM_M_PAT_TOWN+i] = (beacon->pattern>>(i*3))&0x3;
+    wk->param[PRM_M_PAT_TOWN+i] = (beacon->pattern>>(i*3))&0x7;
   }
 }
 
@@ -437,7 +437,8 @@ static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* 
 
   beacon->pattern = 0;
   for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
-     beacon->pattern |= (prm->m_pattern[i]<<(i*3))&0x03;
+    u32 tmp = prm->m_pattern[i]&0x07;
+     beacon->pattern |= (tmp<<(i*3));
   }
   return fmp->send.id;
 }
