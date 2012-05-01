@@ -1220,6 +1220,9 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
       if( p_wk->timeout_cnt++ > KEYSYS_NET_TIMEOUT_TEN_CNT  )
       {
         p_wk->error = KEYSYS_NET_ERROR_TIMEOUT;
+#ifdef BUGFIX_SYSTEM54_20120501
+        p_wk->error_msg = dwc_error_0014;
+#endif //BUGFIX_SYSTEM54_20120501
         *p_seq = SEQ_END;
       }
     }

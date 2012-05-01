@@ -1702,3 +1702,11 @@ resource/wifi_earth/wifi_earth.narc
   修正ソース: src/app/pkwd_selectscreen/pkwd_screenselect.c
 */
 #define BUGFIX_SYSTEM131_20120424
+
+/**
+ * System54
+ *【Wi-Fi経由のおもいでリンクを行った際、エラーコード00000が表示されることがあった】
+ * BWセーブデータ取得の１０分タイムアウトの際、エラーメッセージが指定されていません。
+ * 
+ */
+#define BUGFIX_SYSTEM54_20120501
