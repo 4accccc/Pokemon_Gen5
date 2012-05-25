@@ -155,6 +155,9 @@ static GFL_PROC_RESULT FesRomSystemProcInit( GFL_PROC *proc, int *seq, void *pwk
 	
   _sub_SystemSetup( wk );
   _sub_DataSetup( wk );
+  
+  //Ç∆ÇËÇ†Ç¶Ç∏ÉXÉäÅ[Évã÷é~
+  GFL_UI_SleepDisable(0xFF);
 
   return GFL_PROC_RES_FINISH;
 }

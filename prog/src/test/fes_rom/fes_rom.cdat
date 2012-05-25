@@ -258,14 +258,14 @@ static const PARAM_SET DATA_ParamSetMEdit[] = {
     WSET_ITEMNAME_CHECK, f_rom_prm_medit_item, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_ITEM,
     { 0, 0, 0 },  //param
-    { LINE_7, 1, 1+20, 1 },
+    { LINE_7, 1, 1+21, 1 },
   },
   {
     PRM_M_PAY,  //PARAM_ID
     WSET_MEDIT_NUM, f_rom_prm_medit_pay, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PAY,
     { 0, 0, 0 },  //param
-    { LINE_7, 21, 21+10, 1 },
+    { LINE_7, 22, 22+10, 1 },
   },
   //line8
   {
@@ -273,14 +273,14 @@ static const PARAM_SET DATA_ParamSetMEdit[] = {
     WSET_ITEMNAME_CHECK_SP, f_rom_prm_medit_sp_item, //WSET_TYPE, msg
     EXE_CODE_MEDIT_SP_ITEM, INPUT_CODE_MEDIT_SP_ITEM,
     { 0, 0, 0 },  //param
-    { LINE_8, 1, 1+20, 1 },
+    { LINE_8, 1, 1+21, 1 },
   },
   {
     PRM_M_SP_PAY,  //PARAM_ID
     WSET_MEDIT_NUM, f_rom_prm_medit_sp_pay, //WSET_TYPE, msg
     EXE_CODE_MEDIT_SP_PAY, INPUT_CODE_MEDIT_SP_PAY,
     { 0, 0, 0 },  //param
-    { LINE_8, 21, 21+10, 1 },
+    { LINE_8, 22, 22+10, 1 },
   },
   //line9
   {

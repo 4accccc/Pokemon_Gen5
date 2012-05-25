@@ -723,7 +723,6 @@ static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
   case EXE_CODE_MEDIT_EX:
     return exe_InputSwitchEx( wk, pset, meditEx_InputCodeGet(wk), param );
   
-  case EXE_CODE_MEDIT_SP_ITEM:
   case EXE_CODE_MEDIT_SP_PAY:
     {
       int icode = INPUT_CODE_ERR;
@@ -742,6 +741,7 @@ static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
       return exe_InputSwitchEx( wk, pset, icode, param );
     }
   case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
+  case EXE_CODE_MEDIT_SP_ITEM:
   case EXE_CODE_MEDIT_TIME:
     return exe_InputSwitch( wk, pset, param );
 
