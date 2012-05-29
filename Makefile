@@ -78,6 +78,15 @@ black:
 	$(MAKE) -C $(PROG_DIR) 
 #	cp ./prog/spec/version ./prog/version
 
+fes:
+	cp ./prog/spec/version_fes ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+#	cp ./prog/spec/version ./prog/version
+
 white_rom:
 	cp ./prog/spec/version_wr ./prog/version
 	$(MAKE) -C $(PROG_DIR) clean
@@ -96,6 +105,16 @@ black_rom:
 	$(MAKE) -C $(PROG_DIR) 
 #	cp ./prog/spec/version ./prog/version
 
+fes_rom:
+	cp ./prog/spec/version_fesr ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/Y9IJ_r.srl
+#	cp ./prog/spec/version ./prog/version
+
 black_rom_protect:
 	cp ./prog/spec/version_brp ./prog/version
 	$(MAKE) -C $(PROG_DIR) clean
@@ -112,6 +131,16 @@ white_rom_protect:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
+#	cp ./prog/spec/version ./prog/version
+
+fes_rom_protect:
+	cp ./prog/spec/version_fesrp ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/Y9IJ_p.srl
 #	cp ./prog/spec/version ./prog/version
 
 
@@ -220,4 +249,9 @@ date:
 	$(MAKE)
 	date
 
+make up_fes_d:
+	cp prog\bin\ARM9-TS.HYB\Release\main.srl p:\swan\rom\iwasawa\fes_rom_d.srl
+# cp prog\bin\ARM9-TS.HYB\Release\main.tlf p:\swan\rom\iwasawa\debug
+#	cp prog\bin\ARM9-TS.HYB\Release\main.tef p:\swan\rom\iwasawa\debug
+#	cp prog\bin\ARM9-TS.HYB\Release\main.tef.xMAP p:\swan\rom\iwasawa\debug
 

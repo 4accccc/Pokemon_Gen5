@@ -7,7 +7,9 @@ SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
 SET PROJECT_ARCDIR=%PROJECT_PROGDIR%arc/
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
 SET WBLIBDIR=C:\home\pokemon_wb\lib
-SET TAGFILE=c:\home\pokemon_wb\tags
+SET TAGFILE=c:\home\swan_tools\swan_fes_rom\tags
+SET USERNAME=fes_rom
+
 
 REM ##################################################
 REM	※ 64ビットPC上の32ビットアプリケーションはC:\x86Programsにインストールされています
