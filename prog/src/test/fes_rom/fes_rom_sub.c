@@ -736,7 +736,7 @@ static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
     {
       int icode = INPUT_CODE_ERR;
       if( wk->e_fmwk.beacon.end_type == FMISSION_ENDTYPE_SCORE ){
-        icode = meditEx_InputCodeGet( wk );
+        icode = INPUT_CODE_MEDIT_T_BONUS; //meditEx_InputCodeGet( wk );
       }
       return exe_InputSwitchEx( wk, pset, icode, param );
     }
