@@ -69,6 +69,8 @@
 #define _DEBUG_ALONETEST (24)
 #elif DEBUG_ONLY_FOR_onoue_masayuki
 #define _DEBUG_ALONETEST (25)
+#elif DEBUG_ONLY_FOR_fes_rom
+#define _DEBUG_ALONETEST (254)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)
