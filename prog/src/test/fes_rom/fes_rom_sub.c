@@ -151,10 +151,7 @@ static void draw_MsgWin( FES_ROM_WORK* wk, TARGET_VIEW view, STRBUF* str );
 static void draw_MsgClear( FES_ROM_WORK* wk, TARGET_VIEW view );
 
 static void draw_UnionObjUpdate( FES_ROM_WORK* wk, u8 char_no );
-static void draw_BeaconWindowIni( FES_ROM_WORK* wk );
 static void draw_BeaconData( FES_ROM_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx );
-static void draw_BeaconWindowVisibleSet( FES_ROM_WORK* wk, u8 idx, BOOL visible_f );
-static void draw_BeaconWindow( FES_ROM_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx );
 
 static void effReq_PopupMsg( FES_ROM_WORK* wk );
 static void printReq_BmpwinPrint( FES_ROM_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color );
@@ -213,12 +210,7 @@ void FesRom_InitialDraw( FES_ROM_WORK* wk )
   }
 
 #if 0
-  draw_BeaconWindowIni( wk );
-
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[wk->list_top]);
-  draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw );
-  draw_BeaconWindowVisibleSet( wk, wk->flip_sw, TRUE );
-  draw_BeaconWindowVisibleSet( wk, wk->flip_sw^1, FALSE );
 #endif
 
   wk->initial_f = FALSE;
@@ -762,7 +754,7 @@ static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
     {
       int icode = INPUT_CODE_ERR;
       if( wk->e_fmwk.beacon.end_type == FMISSION_ENDTYPE_TIME ){
-        icode = wk->p_base_set->input_code;
+        icode = INPUT_CODE_MEDIT_SP_PAY;  //wk->p_base_set->input_code;
       }
       return exe_InputSwitchEx( wk, pset, icode, param );
     }
@@ -1100,10 +1092,11 @@ static BOOL subSend_CheckTime( FES_ROM_WORK* wk )
   GFL_RTC_GetTime( &time );
   
   now_min = time.hour*FES_ROM_TIME_UNIT_HOUR+(time.minute/FES_ROM_TIME_UNIT_MIN); //現在時刻を分計算
+#if 0
   if( time.minute != 0 && time.minute != 30 ){  //00分,30分ちょうどでない時は+1
     now_min+=1;
   }
-
+#endif
   s_min = wk->param[PRM_BASE_START_TIME];
   e_min = wk->param[PRM_BASE_END_TIME];
 
@@ -1111,11 +1104,11 @@ static BOOL subSend_CheckTime( FES_ROM_WORK* wk )
   if( s_min == e_min ) return TRUE; //24時間配信
 
   if( s_min < e_min ){  //05:00-20:00
-    if( now_min >= s_min && now_min <= e_min ){
+    if( now_min >= s_min && now_min < e_min ){
       return TRUE;
     }
   }else{  //例20:00-05:00
-    if( now_min >= s_min || now_min <= e_min ){
+    if( now_min >= s_min || now_min < e_min ){
       return TRUE;
     } 
   }
@@ -1530,8 +1523,8 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
     {
       int m_id = param_MissionPopToFMWK( wk, wk->send_id, &wk->tmp_fmwk );
       
-      WORDSET_RegisterNumber( wk->wset, idx, m_id, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      WORDSET_RegisterNumber( wk->wset, idx+1, wk->send_id+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( wk->wset, idx, m_id, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      WORDSET_RegisterNumber( wk->wset, idx+1, wk->send_id+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
       if( m_id == 0 ){
         GF_ASSERT(0);
         GFL_MSG_GetString( wk->msgman, f_rom_param_msend_id_none, wk->str_tmp );
@@ -1738,56 +1731,6 @@ static void draw_UnionObjUpdate( FES_ROM_WORK* wk, u8 char_no )
   sub_PlttVramTrans( &wk->resPlttUnion.dat[p_ofs], FADE_MAIN_OBJ, PLTID_OBJ_UNION_M*16, 16 );
 }
 
-
-/*
- *  @brief  ビーコンウィンドウ初期描画
- */
-static void draw_BeaconWindowIni( FES_ROM_WORK* wk )
-{
-#if 0
-  int i,j;
-  BEACON_WIN* bp;
-  
-  //プロフィール見出し
-  for(i = 0;i < BEACON_PROF_MAX;i++){
-    GFL_MSG_GetString( wk->msgman, msg_prof01+i, wk->str_tmp );
-  
-    for(j = 0;j < BEACON_WIN_MAX;j++){
-      bp = &wk->beacon_win[j];
-  
-      GFL_BMP_Clear( bp->prof[i].bmp, FCOL_BEACON_BASE(i%2) );
-
-      printReq_BmpwinPrint( wk, &bp->prof[i],
-          0, 0, wk->str_tmp, FCOL_BEACON_COL(i%2) );
-      GFL_BMPWIN_MakeTransWindow( bp->prof[i].win );
-    }
-  }
-  //出身地見出し
-  GFL_MSG_GetString( wk->msgman, msg_home_town, wk->str_tmp );
-  for(j = 0;j < BEACON_WIN_MAX;j++){
-    bp = &wk->beacon_win[j];
-
-    GFL_BMP_Clear( bp->home[0].bmp, FCOL_BEACON_BASE(0) );
-
-    printReq_BmpwinPrint( wk, &bp->home[0],
-          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
-    GFL_BMPWIN_MakeTransWindow( bp->home[0].win );
-  }
-
-  //レコード見出し
-  GFL_MSG_GetString( wk->msgman, msg_record, wk->str_tmp);
-  
-  for(i = 0;i < BEACON_WIN_MAX;i++){
-    bp = &wk->beacon_win[i];
-    
-    GFL_BMP_Clear( bp->record.bmp, FCOL_BEACON_BASE(0) );
-    printReq_BmpwinPrint( wk, &bp->record,
-          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
-    GFL_BMPWIN_MakeTransWindow( bp->record.win );
-  }
-#endif
-}
-
 /*
  *  @brief  単発メッセージ描画
  */
@@ -1816,124 +1759,6 @@ static void draw_MsgClear( FES_ROM_WORK* wk, TARGET_VIEW view )
   TARGET_WIN* twin = &wk->target[ view ];
   GFL_BMP_Clear( twin->msg.bmp, FCOL_WIN_CLEAR );
   GFL_BMPWIN_MakeTransWindow( twin->msg.win );
-}
-
-/*
- *  @brief  ビーコンウィンドウ 表示制御
- */
-static void draw_BeaconWindowVisibleSet( FES_ROM_WORK* wk, u8 idx, BOOL visible_f )
-{
-#if 0
-  BEACON_WIN* bp = &wk->beacon_win[idx];
-
-  GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, visible_f );
-  if(bp->rank > 0){
-    GFL_CLACT_WK_SetDrawEnable( bp->cRank, visible_f );
-  }
-  if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
-    PMS_DRAW_VisibleSet( wk->pms_draw, idx, visible_f );
-  }
-	GFL_BG_SetVisible( bp->frame, visible_f );
-#endif
-}
-
-/*
- *  @brief  ビーコンウィンドウ描画
- */
-static void draw_BeaconWindow( FES_ROM_WORK* wk, GAMEBEACON_INFO* info, u16 time, u8 idx )
-{
-#if 0
-  BEACON_WIN* bp = &wk->beacon_win[idx];
-
-  //パネルベースカラー
-  {
-    u8  col_idx;
-    u16 pal[2];
-    GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[0], info);
-    SoftFade(&pal[0], &pal[1], 1, 3, 0x0000); //補色を作成
- 
-    sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+0x01, 2);
-  }
-
-  //プレイヤー名
-  GAMEBEACON_Get_PlayerNameToBuf( info, wk->str_tmp );
-  draw_BeaconData( wk, &bp->prof[0], wk->str_tmp,
-      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
-  //仕事
-  {
-    u8 job = GAMEBEACON_Get_Job(info);
-    if( job == GAMEBEACON_DETAILS_JOB_NULL ){
-      GFL_STR_ClearBuffer( wk->str_expand );
-    }else{
-      WORDSET_RegisterJobName( wk->wset, 0, job);
-      print_GetMsgToBuf( wk, msg_prof_job );
-    }
-    draw_BeaconData( wk, &bp->prof[1], wk->str_expand,
-      BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 1 );
-  }
-  //趣味
-  {
-    u8 hobby = GAMEBEACON_Get_Hobby( info );
-    if( hobby == GAMEBEACON_DETAILS_HOBBY_NULL ){
-      GFL_STR_ClearBuffer( wk->str_expand );
-    }else{
-      WORDSET_RegisterHobbyName( wk->wset, 0, hobby );
-      print_GetMsgToBuf( wk, msg_prof_hobby );
-    }
-    draw_BeaconData( wk, &bp->prof[2], wk->str_expand,
-        BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
-  }
-
-  //プレイ時間
-  {
-    u16 hour,min;
-    GAMEBEACON_Get_PlayTime( info, &hour, &min );
-
-    WORDSET_RegisterNumber( wk->wset, 2,
-        hour, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->wset, 3,
-        min, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-  
-    print_GetMsgToBuf( wk, msg_prof_ptime );
-    draw_BeaconData( wk, &bp->prof[3], wk->str_expand,
-        BMP_PROF02_DAT_PX, 0, BMP_PROF02_DAT_SX, BMP_PROF02_DAT_SY, 1);
-  }
-  //出身地
-  {
-    u16 nation = GAMEBEACON_Get_Nation(info);
-    WORDSET_RegisterCountryName( wk->wset, 0, nation);
-    WORDSET_RegisterLocalPlaceName( wk->wset, 1, nation, GAMEBEACON_Get_Area(info));
-    print_GetMsgToBuf( wk, msg_home_town_word );
-    draw_BeaconData( wk, &bp->home[1], wk->str_expand,
-        0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
-  }
-  //レコード
-  WORDSET_RegisterNumber( wk->wset, 0,
-      GAMEBEACON_Get_ThanksRecvCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wk->wset, 1,
-      GAMEBEACON_Get_SuretigaiCount(info), 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  
-  print_GetMsgToBuf( wk, msg_record_num );
-  draw_BeaconData( wk, &bp->record, wk->str_expand,
-      BMP_RECORD_DAT_PX, 0, BMP_RECORD_DAT_SX, BMP_RECORD_DAT_SY, 0);
-
-  //簡易会話
-  {
-    PMS_DATA pms;
-  
-    if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
-      PMS_DRAW_Clear( wk->pms_draw, idx, TRUE );
-    }
-    GAMEBEACON_Get_IntroductionPms( info, &pms );
-    PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , idx );
-  }
-  //ユニオンキャラクタナンバーを取得
-  bp->union_char = GAMEBEACON_Get_TrainerView( info );
-
-  //トレーナーOBJリソース再転送
-  TR2DGRA_OBJ_RES_Replace( wk->h_trgra, UnionView_GetTrType( bp->union_char),
-      wk->objResTrainer[idx].cgr, wk->objResTrainer[idx].pltt, wk->tmpHeapID );
-#endif
 }
 
 /////////////////////////////////////////////////////////////////////

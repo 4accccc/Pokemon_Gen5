@@ -193,7 +193,11 @@ static GFL_PROC_RESULT FesRomProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //呼び出しモード補正
   if( wk->app_mode == FESROM_APP_MODE_BASE ){
-    if( GFL_UI_KEY_GetCont() != ( PAD_BUTTON_R|PAD_BUTTON_L|PAD_BUTTON_X) &&
+    BOOL edit_force = FALSE;
+    if( wk->sys_wk->command_f ){
+      edit_force = ( GFL_UI_KEY_GetCont() == ( PAD_BUTTON_R|PAD_BUTTON_L|PAD_BUTTON_X));
+    }
+    if( edit_force == FALSE &&
         wk->sys_wk->save_enable_f &&
         wk->sys_wk->ret_mode == FESROM_APP_RET_NONE){
       //送信モードから始める

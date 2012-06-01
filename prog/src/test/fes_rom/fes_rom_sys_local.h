@@ -132,6 +132,7 @@ typedef struct
   BOOL                  data_error_f;
   BOOL                  data_enable_f;
   BOOL                  save_enable_f;
+  BOOL                  command_f;  //隠しコマンドが有効か？
   FESROM_APP_RET_MODE   ret_mode;
   int                   init_pos;
 

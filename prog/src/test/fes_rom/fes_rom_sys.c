@@ -407,6 +407,29 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
   wk->save_wk.str_selfmsg = GFL_STR_CreateBuffer( BUFLEN_FESROM_SELFMSG, wk->heapID );
   
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_FESROM_SELFMSG, wk->heapID );
+
+  { //本体名パスコードチェック
+    static const u16 pass[] = L"PASS";
+    u16 pass_len = NELEMS(pass)-1;
+#if (defined(SDK_TWL))
+    OSOwnerInfoEx info;
+    OS_GetOwnerInfoEx(&info);
+#else
+    OSOwnerInfo owner_info;
+    OS_GetOwnerInfo(&owner_info);
+#endif
+
+    OS_Printf("PassLen %d\n",pass_len);
+    if( pass_len == info.nickNameLength ){
+      int i;
+      for(i = 0;i < pass_len;i++){
+        if( pass[i] != info.nickName[i]) break;
+      }
+      wk->command_f = (i==pass_len);
+      OS_Printf("コマンド入力可否=%d\n",wk->command_f);
+    }
+    wk->command_f = TRUE; //要望がくるまで絶対にTRUE
+  }
 }
 
 //--------------------------------------------------------------
@@ -492,8 +515,10 @@ BOOL FesRomSys_SaveLoad(  FES_ROM_SYS_WORK* wk )
 
   ret = GFL_BACKUP_DirectFlashLoad(0, &wk->save, sizeof(FES_ROM_SAVE));
 
-  if( GFL_UI_KEY_GetCont() == (PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_BUTTON_Y)){
-    if( ret ) wk->save.magic_key = 0; //セーブ消去
+  if( wk->command_f ){
+    if( GFL_UI_KEY_GetCont() == (PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_BUTTON_Y)){
+      if( ret ) wk->save.magic_key = 0; //セーブ消去
+    }
   }
   if(ret == FALSE || wk->save.magic_key != FES_ROM_SAVE_MAGICKEY){
     FesRomSys_SaveInit( &wk->save );
