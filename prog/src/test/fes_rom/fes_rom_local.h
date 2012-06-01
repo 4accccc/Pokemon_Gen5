@@ -123,8 +123,9 @@ typedef struct _MEDIT_PRM_BASE_SET{
   INPUT_CODE  input_code;
   WSET_TYPE wset_type;
   const INPUT_CODE* tbl;
+  int   type_num;
+  const u8* type_tbl;
 }MEDIT_PRM_BASE_SET;
-
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -164,7 +165,10 @@ typedef struct
   FEST_MISSION          tmp_fmwk;    //テンポラリ用
   FEST_MISSION          send_fmwk;   //送信用
   FMISSION_DATA_MAN*    fm_data_man;
+  FMISSION_ARCDATA*     fm_arc_tbl;
+  FEST_MISSION_ID       sub_id;
   const MEDIT_PRM_BASE_SET* p_base_set;
+  FMISSION_ARCDATA*     p_fmarc;
 
   int                   send_id;  //送信データNo
   int                   send_odds;

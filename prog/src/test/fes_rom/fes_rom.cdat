@@ -9,6 +9,81 @@
  */
 //=============================================================================
 
+//////////////////////////////////////////////
+//ミッションタイプリスト
+static const u8 DATA_EffectEncMissionTbl[] = {
+  FMISSION_ID_EFFECT_ENC_TARGET_01,
+  FMISSION_ID_EFFECT_ENC_GLASS_01S,
+  FMISSION_ID_EFFECT_ENC_TARGET_03,
+  FMISSION_ID_EFFECT_ENC_GLASS_01,
+  FMISSION_ID_EFFECT_ENC_TARGET_04,
+};
+#define MTYPE_EFFECT_ENC_NUM  (NELEMS(DATA_EffectEncMissionTbl))
+
+static const u8 DATA_MushroomEncMissionTbl[] = {
+  FMISSION_ID_MUSHROOM_ENC_KINOKO_01,
+};
+#define MTYPE_MUSHROOM_ENC_NUM  (NELEMS(DATA_MushroomEncMissionTbl))
+static const u8 DATA_EventMissionTbl[] = {
+  FMISSION_ID_EVENT_FEATHER_01,
+  FMISSION_ID_EVENT_JEWEL_01,
+  FMISSION_ID_EVENT_TOH_01,
+  FMISSION_ID_EVENT_TOH_01S,
+  FMISSION_ID_EVENT_TRAIL_01,
+  FMISSION_ID_EVENT_TRAIL_02B,
+  FMISSION_ID_EVENT_TRAIL_02W,
+  FMISSION_ID_EVENT_FISH_01B,
+  FMISSION_ID_EVENT_EGG_01,
+  FMISSION_ID_EVENT_TRAIL_SP1,
+};
+#define MTYPE_EVENT_NUM  (NELEMS(DATA_EventMissionTbl))
+
+static const u8 DATA_ItemMissionTbl[] = {
+  FMISSION_ID_ITEM_KINOMI_01,
+  FMISSION_ID_ITEM_LOST_01,
+  FMISSION_ID_ITEM_TREASURE1B,
+  FMISSION_ID_ITEM_TREASURE1W,
+  FMISSION_ID_ITEM_KAKERA_03B,
+  FMISSION_ID_ITEM_KAKERA_03W,
+  FMISSION_ID_ITEM_KAKERA_02S,
+  FMISSION_ID_ITEM_KINOMI_02,
+  FMISSION_ID_ITEM_KAKERA_01,
+  FMISSION_ID_ITEM_LOST_02B,
+  FMISSION_ID_ITEM_LOST_02W,
+  FMISSION_ID_ITEM_KOYASHI_01,
+  FMISSION_ID_ITEM_HEART_01,
+  FMISSION_ID_ITEM_KINOMI_MOVIE,
+  FMISSION_ID_ITEM_KINOMI_SP1,
+  FMISSION_ID_ITEM_TREASURE_SP1,
+  FMISSION_ID_ITEM_KINOMI_GIFT,
+};
+#define MTYPE_ITEM_NUM  (NELEMS(DATA_ItemMissionTbl))
+
+static const u8 DATA_NpcMissionTbl[] = {
+  FMISSION_ID_NPC_LOSTBOY_01,
+  FMISSION_ID_NPC_SHOPPING_01,
+  FMISSION_ID_NPC_BTLNPC_01,
+  FMISSION_ID_NPC_BTLNPC_01S,
+  FMISSION_ID_NPC_TRADE_02B,
+  FMISSION_ID_NPC_TRADE_02W,
+  FMISSION_ID_NPC_BTLNPC_02,
+  FMISSION_ID_NPC_SHOCKSHOP_01,
+  FMISSION_ID_NPC_MEMORYQUIZ_01S,
+  FMISSION_ID_NPC_MEMORYQUIZ_01,
+  FMISSION_ID_NPC_SHOCKSHOP_02B,
+  FMISSION_ID_NPC_SHOCKSHOP_02W,
+  FMISSION_ID_NPC_ITEMBOY_02,
+  FMISSION_ID_NPC_TRADE_01,
+  FMISSION_ID_NPC_JANKEN_01,
+  FMISSION_ID_NPC_POKEQUIZ_SP1,
+  FMISSION_ID_NPC_SHOCKSHOP_SP1,
+  FMISSION_ID_NPC_PRESENT_SP1,
+  FMISSION_ID_NPC_POKEQUIZ_GIFT,
+  FMISSION_ID_NPC_TRBTL_GIFT,
+  FMISSION_ID_NPC_PRESENT_GIFT,
+};
+#define MTYPE_NPC_NUM  (NELEMS(DATA_NpcMissionTbl))
+
 ////////////////////////////////////////////////
 //入力パラメータ
 static const INPUT_PARAM DATA_InputParamTbl[INPUT_CODE_MAX] = {
@@ -45,12 +120,21 @@ static const INPUT_PARAM DATA_InputParamTbl[INPUT_CODE_MAX] = {
  { 0, FMISSION_ITEM_SET_MAX-1, 1, WSET_MBASE_ITEM }, //INPUT_CODE_MBASE_ITEM,        //アイテムミッション アイテムセット名
  { 0, FMISSION_NPC_TYPE_END, 1, WSET_MBASE_NPC },  //INPUT_CODE_MBASE_NPC,         //NPCミッションパターン
  
- { 1, FMISSION_EXP_TRAIL_MONS_MAX, 2, WSET_MEX_EVENT_TRAIL },  //INPUT_CODE_MEDIT_EX_EV_ANIMAL_TRAIL
+ { 1, FMISSION_EXP_TRAIL_MONS_MAX-1, 2, WSET_MEX_EVENT_TRAIL },  //INPUT_CODE_MEDIT_EX_EV_ANIMAL_TRAIL
  { 0, FMISSION_EXP_ITEM_TRADE_SET_MAX-1, 1, WSET_MEX_NPC_ITEM_TRADE },  //INPUT_CODE_MEDIT_EX_NPC_ITEM_TRADE
  { 0, FMISSION_EXP_SHOPPING_SET_MAX-1, 1, WSET_MEX_NPC_SHOPPING },  //INPUT_CODE_MEDIT_EX_NPC_SHOPPING
  { 0, FMISSION_EXP_TRAINER_SET_MAX-1, 1, WSET_MEX_NPC_TR_BATTLE },  //INPUT_CODE_MEDIT_EX_NPC_BATTLE
  { 0, FMISSION_EXP_GET_A_PRESENT_SET_MAX-1, 1, WSET_MEX_NPC_GET_A_PRESENT },  //INPUT_CODE_MEDIT_EX_NPC_G_PRESENT
  { 0, FMISSION_EXP_POKE_QUIZ_MAX-1, 2, WSET_MEX_NPC_POKE_QUIZ },  //INPUT_CODE_MEDIT_EX_NPC_POKE_QUIZ
+ 
+ { 0, 0, 1, WSET_NONE },  //INPUT_CODE_MEDIT_BASE
+ { 0, 0, 1, WSET_NONE },  //INPUT_CODE_MEDIT_EX
+ 
+ { 0, MTYPE_EFFECT_ENC_NUM-1, 2, WSET_MEDIT_TYPE_CODE },  //INPUT_CODE_MEDIT_TYPE_CODE_EFFECT_ENC
+ { 0, MTYPE_MUSHROOM_ENC_NUM-1, 2, WSET_MEDIT_TYPE_CODE },  //INPUT_CODE_MEDIT_TYPE_CODE_MUSHROOM_ENC
+ { 0, MTYPE_EVENT_NUM-1, 2, WSET_MEDIT_TYPE_CODE },  //INPUT_CODE_MEDIT_TYPE_CODE_EVENT
+ { 0, MTYPE_ITEM_NUM-1, 2, WSET_MEDIT_TYPE_CODE },  //INPUT_CODE_MEDIT_TYPE_CODE_ITEM
+ { 0, MTYPE_NPC_NUM-1, 2, WSET_MEDIT_TYPE_CODE },  //INPUT_CODE_MEDIT_TYPE_CODE_NPC
 };
 
 #define DEV_PARAM_SET_MSEND_ID(id,no,line) \
@@ -217,138 +301,149 @@ static const PARAM_SET DATA_ParamSetMEdit[] = {
   },
   //line5
   {
+    PRM_M_TYPE_CODE,  //PARAM_ID
+    WSET_MEDIT_TYPE_CODE, f_rom_prm_medit_type_code, //WSET_TYPE, msg
+    EXE_CODE_MEDIT_TYPE_CODE, INPUT_CODE_MEDIT_TYPE_CODE_EFFECT_ENC,
+    { 0, 0, 0 },  //param
+    { LINE_5, 1, 1+30, 2 },
+  },
+  //line7
+  {
     PRM_M_LEVEL,  //PARAM_ID
     WSET_MEDIT_LEVEL, f_rom_prm_medit_level, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_LEVEL,
     { 0, 0, 0 },  //param
-    { LINE_5, 1, 1+8, 1 },
+    { LINE_7, 1, 1+16, 1 },
   },
+#if 0
   {
     PRM_M_GOAL,  //PARAM_ID
     WSET_MEDIT_NUM, f_rom_prm_medit_goal, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_GOAL,
     { 0, 0, 0 },  //param
-    { LINE_5, 9, 9+10, 1 },
+    { LINE_7, 18, 18+10, 1 },
   },
+#endif
   {
     PRM_M_TIME,  //PARAM_ID
     WSET_MEDIT_TIME, f_rom_prm_medit_time, //WSET_TYPE, msg
     EXE_CODE_MEDIT_TIME, INPUT_CODE_MEDIT_TIME,
     { 0, 0, 0 },  //param
-    { LINE_5, 20, 20+10, 1 },
+    { LINE_8, 1, 1+10, 1 },
   },
-  //line6
   {
     PRM_M_VERSION,  //PARAM_ID
     WSET_MEDIT_VERSION, f_rom_prm_medit_version, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_VERSION,
     { 0, 0, 0 },  //param
-    { LINE_6, 1, 1+10, 1 },
+    { LINE_8, 12, 12+10, 1 },
   },
+#if 0
   {
     PRM_M_UNIT,  //PARAM_ID
     WSET_MEDIT_UNIT, f_rom_prm_medit_unit, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_UNIT,
     { 0, 0, 0 },  //param
-    { LINE_6, 12, 12+10, 1 },
+    { LINE_8, 23, 23+7, 1 },
   },
-  //line7
+#endif
+  //line9
   {
     PRM_M_ITEM,  //PARAM_ID
     WSET_ITEMNAME_CHECK, f_rom_prm_medit_item, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_ITEM,
     { 0, 0, 0 },  //param
-    { LINE_7, 1, 1+21, 1 },
+    { LINE_9, 1, 1+21, 1 },
   },
   {
     PRM_M_PAY,  //PARAM_ID
     WSET_MEDIT_NUM, f_rom_prm_medit_pay, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PAY,
     { 0, 0, 0 },  //param
-    { LINE_7, 22, 22+10, 1 },
+    { LINE_9, 22, 22+10, 1 },
   },
-  //line8
+  //line10
   {
     PRM_M_SP_ITEM,  //PARAM_ID
     WSET_ITEMNAME_CHECK_SP, f_rom_prm_medit_sp_item, //WSET_TYPE, msg
     EXE_CODE_MEDIT_SP_ITEM, INPUT_CODE_MEDIT_SP_ITEM,
     { 0, 0, 0 },  //param
-    { LINE_8, 1, 1+21, 1 },
+    { LINE_10, 1, 1+21, 1 },
   },
   {
     PRM_M_SP_PAY,  //PARAM_ID
     WSET_MEDIT_NUM, f_rom_prm_medit_sp_pay, //WSET_TYPE, msg
     EXE_CODE_MEDIT_SP_PAY, INPUT_CODE_MEDIT_SP_PAY,
     { 0, 0, 0 },  //param
-    { LINE_8, 22, 22+10, 1 },
+    { LINE_10, 22, 22+10, 1 },
   },
-  //line9
+  //line11
   {
     PRM_M_T_BONUS,  //PARAM_ID
     WSET_MEDIT_T_BONUS, f_rom_prm_medit_t_bonus, //WSET_TYPE, msg
     EXE_CODE_MEDIT_T_BONUS, INPUT_CODE_MEDIT_T_BONUS,
     { 0, 0, 0 },  //param
-    { LINE_9, 1, 1+10, 1 },
+    { LINE_11, 1, 1+10, 1 },
   },
-  //line10
+  //line12
   {
     PRM_M_PAT_TOWN,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_01, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_10, 1, 1+11, 1 },
+    { LINE_12, 1, 1+11, 1 },
   },
   {
     PRM_M_PAT_ROAD,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_02, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_10, 12, 12+9, 1 },
+    { LINE_12, 12, 12+9, 1 },
   },
   {
     PRM_M_PAT_CAVE,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_03, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_10, 22, 22+9, 1 },
+    { LINE_12, 22, 22+9, 1 },
   },
-  //line11
+  //line13
   {
     PRM_M_PAT_FOREST,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_04, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_11, 1, 1+11, 1 },
+    { LINE_13, 1, 1+11, 1 },
   },
   {
     PRM_M_PAT_HIGH,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_05, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_11, 12, 12+9, 1 },
+    { LINE_13, 12, 12+9, 1 },
   },
   {
     PRM_M_PAT_LOW,  //PARAM_ID
     WSET_MEDIT_PATTERN, f_rom_prm_medit_pat_06, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_PATTERN,
     { 0, 0, 0 },  //param
-    { LINE_11, 22, 22+9, 1 },
+    { LINE_13, 22, 22+9, 1 },
   },
-  //line12
+  //line15
   {
     PRM_M_TITLE,  //PARAM_ID
     WSET_MEDIT_TITLE, f_rom_prm_medit_title, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_TITLE,
     { 0, 0, 0 },  //param
-    { LINE_12, 1, 1+31, 2 },
+    { LINE_15, 1, 1+31, 2 },
   },
-  //line15
+  //line17
   {
     PRM_M_EXP,  //PARAM_ID
     WSET_MEDIT_EXP, f_rom_prm_medit_exp, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_MEDIT_EXP,
     { 0, 0, 0 },  //param
-    { LINE_15, 1, 1+31, 5 },
+    { LINE_17, 1, 1+31, 5 },
   },
 
 };
@@ -377,11 +472,11 @@ static const  INPUT_CODE DATA_NpcMissionExParamSet[FMISSION_NPC_TYPE_MAX] = {
 };
 //ミッションリクエスト ベースパラメータ
 static const MEDIT_PRM_BASE_SET DATA_MissionBaseParam[] = {
- { INPUT_CODE_MEDIT_EFF_ENC, WSET_MONSNAME, NULL }, //MBASE_PSET_MONSNO,      //ポケモン種族名
- { INPUT_CODE_NONE, WSET_MONSNAME, NULL  },          //MBASE_PSET_MUSHROOM,    //キノコポケモン種族名
- { INPUT_CODE_MEDIT_BASE_EVENT, WSET_MBASE_EVENT, DATA_EventMissionExParamSet  }, //BPRM_MBASE_PSET_EVENT,       //イベントミッションタイプ
- { INPUT_CODE_MEDIT_BASE_ITEM, WSET_MBASE_ITEM, NULL }, //MBASE_PSET_ITEM,        //アイテムミッション アイテムセット名
- { INPUT_CODE_MEDIT_BASE_NPC, WSET_MBASE_NPC, DATA_NpcMissionExParamSet },  //MBASE_PSET_NPC,         //NPCミッションパターン
+ { INPUT_CODE_MEDIT_EFF_ENC, WSET_MONSNAME, NULL, MTYPE_EFFECT_ENC_NUM, DATA_EffectEncMissionTbl }, //MBASE_PSET_MONSNO,      //ポケモン種族名
+ { INPUT_CODE_NONE, WSET_MONSNAME, NULL, MTYPE_MUSHROOM_ENC_NUM, DATA_MushroomEncMissionTbl },          //MBASE_PSET_MUSHROOM,    //キノコポケモン種族名
+ { INPUT_CODE_MEDIT_BASE_EVENT, WSET_MBASE_EVENT, DATA_EventMissionExParamSet, MTYPE_EVENT_NUM, DATA_EventMissionTbl }, //BPRM_MBASE_PSET_EVENT,       //イベントミッションタイプ
+ { INPUT_CODE_MEDIT_BASE_ITEM, WSET_MBASE_ITEM, NULL, MTYPE_ITEM_NUM, DATA_ItemMissionTbl }, //MBASE_PSET_ITEM,        //アイテムミッション アイテムセット名
+ { INPUT_CODE_MEDIT_BASE_NPC, WSET_MBASE_NPC, DATA_NpcMissionExParamSet, MTYPE_NPC_NUM, DATA_NpcMissionTbl },  //MBASE_PSET_NPC,         //NPCミッションパターン
 };
 
 
@@ -499,4 +594,7 @@ static const u16 DATA_TrailMonsTbl[] = {
   MONSNO_TOGETIKKU,
   MONSNO_RAKKII,
 };
+
+
+
 

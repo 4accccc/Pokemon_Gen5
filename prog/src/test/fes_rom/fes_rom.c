@@ -474,6 +474,8 @@ static void _sub_SystemSetup( FES_ROM_WORK* wk)
   
   //フェスミッションデータマネージャ
   wk->fm_data_man = FMISSION_DATA_Init( wk->heapID );
+  //フェスミッションアーカイブ取得
+  wk->fm_arc_tbl = FMISSION_DATA_AllocArcAll( wk->fm_data_man, wk->heapID );
 
   //グラフィックハンドル取得
   wk->handle	= GFL_ARC_OpenDataHandle( ARCID_CONFIG_GRA, wk->heapID );
@@ -522,6 +524,7 @@ static void _sub_SystemExit( FES_ROM_WORK* wk)
 	
   GFL_ARC_CloseDataHandle( wk->handle );
   
+  GFL_HEAP_FreeMemory( wk->fm_arc_tbl );
   FMISSION_DATA_Release( wk->fm_data_man );
 }
 

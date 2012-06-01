@@ -678,13 +678,47 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="f_rom_prm_medit_type_code">
+		<LanguageCell
+			Language="JPN">
+			<Text>code=[Digit:2digits ] s_id=[Digit:2digits Idx="1" ] unit=[Name:PMS Idx="2" ]
+   Lv1=[Digit:3digits Idx="3" ] Lv2=[Digit:3digits Idx="4" ] Lv3=[Digit:3digits Idx="5" ] Lv4=[Digit:3digits Idx="6" ] </Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-05-31T13:32:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-05-31T08:57:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>code=[Digit:2digits ] s_id=[Digit:2digits Idx="1" ] unit=[Name:PMS Idx="2" ]
+   Lv1=[Digit:3digits Idx="3" ] Lv2=[Digit:3digits Idx="4" ] Lv3=[Digit:3digits Idx="5" ] Lv4=[Digit:3digits Idx="6" ] </Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-05-31T13:32:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2012-05-31T09:00:48" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="f_rom_prm_medit_level">
 		<LanguageCell
 			Language="JPN">
-			<Text>lv=[Digit:1digit ]</Text>
+			<Text>lv=[Digit:1digit ] goal=[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-17T11:00:29" />
+				Time="2012-05-31T09:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -692,10 +726,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>lv=[Digit:1digit ]</Text>
+			<Text>lv=[Digit:1digit ] goal=[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2012-04-17T11:00:31" />
+				Time="2012-05-31T09:01:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"

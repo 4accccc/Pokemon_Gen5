@@ -284,15 +284,16 @@ static void param_MissionPop( FES_ROM_WORK* wk )
   }
 
   wk->param[PRM_M_ID] = fmp->send.id;
+  wk->param[PRM_M_TYPE_CODE] = prm->m_type_code;  //param_GetTypeCodeFromMID( wk, wk->param[PRM_M_ID] );
 
   wk->param[PRM_M_T_BONUS] = prm->m_t_bonus;
   wk->param[PRM_M_BASE] = prm->m_base_param;
   wk->param[PRM_M_EX] = prm->m_ex_param;
   wk->param[PRM_M_LEVEL] = prm->m_level;
-  wk->param[PRM_M_GOAL] = prm->m_goal;
+//  wk->param[PRM_M_GOAL] = prm->m_goal;
   wk->param[PRM_M_TIME] = prm->m_time;
   wk->param[PRM_M_VERSION] = prm->m_version;
-  wk->param[PRM_M_UNIT] = prm->m_unit;
+//  wk->param[PRM_M_UNIT] = prm->m_unit;
 
   wk->param[PRM_M_ITEM] = prm->m_item;
   wk->param[PRM_M_PAY] = prm->m_pay;
@@ -321,11 +322,12 @@ static void param_MissionPush( FES_ROM_WORK* wk )
 
   prm->m_base_param = wk->param[PRM_M_BASE];
   prm->m_ex_param = wk->param[PRM_M_EX];
+  prm->m_type_code = wk->param[PRM_M_TYPE_CODE];
   prm->m_level = wk->param[PRM_M_LEVEL];
-  prm->m_goal = wk->param[PRM_M_GOAL];
+//  prm->m_goal = wk->param[PRM_M_GOAL];
   prm->m_time = wk->param[PRM_M_TIME];
   prm->m_version = wk->param[PRM_M_VERSION];
-  prm->m_unit = wk->param[PRM_M_UNIT];
+//  prm->m_unit = wk->param[PRM_M_UNIT];
 
   prm->m_item = wk->param[PRM_M_ITEM];
   prm->m_pay = wk->param[PRM_M_PAY];
@@ -340,6 +342,20 @@ static void param_MissionPush( FES_ROM_WORK* wk )
   }
 }
 
+//ミッションIDからタイプコードを逆引き
+static int param_GetTypeCodeFromMID( FES_ROM_WORK* wk, FEST_MISSION_ID m_id )
+{
+  int i;
+  FMISSION_TYPE_ID m_type = wk->fm_arc_tbl[m_id].common.m_type;
+  const MEDIT_PRM_BASE_SET* mpbs = &DATA_MissionBaseParam[ m_type-1 ];
+
+  for( i = 0;i < mpbs->type_num; i++ ){
+    if( mpbs->type_tbl[i] == m_id ) return i;
+  }
+  GF_ASSERT(0);
+  return 0;
+}
+
 //ミッションデフォルトパラメータ再取得
 static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
 {
@@ -349,24 +365,31 @@ static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
   FESROM_MISSION_PARAM* prm = &fmp->param;
   FEST_BEACON* beacon = &wk->e_fmwk.beacon;
  
-  if( up_code != M_UPDATE_BASE ){
+  if( up_code == M_UPDATE_ID || up_code == M_UPDATE_CUSTOM ){
     FMISSION_DATA_GetMissionParam( wk->fm_data_man, wk->param[PRM_M_ID], wk->param[PRM_M_LEVEL], &wk->e_fmwk );
+    if( up_code == M_UPDATE_ID ){
+      wk->param[PRM_M_TYPE_CODE] = param_GetTypeCodeFromMID( wk, wk->param[PRM_M_ID] );
+    }
   }
   wk->p_base_set = &DATA_MissionBaseParam[ wk->e_fmwk.arc.m_type-1 ];
+  wk->sub_id = wk->p_base_set->type_tbl[wk->param[PRM_M_TYPE_CODE]];
+  wk->p_fmarc = &wk->fm_arc_tbl[ wk->sub_id ];
 
   switch( up_code ){
   case M_UPDATE_BASE:
     {
       INPUT_CODE icode = meditEx_InputCodeGet( wk );
       wk->param[PRM_M_EX] = ( (icode==INPUT_CODE_ERR)?  0 : InPrmMin( icode ));
-      wk->param[PRM_M_UNIT] = wk->e_fmwk.beacon.unit;
+//      wk->param[PRM_M_UNIT] = wk->e_fmwk.beacon.unit;
     }
     return;
+#if 0
   case M_UPDATE_LEVEL:
     wk->param[PRM_M_GOAL] = beacon->goal;
     wk->param[PRM_M_TIME] = beacon->time;
     wk->param[PRM_M_PAY] = beacon->pay;
     return;
+#endif
   case M_UPDATE_CUSTOM:
     return;
   default:
@@ -376,10 +399,10 @@ static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
   wk->param[PRM_M_BASE] = beacon->base_param;
   wk->param[PRM_M_EX] = beacon->ex_param;
   wk->param[PRM_M_LEVEL] = beacon->m_level;
-  wk->param[PRM_M_GOAL] = beacon->goal;
+//  wk->param[PRM_M_GOAL] = beacon->goal;
   wk->param[PRM_M_TIME] = beacon->time;
   wk->param[PRM_M_VERSION] = beacon->version_idx;
-  wk->param[PRM_M_UNIT] = beacon->unit;
+//  wk->param[PRM_M_UNIT] = beacon->unit;
 
   wk->param[PRM_M_ITEM] = beacon->item;
   wk->param[PRM_M_PAY] = beacon->pay;
@@ -401,6 +424,9 @@ static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* 
   FESROM_MISSION* fmp = &wk->sys_save->mission[edit_id];
   FESROM_MISSION_PARAM* prm = &fmp->param;
   FEST_BEACON* beacon = &fmwk->beacon;
+  FEST_MISSION_ID s_id;
+  const MEDIT_PRM_BASE_SET* mpbs;
+  FMISSION_ARCDATA* arc;
 
   if( fmp->send.id == 0 ){
     FEST_MISSION_Clear( fmwk );
@@ -408,11 +434,20 @@ static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* 
   }
   //デフォルトパラメータ取得
   FMISSION_DATA_GetMissionParam( wk->fm_data_man, fmp->send.id, prm->m_level, fmwk );
+  mpbs = &DATA_MissionBaseParam[ fmwk->arc.m_type-1 ];
+  s_id = mpbs->type_tbl[prm->m_type_code];
+  arc = &wk->fm_arc_tbl[ s_id ];
 
   fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成 
   beacon->distribution_f = TRUE;  //配信フラグOn
 
   //カスタムパラメータ適用
+  beacon->m_id = s_id;  //送信する実際のミッションID
+  beacon->m_level = prm->m_level;
+  //単位と目標値はアーカイブから取得
+  beacon->unit = arc->param.unit;
+  beacon->goal = arc->param.level[prm->m_level].goal;
+
   if( beacon->end_type == FMISSION_ENDTYPE_SCORE ){
     beacon->time_bonus = prm->m_t_bonus;
     beacon->sp_item = 0;
@@ -423,11 +458,8 @@ static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* 
   }
   beacon->base_param = prm->m_base_param;
   beacon->ex_param = prm->m_ex_param;
-  beacon->m_level = prm->m_level;
-  beacon->goal = prm->m_goal;
   beacon->time = prm->m_time;
   beacon->version_idx = prm->m_version;
-  beacon->unit = prm->m_unit;
 
   beacon->item = prm->m_item;
   beacon->pay = prm->m_pay;
@@ -438,8 +470,10 @@ static int param_MissionPopToFMWK( FES_ROM_WORK* wk, int edit_id, FEST_MISSION* 
   beacon->pattern = 0;
   for( i = 0;i < FMISSION_MAP_ATTR_MAX;i++){
     u32 tmp = prm->m_pattern[i]&0x07;
-     beacon->pattern |= (tmp<<(i*3));
+    beacon->pattern |= (tmp<<(i*3));
   }
+  beacon->entry_flag_id = 0;  //エントリーフラグ無し
+
   return fmp->send.id;
 }
 
@@ -453,7 +487,7 @@ static void param_MissionPopToFMWKEdit( FES_ROM_WORK* wk, FEST_MISSION* fmwk )
   //編集中パラメータセット
   beacon->m_title_id = wk->param[PRM_M_TITLE];
   beacon->m_exp_id = wk->param[PRM_M_EXP];
-  beacon->goal = wk->param[PRM_M_GOAL];
+  beacon->goal = wk->p_fmarc->param.level[ wk->param[PRM_M_LEVEL]].goal;//wk->param[PRM_M_GOAL];
   beacon->base_param = wk->param[PRM_M_BASE];
   beacon->ex_param = wk->param[PRM_M_EXP];
   beacon->m_level = wk->param[PRM_M_LEVEL];
@@ -631,7 +665,8 @@ int FesRom_InputCheckMEdit( FES_ROM_WORK* wk )
       pset->exe_code == EXE_CODE_MEDIT_TIME ||
       pset->exe_code == EXE_CODE_MEDIT_SP_ITEM ||
       pset->exe_code == EXE_CODE_MEDIT_SP_PAY ||
-      pset->exe_code == EXE_CODE_MEDIT_T_BONUS){
+      pset->exe_code == EXE_CODE_MEDIT_T_BONUS ||
+      pset->exe_code == EXE_CODE_MEDIT_TYPE_CODE ){
     int diff = 1;
 
     if( pset->exe_code == EXE_CODE_MEDIT_TIME ){
@@ -740,6 +775,9 @@ static int input_MEditExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
       }
       return exe_InputSwitchEx( wk, pset, icode, param );
     }
+  case EXE_CODE_MEDIT_TYPE_CODE:
+    return exe_InputSwitchEx( wk, pset, pset->input_code+wk->e_fmwk.arc.m_type-1, param );
+
   case EXE_CODE_INPUT_SWITCH: //スイッチ式入力実行
   case EXE_CODE_MEDIT_SP_ITEM:
   case EXE_CODE_MEDIT_TIME:
@@ -799,10 +837,17 @@ static int exe_InputSwitchEx( FES_ROM_WORK* wk, const PARAM_SET* pset, INPUT_COD
     param_MissionUpdate( wk, M_UPDATE_BASE );
     all = TRUE;
     break;
+  case PRM_M_TYPE_CODE:
+    param_MissionUpdate( wk, M_UPDATE_TYPE_CODE );
+    param_Draw( wk, PRM_M_LEVEL-PRM_MEDIT_ID_START );
+    break;
+#if 0
   case PRM_M_LEVEL:
     param_MissionUpdate( wk, M_UPDATE_LEVEL );
     all = TRUE;
     break;
+#endif
+  case PRM_M_LEVEL:
   case PRM_M_ITEM:
   case PRM_M_SP_ITEM:
     param_Draw( wk, 1 );
@@ -1302,7 +1347,6 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
       }
     }
     return TRUE;
-    
   case WSET_MSEND_TIME:
     WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
     return TRUE;
@@ -1403,8 +1447,28 @@ static BOOL print_ParamWordsetEx( FES_ROM_WORK* wk, u8 idx, int value, WSET_TYPE
     print_FreeWordset( wk->wset, idx+4, wk->str_tmp );
     return TRUE;
   
+  case WSET_MEDIT_TYPE_CODE:
+    {
+      int i;
+      int id = DATA_MissionBaseParam[wk->e_fmwk.arc.m_type-1].type_tbl[value];
+
+      //タイプコード展開
+      WORDSET_RegisterNumber( wk->wset, idx, value, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+      //サブID展開
+      WORDSET_RegisterNumber( wk->wset, idx+1, id, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+      //単位展開
+      GFL_MSG_GetString( wk->msgman, f_rom_fes_unit_01+wk->fm_arc_tbl[id].param.unit, wk->str_tmp );
+      print_FreeWordset( wk->wset, idx+2, wk->str_tmp );
+
+      for( i = 0;i < 4; i++ ){
+        WORDSET_RegisterNumber( wk->wset, idx+3+i, wk->fm_arc_tbl[id].param.level[i].goal, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      }
+    }
+    return TRUE;
+  
   case WSET_MEDIT_LEVEL:
     WORDSET_RegisterNumber( wk->wset, idx, value+1, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, idx+1, wk->p_fmarc->param.level[value].goal, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
     return TRUE;
   
   case WSET_MEDIT_TIME:

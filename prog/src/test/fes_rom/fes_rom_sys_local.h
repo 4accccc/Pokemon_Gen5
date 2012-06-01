@@ -20,7 +20,7 @@
 #define FESROM_MISSION_DATA_MAX (10)
 
 ///セーブデータ有効を示すマジックキー
-#define FES_ROM_SAVE_MAGICKEY    (0xaefb3234)
+#define FES_ROM_SAVE_MAGICKEY    (0xaefb3236)
 
 ///トレーナーID
 #define FES_ROM_TRAINER_ID       (0x0CA9)
@@ -53,11 +53,12 @@ typedef struct _FESROM_MISSION_PARAM{
   int     m_t_bonus;
   int     m_base_param;
   int     m_ex_param;
+  int     m_type_code;
   int     m_level;
-  int     m_goal;
+//  int     m_goal;
   int     m_time;
   int     m_version;
-  int     m_unit;
+//  int     m_unit;
 
   int     m_item;
   int     m_pay;
