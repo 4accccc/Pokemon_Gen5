@@ -20,7 +20,7 @@
 #define FESROM_MISSION_DATA_MAX (10)
 
 ///セーブデータ有効を示すマジックキー
-#define FES_ROM_SAVE_MAGICKEY    (0xaefb3236)
+#define FES_ROM_SAVE_MAGICKEY    (0xaefb3235)
 
 ///トレーナーID
 #define FES_ROM_TRAINER_ID       (0x0CA9)
@@ -105,6 +105,7 @@ typedef struct _FES_ROM_SAVE{
   int start_time;
   int end_time;
   int beacon_interval;
+  int mode;
 }FES_ROM_SAVE;
 
 ///セーブデータ参照用ワーク(STRCODEなどを展開したコピー)

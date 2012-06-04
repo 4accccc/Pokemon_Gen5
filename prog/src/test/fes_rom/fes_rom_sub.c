@@ -229,6 +229,7 @@ static void param_BasePop( FES_ROM_WORK* wk )
   wk->param[PRM_BASE_START_TIME] = wk->sys_save->start_time;
   wk->param[PRM_BASE_END_TIME] = wk->sys_save->end_time;
   wk->param[PRM_BASE_TR_VIEW] = wk->sys_save->tr_view;
+  wk->param[PRM_BASE_MODE] = wk->sys_save->mode;
 
   for( i = 0;i < FESROM_MISSION_DATA_MAX; i++ ){
     int idx = PARAM_BASE_MSET_NUM*i;
@@ -247,7 +248,8 @@ static void param_BasePush( FES_ROM_WORK* wk )
   wk->sys_save->start_time = wk->param[PRM_BASE_START_TIME];
   wk->sys_save->end_time = wk->param[PRM_BASE_END_TIME];
   wk->sys_save->tr_view = wk->param[PRM_BASE_TR_VIEW];
-  
+  wk->sys_save->mode = wk->param[PRM_BASE_MODE];
+
   for( i = 0;i < FESROM_MISSION_DATA_MAX; i++ ){
     int idx = PARAM_BASE_MSET_NUM*i;
     FESROM_MISSION* pm = &wk->sys_save->mission[i];
@@ -626,6 +628,7 @@ static int input_BaseExe( FES_ROM_WORK* wk, const PARAM_SET* pset, int param )
     if( param_MissionEnableNum( wk) == 0){
       return SEQ_BASE_MAIN;
     }
+    param_BasePush( wk );
     wk->ret_pos = wk->pos;
     wk->pos = 0xFF;
     wk->edit_id = 0;
