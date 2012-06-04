@@ -64,6 +64,20 @@
  */
 //=============================================================================
 
+//本体名とコメントによる隠しコマンド有効チェック
+typedef struct FESROM_PASS{
+  int str_len;
+  const u16*  str;
+}FESROM_PASS;
+
+static const u16 pass_name[] = L"fesmission";
+static const u16 pass_comment[] = L"deliverrom";
+
+static const FESROM_PASS DATA_FesRomPass[] = {
+ { NELEMS(pass_name)-1, pass_name },
+ { NELEMS(pass_comment)-1, pass_comment },
+};
+#define FESROM_PASS_NUM (NELEMS(DATA_FesRomPass))
 
 //=============================================================================
 /**
@@ -408,9 +422,10 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
   
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_FESROM_SELFMSG, wk->heapID );
 
-  { //本体名パスコードチェック
-    static const u16 pass[] = L"PASS";
-    u16 pass_len = NELEMS(pass)-1;
+  { //本体名&コメントによるパスコードチェック
+    int i, clear = 0;
+    FESROM_PASS data[FESROM_PASS_NUM] = {0};
+
 #if (defined(SDK_TWL))
     OSOwnerInfoEx info;
     OS_GetOwnerInfoEx(&info);
@@ -418,17 +433,23 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
     OSOwnerInfo owner_info;
     OS_GetOwnerInfo(&owner_info);
 #endif
+    data[0].str_len = info.nickNameLength;
+    data[0].str = info.nickName;
+    data[1].str_len = info.commentLength;
+    data[1].str = info.comment;
 
-    OS_Printf("PassLen %d\n",pass_len);
-    if( pass_len == info.nickNameLength ){
-      int i;
-      for(i = 0;i < pass_len;i++){
-        if( pass[i] != info.nickName[i]) break;
+    for( i = 0; i < FESROM_PASS_NUM; i++ ){
+      int len;
+
+      if( DATA_FesRomPass[i].str_len != data[i].str_len ) continue;
+      
+      for(len = 0;len < data[i].str_len; len++){
+        if( DATA_FesRomPass[i].str[len] != data[i].str[len]) break;
       }
-      wk->command_f = (i==pass_len);
-      OS_Printf("コマンド入力可否=%d\n",wk->command_f);
+      ++clear;
     }
-    wk->command_f = TRUE; //要望がくるまで絶対にTRUE
+    wk->command_f = ( clear == FESROM_PASS_NUM );
+    OS_Printf("コマンド入力可否=%d\n",wk->command_f);
   }
 }
 
