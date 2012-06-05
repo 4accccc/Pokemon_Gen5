@@ -425,7 +425,7 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
   { //本体名&コメントによるパスコードチェック
     int i, clear = 0;
     FESROM_PASS data[FESROM_PASS_NUM] = {0};
-
+    
 #if (defined(SDK_TWL))
     OSOwnerInfoEx info;
     OS_GetOwnerInfoEx(&info);
@@ -446,7 +446,7 @@ static void _sub_SystemSetup( FES_ROM_SYS_WORK* wk)
       for(len = 0;len < data[i].str_len; len++){
         if( DATA_FesRomPass[i].str[len] != data[i].str[len]) break;
       }
-      ++clear;
+      clear += (len==data[i].str_len);
     }
     wk->command_f = ( clear == FESROM_PASS_NUM );
     OS_Printf("コマンド入力可否=%d\n",wk->command_f);

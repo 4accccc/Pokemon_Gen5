@@ -203,7 +203,7 @@ static const PARAM_SET DATA_ParamSetBase[] = {
     WSET_TR_VIEW, f_rom_prm_base_tr_view, //WSET_TYPE, msg
     EXE_CODE_INPUT_SWITCH, INPUT_CODE_TR_VIEW,
     { 0, 0, 0 },  //param
-    { LINE_1, 9, 9+11, 1 },
+    { LINE_1, 9, 9+13, 1 },
   },
   //line2
   {
