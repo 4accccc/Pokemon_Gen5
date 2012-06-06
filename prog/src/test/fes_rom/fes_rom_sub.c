@@ -385,6 +385,7 @@ static void param_MissionUpdate( FES_ROM_WORK* wk, M_UPDATE_CODE up_code )
     return;
 #endif
   case M_UPDATE_CUSTOM:
+  case M_UPDATE_TYPE_CODE:
     return;
   default:
     break;
