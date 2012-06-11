@@ -232,6 +232,10 @@ void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID i
   //アーカイブコモンデータセット
   fmwk->arc = dat.common;
 
+  //FES_ROM
+  if(beacon->pay > FMISSION_PAY_NUM_BASE_MAX-1){ //報酬の基礎値表示が2桁までしか対応してないよバグ対策で-1補正
+    beacon->pay = FMISSION_PAY_NUM_BASE_MAX-1; //99max
+  }
 #ifdef PM_DEBUG
   if( fmwk->arc.host == FMISSION_HOST_COMM ){
     beacon->distribution_f = TRUE;
