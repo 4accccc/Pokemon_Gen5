@@ -112,7 +112,7 @@ fes_rom:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/Y9IJ_r.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/VHYJ_r.srl
 #	cp ./prog/spec/version ./prog/version
 
 black_rom_protect:
@@ -140,7 +140,7 @@ fes_rom_protect:
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
-	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/Y9IJ_p.srl
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/VHYJ_p.srl
 #	cp ./prog/spec/version ./prog/version
 
 
