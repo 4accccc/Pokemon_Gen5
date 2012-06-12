@@ -13,4 +13,4 @@ TWL_COMPRESS   = True
 #AMPROTECT      = yes
 
 #libsyscall
-LIBSYSCALL_A = $(PROJECT_PROGDIR)/spec/Y9IJ/libsyscall.a
+LIBSYSCALL_A = $(PROJECT_PROGDIR)/spec/VHYJ/libsyscall.a
