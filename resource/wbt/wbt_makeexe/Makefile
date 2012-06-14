@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tanaka_ryota
+USERS	= tanaka_ryota tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -57,7 +57,7 @@ WBT_TOKUSEI = wbt_tokusei_conv.rb
 WBT_PERSONAL = $(PROJECT_RSCDIR)\personal\personal_sw.csv
 #
 WBT_RB  = $(WBT_RB0) $(WBT_RB1) $(WBT_RB2) $(WBT_RB3) $(WBT_RB4) \
-	  $(WBT_RB5) $(WBT_RB6) $(WBT_RB7) $(WBT_RB8) $(WBT_RB9) $(WBT_RB10) $(WBT_RB11)
+	  $(WBT_RB5) $(WBT_RB6) $(WBT_RB7) $(WBT_RB8) $(WBT_RB9) $(WBT_RB10) $(WBT_RB11) wbt_dldata_dictionary.rb
 
 WBT_RB20 = $(SUBTARGETNAME).rb
 

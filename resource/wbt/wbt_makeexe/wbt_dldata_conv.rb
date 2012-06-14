@@ -35,6 +35,7 @@ require "wbt_dldata_match.rb"     # 組み合わせ(WBTDL_MATCH)用
 require "wbt_dldata_config.rb"    # config(WBTDL_CONFIG)用
 
 require "wbt_dldata_error.rb"     # エラー
+require "wbt_dldata_dictionary.rb"
 
 # 出力ファイル名
 $output_str = [ "_JJ",	# 日本語
@@ -121,6 +122,23 @@ wbt_config = WBT_CONFIG.new(conv)
 #
 conv.close_file();
 #
+#
+#-----------------------
+# 辞書ファイルの読み込み
+#-----------------------
+DICT_FILENAME="Dictionary_EFIGSK.xls"
+filename = getAbsolutePath(DICT_FILENAME)
+if FileTest.exists?( filename ) then
+  conv.open_file( filename )
+  wbt_dict = WBT_DICTIONARY.new(conv)
+  conv.close_file();
+  WIN32OLE.codepage = WIN32OLE::CP_ACP  #get_unicodeのままなのでもどす
+else
+  printf("辞書ファイル\"%s\"が見つかりません。\n", DICT_FILENAME)
+  printf("コンバートを中止します\n")
+  exit (1)
+end
+
 #-----------------------
 # クラスの初期化
 #-----------------------
@@ -183,7 +201,7 @@ LANG_MAX_NUM.times{|m|
         # 情報の参照
         wbt_data.set_data( conv )
         wbt_rule.set_data( conv )
-        wbt_character.set_data( conv )
+        wbt_character.set_data( conv, wbt_dict.get_local($current_lang_id) )
         wbt_match.set_data( conv )
         #
         # 各情報出力

@@ -83,14 +83,14 @@ class WBT_CHARACTER_SINGLE
   #--------------------------------
   # データセット(内部で初期化あり)
   #--------------------------------
-  def set_data( conv )
+  def set_data( conv, local_dictionary )
     @conv = conv;
     # 言語の設定
     @local_language = 0;
     chk_local_language();
 #    @char_id = num;
     #
-    @pokemon.set_data( conv )
+    @pokemon.set_data( conv, local_dictionary )
     #
     @name = [];
     len = SAVELEN_TRAINER_NAME*2
@@ -827,7 +827,7 @@ class WBT_CHARACTER
   #----------------------------------
   # データのセット(内部で初期化あり)
   #----------------------------------
-  def set_data( conv )
+  def set_data( conv, local_dictionary )
     @conv = conv;
     #
     #------------------------
@@ -849,7 +849,7 @@ class WBT_CHARACTER
     #
     WBTDL_CHAR_MAX.times{|i|
       @character[i].set_tr_max( tnum )
-      @character[i].set_data( conv )
+      @character[i].set_data( conv, local_dictionary )
     }
     #
     @local_debug = 0;

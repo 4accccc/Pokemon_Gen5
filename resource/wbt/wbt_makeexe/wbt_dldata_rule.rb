@@ -471,8 +471,8 @@ class WBT_RULE
     ret = chkblank( cstr, $reg_str[11] );
     if(ret == -1)
       # ãÛîíÉGÉâÅ[
-      $wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[8], REG_UP_START_ROW,
-                                    $reg_str[11]);
+      #$wbt_error.print_blank_error( $current_xls_name, 1, REG_UP_START_COL+$reg_col[8], REG_UP_START_ROW,
+      #                             $reg_str[11]);
       return;
     end
     #

@@ -79,8 +79,9 @@ class WBT_POKEMON_SINGLE
   #--------------------------------
   # データセット(内部で初期化あり)
   #--------------------------------
-  def set_data( conv )
+  def set_data( conv, local_dictionary )
     @conv        = conv;
+    @local_dictionary     = local_dictionary 
 #    @poke_id     = num;
     #
     @monsno      = 0;	# ポケモン番号
@@ -315,7 +316,10 @@ class WBT_POKEMON_SINGLE
     ret = chkblank_no_print( @conv.get_cell(5, POKE_START_COL+offset, POKE_START_ROW+4 ) )
     if(ret == -1)
       # 空白の場合はポケモン名をセットする
-      @nick_name = get_unicode( @conv, 5, POKE_START_COL+offset, POKE_START_ROW );
+      #@nick_name = get_unicode( @conv, 5, POKE_START_COL+offset, POKE_START_ROW );
+      str = @conv.get_cell(5, POKE_START_COL+offset, POKE_START_ROW )
+      id = hash2no( $monsno_hash, str );
+      @nick_name = @local_dictionary[id]
     else
       # セット
       @nick_name = get_unicode( @conv, 5, POKE_START_COL+offset, POKE_START_ROW+4 );
@@ -853,7 +857,7 @@ class WBT_POKEMON
   #--------------------------------
   # データセット(内部で初期化あり)
   #--------------------------------
-  def set_data( conv )
+  def set_data( conv, local_dictionary )
     @conv = conv;
     #
     #------------------------
@@ -893,7 +897,7 @@ class WBT_POKEMON
     TEMOTI_POKEMAX.times{|i|
       @pokemon[i].set_pokemax( num )
       @pokemon[i].set_tr_max( tnum )
-      @pokemon[i].set_data( conv )
+      @pokemon[i].set_data( conv, local_dictionary )
     }
     #
     @local_debug = 0;
