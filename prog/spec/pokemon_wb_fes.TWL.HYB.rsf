@@ -68,7 +68,7 @@ Property
 	#
 	# REMASTER VERSION: Mastering version  現在事前ロットチェック用 0xE0
 	#
-	RemasterVersion			0
+	RemasterVersion			1
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]
