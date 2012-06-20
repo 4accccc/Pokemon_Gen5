@@ -101,7 +101,6 @@ FS_EXTERN_OVERLAY(debug_data);
 
 #include "msg/msg_pmss_peculiar.h"
 #include "../../../resource/quiz/pms_answer.h"
-#include "amprotect.h"
 #include "field_goout_effect.h"
 #include "savedata/resonance_resort_sv.h"
 #include "field/resort_work.h"

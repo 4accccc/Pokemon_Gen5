@@ -34,8 +34,6 @@
 #include "field/field_comm/intrude_work.h"  //Intrude_Check_AlwaysBoot
 #include "field/fieldmap_call.h"
 
-#include "amprotect.h"
-
 
 //デバッグ用
 #include "debug/debug_hudson.h"

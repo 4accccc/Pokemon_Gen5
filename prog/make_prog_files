@@ -1583,7 +1583,6 @@ SRCS_OVERLAY_POKELIST_COMM	= app/pokelist/plist_comm.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_POKELIST_COMM
-#LIB=>          AMProtectR2a_Instant.a
 SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_sys.c \
 		app/pokelist/plist_plate.c \
@@ -2981,11 +2980,6 @@ SRCS_OVERLAY_CYGNUS_DEBUG = test/cygnus/d_cygnus.c \
 # 任天堂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
-
-# マジコン対策ライブラリ
-#===>SRCS_OVERLAY_FIELD_INIT
-#LIB=>          AMProtectR2a.a
-SRCS_OVERLAY_AMPROTECT	= system/amprotect.c
 
 #赤外線チェックコピー版
 #===>SRCS_OVERLAY_UNION_ROOM

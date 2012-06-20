@@ -61,8 +61,6 @@
 
 #include "sound/swan_sound_data.sadl" //サウンドラベルファイル
 
-#include "amprotect.h"
-
 #include "savedata/encount_sv.h"
 #include "field/encount_data_ex_def.h"
 
