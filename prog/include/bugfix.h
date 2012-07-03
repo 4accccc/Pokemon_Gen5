@@ -1656,5 +1656,5 @@ resource/wifi_earth/wifi_earth.narc
  */
 
 
-#define BUGFIX_AFTER_MASTER_GFBTS1151_20120703
+#define BUGFIX_AFTER_MASTER_BTS2334_20120703
 
