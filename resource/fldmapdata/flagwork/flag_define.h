@@ -880,7 +880,7 @@
 #define FV_D29R0101_STOP                   958 /* 0x03be ヤーコンロード：ストッパー */
 #define FV_D24_PAIR_START_BELL_01          959 /* 0x03bf リバースマウンテン：連れ歩きベル */
 #define FV_D24_PAIR_END_BELL_01            960 /* 0x03c0 リバースマウンテン：連れ歩きベル */
-		/* not used   961(0x03c1) */
+#define FV_D26R0701_POKE23_01              961 /* 0x03c1 BUGFIX_AFTER_MASTER_GFBTS1151_20120703 */
 #define FV_D06R0101_WORKMAN2_01            962 /* 0x03c2 電気石の洞穴：ストッパー */
 #define FV_PKWD_STAFF_TUTORIAL01           963 /* 0x03c3 ポケウッド：チュートリアル用 */
 #define FV_PKWD_STAFF_TUTORIAL02           964 /* 0x03c4 ポケウッド：チュートリアル用 */
