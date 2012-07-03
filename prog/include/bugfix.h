@@ -1710,3 +1710,31 @@ resource/wifi_earth/wifi_earth.narc
  * 
  */
 #define BUGFIX_SYSTEM54_20120501
+
+/*
+  日本語版市場バグ ゾロアークのNの城誘導イベントのバグ
+
+  殿堂入り後、チャンピオンロードD26R0701に行きゾロアークの誘導イベントを起動、
+  ゾロアークの誘導に従ってチャンピオンロード内部D26R1101に入った後
+  ゾロアークを無視してD26R0701より前に引き返すと、ゾロアークがストッパーとなって
+  Nの城に入れなくなるバグが発生。
+
+  Nの城でのイベントを進行できないため、パッケージポケモンの入手が不可になる等の
+  不具合が発生する
+
+  修正担当：斉藤マ・岩澤
+
+  修正ファイル
+  resource/fldmapdata/flagwork/vanish_flag.xls
+    363行目:空きフラグNo 361を 有効なフラグ FV_D26R0701_POKE23_01 として新たに定義
+
+  resource/fldmapdata/eventdata/data/d26r0701.mev
+    304行目: #Flag Name FV_D26_POKE23_01→FV_D26R0701_POKE23_01に変更
+
+  resource/fldmapdata/script/d26r0701.ev
+    118行目: _FLAG_SET( FV_D26_POKE23_01 )→_FLAG_SET( FV_D26R0701_POKE23_01 )
+ */
+
+
+#define BUGFIX_AFTER_MASTER_BTS2334_20120703
+
