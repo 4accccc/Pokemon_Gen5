@@ -7049,10 +7049,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくほ</Text>
+			<Text>ゾロアーク不具合対処</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7060,15 +7060,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくほ</Text>
+			<Text>ゾロアーク不具合対処</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-21T06:12:54" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>2012.07.03追加
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-07-04T08:31:32" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -7082,10 +7090,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくほ</Text>
+			<Text>不具合対処に成功しました。</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7093,15 +7101,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくほ</Text>
+			<Text>不具合対処に成功しました。</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-21T06:12:54" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>2012.07.03追加
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-07-04T08:31:35" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -7115,10 +7131,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくほ</Text>
+			<Text>不具合対処に失敗しました。
+以下の問題が考えられます。▼
+不具合がある状態ではない。▼
+D26R1101のゾーン内で
+この処理を実行した。</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7126,15 +7146,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくほ</Text>
+			<Text>不具合対処に失敗しました。
+以下の問題が考えられます。▼
+不具合がある状態ではない。▼
+D26R1101のゾーン内で
+この処理を実行した。</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:31:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-21T06:12:54" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>2012.07.03追加
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-07-04T08:31:35" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -7148,10 +7180,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくほ</Text>
+			<Text>不具合対処を行います。
+………………</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:44:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -7159,15 +7192,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくほ</Text>
+			<Text>不具合対処を行います。
+………………</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-11-21T06:12:54" />
+				Time="2012-07-04T08:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-21T06:12:54" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>2012.07.03追加
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2012-07-04T08:44:26" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>

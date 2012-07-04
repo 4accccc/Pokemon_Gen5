@@ -63,6 +63,8 @@
   .include  "c05r0501_def.h" //予約スクリプト用（水口
   .include  "w21.h" //予約スクリプト用（水口
   .include  "w21_def.h" //予約スクリプト用（水口
+  .include  "d26r0701.h" //ゾロアーク不具合対処
+  .include  "d26r0701_def.h" //ゾロアーク不具合対処
 
 
 //--------------------------------------------------------------
@@ -2739,6 +2741,7 @@ EVENT_START ev_debug_common
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_21, 72 )	//ゾロアーク不具合対処
 		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//シナリオクリア
 		_BMPMENU_MAKE_LIST( msg_debug_common_04, 1 )	//殿堂入り
 		_BMPMENU_MAKE_LIST( msg_debug_common_01, 10 )	//ジムバッジ全部
@@ -2892,6 +2895,10 @@ EVENT_START ev_debug_common
 		ELSIF $SCWK_ANSWER == 110 THEN
 			//初期３匹のタイプ変更
 			_CALL	ev_firstpoke_type
+		
+		ELSIF $SCWK_ANSWER == 72 THEN
+			//ゾロアーク不具合対処
+			_CALL	ev_zorofuguai
 			
 		ELSE
 			//やめる
@@ -3173,3 +3180,54 @@ ev_firstpoke_type:
 _RET
 
 
+//ゾロアーク不具合対処-----------------------------------------------
+ev_zorofuguai:
+	
+	//不具合対処を行う。
+	_PLAINWIN_MSG_DOWN( msg_debug_suginaka_24 )
+	_AB_KEYWAIT_MARK()
+	_PLAINWIN_CLOSE()
+
+	DEFINE_LOCAL	LWK_ZONE
+	_GET_ZONE_ID( LWK_ZONE )
+
+	//デバッグ出力
+	_DEBUG_PRINT_WK( LWK_ZONE )
+	_DEBUG_PRINT_WK( WK_SCENE_D26_POKE23_01 )
+
+	//ワーク値・フラグ・ゾーンをchk
+	IF $WK_SCENE_D26_POKE23_01 == 3 && FLAG_OFF( FV_D26_POKE23_01 ) && $LWK_ZONE != ZONE_ID_D26R1101 THEN
+	
+		//=========WK値・フラグを修正する=========//
+
+		$WK_SCENE_D26_POKE23_01 = 4
+		_FLAG_SET( FV_D26_POKE23_01 )
+
+		//========================================//
+		
+		//不具合対処に成功しました
+		_SE_PLAY( SEQ_SE_FLD_41 )
+		_PLAINWIN_MSG_DOWN( msg_debug_suginaka_22 )
+		_LAST_KEYWAIT()
+		_SE_WAIT()
+		_PLAINWIN_CLOSE()
+		
+		//D26R0701だった場合はゾロアークを消去する。
+		_GET_ZONE_ID( LWK_ZONE )
+		IF $LWK_ZONE == ZONE_ID_D26R0701 THEN
+			
+			_OBJ_DEL( D26R0701_POKE23_01 )
+
+		ENDIF
+	
+	//不具合状態ではない
+	ELSE
+	
+		//不具合対処に失敗しました
+		_PLAINWIN_MSG_DOWN( msg_debug_suginaka_23 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+	
+	ENDIF
+	
+_RET
