@@ -1,0 +1,3241 @@
+//======================================================================
+//
+//                debug_scr.ev
+//
+//    スクリプトファイル：debug_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../message/dst/debug/msg_debug_scr.h"
+  //.include  "debug_scr.h"
+
+  .include  "pokecen_scr_def.h"
+
+  .include  "debug_scr_local_iwasawa.h"
+  
+  .include  "c02.h"
+  .include  "c02gym0101.h"
+  .include  "d06.h"
+  .include  "d06r0101.h"
+  .include  "d08r0901.h"
+  .include  "d01r0101.h"
+  
+  .include  "oldc01r0501.h"
+  .include  "oldc01r0501_def.h"
+  .include  "oldc02gym0202.h"
+  .include  "oldc02gym0202_def.h"
+  .include  "oldt06r0101.h"
+  .include  "oldt06r0101_def.h"
+  .include  "oldc08r0101.h"
+  .include  "oldc08r0101_def.h"
+  .include  "oldt04r0301.h"
+  .include  "oldt04r0301_def.h"
+  .include  "oldc05r0501.h"
+  .include  "oldc05r0501_def.h"
+  .include  "oldc04r0201.h"
+  .include  "oldc04r0201_def.h"
+  .include  "oldd06r0101.h"
+  .include  "oldd06r0101_def.h"
+
+  .include "c08r0401_def.h"
+  .include "t01.h"
+  .include "hiden_def.h"
+  .include "pokewood_scr_def.h"
+
+  .include "init_scr_def.h"
+  .include "pasokon_def.h"
+
+  .include	"wbt_hall_def.h"
+
+  .include  "tv_scr_def.h"
+  .include  "resort_scr_def.h"
+  
+  .include  "w21.h" //w21への遷移参照用
+  .include  "w21_def.h" //w21への遷移参照用
+  .include  "c09p03_def.h" //c09p03への遷移参照用
+  
+  .include  "c08.h" //予約スクリプト用（水口
+  .include  "c08_def.h" //予約スクリプト用（水口
+  .include  "c05r0501.h" //予約スクリプト用（水口
+  .include  "c05r0501_def.h" //予約スクリプト用（水口
+  .include  "w21.h" //予約スクリプト用（水口
+  .include  "w21_def.h" //予約スクリプト用（水口
+  .include  "d26r0701.h" //ゾロアーク不具合対処
+  .include  "d26r0701_def.h" //ゾロアーク不具合対処
+
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_debug_test
+_EVENT_DATA   ev_debug_masafumi
+_EVENT_DATA   ev_debug_mizuguchi
+_EVENT_DATA   ev_debug_suginaka
+_EVENT_DATA   ev_debug_fujimura
+_EVENT_DATA   ev_debug_tamada
+_EVENT_DATA   ev_debug_kagaya
+_EVENT_DATA   ev_debug_iwasawa
+_EVENT_DATA   ev_debug_nozomu
+_EVENT_DATA   ev_debug_tomoya
+_EVENT_DATA   ev_debug_obata
+_EVENT_DATA   ev_debug_hosaka
+_EVENT_DATA   ev_debug_ariizumi
+_EVENT_DATA   ev_debug_ohkubo
+_EVENT_DATA   ev_debug_matsushima
+_EVENT_DATA   ev_debug_ichiraku
+_EVENT_DATA   ev_debug_common
+_EVENT_DATA   ev_debug_nagihashi
+_EVENT_DATA   ev_debug_onoue
+_EVENT_DATA   ev_debug_scr_map
+_EVENT_DATA   ev_debug_local_tvt
+_EVENT_DATA   ev_debug_wheel_medal
+_EVENT_DATA   ev_debug_zorofuguai
+_EVENT_DATA_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_debug_test
+{
+  _GOTO_GAMECLEAR_DEMO( 0 )
+  //_MAP_CHANGE( ZONE_ID_D09R1501, 5, 7, DIR_UP )
+  //_MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
+  //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
+  //_MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+  //_GLOBAL_CALL  SCRID_ELEVATOR
+  //_SXY_MOVE_EXIT_EVENT( DOOR_ID_T01_EXIT03, 786, 0, 757 )
+  //_FLAG_RESET( FV_D02R0201_LEGEND3 )
+  //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_HUSIGIDANE, 0, TOKUSYU_NULL, 10, 0 )
+  //$SCWK_ANSWER = 255
+  //_DEBUG_PRINT_WK( SCWK_ANSWER )
+  //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_RIZAADON, 0, TOKUSYU_NULL, 10, 0 )
+  //_SET_TEMOTI_NATSUKI( 1, 255 )
+  //_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
+  //_SXY_MOVE_BG_EVENT( BG_T01_BOARD_01, 787, 0, 753 )
+  //_SET_BADGE_FLAG( BADGE_ID_03 )
+  //_SET_GYM_VICTORY_INFO( BADGE_ID_03 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_debug_tamada
+{
+  _GET_MY_WAZA_MACHINE_NUM( SCWK_ANSWER )
+  _GET_PARTY_POKE_PARAM( SCWK_ANSWER, 0, SCR_POKEPARA_N_POKE )
+  _PKWD_GET_STAR_RANK( SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+//====↓ ポケウッドチュートリアルの呼び出し方====
+  _FLAG_SET( SYS_FLAG_POKEWOOD_TUTORIAL )
+  _RESERVE_SCRIPT( SCRID_RESERVE_PKWD_ENTRANCE_TUTORIAL )
+  _MAP_CHANGE( ZONE_ID_C15R0201, 14, 21, DIR_UP )
+//====↑ ポケウッドチュートリアルの呼び出し方====
+
+   // _GOTO_GAMECLEAR_DEMO( 0 )
+  //_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+  //_GET_CGEAR_STATUS( SCWK_ANSWER )
+  //_DEBUG_PRINT_WK( SCWK_ANSWER )
+  //_AB_KEYWAIT()
+  //_SET_CGEAR_OFF()
+  //_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
+  //_AB_KEYWAIT()
+}
+  //_BGM_FADEOUT( 0, 30 )
+  //_BGM_STOP()
+  //_BGM_NOW_MAP_RECOVER()
+  //_END_EVENT_BGM()
+EVENT_END
+
+
+/************************************************************/
+/*				斉藤マのデバッグメニュー					*/
+/************************************************************/
+EVENT_START ev_debug_masafumi
+	$SCWK_TEMP0 = 0
+	$SCWK_TEMP1 = 0
+	
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
+	_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
+	_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_13, 4 )	//観覧車トレーナー
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_14, 5 )	//カナワタウン
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_05, 0 )	//四天王部屋
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	
+	IF $SCWK_TEMP1 == 0 THEN
+		_CALL	ev_bigfour_menu	//四天王部屋
+
+	ELSIF $SCWK_TEMP1 == 1 THEN
+		_FLAG_SET( SYS_FLAG_WEATHER_R07 )
+
+	ELSIF $SCWK_TEMP1 == 2 THEN
+		//テスト02
+
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+
+	ELSIF $SCWK_TEMP1 == 3 THEN
+
+		_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+		_AB_KEYWAIT()
+		_SUBWIN_CLOSE( 1 )
+		
+	ELSIF $SCWK_TEMP1 == 4 THEN
+		//観覧車トレーナー
+		//_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+		//_FLAG_RESET( FV_AMUSEMENT_TRAINER )
+		_MAP_CHANGE( ZONE_ID_C04P01, 52, 15, DIR_RIGHT )
+ 
+	ELSIF $SCWK_TEMP1 == 5 THEN
+		//カナワタウンの転車台に配置される車両を変更
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_01, 1 )	//シングル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_02, 2 )	//Ｓシングル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_03, 3 )	//ダブル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_04, 4 )	//Ｓダブル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_05, 5 )	//マルチ
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_06, 6 )	//Ｓマルチ
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_07, 7 )	//Wi-Fi
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_08, 8 )	//カナワ行き
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_09, 9 )	//古いレア
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_10, 10 )	//新しいレア
+		_BMPMENU_MAKE_LIST( msg_debug_01, 0 )	//テスト01（車両なし）
+		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
+		_BMPMENU_START()
+		
+		SWITCH $SCWK_ANSWER
+		CASE 0 THEN
+			$WK_OTHER_T05_TRAIN = 0
+		CASE 1 THEN
+			$WK_OTHER_T05_TRAIN = 1
+		CASE 2 THEN
+			$WK_OTHER_T05_TRAIN = 2
+		CASE 3 THEN
+			$WK_OTHER_T05_TRAIN = 3
+		CASE 4 THEN
+			$WK_OTHER_T05_TRAIN = 4
+		CASE 5 THEN
+			$WK_OTHER_T05_TRAIN = 5
+		CASE 6 THEN
+			$WK_OTHER_T05_TRAIN = 6
+		CASE 7 THEN
+			$WK_OTHER_T05_TRAIN = 7
+		CASE 8 THEN
+			$WK_OTHER_T05_TRAIN = 8
+		CASE 9 THEN
+			$WK_OTHER_T05_TRAIN = 9
+		CASE 10 THEN
+			$WK_OTHER_T05_TRAIN = 10
+		ENDSWITCH
+		
+		IF $SCWK_ANSWER <= 10 THEN
+			_MAP_CHANGE( ZONE_ID_T05, 25, 38, DIR_UP )
+		ENDIF
+		
+	ENDIF
+	
+EVENT_END
+
+
+//四天王部屋デバッグメニュー------------------------------------
+ev_bigfour_menu:
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_07, 0 )	//勝利フラグ
+	_BMPMENU_MAKE_LIST( msg_debug_04, 1 )	//ジャンプ ※階段前にジャンプ（アニメチェック用）
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+
+	IF $SCWK_ANSWER == 0 THEN
+		
+		WHILE $SCWK_TEMP0 != 111
+		
+			_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+			_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+			_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+			_BMPMENU_START()
+			
+			IF $SCWK_PARAM0 == 0 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
+			ELSIF $SCWK_PARAM0 == 1 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
+			ELSIF $SCWK_PARAM0 == 2 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+			ELSIF $SCWK_PARAM0 == 3 THEN
+				_FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
+			ELSE
+				$SCWK_TEMP0 = 111
+			ENDIF
+		
+		ENDWHILE
+		
+	ELSIF $SCWK_ANSWER == 1 THEN
+		
+		
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_04, 3 )	//エスパー
+		_BMPMENU_START()
+		
+		IF $SCWK_PARAM0 == 0 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0101, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 1 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0201, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 2 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0301, 15, 28, DIR_DOWN )
+		ELSIF $SCWK_PARAM0 == 3 THEN
+			_MAP_CHANGE( ZONE_ID_C09R0401, 15, 28, DIR_DOWN )
+		ENDIF
+		
+		
+	ENDIF
+
+_RET
+
+/**************************************************************/
+/* map_debug                                                  */
+/**************************************************************/
+EVENT_START   ev_debug_scr_map
+{
+  //バージョン取得
+  DEFINE_LOCAL LCWK_VERSION
+  
+  $SCWK_TEMP2 = 0
+  //メニュー作成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_debug_map_02, 0 ) //C08氷漬け
+  _BMPMENU_MAKE_LIST( msg_debug_map_01, 1 ) //C08初期化
+  _BMPMENU_MAKE_LIST( msg_debug_map_03, 2 ) //D10船あり
+  _BMPMENU_MAKE_LIST( msg_debug_map_04, 3 ) //D10船なし
+  _BMPMENU_MAKE_LIST( msg_debug_map_05, 4 ) //C03P15船あり
+  _BMPMENU_MAKE_LIST( msg_debug_map_06, 5 ) //C03P15船なし
+  _BMPMENU_MAKE_LIST( msg_debug_map_07, 6 ) //D05船あり
+  _BMPMENU_MAKE_LIST( msg_debug_map_08, 7 ) //D05船なし
+  _BMPMENU_MAKE_LIST( msg_debug_map_09, 8 ) //W21タラップなし
+  _BMPMENU_MAKE_LIST( msg_debug_map_10, 9 ) //W21タラップあり
+  _BMPMENU_MAKE_LIST( msg_debug_map_11, 10 ) //W21なし
+  _BMPMENU_MAKE_LIST( msg_debug_map_12, 11 ) //d13 クリア後
+  _BMPMENU_MAKE_LIST( msg_debug_map_13, 12 ) //トロフィー表示・非表示
+  
+  _BMPMENU_START()
+  
+  //C08氷漬け
+  IF $SCWK_TEMP2 == 0 THEN
+    //C08ヴィオ戦前
+    //C08アイリス表示
+    $WK_SCENE_C08_SWCHAMPION = 1
+    _FLAG_SET( FV_C08_SWCHAMPION_01 )
+    $WK_SCENE_C08_NINJA = 0
+    $WK_SCENE_C08_SWPLAZMA = 5
+		    _FLAG_RESET(FV_C08_SWLEADER7_01)
+		    _FLAG_RESET(FV_C08_SWSAGE7_01)
+		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
+		    _FLAG_SET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+		    _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
+		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+		    
+		    _MAP_CHANGE( ZONE_ID_C08, 425, 173, DIR_DOWN)
+  
+  //C08初期化
+  ELSIF $SCWK_TEMP2 == 1 THEN
+       $WK_SCENE_C08_SWCHAMPION = 0
+       _FLAG_RESET( FV_C08_SWCHAMPION_01 )
+       $WK_SCENE_C08_LEADER7 = 0
+       $WK_SCENE_C08_SWPLAZMA = 0
+       $WK_SCENE_C08_NINJA = 0
+       $WK_SCENE_C08R0101 = 0
+       _FLAG_SET(FV_C08_SWLEADER7_01)  //ソウリュウシティ：シャガ
+       _FLAG_SET(FV_C08_SWSAGE7_01) //ソウリュウシティ：ヴィオ（SAGE7）
+       _FLAG_SET(FV_C08_SWPLAZMA_01) //ソウリュウシティ：プラズマ団
+       _FLAG_SET(FV_C08_NINJA_01)  //ソウリュウシティ：ダークトリニティ（戦うやつ）
+       _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
+       _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
+       _FLAG_RESET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+       _FLAG_SET( FE_C08_PLAZMA_COME )
+       _FLAG_RESET( SYS_FLAG_BGM_C08_PLAZMA )
+       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
+       
+       _MAP_CHANGE( ZONE_ID_C08, 425, 173, DIR_DOWN)
+       
+  //D10船あり
+  ELSIF $SCWK_TEMP2 == 2 THEN
+    _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_D10R0101, 23, 52, DIR_UP )
+    
+  //D10船なし
+  ELSIF $SCWK_TEMP2 == 3 THEN
+    _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_D10R0101, 23, 52, DIR_UP )
+    
+  //C03P15船あり
+  ELSIF $SCWK_TEMP2 == 4 THEN
+    //C03P15アジト船出現
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
+    
+  //C03P15船なし
+  ELSIF $SCWK_TEMP2 == 5 THEN
+    //C03P15アジト船非表示
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, FALSE, FALSE )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_C03P15, 20, 8, DIR_RIGHT)
+
+  //D05船あり
+  ELSIF $SCWK_TEMP2 == 6 THEN
+    //D05イベント進行状態を進めて接続を作成
+    $WK_SCENE_D05 = 3
+    $WK_SCENE_W21_01 = 0
+    _FLAG_RESET( FV_D05_SWBOSS_01 )
+    //D05アジト船出現
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_D05, 197, 493, DIR_RIGHT )
+    
+  //D05船なし
+  ELSIF $SCWK_TEMP2 == 7 THEN
+    //D05アジト船非表示
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, FALSE, FALSE )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_D05, 197, 493, DIR_RIGHT )
+  
+  //W21タラップなし
+  ELSIF $SCWK_TEMP2 == 8 THEN
+    //W21アジト船表示（タラップなし）
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+      
+  //W21タラップあり
+  ELSIF $SCWK_TEMP2 == 9 THEN
+    //W21のイベント進行状態を進めて接続を作成
+    $WK_SCENE_W21_01 = 3
+    $WK_SCENE_D05 = 0
+    //W21アジト船表示（タラップあり）
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+    
+  //W21なし
+  ELSIF $SCWK_TEMP2 == 10 THEN
+    //W21アジト船非表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+  
+  //d13プラズマフリゲートクリア状態
+  ELSIF $SCWK_TEMP2 == 11 THEN
+    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+    //D27の人々をクリア後状態
+    _FLAG_SET( FV_D27_BEFORE_PWPLAZMA_01 )
+    _FLAG_RESET( FV_D27_AFTER_PWPLAZMA_01 )
+    _FLAG_SET( FV_D27R1001_R1301_POKE10_01 )
+    //マップ遷移
+    _MAP_CHANGE( ZONE_ID_D13, 727, 716, DIR_RIGHT )
+  //トロフィー表示
+  ELSIF $SCWK_TEMP2 == 12 THEN
+    //主人公部屋トロフィー表示非表示
+      IF FLAG_ON(FV_C12R0101_TRORHY1_01) THEN
+        _FLAG_RESET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY3_01 )
+        _FLAG_RESET( FV_C12R0101_PRIZE1_01 )
+        _FLAG_RESET( FV_C12R0101_PRIZE2_01 )
+      ELSE
+        _FLAG_SET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY3_01 )
+        _FLAG_SET( FV_C12R0101_PRIZE1_01 )
+        _FLAG_SET( FV_C12R0101_PRIZE2_01 )
+      ENDIF
+  ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/* local_tvt                                                  */
+/**************************************************************/
+EVENT_START   ev_debug_local_tvt
+
+$SCWK_TEMP2 = 0
+  //メニュー作成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_03, 2 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_04, 3 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_05, 4 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_06, 5 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_07, 6 )
+  _BMPMENU_MAKE_LIST( msg_debug_localtvt_08, 7 )
+  
+  _BMPMENU_START()
+  
+  IF $SCWK_TEMP2 == 0 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 1 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 1 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 2 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 2 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 3 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+      
+    ELSIF $SCWK_TEMP2 == 3 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 4 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 4 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 5 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 5 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 6 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 6 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 7 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 7 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 8 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ENDIF
+
+EVENT_END
+/**************************************************************/
+/* MIZUGUCHI                                                  */
+/**************************************************************/
+EVENT_START   ev_debug_mizuguchi
+{
+    //バージョン取得
+    DEFINE_LOCAL LCWK_VERSION
+
+		$SCWK_TEMP2 = 0
+		//メニュー作成
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_01, 0 )	//C03到着
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_02, 1 )	//C03P17開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//ジムクリア
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 3 )	//R04アクロマ初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 4 )	//D07R0401イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_06, 5 )	//C03R0301イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_07, 6 )	//C08初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_08, 7 )	//D27カードキー所持
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_09, 8 )	//D27搭乗1回目
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_10, 9 )	//D27搭乗2回目
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_11, 10 )	//D27搭乗3回目
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_12, 11 )	//D27・ヴィオ戦前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_13, 12 )	//D27・アクロマ戦前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_14, 13 )	//D10・船あり接続
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_15, 14 )	//D10・船なし接続
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_16, 15 )	//D10・イベント起動
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_17, 16 )	//D10・キュレム手前
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_18, 17 )	//d24連れ歩き開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_19, 18 )	//c14イベント開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 19 )	//c15チュートリアル開始
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_21, 20 )	//コバルオン登場
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 21 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 22 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 23 )	//テスト
+		
+		//メニュー表示
+		_BMPMENU_START()
+	
+		IF $SCWK_TEMP2 == 0 THEN
+			//C03イベント開始
+			$WK_SCENE_C03P15 = 1
+			_MAP_CHANGE( ZONE_ID_C03P15, 12, 10, DIR_LEFT )
+		ELSIF $SCWK_TEMP2 == 1 THEN
+		   $WK_SCENE_C03P17 = 1
+			_FLAG_SET( FV_C03P17_SWRIVAL_01 )
+			_FLAG_RESET( FV_C03P17_SWCHAMPION_01 )
+			_MAP_CHANGE( ZONE_ID_C03P17, 2, 14, DIR_RIGHT )
+		ELSIF $SCWK_TEMP2 == 2 THEN
+		  //Cギアチュートリアル起動
+		  $WK_SCENE_C03P08_FESGUIDE_01 = 1
+			//ジムクリア
+			$WK_SCENE_C03P01 = 1
+			_FLAG_RESET( FV_C03P01_SWBOSS_01 )
+			_MAP_CHANGE( ZONE_ID_C03P01, 21, 7, DIR_LEFT )
+		ELSIF $SCWK_TEMP2 == 3 THEN
+			//C03P01アクロマイベント終了
+			$WK_SCENE_R04_SWBOSS = 1
+			_FLAG_RESET( FV_R04_SWBOSS_01 )
+			_FLAG_RESET( FV_R04_BIGROCK_01 )
+			_FLAG_SET( FV_R04_WORKMAN_01 )
+			
+			// ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_UP )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
+      ENDIF
+      
+		ELSIF $SCWK_TEMP2 == 4 THEN
+		  //C08アイリス表示
+      $WK_SCENE_C08_SWCHAMPION = 1
+      _FLAG_SET( FV_C08_SWCHAMPION_01 )
+		  //C08プラズマ団イベント開始
+      $WK_SCENE_C08_LEADER7 = 1
+		  _MAP_CHANGE( ZONE_ID_C08, 405, 145, DIR_DOWN )
+		ELSIF $SCWK_TEMP2 == 5 THEN
+        //C08ヴィオ戦前
+        //C08アイリス非表示
+        $WK_SCENE_C08_SWCHAMPION = 1
+        _FLAG_SET( FV_C08_SWCHAMPION_01 )
+		    $WK_SCENE_C08_NINJA = 0
+		    $WK_SCENE_C08_SWPLAZMA = 5
+		    _FLAG_RESET(FV_C08_SWLEADER7_01)
+		    _FLAG_RESET(FV_C08_SWSAGE7_01)
+		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
+		    _FLAG_SET( FV_C08_NINJA_01 )
+        _FLAG_SET( FV_C08_NINJA_02 )
+		    _FLAG_SET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+		    _FLAG_SET( FE_C08_PLAZMA_COME )
+		    _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
+		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+		    
+		    //マップ遷移
+        _MAP_CHANGE( ZONE_ID_C08, 405, 147, DIR_UP )
+		    
+		ELSIF $SCWK_TEMP2 == 6 THEN
+		   //C08初期化
+		   //C08アイリス非表示
+       $WK_SCENE_C08_SWCHAMPION = 0
+       _FLAG_RESET( FV_C08_SWCHAMPION_01 )
+       $WK_SCENE_C08_LEADER7 = 0
+       $WK_SCENE_C08_SWPLAZMA = 0
+       $WK_SCENE_C08_NINJA = 0
+       $WK_SCENE_C08R0101 = 0
+       _FLAG_SET(FV_C08_SWLEADER7_01)  //ソウリュウシティ：シャガ
+       _FLAG_SET(FV_C08_SWSAGE7_01) //ソウリュウシティ：ヴィオ（SAGE7）
+       _FLAG_SET(FV_C08_SWPLAZMA_01) //ソウリュウシティ：プラズマ団
+       _FLAG_SET(FV_C08_NINJA_01)  //ソウリュウシティ：ダークトリニティ（戦うやつ）
+       _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
+       _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
+       _FLAG_RESET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
+    ELSIF $SCWK_TEMP2 == 7 THEN
+      
+      //D27カードキー所持
+      _FLAG_SET(FE_D27_CARDKEY_01)
+      
+    ELSIF $SCWK_TEMP2 == 8 THEN
+      
+      //D27搭乗一回目
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      //プラズマフリゲート曲をサイレントに
+      _FLAG_SET( SYS_FLAG_BGM_D27R0101_SILENT )
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 1
+      $WK_SCENE_D27R0101_SECONDW_01 = 0
+      $WK_SCENE_D27R0101_SECONDB_01 = 0
+      $WK_SCENE_D05 = 4
+      
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 9 THEN
+      
+      //D27搭乗二回目
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
+      _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 4
+      
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      //ヒントPOS初期化
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27_HINT_01 = 1
+        $WK_SCENE_D27_HINT_02 = 1
+        $WK_SCENE_D27_HINT_03 = 1
+        $WK_SCENE_D27_HINT_04 = 1
+        $WK_SCENE_D27_HINT_05 = 1
+      ELSE
+        $WK_SCENE_D27_HINT_01 = 0
+        $WK_SCENE_D27_HINT_02 = 0
+        $WK_SCENE_D27_HINT_03 = 0
+        $WK_SCENE_D27_HINT_04 = 0
+        $WK_SCENE_D27_HINT_05 = 0
+      ENDIF
+      
+      //B2
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27R0101_SECONDW_01 = 0
+        $WK_SCENE_D27R0101_SECONDB_01 = 1
+      ELSE
+        $WK_SCENE_D27R0101_SECONDW_01 = 1
+        $WK_SCENE_D27R0101_SECONDB_01 = 0
+      ENDIF
+      
+      //バリア状態を初期化
+      $WK_SCENE_D27R1201_BARRIER_01 = 0
+      $WK_SCENE_D27R1001_BARRIER_01 = 0
+      $WK_SCENE_D27_SWITCH_04 = 0
+      $WK_SCENE_D27_SWITCH_03 = 0
+      $WK_SCENE_D27_SWITCH_02 = 0
+      $WK_SCENE_D27_SWITCH_01 = 0
+      
+      //W21シズイイベント終了
+      $WK_SCENE_W21_01 = 3
+      //マップ差し替え:W21アジト船タラップ表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_W21, 797, 240, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 10 THEN
+      
+      //D27搭乗三回目
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      _FLAG_SET( FV_D27R0101_STOPPER_01 )
+      _FLAG_RESET(FV_D27R0201_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R1201_SWRIVAL_01)
+      //D27R0101 プラズマ団員表示
+      _FLAG_RESET(FV_D27R1101_SWPLAZMA_03)
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
+      
+      //ワーク初期化
+      $WK_SCENE_D27R0101_FIRST_01 = 4
+      $WK_SCENE_D27R0101_SECONDW_01 = 4
+      $WK_SCENE_D27R0101_SECONDB_01 = 4
+      $WK_SCENE_D27R0501_SWSAGE7_01 = 2
+      
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      //ヒントPOS初期化
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27_HINT_01 = 0
+        $WK_SCENE_D27_HINT_02 = 0
+        $WK_SCENE_D27_HINT_03 = 0
+        $WK_SCENE_D27_HINT_04 = 0
+        $WK_SCENE_D27_HINT_05 = 0
+      ELSE
+        $WK_SCENE_D27_HINT_01 = 1
+        $WK_SCENE_D27_HINT_02 = 1
+        $WK_SCENE_D27_HINT_03 = 1
+        $WK_SCENE_D27_HINT_04 = 1
+        $WK_SCENE_D27_HINT_05 = 1
+      ENDIF
+      
+      //第二階層誘導イベント設定
+      _FLAG_RESET(FV_D27R1301_SWPLAZMAM_01)
+      _FLAG_SET( FV_D27R1301_SWSAGE7_01 )
+      $WK_SCENE_D27R1301_PLAZMAM_01 = 1
+      $WK_SCENE_D27R1301_SWSAGE7_01 = 0
+      
+      _FLAG_RESET(FV_D27R1001_SWPLAZMAM_01)
+      _FLAG_SET( FV_D27R1001_SWSAGE7_01 )
+      $WK_SCENE_D27R1001_PLAZMAM_01 = 1
+      $WK_SCENE_D27R1001_SWSAGE7_01 = 0
+      
+      //バリア状態を初期化
+      //B2
+      IF $LCWK_VERSION == VERSION_B2 THEN
+      
+        $WK_SCENE_D27R1201_BARRIER_01 = 1
+        $WK_SCENE_D27R1001_BARRIER_01 = 0
+        $WK_SCENE_D27_SWITCH_04 = 1
+        $WK_SCENE_D27_SWITCH_03 = 1
+        $WK_SCENE_D27_SWITCH_02 = 1
+        $WK_SCENE_D27_SWITCH_01 = 1
+        _FLAG_RESET( FE_D27_HINT_01 )
+        _FLAG_RESET( FE_D27_HINT_02 )
+        _FLAG_RESET( FE_D27_HINT_03 )
+        _FLAG_RESET( FE_D27_HINT_04 )
+        _FLAG_RESET( FE_D27_HINT_05 )
+        _FLAG_RESET( FE_D27_HINT_06 )
+        _FLAG_RESET( FE_D27_HINT_07 )
+        
+      ELSE
+      
+        $WK_SCENE_D27R1001_BARRIER_01 = 0
+        $WK_SCENE_D27R1201_BARRIER_01 = 1
+        $WK_SCENE_D27_SWITCH_04 = 0
+        $WK_SCENE_D27_SWITCH_03 = 0
+        $WK_SCENE_D27_SWITCH_02 = 0
+        $WK_SCENE_D27_SWITCH_01 = 0
+        _FLAG_SET( FE_D27_HINT_01 )
+        _FLAG_SET( FE_D27_HINT_02 )
+        _FLAG_SET( FE_D27_HINT_03 )
+        _FLAG_SET( FE_D27_HINT_04 )
+        _FLAG_SET( FE_D27_HINT_05 )
+        _FLAG_SET( FE_D27_HINT_06 )
+        _FLAG_SET( FE_D27_HINT_07 )
+        
+      ENDIF
+      
+      //D10イベント開始状態
+      _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R1101, 11, 31, DIR_RIGHT )
+      
+    ELSIF $SCWK_TEMP2 == 11 THEN
+    
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
+      
+      _FLAG_SET(FV_D27R0501_NINJA_01)
+      $WK_SCENE_D27R0501_SWSAGE7_01 = 1
+      
+      $WK_SCENE_D27R1001_BARRIER_01 = 1
+      
+      //バリア状態を解除に
+      $WK_SCENE_D27R1201_BARRIER_01 = 1
+      $WK_SCENE_D27_SWITCH_04 = 1
+      $WK_SCENE_D27_SWITCH_03 = 1
+      $WK_SCENE_D27_SWITCH_02 = 1
+      $WK_SCENE_D27_SWITCH_01 = 1
+      
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0201, 9, 3, DIR_RIGHT )
+    
+    ELSIF $SCWK_TEMP2 == 12 THEN
+    
+      //プラズマフリゲート曲再生
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0101_SILENT )
+      
+      $WK_SCENE_D27R0401_SWBOSS_01 = 1
+      
+      _FLAG_RESET(FV_D27R0601_SWSAGE1_01)
+      _FLAG_SET(FV_D27R0601_NINJA_01)
+      _FLAG_SET(FV_D27R0601_SWRIVAL_01)
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 0
+      
+      _FLAG_RESET(FV_D27R1001_SWPLAZMAM_01)
+      _FLAG_SET( FV_D27R1001_SWSAGE7_01 )
+      $WK_SCENE_D27R1001_PLAZMAM_01 = 2
+      $WK_SCENE_D27R1001_SWSAGE7_01 = 0
+      
+      _FLAG_RESET(FV_D27R1301_SWPLAZMAM_01)
+      _FLAG_SET( FV_D27R1301_SWSAGE7_01 )
+      $WK_SCENE_D27R1301_PLAZMAM_01 = 2
+      $WK_SCENE_D27R1301_SWSAGE7_01 = 0
+      
+      //バリア状態を解除に（とりあえずブラックだけ）
+      $WK_SCENE_D27R1001_BARRIER_01 = 1
+      $WK_SCENE_D27_SWITCH_04 = 1
+      $WK_SCENE_D27_SWITCH_03 = 1
+      $WK_SCENE_D27_SWITCH_02 = 1
+      $WK_SCENE_D27_SWITCH_01 = 1
+      
+      //【仮】トレーナーフラグをリセット
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R1001, 15, 19, DIR_UP )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R1301, 15, 19, DIR_UP )
+      ENDIF
+    
+    ELSIF $SCWK_TEMP2 == 13 THEN
+      _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D10R0101, 23, 52, DIR_UP )
+    ELSIF $SCWK_TEMP2 == 14 THEN
+      _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D10R0101, 23, 52, DIR_UP )
+    ELSIF $SCWK_TEMP2 == 15 THEN
+      //D10R0101 POS有効
+      $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
+      _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_R22, 710, 136, DIR_LEFT )
+    ELSIF $SCWK_TEMP2 == 16 THEN
+      //D10R0401 POS有効
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 1
+      _FLAG_SET( FV_D10R0401_POKE_03 )
+      _FLAG_SET( FV_D10R0401_POKE_02 )
+      _FLAG_RESET( FV_D10R0401_POKE_01 )
+      _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0501_WAND_01 )
+      _FLAG_SET( FV_D10R0401_BOSS_01 )
+      _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D10R0401, 16, 4, DIR_UP )
+    
+    ELSIF $SCWK_TEMP2 == 17 THEN
+      //連れ歩きイベント起動
+      $WK_SCENE_D24_PAIR_START = 1
+      _MAP_CHANGE( ZONE_ID_D24, 654, 295, DIR_UP)
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 1
+      $WK_SCENE_C03P08_FESGUIDE_01 = 1
+    
+    ELSIF $SCWK_TEMP2 == 18 THEN
+      //C14 SCENE_CHANGE有効
+      $WK_SCENE_C14_SWRIVAL_01 = 1
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_C14R0601, 3, 6, DIR_LEFT)
+    
+    ELSIF $SCWK_TEMP2 == 19 THEN
+      //C15チュートリアル開始
+      $WK_SCENE_C15_TUTORIAL_01 = 1
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_C13R0501, 5, 3, DIR_UP)
+
+    ELSIF $SCWK_TEMP2 == 20 THEN
+      
+      //コバルオン登場
+      $WK_SCENE_R06_LEGEND_MEET = 1
+      //R06七賢人ロット非表示
+      _FLAG_SET( FV_R06_SAGE6_01 )
+      //R06事情通の老人非表示
+      _FLAG_SET( FV_R06_OLDMAN1_01 )
+      _MAP_CHANGE( ZONE_ID_R06, 103, 366, DIR_UP )
+      
+    ELSIF $SCWK_TEMP2 == 21 THEN
+      
+      /*
+      //W21イベント開始
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      $WK_SCENE_W21_01 = 1
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      _MAP_CHANGE( ZONE_ID_W21, 793, 241, DIR_RIGHT )
+      */
+      
+      /*
+      //D22R0101 牧場イベント（２）起動
+      _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D22R0101_BREEDER_01)
+      $WK_SCENE_D22R0101 = 4
+      _MAP_CHANGE( ZONE_ID_D22R0101, 51, 25, DIR_DOWN )
+      */
+      
+      //D24初期化
+      //_FLAG_RESET( FE_D24_SWBELL_FIRSTTALK )
+      
+      /*
+      //乗船二回目誘導イベント起動
+      _FLAG_RESET(FV_D27R0701_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0701_SWPLAZMAM_01)
+      $WK_SCENE_D27R0701_PLAZMAM_01 = 1
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R0701, 16, 24, DIR_DOWN )
+      ELSE
+        //マップ遷移
+        _MAP_CHANGE( ZONE_ID_D27R0701, 16, 44, DIR_UP )
+      ENDIF
+      */
+      
+      /*
+      //C08誘導イベント起動
+      $WK_SCENE_C08_LEADER7 = 2
+      _FLAG_RESET( FV_C08_SWLEADER7_01 )
+      */
+      
+      /*
+      //C05ポケモンハウス起動
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_C05R0501_SAGE6_01 )
+      //C05R0501マップチェンジ
+      _MAP_CHANGE( ZONE_ID_C05R0501, 7, 25, DIR_UP )
+      */
+      
+      //_FLAG_SET( FV_D05R0101_SWBOSS_01 )   //アクロマ
+      
+      /*
+      //C05 SCENE_CHANGE有効
+      $WK_SCENE_C05 = 4
+     //C05ヤーコン表示
+     _FLAG_RESET(FV_C05_SWLEADER5_01)
+     _FLAG_RESET(FV_C05_SWRIVAL_01)
+      */
+      
+      /*
+      //クリア後アクロマ戦起動
+      _FLAG_RESET( FE_D27R0401_SWBOSS_WIN_01 )
+      //D27R0101アクロマ表示
+      _FLAG_SET( FV_D27R0101_SWBOSS_01 )
+      //D27R0401アクロマ非表示
+      _FLAG_RESET( FV_D27R0401_SWBOSS_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0401, 7, 7, DIR_UP )
+      */
+      
+      /*
+      //N城起動・初期化
+      $WK_SCENE_N01R0502_BOSS = 1
+      //N01R0502 N配置
+      _FLAG_SET( FV_N01R0502_BOSS_01 )
+      _FLAG_SET( FV_N01R0502_NPOKE_01 )
+      _FLAG_SET( FV_N01R0502_PLAYER_01 )
+      _MAP_CHANGE( ZONE_ID_N01R0502, 16, 44, DIR_UP )
+      */
+      
+      _FLAG_SET( FE_D10R0401_POKE10_MEET )
+      _FLAG_SET( FE_C04WHEEL_N_MEET )
+      _FLAG_SET( FE_D08R0901_BOSS_TALK )
+      
+      /*
+      //C08：オノノクスイベント再生
+      //========================================//
+      //C08R0101伝説解説イベント終了
+      $WK_SCENE_C08R0101 = 2
+      //C08R0101シャガ非表示
+      _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
+      //C08シャガ表示
+      _FLAG_RESET( FV_C08_SWLEADER7_01 )
+      //C08ダミー主人公表示
+      _FLAG_RESET( FV_C08_PLAYER_01 )
+      //C08プラズマ団襲来イベント開始
+      $WK_SCENE_C08_SWPLAZMA = 1
+      //========================================//
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_C08_PLAZMA_COMMING_02 )
+      _GET_ROM_VERSION( LCWK_VERSION )
+      IF $LCWK_VERSION == VERSION_B2 THEN
+       _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_DOWN )
+      ELSE
+       _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
+      ENDIF
+      */
+      
+      /*
+      //R20 長草イベント
+      $WK_SCENE_R20 = 2
+      _FLAG_RESET( FV_R20_SWLEADER1_01 )
+      _FLAG_RESET( FV_R20_SWRIVAL_01 )
+      */
+      
+      /*
+      //R20イベント進行
+      $WK_SCENE_R20 = 4
+      _FLAG_RESET( FV_R20_SWPLAZMA_01 )
+      _FLAG_RESET( FV_R20_SWRIVAL_01 )
+      _FLAG_SET( SYS_FLAG_BGM_R20_PLAZMA )
+      */
+      
+      /*
+      //C03アイリス誘導イベント起動
+      _FLAG_RESET( FV_C03_SWCHAMPION_01 )
+      _FLAG_SET( FV_C03_SWCHAMPION_02 )
+      $WK_SCENE_C03GYM_STOPPER = 1
+      */
+      
+      /*
+      //T04,D20 LCTVT起動
+      $WK_SCENE_T04_D20_TVT = 1
+      */
+      
+      /*
+      //R20R0101
+      $WK_SCENE_R20R0101 = 0
+      */
+      
+      /*
+      //心の空洞
+      $WK_SCENE_SPPOKE_EVENT_01 = 3
+      _FLAG_RESET( FV_D33R0101_HAKASE2_01 )
+      
+      //19番道路初期化
+      $WK_SCENE_R19 = 0
+      _FLAG_RESET( FV_R19_SWBELL_01 )
+      */
+      
+      /*
+      //R06 季節研究所イベント起動
+      $WK_SCENE_R06_SWLEADER1 = 1
+      _FLAG_RESET( FV_R06_SWLEADER1_01 )
+      _FLAG_RESET( FV_R06R0101_SWLEADER1_01 )
+      */
+      
+      /*
+      //D09R1401初期化
+      $WK_SCENE_D09R1401_SWRIVAL_01 = 0
+      */
+      
+      //ローカルライブキャスター通話可能
+      _PERSON_TVT_CALL_SET_MOTHER()
+      _PERSON_TVT_CALL_SET_DOCTOR()
+      _PERSON_TVT_CALL_SET_RIVAL()
+      _PERSON_TVT_CALL_SET_CHELEN()
+      _PERSON_TVT_CALL_SET_BELL()
+      
+      
+      /*
+      //D10R0501 ゲーチス戦前
+      _FLAG_RESET( FV_D10R0401_BOSS_01 )
+      _FLAG_SET( FV_D10R0501_WAND_01 )
+      _FLAG_RESET( FV_D10R0401_POKE_02 )
+      _FLAG_SET( FV_D10R0401_POKE_03 )
+      _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D10R0401, 16, 2, DIR_UP )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 3
+      */
+      
+      /*
+      //D10R0501 キュレム戦前
+      _FLAG_RESET( FV_D10R0401_BOSS_01 )
+      _FLAG_SET( FV_D10R0501_WAND_01 )
+      _FLAG_SET( FV_D10R0401_POKE_02 )
+      _FLAG_RESET( FV_D10R0401_POKE_03 )
+      _FLAG_RESET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D10R0401, 16, 2, DIR_UP )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+      */
+      
+      /*
+      //D10R0501ゼクロム・N表示
+      _FLAG_RESET( FV_D10R0401_BOSS_01 )
+      _FLAG_RESET( FV_D10R0401_POKE_02 )
+      _FLAG_SET( FV_D10R0501_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D10R0501, 15, 21, DIR_UP )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+      */
+      
+      /*
+      //D10R0301イベント初期化
+      _FLAG_RESET( FV_D10R0301_SWRIVAL_01 )
+      _FLAG_RESET( FV_D10R0301_SWPLAZMAM_01 )
+      _FLAG_SET( FV_D10R0301_SWPLAZMAM_02 )
+      //D10R0301 POSを無効
+      $WK_SCENE_D10R0301_SWPLAZMA_01 = 0
+      _MAP_CHANGE( ZONE_ID_D10R0301, 26, 74, DIR_UP )
+      */
+      
+      /*
+      //D27R0101 ヴィオイベント起動前
+      $WK_SCENE_D27R0101_FIRST_01 = 3
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
+      */
+      
+      /*
+      //D27R0601 ゲーチス演説起動
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 1
+      _FLAG_RESET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_SET( FV_D27R0601_NINJA_01 )
+      _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      _FLAG_RESET( SYS_FLAG_BGM_D27R0601_PLAZMA )
+      _MAP_CHANGE( ZONE_ID_D27R1301, 6, 11, DIR_UP )
+      */
+      /*
+      //アクロマ戦起動
+      $WK_SCENE_D27R0401_SWBOSS_01 = 2
+      */
+      
+      /*
+      //D27R0601 ダークトリニティ戦起動
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 2
+      $WK_SCENE_D27R0601_STOPPER_01 = 1
+      _FLAG_SET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_RESET( FV_D27R0601_NINJA_01 )
+      _FLAG_RESET( FV_D27R0601_SWRIVAL_01 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      _MAP_CHANGE( ZONE_ID_D27R1301, 6, 11, DIR_UP )
+      */
+      
+      /*
+      //D27R1201イベント起動
+      $WK_SCENE_D27R0101_SECONDW_01 = 2
+      _FLAG_RESET( FV_D27R1201_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0101, 18, 16, DIR_UP )
+      */
+      
+      //D27R0701 客室イベント起動
+      //$WK_SCENE_D27R0701_PLAZMAM_01 = 1
+      //$WK_SCENE_D27_ANNOUNCE = 1
+      
+      //コバルオンと遭遇
+      //$WK_SCENE_R13_POKE4 = 0
+      
+      /*
+      //タワーオブヘブン起動
+      $WK_SCENE_C06HAKASE = 3
+      _FLAG_RESET( FV_R07R0101_HAKASE2_01 )
+      */
+      
+      /*
+      //C06ジムクリア
+      $WK_SCENE_C06GYM = 1
+      $WK_SCENE_C06HAKASE = 3
+      _MAP_CHANGE( ZONE_ID_C06GYM0101, 10, 10, DIR_UP )
+      */
+      
+      /*
+      //C05ジムクリア後イベント起動
+      $WK_SCENE_C05 = 4
+      //ライバルを表示に
+      _FLAG_RESET( FV_C05_SWRIVAL_01 )
+      //ヤーコンを表示に
+      _FLAG_RESET( FV_C05_SWLEADER5_01 )
+      _MAP_CHANGE( ZONE_ID_C05GYM0201, 10, 10, DIR_UP )
+      */
+      
+      /*
+      //シャガ誘導イベント発動
+      $WK_SCENE_C08R0101 = 1
+      _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+      $WK_SCENE_C08_SWPLAZMA = 0
+      _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_UP )
+      _FLAG_RESET( SYS_FLAG_BGM_C08_PLAZMA )
+      _FLAG_RESET( SYS_FLAG_BGM_C08_SILENT )
+      */
+      
+      /*
+      //クリア後キュレム確認用
+      _FLAG_SET( FV_D10R0401_POKE_02 )
+      _FLAG_SET( FV_D10R0401_BOSS_01 )
+      _FLAG_SET( FV_D10R0401_SWSAGE1_01 )
+      _FLAG_SET( FV_D10R0401_POKE_03 )
+      _FLAG_SET( FV_D10R0401_POKE_01 )
+      _FLAG_RESET( FV_D10R0501_WAND_01 )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 3
+      
+      _FLAG_RESET( FV_D10R0501_KYUREMU )
+      _FLAG_SET( FV_D10R0501_IDENSHINO_KUSABI )
+      _FLAG_RESET( FE_D10R0501_KUSABI_GET )
+      _FLAG_RESET( FE_D10R0401_POKE10_MEET )
+      */
+      /*
+      //下水道前イベント開始
+      //C03P07表示
+      _FLAG_RESET( FV_C03P17_SWCHAMPION_01 )
+      //C03P17_SCENE_CHANGE有効
+      $WK_SCENE_C03P17 = 1
+      */
+      
+      //R20プラズマ団イベント開始
+      //_FLAG_RESET( FV_R20_SWPLAZMA_01 )
+      /*
+      //牧場イベント最後の
+      $WK_SCENE_D22R0101 = 4
+      _FLAG_RESET(FV_D22R0101_BREEDER_01)
+      _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
+      _MAP_CHANGE( ZONE_ID_D22, 142, 631, DIR_UP )
+      */
+      
+      /*
+      //D27戦闘中の状況確認用
+       $WK_SCENE_D27R0101_FIRST_01 = 3
+      //乗船1回目の人物を全て表示に
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      */
+      
+      /*
+      //R27R0601イベント初期化
+      _FLAG_RESET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_SET( FV_D27R0601_NINJA_01 )
+      _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
+      //D27R0701 SCENE_CHANGE有効
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 1
+      //D27R0701 STOPPER無効
+      $WK_SCENE_D27R0601_STOPPER_01 = 0
+      */
+      
+      /*
+      //D27バリア解説イベント起動
+      $WK_SCENE_D27R0101_SECONDW_01 = 2
+      _FLAG_RESET( FV_D27R1201_SWRIVAL_01 )
+      */
+      
+      /*
+      //D27R0501初期化
+      $WK_SCENE_D27R0501_SWSAGE7_01 = 1
+      _FLAG_SET( FV_D27R0501_NINJA_01 )
+      _FLAG_RESET( FV_D27R0501_SWSAGE7_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0201, 11, 3, DIR_UP )
+      */
+      
+      /*
+      //D10R0101イベント初期化
+      //ライバル・見張り（２）非表示
+      _FLAG_RESET( FV_D10R0101_SWPLAZMAM_01 )
+      _FLAG_SET( FV_D10R0101_SWPLAZMAM_03 )
+      //D10R0101 POS無効
+      $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
+      */
+      
+      /*
+      //C08ダークトリニティ（１）表示
+      _FLAG_RESET( FV_C08_NINJA_01 )
+      //C08：ダークトリニティ戦起動
+      $WK_SCENE_C08_NINJA = 1
+      $WK_SCENE_C08_SWPLAZMA = 6
+      */
+      
+      /*
+      //はじまりの場所イベント初期化
+      $WK_SCENE_C03P19 = 0
+      _TRAINER_FLAG_RESET( TRID_HEADS_11 )
+      _TRAINER_FLAG_RESET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
+      
+      /*
+      //ヒウンラリー初期化
+      $WK_SCENE_C03_RALLY_01 = 1
+      _FLAG_RESET( FE_C03_RALLYPOINT_01 )
+      _FLAG_RESET( FE_C03_RALLYPOINT_02 )
+      _FLAG_RESET( FE_C03_RALLYPOINT_03 )
+      _MAP_CHANGE( ZONE_ID_C03P15, 16, 3, DIR_UP )
+      */
+      
+      //R13R0201 迷いの森ゾロアーク
+      //_FLAG_RESET( FV_R16R0201_BACKPACKERM_01 )
+      
+      /*
+      //R20長い草イベント
+      _FLAG_RESET( FV_R20_SWLEADER1_01 )
+      $WK_SCENE_R20 = 2
+      _MAP_CHANGE( ZONE_ID_R20, 161, 658, DIR_DOWN )
+      */
+      /*
+      //D11R0101初期化
+      $WK_SCENE_D11R0101 = 0
+      _FLAG_RESET( FV_D11R0101_SWRIVAL_01 )
+      _FLAG_RESET( FV_D11R0101_SWPLAZMA_01 )
+      _MAP_CHANGE( ZONE_ID_D11R0101, 84, 21, DIR_DOWN )
+      */
+      
+      
+    ELSIF $SCWK_TEMP2 == 22 THEN
+      
+      //W21終了イベント開始
+      //W21イベント進行
+      $WK_SCENE_W21_01 = 4
+      //W21ライバル表示
+      _FLAG_RESET( FV_W21_SWRIVAL_01 )
+      //W21チェレン非表示
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      //予約スクリプト
+      _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
+      //W21マップチェンジ1
+      _MAP_CHANGE_NO_FADE( ZONE_ID_W21, 798, -5, 242, DIR_RIGHT )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+      
+      /*
+      //C08R0101伝説解説SCENE_CHANGEイベント起動
+      $WK_SCENE_C08R0101 = 1
+      //C08R0101シャガ表示
+      _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+      _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_LEFT )
+      */
+      
+      /*
+      //はじまりの場所イベント二人目
+      $WK_SCENE_C03P19 = 1
+      _TRAINER_FLAG_SET( TRID_HEADS_11 )
+      _TRAINER_FLAG_RESET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
+      
+      /*
+      //W21開始イベント
+      _FLAG_SET( FV_W21_SWRIVAL_01 )
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      //W21のイベント進行状態を進めてイベントを発生
+      $WK_SCENE_W21_01 = 1
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D32R0101, 29, 11, DIR_RIGHT )
+      */
+    
+    ELSIF $SCWK_TEMP2 == 23 THEN
+      
+      /*
+      //はじまりの場所イベント三人目
+      $WK_SCENE_C03P19 = 2
+      _TRAINER_FLAG_SET( TRID_HEADS_11 )
+      _TRAINER_FLAG_SET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
+      
+      /*
+      //W21終了イベント
+      //W21ライバル表示
+      _FLAG_RESET( FV_W21_SWRIVAL_01 )
+      //W21チェレン表示
+      _FLAG_RESET( FV_W21_SWLEADER1_01 )
+      //W21イベント進行
+      $WK_SCENE_W21_01 = 4
+      _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
+      _MAP_CHANGE( ZONE_ID_W21, 794, 241, DIR_DOWN )
+      */
+    
+    ELSIF $SCWK_TEMP2 == 24 THEN
+    
+      //主人公部屋トロフィー表示非表示
+      IF FLAG_ON(FV_C12R0101_TRORHY1_01) THEN
+        _FLAG_RESET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_RESET( FV_C12R0101_TRORHY3_01 )
+        _FLAG_RESET( FV_C12R0101_PRIZE1_01 )
+        _FLAG_RESET( FV_C12R0101_PRIZE2_01 )
+      ELSE
+        _FLAG_SET( FV_C12R0101_TRORHY1_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY2_01 )
+        _FLAG_SET( FV_C12R0101_TRORHY3_01 )
+        _FLAG_SET( FV_C12R0101_PRIZE1_01 )
+        _FLAG_SET( FV_C12R0101_PRIZE2_01 )
+      ENDIF
+      
+      //連れ歩きイベント起動
+      $WK_SCENE_D24_PAIR_START = 1
+    
+    ELSIF $SCWK_TEMP2 == 25 THEN
+      //$WK_SCENE_C15_TUTORIAL_01 = 1
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 1 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 26 THEN
+      //連れ歩きイベント起動
+      //$WK_SCENE_D24_PAIR_START = 1
+      /*
+      _FLAG_RESET( FV_D27R1301_STOPPER_01 )
+      _FLAG_RESET( FV_D27R1001_STOPPER_01 )
+      $WK_SCENE_D27R10R13_STOPPER = 0
+      */
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 2 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 27 THEN
+      /*
+      _FLAG_RESET( FV_D27R1301_STOPPER_01 )
+      _FLAG_RESET( FV_D27R1001_STOPPER_01 )
+      $WK_SCENE_D27R10R13_STOPPER = 1
+      */
+    /*
+      //ゲームクリア時イベント起動
+      $WK_SCENE_C12R0101 = 2
+      //C12R0101ママを表示
+      _FLAG_RESET( FV_C12R0101_SWMAMA )
+      */
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 3 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+      
+    ELSIF $SCWK_TEMP2 == 28 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 4 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+    ELSIF $SCWK_TEMP2 == 29 THEN
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _CALL_TVT_DEMO( 5 )
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+      
+    ELSE
+			//C04R0101でんきジム実験
+			$WK_SCENE_C04GYM0101_SHOWEND = 1
+		ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*				杉中のデバッグメニュー						  */
+/**************************************************************/
+EVENT_START   ev_debug_suginaka
+	$SCWK_TEMP0 = 0
+	
+	WHILE $SCWK_TEMP0 != 428
+
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//C13R0401：船
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//C06R0201：飛行機
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//D08R0901：レシゼク戦
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｃ１３ネオプラズマ団イベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 4 )	//過去イベント・三つ子
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 5 )	//過去イベント・シッポウ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 6 )	//過去イベント・サンギ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 7 )	//過去イベント・ソウリュウ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 8 )	//過去イベント・サザナミ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 9 )	//過去イベント・ホドモエ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_19, 15 )	//過去イベント・ミュージカルホール
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_20, 16 )	//過去イベント・電気石の洞穴
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_14, 10 )	//せいそくち・水上エンカウント用フラグセット
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_15, 11 )	//せいそくち・釣りエンカウント用フラグセット
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_16, 12 )	//ローカルライブキャスターＰＯＳ起動
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_17, 13 )	//せいそくち・水上釣り到着フラグセット
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_18, 14 )	//ライモンシティ・ライバルイベント
+		_BMPMENU_MAKE_LIST( msg_debug_01, 17 )	//C12のイベント消化済みにする
+		_BMPMENU_MAKE_LIST( msg_debug_02, 18 )	//C12のイベント消化済みにする
+		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+	
+		IF $SCWK_ANSWER == 0 THEN
+			
+			_FLAG_RESET( FV_C13R0401_SWRIVAL )
+			_FLAG_RESET( FV_C13R0401_PILOT )
+			
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C13R0401, 6, 7, DIR_UP )
+			
+			$SCWK_TEMP0 = 428
+		
+		ELSIF $SCWK_ANSWER == 1 THEN
+			
+			_FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
+			_FLAG_RESET( FV_C06R0201_HAKASE2_01 )
+			
+			$WK_SCENE_C06HAKASE = 4
+			
+			_SET_BADGE_FLAG( BADGE_ID_06 )
+			
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C06R0201, 17, 21, DIR_UP )
+			
+			$SCWK_TEMP0 = 428
+			
+		ELSIF $SCWK_ANSWER == 2 THEN
+
+			$WK_SCENE_D08R0901_LEGEND = 1
+	
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_D08R0901, 16, 16, DIR_UP )
+			
+			$SCWK_TEMP0 = 428
+			
+		ELSIF $SCWK_ANSWER == 3 THEN
+			//C13：ネオプラズマ団イベント
+			$WK_SCENE_C13 = 4
+
+			_FLAG_RESET( FV_C13_SWPLAZMA )	//ネオプラズマ団イベント用　表示
+
+			$SCWK_TEMP0 = 428
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C13, 237, 670, DIR_RIGHT )
+
+		ELSIF $SCWK_ANSWER == 4 THEN
+		
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・三つ子起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC01R0501_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC01R0501, 7,0, 3, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+		
+		ELSIF $SCWK_ANSWER == 5 THEN
+			
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・シッポウ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC02GYM0202_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC02GYM0202, 5, 1, 4, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+	
+		ELSIF $SCWK_ANSWER == 6 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・シッポウ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDT06R0101_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDT06R0101, 6, 0, 3, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 7 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・ソウリュウ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC08R0101_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC08R0101, 9, 0, 9, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+		
+		ELSIF $SCWK_ANSWER == 8 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・サザナミ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDT04R0301_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDT04R0301, 6, 0, 5, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 9 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・ホドモエ起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC05R0501_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC05R0501, 7, 0, 18, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 10 THEN
+
+			_FLAG_SET(SYS_FLAG_NAMINORI_GET)
+
+		ELSIF $SCWK_ANSWER == 11 THEN
+
+			_FLAG_SET(SYS_FLAG_SUGOI_TSURI_GET)
+			
+		ELSIF $SCWK_ANSWER == 12 THEN
+
+			$WK_SCENE_C04_LOCALTVT = 1
+			$WK_SCENE_C05_LOCALTVT = 1
+			$WK_SCENE_C06_LOCALTVT = 1
+			$WK_SCENE_T03_LOCALTVT = 1
+			$WK_SCENE_T04_LOCALTVT = 1
+			$WK_SCENE_T07_LOCALTVT = 1
+			$WK_SCENE_R05_LOCALTVT = 1
+			$WK_SCENE_R06_LOCALTVT = 1
+			$WK_SCENE_R07_LOCALTVT = 1
+			$WK_SCENE_R09_LOCALTVT = 1
+			$WK_SCENE_R11_LOCALTVT = 1
+			$WK_SCENE_R12_LOCALTVT = 1
+			$WK_SCENE_R13_LOCALTVT = 1
+			$WK_SCENE_R14_LOCALTVT = 1
+			$WK_SCENE_R16_LOCALTVT = 1
+	
+		ELSIF $SCWK_ANSWER == 13 THEN
+		
+			_FLAG_SET(SYS_FLAG_NAMINORI_GET)
+			_FLAG_SET(SYS_FLAG_SUGOI_TSURI_GET)
+		
+			_FLAG_SET( SYS_FLAG_ARRIVE_T01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C05 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C06 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C07 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C08 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D09 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C09 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C11 )
+
+			// スワン追加到着フラグ
+			_FLAG_SET( SYS_FLAG_ARRIVE_C12 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C13 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C14 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T06 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T07 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_H01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_H03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_H05 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R19 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R20 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D22 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D23 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D11R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D04R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R05 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R16 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R16R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R16R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_H02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R06 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D28R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R06R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D06 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R07 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R07R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D24 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D25R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R13 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D20 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R14 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R14R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R12 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_H04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R11 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R09 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D32R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_W21 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R15 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R22 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D10 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R23 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D26R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R08 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R08R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D08 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D07 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R03R0301 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D01R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_W17 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_R18 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D13 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D29R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C00R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C00R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C15 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C16 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D05R0101 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D31R0201 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D31R0101 )
+
+		ELSIF $SCWK_ANSWER == 14 THEN
+
+			//================================================//
+
+			//ライバルイベントPOSを起動
+			$WK_SCENE_C04_SWRIVAL = 1
+			//ライバル表示
+			_FLAG_RESET( FV_C04_SWRIVAL_01 )
+			//プラズマ表示
+			_FLAG_RESET( FV_C04_SWPLASMAM_01 )
+    
+			//旧ジムのモデル削除
+			_FLAG_SET( FV_C04R1101_ADULTW_01 )
+    
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C04, 411, 438, DIR_LEFT )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 15 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・ミュージカルホール起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 16 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・電気石の洞穴起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDD06R0101_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDD06R0101, 9, 0, 19, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 17 THEN
+
+			//========================================//
+			_FLAG_RESET( FV_C12R0101_SWMAMA )
+			//C12のSCENE_CHANGE起動をOFFに
+			$WK_SCENE_C12_WHITE_MEET = 7
+			//SCENE_CHANGE無効
+			$WK_SCENE_C12GYM0201 = 1
+			//R19イベント終了
+			$WK_SCENE_R19 = 4
+			//R19アデク非表示
+			_FLAG_SET( FV_R19_CHAMPION_01 )
+			//C12のベル・ライバルを非表示
+			_FLAG_SET( FV_C12_SWBELL )
+			_FLAG_SET( FV_C12_SWANLEADER1 )
+			//C12の動作モデル操作を終了（C12ジムクリア関連イベント終了）
+			$WK_SCENE_C12GYM_OPEN = 4
+			//========================================//
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C12R0101, 14, 3, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 18 THEN
+
+
+			//チュートリアル開始
+			_FLAG_SET( SYS_FLAG_POKEWOOD_TUTORIAL )
+			_RESERVE_SCRIPT( SCRID_RESERVE_PKWD_ENTRANCE_TUTORIAL )
+			_MAP_CHANGE( ZONE_ID_C15R0201, 14, 21, DIR_UP )
+  
+			//==================================//
+			//C16誘導イベント終了
+			$WK_SCENE_C15_TUTORIAL_01 = 3
+  
+			//C13プラズマ団イベント開始
+			$WK_SCENE_C13 = 4
+			//C13プラズマ団員表示
+			_FLAG_RESET( FV_C13_SWPLAZMA )
+ 
+			//==================================//
+			
+			$SCWK_TEMP0 = 428
+
+		ELSE
+
+			$SCWK_TEMP0 = 428
+			
+		ENDIF
+	
+	ENDWHILE
+	
+EVENT_END
+
+/**************************************************************/
+/*   FUJIMURA                                                 */
+/**************************************************************/
+EVENT_START   ev_debug_fujimura
+  $SCWK_TEMP2 = 0
+  //メニュー作成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_03, 2 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_04, 3 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_05, 4 )
+
+    //メニュー表示
+    _BMPMENU_START()
+
+    //メニュー1つ目
+    IF $SCWK_TEMP2 == 0 THEN
+      //セイガイハ：ライバルイベントスタンバイ
+      $WK_SCENE_C14_SWRIVAL_01 = 1
+
+    //メニュー2つ目
+    ELSIF $SCWK_TEMP2 == 1 THEN
+      //セイガイハ：ジムリーダーイベントスタンバイ
+      $WK_SCENE_C14_SWLEADER8_01 = 1
+
+    //メニュー3つ目
+    ELSIF $SCWK_TEMP2 == 2 THEN
+      //アイス復活
+      _FLAG_RESET( TMFLG_C03P09_ICEBUY )
+      //アイス屋の行列設置
+      _FLAG_SET( FE_C03P09_ICEBUY_01 )
+      _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+
+    //メニュー4つ目
+    ELSIF $SCWK_TEMP2 == 3 THEN
+
+    //メニュー5つ目
+    ELSIF $SCWK_TEMP2 == 4 THEN
+      //ライバルイベントの準備
+      $WK_SCENE_C13 = 5
+
+    ENDIF
+
+EVENT_END
+//--------------------------------------------------------------------
+//  パッケージポケモン： Nを乗せて飛ぶ              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke_idou_02
+	
+	_ANIME_DATA AC_SHIN_MU_FLY_L,24
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//デンチュラの巣:壊れる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_01_hakai
+	_ANIME_DATA	AC_SPIDER_REMOVE,1
+	_ANIME_DATA	ACMD_END,0 
+
+//--------------------------------------------------------------------
+// ポケモン: 巣まで移動する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_kuru_01
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ポケモン: わざを出す                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_waza_01
+
+	_ANIME_DATA AC_STAY_JUMP_U_8F,1	
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1	
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA AC_WALK_U_4F,1
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_kagaya
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+
+{ //DEBUG_IWASAWA_START
+DEFINE_LOCAL  reg_iwasawa_return
+
+EVENT_START   ev_debug_iwasawa
+  _CALL sub_iwasawa_main
+EVENT_END
+
+sub_iwasawa_main:
+{
+
+  DEFINE_LOCAL  i_seq
+  DEFINE_LOCAL  i_loop
+ 
+  _DEBUG_PRINT_WK( WK_SCENE_D06_PAIR )
+  IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+    _DEBUG_PRINT_WK( WK_SCENE_D06_PAIR )
+  ENDIF
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+    SWITCH $i_seq
+    CASE SEQ_IWASAWA_MAIN_MENU THEN
+      _CALL siwasawa_main_menu
+      $i_seq = $reg_iwasawa_return
+    
+    CASE SEQ_IWASAWA_ADD_PAIR THEN
+      _CALL siwasawa_add_pair_menu
+      $i_seq = $reg_iwasawa_return
+
+    CASE SEQ_IWASAWA_MV_POKE THEN
+      _CALL siwasawa_mv_poke_menu
+      $i_seq = $reg_iwasawa_return
+
+    CASE SEQ_IWASAWA_EXIT THEN
+      $i_loop = FALSE
+    CASE EV_WIN_B_CANCEL THEN
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
+
+}
+_RET
+
+//メインメニュー
+siwasawa_main_menu:
+{
+  DEFINE_LOCAL  i_ret
+
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main01, SEQ_IWASAWA_ADD_PAIR )	//連れ歩き
+	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main02, SEQ_IWASAWA_MV_POKE )	//いどうポケモン
+	_BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+
+  $reg_iwasawa_return = $i_ret
+}
+_RET
+
+//連れ歩き追加メニュー
+siwasawa_add_pair_menu:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+  DEFINE_LOCAL  i_player_x
+  DEFINE_LOCAL  i_player_z
+  
+  $reg_iwasawa_return = SEQ_IWASAWA_EXIT
+  
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+	  //メニュー作成
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  //リスト追加
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair01, 0 )
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair02, 1 )
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_pair03, 2 )
+	  _BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	  //メニュー表示
+	  _BMPMENU_START()
+    
+    $i_loop = FALSE
+    _PLAYER_POS_GET( i_player_x, i_player_z)
+
+    SWITCH $i_ret
+    CASE 0 THEN
+      //連れ歩き開始
+      IF FLAG_OFF( SYS_FLAG_PAIR) THEN
+        _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
+        _PAIR_TRAINER_SET( PAIR_TRAINER_01, PAIR_ID_01, PAIR_TYPE_ONE_ZONE, TRID_SUPPORT_01, 0 )
+      ENDIF
+    CASE 1 THEN
+      //連れ歩き開始
+      IF FLAG_OFF( SYS_FLAG_PAIR) THEN
+        _OBJ_ADD_EX( i_player_x, i_player_z, DIR_DOWN, PAIR_TRAINER_01, SHIRONA, MV_PAIR )
+        _PAIR_TRAINER_SET( PAIR_TRAINER_01, PAIR_ID_01, PAIR_TYPE_FREE_ZONE, TRID_SUPPORT_01, 0 )
+      ENDIF
+    CASE 2 THEN
+      //連れ歩き終了
+      IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+        _PAIR_TRAINER_FREE( 0, MV_DMY )
+        _OBJ_DEL( PAIR_TRAINER_01 )
+      ENDIF
+    DEFAULT
+      $reg_iwasawa_return = SEQ_IWASAWA_MAIN_MENU
+    ENDSWITCH
+  ENDWHILE
+
+//  _FLAG_SET( SYS_FLAG_PAIR )
+//	_OBJ_SET_NOT_DEL_ZONECHG( PAIR_TRAINER_01 )
+}
+_RET
+
+//移動ポケモン追加メニュー
+siwasawa_mv_poke_menu:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_loop
+
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+	  //メニュー作成
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  //リスト追加
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp01, MOVE_POKE_RAIKAMI )	//ライカミ
+	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp02, MOVE_POKE_KAZAKAMI )	//カザカミ
+	  _BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
+	  //メニュー表示
+	  _BMPMENU_START()
+
+    IF $i_ret == SEQ_IWASAWA_EXIT THEN
+      $i_loop = FALSE
+    ELSE
+      _ADD_MOVE_POKEMON( i_ret )
+    ENDIF
+  ENDWHILE
+  $reg_iwasawa_return = SEQ_IWASAWA_MAIN_MENU
+}
+_RET
+
+} //DEBUG_IWASAWA_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_nozomu
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_tomoya
+
+/*
+  _CGEAR_ON_DEMO( TRUE )
+  _AB_KEYWAIT()
+  _CGEAR_ON_DEMO( FALSE )
+//*/
+
+/*
+  _ITEMJUDGE_HAVE_CHECK( 0, SCWK_ANSWER )
+//*/
+
+/*
+
+  _TRADEPOKE_AFTER_SAVE( 0, SCR_TRPOKE_AFTER_SAVE_C02 )
+  _TRADE_AFTER_TRAINER_BTL_SET( 2, SCR_TRPOKE_AFTER_SAVE_C02 )
+//*/
+
+/*
+  _OBJ_HIGH_JUMP(0, 782, 0, 756)
+//*/
+/*
+  _CAMERA_START()
+
+
+  _CAMERA_MOVE( 11685,60719,1408830,2064416,12288,3702784, 8 )
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_RECV_MOVE( 8 )
+  _CAMERA_WAIT_MOVE()
+  
+  _CAMERA_END()
+//*/
+//*
+  //_EV_MOVEPOKE_CREATE( MMDL_ID_PLAYER )
+  _EV_MOVEPOKE_CREATE( 0 )
+
+  _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE)
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+
+  _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE)
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+
+  _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE)
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+
+  _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE)
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+  
+  _EV_MOVEPOKE_DELETE()
+//*/
+
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_debug_obata
+
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_obata_1,   1 ) // 初回クリア
+	_BMPMENU_MAKE_LIST( msg_debug_obata_2,   2 ) // 殿堂入り
+	_BMPMENU_MAKE_LIST( msg_debug_obata_3,   3 ) // リーグ・エレベータチェック
+	_BMPMENU_MAKE_LIST( msg_debug_obata_4,   4 ) // 育て屋オープン
+	_BMPMENU_MAKE_LIST( msg_debug_obata_5,   5 ) // 育て屋ポケセット
+	_BMPMENU_MAKE_LIST( msg_debug_obata_6,   6 ) // 育て屋ポケクリア
+	_BMPMENU_MAKE_LIST( msg_debug_obata_7,   7 ) // 育て屋ジャンプ
+	_BMPMENU_MAKE_LIST( msg_debug_obata_8,   8 ) // 無音曲再生
+	_BMPMENU_MAKE_LIST( msg_debug_obata_9,   9 ) // 調査項目全オープン
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 10 ) // テスト
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 11 ) // テスト
+	_BMPMENU_MAKE_LIST( msg_debug_obata_10, 12 ) // テスト
+	_BMPMENU_START()
+
+  SWITCH $SCWK_ANSWER
+  CASE 1 THEN 
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _GOTO_GAMECLEAR_DEMO( 0 )
+  CASE 2 THEN 
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+    _GOTO_GAMECLEAR_DEMO( 1 )
+  CASE 3 THEN 
+    _FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
+    _FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
+    _FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
+    _FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN )
+    _MAP_CHANGE( ZONE_ID_C09P01, 31, 45, DIR_UP )
+  CASE 4 THEN
+    _FLAG_SET( FE_SODATEYAOLDMAN_OPEN ) 
+    _FLAG_RESET( FV_R03_SODATEYA_01 ) 
+  CASE 5 THEN
+    _POKE_TO_SODATEYA(0)
+    _POKE_TO_SODATEYA(1)
+  CASE 6 THEN 
+    _POKE_FROM_SODATEYA(0)
+    _POKE_FROM_SODATEYA(0)
+  CASE 7 THEN 
+    _MAP_CHANGE( ZONE_ID_R03R0201, 6, 9, DIR_UP )
+  CASE 8 THEN 
+    _START_EVENT_BGM( SEQ_BGM_SILENCE_FIELD )
+  CASE 9 THEN 
+    _FLAG_SET( FE_RES_QUESTION_YOU )
+    _FLAG_SET( FE_RES_QUESTION_FAVARITE )
+    _FLAG_SET( FE_RES_QUESTION_WISH )
+    _FLAG_SET( FE_RES_QUESTION_PARTNER )
+    _FLAG_SET( FE_RES_QUESTION_FUTURE )
+    _FLAG_SET( FE_RES_QUESTION_HOBBY )
+    _FLAG_SET( FE_RES_QUESTION_IF )
+    _FLAG_SET( FE_RES_QUESTION_PLAY )
+    _FLAG_SET( FE_RES_QUESTION_POKEMON )
+  CASE 10 THEN
+    _BGM_VOLUME_DOWN( 30, 100 )
+  CASE 11 THEN
+    _BGM_VOLUME_RECOVER( 30 )
+  CASE 12 THEN
+    _BGM_VOLUME_DOWN( 30, 60 )
+    _TIME_WAIT( 60 )
+    _START_EVENT_BGM( SEQ_BGM_C_01 )
+    _TIME_WAIT( 60 )
+    _BGM_VOLUME_RECOVER( 30 )
+  ENDSWITCH
+
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_hosaka
+  //_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
+
+  //Nの城出現デモ呼び出し
+  //_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
+
+  //チャンピオン部屋のマップ置き換えリクエスト
+  //_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_CHAMPROOM, TRUE, TRUE )
+
+  //_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ariizumi
+
+  DEFINE_LOCAL  i_ret
+	_FIELD_COMM_EXIT_EVENT_CALL( i_ret )
+	_PALPARK_CALL() //ミュージカル呼び出し
+
+//  _CALL_TVT_DEMO( 0 )
+EVENT_END
+
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ohkubo
+
+  _SET_BADGE_FLAG( BADGE_ID_01 )
+  _SET_BADGE_FLAG( BADGE_ID_02 )
+  _SET_BADGE_FLAG( BADGE_ID_03 )
+  _SET_BADGE_FLAG( BADGE_ID_04 )
+  _SET_BADGE_FLAG( BADGE_ID_05 )
+  _SET_BADGE_FLAG( BADGE_ID_06 )
+  _SET_BADGE_FLAG( BADGE_ID_07 )
+  _SET_BADGE_FLAG( BADGE_ID_08 )
+
+  _MAP_CHANGE( ZONE_ID_R10R0101, 15, 19, DIR_UP )
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_matsushima
+  _MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
+EVENT_END
+
+/**************************************************************/
+/*  観覧車をアイドル以外乗ったことにする    */
+/**************************************************************/
+EVENT_START   ev_debug_wheel_medal
+  DEFINE_LOCAL  ret_tr_id
+
+  // トレーナーフラグ全て立てる
+  _GET_WHEEL_TRAINER_TR_ID( 0, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 1, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 2, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 3, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 4, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 5, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 6, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+  _GET_WHEEL_TRAINER_TR_ID( 7, ret_tr_id )
+  _TRAINER_FLAG_SET( ret_tr_id  )
+
+  _FLAG_SET( FE_AMUSEMENT_NPC01_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC02_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC03_TALK )
+  _FLAG_SET( FE_AMUSEMENT_NPC04_TALK )
+
+EVENT_END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START   ev_debug_ichiraku
+
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_1,   1 ) // 自動歩行
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_2,   2 ) // 捕獲デモ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_3,   3 ) // ライバル名入力
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_4,   4 ) // ライバル名表示
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_5,   5 ) // ぎょえ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_6,   6 ) // わざおしえショップ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_7,   7 ) // アジト船パスワード入力(ゾーン限定)
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // キュレム戦
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナーリセット
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_11,  11 ) // 背景真っ黒のままメッセージ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // キュレム合体したあと
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // コバルオン入退場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 覚醒
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_16,  16 ) // キュレムデモ 登場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_17,  17 ) // PWTのカメラ合わせ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_18,  18 ) // エンディング　花火
+	_BMPMENU_START()
+
+  SWITCH $SCWK_ANSWER
+  CASE 1 THEN
+    //ローカル変数を定義
+    DEFINE_LOCAL	LWK_HERO_X
+    DEFINE_LOCAL	LWK_HERO_Z
+    //自機の位置取得
+    _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+    $LWK_HERO_X -= 5
+    $LWK_HERO_Z -= 5
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LWK_HERO_X, LWK_HERO_Z, FORCE_TYPE_NOT, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    $LWK_HERO_X += 5
+    $LWK_HERO_Z += 5
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LWK_HERO_X, LWK_HERO_Z, FORCE_TYPE_NPC, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    $LWK_HERO_X -= 5
+    $LWK_HERO_Z -= 5
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LWK_HERO_X, LWK_HERO_Z, FORCE_TYPE_MAP, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    $LWK_HERO_X += 5
+    $LWK_HERO_Z += 5
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LWK_HERO_X, LWK_HERO_Z, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+  CASE 2 THEN
+    _CAPTURE_DEMO_SET()
+    _WILD_WIN()
+  CASE 3 THEN
+    DEFINE_LOCAL ret
+    _RIVAL_NAME_INPUT( ret )
+    _DEBUG_PRINT_WK( ret )
+  CASE 4 THEN
+    _RIVAL_NAME(0)
+    _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
+	  _LAST_KEYWAIT()	
+	  _PLAINWIN_CLOSE()
+  CASE 5 THEN
+    // !アイコン表示
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_tr_gyoe )
+		_OBJ_ANIME_WAIT()
+  CASE 6 THEN
+    _WAZA_OSHIE_RED_SHOP_CALL_GREETING_LESS()
+  CASE 7 THEN
+    _HIDE_SHIP_PASSWORD_INPUT( SCWK_ANSWER )
+    _DEBUG_PRINT_WK( SCWK_ANSWER )
+  CASE 8 THEN
+    _GLOBAL_CALL  SCRID_TV
+  CASE 9 THEN
+    {
+    // キュレム戦
+    DEFINE_LOCAL LWK_BATTLE_FLAG
+    DEFINE_LOCAL LCWK_VERSION
+
+    // ROMバージョン取得
+    _GET_ROM_VERSION( LCWK_VERSION )
+    
+    // 専用背景、伝説系、レアなし、捕獲不可
+    $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_KYUREMU
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
+
+    // 野生戦
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      //ブラック
+      //キュロム
+      _WILD_BTL_SET_EX2( MONSNO_653, 50, FORMNO_653_BLACK, LWK_BATTLE_FLAG )
+    ELSE
+      //ホワイト
+      //キュラム
+      _WILD_BTL_SET_EX2( MONSNO_653, 50, FORMNO_653_WHITE, LWK_BATTLE_FLAG )
+    ENDIF
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+      _WILD_WIN()
+    ELSE
+      _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+    }
+
+  CASE 10 THEN
+    // 観覧車トレーナー
+		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+		_FLAG_RESET( TMFLG_AMUSEMENT_NPC )
+    _SET_ZENKOKU_ZUKAN_FLAG()
+
+  CASE 11 THEN
+    // メッセージ面以外のフェード
+    _MAP_FADE_OUT_MSG_ENABLE( MSG_FADE_WHITE, 0 )
+    _TIME_WAIT(15)
+    _RIVAL_NAME(0)
+    _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
+	  _LAST_KEYWAIT()	
+	  _PLAINWIN_CLOSE()
+    _MAP_FADE_IN_MSG_ENABLE( MSG_FADE_WHITE, 0 )
+
+  CASE 12 THEN
+    // キュレム合体イベントリセット
+    _FLAG_SET( FV_D10R0401_BOSS_01 )
+    _FLAG_RESET( FV_D10R0401_POKE_01 )
+    _FLAG_SET( FV_D10R0401_POKE_02 )
+    _FLAG_SET( FV_D10R0401_POKE_03 )
+    $WK_SCENE_D10R0401_SWSAGE1_01 = 1
+
+    _MAP_CHANGE( ZONE_ID_D10R0401, 16, 4, DIR_UP )
+
+  CASE 13 THEN
+    // キュレム合体したあと
+    // N表示
+    _FLAG_RESET( FV_D10R0401_BOSS_01 )
+    //キュラム・キュロム表示
+    _FLAG_RESET( FV_D10R0401_POKE_03 )
+    //キュレム非表示
+    _FLAG_SET( FV_D10R0401_POKE_01 )
+    //SCENE_CHANGE無効
+    $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+
+    _MAP_CHANGE( ZONE_ID_D10R0501, 15, 19, DIR_UP )
+
+  CASE 14 THEN
+    // コバルオンイベント
+    {
+
+      // コバルオンOBJ生成
+      _OBJ_ADD_EX( 103, 364, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE4_STEP, MV_DMY )
+
+      // 鳴き声を鳴らす
+      // voice_play
+
+      // 移動ポケモンアニメ作成
+      _EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
+    
+      // 登場アニメ
+      _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_IN )
+      _EV_MOVEPOKE_CHECK_ANIME_END()
+
+      // なんかしゃべる?
+      _TIME_WAIT(60)
+
+      // 退場アニメ
+      _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_OUT )
+      _EV_MOVEPOKE_CHECK_ANIME_END()
+
+      // 移動ポケモンアニメ破棄
+      _EV_MOVEPOKE_DELETE()
+
+      // コバルオンOBJ削除
+      _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    }
+
+  CASE 15 THEN
+    {
+    DEFINE_LOCAL LCWK_VERSION
+    _GET_ROM_VERSION( LCWK_VERSION )
+
+    // キュレムデモ　覚醒
+	  _DEMO_FADEOUT_BLACK_CALL()
+    _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_00 )
+
+	  IF $LCWK_VERSION == VERSION_B2 THEN
+      _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
+    ELSE
+      _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_01 )
+    ENDIF
+	  _DEMO_FADEIN_BLACK_CALL()
+    }
+  CASE 16 THEN
+    {
+      DEFINE_LOCAL LCWK_VERSION
+
+      _GET_ROM_VERSION( LCWK_VERSION )
+
+      // キュレムデモ　登場
+	    _DEMO_FADEOUT_BLACK_CALL()
+
+	    IF $LCWK_VERSION == VERSION_B2 THEN
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_02 )
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_03 )
+      ELSE
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_02 )
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_03 )
+      ENDIF
+	    _DEMO_FADEIN_BLACK_CALL()
+    }
+
+  CASE 17 THEN
+    {
+      //カメラ移動・中央固定　
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラのバインドを解く
+
+      //カメラ操作　ステージ中央にカメラを合わせる
+      _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//一番最後の引数は移動にかかるフレーム数
+      _CAMERA_WAIT_MOVE()
+
+      _OBJ_ADD_EX( 20, 15, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, RGLEADER3, MV_DMY )
+
+      _CAMERA_END()
+    }
+  CASE 18 THEN
+    _MAP_FADE_BLACK_OUT_SLOW()
+    _MAP_FADE_END_CHECK()
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C09P03, 31, 47, 1, DIR_DOWN )
+    _GLOBAL_CALL  SCRID_C09P03_ENDING
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C09P03, 31, 47, 1, DIR_DOWN )
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
+
+  ENDSWITCH
+
+EVENT_END
+//--------------------------------------------------------------
+//	トレーナー[!]マーク
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tr_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------
+//	下向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_debug_onoue
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_01,   0 ) // 最も獲得数の多いメダルカテゴリ
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_02,   1 ) // メダル獲得済み確認
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_03,   2 ) // メダル獲得済み確認
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_04,   3 ) // メダル獲得済み確認
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_05,   4 ) // メダル獲得済み確認
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_06,   5 ) // 全捕獲チェック
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_07,   6 ) // 全捕獲
+	_BMPMENU_MAKE_LIST( msg_debug_onoue_08,   7 ) // 獣道データセット
+	_BMPMENU_START()
+
+  SWITCH $SCWK_ANSWER
+  CASE 0 THEN
+  {
+	  DEFINE_LOCAL LWK_CATEGORY
+    _GET_MOST_GET_MEDALCATEGORY(LWK_CATEGORY)
+    _DEBUG_PRINT_WK(LWK_CATEGORY)
+  }
+  CASE 1 THEN
+  {
+ 	  DEFINE_LOCAL LWK_IS_GET
+    _CHECK_MEDAL_GET( LWK_IS_GET ,1)
+    _DEBUG_PRINT_WK(LWK_IS_GET)
+  }
+  CASE 2 THEN
+  {
+    _SC_WALK_COUNT_START()
+  }
+  CASE 3 THEN
+  {
+    _SC_WALK_COUNT_STOP()
+  }
+  CASE 4 THEN
+  {
+	  DEFINE_LOCAL LWK_WALK_CNT
+    _SC_WALK_COUNT_GET(LWK_WALK_CNT)
+    _DEBUG_PRINT_WK(LWK_WALK_CNT)
+  }
+  CASE 5 THEN
+  {
+	  DEFINE_LOCAL RET_WK
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_LAND,TRUE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_SEA,TRUE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_FISHING,TRUE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_LAND,FALSE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_SEA,FALSE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+    _SC_GET_ZONE_POKE_CMP_CHECK(ZONE_ID_C12,SCR_HABITAT_TYPE_FISHING,FALSE,RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+  }
+  CASE 6 THEN
+  {
+	  DEFINE_LOCAL RET_WK
+    _INFINITY_DUNGEON_GET_DUNGEON_STATUS(RET_WK)
+    _DEBUG_PRINT_WK(RET_WK)
+  }
+  CASE 7 THEN
+  {
+    _ANIMAL_TRAIL_DATA_SET(SCR_ANIMAL_TRAIL_ID_03,SCR_ANIMAL_TRAIL_MAIN_TABLE_POKE_A,3,TRUE)
+  }
+  ENDSWITCH
+ 
+EVENT_END
+
+/**************************************************************/
+/*              なぎはし                                      */
+/**************************************************************/
+EVENT_START   ev_debug_nagihashi
+{
+  DEFINE_LOCAL LWK_RET
+
+  $SCWK_TEMP0 = 0
+
+	WHILE $SCWK_TEMP0 == 0
+
+    //メインメニュー
+    _CALL sub_nagi_main_menu
+
+	  SWITCH $SCWK_ANSWER
+	  CASE 0 THEN //JA
+      _GET_ZONE_ID( LWK_RET )
+      IF $LWK_RET == ZONE_ID_C16 THEN
+        _RESERVE_SCRIPT( SCRID_RESERVE_RESORT_DEBUG )
+        $SCWK_TEMP0 = 1
+      ENDIF
+    DEFAULT
+      $SCWK_TEMP0 = 1
+	  ENDSWITCH
+
+  ENDWHILE
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//               なぎはしメインメニュー
+//--------------------------------------------------------------
+sub_nagi_main_menu:
+{
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_nagi_00,   0 ) //JA
+	_BMPMENU_START()
+}
+_RET
+
+/************************************************************/
+/*				一般向けデバッグメニュー					*/
+/************************************************************/
+EVENT_START ev_debug_common
+	$SCWK_TEMP0 = 0
+	
+	WHILE $SCWK_TEMP0 != 555
+		
+		//メニュー作成
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_21, 72 )	//ゾロアーク不具合対処
+		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//シナリオクリア
+		_BMPMENU_MAKE_LIST( msg_debug_common_04, 1 )	//殿堂入り
+		_BMPMENU_MAKE_LIST( msg_debug_common_01, 10 )	//ジムバッジ全部
+		_BMPMENU_MAKE_LIST( msg_debug_common_02, 20 )	//到着フラグ
+		_BMPMENU_MAKE_LIST( msg_debug_08, 70 )	//イベントジャンプ
+		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
+		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
+		_BMPMENU_MAKE_LIST( msg_debug_common_03, 100 )	//育て屋オープン
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_15, 110 )	//初期３匹のタイプ変更
+		_BMPMENU_MAKE_LIST( msg_debug_00, 1000 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		IF $SCWK_ANSWER == 0 THEN
+			
+			//シナリオクリア後にかかる処理を呼び出す
+			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			
+      //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
+      _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+
+		ELSIF $SCWK_ANSWER == 1 THEN
+			
+			//殿堂入り後にかかる処理を呼び出す（シナリオクリアしてなければ２回呼ぶことで殿堂入り処理へ流す）
+			IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+				_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			ENDIF
+			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
+			
+			//ボックス壁紙を追加
+			//_GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
+			
+      //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
+      _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+
+		ELSIF $SCWK_ANSWER == 10 THEN
+			
+			_SET_BADGE_FLAG( BADGE_ID_01 )
+			_SET_BADGE_FLAG( BADGE_ID_02 )
+			_SET_BADGE_FLAG( BADGE_ID_03 )
+			_SET_BADGE_FLAG( BADGE_ID_04 )
+			_SET_BADGE_FLAG( BADGE_ID_05 )
+			_SET_BADGE_FLAG( BADGE_ID_06 )
+			_SET_BADGE_FLAG( BADGE_ID_07 )
+			_SET_BADGE_FLAG( BADGE_ID_08 )
+			
+		ELSIF $SCWK_ANSWER == 20 THEN
+			
+			_FLAG_SET( SYS_FLAG_ARRIVE_T01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C01 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C02 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C05 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C06 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C07 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C08 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_D09 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C09 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T03 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_T04 )
+			_FLAG_SET( SYS_FLAG_ARRIVE_C11 )
+      
+      // スワン追加到着フラグ
+      _FLAG_SET( SYS_FLAG_ARRIVE_C12 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_C13 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_C14 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_T06 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_T07 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_H01 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_H03 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_H05 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R19 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R20 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D22 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D23 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D11R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R04 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D03 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D04R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R05 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R16 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R16R0201 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_H02 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R06 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D28R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R06R0201 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D06 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R07 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R07R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D24 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D25R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R13 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D20 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R14 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R14R0201 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R12 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_H04 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R11 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R09 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D32R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_W21 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R15 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R22 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D10 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R23 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D26R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R08 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R08R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D08 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D07 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D02 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R03 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R03R0301 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D01R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R01 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R02 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_W17 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_R18 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D13 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D29R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_C00R0101 )          
+      _FLAG_SET( SYS_FLAG_ARRIVE_C00R0201 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_C15 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_C16 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D05R0101 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D31R0201 )
+      _FLAG_SET( SYS_FLAG_ARRIVE_D31R0101 )
+
+		ELSIF $SCWK_ANSWER == 70 THEN
+			//イベントジャンプ
+			_CALL	ev_event_jump
+			$SCWK_TEMP0 = 555
+			
+		ELSIF $SCWK_ANSWER == 80 THEN
+			//イベントＯＦＦ
+			_CALL	ev_event_off
+			$SCWK_TEMP0 = 555
+			
+		ELSIF $SCWK_ANSWER == 90 THEN
+			//マップ差し替え
+			_CALL	ev_change_mapmatrix
+			$SCWK_TEMP0 = 555
+			
+		ELSIF $SCWK_ANSWER == 100 THEN
+			//育て屋オープン
+			_FLAG_RESET( FV_R03_SODATEYA_01 )
+			_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
+			
+		ELSIF $SCWK_ANSWER == 110 THEN
+			//初期３匹のタイプ変更
+			_CALL	ev_firstpoke_type
+		
+		ELSIF $SCWK_ANSWER == 72 THEN
+			//ゾロアーク不具合対処
+			_CALL	ev_zorofuguai
+			
+		ELSE
+			//やめる
+			$SCWK_TEMP0 = 555
+			
+		ENDIF
+	
+	ENDWHILE
+
+EVENT_END
+
+
+//イベントＯＦＦ-----------------------------------------------
+ev_event_off:
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_06, 2 )	//Ｎの城
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_08, 0 )	//チャンピオン部屋
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_09, 1 )	//Ｔ01全イベント
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_11, 3 )	//Ｃ09ポケモンリーグ手前
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+
+	IF $SCWK_ANSWER == 0 THEN
+		//チャンピオン部屋のＮとのイベントを無効にする
+		//$WK_SCENE_C09R0501 = 1
+		//_FLAG_SET( FV_C09R0501_BOSS_01 )
+		//_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 9, DIR_UP )
+
+	ELSIF $SCWK_ANSWER == 1 THEN
+		//T01の初回イベントを全部OFF
+		//図鑑入手イベント終わった状態にする
+		//$WK_SCENE_T01R0401 = 1
+		//_FLAG_SET( FV_T01R0401_HAKASE2 )
+		//_FLAG_SET( FV_T01R0401_RIVAL )
+		//_FLAG_SET( FV_T01R0401_SUPPORT )
+		//サポート初回イベント終わった
+		//$WK_SCENE_T01R0201 = 1
+		//_FLAG_SET( FV_T01R0201_SUPPORT )
+		//_FLAG_RESET( FV_T01_SUPPORT )
+		//主人公宅の初回イベント終わった
+		//$WK_SCENE_T01R0101 = 1
+		//_FLAG_SET( FV_T01R0101_FRIENDS )
+		//_FLAG_SET( FV_T01R0102_PRESENT )
+		//$WK_SCENE_T01R0102 = 2
+		//_FLAG_SET( FV_T01R0102_RIVAL )
+		//_FLAG_SET( FV_T01R0102_SUPPORT )
+
+	ELSIF $SCWK_ANSWER == 2 THEN
+		//Ｎの城１Ｆの初回イベント無効
+		//$WK_SCENE_N01R0101 = 20
+		//Ｎの城２Ｆのダークトリニティイベント無効
+		//$WK_SCENE_N01R0201 = 20
+		//Ｎの城・謁見の間イベント無効
+		//$WK_SCENE_N01R0502 = 20
+		
+		_MAP_CHANGE( ZONE_ID_N01R0101, 25, 17, DIR_UP )
+
+	ELSIF $SCWK_ANSWER == 3 THEN
+		//ポケモンリーグ手前の初回誘導POSイベントを無効
+		//$WK_SCENE_C09 = 1
+		_MAP_CHANGE( ZONE_ID_C09, 32, 57, DIR_UP )
+
+	ENDIF
+	
+_RET
+
+
+//マップ差し替え-----------------------------------------------
+ev_change_mapmatrix:
+	//マップマトリクスの差し替え全部ON
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_05, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE, TRUE )
+_RET
+
+
+//イベントジャンプ-----------------------------------------------
+ev_event_jump:
+	{
+	DEFINE_LOCAL LWK_EVTJUMP
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 10 )	//自宅２Fゲーム開始イベント
+	_BMPMENU_MAKE_LIST( msg_debug_10, 12 )	//T02演説イベント
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 15 )	//Ｃギア入手イベント
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_12, 20 )	//C04 サポート父イベント
+	_BMPMENU_MAKE_LIST( msg_debug_09, 30 )	//復帰チャンピオン戦
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 40 )	//カザカミ・ライカミイベント
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミ（カザカミ・ライカミ追加）
+//	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_16, 70 )	//ライ遭遇イベント
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
+	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	
+	IF $LWK_EVTJUMP == 10 THEN
+		//自宅２階のゲーム開始イベントを起動
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE, TRUE )
+		//_FLAG_SET( FV_T01R0102_SUPPORT )
+		//_FLAG_RESET( FV_T01R0102_RIVAL )
+		//_FLAG_RESET( FV_T01R0102_PRESENT )
+		//$WK_SCENE_T01R0102 = 0
+		_MAP_CHANGE( ZONE_ID_T01R0102, 5, 6, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 12 THEN
+		//T02演説イベント
+		//$WK_SCENE_T02 = 1
+		//ライバルストッパー解除
+		//_FLAG_SET( FV_T02_RIVAL )
+		//_FLAG_SET( FV_T02_HAKASE )
+		//演説イベントフラグ開始
+		//_FLAG_RESET( FV_T02_SAGE )
+		//_FLAG_RESET( FV_T02_HAKAI )
+		//_FLAG_RESET( FV_T02_NNN )
+		//_FLAG_RESET( FV_T02_RIVAL_02 )
+		//_FLAG_RESET( FV_T02_MAN )
+		//_FLAG_RESET( FV_T02_SPEECH_BEFORE )
+		//_FLAG_SET( FV_T02_SPEECH_AFTER )
+		_MAP_CHANGE( ZONE_ID_T02PC0101, 10, 10, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 15 THEN
+		//Ｃギア入手イベント
+		//ワーク追加
+		//$WK_SCENE_C01R0102 = 1
+		//$WK_SCENE_D01R0101_POKE = 4
+		_MAP_CHANGE( ZONE_ID_C01R0102, 10, 8, DIR_RIGHT )
+
+	ELSIF $LWK_EVTJUMP == 20 THEN
+		//C04サポートパパイベント
+
+		//ミュージカルホール内、イベント無効
+		//$WK_SCENE_C04R0201 = 1
+		//C04フィールド：サポートパパイベントを有効にする
+		//$WK_SCENE_C04 = 2
+		//サポートパパを表示
+		//_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
+		//_FLAG_RESET( FV_C04_SUPPORT_01 )
+		_MAP_CHANGE( ZONE_ID_C04R0201, 10, 10, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 30 THEN
+		//復帰チャンピオン戦
+
+		//ポケモンリーグのチャンピオンとライバルを非表示
+		//_FLAG_SET( FV_C09R0501_RIVAL_01 )
+		//_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		//_FLAG_SET( FV_C09R0501_BOSS_01 )
+		//チャンピオン部屋：復帰チャンピオンを表示
+		//_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
+		//復帰チャンピオン戦を有効
+		//$WK_SCENE_C09R0501 = 3
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 20, DIR_UP )
+		
+	ELSIF $LWK_EVTJUMP == 40 THEN
+		//R07カザカミ・ライカミ登場イベント起動
+		//$WK_SCENE_R07_MOVEPOKE = 2
+		//R07天気を晴れに
+		_FLAG_RESET(SYS_FLAG_WEATHER_R07)
+		//おばあちゃん家に移動
+		_MAP_CHANGE( ZONE_ID_R07R0301, 6, 8, DIR_DOWN )
+	
+	ELSIF $LWK_EVTJUMP == 50 THEN
+		//カザカミ・ライカミを手持ちに追加
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_648, 0, 50 )
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_649, 0, 50 )
+
+		//ツチノカミ寸劇を終了しておく
+		//$WK_SCENE_R14R0201_LEG = 2
+		//イベント初期化
+		_FLAG_RESET( FE_R14R0201_LEG_GET )
+		_FLAG_RESET( FE_R14R0201_LEG_MEET )
+		_FLAG_SET( FV_R14R0201_LEG )
+		//神社前に移動
+		_MAP_CHANGE( ZONE_ID_R14R0201, 22, 17, DIR_UP )
+		
+	ELSIF $LWK_EVTJUMP == 70 THEN
+		//ライ遭遇イベント
+		//$WK_SCENE_D10_LEG = 0
+		_MAP_CHANGE( ZONE_ID_D10R0201, 50, 50, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 80 THEN
+		//ラストシーン・はじめから
+		//OBJ調整
+		//_FLAG_SET( FV_N01R0502_LEGEND_01 )
+		//_FLAG_SET( FV_N01R0502_LEGEND_02 )
+		//_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//ワークを０に
+		//$WK_SCENE_N01R0502 = 0
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 58, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 90 THEN
+		//ラストシーン・伝説捕獲前
+		//OBJ調整
+		//_FLAG_RESET( FV_N01R0502_LEGEND_01 )
+		//_FLAG_RESET( FV_N01R0502_LEGEND_02 )
+		//_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワークを２に
+		//$WK_SCENE_N01R0502 = 2
+		
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 100 THEN
+		//ラストシーン・Ｎ戦前
+		//OBJ調整
+		//_FLAG_RESET( FV_N01R0502_LEGEND_01 )	//Nの伝説
+		//_FLAG_SET( FV_N01R0502_LEGEND_02 )	//自機の伝説
+		//_FLAG_SET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワークを３に
+		//$WK_SCENE_N01R0502 = 3
+		
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+
+	ELSIF $LWK_EVTJUMP == 110 THEN
+		//ラストシーン・ゲーチス戦前
+		//OBJセット
+		//_FLAG_SET( FV_C09R0501_RIVAL_01 )
+		//_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		//_FLAG_SET( FV_N01R0501_SAGE1 )
+		//_FLAG_RESET( FV_N01R0502_EVENT_01 )
+
+		//謁見の間、水が干上がった状態のマップに変更
+		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
+
+		//ワーク
+		//$WK_SCENE_N01R0502 = 5
+		//$WK_SCENE_C09R0501 = 2	
+			
+		_MAP_CHANGE( ZONE_ID_N01R0502, 16, 45, DIR_UP )
+		
+	ENDIF
+	}
+	
+_RET
+
+
+//初期３匹のタイプ変更-----------------------------------------------
+ev_firstpoke_type:
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_01, 0 )	//くさタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_03, 1 )	//ほのおタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_02, 2 )	//みずタイプ
+	_BMPMENU_MAKE_LIST( msg_debug_00, 3 )	//やめる
+	_BMPMENU_START()
+	
+	SWITCH $SCWK_ANSWER
+	CASE 0 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
+	CASE 1 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+	CASE 2 THEN
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+	DEFAULT
+		//やめる
+	ENDSWITCH
+
+_RET
+
+
+//ゾロアーク不具合対処-----------------------------------------------
+ev_zorofuguai:
+	
+	//不具合対処を行う。
+	_PLAINWIN_MSG_DOWN( msg_debug_suginaka_24 )
+	_AB_KEYWAIT_MARK()
+	_PLAINWIN_CLOSE()
+
+	DEFINE_LOCAL	LWK_ZONE
+	_GET_ZONE_ID( LWK_ZONE )
+
+	//デバッグ出力
+	_DEBUG_PRINT_WK( LWK_ZONE )
+	_DEBUG_PRINT_WK( WK_SCENE_D26_POKE23_01 )
+
+	//ワーク値・フラグ・ゾーンをchk
+	IF $WK_SCENE_D26_POKE23_01 == 3 && FLAG_OFF( FV_D26_POKE23_01 ) && $LWK_ZONE != ZONE_ID_D26R1101 THEN
+	
+		//=========WK値・フラグを修正する=========//
+
+		$WK_SCENE_D26_POKE23_01 = 4
+		_FLAG_SET( FV_D26_POKE23_01 )
+
+		//========================================//
+		
+		//不具合対処に成功しました
+		_SE_PLAY( SEQ_SE_FLD_41 )
+		_PLAINWIN_MSG_DOWN( msg_debug_suginaka_22 )
+		_LAST_KEYWAIT()
+		_SE_WAIT()
+		_PLAINWIN_CLOSE()
+		
+		//D26R0701だった場合はゾロアークを消去する。
+		_GET_ZONE_ID( LWK_ZONE )
+		IF $LWK_ZONE == ZONE_ID_D26R0701 THEN
+			
+			_OBJ_DEL( D26R0701_POKE23_01 )
+
+		ENDIF
+	
+	//不具合状態ではない
+	ELSE
+	
+		//不具合対処に失敗しました
+		_PLAINWIN_MSG_DOWN( msg_debug_suginaka_23 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+	
+	ENDIF
+	
+_RET
+
+//ゾロアーク不具合対処呼び出し-----------------------------------------------
+EVENT_START   ev_debug_zorofuguai
+  //ゾロアーク不具合対処
+  _CALL	ev_zorofuguai
+EVENT_END
+
