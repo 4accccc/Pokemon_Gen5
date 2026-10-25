@@ -81,15 +81,29 @@ This repository is a Git conversion of Game Freak's internal SVN repository `swa
 
 > "SVN-derived commits" includes shared ancestors, so the numbers cannot be added directly. `trunk` also has one README commit, so its current HEAD is one commit ahead of the tip shown above.
 
+### Additional Black/White development-line branches (3)
+
+These branches come from a parallel Black/White development line that split from the main line at r44,799. Only r44,800–r44,832 are unique; the base history is shared with `trunk` / `upper_version`.
+
+| Git branch | Created at | Based on | Purpose | HEAD date | Commits (incl. shared ancestors) |
+|---|---|---|---|---|---|
+| `wb-trunk` | r44,827 | `trunk` @ r44,799 | Additional Black/White trunk line; post-split battle AI fixes | 2012-02-20 | 43,220 |
+| `wb-upper_version` | r44,800 | `upper_version` @ r44,799 | Additional upper-version (B2W2) fixes from the parallel line | 2010-12-08 | 43,420 |
+| `wb-gpower` | r44,800 | `trunk` @ r44,799 | G-Power distribution ROM build | 2012-03-28 | 43,226 |
+
+> These three branches are **additional Black/White source branches**, reconstructed from the parallel line's r44,800–r44,832 revisions; they are not part of the original 17 SVN branches.
+
 ## Repository statistics
 
-- Git branches: **19** (`trunk` + 17 original SVN branches + `pre-layout`)
+- Git branches: **22** (`trunk` + 17 original SVN branches + 3 additional Black/White branches + `pre-layout`)
 - Original SVN branches: 17 (13 alive + 4 deleted)
-- Union of commits across all branches: **59,994**
+- Additional Black/White branches: 3 (r44,800–r44,832, 33 unique commits)
+- Union of commits across all branches: **60,028**
 - SVN revisions: 59,995 (r1 – r59,995; a few revisions had no trackable file changes, so the Git commit count is slightly lower)
+- Parallel Black/White line: r44,800–r44,832 (33 revisions, reconstructed as the `wb-*` branches)
 - Authors: 84
 - Tags: 0
-- Git objects: 738,649; pack size about 2.46 GiB
+- Git objects: 739,029; pack size about 2.46 GiB
 - Git LFS: 1 object, about 128 MB (`tools/effecteditor/effecteditor.srl`)
 - `trunk` files: 41,857
 - `upper_version` files: 55,034
@@ -128,6 +142,7 @@ rom/         Empty in SVN; not preserved by Git
 - Commit messages do not contain `git-svn-id`, so the corresponding SVN revision is not directly visible; branch creation revisions are listed above, and `pre-layout` covers r1 – r1022
 - The source contains Game Freak employees' corporate email addresses (historical comments, not removed)
 - Much of the text is Shift-JIS encoded; there are many binary assets (`.narc`, `.imd`, `.sdat`, etc.); only files over 100 MB use Git LFS, while 50–100 MB files remain normal Git objects (GitHub warns about them but accepts them)
+- The three `wb-*` branches were reconstructed from a parallel Black/White line that split at r44,799; commit metadata is preserved, but their hashes differ from the main line after the split
 - The source contains the NetAgent AMProtect/DSProtect anti-piracy middleware and its call sites, preserved for historical archiving
 
 ## Copyright

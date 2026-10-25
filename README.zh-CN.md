@@ -81,15 +81,29 @@
 
 > “SVN 派生提交数”包含共享祖先，因此分支之间的数字不可直接相加；`trunk` 另有 1 个 README 提交，当前 HEAD 比表中 tip 多 1 个提交。
 
+### 额外的 Black/White 开发线分支（3 个）
+
+这些分支来自在 r44,799 与主线分叉的并行 Black/White 开发线；独有部分是 r44,800–r44,832，之前的历史与 `trunk` / `upper_version` 共享。
+
+| Git 分支 | 创建版本 | 基于 | 用途 | HEAD 日期 | 提交数（含共享祖先） |
+|---|---|---|---|---|---|
+| `wb-trunk` | r44,827 | `trunk` @ r44,799 | 额外的 Black/White 主线（分叉后的战斗 AI 修正） | 2012-02-20 | 43,220 |
+| `wb-upper_version` | r44,800 | `upper_version` @ r44,799 | 并行线的 upper_version（B2W2）修正 | 2010-12-08 | 43,420 |
+| `wb-gpower` | r44,800 | `trunk` @ r44,799 | G-Power 配信 ROM 构建 | 2012-03-28 | 43,226 |
+
+> 这 3 个分支是**额外的 Black/White 源码分支**，由并行线的 r44,800–r44,832 重建，不属于原始 17 个 SVN 分支。
+
 ## 仓库统计
 
-- Git 分支总数：**19**（`trunk` + 17 个原始 SVN 分支 + `pre-layout`）
+- Git 分支总数：**22**（`trunk` + 17 个原始 SVN 分支 + 3 个额外的 Black/White 分支 + `pre-layout`）
 - 原始 SVN 分支：17 个（13 个存活 + 4 个已删除）
-- 所有分支的提交并集：**59,994**
+- 额外的 Black/White 分支：3 个（r44,800–r44,832，33 个独有提交）
+- 所有分支的提交并集：**60,028**
 - SVN 修订总数：59,995（r1 – r59,995；少数修订没有可跟踪的文件变化，因此 Git 提交数略少）
+- 并行 Black/White 线：r44,800–r44,832（33 个修订，重建为 `wb-*` 分支）
 - 作者：84
 - Tag：0
-- Git 对象：738,649；pack 体积约 2.46 GiB
+- Git 对象：739,029；pack 体积约 2.46 GiB
 - Git LFS：1 个对象，约 128MB（`tools/effecteditor/effecteditor.srl`）
 - `trunk` 文件数：41,857
 - `upper_version` 文件数：55,034
@@ -128,6 +142,7 @@ rom/         SVN 中为空目录，Git 不保留
 - 提交信息不含 `git-svn-id`，无法直接从提交看出对应 SVN revision；分支创建版本见上表，`pre-layout` 的范围为 r1 – r1022
 - 源码中包含 Game Freak 员工的公司邮箱（历史注释，未清除）
 - 大量文本为 Shift-JIS 编码；大量二进制资源（`.narc`、`.imd`、`.sdat` 等）；仅超过 100MB 的文件使用 Git LFS，50–100MB 文件仍是普通 Git 对象（GitHub 会警告但不阻止）
+- `wb-*` 的 3 个分支由 r44,799 分叉的并行 Black/White 线重建；提交元数据保留，但分叉后的 hash 与主线不同
 - 源码中包含反盗版中间件（NetAgent AMProtect/DSProtect）及其调用代码，仅为历史存档
 
 ## 版权
